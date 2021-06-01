@@ -12,19 +12,15 @@ const PORT = process.env.PORT || 8080;
 
 const server = app.listen(PORT);
 
-const io = require("socket.io")(server, {
-  cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
-  },
-});
+const io = require("./socket").init(server);
 
 io.on("connection", (socket) => {
   console.log("socket connected");
 
   socket.on("user-joined", async ({ id, name }) => {
     const users = await addUser(id, socket.id, name);
-    console.log("USERSs:", users);
+    socket.emit("user-joined-successfully", users);
+    console.log("*:", users);
   });
 
   socket.on("userConnectedToChat", async ({ username, id }) => {
