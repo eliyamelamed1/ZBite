@@ -4,23 +4,25 @@ from chat_rooms.serializers import ChatRoomSerializer, ChatRoomTitleSerializer, 
 from rest_framework import permissions
 from chat_rooms.models import ChatRoom
 from permissions import IsAuthorOrReadOnly
-from rest_framework.generics import (CreateAPIView, RetrieveAPIView, UpdateAPIView)
+from rest_framework.generics import (CreateAPIView, ListAPIView, UpdateAPIView)
 from rest_framework.response import Response
 
 
 
-class ChatRoomList(RetrieveAPIView):
+
+class ChatRoomList(ListAPIView):
     # TODO set permission class to only my chat rooms
     queryset = ChatRoom.objects.all()
     serializer_class = ChatRoomSerializer
 
-class ChatRoomMassagesList(RetrieveAPIView):
+class ChatRoomMassagesList(ListAPIView):
     # TODO set permission class to only participents
     serializer_class = ChatMassageSerializer
-
+    queryset = ChatMassage.objects.order_by('-created_at')
+    
     def post(self, request, format=None):
         queryset = ChatMassage.objects.order_by('-created_at')
-        data = request.data
+        data = self.request.data
         room = data['room']
 
         queryset = queryset.filter(room=room)
@@ -29,7 +31,7 @@ class ChatRoomMassagesList(RetrieveAPIView):
         return Response(serializer.data)
 
 class ChatRoomCreate(CreateAPIView):
-    permission_classes = (permissions.IsAuthenticated)
+    permission_classes = (permissions.IsAuthenticated, )
     queryset = ChatRoom.objects.all()
     serializer_class = ChatRoomSerializer
 

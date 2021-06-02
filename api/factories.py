@@ -1,4 +1,6 @@
 # TODO - add tests for factories
+from chat_rooms.models import ChatRoom
+from chat_massages.models import ChatMassage
 import factory
 import factory.fuzzy
 from attr import attributes
@@ -48,3 +50,25 @@ class RatingFactory(factory.django.DjangoModelFactory):
     stars = 5
     class Meta:
         model = Rating
+
+
+class ChatRoomFactory(factory.django.DjangoModelFactory):
+    author = factory.SubFactory(UserFactory)
+    title = factory.fuzzy.FuzzyText() 
+    class Meta:
+        model = ChatRoom
+
+    @factory.post_generation
+    def participents(self, create, extracted, **kwargs):
+        if not create:
+            return
+        
+        if extracted:
+            for participent in extracted:
+                self.participents.add(participent)
+
+class ChatMassageFactory(factory.django.DjangoModelFactory):
+    author = factory.SubFactory(UserFactory)
+    text = factory.fuzzy.FuzzyText() 
+    class Meta:
+        model = ChatMassage

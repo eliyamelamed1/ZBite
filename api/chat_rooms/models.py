@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 from django.db import models
 import uuid
 
+from django.urls.base import reverse
+
 from accounts.models import UserAccount
 
 
@@ -18,4 +20,6 @@ class ChatRoom(models.Model):
     def __str__(self):
         return self.title
 
-    
+    @classmethod
+    def get_create_url(cls):
+        return reverse('chat_rooms:create')

@@ -1,9 +1,10 @@
 from django.db import models
 import uuid
 
+from django.urls.base import reverse
+
 from chat_rooms.models import ChatRoom
 from accounts.models import UserAccount
-from django.urls import reverse
 
 class ChatMassage(models.Model):
     id = models.UUIDField(
@@ -21,4 +22,8 @@ class ChatMassage(models.Model):
 
     def get_absolute_url(self):
         """Return absolute URL to the Chat Massage Detail page."""
-        return reverse('chat_massages:detail', kwargs={"pk": self.id})
+        return reverse('chat_massages:details', kwargs={"pk": self.id})
+
+    @classmethod
+    def get_create_url(cls):
+        return reverse('chat_massages:create')
