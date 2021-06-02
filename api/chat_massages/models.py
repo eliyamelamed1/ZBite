@@ -1,16 +1,24 @@
-from django.contrib.auth.models import User
 from django.db import models
 import uuid
 
+from chat_rooms.models import ChatRoom
 from accounts.models import UserAccount
+from django.urls import reverse
 
-
-class ChatRoom(models.Model):
+class ChatMassage(models.Model):
     id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,
         editable=False
     )
-    admins = models.ManyToManyField(UserAccount(), default=None, blank=True, related_name='room_admins')
-    participents = models.ManyToManyField(UserAccount(), default=None, blank=True, related_name='room_participents')
+    author = models.ForeignKey(UserAccount(), on_delete=models.CASCADE)
+    text = models.TextField(default=None)
+    room = models.ForeignKey(ChatRoom(), on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        """Return absolute URL to the Chat Massage Detail page."""
+        return reverse('chat_massages:detail', kwargs={"pk": self.id})
