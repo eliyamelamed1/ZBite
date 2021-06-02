@@ -5,7 +5,7 @@ from chat_massages.models import ChatMassage
 from .serializers import ChatMassageSerializer, ChatMassageDetailsSerializer
 
 class ChatMassageCreate(CreateAPIView):
-    permission_classes = (permissions.IsAuthenticated, )
+    permission_classes = (permissions.AllowAny, )
     queryset = ChatMassage.objects.all()
     serializer_class = ChatMassageSerializer
 
@@ -17,3 +17,4 @@ class ChatMassageDetails(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthorOrReadOnly, )
     queryset = ChatMassage.objects.all()
     serializer_class = ChatMassageDetailsSerializer
+
