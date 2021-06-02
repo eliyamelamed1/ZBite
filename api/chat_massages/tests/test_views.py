@@ -23,7 +23,7 @@ class TestChatMassageCreate:
         #     new_user = UserFactory()
         #     new_user2 = UserFactory()
         #     api_client.force_authenticate(new_user)
-        #     room = ChatRoomFactory.create(participents=(new_user, new_user2))
+        #     room = ChatRoomFactory.create(participants=(new_user, new_user2))
         #     new_massage = ChatMassageFactory.create(room=(room, new_user))
 
             # new_massage = {
@@ -35,4 +35,4 @@ class TestChatMassageCreate:
 
             # assert response.status_code == 200
 
-            # assert room.participents.all() == 5
+            # assert room.participants.all() == 5

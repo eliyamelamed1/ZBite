@@ -6,12 +6,12 @@ from .models import ChatRoom
 class ChatRoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChatRoom
-        fields = ('title', 'participents')
+        fields = ('title', 'participants')
 
-class ChatRoomParticipentsSerializer(serializers.ModelSerializer):
+class ChatRoomParticipantsSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChatRoom
-        fields = ('participents')
+        fields = ('participants')
 
 class ChatRoomTitleSerializer(serializers.ModelSerializer):
     class Meta:

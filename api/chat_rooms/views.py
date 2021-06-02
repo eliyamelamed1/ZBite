@@ -1,22 +1,30 @@
+from rest_framework.views import APIView
 from chat_massages.serializers import ChatMassageSerializer
 from chat_massages.models import ChatMassage
-from chat_rooms.serializers import ChatRoomSerializer, ChatRoomTitleSerializer, ChatRoomParticipentsSerializer
+from chat_rooms.serializers import ChatRoomSerializer, ChatRoomTitleSerializer, ChatRoomParticipantsSerializer
 from rest_framework import permissions
 from chat_rooms.models import ChatRoom
-from permissions import IsAuthorOrReadOnly
+from permissions import (IsAuthorOrReadOnly,)
 from rest_framework.generics import (CreateAPIView, ListAPIView, UpdateAPIView)
 from rest_framework.response import Response
 
 
 
-
-class ChatRoomList(ListAPIView):
-    # TODO set permission class to only my chat rooms
+class ChatRoomList(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
     queryset = ChatRoom.objects.all()
-    serializer_class = ChatRoomSerializer
 
+    def get(self, request, format=None):
+        '''display chats the the user participate'''
+
+        user = request.user
+        queryset = ChatRoom.objects.all().filter(participants=user) 
+
+        serializer = ChatRoomSerializer(queryset, many=True)
+
+        return Response(serializer.data)
 class ChatRoomMassagesList(ListAPIView):
-    # TODO set permission class to only participents
+    # TODO set permission class to only participants
     serializer_class = ChatMassageSerializer
     queryset = ChatMassage.objects.order_by('-created_at')
     
@@ -30,22 +38,27 @@ class ChatRoomMassagesList(ListAPIView):
 
         return Response(serializer.data)
 
-class ChatRoomCreate(CreateAPIView):
+
+class ChatRoomCreate(CreateAPIView): # Tested
     permission_classes = (permissions.IsAuthenticated, )
     queryset = ChatRoom.objects.all()
     serializer_class = ChatRoomSerializer
 
     def perform_create(self, serializer):
-        '''save the current logged in user as the author of the Chat Room'''
-        
-        serializer.save(author=self.request.user)
+        '''
+        save the current logged in user as the author of the Chat Room, 
+        and add the author to the room participants list
+        '''
+        obj = serializer.save(author=self.request.user)
+        obj.participants.add(self.request.user)
 
-class ChatRoomUpdateParticipents(UpdateAPIView):
-    permission_classes = (IsAuthorOrReadOnly)
+class ChatRoomUpdateParticipants(UpdateAPIView):
+    # TODO set permission class to only participants
+    permission_classes = (IsAuthorOrReadOnly, )
     queryset = ChatRoom.objects.all()
-    serializer_class = ChatRoomParticipentsSerializer
+    serializer_class = ChatRoomParticipantsSerializer
 
 class ChatRoomUpdateTitle(UpdateAPIView):
-    # TODO set permission class to only participents
+    # TODO set permission class to only participants
     querySet = ChatRoom.objects.all()
     serializers_class = ChatRoomTitleSerializer

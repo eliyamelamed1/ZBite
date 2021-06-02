@@ -59,13 +59,13 @@ class ChatRoomFactory(factory.django.DjangoModelFactory):
         model = ChatRoom
 
     @factory.post_generation
-    def participents(self, create, extracted, **kwargs):
+    def participants(self, create, extracted, **kwargs):
         if not create:
             return
         
         if extracted:
             for participent in extracted:
-                self.participents.add(participent)
+                self.participants.add(participent)
 
 class ChatMassageFactory(factory.django.DjangoModelFactory):
     author = factory.SubFactory(UserFactory)
