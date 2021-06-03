@@ -4,11 +4,12 @@ import pytest
 from factories import UserFactory
 from chat_massages.models import ChatMassage 
 from accounts.models import UserAccount
+from chat_rooms.models import ChatRoom
 
 pytestmark = pytest.mark.django_db
 
 chat_massage_create_url = ChatMassage.get_create_url()
-
+massage_list_url = ChatMassage.get_massages_list_url()
 class TestChatMassageCreate:
     class TestAuthenticatedUsers:
         def test_chat_massage_create_page_render(self, api_client):
@@ -36,3 +37,56 @@ class TestChatMassageCreate:
             # assert response.status_code == 200
 
             # assert room.participants.all() == 5
+    
+
+# class TestChatRoomMassageList:
+#     class TestAuthenticatedParticipantsUsers:
+#         def test_chat_room_massage_page_should_render(self, api_client):
+#             new_user = UserFactory()
+#             new_user2 = UserFactory()
+#             api_client.force_authenticate(new_user)
+
+#             ChatRoomFactory.create(participants=(new_user, new_user2))
+#             response = api_client.get(massage_list_url)
+
+#             assert response.status_code == 405
+
+#         def test_chat_post_request_allowed(self, api_client):
+#             new_user = UserFactory()
+#             new_user2 = UserFactory()
+
+#             api_client.force_authenticate(new_user)
+#             new_chat_room = ChatRoomFactory.create(participants=(new_user, new_user2))
+#             data = {
+#                 'room': new_chat_room.id
+#             }
+
+#             response = api_client.post(massage_list_url, data)
+
+#             assert response.status_code == 200
+#     class TestAuthenticatedUsers:
+#         def test_chat_room_massage_page_should_render(self, api_client):
+#             new_user = UserFactory()
+#             new_user2 = UserFactory()
+#             new_user3 = UserFactory()
+#             api_client.force_authenticate(new_user3)
+
+#             ChatRoomFactory.create(participants=(new_user, new_user2))
+#             response = api_client.get(massage_list_url)
+
+#             assert response.status_code == 405
+        
+#         def test_chat_post_request_allowed(self, api_client):
+#             new_user = UserFactory()
+#             new_user2 = UserFactory()
+#             new_user3 = UserFactory()
+
+#             api_client.force_authenticate(new_user3)
+#             new_chat_room = ChatRoomFactory.create(participants=(new_user, new_user2))
+#             data = {
+#                 'room': new_chat_room.id
+#             }
+
+#             response = api_client.post(massage_list_url, data)
+
+            # assert response.content == ''

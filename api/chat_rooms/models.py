@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
 from django.db import models
 import uuid
 
@@ -20,16 +19,14 @@ class ChatRoom(models.Model):
     def __str__(self):
         return self.title
 
+    
+    def get_update_participants_url(self):
+        return reverse('chat_rooms:update_participants', kwargs={"pk": self.id})
+    
+    def get_update_title_url(self):
+        return reverse('chat_rooms:update_title', kwargs={"pk": self.id})
+    
     @classmethod
     def get_create_url(cls):
         return reverse('chat_rooms:create')
-    
-    
-    @classmethod
-    def get_update_participants_url(cls):
-        return reverse('chat_rooms:update_participants')
-    
-    @classmethod
-    def get_update_title_url(cls):
-        return reverse('chat_rooms:update_title')
-    
+

@@ -3,7 +3,6 @@ from chat_rooms.models import ChatRoom
 from chat_massages.models import ChatMassage
 import factory
 import factory.fuzzy
-from attr import Factory, attributes
 
 from accounts.models import UserAccount
 from comments.models import Comment
@@ -53,6 +52,7 @@ class RatingFactory(factory.django.DjangoModelFactory):
 
 
 class ChatRoomFactory(factory.django.DjangoModelFactory):
+    # TODO - need to add the author to the participants
     author = factory.SubFactory(UserFactory)
     title = factory.fuzzy.FuzzyText()
     class Meta:

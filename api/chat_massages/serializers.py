@@ -13,3 +13,8 @@ class ChatMassageDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChatMassage
         fields = ('text')
+
+class ChatMassagesRoomSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ChatMassage
+        fields = ('room', )

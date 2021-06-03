@@ -131,16 +131,157 @@ class TestChatRoomCreate:
 
                 assert response.status_code == 401
 
-# class TestChatRoomUpdateparticipants:
-#     class TestAuthenticatedUsers:
-#         def test_update_participants_page_should_render(self, api_client):
-#             new_user = UserFactory()
-#             api_client.force_authenticate(new_user)
-#             new_chat_room = ChatRoomFactory()
+class TestChatRoomUpdateparticipants:
+    class TestAuthenticatedUsers:
+        def test_update_participants_page_should_render(self, api_client):
+            new_user = UserFactory()
+            new_user2 = UserFactory()
+            api_client.force_authenticate(new_user)
 
-#             chat_room_update_participants_url = reverse('chat_rooms:update_participants', kwargs={"pk": new_chat_room.id})
-#             response = api_client.get(chat_room_update_participants_url)
+            new_chat_room = ChatRoomFactory.create(participants=(new_user, new_user2))
 
-#             assert response.status_code == 405
+            chat_room_update_participants_url = new_chat_room.get_update_participants_url()
+            response = api_client.get(chat_room_update_participants_url)
+
+            assert response.status_code == 405
     
-# chat_room_update_title_url = ChatRoom.get_update_title_url() 
+
+        def test_author_should_be_able_to_update_room_participants(self, api_client):
+                new_user = UserFactory()
+                new_user2 = UserFactory()
+                new_chat_room = ChatRoomFactory.create(participants=(new_user, new_user2))
+                api_client.force_authenticate(new_chat_room.author)
+
+                updated_data = {
+                    'participants': [new_user.id,]
+                }
+                chat_room_update_participants_url = new_chat_room.get_update_participants_url()
+                response = api_client.patch(chat_room_update_participants_url, updated_data)
+
+                assert response.status_code == 200
+                assert new_chat_room.participants.all().count() == 1
+                assert new_chat_room.participants.all()[0] == new_user
+
+        def test_not_author_should_not_be_able_to_update_room_participants(self, api_client):
+                new_user = UserFactory()
+                new_user2 = UserFactory()
+                api_client.force_authenticate(new_user)
+
+                new_chat_room = ChatRoomFactory.create(participants=(new_user, new_user2))
+
+                api_client.force_authenticate(new_user)
+                updated_data = {
+                    'participants': [new_user.id,]
+                }
+
+                chat_room_update_participants_url = new_chat_room.get_update_participants_url()
+                response = api_client.patch(chat_room_update_participants_url, updated_data)
+
+                assert response.status_code == 403
+        
+    class TestGuestUsers:
+        def test_update_participants_page_should_not_render(self, api_client):
+            new_user = UserFactory()
+            new_user2 = UserFactory()
+            new_chat_room = ChatRoomFactory.create(participants=(new_user, new_user2))
+
+            chat_room_update_participants_url = reverse('chat_rooms:update_participants', kwargs={"pk": new_chat_room.id})
+            response = api_client.get(chat_room_update_participants_url)
+
+            assert response.status_code == 401
+        
+        def test_guest_should_not_be_able_to_update_room_participants(self, api_client):
+                new_user = UserFactory()
+                new_user2 = UserFactory()
+                new_chat_room = ChatRoomFactory.create(participants=(new_user, new_user2))
+
+                updated_data = {
+                    'participants': [new_user.id,]
+                }
+
+                chat_room_update_participants_url = new_chat_room.get_update_participants_url()
+                response = api_client.patch(chat_room_update_participants_url, updated_data)
+
+                assert response.status_code == 401
+
+class TestChatRoomUpdateTitle:
+
+    class TestAuthenticatedParticipantsUsers:
+        def test_update_title_page_should_render(self, api_client):
+            new_user = UserFactory()
+            new_user2 = UserFactory()
+            api_client.force_authenticate(new_user)
+            new_chat_room = ChatRoomFactory.create(participants=(new_user, new_user2))
+
+            chat_room_update_title_url = new_chat_room.get_update_title_url()
+            response = api_client.get(chat_room_update_title_url)
+
+            assert response.status_code == 405
+            
+        def test_update_title_page_patch_request_allowed(self, api_client):
+            new_user = UserFactory()
+            new_user2 = UserFactory()
+            api_client.force_authenticate(new_user)
+            new_chat_room = ChatRoomFactory.create(participants=(new_user, new_user2))
+
+            updated_data = {
+                'title': 'asdasd'
+            }
+            chat_room_update_title_url = new_chat_room.get_update_title_url()
+            response = api_client.patch(chat_room_update_title_url, updated_data)
+
+            assert response.status_code == 200
+    class TestAuthenticatedUsers:
+
+        def test_update_title_page_should_not_render(self, api_client):
+            new_user = UserFactory()
+            new_user2 = UserFactory()
+            new_user3 = UserFactory()
+            new_chat_room = ChatRoomFactory.create(participants=(new_user, new_user2))
+            api_client.force_authenticate(new_user3)
+
+            chat_room_update_title_url = new_chat_room.get_update_title_url()
+            response = api_client.get(chat_room_update_title_url)
+
+            assert response.status_code == 405
+
+        def test_update_title_page_patch_request_not_allowed(self, api_client):
+            new_user = UserFactory()
+            new_user2 = UserFactory()
+            new_user3 = UserFactory()
+            api_client.force_authenticate(new_user3)
+            new_chat_room = ChatRoomFactory.create(participants=(new_user, new_user2))
+
+            updated_data = {
+                'title': 'asdasd'
+            }
+            chat_room_update_title_url = new_chat_room.get_update_title_url()
+            response = api_client.patch(chat_room_update_title_url, updated_data)
+
+            assert response.status_code == 403
+
+    class TestGuestUsers:
+        def test_update_title_page_should_not_render(self, api_client):
+            new_user = UserFactory()
+            new_user2 = UserFactory()
+            new_chat_room = ChatRoomFactory.create(participants=(new_user, new_user2))
+
+            chat_room_update_title_url = new_chat_room.get_update_title_url()
+            response = api_client.get(chat_room_update_title_url)
+
+            assert response.status_code == 401
+        
+        def test_update_title_page_patch_request_not_allowed(self, api_client):
+            new_user = UserFactory()
+            new_user2 = UserFactory()
+            new_chat_room = ChatRoomFactory.create(participants=(new_user, new_user2))
+            
+            updated_data = {
+                'title': 'asdasd'
+            }
+            chat_room_update_title_url = new_chat_room.get_update_title_url()
+            response = api_client.patch(chat_room_update_title_url, updated_data)
+
+            assert response.status_code == 401
+
+

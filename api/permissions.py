@@ -37,3 +37,8 @@ class RecipeAuthorCanDeleteComments(permissions.BasePermission):
         
         return Comment.recipe.author == request.user
 
+class IsParticipatnsOrAcssessDenied(permissions.BasePermission):
+
+    def has_object_permission(self, request, view, obj):
+
+        return request.user in obj.participants.all()
