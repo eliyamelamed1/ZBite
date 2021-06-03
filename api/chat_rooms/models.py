@@ -13,15 +13,15 @@ class ChatRoom(models.Model):
         editable=False
     )
     author = models.ForeignKey(UserAccount(), on_delete=models.CASCADE)
-    participants = models.ManyToManyField(UserAccount(), default=None, blank=True, related_name='room_participants')
+    members = models.ManyToManyField(UserAccount(), default=None, blank=True, related_name='room_members')
     title = models.TextField(blank=True)
 
     def __str__(self):
         return self.title
 
     
-    def get_update_participants_url(self):
-        return reverse('chat_rooms:update_participants', kwargs={"pk": self.id})
+    def get_update_members_url(self):
+        return reverse('chat_rooms:update_members', kwargs={"pk": self.id})
     
     def get_update_title_url(self):
         return reverse('chat_rooms:update_title', kwargs={"pk": self.id})
@@ -29,4 +29,3 @@ class ChatRoom(models.Model):
     @classmethod
     def get_create_url(cls):
         return reverse('chat_rooms:create')
-

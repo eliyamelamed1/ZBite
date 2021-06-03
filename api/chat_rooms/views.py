@@ -1,22 +1,22 @@
 from rest_framework.views import APIView
-from chat_rooms.serializers import ChatRoomSerializer, ChatRoomTitleSerializer, ChatRoomParticipantsSerializer
+from chat_rooms.serializers import ChatRoomSerializer, ChatRoomTitleSerializer, ChatRoomMembersSerializer
 from rest_framework import permissions
 from chat_rooms.models import ChatRoom
-from permissions import (IsAuthorOrReadOnly, IsParticipatnsOrAcssessDenied)
+from permissions import (IsAuthorOrReadOnly, IsMembersOrAccessDenied)
 from rest_framework.generics import (CreateAPIView, UpdateAPIView)
 from rest_framework.response import Response
 
 
 
 class ChatRoomList(APIView):
-    permission_classes = (IsParticipatnsOrAcssessDenied, permissions.IsAuthenticated,)
+    permission_classes = (IsMembersOrAccessDenied, permissions.IsAuthenticated,)
     queryset = ChatRoom.objects.all()
 
     def get(self, request, format=None):
         '''display chats the the user participate'''
 
         user = request.user
-        queryset = ChatRoom.objects.all().filter(participants=user) 
+        queryset = ChatRoom.objects.all().filter(members=user) 
 
         serializer = ChatRoomSerializer(queryset, many=True)
 
@@ -30,17 +30,17 @@ class ChatRoomCreate(CreateAPIView):
     def perform_create(self, serializer):
         '''
         save the current logged in user as the author of the Chat Room, 
-        and add the author to the room participants list
+        and add the author to the room members list
         '''
         obj = serializer.save(author=self.request.user)
-        obj.participants.add(self.request.user)
+        obj.members.add(self.request.user)
 
-class ChatRoomUpdateParticipants(UpdateAPIView):
+class ChatRoomUpdateMembers(UpdateAPIView):
     permission_classes = (IsAuthorOrReadOnly, permissions.IsAuthenticated,)
     queryset = ChatRoom.objects.all()
-    serializer_class = ChatRoomParticipantsSerializer
+    serializer_class = ChatRoomMembersSerializer
 
 class ChatRoomUpdateTitle(UpdateAPIView):
-    permission_classes = (IsParticipatnsOrAcssessDenied, permissions.IsAuthenticated)
+    permission_classes = (IsMembersOrAccessDenied, permissions.IsAuthenticated)
     queryset = ChatRoom.objects.all()
     serializer_class = ChatRoomTitleSerializer

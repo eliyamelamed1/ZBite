@@ -18,7 +18,7 @@ class ChatMassage(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.title
+        return self.text
 
     def get_absolute_url(self):
         """Return absolute URL to the Chat Massage Detail page."""

@@ -52,25 +52,29 @@ class RatingFactory(factory.django.DjangoModelFactory):
 
 
 class ChatRoomFactory(factory.django.DjangoModelFactory):
-    # TODO - need to add the author to the participants
+    # TODO - need to add the author to the members
     author = factory.SubFactory(UserFactory)
     title = factory.fuzzy.FuzzyText()
     class Meta:
         model = ChatRoom
 
     @factory.post_generation
-    def participants(self, create, extracted, **kwargs):
+    def members(self, create, extracted, **kwargs):
         if not create:
-            return
-        
+            # self.members.add(self.author)
+            return 
+            
         if extracted:
-            for participent in extracted:
-                self.participants.add(participent)
-
-
+            for participant in extracted:
+                self.members.add(participant)
         
+
 class ChatMassageFactory(factory.django.DjangoModelFactory):
     author = factory.SubFactory(UserFactory)
     text = factory.fuzzy.FuzzyText() 
+    room = factory.SubFactory(ChatRoomFactory)
     class Meta:
         model = ChatMassage
+    
+
+    
