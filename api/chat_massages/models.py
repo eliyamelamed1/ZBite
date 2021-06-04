@@ -3,7 +3,7 @@ import uuid
 
 from django.urls.base import reverse
 
-from chat_rooms.models import ChatRoom
+from chat_groups.models import ChatGroup
 from accounts.models import UserAccount
 
 class ChatMassage(models.Model):
@@ -14,7 +14,7 @@ class ChatMassage(models.Model):
     )
     author = models.ForeignKey(UserAccount(), on_delete=models.CASCADE)
     text = models.TextField(default=None)
-    room = models.ForeignKey(ChatRoom(), on_delete=models.CASCADE)
+    group = models.ForeignKey(ChatGroup(), on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

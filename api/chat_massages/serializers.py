@@ -6,7 +6,7 @@ from .models import ChatMassage
 class ChatMassageCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChatMassage
-        fields = ('text', 'room',)
+        fields = ('text', 'group',)
 
 
 class ChatMassageDetailsSerializer(serializers.ModelSerializer):
@@ -17,4 +17,4 @@ class ChatMassageDetailsSerializer(serializers.ModelSerializer):
 class ChatMassagesRoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChatMassage
-        fields = ('room', )
+        fields = ('group', )

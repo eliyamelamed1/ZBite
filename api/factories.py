@@ -1,5 +1,5 @@
 # TODO - add tests for factories
-from chat_rooms.models import ChatRoom
+from chat_groups.models import ChatGroup
 from chat_massages.models import ChatMassage
 import factory
 import factory.fuzzy
@@ -51,12 +51,12 @@ class RatingFactory(factory.django.DjangoModelFactory):
         model = Rating
 
 
-class ChatRoomFactory(factory.django.DjangoModelFactory):
+class ChatGroupFactory(factory.django.DjangoModelFactory):
     # TODO - need to add the author to the members
     author = factory.SubFactory(UserFactory)
     title = factory.fuzzy.FuzzyText()
     class Meta:
-        model = ChatRoom
+        model = ChatGroup
 
     @factory.post_generation
     def members(self, create, extracted, **kwargs):
@@ -72,7 +72,7 @@ class ChatRoomFactory(factory.django.DjangoModelFactory):
 class ChatMassageFactory(factory.django.DjangoModelFactory):
     author = factory.SubFactory(UserFactory)
     text = factory.fuzzy.FuzzyText() 
-    room = factory.SubFactory(ChatRoomFactory)
+    group = factory.SubFactory(ChatGroupFactory)
     class Meta:
         model = ChatMassage
     

@@ -14,7 +14,7 @@ urlpatterns = [
     path('api/likes/', include('likes.urls', namespace='likes')), 
     path('api/followers/', include('followers.urls', namespace='followers')), 
     path('api/ratings/', include('ratings.urls', namespace='ratings')),
-    path('api/chat_rooms/', include('chat_rooms.urls', namespace='chat_rooms')),
+    path('api/chat_groups/', include('chat_groups.urls', namespace='chat_groups')),
     path('api/chat_massages/', include('chat_massages.urls', namespace='chat_massages')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

@@ -7,7 +7,7 @@ from rest_framework.generics import (RetrieveUpdateDestroyAPIView, CreateAPIView
 from chat_massages.models import ChatMassage
 from .serializers import ChatMassageCreateSerializer, ChatMassageDetailsSerializer, ChatMassagesRoomSerializer
 from django.db.models.query_utils import Q
-from chat_rooms.models import ChatRoom
+from chat_groups.models import ChatGroup
 from accounts.models import UserAccount
 from django.core.exceptions import PermissionDenied
 
@@ -26,13 +26,13 @@ class ChatMassagesInRoom(APIView):
         user = request.user
         data = request.data
 
-        room = data['room']
+        group = data['group']
 
         try:
-            room = ChatRoom.objects.get(id=room)
+            group = ChatGroup.objects.get(id=group)
             user = UserAccount.objects.get(email=user)
-            if user in room.members.all():
-                queryset = ChatMassage.objects.filter(room=room)
+            if user in group.members.all():
+                queryset = ChatMassage.objects.filter(group=group)
                 serializer = ChatMassageDetailsSerializer(queryset, many=True)
 
                 return Response(serializer.data)
@@ -49,17 +49,17 @@ class ChatMassageCreate(APIView):
         user = request.user
         data = request.data
 
-        room = data['room']
+        group = data['group']
         text = data['text']
 
-        '''check if the user is a member of the room he wants to send massage to'''
+        '''check if the user is a member of the group he wants to send massage to'''
         try:
-            room = ChatRoom.objects.get(id=room)
+            group = ChatGroup.objects.get(id=group)
             user = UserAccount.objects.get(email=user)
-            if user in room.members.all():
+            if user in group.members.all():
                 ChatMassage.objects.create(
                     author = user,
-                    room = room,
+                    group = group,
                     text = text
                 )
             else:

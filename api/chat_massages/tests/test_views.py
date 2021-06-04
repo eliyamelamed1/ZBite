@@ -1,17 +1,17 @@
-from factories import ChatMassageFactory, ChatRoomFactory
+from factories import ChatMassageFactory, ChatGroupFactory
 from django.http import response
 import pytest
 from factories import UserFactory
 from chat_massages.models import ChatMassage 
 from accounts.models import UserAccount
-from chat_rooms.models import ChatRoom
+from chat_groups.models import ChatGroup
 
 pytestmark = pytest.mark.django_db
 
 chat_massage_create_url = ChatMassage.get_create_url()
 massage_list_url = ChatMassage.get_massages_list_url()
 
-#  TODO test cant massage room that i am not participating
+#  TODO test cant massage group that i am not participating
 class TestChatMassageCreate:
     class TestAuthenticatedUsers:
         def test_chat_massage_create_page_render(self, api_client):
@@ -26,11 +26,11 @@ class TestChatMassageCreate:
             new_user = UserFactory()
             new_user2 = UserFactory()
             api_client.force_authenticate(new_user)
-            room = ChatRoomFactory.create(members=(new_user, new_user2))
+            group = ChatGroupFactory.create(members=(new_user, new_user2))
             new_massage = ChatMassageFactory.build()
             new_massage = {
                 'text': new_massage.text,
-                'room': room.id,
+                'group': group.id,
             }
 
             response = api_client.post(chat_massage_create_url, new_massage)
@@ -43,11 +43,11 @@ class TestChatMassageCreate:
             new_user2 = UserFactory()
             api_client.force_authenticate(new_user)
 
-            room = ChatRoomFactory.create(members=(new_user, new_user2))
+            group = ChatGroupFactory.create(members=(new_user, new_user2))
             new_massage = ChatMassageFactory.build()
             new_massage = {
                 'text': new_massage.text,
-                'room': room.id,
+                'group': group.id,
             }
 
             response = api_client.post(chat_massage_create_url, new_massage)
@@ -56,17 +56,17 @@ class TestChatMassageCreate:
             assert response.status_code == 200
             assert new_massage.author == new_user
     
-        def test_cant_send_massage_to_a_room_i_am_not_participating_in(self, api_client):
+        def test_cant_send_massage_to_a_group_i_am_not_participating_in(self, api_client):
             new_user = UserFactory()
             new_user2 = UserFactory()
             new_user3 = UserFactory()
-            room = ChatRoomFactory.create(members=(new_user, new_user2))
+            group = ChatGroupFactory.create(members=(new_user, new_user2))
 
             api_client.force_authenticate(new_user3)
             new_massage = ChatMassageFactory.build()
             new_massage = {
                 'text': new_massage.text,
-                'room': room.id,
+                'group': group.id,
             }
 
             response = api_client.post(chat_massage_create_url, new_massage)
@@ -83,13 +83,13 @@ class TestChatMassageCreate:
         def test_create_chat_massage_fail(self, api_client):
             new_user = UserFactory()
             new_user2 = UserFactory()
-            room = ChatRoomFactory.create(members=(new_user, new_user2))
+            group = ChatGroupFactory.create(members=(new_user, new_user2))
 
             new_massage = ChatMassageFactory.build()
             new_massage = {
                 'author': new_user.id,
                 'text': new_massage.text,
-                'room': room.id,
+                'group': group.id,
             }
 
             response = api_client.post(chat_massage_create_url, new_massage)
@@ -186,12 +186,12 @@ class TestChatMassageDetails:
 
 class TestChatMassagesInRoom:
     class TestMembers:
-        def test_chat_room_massage_page_should_render(self, api_client):
+        def test_chat_group_massage_page_should_render(self, api_client):
             new_user = UserFactory()
             new_user2 = UserFactory()
             api_client.force_authenticate(new_user)
 
-            ChatRoomFactory.create(members=(new_user, new_user2))
+            ChatGroupFactory.create(members=(new_user, new_user2))
             response = api_client.get(massage_list_url)
 
             assert response.status_code == 405
@@ -201,9 +201,9 @@ class TestChatMassagesInRoom:
             new_user2 = UserFactory()
 
             api_client.force_authenticate(new_user)
-            new_chat_room = ChatRoomFactory.create(members=(new_user, new_user2))
+            new_chat_group = ChatGroupFactory.create(members=(new_user, new_user2))
             data = {
-                'room': new_chat_room.id
+                'group': new_chat_group.id
             }
 
             response = api_client.post(massage_list_url, data)
@@ -214,7 +214,7 @@ class TestChatMassagesInRoom:
             new_chat_massage = chat_massage_create
             api_client.force_authenticate(new_chat_massage.author)
             data = {
-                'room': new_chat_massage.room.id
+                'group': new_chat_massage.group.id
             }
 
             response = api_client.post(massage_list_url, data)
@@ -223,25 +223,25 @@ class TestChatMassagesInRoom:
             assert f'{new_chat_massage}' in f'{response.content}'
             
     class TestAuthenticatedUsers:
-        def test_chat_room_massage_page_should_render(self, api_client):
+        def test_chat_group_massage_page_should_render(self, api_client):
             new_user = UserFactory()
             new_user2 = UserFactory()
             new_user3 = UserFactory()
             api_client.force_authenticate(new_user3)
 
-            ChatRoomFactory.create(members=(new_user, new_user2))
+            ChatGroupFactory.create(members=(new_user, new_user2))
             response = api_client.get(massage_list_url)
 
             assert response.status_code == 405
         
-        def test_chat_post_request_denied_to_non_participant_room(self, api_client):
+        def test_chat_post_request_denied_to_non_participant_group(self, api_client):
             new_user = UserFactory()
             new_user2 = UserFactory()
             new_user3 = UserFactory()
             api_client.force_authenticate(new_user3)
-            new_chat_room = ChatRoomFactory.create(members=(new_user, new_user2))
+            new_chat_group = ChatGroupFactory.create(members=(new_user, new_user2))
             data = {
-                'room': new_chat_room.id
+                'group': new_chat_group.id
             }
             response = api_client.post(massage_list_url, data)
 
@@ -252,7 +252,7 @@ class TestChatMassagesInRoom:
             new_chat_massage = chat_massage_create
             api_client.force_authenticate(UserFactory())
             data = {
-                'room': new_chat_massage.room.id
+                'group': new_chat_massage.group.id
             }
 
             response = api_client.post(massage_list_url, data)
