@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from rest_framework.test import APIClient
 
 from accounts.models import UserAccount
-from factories import CommentFactory, RecipeFactory, UserFactory
+from factories import CommentFactory, RecipeFactory, UserFactory, ChatRoomFactory, ChatMassageFactory
 from recipes.models import Recipe
 
 # ---------------------------------------- Set Up
@@ -86,3 +86,17 @@ def search_comment_response(api_client):
 
     return response
 
+@pytest.fixture
+def chat_massage_create():
+    user = UserFactory()
+    user2 = UserFactory()
+    chat_room = ChatRoomFactory.create(members=(user, user2))
+    chat_massage = ChatMassageFactory()
+    chat_room.members.add(chat_room.author)
+    chat_room.members.add(chat_massage.author)
+    chat_massage.room = chat_room
+    chat_room.save()
+    chat_massage.save()
+    chat_massage.room = chat_room
+
+    return chat_massage

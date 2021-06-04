@@ -11,32 +11,36 @@ from chat_rooms.models import ChatRoom
 from accounts.models import UserAccount
 from django.core.exceptions import PermissionDenied
 
-# class ChatMassageCreate(CreateAPIView):
-#     permission_classes = (permissions.IsAuthenticated,)
-#     queryset = ChatMassage.objects.all()
-#     serializer_class = ChatMassageCreateSerializer
-
-#     def perform_create(self, serializer):
-#         '''save the current logged in user as the author of the Chat Massage'''
-#         serializer.save(author=self.request.user)
-
 class ChatMassageDetails(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthorOrAccessDenied,)
     queryset = ChatMassage.objects.all()
     serializer_class = ChatMassageDetailsSerializer
 
+
+
 class ChatMassagesInRoom(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
     serializer_class = ChatMassagesRoomSerializer
-    
 
     def post(self, request, format=None):
+        user = request.user
         data = request.data
+
         room = data['room']
 
-        queryset = ChatMassage.objects.filter(room=room)
-        serializer = ChatMassageDetailsSerializer(queryset, many=True)
+        try:
+            room = ChatRoom.objects.get(id=room)
+            user = UserAccount.objects.get(email=user)
+            if user in room.members.all():
+                queryset = ChatMassage.objects.filter(room=room)
+                serializer = ChatMassageDetailsSerializer(queryset, many=True)
 
-        return Response(serializer.data)
+                return Response(serializer.data)
+            else:
+                raise PermissionDenied()
+        except:
+            raise PermissionDenied()
+
 class ChatMassageCreate(APIView):
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = ChatMassageCreateSerializer
@@ -48,6 +52,7 @@ class ChatMassageCreate(APIView):
         room = data['room']
         text = data['text']
 
+        '''check if the user is a member of the room he wants to send massage to'''
         try:
             room = ChatRoom.objects.get(id=room)
             user = UserAccount.objects.get(email=user)

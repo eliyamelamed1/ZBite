@@ -184,77 +184,77 @@ class TestChatMassageDetails:
 
 
 
-# class TestChatRoomMassageList:
-#     class TestMembers:
-#         def test_chat_room_massage_page_should_render(self, api_client):
-#             new_user = UserFactory()
-#             new_user2 = UserFactory()
-#             api_client.force_authenticate(new_user)
+class TestChatMassagesInRoom:
+    class TestMembers:
+        def test_chat_room_massage_page_should_render(self, api_client):
+            new_user = UserFactory()
+            new_user2 = UserFactory()
+            api_client.force_authenticate(new_user)
 
-#             ChatRoomFactory.create(members=(new_user, new_user2))
-#             response = api_client.get(massage_list_url)
+            ChatRoomFactory.create(members=(new_user, new_user2))
+            response = api_client.get(massage_list_url)
 
-#             assert response.status_code == 405
+            assert response.status_code == 405
 
-#         def test_chat_post_request_allowed(self, api_client):
-#             new_user = UserFactory()
-#             new_user2 = UserFactory()
+        def test_chat_post_request_allowed(self, api_client):
+            new_user = UserFactory()
+            new_user2 = UserFactory()
 
-#             api_client.force_authenticate(new_user)
-#             new_chat_room = ChatRoomFactory.create(members=(new_user, new_user2))
-#             data = {
-#                 'room': new_chat_room.id
-#             }
+            api_client.force_authenticate(new_user)
+            new_chat_room = ChatRoomFactory.create(members=(new_user, new_user2))
+            data = {
+                'room': new_chat_room.id
+            }
 
-#             response = api_client.post(massage_list_url, data)
+            response = api_client.post(massage_list_url, data)
 
-#             assert response.status_code == 200
+            assert response.status_code == 200
 
-#         def test_should_render_chat_massages(self, api_client):
-#             new_chat_massage = ChatMassageFactory()
-#             api_client.force_authenticate(new_chat_massage.author)
-#             data = {
-#                 'room': new_chat_massage.room.id
-#             }
+        def test_should_render_chat_massages(self, api_client, chat_massage_create):
+            new_chat_massage = chat_massage_create
+            api_client.force_authenticate(new_chat_massage.author)
+            data = {
+                'room': new_chat_massage.room.id
+            }
 
-#             response = api_client.post(massage_list_url, data)
+            response = api_client.post(massage_list_url, data)
 
-#             assert f'{new_chat_massage}' in f'{response.content}'
+            assert response.status_code == 200
+            assert f'{new_chat_massage}' in f'{response.content}'
             
-    # class TestAuthenticatedUsers:
-    #     def test_chat_room_massage_page_should_render(self, api_client):
-    #         new_user = UserFactory()
-    #         new_user2 = UserFactory()
-    #         new_user3 = UserFactory()
-    #         api_client.force_authenticate(new_user3)
+    class TestAuthenticatedUsers:
+        def test_chat_room_massage_page_should_render(self, api_client):
+            new_user = UserFactory()
+            new_user2 = UserFactory()
+            new_user3 = UserFactory()
+            api_client.force_authenticate(new_user3)
 
-    #         ChatRoomFactory.create(members=(new_user, new_user2))
-    #         response = api_client.get(massage_list_url)
+            ChatRoomFactory.create(members=(new_user, new_user2))
+            response = api_client.get(massage_list_url)
 
-    #         assert response.status_code == 405
+            assert response.status_code == 405
         
-    #     def test_chat_post_request_denied_to_non_participant_room(self, api_client):
-    #         new_user = UserFactory()
-    #         new_user2 = UserFactory()
-    #         new_user3 = UserFactory()
-    #         api_client.force_authenticate(new_user3)
-    #         new_chat_room = ChatRoomFactory.create(members=(new_user, new_user2))
-    #         data = {
-    #             'room': new_chat_room.id
-    #         }
-    #         response = api_client.post(massage_list_url, data)
+        def test_chat_post_request_denied_to_non_participant_room(self, api_client):
+            new_user = UserFactory()
+            new_user2 = UserFactory()
+            new_user3 = UserFactory()
+            api_client.force_authenticate(new_user3)
+            new_chat_room = ChatRoomFactory.create(members=(new_user, new_user2))
+            data = {
+                'room': new_chat_room.id
+            }
+            response = api_client.post(massage_list_url, data)
 
-    #         # assert new_user3 in new_chat_room.members.all()
-    #         assert response.status_code == 2000
+            assert response.status_code == 403
 
+ 
+        def test_should_render_chat_massages(self, api_client, chat_massage_create):
+            new_chat_massage = chat_massage_create
+            api_client.force_authenticate(UserFactory())
+            data = {
+                'room': new_chat_massage.room.id
+            }
 
-        # def test_should_render_chat_massages(self, api_client):
-        #     new_chat_massage = ChatMassageFactory()
-        #     api_client.force_authenticate(new_chat_massage.author)
-        #     data = {
-        #         'room': new_chat_massage.room.id
-        #     }
+            response = api_client.post(massage_list_url, data)
 
-        #     response = api_client.post(massage_list_url, data)
-
-        #     assert f'{new_chat_massage}' in f'{response.content}'
+            assert response.status_code == 403
