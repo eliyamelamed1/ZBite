@@ -19,7 +19,6 @@ class ChatGroup(models.Model):
     def __str__(self):
         return self.title
 
-    
     def get_update_members_url(self):
         return reverse('chat_groups:update_members', kwargs={"pk": self.id})
     

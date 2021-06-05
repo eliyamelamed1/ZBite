@@ -9,7 +9,7 @@ from chat_groups.models import ChatGroup
 pytestmark = pytest.mark.django_db
 
 chat_massage_create_url = ChatMassage.get_create_url()
-massage_list_url = ChatMassage.get_massages_list_url()
+massages_in_room_url = ChatMassage.get_massages_in_room_url()
 
 #  TODO test cant massage group that i am not participating
 class TestChatMassageCreate:
@@ -192,7 +192,7 @@ class TestChatMassagesInRoom:
             api_client.force_authenticate(new_user)
 
             ChatGroupFactory.create(members=(new_user, new_user2))
-            response = api_client.get(massage_list_url)
+            response = api_client.get(massages_in_room_url)
 
             assert response.status_code == 405
 
@@ -206,7 +206,7 @@ class TestChatMassagesInRoom:
                 'group': new_chat_group.id
             }
 
-            response = api_client.post(massage_list_url, data)
+            response = api_client.post(massages_in_room_url, data)
 
             assert response.status_code == 200
 
@@ -217,7 +217,7 @@ class TestChatMassagesInRoom:
                 'group': new_chat_massage.group.id
             }
 
-            response = api_client.post(massage_list_url, data)
+            response = api_client.post(massages_in_room_url, data)
 
             assert response.status_code == 200
             assert f'{new_chat_massage}' in f'{response.content}'
@@ -230,7 +230,7 @@ class TestChatMassagesInRoom:
             api_client.force_authenticate(new_user3)
 
             ChatGroupFactory.create(members=(new_user, new_user2))
-            response = api_client.get(massage_list_url)
+            response = api_client.get(massages_in_room_url)
 
             assert response.status_code == 405
         
@@ -243,7 +243,7 @@ class TestChatMassagesInRoom:
             data = {
                 'group': new_chat_group.id
             }
-            response = api_client.post(massage_list_url, data)
+            response = api_client.post(massages_in_room_url, data)
 
             assert response.status_code == 403
 
@@ -255,6 +255,6 @@ class TestChatMassagesInRoom:
                 'group': new_chat_massage.group.id
             }
 
-            response = api_client.post(massage_list_url, data)
+            response = api_client.post(massages_in_room_url, data)
 
             assert response.status_code == 403

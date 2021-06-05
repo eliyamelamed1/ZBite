@@ -163,7 +163,7 @@ class TestChatGroupUpdatemembers:
                 api_client.force_authenticate(new_chat_group.author)
 
                 updated_data = {
-                    'members': [new_user.id,]
+                    'members': [new_user.id, ]
                 }
                 chat_group_update_members_url = new_chat_group.get_update_members_url()
                 response = api_client.patch(chat_group_update_members_url, updated_data)

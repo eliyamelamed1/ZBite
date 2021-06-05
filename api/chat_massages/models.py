@@ -29,5 +29,5 @@ class ChatMassage(models.Model):
         return reverse('chat_massages:create')
 
     @classmethod
-    def get_massages_list_url(cls):
-        return reverse('chat_massages:massages_list')
+    def get_massages_in_room_url(cls):
+        return reverse('chat_massages:massages_in_room')
