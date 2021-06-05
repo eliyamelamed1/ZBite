@@ -1,6 +1,6 @@
 from django.urls.base import reverse
 from chat_groups.models import ChatGroup
-from factories import ChatMassageFactory, ChatGroupFactory
+from factories import ChatGroupFactory
 import pytest
 from factories import UserFactory
 
@@ -8,7 +8,7 @@ from factories import UserFactory
 pytestmark = pytest.mark.django_db
 
 chat_group_create_url = ChatGroup.get_create_url()
-chat_groups_list = reverse('chat_groups:list')
+chat_group_list = ChatGroup.get_list_url()
 
 class TestChatGroupList:
     class TestAuthenticatedMembersUsers:
@@ -16,7 +16,7 @@ class TestChatGroupList:
             new_user = UserFactory()
             api_client.force_authenticate(new_user)
 
-            response = api_client.get(chat_groups_list)
+            response = api_client.get(chat_group_list)
 
             assert response.status_code == 200
             
@@ -27,7 +27,7 @@ class TestChatGroupList:
 
             api_client.force_authenticate(first_participating_user)
 
-            response = api_client.get(chat_groups_list)
+            response = api_client.get(chat_group_list)
 
             assert f'{new_chat_group}' in f'{response.content}'
 
@@ -36,7 +36,7 @@ class TestChatGroupList:
             new_user = UserFactory()
             api_client.force_authenticate(new_user)
 
-            response = api_client.get(chat_groups_list)
+            response = api_client.get(chat_group_list)
 
             assert response.status_code == 200
 
@@ -48,14 +48,14 @@ class TestChatGroupList:
             not_participating_user = UserFactory()
             api_client.force_authenticate(not_participating_user)
 
-            response = api_client.get(chat_groups_list)
+            response = api_client.get(chat_group_list)
 
             assert f'{new_chat_group}' not in f'{response.content}'
 
 
     class TestGuestUsers:
         def test_chat_group_list_page_should_not_render(self, api_client):
-            response = api_client.get(chat_groups_list)
+            response = api_client.get(chat_group_list)
 
             assert response.status_code == 401
 

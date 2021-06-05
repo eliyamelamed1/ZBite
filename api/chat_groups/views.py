@@ -5,19 +5,13 @@ from chat_groups.models import ChatGroup
 from permissions import (IsAuthorOrReadOnly, IsMembersOrAccessDenied)
 from rest_framework.generics import (CreateAPIView, UpdateAPIView)
 from rest_framework.response import Response
-from django.core.exceptions import PermissionDenied, ValidationError
-from django.http import JsonResponse
-
-
-
-
+from django.core.exceptions import PermissionDenied
 
 class ChatGroupList(APIView):
     permission_classes = (IsMembersOrAccessDenied, permissions.IsAuthenticated,)
-    queryset = ChatGroup.objects.all()
 
     def get(self, request, format=None):
-        '''display chats the the user participate'''
+        '''display chat groups the the user participate'''
 
         user = request.user
         queryset = ChatGroup.objects.all().filter(members=user) 

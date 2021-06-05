@@ -28,3 +28,6 @@ class ChatGroup(models.Model):
     @classmethod
     def get_create_url(cls):
         return reverse('chat_groups:create')
+    @classmethod
+    def get_list_url(cls):
+        return reverse('chat_groups:list')

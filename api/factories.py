@@ -9,7 +9,7 @@ from comments.models import Comment
 from likes.models import Like
 from ratings.models import Rating
 from recipes.models import Recipe
-
+from chat_duos.models import ChatDuo
 
 class UserFactory(factory.django.DjangoModelFactory):
     name = factory.fuzzy.FuzzyText()
@@ -51,6 +51,19 @@ class RatingFactory(factory.django.DjangoModelFactory):
         model = Rating
 
 
+class ChatDuoFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = ChatDuo
+
+    @factory.post_generation
+    def members(self, create, extracted, **kwargs):
+        if not create:
+            return 
+            
+        if extracted:
+            for participant in extracted:
+                self.members.add(participant)
+        
 class ChatGroupFactory(factory.django.DjangoModelFactory):
     # TODO - need to add the author to the members
     author = factory.SubFactory(UserFactory)
@@ -61,7 +74,6 @@ class ChatGroupFactory(factory.django.DjangoModelFactory):
     @factory.post_generation
     def members(self, create, extracted, **kwargs):
         if not create:
-            # self.members.add(self.author)
             return 
             
         if extracted:

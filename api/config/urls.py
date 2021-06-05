@@ -16,6 +16,7 @@ urlpatterns = [
     path('api/ratings/', include('ratings.urls', namespace='ratings')),
     path('api/chat_groups/', include('chat_groups.urls', namespace='chat_groups')),
     path('api/chat_massages/', include('chat_massages.urls', namespace='chat_massages')),
+    path('api/chat_duos/', include('chat_duos.urls', namespace='chat_duos')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += [re_path(r'^.*', TemplateView.as_view(template_name='index.html'))]

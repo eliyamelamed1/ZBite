@@ -13,12 +13,12 @@ class TestChatGroupList:
         assert resolve('/api/chat_groups/list/').view_name == 'chat_groups:list'
 
 
-class TesChatGroupCreate:
+class TestChatGroupCreate:
     def test_reverse(self):
         assert reverse('chat_groups:create') == '/api/chat_groups/create/'
 
     def test_resolve(self):
-        assert resolve('/api/chat_groups/create/').view_name == 'chat_groups:detail'
+        assert resolve('/api/chat_groups/create/').view_name == 'chat_groups:create'
 
 
 class TestChatGroupUpdateMembers:

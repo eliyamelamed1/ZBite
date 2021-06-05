@@ -6,7 +6,6 @@ from permissions import (IsAuthorOrAccessDenied, )
 from rest_framework.generics import (RetrieveUpdateDestroyAPIView, CreateAPIView,)
 from chat_massages.models import ChatMassage
 from .serializers import ChatMassageCreateSerializer, ChatMassageDetailsSerializer, ChatMassagesRoomSerializer
-from django.db.models.query_utils import Q
 from chat_groups.models import ChatGroup
 from accounts.models import UserAccount
 from django.core.exceptions import PermissionDenied
