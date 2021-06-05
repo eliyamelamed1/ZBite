@@ -9,3 +9,4 @@ urlpatterns = [
     path('<uuid:pk>/', ChatMassageDetails.as_view(), name='details'),
     path('massages_in_room/', ChatMassagesInRoom.as_view(), name='massages_in_room'),
 ]
+

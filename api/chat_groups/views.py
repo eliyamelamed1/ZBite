@@ -5,6 +5,10 @@ from chat_groups.models import ChatGroup
 from permissions import (IsAuthorOrReadOnly, IsMembersOrAccessDenied)
 from rest_framework.generics import (CreateAPIView, UpdateAPIView)
 from rest_framework.response import Response
+from django.core.exceptions import PermissionDenied, ValidationError
+from django.http import JsonResponse
+
+
 
 
 
@@ -34,6 +38,8 @@ class ChatGroupCreate(CreateAPIView):
         '''
         obj = serializer.save(author=self.request.user)
         obj.members.add(self.request.user)
+        if obj.members.all().count() < 3:
+            raise PermissionDenied()
 
 class ChatGroupUpdateMembers(UpdateAPIView):
     permission_classes = (IsAuthorOrReadOnly, permissions.IsAuthenticated,)
