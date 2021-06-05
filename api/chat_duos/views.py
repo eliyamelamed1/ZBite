@@ -39,5 +39,5 @@ class ChatDuoCreate(CreateAPIView):
         chat_duos = ChatDuo.objects.all()
         user = obj.members.all()[0]
         user2 = obj.members.all()[1]
-        if chat_duos.filter(Q(members=user) and Q(members=user2)).count() > 1:
+        if chat_duos.filter(members=user).filter(members=user2).count() > 1:
             raise PermissionDenied()

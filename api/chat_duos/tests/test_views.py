@@ -126,6 +126,24 @@ class TestChatDuoCreate:
 
             assert response.status_code == 403
 
+        def test_creating_chat_duos_with_the_different_members_are_allowed(self, api_client):
+            user = UserFactory()
+            user2 = UserFactory()
+            user3 = UserFactory()
+            api_client.force_authenticate(user)
+
+            chat_duo = {
+                'members': [user.id, user2.id]
+            }
+            api_client.post(chat_duo_create_url, chat_duo)
+
+            chat_duo = {
+                'members': [user.id, user3.id]
+            }
+            response = api_client.post(chat_duo_create_url, chat_duo)
+
+            assert response.status_code == 201
+
     class TestGuest:
         def test_page_should_not_render(self, api_client):
             response = api_client.get(chat_duo_create_url)
