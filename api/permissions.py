@@ -28,7 +28,11 @@ class IsAuthorOrReadOnly(permissions.BasePermission):
         
         # Write permissions are only allowed to the author of a post
         return obj.author == request.user
+class IsAuthorOrAccessDenied(permissions.BasePermission):
 
+    def has_object_permission(self, request, view, obj):
+        # Write permissions are only allowed to the author of a post
+        return obj.author == request.user
 class RecipeAuthorCanDeleteComments(permissions.BasePermission):
 
     def has_object_permission(self, request, view,  Comment):
@@ -36,4 +40,9 @@ class RecipeAuthorCanDeleteComments(permissions.BasePermission):
             return True
         
         return Comment.recipe.author == request.user
+class IsMembersOrAccessDenied(permissions.BasePermission):
+
+    def has_object_permission(self, request, view, obj):
+
+        return request.user in obj.members.all()
 

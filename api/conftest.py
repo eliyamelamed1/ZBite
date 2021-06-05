@@ -1,11 +1,11 @@
+from django.urls.base import reverse
 import pytest
 from django.http import HttpResponse
 from rest_framework.test import APIClient
 
 from accounts.models import UserAccount
-from factories import CommentFactory, RecipeFactory, UserFactory
+from factories import CommentFactory, RecipeFactory, UserFactory, ChatGroupFactory, ChatMassageFactory
 from recipes.models import Recipe
-
 
 # ---------------------------------------- Set Up
 @pytest.fixture
@@ -86,3 +86,17 @@ def search_comment_response(api_client):
 
     return response
 
+@pytest.fixture
+def chat_massage_create():
+    user = UserFactory()
+    user2 = UserFactory()
+    chat_group = ChatGroupFactory.create(members=(user, user2))
+    chat_massage = ChatMassageFactory()
+    chat_group.members.add(chat_group.author)
+    chat_group.members.add(chat_massage.author)
+    chat_massage.group = chat_group
+    chat_group.save()
+    chat_massage.save()
+    chat_massage.group = chat_group
+
+    return chat_massage

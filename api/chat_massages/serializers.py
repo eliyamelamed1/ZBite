@@ -3,13 +3,18 @@ from rest_framework import serializers
 from .models import ChatMassage
 
 
-class ChatMassageSerializer(serializers.ModelSerializer):
+class ChatMassageCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChatMassage
-        fields = ('text', 'room')
+        fields = ('text', 'group',)
 
 
 class ChatMassageDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChatMassage
-        fields = ('text')
+        fields = '__all__'
+
+class ChatMassagesRoomSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ChatMassage
+        fields = ('group', )
