@@ -19,8 +19,8 @@ import {
 const TEST_CASE_AUTH = 'TEST_CASE_AUTH';
 
 const initialState = {
-    key: localStorage.getItem('key'),
-    isAuthenticated: !!localStorage.getItem('key'),
+    auth_token: localStorage.getItem('auth_token'),
+    isAuthenticated: !!localStorage.getItem('auth_token'),
     loggedUser: null,
     userList: null,
     userDetails: null,
@@ -33,7 +33,7 @@ export default function authReducer(state = initialState, action) {
         case TEST_CASE_AUTH:
             return {
                 ...state,
-                key: payload.key,
+                auth_token: payload.auth_token,
                 isAuthenticated: payload.isAuthenticated,
                 loggedUser: payload.loggedUser,
                 userList: payload.userList,
@@ -55,11 +55,11 @@ export default function authReducer(state = initialState, action) {
                 loggedUser: payload,
             };
         case LOGIN_SUCCESS:
-            localStorage.setItem('key', payload.key);
+            localStorage.setItem('auth_token', payload.auth_token);
             return {
                 ...state,
                 isAuthenticated: true,
-                key: payload.key,
+                auth_token: payload.auth_token,
             };
         case USER_LOADED_SUCCESS:
             return {
@@ -80,10 +80,10 @@ export default function authReducer(state = initialState, action) {
         case SIGNUP_FAIL:
         case LOGIN_FAIL:
         case LOGOUT:
-            localStorage.removeItem('key');
+            localStorage.removeItem('auth_token');
             return {
                 ...state,
-                key: null,
+                auth_token: null,
                 isAuthenticated: false,
                 loggedUser: null,
             };

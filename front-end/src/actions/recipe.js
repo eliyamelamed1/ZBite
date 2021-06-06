@@ -20,7 +20,7 @@ export const recipeDeleteAction = (id) => async (dispatch) => {
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Token ${localStorage.getItem('key')}`,
+                Authorization: `Token ${localStorage.getItem('auth_token')}`,
             },
         };
 
@@ -38,7 +38,7 @@ export const recipeCreateAction = (title, description, flavor_type) => async (di
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Token ${localStorage.getItem('key')}`,
+                Authorization: `Token ${localStorage.getItem('auth_token')}`,
             },
         };
 
@@ -59,7 +59,7 @@ export const recipeUpdateAction = (id, title, description, flavor_type) => async
     const config = {
         headers: {
             'Content-Type': 'application/json',
-            Authorization: `Token ${localStorage.getItem('key')}`,
+            Authorization: `Token ${localStorage.getItem('auth_token')}`,
         },
     };
 

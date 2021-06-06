@@ -29,9 +29,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
-    'dj_rest_auth',
     'django_extensions',
-
+    'drf_yasg',
 
     #local
     'accounts',
@@ -139,7 +138,7 @@ REST_FRAMEWORK = {
 
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication', # Defualt settings- add the browsable api
+        # 'rest_framework.authentication.SessionAuthentication', # Defualt settings- add the browsable api
     ),
 }
 
@@ -165,6 +164,8 @@ DJOSER = {
         'user_delete': 'accounts.serializers.UserDeleteSerializer',
     },
 }
+
+
 
 AUTH_USER_MODEL = 'accounts.UserAccount'
 

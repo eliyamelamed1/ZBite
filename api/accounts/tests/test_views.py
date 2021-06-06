@@ -15,7 +15,7 @@ def test_signup_success(signup):
 
 def test_login_fail_without_signup(api_client):
     user_data = UserFactory.build()
-    login_url = '/api/users/login/'
+    login_url = '/api/djoser/token/login/'
     user_data = {
         'email': user_data.email,
         'password': user_data.password,

@@ -41,7 +41,7 @@ def signup(api_client):
 
 @pytest.fixture
 def signup_and_login(api_client, signup):
-    login_url = "/api/users/login/"
+    login_url = '/api/djoser/token/login/'
     credentials = {
         "email": signup.credentials['email'],
         "password": signup.credentials['password']
@@ -53,7 +53,7 @@ def signup_and_login(api_client, signup):
 
 @pytest.fixture
 def logout(api_client):
-    logout_url = "/api/users/logout/"
+    logout_url = '/api/djoser/token/login/'
     logout = api_client.post(logout_url)
 
 
