@@ -222,7 +222,7 @@ class TestChatMassagesInRoom:
             assert response.status_code == 200
             assert f'{new_chat_massage}' in f'{response.content}'
             
-    class TestAuthenticatedUsers:
+    class TestAuthenticatedNonMembers:
         def test_chat_group_massage_page_should_render(self, api_client):
             new_user = UserFactory()
             new_user2 = UserFactory()
@@ -248,11 +248,11 @@ class TestChatMassagesInRoom:
             assert response.status_code == 403
 
  
-        def test_should_render_chat_massages(self, api_client, chat_massage_create):
+        def test_should_not_render_chat_massages(self, api_client, chat_massage_create):
             new_chat_massage = chat_massage_create
             api_client.force_authenticate(UserFactory())
             data = {
-                'group': new_chat_massage.group.id
+                'group': new_chat_massage.group
             }
 
             response = api_client.post(massages_in_room_url, data)

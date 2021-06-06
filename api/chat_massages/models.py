@@ -3,8 +3,10 @@ import uuid
 
 from django.urls.base import reverse
 
-from chat_groups.models import ChatGroup
 from accounts.models import UserAccount
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+
 
 class ChatMassage(models.Model):
     id = models.UUIDField(
@@ -14,8 +16,15 @@ class ChatMassage(models.Model):
     )
     author = models.ForeignKey(UserAccount(), on_delete=models.CASCADE)
     text = models.TextField(default=None)
-    group = models.ForeignKey(ChatGroup(), on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+    content_type = models.ForeignKey(ContentType,related_name='content_obj', on_delete=models.CASCADE)
+    object_id = models.UUIDField(
+        blank=True,
+        null=True,
+        default=None,
+    )
+    group = GenericForeignKey('content_type', 'object_id')
+    
 
     def __str__(self):
         return self.text
@@ -31,3 +40,4 @@ class ChatMassage(models.Model):
     @classmethod
     def get_massages_in_room_url(cls):
         return reverse('chat_massages:massages_in_room')
+

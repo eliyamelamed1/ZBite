@@ -12,7 +12,7 @@ class ChatDuoList(APIView):
     permission_classes = (permissions.IsAuthenticated, )
 
     def get(self, request, format=None):
-        '''display the chat duos of the user'''
+        '''display the chat duo rooms of the user'''
         user = request.user
         queryset = ChatDuo.objects.all().filter(members=user)
 

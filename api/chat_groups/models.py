@@ -2,6 +2,8 @@ from django.db import models
 import uuid
 
 from django.urls.base import reverse
+from chat_massages.models import ChatMassage
+from django.contrib.contenttypes.fields import GenericRelation
 
 from accounts.models import UserAccount
 
@@ -15,6 +17,7 @@ class ChatGroup(models.Model):
     author = models.ForeignKey(UserAccount(), on_delete=models.CASCADE)
     members = models.ManyToManyField(UserAccount(), default=None, blank=True, related_name='group_members')
     title = models.TextField(blank=True)
+    massages = GenericRelation(ChatMassage)
 
     def __str__(self):
         return self.title

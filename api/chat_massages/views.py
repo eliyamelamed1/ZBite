@@ -1,4 +1,3 @@
-from django.http.response import Http404
 from rest_framework import permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -25,13 +24,13 @@ class ChatMassagesInRoom(APIView):
         user = request.user
         data = request.data
 
-        group = data['group']
+        group = data['group'] # or Chatduo
 
         try:
             group = ChatGroup.objects.get(id=group)
             user = UserAccount.objects.get(email=user)
             if user in group.members.all():
-                queryset = ChatMassage.objects.filter(group=group)
+                queryset = group.massages.all()
                 serializer = ChatMassageDetailsSerializer(queryset, many=True)
 
                 return Response(serializer.data)
@@ -39,6 +38,7 @@ class ChatMassagesInRoom(APIView):
                 raise PermissionDenied()
         except:
             raise PermissionDenied()
+        
 
 class ChatMassageCreate(APIView):
     permission_classes = (permissions.IsAuthenticated,)
