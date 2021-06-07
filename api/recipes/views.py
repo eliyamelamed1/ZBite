@@ -9,7 +9,7 @@ from permissions import IsAuthorOrReadOnly
 from .models import Recipe
 from .serializers import (RecipeCreateSerializer, RecipeSearchSerializer,
                           RecipeSerializer)
-
+# 
 
 class RecipeList(ListAPIView):
     queryset = Recipe.objects.order_by('-updated_at')
