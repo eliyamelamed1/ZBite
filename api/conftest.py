@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from rest_framework.test import APIClient
 
 from accounts.models import UserAccount
-from factories import CommentFactory, RecipeFactory, UserFactory, ChatGroupFactory, ChatMassageFactory
+from factories import CommentFactory, RecipeFactory, UserFactory, ChatGroupFactory, ChatMassageFactory, ChatDuoFactory
 from recipes.models import Recipe
 
 # ---------------------------------------- Set Up
@@ -100,3 +100,18 @@ def chat_massage_create():
     chat_massage.group = chat_group
 
     return chat_massage
+
+
+@pytest.fixture
+def chat_massage_create_duo():
+    user = UserFactory()
+    user2 = UserFactory()
+    chat_duo = ChatDuoFactory.create(members=(user, user2))
+    chat_massage = ChatMassageFactory()
+    chat_massage.group = chat_duo
+    chat_massage.save()
+    chat_massage.group = chat_duo
+
+    return chat_massage
+
+

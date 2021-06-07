@@ -8,7 +8,7 @@ from .serializers import ChatMassageCreateSerializer, ChatMassageDetailsSerializ
 from chat_groups.models import ChatGroup
 from accounts.models import UserAccount
 from django.core.exceptions import PermissionDenied
-
+from chat_duos.models import ChatDuo
 class ChatMassageDetails(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthorOrAccessDenied,)
     queryset = ChatMassage.objects.all()
@@ -20,17 +20,18 @@ class ChatMassagesInRoom(APIView):
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = ChatMassagesRoomSerializer
 
+
     def post(self, request, format=None):
         user = request.user
         data = request.data
 
         group = data['group'] # or Chatduo
 
+        room = get_room(group)
         try:
-            group = ChatGroup.objects.get(id=group)
             user = UserAccount.objects.get(email=user)
-            if user in group.members.all():
-                queryset = group.massages.all()
+            if is_user_a_room_member(user, room):
+                queryset = room.massages.all()
                 serializer = ChatMassageDetailsSerializer(queryset, many=True)
 
                 return Response(serializer.data)
@@ -39,6 +40,24 @@ class ChatMassagesInRoom(APIView):
         except:
             raise PermissionDenied()
         
+
+def is_user_a_room_member(user, room):
+    if user in room.members.all():
+        return True
+    else:
+        return False
+
+def get_room(room):
+    try:
+        room = ChatGroup.objects.get(id=room)
+        return room
+    except:
+        try:
+            room = ChatDuo.objects.get(id=room)
+            return room
+        except:
+            PermissionDenied()
+    
 
 class ChatMassageCreate(APIView):
     permission_classes = (permissions.IsAuthenticated,)

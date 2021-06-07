@@ -1,4 +1,4 @@
-from factories import ChatMassageFactory, ChatGroupFactory
+from factories import ChatMassageFactory, ChatGroupFactory, ChatDuoFactory
 from django.http import response
 import pytest
 from factories import UserFactory
@@ -190,13 +190,13 @@ class TestChatMassagesInRoom:
             new_user = UserFactory()
             new_user2 = UserFactory()
             api_client.force_authenticate(new_user)
-
             ChatGroupFactory.create(members=(new_user, new_user2))
+
             response = api_client.get(massages_in_room_url)
 
             assert response.status_code == 405
 
-        def test_chat_post_request_allowed(self, api_client):
+        def test_chat_post_request_allowed_input_group(self, api_client):
             new_user = UserFactory()
             new_user2 = UserFactory()
 
@@ -205,7 +205,19 @@ class TestChatMassagesInRoom:
             data = {
                 'group': new_chat_group.id
             }
+            response = api_client.post(massages_in_room_url, data)
 
+            assert response.status_code == 200
+
+        def test_chat_post_request_allowed_input_duo(self, api_client):
+            new_user = UserFactory()
+            new_user2 = UserFactory()
+
+            api_client.force_authenticate(new_user)
+            new_chat_duo = ChatDuoFactory.create(members=(new_user, new_user2))
+            data = {
+                'group': new_chat_duo.id
+            }
             response = api_client.post(massages_in_room_url, data)
 
             assert response.status_code == 200
