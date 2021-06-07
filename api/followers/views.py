@@ -17,19 +17,23 @@ class FollowSomeone(APIView):
         author = request.user
         input_data = request.data
         user_followed = input_data['user_followed']
-        user_followed = UserAccount.objects.all().get(id__exact=user_followed)
+
+        try:
+            user_followed = UserAccount.objects.all().get(id__exact=user_followed)
+        except:
+            return Response('invalid user_followed data')
 
         if author.id == user_followed.id:
-            return Response()
+            return Response('you cant follow yourself')
 
         try:
             already_following = author.following.all().get(id__exact=user_followed.id)
             if already_following:
                 author.following.remove(user_followed)
                 user_followed.followers.remove(author)
+                return Response('unfollowed')
         except:
             author.following.add(user_followed)
             user_followed.followers.add(author)
-        
-        return Response()
+            return Response('followed')
 

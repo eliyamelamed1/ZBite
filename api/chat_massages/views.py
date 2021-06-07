@@ -9,6 +9,7 @@ from chat_groups.models import ChatGroup
 from accounts.models import UserAccount
 from django.core.exceptions import PermissionDenied
 from chat_duos.models import ChatDuo
+from django.http import HttpResponseForbidden
 class ChatMassageDetails(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthorOrAccessDenied,)
     queryset = ChatMassage.objects.all()
@@ -36,12 +37,45 @@ class ChatMassagesInRoom(APIView):
 
                 return Response(serializer.data)
             else:
-                print('user isnt a room member')
-                raise PermissionDenied()
+                raise PermissionDenied('user isnt a room member')
         except:
-            print('user isnt exist ')
-            raise PermissionDenied()
+            raise PermissionDenied('invalid user')
         
+
+class ChatMassageCreate(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = ChatMassageCreateSerializer
+
+    def post(self, request, format=None):
+        user = request.user
+        data = request.data
+
+        group = data['group']
+        text = data['text']
+
+        room = get_room(group)
+        try:
+            user = UserAccount.objects.get(email=user)
+            if is_user_a_room_member(user, room):
+                ChatMassage.objects.create(
+                    author = user,
+                    group = room,
+                    text = text
+                )
+
+                return Response('massage created successfully')
+
+            else:
+                raise PermissionDenied('user is not a room member')    
+        except:
+            raise PermissionDenied('invalid user') 
+        
+
+
+    def perform_create(self, serializer):
+        '''save the current logged in user as the author of the Chat Massage'''
+        serializer.save(author=self.request.user)
+
 
 def is_user_a_room_member(user, room):
     if user in room.members.all():
@@ -58,39 +92,5 @@ def get_room(room):
             room = ChatGroup.objects.get(id=room)
             return room
         except:
-            print('room isnt exist')
-            PermissionDenied()
+            PermissionDenied('room isnt exists')
     
-
-class ChatMassageCreate(APIView):
-    permission_classes = (permissions.IsAuthenticated,)
-    serializer_class = ChatMassageCreateSerializer
-
-    def post(self, request, format=None):
-        user = request.user
-        data = request.data
-
-        group = data['group']
-        text = data['text']
-
-        '''check if the user is a member of the group he wants to send massage to'''
-        try:
-            group = ChatGroup.objects.get(id=group)
-            user = UserAccount.objects.get(email=user)
-            if user in group.members.all():
-                ChatMassage.objects.create(
-                    author = user,
-                    group = group,
-                    text = text
-                )
-            else:
-                raise PermissionDenied()    
-        except:
-            raise PermissionDenied() 
-        
-        return Response()
-
-
-    def perform_create(self, serializer):
-        '''save the current logged in user as the author of the Chat Massage'''
-        serializer.save(author=self.request.user)
