@@ -51,12 +51,12 @@ class Recipe(models.Model):
         return reverse('recipes:list')
 
     @classmethod
-    def get_followed_users_recipes_url(cls):
-        return reverse('recipes:followed')
+    def get_recipes_of_accounts_followed_url(cls):
+        return reverse('recipes:recipes_of_accounts_followed')
         
     @classmethod
     def get_top_rated_recipes_url(cls):
-        return reverse('recipes:top')
+        return reverse('recipes:top_rated')
 
     @classmethod
     def get_users_followed(cls, request):

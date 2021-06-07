@@ -1,10 +1,10 @@
 from django.urls import path
 
-from .views import RatingCreate, RatingDelete, RatingSearch
+from .views import RatingCreate, RatingDelete, RatingsInRecipe
 
 app_name='ratings'
 urlpatterns = [
     path('create/', RatingCreate.as_view(), name='create'),
     path('delete/<uuid:pk>/', RatingDelete.as_view(), name='delete'),
-    path('search/', RatingSearch.as_view(), name='search'),
+    path('ratings_in_recipe/', RatingsInRecipe.as_view(), name='ratings_in_recipe'),
 ]

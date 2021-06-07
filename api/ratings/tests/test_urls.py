@@ -26,9 +26,9 @@ class TestDeletelUrl:
 
 class TestSearchUrl:
     def test_search_url_reverse(self):
-        url = reverse('ratings:search')
-        assert url == f'/api/ratings/search/'
+        url = reverse('ratings:ratings_in_recipe')
+        assert url == f'/api/ratings/ratings_in_recipe/'
 
     def test_search_url_resolve(self):
-        url = f'/api/ratings/search/'
-        assert resolve(url).view_name == 'ratings:search'
+        url = f'/api/ratings/ratings_in_recipe/'
+        assert resolve(url).view_name == 'ratings:ratings_in_recipe'

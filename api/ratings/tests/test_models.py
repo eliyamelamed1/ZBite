@@ -22,8 +22,8 @@ def test_get_delete_url():
 def test_get_create_url():
     assert Rating.get_create_url() == reverse('ratings:create')
 
-def test_get_search_url():
-    assert Rating.get_search_url() == reverse('ratings:search')
+def test_get_ratings_in_recipe_url():
+    assert Rating.get_ratings_in_recipe_url() == reverse('ratings:ratings_in_recipe')
 
 
 

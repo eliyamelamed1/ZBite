@@ -1,7 +1,6 @@
 import pytest
 from django.urls import resolve, reverse
 
-from comments.models import Comment
 from factories import CommentFactory
 
 pytestmark = pytest.mark.django_db
@@ -40,9 +39,9 @@ class TestDeletelUrl:
 
 class TestSearchUrl:
     def test_search_url_reverse(self):
-        url = reverse('comments:search')
-        assert url == f'/api/comments/search/'
+        url = reverse('comments:comments_in_recipe')
+        assert url == f'/api/comments/comments_in_recipe/'
 
     def test_search_url_resolve(self):
-        url = f'/api/comments/search/'
-        assert resolve(url).view_name == 'comments:search'
+        url = f'/api/comments/comments_in_recipe/'
+        assert resolve(url).view_name == 'comments:comments_in_recipe'

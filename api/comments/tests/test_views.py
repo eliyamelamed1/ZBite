@@ -73,13 +73,13 @@ class TestCommentCreateView:
             assert response.status_code == 401
 
 
-class TestCommentSearchView:
+class TestCommentsInRecipeView:
     class TestAuthenticatedUsers:
         def test_comment_search_page_render(self, api_client):
             new_user = UserAccount()
             api_client.force_authenticate(new_user)
-            search_comment_url = '/api/comments/search/'
-            response = api_client.get(search_comment_url)
+            comments_in_recipe_url = '/api/comments/comments_in_recipe/'
+            response = api_client.get(comments_in_recipe_url)
 
             assert response.status_code == 405 # 405 = method not allowed - get isnt allowed only post
 
@@ -91,8 +91,8 @@ class TestCommentSearchView:
 
     class TestGuestUsers:
         def test_comment_search_page_render(self, api_client):
-            search_comment_url = '/api/comments/search/'
-            response = api_client.get(search_comment_url)
+            comments_in_recipe_url = '/api/comments/comments_in_recipe/'
+            response = api_client.get(comments_in_recipe_url)
 
             assert response.status_code == 405 # 405 = method not allowed - get isnt allowed only post
 

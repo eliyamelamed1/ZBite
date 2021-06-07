@@ -15,5 +15,5 @@ class Follower(models.Model):
     )
 
     @classmethod
-    def get_create_url(cls):
-        return reverse('followers:create')
+    def get_follow_url(cls):
+        return reverse('followers:follow')

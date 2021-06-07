@@ -44,17 +44,17 @@ class TestSearchUrl:
         assert resolve(url).view_name == 'recipes:search'
 class TestFollowedUsersRecipesUrl:
     def test_followed_account_recipes_reverse(self):
-        url = reverse('recipes:followed')
-        assert url == f'/api/recipes/followed/'
+        url = reverse('recipes:recipes_of_accounts_followed')
+        assert url == f'/api/recipes/recipes_of_accounts_followed/'
 
     def test_followed_account_recipes_resolve(self):
-        url = f'/api/recipes/followed/'
-        assert resolve(url).view_name == 'recipes:followed'
+        url = f'/api/recipes/recipes_of_accounts_followed/'
+        assert resolve(url).view_name == 'recipes:recipes_of_accounts_followed'
 class TestTopRatedRecipesUrl:
     def test_top_rated_recipes_url_reverse(self):
-        url = reverse('recipes:top')
-        assert url == f'/api/recipes/top/'
+        url = reverse('recipes:top_rated')
+        assert url == f'/api/recipes/top_rated/'
 
     def test_top_rated_recipes_url_resolve(self):
-        url = f'/api/recipes/top/'
-        assert resolve(url).view_name == 'recipes:top'
+        url = f'/api/recipes/top_rated/'
+        assert resolve(url).view_name == 'recipes:top_rated'

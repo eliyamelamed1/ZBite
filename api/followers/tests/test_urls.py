@@ -9,7 +9,7 @@ pytestmark = pytest.mark.django_db
 
 class TestFollowSomeone:
     def test_follow_reverse(self):
-        assert reverse('followers:create') == '/api/followers/create/'
+        assert reverse('followers:follow') == '/api/followers/follow/'
 
     def test_follow_resolve(self):
-        assert resolve('/api/followers/create/').view_name == 'followers:create'
+        assert resolve('/api/followers/follow/').view_name == 'followers:follow'
