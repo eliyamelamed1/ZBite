@@ -99,21 +99,6 @@ def chat_massage_create():
     chat_massage.room = chat_room
     chat_room.save()
     chat_massage.save()
-    chat_massage.room = chat_room
 
     return chat_massage
-
-
-@pytest.fixture
-def chat_massage_create_duo():
-    user = UserFactory()
-    user2 = UserFactory()
-    chat_duo = ChatDuoFactory.create(members=(user, user2))
-    chat_massage = ChatMassageFactory()
-    chat_massage.room = chat_duo
-    chat_massage.save()
-    chat_massage.room = chat_duo
-
-    return chat_massage
-
 
