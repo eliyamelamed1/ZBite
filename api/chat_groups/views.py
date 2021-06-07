@@ -33,7 +33,7 @@ class ChatGroupCreate(CreateAPIView):
         obj = serializer.save(author=self.request.user)
         obj.members.add(self.request.user)
         if obj.members.all().count() < 3:
-            raise PermissionDenied()
+            raise PermissionDenied('group need to have atleast 3 members')
 
 class ChatGroupUpdateMembers(UpdateAPIView):
     permission_classes = (IsAuthorOrReadOnly, permissions.IsAuthenticated,)

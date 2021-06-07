@@ -23,7 +23,7 @@ class ChatMassage(models.Model):
         null=True,
         default=None,
     )
-    group = GenericForeignKey('content_type', 'object_id')
+    room = GenericForeignKey('content_type', 'object_id')
     
 
     def __str__(self):

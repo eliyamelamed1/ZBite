@@ -84,7 +84,7 @@ class ChatGroupFactory(factory.django.DjangoModelFactory):
 class ChatMassageFactory(factory.django.DjangoModelFactory):
     author = factory.SubFactory(UserFactory)
     text = factory.fuzzy.FuzzyText() 
-    group = factory.SubFactory(ChatGroupFactory)
+    room = factory.SubFactory(ChatGroupFactory)
     class Meta:
         model = ChatMassage
     

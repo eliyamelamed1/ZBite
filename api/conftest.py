@@ -90,14 +90,14 @@ def search_comment_response(api_client):
 def chat_massage_create():
     user = UserFactory()
     user2 = UserFactory()
-    chat_group = ChatGroupFactory.create(members=(user, user2))
+    chat_room = ChatGroupFactory.create(members=(user, user2))
     chat_massage = ChatMassageFactory()
-    chat_group.members.add(chat_group.author)
-    chat_group.members.add(chat_massage.author)
-    chat_massage.group = chat_group
-    chat_group.save()
+    chat_room.members.add(chat_room.author)
+    chat_room.members.add(chat_massage.author)
+    chat_massage.room = chat_room
+    chat_room.save()
     chat_massage.save()
-    chat_massage.group = chat_group
+    chat_massage.room = chat_room
 
     return chat_massage
 
@@ -108,9 +108,9 @@ def chat_massage_create_duo():
     user2 = UserFactory()
     chat_duo = ChatDuoFactory.create(members=(user, user2))
     chat_massage = ChatMassageFactory()
-    chat_massage.group = chat_duo
+    chat_massage.room = chat_duo
     chat_massage.save()
-    chat_massage.group = chat_duo
+    chat_massage.room = chat_duo
 
     return chat_massage
 

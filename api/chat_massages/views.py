@@ -26,9 +26,9 @@ class ChatMassagesInRoom(APIView):
         user = request.user
         data = request.data
 
-        group = data['group'] # or Chatduo
+        room = data['room'] # or Chatduo
 
-        room = get_room(group)
+        room = get_room(room)
         try:
             user = UserAccount.objects.get(email=user)
             if is_user_a_room_member(user, room):
@@ -50,16 +50,16 @@ class ChatMassageCreate(APIView):
         user = request.user
         data = request.data
 
-        group = data['group']
+        room = data['room']
         text = data['text']
 
-        room = get_room(group)
+        room = get_room(room)
         try:
             user = UserAccount.objects.get(email=user)
             if is_user_a_room_member(user, room):
                 ChatMassage.objects.create(
                     author = user,
-                    group = room,
+                    room = room,
                     text = text
                 )
 
