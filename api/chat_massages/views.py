@@ -36,8 +36,10 @@ class ChatMassagesInRoom(APIView):
 
                 return Response(serializer.data)
             else:
+                print('user isnt a room member')
                 raise PermissionDenied()
         except:
+            print('user isnt exist ')
             raise PermissionDenied()
         
 
@@ -49,13 +51,14 @@ def is_user_a_room_member(user, room):
 
 def get_room(room):
     try:
-        room = ChatGroup.objects.get(id=room)
+        room = ChatDuo.objects.get(id=room)
         return room
     except:
         try:
-            room = ChatDuo.objects.get(id=room)
+            room = ChatGroup.objects.get(id=room)
             return room
         except:
+            print('room isnt exist')
             PermissionDenied()
     
 
