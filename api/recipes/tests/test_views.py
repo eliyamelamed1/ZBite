@@ -12,7 +12,7 @@ recipe_list_url = Recipe.get_list_url()
 create_recipe_url = Recipe.get_create_url()
 search_recipe_url = Recipe.get_search_url()
 
-followed_users_recipes_url = Recipe.get_followed_users_recipes_url()
+recipes_of_accounts_followed_url = Recipe.get_recipes_of_accounts_followed_url()
 top_rated_recipes_url = Recipe.get_top_rated_recipes_url()
 
 class TestRecipeListView:
@@ -199,7 +199,7 @@ class TestRecipesOfAccountsFollowedView:
             new_user = UserFactory()
             api_client.force_authenticate(new_user)
 
-            response = api_client.get(followed_users_recipes_url) 
+            response = api_client.get(recipes_of_accounts_followed_url) 
 
             assert response.status_code == 200
         
@@ -212,7 +212,7 @@ class TestRecipesOfAccountsFollowedView:
 
             first_user.following.add(second_recipe.author)
 
-            response = api_client.get(followed_users_recipes_url)
+            response = api_client.get(recipes_of_accounts_followed_url)
 
             assert f'{second_recipe}' in f'{response.content}'
             assert f'{third_recipe}' not in f'{response.content}'
@@ -235,14 +235,14 @@ class TestRecipesOfAccountsFollowedView:
             api_client.force_authenticate(first_user)
             first_user.following.add(second_user)
 
-            response = api_client.get(followed_users_recipes_url)
+            response = api_client.get(recipes_of_accounts_followed_url)
             recipes = Recipe.objects.all().filter(author=second_user)
 
             for recipe in recipes:
                 assert f'{recipe}' in f'{response.content}'
     class TestGuestUsers:
         def test_followed_users_recipes_page_should_not_render(self, api_client):
-            response = api_client.get(followed_users_recipes_url) 
+            response = api_client.get(recipes_of_accounts_followed_url) 
 
             assert response.status_code == 401
 

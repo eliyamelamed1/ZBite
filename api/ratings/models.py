@@ -67,5 +67,5 @@ class Rating(models.Model):
         return reverse('ratings:create')
 
     @classmethod
-    def get_search_url(cls):
-        return reverse('ratings:search')
+    def get_ratings_in_recipe_url(cls):
+        return reverse('ratings:ratings_in_recipe')

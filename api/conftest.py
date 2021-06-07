@@ -78,13 +78,13 @@ def search_recipe_response(api_client):
 @pytest.fixture
 def search_comment_response(api_client):
     new_recipe = RecipeFactory()
-    search_comment_url = '/api/comments/search/'
+    comments_in_recipe_url = '/api/comments/comments_in_recipe/'
 
     data = {
         'recipe': {new_recipe.id},
     }
 
-    response = api_client.post(search_comment_url, data)
+    response = api_client.post(comments_in_recipe_url, data)
 
     return response
 

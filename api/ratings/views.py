@@ -9,7 +9,7 @@ from recipes.models import Recipe
 
 from .models import Rating
 from .serializers import (RatingCreateSerializer, RatingDetailSerializer,
-                          RatingSearchSerializer)
+                          RatingsInRecipeSerializer)
 
 
 class RatingCreate(APIView):
@@ -58,9 +58,9 @@ class RatingDelete(DestroyAPIView):
     serializer_class = RatingDetailSerializer
 
 
-class RatingSearch(APIView):
+class RatingsInRecipe(APIView):
     permission_classes = (permissions.AllowAny,)
-    serializer_class = RatingSearchSerializer
+    serializer_class = RatingsInRecipeSerializer
 
     def post(self, request, format=None):
         queryset = Rating.objects.all()

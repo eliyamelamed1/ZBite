@@ -12,7 +12,7 @@ from recipes.models import Recipe
 pytestmark = pytest.mark.django_db
 
 rating_rate_url = Rating.get_create_url()
-rating_search_url = Rating.get_search_url()
+ratings_in_recipe_url = Rating.get_ratings_in_recipe_url()
 create_recipe_url = Recipe.get_create_url()
 class TestRatingCreateView:
     class TestAuthenticatedUsers:
@@ -335,13 +335,13 @@ class TestRatingDeleteView:
 
 
 
-class TestRatingSearchView:
+class TestRatingsInRecipeView:
     class TestAuthenticatedUsers:
         def test_search_page_should_render(self, api_client):
             new_rating = RatingFactory()
             api_client.force_authenticate(new_rating.author)
 
-            response = api_client.get(rating_search_url)
+            response = api_client.get(ratings_in_recipe_url)
 
             assert response.status_code == 405
 
@@ -351,14 +351,14 @@ class TestRatingSearchView:
             data = {
                 'recipe': new_rating.recipe.id
             }
-            response = api_client.post(rating_search_url, data)
+            response = api_client.post(ratings_in_recipe_url, data)
 
             assert response.status_code == 200
         
         
     class TestGuestUsers:
         def test_search_page_should_render(self, api_client):
-            response = api_client.get(rating_search_url)
+            response = api_client.get(ratings_in_recipe_url)
 
             assert response.status_code == 405
 
@@ -367,7 +367,7 @@ class TestRatingSearchView:
             data = {
                 'recipe': new_rating.recipe.id
             }
-            response = api_client.post(rating_search_url, data)
+            response = api_client.post(ratings_in_recipe_url, data)
 
             assert response.status_code == 200
         

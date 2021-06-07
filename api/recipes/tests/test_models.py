@@ -26,11 +26,11 @@ def test_get_create_url():
 def test_get_search_url():
     assert Recipe.get_search_url() == reverse('recipes:search')
 
-def test_get_followed_users_recipes_url():
-    assert Recipe.get_followed_users_recipes_url() == reverse('recipes:followed')
+def get_recipes_of_accounts_followed_url():
+    assert Recipe.get_recipes_of_accounts_followed_url() == reverse('recipes:recipes_of_accounts_followed')
 
 def test_get_top_rated_recipes_url():
-    assert Recipe.get_top_rated_recipes_url() == reverse('recipes:top')
+    assert Recipe.get_top_rated_recipes_url() == reverse('recipes:top_rated')
 
 
 def test_get_all_likes(api_client):

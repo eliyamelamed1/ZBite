@@ -8,7 +8,7 @@ from permissions import IsAuthorOrReadOnly, RecipeAuthorCanDeleteComments
 from recipes.models import Recipe
 
 from .models import Comment
-from .serializers import CommentSearchSerializer, CommentSerializer
+from .serializers import CommentsInRecipeSerializer, CommentSerializer
 
 
 class CommentCreate(CreateAPIView):
@@ -32,9 +32,9 @@ class CommentDelete(DestroyAPIView):
     serializer_class = CommentSerializer
 
 
-class CommentSearch(APIView):
+class CommentsInRecipe(APIView):
     permission_classes = (permissions.AllowAny, )
-    serializer_class = CommentSearchSerializer
+    serializer_class = CommentsInRecipeSerializer
     
     def post(self, request, format=None):
         queryset = Comment.objects.all() 

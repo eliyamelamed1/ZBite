@@ -16,7 +16,7 @@ class RatingCreateSerializer(serializers.ModelSerializer):
         model = Rating
         fields = ('stars', 'recipe',)
 
-class RatingSearchSerializer(serializers.ModelSerializer):
+class RatingsInRecipeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rating
         fields = ('recipe', )

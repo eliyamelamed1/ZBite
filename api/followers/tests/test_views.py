@@ -8,7 +8,7 @@ from factories import RecipeFactory, UserFactory
 from followers.models import Follower
 
 pytestmark = pytest.mark.django_db
-follow_url = Follower.get_create_url()
+follow_url = Follower.get_follow_url()
 class TestFollowSomeoneView:
     class TestAuthenticatedUsers:
         class TestFollow:
