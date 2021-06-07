@@ -1,5 +1,6 @@
-from .views import ChatDuoList, ChatDuoCreate
 from django.urls import path
+
+from .views import ChatDuoCreate, ChatDuoList
 
 app_name = 'chat_duos'
 

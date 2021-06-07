@@ -1,6 +1,7 @@
-from chat_massages.models import ChatMassage
 import pytest
 from django.urls import reverse
+
+from chat_massages.models import ChatMassage
 
 pytestmark = pytest.mark.django_db
 

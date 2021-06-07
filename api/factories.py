@@ -1,15 +1,16 @@
 # TODO - add tests for factories
-from chat_groups.models import ChatGroup
-from chat_massages.models import ChatMassage
 import factory
 import factory.fuzzy
 
 from accounts.models import UserAccount
+from chat_duos.models import ChatDuo
+from chat_groups.models import ChatGroup
+from chat_massages.models import ChatMassage
 from comments.models import Comment
 from likes.models import Like
 from ratings.models import Rating
 from recipes.models import Recipe
-from chat_duos.models import ChatDuo
+
 
 class UserFactory(factory.django.DjangoModelFactory):
     name = factory.fuzzy.FuzzyText()

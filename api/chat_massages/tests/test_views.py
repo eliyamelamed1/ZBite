@@ -1,7 +1,8 @@
-from factories import ChatMassageFactory, ChatGroupFactory, ChatDuoFactory
 import pytest
-from factories import UserFactory
-from chat_massages.models import ChatMassage 
+
+from chat_massages.models import ChatMassage
+from factories import (ChatDuoFactory, ChatGroupFactory, ChatMassageFactory,
+                       UserFactory)
 
 pytestmark = pytest.mark.django_db
 

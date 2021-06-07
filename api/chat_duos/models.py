@@ -1,9 +1,12 @@
-from django.db import models
 import uuid
+
+from django.contrib.contenttypes.fields import GenericRelation
+from django.db import models
+from django.urls.base import reverse
+
 from accounts.models import UserAccount
 from chat_massages.models import ChatMassage
-from django.contrib.contenttypes.fields import GenericRelation
-from django.urls.base import reverse
+
 
 class ChatDuo(models.Model):
     id = models.UUIDField(

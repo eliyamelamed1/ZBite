@@ -1,11 +1,15 @@
-from rest_framework.views import APIView
-from chat_groups.serializers import ChatGroupSerializer, ChatGroupTitleSerializer, ChatGroupMembersSerializer
-from rest_framework import permissions
-from chat_groups.models import ChatGroup
-from permissions import (IsAuthorOrReadOnly, IsMembersOrAccessDenied)
-from rest_framework.generics import (CreateAPIView, UpdateAPIView)
-from rest_framework.response import Response
 from django.core.exceptions import PermissionDenied
+from rest_framework import permissions
+from rest_framework.generics import CreateAPIView, UpdateAPIView
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from chat_groups.models import ChatGroup
+from chat_groups.serializers import (ChatGroupMembersSerializer,
+                                     ChatGroupSerializer,
+                                     ChatGroupTitleSerializer)
+from permissions import IsAuthorOrReadOnly, IsMembersOrAccessDenied
+
 
 class ChatGroupList(APIView):
     permission_classes = (IsMembersOrAccessDenied, permissions.IsAuthenticated,)

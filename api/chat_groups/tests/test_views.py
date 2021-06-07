@@ -1,9 +1,8 @@
-from django.urls.base import reverse
-from chat_groups.models import ChatGroup
-from factories import ChatGroupFactory
 import pytest
-from factories import UserFactory
+from django.urls.base import reverse
 
+from chat_groups.models import ChatGroup
+from factories import ChatGroupFactory, UserFactory
 
 pytestmark = pytest.mark.django_db
 

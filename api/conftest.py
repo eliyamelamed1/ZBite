@@ -1,11 +1,13 @@
-from django.urls.base import reverse
 import pytest
 from django.http import HttpResponse
+from django.urls.base import reverse
 from rest_framework.test import APIClient
 
 from accounts.models import UserAccount
-from factories import CommentFactory, RecipeFactory, UserFactory, ChatGroupFactory, ChatMassageFactory, ChatDuoFactory
+from factories import (ChatDuoFactory, ChatGroupFactory, ChatMassageFactory,
+                       CommentFactory, RecipeFactory, UserFactory)
 from recipes.models import Recipe
+
 
 # ---------------------------------------- Set Up
 @pytest.fixture

@@ -1,6 +1,7 @@
-from .views import ChatGroupCreate, ChatGroupList, ChatGroupUpdateMembers, ChatGroupUpdateTitle
 from django.urls import path
 
+from .views import (ChatGroupCreate, ChatGroupList, ChatGroupUpdateMembers,
+                    ChatGroupUpdateTitle)
 
 app_name = 'chat_groups'
 

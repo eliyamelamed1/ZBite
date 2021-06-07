@@ -1,7 +1,8 @@
+import pytest
 from django.urls.base import reverse
+
 from chat_duos.models import ChatDuo
 from factories import ChatDuoFactory, UserFactory
-import pytest
 
 pytestmark = pytest.mark.django_db
 
@@ -126,7 +127,8 @@ class TestChatDuoCreate:
 
             assert response.status_code == 403
 
-        def test_creating_chat_duos_with_the_different_members_are_allowed(self, api_client):
+
+        def test_creating_chat_duos_with_different_members_are_allowed(self, api_client):
             user = UserFactory()
             user2 = UserFactory()
             user3 = UserFactory()

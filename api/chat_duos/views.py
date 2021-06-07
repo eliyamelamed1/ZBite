@@ -1,11 +1,12 @@
+from django.core.exceptions import PermissionDenied
 from rest_framework import permissions
-from rest_framework.generics import (CreateAPIView)
+from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
 from chat_duos.models import ChatDuo
+
 from .serializers import ChatDuoSerializer
-from django.core.exceptions import PermissionDenied
-from django.db.models.query_utils import Q
 
 
 class ChatDuoList(APIView):
@@ -41,3 +42,4 @@ class ChatDuoCreate(CreateAPIView):
         user2 = obj.members.all()[1]
         if chat_duos.filter(members=user).filter(members=user2).count() > 1:
             raise PermissionDenied('duo already exists')
+            # TODO - change PermissionDenied to redirect to duo room

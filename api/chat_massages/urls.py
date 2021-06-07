@@ -1,6 +1,6 @@
-from .views import ChatMassageCreate, ChatMassageDetails, ChatMassagesInRoom
 from django.urls import path
 
+from .views import ChatMassageCreate, ChatMassageDetails, ChatMassagesInRoom
 
 app_name = 'chat_massages'
 
