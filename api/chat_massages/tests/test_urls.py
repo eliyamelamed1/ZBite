@@ -1,6 +1,8 @@
 import pytest
 from django.urls import resolve, reverse
+
 from factories import ChatMassageFactory
+
 pytestmark = pytest.mark.django_db
 
 class TestChatMassageCreate:

@@ -29,9 +29,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
-    'dj_rest_auth',
     'django_extensions',
-
+    'drf_yasg',
 
     #local
     'accounts',
@@ -41,7 +40,8 @@ INSTALLED_APPS = [
     'followers',
     'ratings',
     'chat_groups',
-    'chat_massages'
+    'chat_duos',
+    'chat_massages',
 ]
 
 MIDDLEWARE = [
@@ -164,6 +164,8 @@ DJOSER = {
         'user_delete': 'accounts.serializers.UserDeleteSerializer',
     },
 }
+
+
 
 AUTH_USER_MODEL = 'accounts.UserAccount'
 

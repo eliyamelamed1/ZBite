@@ -1,19 +1,21 @@
-from rest_framework.views import APIView
-from chat_groups.serializers import ChatGroupSerializer, ChatGroupTitleSerializer, ChatGroupMembersSerializer
+from django.core.exceptions import PermissionDenied
 from rest_framework import permissions
-from chat_groups.models import ChatGroup
-from permissions import (IsAuthorOrReadOnly, IsMembersOrAccessDenied)
-from rest_framework.generics import (CreateAPIView, UpdateAPIView)
+from rest_framework.generics import CreateAPIView, UpdateAPIView
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
+from chat_groups.models import ChatGroup
+from chat_groups.serializers import (ChatGroupMembersSerializer,
+                                     ChatGroupSerializer,
+                                     ChatGroupTitleSerializer)
+from permissions import IsAuthorOrReadOnly, IsMembersOrAccessDenied
 
 
 class ChatGroupList(APIView):
     permission_classes = (IsMembersOrAccessDenied, permissions.IsAuthenticated,)
-    queryset = ChatGroup.objects.all()
 
     def get(self, request, format=None):
-        '''display chats the the user participate'''
+        '''display chat groups the the user participate'''
 
         user = request.user
         queryset = ChatGroup.objects.all().filter(members=user) 
@@ -34,6 +36,8 @@ class ChatGroupCreate(CreateAPIView):
         '''
         obj = serializer.save(author=self.request.user)
         obj.members.add(self.request.user)
+        if obj.members.all().count() < 3:
+            raise PermissionDenied('group need to have atleast 3 members')
 
 class ChatGroupUpdateMembers(UpdateAPIView):
     permission_classes = (IsAuthorOrReadOnly, permissions.IsAuthenticated,)

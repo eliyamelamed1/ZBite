@@ -2,7 +2,7 @@ import pytest
 from django.urls import reverse
 
 from chat_groups.models import ChatGroup
-from factories import RecipeFactory, UserFactory, ChatGroupFactory
+from factories import ChatGroupFactory, RecipeFactory, UserFactory
 from recipes.models import Recipe
 
 pytestmark = pytest.mark.django_db

@@ -1,11 +1,13 @@
-from django.urls.base import reverse
 import pytest
 from django.http import HttpResponse
+from django.urls.base import reverse
 from rest_framework.test import APIClient
 
 from accounts.models import UserAccount
-from factories import CommentFactory, RecipeFactory, UserFactory, ChatGroupFactory, ChatMassageFactory
+from factories import (ChatDuoFactory, ChatGroupFactory, ChatMassageFactory,
+                       CommentFactory, RecipeFactory, UserFactory)
 from recipes.models import Recipe
+
 
 # ---------------------------------------- Set Up
 @pytest.fixture
@@ -41,7 +43,7 @@ def signup(api_client):
 
 @pytest.fixture
 def signup_and_login(api_client, signup):
-    login_url = "/api/users/login/"
+    login_url = '/api/djoser/token/login/'
     credentials = {
         "email": signup.credentials['email'],
         "password": signup.credentials['password']
@@ -53,7 +55,7 @@ def signup_and_login(api_client, signup):
 
 @pytest.fixture
 def logout(api_client):
-    logout_url = "/api/users/logout/"
+    logout_url = '/api/djoser/token/login/'
     logout = api_client.post(logout_url)
 
 
@@ -90,13 +92,13 @@ def search_comment_response(api_client):
 def chat_massage_create():
     user = UserFactory()
     user2 = UserFactory()
-    chat_group = ChatGroupFactory.create(members=(user, user2))
+    chat_room = ChatGroupFactory.create(members=(user, user2))
     chat_massage = ChatMassageFactory()
-    chat_group.members.add(chat_group.author)
-    chat_group.members.add(chat_massage.author)
-    chat_massage.group = chat_group
-    chat_group.save()
+    chat_room.members.add(chat_room.author)
+    chat_room.members.add(chat_massage.author)
+    chat_massage.room = chat_room
+    chat_room.save()
     chat_massage.save()
-    chat_massage.group = chat_group
 
     return chat_massage
+

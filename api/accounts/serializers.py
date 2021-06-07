@@ -1,19 +1,19 @@
 from django.contrib.auth import get_user_model
-from django.db.models import fields
-from djoser.serializers import UserCreateSerializer
 from rest_framework import serializers
-
-from accounts.models import UserAccount
 
 User = get_user_model()
 
-class UserCreateSerializer(UserCreateSerializer):
-    class Meta(UserCreateSerializer.Meta):
+class UserCreateSerializer(serializers.ModelSerializer):
+    class Meta:
         model = User
         fields = ('id', 'email', 'name', 'password')
-
+        ref_name = "user_create"
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
+        ref_name = "user_details"
+
+
+# ref_name field is added to enable the api docs 

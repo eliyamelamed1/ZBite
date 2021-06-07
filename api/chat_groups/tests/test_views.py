@@ -1,14 +1,13 @@
-from django.urls.base import reverse
-from chat_groups.models import ChatGroup
-from factories import ChatMassageFactory, ChatGroupFactory
 import pytest
-from factories import UserFactory
+from django.urls.base import reverse
 
+from chat_groups.models import ChatGroup
+from factories import ChatGroupFactory, UserFactory
 
 pytestmark = pytest.mark.django_db
 
 chat_group_create_url = ChatGroup.get_create_url()
-chat_groups_list = reverse('chat_groups:list')
+chat_group_list = ChatGroup.get_list_url()
 
 class TestChatGroupList:
     class TestAuthenticatedMembersUsers:
@@ -16,7 +15,7 @@ class TestChatGroupList:
             new_user = UserFactory()
             api_client.force_authenticate(new_user)
 
-            response = api_client.get(chat_groups_list)
+            response = api_client.get(chat_group_list)
 
             assert response.status_code == 200
             
@@ -27,7 +26,7 @@ class TestChatGroupList:
 
             api_client.force_authenticate(first_participating_user)
 
-            response = api_client.get(chat_groups_list)
+            response = api_client.get(chat_group_list)
 
             assert f'{new_chat_group}' in f'{response.content}'
 
@@ -36,7 +35,7 @@ class TestChatGroupList:
             new_user = UserFactory()
             api_client.force_authenticate(new_user)
 
-            response = api_client.get(chat_groups_list)
+            response = api_client.get(chat_group_list)
 
             assert response.status_code == 200
 
@@ -48,14 +47,14 @@ class TestChatGroupList:
             not_participating_user = UserFactory()
             api_client.force_authenticate(not_participating_user)
 
-            response = api_client.get(chat_groups_list)
+            response = api_client.get(chat_group_list)
 
             assert f'{new_chat_group}' not in f'{response.content}'
 
 
     class TestGuestUsers:
         def test_chat_group_list_page_should_not_render(self, api_client):
-            response = api_client.get(chat_groups_list)
+            response = api_client.get(chat_group_list)
 
             assert response.status_code == 401
 
@@ -73,12 +72,13 @@ class TestChatGroupCreate:
         def test_create_chat_group_post_request(self, api_client):
             new_user = UserFactory()
             new_user2 = UserFactory()
+            new_user3 = UserFactory()
             api_client.force_authenticate(new_user)
             new_chat_group = ChatGroupFactory.build()
 
             new_chat_group = {
                 'title': new_chat_group.title,
-                'members': [new_user.id, new_user2.id]
+                'members': [new_user2.id, new_user3.id]
             }
 
             response = api_client.post(chat_group_create_url, new_chat_group)
@@ -89,12 +89,13 @@ class TestChatGroupCreate:
         def test_logged_in_user_should_be_automatically_set_as_the_author_of_the_created_chat_group(self, api_client):
             new_user = UserFactory()
             new_user2 = UserFactory()
+            new_user3 = UserFactory()
             api_client.force_authenticate(new_user)
             new_chat_group = ChatGroupFactory.build()
             new_chat_group = {
                 'author': new_user2,
                 'title': new_chat_group.title,
-                'members': [new_user2.id]
+                'members': [new_user2.id, new_user3.id]
             }
 
             api_client.post(chat_group_create_url, new_chat_group)
@@ -102,9 +103,27 @@ class TestChatGroupCreate:
             new_chat_group = ChatGroup.objects.get(title=new_chat_group['title'])
             
             assert new_chat_group.author == new_user
-            assert new_chat_group.members.all().count() == 2
+            assert new_chat_group.members.all().count() == 3
         
         def test_author_is_automaticaly_added_to_the_created_chat_group_members(self, api_client):
+            new_user = UserFactory()
+            new_user2 = UserFactory()
+            new_user3 = UserFactory()
+            api_client.force_authenticate(new_user)
+
+            new_chat_group = ChatGroupFactory.build()
+            new_chat_group = {
+                'title': new_chat_group.title,
+                'members': [new_user2.id, new_user3.id]
+            }
+
+            api_client.post(chat_group_create_url, new_chat_group)
+            
+            new_chat_group = ChatGroup.objects.get(title=new_chat_group['title'])
+            
+            assert new_user in new_chat_group.members.all()
+        
+        def test_chat_group_with_below_3_members_wont_be_created(self, api_client):
             new_user = UserFactory()
             new_user2 = UserFactory()
             api_client.force_authenticate(new_user)
@@ -115,12 +134,9 @@ class TestChatGroupCreate:
                 'members': [new_user2.id]
             }
 
-            api_client.post(chat_group_create_url, new_chat_group)
-            
-            new_chat_group = ChatGroup.objects.get(title=new_chat_group['title'])
-            
-            assert new_user and new_user2 in new_chat_group.members.all()
-        
+            response = api_client.post(chat_group_create_url, new_chat_group)
+
+            assert response.status_code == 403
         class TestGuestUsers:
             def test_chat_group_create_page_should_not_render(self, api_client):
                 response = api_client.get(chat_group_create_url)

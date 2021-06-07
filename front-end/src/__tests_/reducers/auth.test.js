@@ -1,5 +1,6 @@
-import { cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
+
+import { cleanup } from '@testing-library/react';
 import store from '../../store';
 
 describe('reducers - auth ', () => {
@@ -9,7 +10,7 @@ describe('reducers - auth ', () => {
     let initialState;
     beforeEach(() => {
         initialState = {
-            key: 'initialValue',
+            auth_token: 'initialValue',
             isAuthenticated: 'initialValue',
             loggedUser: 'initialValue',
             userList: 'initialValue',
@@ -24,7 +25,7 @@ describe('reducers - auth ', () => {
         initialState = store.getState();
 
         expect(initialState.authReducer.isAuthenticated).toBe('initialValue');
-        expect(initialState.authReducer.key).toBe('initialValue');
+        expect(initialState.authReducer.auth_token).toBe('initialValue');
         expect(initialState.authReducer.loggedUser).toBe('initialValue');
         expect(initialState.authReducer.userList).toBe('initialValue');
         expect(initialState.authReducer.userDetails).toBe('initialValue');
@@ -35,7 +36,7 @@ describe('reducers - auth ', () => {
         initialState = store.getState();
 
         expect(initialState.authReducer.isAuthenticated).toBe('initialValue');
-        expect(initialState.authReducer.key).toBe('initialValue');
+        expect(initialState.authReducer.auth_token).toBe('initialValue');
         expect(initialState.authReducer.loggedUser).toBe('initialValue');
         expect(initialState.authReducer.userList).toBe('initialValue');
         expect(initialState.authReducer.userDetails).toStrictEqual({
@@ -50,7 +51,7 @@ describe('reducers - auth ', () => {
         initialState = store.getState();
 
         expect(initialState.authReducer.isAuthenticated).toBe('initialValue');
-        expect(initialState.authReducer.key).toBe('initialValue');
+        expect(initialState.authReducer.auth_token).toBe('initialValue');
         expect(initialState.authReducer.loggedUser).toBe('initialValue');
         expect(initialState.authReducer.userList).toBe('initialValue');
         expect(initialState.authReducer.userDetails).toBe('initialValue');
@@ -61,7 +62,7 @@ describe('reducers - auth ', () => {
         initialState = store.getState();
 
         expect(initialState.authReducer.isAuthenticated).toBe('initialValue');
-        expect(initialState.authReducer.key).toBe('initialValue');
+        expect(initialState.authReducer.auth_token).toBe('initialValue');
         expect(initialState.authReducer.loggedUser).toBe('initialValue');
         expect(initialState.authReducer.userList).toStrictEqual({
             firstUser: { name: 'testName' },
@@ -71,14 +72,14 @@ describe('reducers - auth ', () => {
     });
     test('case USER_DELETED_FAIL', () => {
         initialState['loggedUser'] = { email: 'testEmail', name: 'testName', id: 'testId' };
-        initialState['key'] = 'testToken';
+        initialState['auth_token'] = 'testToken';
         initialState['isAuthenticated'] = true;
         store.dispatch({ type: 'TEST_CASE_AUTH', payload: initialState });
         store.dispatch({ type: 'USER_DELETED_fail' });
         initialState = store.getState();
 
         expect(initialState.authReducer.isAuthenticated).toBe(true);
-        expect(initialState.authReducer.key).toBe('testToken');
+        expect(initialState.authReducer.auth_token).toBe('testToken');
         expect(initialState.authReducer.loggedUser).toStrictEqual({
             email: 'testEmail',
             name: 'testName',
@@ -89,13 +90,13 @@ describe('reducers - auth ', () => {
     });
     test('case USER_DELETED_SUCCESS', () => {
         initialState['loggedUser'] = { email: 'testEmail', name: 'testName', id: 'testId' };
-        initialState['key'] = 'testToken';
+        initialState['auth_token'] = 'testToken';
         initialState['isAuthenticated'] = true;
         store.dispatch({ type: 'TEST_CASE_AUTH', payload: initialState });
         store.dispatch({ type: 'USER_DELETED_SUCCESS' });
         initialState = store.getState();
 
-        expect(initialState.authReducer.key).toBe(null);
+        expect(initialState.authReducer.auth_token).toBe(null);
         expect(initialState.authReducer.isAuthenticated).toBe(false);
         expect(initialState.authReducer.loggedUser).toBe(null);
         expect(initialState.authReducer.userList).toBe('initialValue');
@@ -110,7 +111,7 @@ describe('reducers - auth ', () => {
         initialState = store.getState();
 
         expect(initialState.authReducer.isAuthenticated).toBe('initialValue');
-        expect(initialState.authReducer.key).toBe('initialValue');
+        expect(initialState.authReducer.auth_token).toBe('initialValue');
         expect(initialState.authReducer.loggedUser).toStrictEqual({
             email: 'testEmail',
             name: 'testName',
@@ -127,7 +128,7 @@ describe('reducers - auth ', () => {
         initialState = store.getState();
 
         expect(initialState.authReducer.isAuthenticated).toBe('initialValue');
-        expect(initialState.authReducer.key).toBe('initialValue');
+        expect(initialState.authReducer.auth_token).toBe('initialValue');
         expect(initialState.authReducer.loggedUser).toStrictEqual({
             email: 'testEmail2',
             name: 'testName2',
@@ -137,12 +138,12 @@ describe('reducers - auth ', () => {
     });
 
     test('case LOGIN_SUCCESS', () => {
-        initialState['key'] = 'testToken';
+        initialState['auth_token'] = 'testToken';
         initialState['loggedUser'] = { email: 'testEmail', name: 'testName', id: 'testId' };
         store.dispatch({ type: 'LOGIN_SUCCESS', payload: initialState });
         initialState = store.getState();
         expect(initialState.authReducer.isAuthenticated).toBe(true);
-        expect(initialState.authReducer.key).toBe('testToken');
+        expect(initialState.authReducer.auth_token).toBe('testToken');
         expect(initialState.authReducer.loggedUser).toBe('initialValue');
         expect(initialState.authReducer.userList).toBe('initialValue');
         expect(initialState.authReducer.userDetails).toBe('initialValue');
@@ -152,7 +153,7 @@ describe('reducers - auth ', () => {
         store.dispatch({ type: 'USER_LOADED_SUCCESS', payload: initialState.loggedUser });
         initialState = store.getState();
 
-        expect(initialState.authReducer.key).toBe('initialValue');
+        expect(initialState.authReducer.auth_token).toBe('initialValue');
         expect(initialState.authReducer.isAuthenticated).toBe('initialValue');
         expect(initialState.authReducer.loggedUser).toStrictEqual({
             email: 'testEmail',
@@ -165,7 +166,7 @@ describe('reducers - auth ', () => {
     test('case SIGNUP_SUCCESS', () => {
         store.dispatch({ type: 'SIGNUP_SUCCESS' });
         initialState = store.getState();
-        expect(initialState.authReducer.key).toBe('initialValue');
+        expect(initialState.authReducer.auth_token).toBe('initialValue');
         expect(initialState.authReducer.isAuthenticated).toBe(false);
         expect(initialState.authReducer.loggedUser).toBe('initialValue');
         expect(initialState.authReducer.userList).toBe('initialValue');
@@ -174,7 +175,7 @@ describe('reducers - auth ', () => {
     test('case USER_LOADED_FAIL', () => {
         store.dispatch({ type: 'USER_LOADED_FAIL' });
         initialState = store.getState();
-        expect(initialState.authReducer.key).toBe('initialValue');
+        expect(initialState.authReducer.auth_token).toBe('initialValue');
         expect(initialState.authReducer.isAuthenticated).toBe('initialValue');
         expect(initialState.authReducer.loggedUser).toBe(null);
         expect(initialState.authReducer.userList).toBe('initialValue');
@@ -183,7 +184,7 @@ describe('reducers - auth ', () => {
     test('case SIGNUP_FAIL', () => {
         store.dispatch({ type: 'SIGNUP_FAIL' });
         initialState = store.getState();
-        expect(initialState.authReducer.key).toBe(null);
+        expect(initialState.authReducer.auth_token).toBe(null);
         expect(initialState.authReducer.isAuthenticated).toBe(false);
         expect(initialState.authReducer.loggedUser).toBe(null);
         expect(initialState.authReducer.userList).toBe('initialValue');
@@ -192,7 +193,7 @@ describe('reducers - auth ', () => {
     test('case LOGIN_FAIL', () => {
         store.dispatch({ type: 'LOGIN_FAIL' });
         initialState = store.getState();
-        expect(initialState.authReducer.key).toBe(null);
+        expect(initialState.authReducer.auth_token).toBe(null);
         expect(initialState.authReducer.isAuthenticated).toBe(false);
         expect(initialState.authReducer.loggedUser).toBe(null);
         expect(initialState.authReducer.userList).toBe('initialValue');
@@ -201,7 +202,7 @@ describe('reducers - auth ', () => {
     test('case LOGOUT', () => {
         store.dispatch({ type: 'LOGOUT' });
         initialState = store.getState();
-        expect(initialState.authReducer.key).toBe(null);
+        expect(initialState.authReducer.auth_token).toBe(null);
         expect(initialState.authReducer.isAuthenticated).toBe(false);
         expect(initialState.authReducer.loggedUser).toBe(null);
         expect(initialState.authReducer.userList).toBe('initialValue');
@@ -209,7 +210,7 @@ describe('reducers - auth ', () => {
     });
     test('case default', () => {
         initialState = store.getState();
-        expect(initialState.authReducer.key).toBe('initialValue');
+        expect(initialState.authReducer.auth_token).toBe('initialValue');
         expect(initialState.authReducer.isAuthenticated).toBe('initialValue');
         expect(initialState.authReducer.loggedUser).toBe('initialValue');
         expect(initialState.authReducer.userList).toBe('initialValue');
