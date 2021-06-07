@@ -1,27 +1,28 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 
-// pages
-import { Provider } from "react-redux";
-import HomePage from "./containers/HomePage";
-import LoginPage from "./containers/LoginPage";
-import SignupPage from "./containers/SignupPage";
 import ActivatePage from "./containers/ActivatePage";
-import ResetPasswordPage from "./containers/ResetPasswordPage";
-import ResetPasswordConfirmPage from "./containers/ResetPasswordConfirmPage";
-import RecipeListPage from "./containers/RecipeListPage";
-import RecipeDetailPage from "./containers/RecipeDetailPage";
+import Chats from "./containers/Chats";
+import HomePage from "./containers/HomePage";
+import Layout from "./layout/Layout";
+import LoginPage from "./containers/LoginPage";
+import NotFound from "./components/NotFound";
+import { Provider } from "react-redux";
+import React from "react";
 import RecipeCreatePage from "./containers/RecipeCreatePage";
+import RecipeDetailPage from "./containers/RecipeDetailPage";
+import RecipeListPage from "./containers/RecipeListPage";
+import ResetPasswordConfirmPage from "./containers/ResetPasswordConfirmPage";
+import ResetPasswordPage from "./containers/ResetPasswordPage";
+import SignupPage from "./containers/SignupPage";
 import UserDetailPage from "./containers/UserDetailPage";
 import UserListPage from "./containers/UserListPage";
-import Chats from "./containers/Chats";
+import store from "./store";
+
+// pages
 
 // components
-import NotFound from "./components/NotFound";
-import Layout from "./layout/Layout";
 
-// redux
-import store from "./store";
+// reduxjj
 
 const App = () => (
   <Provider store={store}>
