@@ -1,33 +1,33 @@
 let usersInChat = {};
 
-const addUserToChatGroup = async (userId, socketId, name) => {
-    if (usersInChat[name]) {
-        if (usersInChat[name].socketId === socketId) {
-            return usersInChat;
-        }
-        //
-        else {
-            await removeUserFromChatGroup(name);
-        }
+const addUserToChatRoom = async (userId, socketId, name) => {
+  if (usersInChat[name]) {
+    if (usersInChat[name].socketId === socketId) {
+      return usersInChat;
     }
+    //
+    else {
+      await removeUserFromChatRoom(name);
+    }
+  }
 
-    const newUser = {
-        socketId,
-        userId,
-    };
-    usersInChat[name] = { ...newUser };
+  const newUser = {
+    socketId,
+    userId,
+  };
+  usersInChat[name] = { ...newUser };
 
-    return usersInChat;
+  return usersInChat;
 };
 
-const removeUserFromChatGroup = async (name) => {
-    delete usersInChat[name];
-    return usersInChat;
+const removeUserFromChatRoom = async (name) => {
+  delete usersInChat[name];
+  return usersInChat;
 };
 
-// const findUserInChatGroup = (name) => usersInChat[name];
+// const findUserInChatRoom = (name) => usersInChat[name];
 
 module.exports = {
-    addUserToChatGroup,
-    removeUserFromChatGroup,
+  addUserToChatRoom,
+  removeUserFromChatRoom,
 };

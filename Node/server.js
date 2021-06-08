@@ -1,53 +1,84 @@
-const express = require('express');
+const express = require("express");
 
-const { addUser, removeUser, findUser } = require('./utils/groupActions');
-
-const { addUserToChatGroup, removeUserFromChatGroup } = require('./utils/chatRoomActions');
+const {
+  addUser,
+  removeUser,
+  findUser,
+  addUserToChatRoom,
+  removeUserFromChatRoom,
+  findOnlineUsers,
+  removeAllUsers,
+} = require("./utils/roomActions");
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 
 const server = app.listen(PORT);
 
-const io = require('./socket').init(server);
+const io = require("./socket").init(server);
 
-io.on('connection', (socket) => {
-    console.log('socket connected');
+io.on("connection", (socket) => {
+  console.log("socket connected");
 
-    socket.on('user-joined', async ({ id, name }) => {
-        const users = await addUser(id, socket.id, name);
-        socket.emit('user-joined-successfully', users);
-        console.log('*:', users);
-    });
+  socket.on("user-joined", ({ id, name }) => {
+    const users = addUser(id, socket.id, name);
+    io.to(socket.id).emit("user-joined-successfully", users);
+    console.log("*:", users);
+  });
 
-    socket.on('userConnectedToChat', async ({ username, id }) => {
-        const onlineUsers = await addUserToChatGroup(id, socket.id, username);
-        console.log(onlineUsers);
+  socket.on("userConnectedToChat", ({ username, id }) => {
+    const error = addUserToChatRoom(id, socket.id, username);
 
-        socket.emit('currentUsers', { onlineUsers });
+    if (!error) {
+      const onlineUsers = findOnlineUsers();
+      console.log(onlineUsers);
+      socket.emit("currentUsers", { onlineUsers });
+      socket.broadcast.emit("userInChatIncrese", { onlineUsers });
+    }
+    //
+    else {
+      socket.to(socket.id).emit("failedAddingUserToChat");
+    }
+  });
 
-        socket.broadcast.emit('userInChatIncrese', {
-            onlineUsers,
-        });
-    });
+  socket.on("userDisconectedFromChat", ({ username }) => {
+    const error = removeUserFromChatRoom(username);
 
-    socket.on('userDisconectedFromChat', async ({ username }) => {
-        const onlineUsers = await removeUserFromChatGroup(username);
+    if (!error) {
+      const onlineUsers = findOnlineUsers();
+      console.log(onlineUsers);
+      socket.broadcast.emit("userInChatDicrese", { onlineUsers });
+    }
+    //
+    else {
+      socket.to(socket.id).emit("failedRemovingUserFromChat");
+    }
+  });
 
-        socket.broadcast.emit('userInChatDicrese', { onlineUsers });
-    });
+  socket.on("new-message", ({ sender, receiver, text }) => {
+    console.log("newMessage:", sender, receiver, text);
+    const socketId = findUser(receiver).socketId;
 
-    socket.on('new-message', async ({ sender, receiver, text }) => {
-        console.log('newMessage:', sender, receiver, text);
-        const socketId = findUser(receiver).socketId;
+    if (socketId) {
+      socket.to(socketId).emit("message-received", { sender, text });
+    }
+  });
 
-        if (socketId) {
-            socket.to(socketId).emit('message-received', { sender, text });
-        }
-    });
+<<<<<<< HEAD
+  socket.on("user-disconnected", () => {
+    removeUser(socket.id);
+    socket.emit("userDisconnected");
+    console.log("socket-disconnected");
+  });
 
-    socket.on('user-disconnected', async () => {
-        await removeUser(socket.id);
-        console.log('socket-disconnected');
-    });
+  socket.on("disconnectAllUsers", () => {
+    removeAllUsers();
+    console.log("all User disconnected!");
+  });
+=======
+  socket.on("user-disconnected", async () => {
+    await removeUser(socket.id);
+    console.log("socket-disconnected");
+  });
+>>>>>>> 4ac39c985276199be55494fa8abb4c69c0bc7f01
 });
