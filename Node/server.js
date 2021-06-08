@@ -64,7 +64,6 @@ io.on("connection", (socket) => {
     }
   });
 
-<<<<<<< HEAD
   socket.on("user-disconnected", () => {
     removeUser(socket.id);
     socket.emit("userDisconnected");
@@ -75,10 +74,4 @@ io.on("connection", (socket) => {
     removeAllUsers();
     console.log("all User disconnected!");
   });
-=======
-  socket.on("user-disconnected", async () => {
-    await removeUser(socket.id);
-    console.log("socket-disconnected");
-  });
->>>>>>> 4ac39c985276199be55494fa8abb4c69c0bc7f01
 });
