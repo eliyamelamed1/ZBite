@@ -2,6 +2,7 @@ import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 
 import ActivatePage from "./containers/ActivatePage";
 import Chats from "./containers/Chats";
+import DetailChat from "./containers/ChatDetail";
 import HomePage from "./containers/HomePage";
 import Layout from "./layout/Layout";
 import LoginPage from "./containers/LoginPage";
@@ -44,7 +45,8 @@ const App = () => (
             component={ResetPasswordConfirmPage}
           />
           <Route exact path="/activate/:uid/:token" component={ActivatePage} />
-          <Route path="/chats" component={Chats} />
+          <Route exact path="/chats" component={Chats} />
+          <Route exact path="/chats/chat/:chatId" component={DetailChat} />
           <Route component={NotFound} />
         </Switch>
       </Layout>

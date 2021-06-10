@@ -37,3 +37,7 @@ export const RECIPE_DELETED_FAIL = "RECIPE_DELETED_FAIL";
 
 //socket
 export const CONNECT_SOCKET = "CONNECT_SOCKET";
+
+//chats
+export const CHAT_LIST_SUCCESS = "CHAT_LIST_SUCCESS";
+export const CHAT_LIST_FAIL = "CHAT_LIST_FAIL";

@@ -1,22 +1,27 @@
-import React, { useState, useEffect } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
 
 import { loadUserListAction } from "../actions/auth";
-import { Link, useLocation } from "react-router-dom";
-import MessageForm from "../components/notifications/MessageForm";
+import { getChatsList } from "../actions/chat";
+import Search from "../components/chats/search";
 
-function Chat() {
+function Chats() {
+  const history = useHistory();
   const dispatch = useDispatch();
-  const location = useLocation();
-  const [currentChatWith, setCurrentChatWith] = useState(null);
-  const [onlineUsers, setOnlineUsers] = useState({});
 
-  const { userList, loggedUser } = useSelector((state) => state.authReducer);
-  const { socket } = useSelector((state) => state.socketReducer);
+  const [chats, setChats] = useState([]);
+  const [onlineUsers, setOnlineUsers] = useState([]);
 
   useEffect(() => {
+    dispatch(getChatsList());
     dispatch(loadUserListAction());
-  }, [dispatch]);
+  }, []);
+
+  const { socket } = useSelector((state) => state.socketReducer);
+  const { chatsList } = useSelector((state) => state.chatReducer);
+  const { userList, loggedUser } = useSelector((state) => state.authReducer);
 
   useEffect(() => {
     if (socket && loggedUser) {
@@ -32,6 +37,7 @@ function Chat() {
       socket.on("userInChatIncrese", ({ onlineUsers }) => {
         setOnlineUsers(onlineUsers);
       });
+
       socket.on("userInChatDicrese", ({ onlineUsers }) => {
         setOnlineUsers(onlineUsers);
       });
@@ -48,42 +54,86 @@ function Chat() {
   }, [socket, loggedUser]);
 
   useEffect(() => {
-    if (location.search && userList) {
-      const userId = location.search.split("=")[1];
-      setCurrentChatWith(userList.find((user) => user.id === userId));
+    if (chatsList && userList) {
+      const updatedChats = chatsList.forEach((chat) => {
+        return userList.find((user) => user.id === chat.member);
+      });
+      setChats(updatedChats);
     }
-  }, [location.search, userList, loggedUser]);
+  }, [chatsList, userList]);
+
+  const createChatHandler = async (id) => {
+    try {
+      const isChatExist = chatsList.find((chat) => chat.member === id);
+      if (!isChatExist) {
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${localStorage.getItem("auth_token")}`,
+          },
+        };
+
+        const body = JSON.stringify({
+          members: [id],
+        });
+
+        const res = await axios.post(
+          `${process.env.REACT_APP_API_URL}/api/chat_duos/create/`,
+          config,
+          body
+        );
+        history.push(`chat/${res.data.id}`);
+      } else {
+        history.push(`chat/${isChatExist.id}`);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
-    <div>
-      {userList && loggedUser ? (
-        userList.map((user) => {
-          if (user.name !== loggedUser.name) {
-            return (
-              <li style={{ display: "flex" }} key={user.id}>
-                <Link to={`/chats/?chat=${user.id}`}>{user.name}</Link>
-                {Object.prototype.hasOwnProperty.call(
-                  onlineUsers,
-                  user.name
-                ) && <h3>ONLINE</h3>}
-              </li>
-            );
-          }
-        })
+    <>
+      <Search />
+      {/* search a user to create a chat */}
+      <div>
+        {userList && userList.length > 0 ? (
+          <>
+            <h3>Friends:</h3>
+            {userList &&
+              userList.map((user) => {
+                if (user.name !== loggedUser.name) {
+                  return (
+                    <li
+                      style={{ cursor: "pointer" }}
+                      onClick={() => createChatHandler(user.id)}
+                      key={user.id}
+                    >
+                      {user.name}
+                    </li>
+                  );
+                }
+              })}
+          </>
+        ) : (
+          <>No Friends :(</>
+        )}
+      </div>
+      {chats && chats.length > 0 ? (
+        <>
+          {chats.map((chat) => {
+            <div key={chat.id}>
+              <Link to={`/chats/chat/:${chat.id}`}>{chat.name}</Link>
+              {Object.prototype.hasOwnProperty.call(onlineUsers, chat.name) && (
+                <h6>online</h6>
+              )}
+            </div>;
+          })}
+        </>
       ) : (
-        <>loading</>
+        <p>No chats found... You should try create one</p>
       )}
-      {currentChatWith && loggedUser && (
-        <div>
-          <h1>{currentChatWith.name}</h1>
-          <MessageForm
-            sender={loggedUser.name}
-            receiver={currentChatWith.name}
-          />
-        </div>
-      )}
-    </div>
+    </>
   );
 }
 
-export default Chat;
+export default Chats;
