@@ -35,11 +35,13 @@ class ChatDuoCreate(CreateAPIView):
         obj.members.add(self.request.user)
 
         if obj.members.all().count() != 2:
-            raise PermissionDenied('duo need to have 2 members only')
+            obj.delete()
+            raise  PermissionDenied('duo need to have 2 members only')
     
         chat_duos = ChatDuo.objects.all()
         user = obj.members.all()[0]
         user2 = obj.members.all()[1]
         if chat_duos.filter(members=user).filter(members=user2).count() > 1:
+            obj.delete()
             raise PermissionDenied('duo already exists')
             # TODO - change PermissionDenied to redirect to duo room

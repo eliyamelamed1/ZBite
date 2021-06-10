@@ -100,6 +100,8 @@ class TestChatDuoCreate:
 
             assert response.status_code == 403
 
+            assert ChatDuo.objects.all().count()==0
+
         def test_logged_user_is_automatically_added_to_the_chat_duo_members(self, api_client):
             user = UserFactory()
             user2 = UserFactory()
