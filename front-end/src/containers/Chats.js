@@ -74,13 +74,13 @@ function Chats() {
         };
 
         const body = JSON.stringify({
-          members: [id],
+          id,
         });
 
         const res = await axios.post(
           `${process.env.REACT_APP_API_URL}/api/chat_duos/create/`,
-          config,
-          body
+          body,
+          config
         );
         history.push(`chat/${res.data.id}`);
       } else {
