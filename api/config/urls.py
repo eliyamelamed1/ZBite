@@ -23,7 +23,7 @@ schema_view = get_schema_view( # new
 
 urlpatterns = [
     # browser api
-    path('api/users/', include('dj_rest_auth.urls')), 
+    path('api/browser_api/', include('dj_rest_auth.urls')), 
 
     # admim
     path('api/admin/', admin.site.urls),
