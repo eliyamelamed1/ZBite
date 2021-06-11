@@ -61,7 +61,6 @@ function Chats() {
             (user.id === chat.members[1] && user.id !== loggedUser.id)
         );
       });
-      console.log("||||||||||||||||||||", updatedChats);
       setChats(updatedChats);
     }
   }, [chatsList, userList]);
