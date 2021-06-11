@@ -13,7 +13,7 @@ jobs:
     runs-on: windows-latest
     defaults:
       run:
-        working-directory: ./front-end
+        working-directory: ./Node
  
     strategy:
       matrix:
