@@ -23,6 +23,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    
+    # browser api
+    'dj_rest_auth',
 
     #3rd party
     'djoser',
@@ -138,7 +141,9 @@ REST_FRAMEWORK = {
 
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
-        # 'rest_framework.authentication.SessionAuthentication', # Defualt settings- add the browsable api
+   
+        # browser api
+        # 'rest_framework.authentication.SessionAuthentication',
     ),
 }
 
