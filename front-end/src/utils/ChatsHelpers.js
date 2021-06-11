@@ -1,11 +1,11 @@
 import axios from "axios";
 
-export const startDuoChat = async (id, loggedUserId, chatsList) => {
+export const startDuoChat = async (id, chatsList) => {
   try {
-    console.log(id, loggedUserId);
-    const isChatExist = chatsList.find((chat) => {
-      chat.members.includes(id);
-    });
+    console.log("44444444444444", chatsList);
+    const isChatExist = chatsList.find((chat) => chat.members.includes(id));
+
+    console.log(isChatExist);
 
     if (!isChatExist) {
       const config = {
@@ -24,9 +24,9 @@ export const startDuoChat = async (id, loggedUserId, chatsList) => {
         { id },
         config
       );
-      return `chat/${res.data.id}`;
+      return `chats/chat/${res.data.id}`;
     } else {
-      return `chat/${isChatExist.id}`;
+      return `chats/chat/${isChatExist.id}`;
     }
   } catch (err) {
     console.log(err);

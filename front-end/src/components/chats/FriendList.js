@@ -6,7 +6,7 @@ function FriendList({ userList, loggedUser, chatsList }) {
   const history = useHistory();
 
   const startDuoChatHandler = async (id) => {
-    const newURL = await startDuoChat(id, loggedUser.id, chatsList);
+    const newURL = await startDuoChat(id, chatsList);
     history.push(newURL);
   };
 

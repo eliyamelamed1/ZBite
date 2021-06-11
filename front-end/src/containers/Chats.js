@@ -54,9 +54,14 @@ function Chats() {
 
   useEffect(() => {
     if (chatsList && userList) {
-      const updatedChats = chatsList.forEach((chat) => {
-        return userList.find((user) => user.id === chat.member);
+      const updatedChats = chatsList.map((chat) => {
+        return userList.find(
+          (user) =>
+            (user.id === chat.members[0] && user.id !== loggedUser.id) ||
+            (user.id === chat.members[1] && user.id !== loggedUser.id)
+        );
       });
+      console.log("||||||||||||||||||||", updatedChats);
       setChats(updatedChats);
     }
   }, [chatsList, userList]);
