@@ -13,7 +13,7 @@ jobs:
     runs-on: windows-latest
     defaults:
       run:
-        working-directory: ./node
+        working-directory: ./Node
 
     strategy:
       matrix:
