@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'ratings',
     'chat_groups',
     'chat_duos',
-    # 'chat_massages',
+    'chat_massages',
 ]
 
 MIDDLEWARE = [
