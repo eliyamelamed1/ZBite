@@ -31,8 +31,10 @@ class ChatDuoCreate(CreateAPIView):
         save the current logged in user as the author of the Chat Room, 
         and add the author to the group members list
         '''
+        print('=======',self.request.data['id'])
         obj = serializer.save()
         obj.members.add(self.request.user)
+        obj.members.add(self.request.data['id'])
 
         if obj.members.all().count() != 2:
             obj.delete()

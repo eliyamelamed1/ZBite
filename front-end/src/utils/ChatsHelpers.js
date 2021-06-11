@@ -1,7 +1,8 @@
 import axios from "axios";
 
-export const startDuoChat = async (id, chatsList) => {
+export const startDuoChat = async (id, loggedUserId, chatsList) => {
   try {
+    console.log(id, loggedUserId);
     const isChatExist = chatsList.find((chat) => {
       chat.members.includes(id);
     });
@@ -14,13 +15,13 @@ export const startDuoChat = async (id, chatsList) => {
         },
       };
 
-      const body = JSON.stringify({
-        id,
-      });
+      //   const body = JSON.stringify({
+      //     id,
+      //   });
 
       const res = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/chat_duos/create/`,
-        body,
+        { id },
         config
       );
       return `chat/${res.data.id}`;
