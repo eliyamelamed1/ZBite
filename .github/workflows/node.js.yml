@@ -1,4 +1,4 @@
-name: CI
+name: Node CI
 
 on:
   push:
@@ -24,7 +24,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
-      - run: npm install -g nodeman
+      - run: npm install -g nodemon
       - run: npm start
       - run: npm test
         
