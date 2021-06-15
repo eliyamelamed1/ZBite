@@ -4,7 +4,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import React from 'react';
-import RecipeDetailPage from '../../containers/RecipeDetailPage';
+import RecipeDetailPage from '../../containers/recipes/RecipeDetailPage';
 import { BrowserRouter as Router } from 'react-router-dom';
 import store from '../../redux/store';
 import userEvent from '@testing-library/user-event';

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import ChatList from '../components/chats/ChatsList';
-import ChooseUserToChatWith from '../components/chats/ChooseUserToChatWith';
-import { getChatsListAction } from '../redux/actions/chat';
-import { loadUserListAction } from '../redux/actions/auth';
+import ChatList from '../../components/chats/ChatsList';
+import ChooseUserToChatWith from '../../components/chats/ChooseUserToChatWith';
+import { getChatsListAction } from '../../redux/actions/chat';
+import { loadUserListAction } from '../../redux/actions/auth';
 
 function Chats() {
     const dispatch = useDispatch();

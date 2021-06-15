@@ -1,7 +1,7 @@
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 import React from 'react';
-import RecipeCreate from '../components/recipes/RecipeCreate';
+import RecipeCreate from '../../components/recipes/RecipeCreate';
 
 const recipeCreatePage = () => {
     return (

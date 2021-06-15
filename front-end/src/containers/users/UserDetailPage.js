@@ -1,11 +1,11 @@
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import React, { useEffect, useState } from 'react';
 
-import NotFound from '../components/NotFound';
-import UserDelete from '../components/users/UserDelete';
-import UserUpdate from '../components/users/UserUpdate';
+import NotFound from '../../components/NotFound';
+import UserDelete from '../../components/users/UserDelete';
+import UserUpdate from '../../components/users/UserUpdate';
 import { connect } from 'react-redux';
-import { loadUserDetailsAction } from '../redux/actions/auth';
+import { loadUserDetailsAction } from '../../redux/actions/auth';
 
 const userDetailPage = (props) => {
     const [isAuthor, setIsAuthor] = useState(false);

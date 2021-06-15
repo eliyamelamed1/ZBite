@@ -1,8 +1,8 @@
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 
-import DisplayRecipes from '../components/recipes/DisplayRecipes';
+import DisplayRecipes from '../../components/recipes/DisplayRecipes';
 import React from 'react';
-import RecipeList from '../components/recipes/RecipeList';
+import RecipeList from '../../components/recipes/RecipeList';
 import { connect } from 'react-redux';
 
 const recipeListPage = ({ recipeListData }) => {

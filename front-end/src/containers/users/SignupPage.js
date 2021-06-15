@@ -2,7 +2,7 @@ import { Link, Redirect } from 'react-router-dom';
 import React, { useState } from 'react';
 
 import { connect } from 'react-redux';
-import { signupAction } from '../redux/actions/auth';
+import { signupAction } from '../../redux/actions/auth';
 
 const signupPage = ({ signupAction, isAuthenticated }) => {
     const [formData, setFormData] = useState({

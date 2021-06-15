@@ -3,10 +3,10 @@
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import React, { useEffect } from 'react';
 
-import IsRecipeAuthor from '../components/recipes/IsRecipeAuthor';
+import IsRecipeAuthor from '../../components/recipes/IsRecipeAuthor';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { loadRecipeDetailsAction } from '../redux/actions/recipe';
+import { loadRecipeDetailsAction } from '../../redux/actions/recipe';
 
 // import PropTypes from 'prop-types';
 

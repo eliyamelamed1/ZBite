@@ -4,7 +4,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import React from 'react';
-import RecipeCreatePage from '../../containers/RecipeCreatePage';
+import RecipeCreatePage from '../../containers/recipes/RecipeCreatePage';
 import store from '../../redux/store';
 
 beforeEach(() => {

@@ -1,22 +1,22 @@
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 
-import ActivatePage from './containers/ActivatePage';
-import Chats from './containers/Chats';
-import DetailChat from './containers/ChatDetail';
+import ActivatePage from './containers/users/ActivatePage';
+import Chats from './containers/chats/Chats';
+import DetailChat from './containers/chats/ChatDetail';
 import HomePage from './containers/HomePage';
 import Layout from './components/Layout';
-import LoginPage from './containers/LoginPage';
+import LoginPage from './containers/users/LoginPage';
 import NotFound from './components/NotFound';
 import { Provider } from 'react-redux';
 import React from 'react';
-import RecipeCreatePage from './containers/RecipeCreatePage';
-import RecipeDetailPage from './containers/RecipeDetailPage';
-import RecipeListPage from './containers/RecipeListPage';
-import ResetPasswordConfirmPage from './containers/ResetPasswordConfirmPage';
-import ResetPasswordPage from './containers/ResetPasswordPage';
-import SignupPage from './containers/SignupPage';
-import UserDetailPage from './containers/UserDetailPage';
-import UserListPage from './containers/UserListPage';
+import RecipeCreatePage from './containers/recipes/RecipeCreatePage';
+import RecipeDetailPage from './containers/recipes/RecipeDetailPage';
+import RecipeListPage from './containers/recipes/RecipeListPage';
+import ResetPasswordConfirmPage from './containers/users/ResetPasswordConfirmPage';
+import ResetPasswordPage from './containers/users/ResetPasswordPage';
+import SignupPage from './containers/users/SignupPage';
+import UserDetailPage from './containers/users/UserDetailPage';
+import UserListPage from './containers/users/UserListPage';
 import store from './redux/store';
 
 // pages

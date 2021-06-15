@@ -5,7 +5,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import React from 'react';
-import RecipeListPage from '../../containers/RecipeListPage';
+import RecipeListPage from '../../containers/recipes/RecipeListPage';
 import { act } from 'react-dom/test-utils';
 import store from '../../redux/store';
 

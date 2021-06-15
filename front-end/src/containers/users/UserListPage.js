@@ -1,8 +1,8 @@
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 
-import DisplayUsers from '../components/users/DisplayUsers';
+import DisplayUsers from '../../components/users/DisplayUsers';
 import React from 'react';
-import UserList from '../components/users/UserList';
+import UserList from '../../components/users/UserList';
 import { connect } from 'react-redux';
 
 const userListPage = ({ userList }) => {
