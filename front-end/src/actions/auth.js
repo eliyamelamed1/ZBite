@@ -90,7 +90,7 @@ export const userDeleteAction = (id) => async (dispatch) => {
 };
 
 // load the the details of the connects user loadLoggedUserDetailsAction
-export const loadLoggedUserDetailsAction = (socket) => async (dispatch) => {
+export const loadLoggedUserDetailsAction = () => async (dispatch) => {
     if (localStorage.getItem('auth_token')) {
         const config = {
             headers: {
@@ -102,10 +102,6 @@ export const loadLoggedUserDetailsAction = (socket) => async (dispatch) => {
 
         try {
             const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/djoser/users/me/`, config);
-
-            const { id, name } = res.data;
-
-            socket.emit('user-joined', { id, name });
 
             dispatch({ type: USER_LOADED_SUCCESS, payload: res.data });
         } catch (err) {
