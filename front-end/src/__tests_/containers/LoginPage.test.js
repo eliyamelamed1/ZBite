@@ -6,7 +6,7 @@ import '@testing-library/jest-dom';
 
 import { cleanup, render, screen } from '@testing-library/react';
 
-import LoginPage from '../../containers/LoginPage';
+import LoginPage from '../../containers/users/LoginPage';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
