@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import ChatList from '../components/chats/ChatsList';
-import FriendsList from '../components/chats/FriendList';
-import Search from '../components/chats/search';
-import { getChatsList } from '../redux/actions/chat';
+import ChooseUserToChatWith from '../components/chats/ChooseUserToChatWith';
+import { getChatsListAction } from '../redux/actions/chat';
 import { loadUserListAction } from '../redux/actions/auth';
 
 function Chats() {
@@ -14,7 +13,7 @@ function Chats() {
     const [onlineUsers, setOnlineUsers] = useState([]);
 
     useEffect(() => {
-        dispatch(getChatsList());
+        dispatch(getChatsListAction());
         dispatch(loadUserListAction());
     }, []);
 
@@ -67,10 +66,8 @@ function Chats() {
 
     return (
         <>
-            <Search />
-            {/* search a user to create a chat */}
             {userList && loggedUser && chatsList && (
-                <FriendsList userList={userList} loggedUser={loggedUser} chatsList={chatsList} />
+                <ChooseUserToChatWith userList={userList} loggedUser={loggedUser} chatsList={chatsList} />
             )}
             {onlineUsers && <ChatList chats={chats} onlineUsers={onlineUsers} />}
         </>
