@@ -5,11 +5,11 @@ import '@testing-library/jest-dom';
 
 import { cleanup, render, screen } from '@testing-library/react';
 
-import Layout from '../../Layout/Layout';
+import Layout from '../../components/Layout';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import store from '../../store';
+import store from '../../redux/store';
 
 beforeEach(() => {
     render(

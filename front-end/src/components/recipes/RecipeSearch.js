@@ -1,9 +1,10 @@
 // TODO - test loader
+
 import React, { useState } from 'react';
 
 import Loader from 'react-loader-spinner';
 import { connect } from 'react-redux';
-import { recipeSearchAction } from '../../actions/recipe';
+import { recipeSearchAction } from '../../redux/actions/recipe';
 
 const recipeSearch = ({ recipeSearchAction }) => {
     const [onSubmitHaveBeenCalled, setOnSubmitHaveBeenCalled] = useState(false);

@@ -2,13 +2,15 @@
 // TODO - test onSubmit work as expected
 // TODO - test redirect to home after reset password
 
-import React from 'react';
-import { render, screen, cleanup } from '@testing-library/react';
-import ResetPasswordConfirmPage from '../../containers/ResetPasswordConfirmPage';
-import store from '../../store';
-import { Provider } from 'react-redux';
-import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
+
+import { cleanup, render, screen } from '@testing-library/react';
+
+import { Provider } from 'react-redux';
+import React from 'react';
+import ResetPasswordConfirmPage from '../../containers/ResetPasswordConfirmPage';
+import store from '../../redux/store';
+import userEvent from '@testing-library/user-event';
 
 beforeEach(() => {
     render(

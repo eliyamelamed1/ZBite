@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 
 import { cleanup } from '@testing-library/react';
-import store from '../../store';
+import store from '../../../redux/store';
 
 describe('reducers - auth ', () => {
     afterEach(() => {

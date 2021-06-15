@@ -1,11 +1,13 @@
-import React from 'react';
-import { render, cleanup, screen } from '@testing-library/react';
-import RecipeListPage from '../../containers/RecipeListPage';
 import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
-import { act } from 'react-dom/test-utils';
+
+import { cleanup, render, screen } from '@testing-library/react';
+
 import { Provider } from 'react-redux';
-import store from '../../store';
+import React from 'react';
+import RecipeListPage from '../../containers/RecipeListPage';
+import { act } from 'react-dom/test-utils';
+import store from '../../redux/store';
 
 describe('RecipeListPage', () => {
     beforeEach(() => {

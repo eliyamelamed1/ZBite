@@ -1,9 +1,11 @@
-import React from 'react';
-import HomePage from '../../containers/HomePage';
-import { cleanup, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
+
+import { cleanup, render, screen } from '@testing-library/react';
+
+import HomePage from '../../containers/HomePage';
 import { Provider } from 'react-redux';
-import store from '../../store';
+import React from 'react';
+import store from '../../redux/store';
 
 beforeEach(() => {
     render(

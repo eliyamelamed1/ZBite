@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { resetPasswordAction } from '../actions/auth';
+import { resetPasswordAction } from '../redux/actions/auth';
 
 const resetPasswordPage = (props) => {
     const [requestSent, setRequestSent] = useState(false);

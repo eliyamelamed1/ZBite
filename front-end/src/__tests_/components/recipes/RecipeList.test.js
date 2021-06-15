@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import RecipeList from '../../../components/recipes/RecipeList';
 import { act } from 'react-dom/test-utils';
-import store from '../../../store';
+import store from '../../../redux/store';
 
 beforeEach(() => {
     act(() => {

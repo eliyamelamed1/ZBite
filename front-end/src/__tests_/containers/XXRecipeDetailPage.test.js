@@ -1,11 +1,13 @@
-import React from 'react';
-import { render, screen, cleanup } from '@testing-library/react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom/extend-expect';
-import RecipeDetailPage from '../../containers/RecipeDetailPage';
+
+import { cleanup, render, screen } from '@testing-library/react';
+
 import { Provider } from 'react-redux';
-import store from '../../store';
+import React from 'react';
+import RecipeDetailPage from '../../containers/RecipeDetailPage';
+import { BrowserRouter as Router } from 'react-router-dom';
+import store from '../../redux/store';
+import userEvent from '@testing-library/user-event';
 
 // beforeEach(() => {
 //     const renderWithRouter = (ui, { route = '/recipes/2/' } = {}) => {

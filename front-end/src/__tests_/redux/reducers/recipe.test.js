@@ -1,9 +1,10 @@
 // TODO - improve this tests
 // TODO - after each test reset initiaLState
 
-import { cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import store from '../../store';
+
+import { cleanup } from '@testing-library/react';
+import store from '../../../redux/store';
 
 describe('reducers - auth ', () => {
     afterEach(() => {

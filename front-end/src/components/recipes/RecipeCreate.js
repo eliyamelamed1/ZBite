@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { recipeCreateAction } from '../../actions/recipe';
+import { recipeCreateAction } from '../../redux/actions/recipe';
 
 const recipeCreate = ({ isAuthenticated, recipeCreateAction }) => {
     const [onSubmitHaveBeenCalled, setOnSubmitHaveBeenCalled] = useState(false);

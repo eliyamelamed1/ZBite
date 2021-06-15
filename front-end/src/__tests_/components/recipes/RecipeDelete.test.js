@@ -8,7 +8,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import React from 'react';
 import RecipeDelete from '../../../components/recipes/RecipeDelete';
-import store from '../../../store';
+import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
 
 describe('RecipeDelete - general ', () => {

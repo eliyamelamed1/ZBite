@@ -1,14 +1,16 @@
 // TODO - test redirect after login
 // TODO - test submit calls loginAction
 
-import React from 'react';
-import { cleanup, screen, render } from '@testing-library/react';
-import LoginPage from '../../containers/LoginPage';
-import store from '../../store';
-import { Provider } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
 import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
+
+import { cleanup, render, screen } from '@testing-library/react';
+
+import LoginPage from '../../containers/LoginPage';
+import { Provider } from 'react-redux';
+import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import store from '../../redux/store';
 import userEvent from '@testing-library/user-event';
 
 beforeEach(() => {

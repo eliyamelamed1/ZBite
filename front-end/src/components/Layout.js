@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import Navbar from '../components/Navbar';
-import NewMessage from '../components/notifications/NewMessage';
+import Navbar from './Navbar';
+import NewMessage from './notifications/NewMessage';
 import { connect } from 'react-redux';
-import { connectSocket } from '../actions/socket';
-import { loadLoggedUserDetailsAction } from '../actions/auth';
+import { connectSocket } from '../redux/actions/socket';
+import { loadLoggedUserDetailsAction } from '../redux/actions/auth';
 
 const layout = ({ loadLoggedUserDetailsAction, children }) => {
     const [showPopup, setShowPopup] = useState(false);

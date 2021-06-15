@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { connect } from 'react-redux';
-import { loadUserListAction } from '../../actions/auth';
+import { loadUserListAction } from '../../redux/actions/auth';
 
 const userList = ({ loadUserListAction }) => {
     useEffect(() => {

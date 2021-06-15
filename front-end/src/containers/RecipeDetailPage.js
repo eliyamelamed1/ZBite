@@ -6,7 +6,7 @@ import React, { useEffect } from 'react';
 import IsRecipeAuthor from '../components/recipes/IsRecipeAuthor';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { loadRecipeDetailsAction } from '../actions/recipe';
+import { loadRecipeDetailsAction } from '../redux/actions/recipe';
 
 // import PropTypes from 'prop-types';
 
