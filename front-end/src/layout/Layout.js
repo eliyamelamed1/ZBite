@@ -30,14 +30,14 @@ const layout = ({ loadLoggedUserDetailsAction, children }) => {
         if (socket && loggedUser) {
             const id = loggedUser.id;
             const name = loggedUser.name;
+            console.log(loggedUser.id);
             socket.emit('user-joined', { id, name });
         }
-    }, [socket]);
+    }, [socket, loggedUser]);
 
     useEffect(() => {
         if (socket) {
             socket.on('message-received', ({ sender, text }) => {
-                console.log('------------');
                 setShowPopup(true);
                 setMessageReceivied({ sender, text }); //while on chat dont show popup
             });
