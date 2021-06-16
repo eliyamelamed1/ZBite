@@ -1,9 +1,9 @@
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import React, { useEffect, useState } from 'react';
 
-import NotFound from '../../components/NotFound';
-import UserDelete from '../../components/users/UserDelete';
-import UserUpdate from '../../components/users/UserUpdate';
+import NotFound from '../NotFound';
+import UserDelete from './UserDelete';
+import UserUpdate from './UserUpdate';
 import { connect } from 'react-redux';
 import { loadUserDetailsAction } from '../../redux/actions/auth';
 

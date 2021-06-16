@@ -12,10 +12,10 @@ import React from 'react';
 import RecipeCreatePage from './containers/recipes/RecipeCreatePage';
 import RecipeDetailPage from './containers/recipes/RecipeDetailPage';
 import RecipeListPage from './containers/recipes/RecipeListPage';
-import ResetPasswordConfirmPage from './containers/users/ResetPasswordConfirmPage';
-import ResetPasswordPage from './containers/users/ResetPasswordPage';
-import SignupPage from './containers/users/SignupPage';
-import UserDetailPage from './containers/users/UserDetailPage';
+import ResetPasswordConfirmPage from './components/users/UserResetPasswordConfirmPage';
+import ResetPasswordPage from './components/users/UserResetPasswordPage';
+import SignupPage from './components/users/UserSignup';
+import UserDetailPage from './components/users/UserDetails';
 import UserList from './components/users/UserList';
 import store from './redux/store';
 

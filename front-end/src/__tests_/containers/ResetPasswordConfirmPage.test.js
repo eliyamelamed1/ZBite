@@ -8,7 +8,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import React from 'react';
-import ResetPasswordConfirmPage from '../../containers/users/ResetPasswordConfirmPage';
+import ResetPasswordConfirmPage from '../../components/users/UserResetPasswordConfirmPage';
 import store from '../../redux/store';
 import userEvent from '@testing-library/user-event';
 
