@@ -8,14 +8,14 @@ import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import React from 'react';
-import ResetPasswordPage from '../../components/users/UserResetPasswordPage';
-import store from '../../redux/store';
+import UserResetPassword from '../../../components/users/UserResetPassword';
+import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
 
 beforeEach(() => {
     render(
         <Provider store={store}>
-            <ResetPasswordPage />
+            <UserResetPassword />
         </Provider>
     );
 });
@@ -24,11 +24,11 @@ afterEach(() => {
     cleanup();
 });
 
-describe('ResetPasswordPage', () => {
+describe('UserResetPassword', () => {
     test('renders without crashing', () => {});
 });
 
-describe('ResetPasswordPage - email input', () => {
+describe('UserResetPassword - email input', () => {
     test('should render email text box', () => {
         const emailTextbox = screen.getByPlaceholderText('Email');
         expect(emailTextbox).toBeInTheDocument();
@@ -45,7 +45,7 @@ describe('ResetPasswordPage - email input', () => {
     });
 });
 
-describe('ResetPasswordPage - send reset password email button', () => {
+describe('UserResetPassword - send reset password email button', () => {
     test('button should render ', () => {
         const button = screen.getByRole('button', { name: 'Send Password Reset' });
         expect(button).toBeInTheDocument();

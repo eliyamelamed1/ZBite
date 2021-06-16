@@ -28,7 +28,7 @@ const resetPasswordConfirmPage = (props) => {
 
     if (requestSent) return <Redirect to='/' />;
     return (
-        <div data-testid='resetPasswordConfirmPage'>
+        <div data-testid='userResetPasswordConfirm'>
             <form onSubmit={(e) => onSubmit(e)}>
                 <div>
                     <input

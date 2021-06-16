@@ -8,14 +8,14 @@ import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import React from 'react';
-import ResetPasswordConfirmPage from '../../components/users/UserResetPasswordConfirmPage';
-import store from '../../redux/store';
+import UserResetPasswordConfirm from '../../../components/users/UserResetPasswordConfirm';
+import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
 
 beforeEach(() => {
     render(
         <Provider store={store}>
-            <ResetPasswordConfirmPage />
+            <UserResetPasswordConfirm />
         </Provider>
     );
 });
@@ -24,11 +24,11 @@ afterEach(() => {
     cleanup();
 });
 
-describe('ResetPasswordConfirmPage', () => {
+describe('UserResetPasswordConfirm', () => {
     test('renders without crashing', () => {});
 });
 
-describe('ResetPasswordConfirmPage - new password input', () => {
+describe('UserResetPasswordConfirm - new password input', () => {
     test('renders password box', () => {
         const passwordTextbox = screen.getByPlaceholderText('New password');
         expect(passwordTextbox).toBeInTheDocument();
@@ -44,7 +44,7 @@ describe('ResetPasswordConfirmPage - new password input', () => {
     });
 });
 
-describe('ResetPasswordConfirmPage - confirm new password input', () => {
+describe('UserResetPasswordConfirm - confirm new password input', () => {
     test('renders password box', () => {
         const passwordTextbox = screen.getByPlaceholderText('Confirm New Password');
         expect(passwordTextbox).toBeInTheDocument();
@@ -60,7 +60,7 @@ describe('ResetPasswordConfirmPage - confirm new password input', () => {
     });
 });
 
-describe('ResetPasswordConfirmPage - reset password button', () => {
+describe('UserResetPasswordConfirm - reset password button', () => {
     test('should render register button', () => {
         const button = screen.getByRole('button', { name: 'Reset Password' });
         expect(button).toBeInTheDocument();

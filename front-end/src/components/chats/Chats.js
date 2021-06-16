@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import ChatList from '../../components/chats/ChatsList';
-import ChooseUserToChatWith from '../../components/chats/ChooseUserToChatWith';
+import ChatList from './ChatsList';
+import ChooseUserToChatWith from './ChooseUserToChatWith';
 import { getChatsListAction } from '../../redux/actions/chat';
 import { loadUserListAction } from '../../redux/actions/auth';
 

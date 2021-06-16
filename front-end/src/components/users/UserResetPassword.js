@@ -25,7 +25,7 @@ const resetPasswordPage = (props) => {
     if (requestSent) return <Redirect to='/' />;
 
     return (
-        <div data-testid='resetPasswordPage'>
+        <div data-testid='userResetPassword'>
             <h1>Request Password Reset:</h1>
             <form onSubmit={(e) => onSubmit(e)}>
                 <div>

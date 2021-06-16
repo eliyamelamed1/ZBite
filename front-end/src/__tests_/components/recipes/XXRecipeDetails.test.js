@@ -4,9 +4,9 @@ import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import React from 'react';
-import RecipeDetailPage from '../../containers/recipes/RecipeDetailPage';
+import RecipeDetails from '../../../components/recipes/RecipeDetails';
 import { BrowserRouter as Router } from 'react-router-dom';
-import store from '../../redux/store';
+import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
 
 // beforeEach(() => {
@@ -25,7 +25,7 @@ import userEvent from '@testing-library/user-event';
 //     cleanup();
 // });
 
-describe('RecipeDetailPage', () => {
+describe('RecipeDetails', () => {
     test('should render without crashing', () => {});
     // test('should render RecipeDetailPage', () => {
     //     const detailPage = screen.getByRole('link', { name: 'View Recipe Details' });

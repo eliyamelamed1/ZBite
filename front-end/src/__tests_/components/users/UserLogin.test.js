@@ -6,11 +6,11 @@ import '@testing-library/jest-dom';
 
 import { cleanup, render, screen } from '@testing-library/react';
 
-import LoginPage from '../../containers/users/LoginPage';
+import LoginPage from '../../../components/users/UserLogin';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import store from '../../redux/store';
+import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
 
 beforeEach(() => {

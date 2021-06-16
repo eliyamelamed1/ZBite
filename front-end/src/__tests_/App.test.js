@@ -1,10 +1,12 @@
 // TODO - test layout wrap components (components inside the layout)
 // TODO - RecipeList, RecipeDetails, RecipePage tests throw error
 
-import React from 'react';
-import App from './App';
-import { screen, render, cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
+
+import { cleanup, render, screen } from '@testing-library/react';
+
+import App from '../App';
+import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { act } from 'react-dom/test-utils';
 
@@ -83,8 +85,8 @@ describe('App - recipe create page url should match component ', () => {
     });
     test('should render without crashing', () => {});
     test('should render recipe create page', () => {
-        const recipeCreatePage = screen.getByTestId('recipeCreatePage');
-        expect(recipeCreatePage).toBeInTheDocument();
+        const recipeCreate = screen.getByTestId('recipeCreate');
+        expect(recipeCreate).toBeInTheDocument();
     });
 });
 
@@ -102,8 +104,8 @@ describe('App - recipes page url should match component ', () => {
     });
     test('should render without crashing', () => {});
     test('should render recipes page', () => {
-        const recipesPage = screen.getByTestId('recipesPage');
-        expect(recipesPage).toBeInTheDocument();
+        const recipeList = screen.getByTestId('recipeList');
+        expect(recipeList).toBeInTheDocument();
     });
 });
 
@@ -121,8 +123,8 @@ describe('App - recipes detail page url should match component ', () => {
     });
     test('should render without crashing', () => {});
     test('should render recipe detail page', () => {
-        const recipeDetailPage = screen.getByTestId('recipeDetailPage');
-        expect(recipeDetailPage).toBeInTheDocument();
+        const recipeDetails = screen.getByTestId('recipeDetails');
+        expect(recipeDetails).toBeInTheDocument();
     });
 });
 
@@ -140,8 +142,8 @@ describe('App - reset password page url should match component ', () => {
     });
     test('should render without crashing', () => {});
     test('should render reset password page', () => {
-        const resetPasswordPage = screen.getByTestId('resetPasswordPage');
-        expect(resetPasswordPage).toBeInTheDocument();
+        const userResetPassword = screen.getByTestId('userResetPassword');
+        expect(userResetPassword).toBeInTheDocument();
     });
 });
 
@@ -159,8 +161,8 @@ describe('App - reset password confirm page url should match component ', () => 
     });
     test('should render without crashing', () => {});
     test('should render reset password confirm page', () => {
-        const resetPasswordConfirmPage = screen.getByTestId('resetPasswordConfirmPage');
-        expect(resetPasswordConfirmPage).toBeInTheDocument();
+        const userResetPasswordConfirm = screen.getByTestId('userResetPasswordConfirm');
+        expect(userResetPasswordConfirm).toBeInTheDocument();
     });
 });
 

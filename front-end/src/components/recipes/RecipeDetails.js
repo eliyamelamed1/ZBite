@@ -3,7 +3,7 @@
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import React, { useEffect } from 'react';
 
-import IsRecipeAuthor from '../../components/recipes/IsRecipeAuthor';
+import IsRecipeAuthor from './IsRecipeAuthor';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loadRecipeDetailsAction } from '../../redux/actions/recipe';
@@ -64,7 +64,7 @@ const recipeDetailPage = (props) => {
     );
 
     return (
-        <div data-testid='recipeDetailPage'>
+        <div data-testid='recipeDetails'>
             <HelmetProvider>
                 <Helmet>
                     {props.recipeDetailState ? (

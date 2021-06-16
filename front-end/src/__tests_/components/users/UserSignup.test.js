@@ -9,8 +9,8 @@ import { cleanup, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import SignupPage from '../../components/users/UserSignup';
-import store from '../../redux/store';
+import SignupPage from '../../../components/users/UserSignup';
+import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
 
 beforeEach(() => {

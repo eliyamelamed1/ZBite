@@ -1,16 +1,16 @@
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
 
 import { cleanup, render, screen } from '@testing-library/react';
 
+import HomePage from '../../pages/HomePage';
 import { Provider } from 'react-redux';
 import React from 'react';
-import RecipeCreatePage from '../../containers/recipes/RecipeCreatePage';
 import store from '../../redux/store';
 
 beforeEach(() => {
     render(
         <Provider store={store}>
-            <RecipeCreatePage />
+            <HomePage />
         </Provider>
     );
 });
@@ -18,9 +18,9 @@ afterEach(() => {
     cleanup();
 });
 
-describe('RecipeCreatePage', () => {
+describe('HomePage', () => {
     test('renders without crashing', () => {});
-    test('contains RecipeCreate componenet', () => {
-        expect(screen.getByTestId('recipeCreate')).toBeInTheDocument();
+    test('contains RecipeSearch componenet', () => {
+        expect(screen.getByTestId('RecipeSearch')).toBeInTheDocument();
     });
 });
