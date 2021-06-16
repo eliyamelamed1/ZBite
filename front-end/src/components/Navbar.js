@@ -1,13 +1,17 @@
 // add recipes option in navbar
 
 import { Link, NavLink } from 'react-router-dom';
+import { connect, useSelector } from 'react-redux';
 
 import React from 'react';
-import { connect } from 'react-redux';
 import { logoutAction } from '../redux/actions/auth';
 
-const navbar = ({ isAuthenticatedData, logoutAction, loggedUserData }) => {
+const navbar = ({ logoutAction }) => {
+    const isAuthenticatedData = useSelector((state) => state.authReducer.isAuthenticatedData);
+    const loggedUserData = useSelector((state) => state.authReducer.loggedUserData);
+
     const profileUrl = loggedUserData ? '/users/' + loggedUserData.id : null;
+
     const authLinks = (
         <section data-testid='authLinks'>
             {loggedUserData ? (
@@ -61,9 +65,4 @@ const navbar = ({ isAuthenticatedData, logoutAction, loggedUserData }) => {
     );
 };
 
-const mapStateToProps = (state) => ({
-    isAuthenticatedData: state.authReducer.isAuthenticatedData,
-    loggedUserData: state.authReducer.loggedUserData,
-});
-
-export default connect(mapStateToProps, { logoutAction })(navbar);
+export default connect(null, { logoutAction })(navbar);

@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
+import { connect, useSelector } from 'react-redux';
 
 import DisplayUsers from './DisplayUsers';
-import { connect } from 'react-redux';
 import { loadUserListAction } from '../../redux/actions/auth';
 
-const userList = ({ loadUserListAction, userListData }) => {
+const userList = ({ loadUserListAction }) => {
+    const userListData = useSelector((state) => state.authReducer.userListData);
     useEffect(() => {
         loadUserListAction();
     }, []);
@@ -16,8 +17,4 @@ const userList = ({ loadUserListAction, userListData }) => {
     );
 };
 
-const mapStateToProps = (state) => ({
-    userListData: state.authReducer.userListData,
-});
-
-export default connect(mapStateToProps, { loadUserListAction })(userList);
+export default connect(null, { loadUserListAction })(userList);

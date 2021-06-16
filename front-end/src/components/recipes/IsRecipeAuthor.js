@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { connect, useSelector } from 'react-redux';
 
 import PropTypes from 'prop-types';
 import RecipeDelete from './RecipeDelete';
 import RecipeUpdate from './RecipeUpdate';
-import { connect } from 'react-redux';
 
-const isRecipeAuthor = ({ recipe, loggedUserData }) => {
+const isRecipeAuthor = ({ recipe }) => {
     const [isAuthor, setIsAuthor] = useState(false);
     const guestLinks = <div data-testid='guestLinks'>you are not the recipe author </div>;
+    const loggedUserData = useSelector((state) => state.authReducer.loggedUserData);
 
     const authorLinks = (
         <div data-testid='authorLinks'>
@@ -26,13 +27,10 @@ const isRecipeAuthor = ({ recipe, loggedUserData }) => {
     return <div>{isAuthor ? authorLinks : guestLinks}</div>;
 };
 
-const mapStateToProps = (state) => ({
-    loggedUserData: state.authReducer.loggedUserData,
-});
 isRecipeAuthor.propTypes = {
     recipe: PropTypes.object.isRequired,
 };
 
-export default connect(mapStateToProps, null)(isRecipeAuthor);
+export default connect(null, null)(isRecipeAuthor);
 
 // add proptypes

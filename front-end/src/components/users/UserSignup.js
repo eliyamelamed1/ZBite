@@ -1,10 +1,11 @@
 import { Link, Redirect } from 'react-router-dom';
 import React, { useState } from 'react';
+import { connect, useSelector } from 'react-redux';
 
-import { connect } from 'react-redux';
 import { signupAction } from '../../redux/actions/auth';
 
-const signupPage = ({ signupAction, isAuthenticatedData }) => {
+const signupPage = ({ signupAction }) => {
+    const isAuthenticatedData = useSelector((state) => state.authReducer.isAuthenticatedData);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -95,8 +96,4 @@ const signupPage = ({ signupAction, isAuthenticatedData }) => {
     );
 };
 
-const mapStateToProps = (state) => ({
-    isAuthenticatedData: state.authReducer.isAuthenticatedData,
-});
-
-export default connect(mapStateToProps, { signupAction })(signupPage);
+export default connect(null, { signupAction })(signupPage);

@@ -1,11 +1,12 @@
 import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { connect, useSelector } from 'react-redux';
 
 import DisplayRecipes from '../components/recipes/DisplayRecipes';
 import React from 'react';
 import RecipeSearch from '../components/recipes/RecipeSearch';
-import { connect } from 'react-redux';
 
-const homePage = ({ recipeSearchedListData }) => {
+const homePage = () => {
+    const recipeSearchedListData = useSelector((state) => state.recipeReducer.recipeSearchedListData);
     return (
         <main data-testid='homePage'>
             <HelmetProvider>
@@ -24,8 +25,4 @@ const homePage = ({ recipeSearchedListData }) => {
     );
 };
 
-const mapStateToProps = (state) => ({
-    recipeSearchedListData: state.recipeReducer.recipeSearchedListData,
-});
-
-export default connect(mapStateToProps, null)(homePage);
+export default connect(null, null)(homePage);
