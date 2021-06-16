@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { userDeleteAction } from '../../actions/auth';
+import { userDeleteAction } from '../../redux/actions/auth';
 
 // import { Redirect } from 'react-router-dom';
 

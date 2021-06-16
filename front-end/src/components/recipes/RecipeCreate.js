@@ -4,9 +4,9 @@ import React, { useState } from 'react';
 
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { recipeCreateAction } from '../../actions/recipe';
+import { recipeCreateAction } from '../../redux/actions/recipe';
 
-const recipeCreate = ({ isAuthenticated, recipeCreateAction }) => {
+const recipeCreate = ({ isAuthenticatedData, recipeCreateAction }) => {
     const [onSubmitHaveBeenCalled, setOnSubmitHaveBeenCalled] = useState(false);
     const [formData, setFormData] = useState({
         title: '',
@@ -18,7 +18,7 @@ const recipeCreate = ({ isAuthenticated, recipeCreateAction }) => {
 
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    if (isAuthenticated == false) return <Redirect to='/' />;
+    if (isAuthenticatedData == false) return <Redirect to='/' />;
 
     const onSubmit = (e) => {
         e.preventDefault();

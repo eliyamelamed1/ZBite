@@ -6,7 +6,7 @@ import DisplayRecipes from '../../../components/recipes/DisplayRecipes';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import store from '../../../store';
+import store from '../../../redux/store';
 
 beforeEach(() => {
     const data = {

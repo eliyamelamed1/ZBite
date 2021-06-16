@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import RecipeSearch from '../../../components/recipes/RecipeSearch';
 import { act } from 'react-dom/test-utils';
-import store from '../../../store';
+import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
 
 beforeEach(() => {

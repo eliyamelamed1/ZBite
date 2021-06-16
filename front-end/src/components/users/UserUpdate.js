@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { userUpdateAction } from '../../actions/auth';
+import { userUpdateAction } from '../../redux/actions/auth';
 
 const userUpdate = ({ id, userUpdateAction }) => {
     const [formData, setFormData] = useState({

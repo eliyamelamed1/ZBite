@@ -1,57 +1,47 @@
-import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 
-import ActivatePage from "./containers/ActivatePage";
-import Chats from "./containers/Chats";
-import DetailChat from "./containers/ChatDetail";
-import HomePage from "./containers/HomePage";
-import Layout from "./layout/Layout";
-import LoginPage from "./containers/LoginPage";
-import NotFound from "./components/NotFound";
-import { Provider } from "react-redux";
-import React from "react";
-import RecipeCreatePage from "./containers/RecipeCreatePage";
-import RecipeDetailPage from "./containers/RecipeDetailPage";
-import RecipeListPage from "./containers/RecipeListPage";
-import ResetPasswordConfirmPage from "./containers/ResetPasswordConfirmPage";
-import ResetPasswordPage from "./containers/ResetPasswordPage";
-import SignupPage from "./containers/SignupPage";
-import UserDetailPage from "./containers/UserDetailPage";
-import UserListPage from "./containers/UserListPage";
-import store from "./store";
-
-// pages
-
-// components
-
-// reduxjj
+import ChatDetails from './components/chats/ChatDetails';
+import Chats from './components/chats/Chats';
+import HomePage from './pages/HomePage';
+import Layout from './components/Layout';
+import NotFound from './components/NotFound';
+import { Provider } from 'react-redux';
+import React from 'react';
+import RecipeCreate from './components/recipes/RecipeCreate';
+import RecipeDetails from './components/recipes/RecipeDetails';
+import RecipeList from './components/recipes/RecipeList';
+import UserActivate from './components/users/UserActivate';
+import UserDetails from './components/users/UserDetails';
+import UserList from './components/users/UserList';
+import UserLogin from './components/users/UserLogin';
+import UserResetPassword from './components/users/UserResetPassword';
+import UserResetPasswordConfirm from './components/users/UserResetPasswordConfirm';
+import UserSignup from './components/users/UserSignup';
+import store from './redux/store';
 
 const App = () => (
-  <Provider store={store}>
-    <Router>
-      <Layout>
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route exact path="/users" component={UserListPage} />
-          <Route exact path="/users/:id" component={UserDetailPage} />
-          <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/signup" component={SignupPage} />
-          <Route exact path="/recipes/create" component={RecipeCreatePage} />
-          <Route exact path="/recipes" component={RecipeListPage} />
-          <Route exact path="/recipes/:id" component={RecipeDetailPage} />
-          <Route exact path="/reset_password" component={ResetPasswordPage} />
-          <Route
-            exact
-            path="/password/reset/confirm/:uid/:token"
-            component={ResetPasswordConfirmPage}
-          />
-          <Route exact path="/activate/:uid/:token" component={ActivatePage} />
-          <Route exact path="/chats" component={Chats} />
-          <Route exact path="/chats/chat/:chatId" component={DetailChat} />
-          <Route component={NotFound} />
-        </Switch>
-      </Layout>
-    </Router>
-  </Provider>
+    <Provider store={store}>
+        <Router>
+            <Layout>
+                <Switch>
+                    <Route exact path='/' component={HomePage} />
+                    <Route exact path='/users' component={UserList} />
+                    <Route exact path='/users/:id' component={UserDetails} />
+                    <Route exact path='/login' component={UserLogin} />
+                    <Route exact path='/signup' component={UserSignup} />
+                    <Route exact path='/recipes/create' component={RecipeCreate} />
+                    <Route exact path='/recipes' component={RecipeList} />
+                    <Route exact path='/recipes/:id' component={RecipeDetails} />
+                    <Route exact path='/reset_password' component={UserResetPassword} />
+                    <Route exact path='/password/reset/confirm/:uid/:token' component={UserResetPasswordConfirm} />
+                    <Route exact path='/activate/:uid/:token' component={UserActivate} />
+                    <Route exact path='/chats' component={Chats} />
+                    <Route exact path='/chats/chat/:chatId' component={ChatDetails} />
+                    <Route component={NotFound} />
+                </Switch>
+            </Layout>
+        </Router>
+    </Provider>
 );
 
 export default App;

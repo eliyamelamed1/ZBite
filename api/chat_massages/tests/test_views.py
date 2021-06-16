@@ -26,6 +26,9 @@ class TestChatMassageCreate:
                 response = api_client.post(chat_massage_create_url, new_massage)
 
                 assert response.status_code == 200
+                assert ChatMassage.objects.all()[0].text == new_massage['text']
+                assert ChatMassage.objects.all().count() == 1
+
             
             def test_chat_massage_author_should_automatically_set_to_be_the_connected_user(self, api_client):
                 new_user = UserFactory()
@@ -70,6 +73,7 @@ class TestChatMassageCreate:
                 response = api_client.post(chat_massage_create_url, new_massage)
 
                 assert response.status_code == 403
+                assert ChatMassage.objects.all().count() == 0
         
 
         class TestGuestUsers:
@@ -93,6 +97,8 @@ class TestChatMassageCreate:
                 response = api_client.post(chat_massage_create_url, new_massage)
 
                 assert response.status_code == 401   
+                assert ChatMassage.objects.all().count() == 0
+
     class TestRoomDuoInput:
         class TestMembers:
             def test_create_chat_massage_successfully(self, api_client):
@@ -109,6 +115,10 @@ class TestChatMassageCreate:
                 response = api_client.post(chat_massage_create_url, new_massage)
 
                 assert response.status_code == 200
+                assert ChatMassage.objects.all().count() == 1
+                assert ChatMassage.objects.all()[0].text == new_massage['text']
+
+
             
             def test_chat_massage_author_should_automatically_set_to_be_the_connected_user(self, api_client):
                 new_user = UserFactory()
@@ -145,6 +155,7 @@ class TestChatMassageCreate:
                 response = api_client.post(chat_massage_create_url, new_massage)
 
                 assert response.status_code == 403
+                assert ChatMassage.objects.all().count() == 0
         
         class TestGuestUsers:
             def test_create_chat_massage_fail(self, api_client):
@@ -161,7 +172,9 @@ class TestChatMassageCreate:
 
                 response = api_client.post(chat_massage_create_url, new_massage)
 
-                assert response.status_code == 401   
+                assert response.status_code == 401 
+                assert ChatMassage.objects.all().count() == 0
+  
 
 
 class TestChatMassageDetails:
@@ -183,7 +196,7 @@ class TestChatMassageDetails:
                 assert response.status_code == 403
 
         class TestGuest:
-            def test_chat_massage_details_page_should_render(self, api_client):
+            def test_chat_massage_details_page_should_not_render(self, api_client):
                 chat_massage = ChatMassageFactory()
                 response = api_client.get(chat_massage.get_absolute_url())
 
@@ -198,8 +211,11 @@ class TestChatMassageDetails:
                     'text': 'updated_chat_massage'
                 }
                 response = api_client.patch(chat_massage.get_absolute_url(), updated_chat_massage)
+                chat_massage = ChatMassage.objects.get(text=updated_chat_massage['text'])
 
                 assert response.status_code == 200
+                assert f'{chat_massage.id}' in f'{response.content}'
+
 
         class TestAuthenticated:
             def test_chat_massage_details_page_should_render(self, api_client):
@@ -212,9 +228,10 @@ class TestChatMassageDetails:
                 response = api_client.patch(chat_massage.get_absolute_url(), updated_chat_massage)
 
                 assert response.status_code == 403
+                assert f'{updated_chat_massage}' not in f'{response.content}'
 
         class TestGuest:
-            def test_chat_massage_details_page_should_render(self, api_client):
+            def test_chat_massage_details_page_should_not_render(self, api_client):
                 chat_massage = ChatMassageFactory()
                 updated_chat_massage = {
                     'text': 'updated_chat_massage'
@@ -222,6 +239,7 @@ class TestChatMassageDetails:
                 response = api_client.patch(chat_massage.get_absolute_url(), updated_chat_massage)
 
                 assert response.status_code == 401
+                assert f'{chat_massage.id}' not in f'{response.content}'
 
 
     class TestDestroy:
@@ -232,6 +250,7 @@ class TestChatMassageDetails:
                 response = api_client.delete(chat_massage.get_absolute_url())
 
                 assert response.status_code == 204
+                assert ChatMassage.objects.all().count() == 0
 
         class TestAuthenticated:
             def test_chat_massage_details_page_should_render(self, api_client):
@@ -241,6 +260,7 @@ class TestChatMassageDetails:
                 response = api_client.delete(chat_massage.get_absolute_url())
 
                 assert response.status_code == 403
+                assert ChatMassage.objects.all().count() == 1
 
         class TestGuest:
             def test_chat_massage_details_page_should_render(self, api_client):
@@ -248,13 +268,14 @@ class TestChatMassageDetails:
                 response = api_client.delete(chat_massage.get_absolute_url())
 
                 assert response.status_code == 401
+                assert ChatMassage.objects.all().count() == 1
 
 
 
 class TestChatMassagesInRoom:
     class TestGroup:
         class TestMembers:
-            def test_chat_post_request_allowed_input_room(self, api_client):
+            def test_chat_post_request_response(self, api_client):
                 new_user = UserFactory()
                 new_user2 = UserFactory()
                 api_client.force_authenticate(new_user)

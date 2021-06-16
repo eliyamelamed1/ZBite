@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 
 import { connect } from 'react-redux';
-import { recipeUpdateAction } from '../../actions/recipe';
+import { recipeUpdateAction } from '../../redux/actions/recipe';
 
 const recipeUpdate = ({ id, recipeUpdateAction }) => {
     const [onSubmitHaveBeenCalled, setOnSubmitHaveBeenCalled] = useState(false);
