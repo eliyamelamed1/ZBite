@@ -16,7 +16,7 @@ import {
 const initialState = {
     recipeListData: null,
     recipeSearchedListData: null,
-    recipeDetailState: null,
+    recipeDetailData: null,
 };
 
 const TEST_CASE_RECIPE = 'TEST_CASE_RECIPE';
@@ -30,7 +30,7 @@ export default function recipeReducer(state = initialState, action) {
                 ...state,
                 recipeListData: payload.recipeListData,
                 recipeSearchedListData: payload.recipeSearchedListData,
-                recipeDetailState: payload.recipeDetailState,
+                recipeDetailData: payload.recipeDetailData,
             };
         case LOAD_RECIPE_LIST_SUCCESS: //
             return { ...state, recipeListData: payload };
@@ -38,7 +38,7 @@ export default function recipeReducer(state = initialState, action) {
             return { ...state, recipeSearchedListData: payload };
         case RECIPE_UPDATED_SUCCESS: //
         case LOAD_RECIPE_DETAILS_SUCCESS: //
-            return { ...state, recipeDetailState: payload };
+            return { ...state, recipeDetailData: payload };
         case RECIPE_DELETED_SUCCESS: //
         case RECIPE_DELETED_FAIL:
         case RECIPE_CREATED_SUCCESS:

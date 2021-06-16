@@ -6,13 +6,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { logoutAction } from '../redux/actions/auth';
 
-const navbar = ({ isAuthenticated, logoutAction, loggedUser }) => {
-    const profileUrl = loggedUser ? '/users/' + loggedUser.id : null;
+const navbar = ({ isAuthenticatedData, logoutAction, loggedUserData }) => {
+    const profileUrl = loggedUserData ? '/users/' + loggedUserData.id : null;
     const authLinks = (
         <section data-testid='authLinks'>
-            {loggedUser ? (
+            {loggedUserData ? (
                 <div>
-                    <div>you are currently logged in as {loggedUser.email}</div>
+                    <div>you are currently logged in as {loggedUserData.email}</div>
                     <div>
                         <NavLink exact to={profileUrl}>
                             Profile
@@ -22,7 +22,7 @@ const navbar = ({ isAuthenticated, logoutAction, loggedUser }) => {
                     </div>
                 </div>
             ) : null}
-            {isAuthenticated ? (
+            {isAuthenticatedData ? (
                 <li>
                     <button onClick={logoutAction}>Logout</button>
                 </li>
@@ -54,7 +54,7 @@ const navbar = ({ isAuthenticated, logoutAction, loggedUser }) => {
                             Home
                         </NavLink>
                     </li>
-                    <>{isAuthenticated ? authLinks : guestLinks}</>
+                    <>{isAuthenticatedData ? authLinks : guestLinks}</>
                 </ul>
             </div>
         </nav>
@@ -62,8 +62,8 @@ const navbar = ({ isAuthenticated, logoutAction, loggedUser }) => {
 };
 
 const mapStateToProps = (state) => ({
-    isAuthenticated: state.authReducer.isAuthenticated,
-    loggedUser: state.authReducer.loggedUser,
+    isAuthenticatedData: state.authReducer.isAuthenticatedData,
+    loggedUserData: state.authReducer.loggedUserData,
 });
 
 export default connect(mapStateToProps, { logoutAction })(navbar);

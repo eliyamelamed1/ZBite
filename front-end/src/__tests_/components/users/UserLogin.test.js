@@ -65,7 +65,7 @@ describe('LoginPage - redirect', () => {
         cleanup();
     });
     test('should redirect authenticated user', async () => {
-        store.dispatch({ type: 'LOGIN_SUCCESS', payload: { isAuthenticated: true } });
+        store.dispatch({ type: 'LOGIN_SUCCESS', payload: { isAuthenticatedData: true } });
         render(
             <Provider store={store}>
                 <Router>

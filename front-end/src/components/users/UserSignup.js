@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { signupAction } from '../../redux/actions/auth';
 
-const signupPage = ({ signupAction, isAuthenticated }) => {
+const signupPage = ({ signupAction, isAuthenticatedData }) => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -36,7 +36,7 @@ const signupPage = ({ signupAction, isAuthenticated }) => {
         }
     };
 
-    if (isAuthenticated) return <Redirect to='/' />;
+    if (isAuthenticatedData) return <Redirect to='/' />;
     if (accountCreated) return <Redirect to='/login' />;
 
     return (
@@ -96,7 +96,7 @@ const signupPage = ({ signupAction, isAuthenticated }) => {
 };
 
 const mapStateToProps = (state) => ({
-    isAuthenticated: state.authReducer.isAuthenticated,
+    isAuthenticatedData: state.authReducer.isAuthenticatedData,
 });
 
 export default connect(mapStateToProps, { signupAction })(signupPage);

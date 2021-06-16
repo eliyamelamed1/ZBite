@@ -71,6 +71,7 @@ export const userUpdateAction = (id, email, name) => async (dispatch) => {
     }
 };
 
+// TODO gets an error after deleting user
 export const userDeleteAction = (id) => async (dispatch) => {
     const config = {
         headers: {

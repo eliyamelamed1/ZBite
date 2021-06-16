@@ -18,14 +18,14 @@ function Chats() {
     }, []);
 
     const { socket } = useSelector((state) => state.socketReducer);
-    const { chatsList } = useSelector((state) => state.chatReducer);
-    const { userList, loggedUser } = useSelector((state) => state.authReducer);
+    const { chatsListData } = useSelector((state) => state.chatReducer);
+    const { userListData, loggedUserData } = useSelector((state) => state.authReducer);
 
     useEffect(() => {
-        if (socket && loggedUser) {
+        if (socket && loggedUserData) {
             socket.emit('userConnectedToChat', {
-                username: loggedUser.name,
-                id: loggedUser.id,
+                username: loggedUserData.name,
+                id: loggedUserData.id,
             });
 
             socket.on('currentUsers', ({ onlineUsers }) => {
@@ -41,33 +41,37 @@ function Chats() {
             });
         }
         return () => {
-            if (socket && loggedUser) {
+            if (socket && loggedUserData) {
                 socket.emit('userDisconectedFromChat', {
-                    username: loggedUser.name,
-                    id: loggedUser.id,
+                    username: loggedUserData.name,
+                    id: loggedUserData.id,
                 });
                 socket.off();
             }
         };
-    }, [socket, loggedUser]);
+    }, [socket, loggedUserData]);
 
     useEffect(() => {
-        if (chatsList && userList) {
-            const updatedChats = chatsList.map((chat) => {
-                return userList.find(
+        if (chatsListData && userListData) {
+            const updatedChats = chatsListData.map((chat) => {
+                return userListData.find(
                     (user) =>
-                        (user.id === chat.members[0] && user.id !== loggedUser.id) ||
-                        (user.id === chat.members[1] && user.id !== loggedUser.id)
+                        (user.id === chat.members[0] && user.id !== loggedUserData.id) ||
+                        (user.id === chat.members[1] && user.id !== loggedUserData.id)
                 );
             });
             setChats(updatedChats);
         }
-    }, [chatsList, userList]);
+    }, [chatsListData, userListData]);
 
     return (
         <>
-            {userList && loggedUser && chatsList && (
-                <ChooseUserToChatWith userList={userList} loggedUser={loggedUser} chatsList={chatsList} />
+            {userListData && loggedUserData && chatsListData && (
+                <ChooseUserToChatWith
+                    userListData={userListData}
+                    loggedUserData={loggedUserData}
+                    chatsListData={chatsListData}
+                />
             )}
             {onlineUsers && <ChatList chats={chats} onlineUsers={onlineUsers} />}
         </>

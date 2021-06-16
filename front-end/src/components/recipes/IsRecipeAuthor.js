@@ -5,7 +5,7 @@ import RecipeDelete from './RecipeDelete';
 import RecipeUpdate from './RecipeUpdate';
 import { connect } from 'react-redux';
 
-const isRecipeAuthor = ({ recipe, loggedUser }) => {
+const isRecipeAuthor = ({ recipe, loggedUserData }) => {
     const [isAuthor, setIsAuthor] = useState(false);
     const guestLinks = <div data-testid='guestLinks'>you are not the recipe author </div>;
 
@@ -17,8 +17,8 @@ const isRecipeAuthor = ({ recipe, loggedUser }) => {
     );
 
     useEffect(() => {
-        if (loggedUser != null) {
-            if (recipe.author == loggedUser.id) {
+        if (loggedUserData != null) {
+            if (recipe.author == loggedUserData.id) {
                 setIsAuthor(true);
             }
         }
@@ -27,7 +27,7 @@ const isRecipeAuthor = ({ recipe, loggedUser }) => {
 };
 
 const mapStateToProps = (state) => ({
-    loggedUser: state.authReducer.loggedUser,
+    loggedUserData: state.authReducer.loggedUserData,
 });
 isRecipeAuthor.propTypes = {
     recipe: PropTypes.object.isRequired,

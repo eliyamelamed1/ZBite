@@ -16,15 +16,15 @@ const recipeDetailPage = (props) => {
     }, [props.match.params.id]);
 
     const displayInteriorImages = () => {
-        if (props.recipeDetailState) {
+        if (props.recipeDetailData) {
             const images = [];
 
             images.push(
                 <div key={1}>
                     <div>
-                        {props.recipeDetailState.photo_1 ? (
+                        {props.recipeDetailData.photo_1 ? (
                             <div>
-                                <img src={props.recipeDetailState.photo_1} alt='' />
+                                <img src={props.recipeDetailData.photo_1} alt='' />
                             </div>
                         ) : (
                             <div>* this recipe has no photos *</div>
@@ -38,21 +38,21 @@ const recipeDetailPage = (props) => {
 
     const guestLinks = (
         <div>
-            {props.recipeDetailState ? (
+            {props.recipeDetailData ? (
                 <div>
-                    <Link to={`/users/${props.recipeDetailState.author}/`}>
-                        recipe Author: {props.recipeDetailState.author}
+                    <Link to={`/users/${props.recipeDetailData.author}/`}>
+                        recipe Author: {props.recipeDetailData.author}
                     </Link>
-                    <h1>recipe title: {props.recipeDetailState.title}</h1>
-                    <Link to='/'>Home</Link> /{props.recipeDetailState.title}
-                    <img src={props.recipeDetailState.photo_main} alt='' />
+                    <h1>recipe title: {props.recipeDetailData.title}</h1>
+                    <Link to='/'>Home</Link> /{props.recipeDetailData.title}
+                    <img src={props.recipeDetailData.photo_main} alt='' />
                     <ul>
                         <li>
                             Flavor Type:
-                            {props.recipeDetailState.flavor_type}
+                            {props.recipeDetailData.flavor_type}
                         </li>
                     </ul>
-                    <p>recipe description: {props.recipeDetailState.description}</p>
+                    <p>recipe description: {props.recipeDetailData.description}</p>
                     {displayInteriorImages()}
                 </div>
             ) : null}
@@ -60,15 +60,15 @@ const recipeDetailPage = (props) => {
     );
 
     const authorLinks = (
-        <section>{props.recipeDetailState ? <IsRecipeAuthor recipe={props.recipeDetailState} /> : null}</section>
+        <section>{props.recipeDetailData ? <IsRecipeAuthor recipe={props.recipeDetailData} /> : null}</section>
     );
 
     return (
         <div data-testid='recipeDetails'>
             <HelmetProvider>
                 <Helmet>
-                    {props.recipeDetailState ? (
-                        <title>ZBite - recipes |{`${props.recipeDetailState.title}`}</title>
+                    {props.recipeDetailData ? (
+                        <title>ZBite - recipes |{`${props.recipeDetailData.title}`}</title>
                     ) : (
                         <title>ZBite - recipes </title>
                     )}
@@ -81,7 +81,7 @@ const recipeDetailPage = (props) => {
     );
 };
 const mapStateToProps = (state) => ({
-    recipeDetailState: state.recipeReducer.recipeDetailState,
+    recipeDetailData: state.recipeReducer.recipeDetailData,
 });
 
 export default connect(mapStateToProps, { loadRecipeDetailsAction })(recipeDetailPage);

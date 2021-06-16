@@ -17,10 +17,10 @@ export const getChatsListAction = () => async (dispatch) => {
     }
 };
 
-export const startDuoChatAction = async (id, chatsList) => {
+export const startDuoChatAction = async (id, chatsListData) => {
     try {
-        console.log('44444444444444', chatsList);
-        const isChatExist = chatsList.find((chat) => chat.members.includes(id));
+        console.log('44444444444444', chatsListData);
+        const isChatExist = chatsListData.find((chat) => chat.members.includes(id));
 
         console.log(isChatExist);
 

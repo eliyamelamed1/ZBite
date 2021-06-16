@@ -1,7 +1,7 @@
 import { CHAT_LIST_FAIL, CHAT_LIST_SUCCESS } from '../actions/types';
 
 const initialState = {
-    chatsList: [],
+    chatsListData: [],
 };
 
 export default function chatReducer(state = initialState, action) {
@@ -11,7 +11,7 @@ export default function chatReducer(state = initialState, action) {
         case CHAT_LIST_SUCCESS:
             return {
                 ...state,
-                chatsList: payload,
+                chatsListData: payload,
             };
 
         case CHAT_LIST_FAIL:

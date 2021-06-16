@@ -17,7 +17,7 @@ afterEach(() => {
 
 describe('authenticated users', () => {
     beforeEach(() => {
-        store.dispatch({ type: 'LOGIN_SUCCESS', payload: { isAuthenticated: true } });
+        store.dispatch({ type: 'LOGIN_SUCCESS', payload: { isAuthenticatedData: true } });
         store.dispatch({ type: 'LOAD_USER_SUCCUSS', payload: { user: { email: 'testemail@gmail.com' } } });
         render(
             <Provider store={store}>
@@ -49,7 +49,7 @@ describe('authenticated users', () => {
 
 describe('guest users', () => {
     beforeEach(() => {
-        store.dispatch({ type: 'LOGOUT', payload: { isAuthenticated: false } });
+        store.dispatch({ type: 'LOGOUT', payload: { isAuthenticatedData: false } });
         render(
             <Provider store={store}>
                 <Router>

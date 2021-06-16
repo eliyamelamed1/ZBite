@@ -2,22 +2,22 @@ import React from 'react';
 import { startDuoChatAction } from '../../redux/actions/chat';
 import { useHistory } from 'react-router-dom';
 
-function chooseUserToChatWith({ userList, loggedUser, chatsList }) {
+function chooseUserToChatWith({ userListData, loggedUserData, chatsListData }) {
     const history = useHistory();
 
     const startDuoChatHandler = async (id) => {
-        const newURL = await startDuoChatAction(id, chatsList);
+        const newURL = await startDuoChatAction(id, chatsListData);
         history.push(newURL);
     };
 
     return (
         <div>
-            {userList.length > 0 ? (
+            {userListData.length > 0 ? (
                 <>
                     <h3>Friends:</h3>
-                    {userList &&
-                        userList.map((user) => {
-                            if (user.name !== loggedUser.name) {
+                    {userListData &&
+                        userListData.map((user) => {
+                            if (user.name !== loggedUserData.name) {
                                 return (
                                     <li
                                         style={{ cursor: 'pointer' }}

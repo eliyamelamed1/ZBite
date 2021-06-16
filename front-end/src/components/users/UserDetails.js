@@ -16,27 +16,27 @@ const userDetailPage = (props) => {
     }, [props.match.params.id]);
 
     useEffect(() => {
-        if (props.userDetails) {
-            if (Object.prototype.hasOwnProperty.call(props.userDetails, 'name')) {
+        if (props.userDetailsData) {
+            if (Object.prototype.hasOwnProperty.call(props.userDetailsData, 'name')) {
                 setUserExist(true);
             }
         }
-    }, [props.userDetails]);
+    }, [props.userDetailsData]);
 
     useEffect(() => {
-        if (props.loggedUser != null) {
-            if (props.loggedUser.id == props.match.params.id) {
+        if (props.loggedUserData != null) {
+            if (props.loggedUserData.id == props.match.params.id) {
                 setIsAuthor(true);
             }
         }
-    }, [props.match.params.id, props.loggedUser]);
+    }, [props.match.params.id, props.loggedUserData]);
 
     const guestLinks = (
         <main>
             {userExist ? (
                 <div>
-                    <p>user name: {props.userDetails.name}</p>
-                    <p>user email: {props.userDetails.email}</p>
+                    <p>user name: {props.userDetailsData.name}</p>
+                    <p>user email: {props.userDetailsData.email}</p>
                 </div>
             ) : (
                 <NotFound />
@@ -48,10 +48,10 @@ const userDetailPage = (props) => {
         <div>
             <UserDelete id={props.match.params.id} />
             <UserUpdate id={props.match.params.id} />
-            {props.loggedUser ? (
+            {props.loggedUserData ? (
                 <div>
-                    <div>user name: {props.loggedUser.name}</div>
-                    <div>user email: {props.loggedUser.email}</div>
+                    <div>user name: {props.loggedUserData.name}</div>
+                    <div>user email: {props.loggedUserData.email}</div>
                 </div>
             ) : (
                 { guestLinks }
@@ -75,8 +75,8 @@ const userDetailPage = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-    loggedUser: state.authReducer.loggedUser,
-    userDetails: state.authReducer.userDetails,
+    loggedUserData: state.authReducer.loggedUserData,
+    userDetailsData: state.authReducer.userDetailsData,
 });
 
 export default connect(mapStateToProps, { loadUserDetailsAction })(userDetailPage);

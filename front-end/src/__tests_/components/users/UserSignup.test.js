@@ -115,7 +115,7 @@ describe('SignupPage - redirect', () => {
         cleanup();
     });
     test('should redirect authenticated user', async () => {
-        store.dispatch({ type: 'LOGIN_SUCCESS', payload: { isAuthenticated: true } });
+        store.dispatch({ type: 'LOGIN_SUCCESS', payload: { isAuthenticatedData: true } });
         render(
             <Provider store={store}>
                 <Router>
@@ -127,7 +127,7 @@ describe('SignupPage - redirect', () => {
         expect(signupPage).not.toBeInTheDocument();
     });
     test('should redirect after signing up and call onSubmit function', () => {
-        store.dispatch({ type: 'LOGOUT', payload: { isAuthenticated: false } });
+        store.dispatch({ type: 'LOGOUT', payload: { isAuthenticatedData: false } });
         render(
             <Provider store={store}>
                 <Router>

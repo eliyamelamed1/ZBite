@@ -17,7 +17,7 @@ const userList = ({ loadUserListAction, userListData }) => {
 };
 
 const mapStateToProps = (state) => ({
-    userListData: state.authReducer.userList,
+    userListData: state.authReducer.userListData,
 });
 
 export default connect(mapStateToProps, { loadUserListAction })(userList);

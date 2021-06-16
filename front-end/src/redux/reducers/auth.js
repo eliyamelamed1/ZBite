@@ -20,10 +20,10 @@ const TEST_CASE_AUTH = 'TEST_CASE_AUTH';
 
 const initialState = {
     auth_token: localStorage.getItem('auth_token'),
-    isAuthenticated: !!localStorage.getItem('auth_token'),
-    loggedUser: null,
-    userList: null,
-    userDetails: null,
+    isAuthenticatedData: !!localStorage.getItem('auth_token'),
+    loggedUserData: null,
+    userListData: null,
+    userDetailsData: null,
 };
 
 export default function authReducer(state = initialState, action) {
@@ -34,47 +34,47 @@ export default function authReducer(state = initialState, action) {
             return {
                 ...state,
                 auth_token: payload.auth_token,
-                isAuthenticated: payload.isAuthenticated,
-                loggedUser: payload.loggedUser,
-                userList: payload.userList,
-                userDetails: payload.userDetails,
+                isAuthenticatedData: payload.isAuthenticatedData,
+                loggedUserData: payload.loggedUserData,
+                userListData: payload.userListData,
+                userDetailsData: payload.userDetailsData,
             };
         case LOAD_USER_DETAILS_SUCCESS:
             return {
                 ...state,
-                userDetails: payload,
+                userDetailsData: payload,
             };
         case LOAD_USER_LIST_SUCCESS:
             return {
                 ...state,
-                userList: payload,
+                userListData: payload,
             };
         case USER_UPDATED_SUCCESS:
             return {
                 ...state,
-                loggedUser: payload,
+                loggedUserData: payload,
             };
         case LOGIN_SUCCESS:
             localStorage.setItem('auth_token', payload.auth_token);
             return {
                 ...state,
-                isAuthenticated: true,
+                isAuthenticatedData: true,
                 auth_token: payload.auth_token,
             };
         case USER_LOADED_SUCCESS:
             return {
                 ...state,
-                loggedUser: payload,
+                loggedUserData: payload,
             };
         case SIGNUP_SUCCESS:
             return {
                 ...state,
-                isAuthenticated: false,
+                isAuthenticatedData: false,
             };
         case USER_LOADED_FAIL:
             return {
                 ...state,
-                loggedUser: null,
+                loggedUserData: null,
             };
         case USER_DELETED_SUCCESS:
         case SIGNUP_FAIL:
@@ -84,8 +84,8 @@ export default function authReducer(state = initialState, action) {
             return {
                 ...state,
                 auth_token: null,
-                isAuthenticated: false,
-                loggedUser: null,
+                isAuthenticatedData: false,
+                loggedUserData: null,
             };
         case LOAD_USER_DETAILS_FAIL:
         case LOAD_USER_LIST_FAIL:

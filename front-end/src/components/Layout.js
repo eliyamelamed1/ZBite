@@ -25,15 +25,15 @@ const layout = ({ loadLoggedUserDetailsAction, children }) => {
         loadLoggedUserDetailsAction();
     }, []);
 
-    const { loggedUser } = useSelector((state) => state.authReducer);
+    const { loggedUserData } = useSelector((state) => state.authReducer);
     useEffect(() => {
-        if (socket && loggedUser) {
-            const id = loggedUser.id;
-            const name = loggedUser.name;
-            console.log(loggedUser.id);
+        if (socket && loggedUserData) {
+            const id = loggedUserData.id;
+            const name = loggedUserData.name;
+            console.log(loggedUserData.id);
             socket.emit('user-joined', { id, name });
         }
-    }, [socket, loggedUser]);
+    }, [socket, loggedUserData]);
 
     useEffect(() => {
         if (socket) {
