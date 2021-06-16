@@ -16,7 +16,7 @@ import ResetPasswordConfirmPage from './containers/users/ResetPasswordConfirmPag
 import ResetPasswordPage from './containers/users/ResetPasswordPage';
 import SignupPage from './containers/users/SignupPage';
 import UserDetailPage from './containers/users/UserDetailPage';
-import UserListPage from './containers/users/UserListPage';
+import UserList from './components/users/UserList';
 import store from './redux/store';
 
 // pages
@@ -31,7 +31,7 @@ const App = () => (
             <Layout>
                 <Switch>
                     <Route exact path='/' component={HomePage} />
-                    <Route exact path='/users' component={UserListPage} />
+                    <Route exact path='/users' component={UserList} />
                     <Route exact path='/users/:id' component={UserDetailPage} />
                     <Route exact path='/login' component={LoginPage} />
                     <Route exact path='/signup' component={SignupPage} />
