@@ -29,7 +29,7 @@ const navbar = () => {
             ) : null}
             {isAuthenticatedData ? (
                 <li>
-                    <button onClick={dispatch(logoutAction)}>Logout</button>
+                    <button onClick={() => dispatch(logoutAction())}>Logout</button>
                 </li>
             ) : null}
         </section>

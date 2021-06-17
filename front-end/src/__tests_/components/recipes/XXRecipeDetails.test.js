@@ -18,7 +18,7 @@ import userEvent from '@testing-library/user-event';
 //             ui, { wrapper: Router }
 //             );
 //     };
-//     renderWithRouter(<RecipeDetailPage id={'2'} />);
+//     renderWithRouter(<RecipeDetails id={'2'} />);
 // });
 
 // afterEach(() => {
@@ -27,13 +27,13 @@ import userEvent from '@testing-library/user-event';
 
 describe('RecipeDetails', () => {
     test('should render without crashing', () => {});
-    // test('should render RecipeDetailPage', () => {
+    // test('should render RecipeDetails', () => {
     //     const detailPage = screen.getByRole('link', { name: 'View Recipe Details' });
     //     userEvent.click(detailPage);
-    //     const recipeDetailPage = screen.getByTestId('recipeDetailPage');
-    //     expect(recipeDetailPage).toBeInTheDocument();
+    //     const recipeDetails = screen.getByTestId('recipeDetails');
+    //     expect(recipeDetails).toBeInTheDocument();
     // });
 });
 
-// use this line on RecipeDetailPage file for more info
+// use this line on RecipeDetails file for more info
 // console.log(props.match);

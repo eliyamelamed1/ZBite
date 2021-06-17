@@ -10,7 +10,7 @@ import { loadRecipeDetailsAction } from '../../redux/actions/recipe';
 
 // import PropTypes from 'prop-types';
 
-const recipeDetailPage = (props) => {
+const recipeDetails = (props) => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(loadRecipeDetailsAction(props.match.params.id));
@@ -79,4 +79,4 @@ const recipeDetailPage = (props) => {
     );
 };
 
-export default connect()(recipeDetailPage);
+export default connect()(recipeDetails);

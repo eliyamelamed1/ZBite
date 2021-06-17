@@ -6,7 +6,7 @@ import { connect, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { verify } from '../../redux/actions/auth';
 
-const activatePage = (props) => {
+const userActivate = (props) => {
     const dispatch = useDispatch();
     const [verified, setVerified] = useState(false);
 
@@ -21,7 +21,7 @@ const activatePage = (props) => {
     if (verified) return <Redirect to='/' />;
 
     return (
-        <div data-testid='activatePage'>
+        <div data-testid='userActivate'>
             <div>
                 <h1>Verify your Account</h1>
                 <button onClick={verify_account} type='button'>
@@ -32,4 +32,4 @@ const activatePage = (props) => {
     );
 };
 
-export default connect()(activatePage);
+export default connect()(userActivate);

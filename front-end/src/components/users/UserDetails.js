@@ -7,7 +7,7 @@ import UserDelete from './UserDelete';
 import UserUpdate from './UserUpdate';
 import { loadUserDetailsAction } from '../../redux/actions/auth';
 
-const userDetailPage = (props) => {
+const userDetails = (props) => {
     const [isAuthor, setIsAuthor] = useState(false);
     const [userExist, setUserExist] = useState(false);
     const loggedUserData = useSelector((state) => state.authReducer.loggedUserData);
@@ -62,7 +62,7 @@ const userDetailPage = (props) => {
     );
 
     return (
-        <div data-testid='userDetailPage'>
+        <div data-testid='userDetails'>
             <HelmetProvider>
                 <Helmet>
                     <title>ZBite - User Details Page </title>
@@ -76,4 +76,4 @@ const userDetailPage = (props) => {
     );
 };
 
-export default connect()(userDetailPage);
+export default connect()(userDetails);

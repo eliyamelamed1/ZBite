@@ -4,7 +4,7 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 
 import { signupAction } from '../../redux/actions/auth';
 
-const signupPage = () => {
+const userSignup = () => {
     const dispatch = useDispatch();
     const isAuthenticatedData = useSelector((state) => state.authReducer.isAuthenticatedData);
     const [formData, setFormData] = useState({
@@ -44,7 +44,7 @@ const signupPage = () => {
     if (accountCreated) return <Redirect to='/login' />;
 
     return (
-        <div data-testid='signupPage'>
+        <div data-testid='userSignup'>
             <h1>Sign Up</h1>
             <p>Create your Account</p>
             <form onSubmit={(e) => onSubmit(e)}>
@@ -99,4 +99,4 @@ const signupPage = () => {
     );
 };
 
-export default connect()(signupPage);
+export default connect()(userSignup);

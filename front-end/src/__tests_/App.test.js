@@ -47,8 +47,8 @@ describe('App - login page url should match component ', () => {
     });
     test('should render without crashing', () => {});
     test('should render home page', () => {
-        const loginPage = screen.getByTestId('loginPage');
-        expect(loginPage).toBeInTheDocument();
+        const userLogin = screen.getByTestId('userLogin');
+        expect(userLogin).toBeInTheDocument();
     });
 });
 
@@ -66,8 +66,8 @@ describe('App - signup page url should match component ', () => {
     });
     test('should render without crashing', () => {});
     test('should render home page', () => {
-        const signupPage = screen.getByTestId('signupPage');
-        expect(signupPage).toBeInTheDocument();
+        const userSignup = screen.getByTestId('userSignup');
+        expect(userSignup).toBeInTheDocument();
     });
 });
 
@@ -180,8 +180,8 @@ describe('App - activate page url should match component ', () => {
     });
     test('should render without crashing', () => {});
     test('should render activate page', () => {
-        const activatePage = screen.getByTestId('activatePage');
-        expect(activatePage).toBeInTheDocument();
+        const userActivate = screen.getByTestId('userActivate');
+        expect(userActivate).toBeInTheDocument();
     });
 });
 

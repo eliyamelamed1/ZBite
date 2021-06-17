@@ -4,7 +4,7 @@ import { connect, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { resetPasswordConfirmAction } from '../../redux/actions/auth';
 
-const resetPasswordConfirmPage = (props) => {
+const userResetPasswordConfirm = (props) => {
     const dispatch = useDispatch();
     const [requestSent, setRequestSent] = useState(false);
 
@@ -63,4 +63,4 @@ const resetPasswordConfirmPage = (props) => {
     );
 };
 
-export default connect()(resetPasswordConfirmPage);
+export default connect()(userResetPasswordConfirm);
