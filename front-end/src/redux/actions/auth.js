@@ -71,7 +71,7 @@ export const userUpdateAction = (id, email, name) => async (dispatch) => {
     }
 };
 
-// TODO gets an error after deleting user
+// TODO fix gets an error after deleting user
 export const userDeleteAction = (id) => async (dispatch) => {
     const config = {
         headers: {
@@ -84,7 +84,7 @@ export const userDeleteAction = (id) => async (dispatch) => {
     try {
         const res = await axios.delete(`${process.env.REACT_APP_API_URL}/api/accounts/${id}/`, config);
         dispatch({ type: USER_DELETED_SUCCESS, payload: res.data });
-        dispatch(logoutAction);
+        dispatch(logoutAction());
     } catch {
         dispatch({ type: USER_DELETED_FAIL });
     }
