@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
+import { connect, useDispatch } from 'react-redux';
 
 import DisplayRecipes from './DisplayRecipes';
-import { connect } from 'react-redux';
 import { loadRecipeListAction } from '../../redux/actions/recipe';
 import { useSelector } from 'react-redux';
 
-const recipeList = ({ loadRecipeListAction }) => {
+const recipeList = () => {
+    const dispatch = useDispatch();
     useEffect(() => {
-        loadRecipeListAction();
-    }, []);
+        dispatch(loadRecipeListAction());
+    }, [dispatch]);
 
     const { recipeListData } = useSelector((state) => state.recipeReducer);
 
@@ -20,4 +21,4 @@ const recipeList = ({ loadRecipeListAction }) => {
     );
 };
 
-export default connect(null, { loadRecipeListAction })(recipeList);
+export default connect()(recipeList);

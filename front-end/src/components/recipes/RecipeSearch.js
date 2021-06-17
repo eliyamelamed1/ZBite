@@ -1,12 +1,13 @@
 // TODO - test loader
 
 import React, { useState } from 'react';
+import { connect, useDispatch } from 'react-redux';
 
 import Loader from 'react-loader-spinner';
-import { connect } from 'react-redux';
 import { recipeSearchAction } from '../../redux/actions/recipe';
 
-const recipeSearch = ({ recipeSearchAction }) => {
+const recipeSearch = () => {
+    const dispatch = useDispatch();
     const [onSubmitHaveBeenCalled, setOnSubmitHaveBeenCalled] = useState(false);
     const [flavorType, setFlavorType] = useState({
         flavor_type: 'Sour',
@@ -22,7 +23,8 @@ const recipeSearch = ({ recipeSearchAction }) => {
         e.preventDefault();
         setOnSubmitHaveBeenCalled(true);
         setLoading(true);
-        recipeSearchAction(flavor_type);
+
+        dispatch(recipeSearchAction(flavor_type));
         setLoading(false);
     };
 
@@ -62,4 +64,4 @@ const recipeSearch = ({ recipeSearchAction }) => {
     );
 };
 
-export default connect(null, { recipeSearchAction })(recipeSearch);
+export default connect()(recipeSearch);

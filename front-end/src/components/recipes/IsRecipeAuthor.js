@@ -31,6 +31,6 @@ isRecipeAuthor.propTypes = {
     recipe: PropTypes.object.isRequired,
 };
 
-export default connect(null, null)(isRecipeAuthor);
+export default connect()(isRecipeAuthor);
 
 // add proptypes

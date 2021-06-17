@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { connect, useDispatch } from 'react-redux';
 
 import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
 import { resetPasswordAction } from '../../redux/actions/auth';
 
-const resetPasswordPage = (props) => {
+const userResetPassword = () => {
+    const dispatch = useDispatch();
     const [requestSent, setRequestSent] = useState(false);
 
     const [formData, setFormData] = useState({
@@ -18,7 +19,7 @@ const resetPasswordPage = (props) => {
     const onSubmit = (e) => {
         e.preventDefault();
 
-        props.resetPasswordAction(email);
+        dispatch(resetPasswordAction(email));
         setRequestSent(true);
     };
 
@@ -44,4 +45,4 @@ const resetPasswordPage = (props) => {
     );
 };
 
-export default connect(null, { resetPasswordAction })(resetPasswordPage);
+export default connect()(userResetPassword);

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { connect, useDispatch } from 'react-redux';
 
 import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
 import { resetPasswordConfirmAction } from '../../redux/actions/auth';
 
-const resetPasswordConfirmPage = (props) => {
+const userResetPasswordConfirm = (props) => {
+    const dispatch = useDispatch();
     const [requestSent, setRequestSent] = useState(false);
 
     const [formData, setFormData] = useState({
@@ -22,7 +23,8 @@ const resetPasswordConfirmPage = (props) => {
         const { uid } = props.match.params;
         const { token } = props.match.params;
 
-        props.resetPasswordConfirmAction(uid, token, new_password, re_new_password);
+        dispatch(resetPasswordConfirmAction(uid, token, new_password, re_new_password));
+
         setRequestSent(true);
     };
 
@@ -61,4 +63,4 @@ const resetPasswordConfirmPage = (props) => {
     );
 };
 
-export default connect(null, { resetPasswordConfirmAction })(resetPasswordConfirmPage);
+export default connect()(userResetPasswordConfirm);

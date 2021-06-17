@@ -1,11 +1,12 @@
 // TODO - change PropTypes id to .isRequired
 
 import React, { useState } from 'react';
+import { connect, useDispatch } from 'react-redux';
 
-import { connect } from 'react-redux';
 import { recipeUpdateAction } from '../../redux/actions/recipe';
 
-const recipeUpdate = ({ id, recipeUpdateAction }) => {
+const recipeUpdate = ({ id }) => {
+    const dispatch = useDispatch();
     const [onSubmitHaveBeenCalled, setOnSubmitHaveBeenCalled] = useState(false);
     const [formData, setFormData] = useState({
         title: '',
@@ -21,7 +22,7 @@ const recipeUpdate = ({ id, recipeUpdateAction }) => {
         e.preventDefault();
         setOnSubmitHaveBeenCalled(true);
 
-        recipeUpdateAction(id, title, description, flavor_type);
+        dispatch(recipeUpdateAction(id, title, description, flavor_type));
     };
     const testing = (
         <main>
@@ -66,4 +67,4 @@ const recipeUpdate = ({ id, recipeUpdateAction }) => {
     );
 };
 
-export default connect(null, { recipeUpdateAction })(recipeUpdate);
+export default connect()(recipeUpdate);

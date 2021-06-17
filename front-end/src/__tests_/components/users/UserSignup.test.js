@@ -9,7 +9,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import SignupPage from '../../../components/users/UserSignup';
+import UserSignup from '../../../components/users/UserSignup';
 import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
 
@@ -18,7 +18,7 @@ beforeEach(() => {
     render(
         <Provider store={store}>
             <Router>
-                <SignupPage onSubmit={onSubmit} />
+                <UserSignup onSubmit={onSubmit} />
             </Router>
         </Provider>
     );
@@ -28,7 +28,7 @@ afterEach(() => {
     cleanup();
 });
 
-describe('SignupPage - general', () => {
+describe('UserSignup - general', () => {
     test('renders without crashing', () => {});
     test('should render Already have an account? linking to the login page', () => {
         const signin = screen.getByRole('link', { name: /Sign in/i });
@@ -37,7 +37,7 @@ describe('SignupPage - general', () => {
     });
 });
 
-describe('SignupPage- name input', () => {
+describe('UserSignup- name input', () => {
     test('renders name text box', () => {
         const nameTextbox = screen.getByPlaceholderText('Name*');
         expect(nameTextbox).toBeInTheDocument();
@@ -53,7 +53,7 @@ describe('SignupPage- name input', () => {
     });
 });
 
-describe('SignupPage- email input', () => {
+describe('UserSignup- email input', () => {
     test('renders email text box', () => {
         const emailTextbox = screen.getByPlaceholderText('Email*');
         expect(emailTextbox).toBeInTheDocument();
@@ -70,7 +70,7 @@ describe('SignupPage- email input', () => {
     });
 });
 
-describe('SignupPage- password input', () => {
+describe('UserSignup- password input', () => {
     test('renders password box', () => {
         const passwordTextbox = screen.getByPlaceholderText('Password*');
         expect(passwordTextbox).toBeInTheDocument();
@@ -86,7 +86,7 @@ describe('SignupPage- password input', () => {
     });
 });
 
-describe('SignupPage- confirm password input', () => {
+describe('UserSignup- confirm password input', () => {
     test('renders confirm password box', () => {
         const confirmPasswordTextbox = screen.getByPlaceholderText('Confirm Password*');
         expect(confirmPasswordTextbox).toBeInTheDocument();
@@ -102,7 +102,7 @@ describe('SignupPage- confirm password input', () => {
     });
 });
 
-describe('SignupPage- register button', () => {
+describe('UserSignup- register button', () => {
     test('should render register button', () => {
         const button = screen.getByRole('button', { name: 'Register' });
         expect(button).toBeInTheDocument();
@@ -110,7 +110,7 @@ describe('SignupPage- register button', () => {
 });
 
 // TODO - imporve this tests by checking the redirection url (authenticated user redirect to home page, user who signed up to login page)
-describe('SignupPage - redirect', () => {
+describe('UserSignup - redirect', () => {
     beforeEach(() => {
         cleanup();
     });
@@ -119,23 +119,23 @@ describe('SignupPage - redirect', () => {
         render(
             <Provider store={store}>
                 <Router>
-                    <SignupPage />
+                    <UserSignup />
                 </Router>
             </Provider>
         );
-        const signupPage = screen.queryByTestId('signupPage');
-        expect(signupPage).not.toBeInTheDocument();
+        const userSignup = screen.queryByTestId('userSignup');
+        expect(userSignup).not.toBeInTheDocument();
     });
     test('should redirect after signing up and call onSubmit function', () => {
         store.dispatch({ type: 'LOGOUT', payload: { isAuthenticatedData: false } });
         render(
             <Provider store={store}>
                 <Router>
-                    <SignupPage />
+                    <UserSignup />
                 </Router>
             </Provider>
         );
-        const signupPage = screen.getByTestId('signupPage');
+        const userSignup = screen.getByTestId('userSignup');
         const nameTextbox = screen.getByPlaceholderText('Name*');
         const emailTextbox = screen.getByPlaceholderText('Email*');
         const passwordTextbox = screen.getByPlaceholderText('Password*');
@@ -148,6 +148,6 @@ describe('SignupPage - redirect', () => {
         userEvent.type(confirmTextbox, 'testuser123');
         userEvent.click(signupButton);
 
-        expect(signupPage).not.toBeInTheDocument();
+        expect(userSignup).not.toBeInTheDocument();
     });
 });

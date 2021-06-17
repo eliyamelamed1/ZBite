@@ -1,21 +1,21 @@
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import React, { useEffect, useState } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 
 import NotFound from '../NotFound';
 import UserDelete from './UserDelete';
 import UserUpdate from './UserUpdate';
 import { loadUserDetailsAction } from '../../redux/actions/auth';
 
-const userDetailPage = (props) => {
+const userDetails = (props) => {
     const [isAuthor, setIsAuthor] = useState(false);
     const [userExist, setUserExist] = useState(false);
     const loggedUserData = useSelector((state) => state.authReducer.loggedUserData);
     const userDetailsData = useSelector((state) => state.authReducer.userDetailsData);
-
+    const dispatch = useDispatch();
     useEffect(() => {
-        props.loadUserDetailsAction(props.match.params.id);
-    }, [props.match.params.id]);
+        dispatch(loadUserDetailsAction(props.match.params.id));
+    }, [props.match.params.id, dispatch]);
 
     useEffect(() => {
         if (userDetailsData) {
@@ -62,7 +62,7 @@ const userDetailPage = (props) => {
     );
 
     return (
-        <div data-testid='userDetailPage'>
+        <div data-testid='userDetails'>
             <HelmetProvider>
                 <Helmet>
                     <title>ZBite - User Details Page </title>
@@ -76,4 +76,4 @@ const userDetailPage = (props) => {
     );
 };
 
-export default connect(null, { loadUserDetailsAction })(userDetailPage);
+export default connect()(userDetails);

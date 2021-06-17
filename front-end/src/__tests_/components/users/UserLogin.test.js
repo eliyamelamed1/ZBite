@@ -6,10 +6,10 @@ import '@testing-library/jest-dom';
 
 import { cleanup, render, screen } from '@testing-library/react';
 
-import LoginPage from '../../../components/users/UserLogin';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import UserLogin from '../../../components/users/UserLogin';
 import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
 
@@ -17,7 +17,7 @@ beforeEach(() => {
     render(
         <Provider store={store}>
             <Router>
-                <LoginPage />
+                <UserLogin />
             </Router>
         </Provider>
     );
@@ -27,11 +27,11 @@ afterEach(() => {
     cleanup();
 });
 
-describe('LoginPage', () => {
+describe('UserLogin', () => {
     test('renders without crashing', () => {});
-    test('render loginPage', () => {
-        const loginPage = screen.getByTestId('loginPage');
-        expect(loginPage).toBeInTheDocument();
+    test('render userLogin', () => {
+        const userLogin = screen.getByTestId('userLogin');
+        expect(userLogin).toBeInTheDocument();
     });
     test('renders email text box', () => {
         const emailInput = screen.getByPlaceholderText(/email/i);
@@ -60,7 +60,7 @@ describe('LoginPage', () => {
 });
 
 // TODO - imporve this tests by checking the redirection url (should be home page)
-describe('LoginPage - redirect', () => {
+describe('UserLogin - redirect', () => {
     beforeEach(() => {
         cleanup();
     });
@@ -69,12 +69,12 @@ describe('LoginPage - redirect', () => {
         render(
             <Provider store={store}>
                 <Router>
-                    <LoginPage />
+                    <UserLogin />
                 </Router>
             </Provider>
         );
-        const loginPage = screen.queryByTestId('loginPage');
-        expect(loginPage).not.toBeInTheDocument();
+        const userLogin = screen.queryByTestId('userLogin');
+        expect(userLogin).not.toBeInTheDocument();
     });
     // test('should redirect after successful login', () => {});
 });

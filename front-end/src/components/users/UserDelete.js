@@ -1,18 +1,19 @@
 // TODO - change PropTypes id to .isRequired
 // TODO - check the redirect
 
+import { connect, useDispatch } from 'react-redux';
+
 import React from 'react';
-import { connect } from 'react-redux';
 import { userDeleteAction } from '../../redux/actions/auth';
 
 // import { Redirect } from 'react-router-dom';
 
-const userDelete = ({ id, userDeleteAction }) => {
+const userDelete = ({ id }) => {
     // if (redirect == true) return (<Redirect to='/' />).then(() => window.location.reload());
-
+    const dispatch = useDispatch();
     const onSubmit = (e) => {
         e.preventDefault();
-        userDeleteAction(id);
+        dispatch(userDeleteAction(id));
     };
     // add permissions
     return (
@@ -24,4 +25,4 @@ const userDelete = ({ id, userDeleteAction }) => {
     );
 };
 
-export default connect(null, { userDeleteAction })(userDelete);
+export default connect()(userDelete);

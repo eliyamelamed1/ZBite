@@ -1,19 +1,20 @@
 // TODO - change PropTypes id to .isRequired
 
 import React, { useState } from 'react';
+import { connect, useDispatch } from 'react-redux';
 
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { recipeDeleteAction } from '../../redux/actions/recipe';
 
-const recipeDelete = ({ id, recipeDeleteAction }) => {
+const recipeDelete = ({ id }) => {
+    const dispatch = useDispatch();
     const [onSubmitHaveBeenCalled, setOnSubmitHaveBeenCalled] = useState(false);
 
     const onSubmit = (e) => {
         e.preventDefault();
         setOnSubmitHaveBeenCalled(true);
 
-        recipeDeleteAction(id);
+        dispatch(recipeDeleteAction(id));
     };
     const testing = (
         <main>
@@ -34,4 +35,4 @@ recipeDelete.propTypes = {
     id: PropTypes.string,
 };
 
-export default connect(null, { recipeDeleteAction })(recipeDelete);
+export default connect()(recipeDelete);

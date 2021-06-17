@@ -1,12 +1,13 @@
 // TODO add redirect after creating a recipe
 
 import React, { useState } from 'react';
+import { connect, useDispatch } from 'react-redux';
 
 import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
 import { recipeCreateAction } from '../../redux/actions/recipe';
 
-const recipeCreate = ({ isAuthenticatedData, recipeCreateAction }) => {
+const recipeCreate = ({ isAuthenticatedData }) => {
+    const dispatch = useDispatch();
     const [onSubmitHaveBeenCalled, setOnSubmitHaveBeenCalled] = useState(false);
     const [formData, setFormData] = useState({
         title: '',
@@ -24,7 +25,7 @@ const recipeCreate = ({ isAuthenticatedData, recipeCreateAction }) => {
         e.preventDefault();
         setOnSubmitHaveBeenCalled(true);
 
-        recipeCreateAction(title, description, flavor_type);
+        dispatch(recipeCreateAction(title, description, flavor_type));
     };
     const testing = (
         <main>

@@ -2,7 +2,7 @@
 
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import React, { useEffect } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 
 import IsRecipeAuthor from './IsRecipeAuthor';
 import { Link } from 'react-router-dom';
@@ -10,10 +10,11 @@ import { loadRecipeDetailsAction } from '../../redux/actions/recipe';
 
 // import PropTypes from 'prop-types';
 
-const recipeDetailPage = (props) => {
+const recipeDetails = (props) => {
+    const dispatch = useDispatch();
     useEffect(() => {
-        props.loadRecipeDetailsAction(props.match.params.id);
-    }, [props.match.params.id]);
+        dispatch(loadRecipeDetailsAction(props.match.params.id));
+    }, [props.match.params.id, dispatch]);
     const recipeDetailData = useSelector((state) => state.recipeReducer.recipeDetailData);
 
     const displayInteriorImages = () => {
@@ -78,4 +79,4 @@ const recipeDetailPage = (props) => {
     );
 };
 
-export default connect(null, { loadRecipeDetailsAction })(recipeDetailPage);
+export default connect()(recipeDetails);
