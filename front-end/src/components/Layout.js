@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { connectSocket } from '../redux/actions/socket';
 import { loadLoggedUserDetailsAction } from '../redux/actions/auth';
 
-const layout = ({ loadLoggedUserDetailsAction, children }) => {
+const layout = ({ children }) => {
     const [showPopup, setShowPopup] = useState(false);
     const [messageReceived, setMessageReceivied] = useState({
         sender: '',
@@ -22,8 +22,8 @@ const layout = ({ loadLoggedUserDetailsAction, children }) => {
     const { socket } = useSelector((state) => state.socketReducer);
 
     useEffect(() => {
-        loadLoggedUserDetailsAction();
-    }, []);
+        dispatch(loadLoggedUserDetailsAction());
+    }, [dispatch]);
 
     const { loggedUserData } = useSelector((state) => state.authReducer);
     useEffect(() => {
@@ -72,4 +72,4 @@ const layout = ({ loadLoggedUserDetailsAction, children }) => {
     );
 };
 
-export default connect(null, { loadLoggedUserDetailsAction })(layout);
+export default connect()(layout);

@@ -1,12 +1,13 @@
 // TODO - change PropTypes id to .isRequired
 
 import React, { useState } from 'react';
+import { connect, useDispatch } from 'react-redux';
 
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { userUpdateAction } from '../../redux/actions/auth';
 
-const userUpdate = ({ id, userUpdateAction }) => {
+const userUpdate = ({ id }) => {
+    const dispatch = useDispatch();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -17,7 +18,8 @@ const userUpdate = ({ id, userUpdateAction }) => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        userUpdateAction(id, email, name);
+
+        dispatch(userUpdateAction(id, email, name));
     };
 
     return (
@@ -53,4 +55,4 @@ userUpdate.propTypes = {
     id: PropTypes.array.isRequired,
 };
 
-export default connect(null, { userUpdateAction })(userUpdate);
+export default connect()(userUpdate);

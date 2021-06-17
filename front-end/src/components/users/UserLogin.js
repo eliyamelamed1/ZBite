@@ -1,10 +1,11 @@
 import { Link, Redirect } from 'react-router-dom';
 import React, { useState } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 
 import { loginAction } from '../../redux/actions/auth';
 
-const loginPage = ({ loginAction }) => {
+const loginPage = () => {
+    const dispatch = useDispatch();
     const isAuthenticatedData = useSelector((state) => state.authReducer.isAuthenticatedData);
     const [formData, setFormData] = useState({
         email: '',
@@ -19,7 +20,7 @@ const loginPage = ({ loginAction }) => {
         // TODO - check about this command
         e.preventDefault();
 
-        loginAction(email, password);
+        dispatch(loginAction(email, password));
     };
 
     if (isAuthenticatedData) return <Redirect exact to='/' />;
@@ -61,4 +62,4 @@ const loginPage = ({ loginAction }) => {
     );
 };
 
-export default connect(null, { loginAction })(loginPage);
+export default connect()(loginPage);

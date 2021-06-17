@@ -1,10 +1,11 @@
 import { Link, Redirect } from 'react-router-dom';
 import React, { useState } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 
 import { signupAction } from '../../redux/actions/auth';
 
-const signupPage = ({ signupAction }) => {
+const signupPage = () => {
+    const dispatch = useDispatch();
     const isAuthenticatedData = useSelector((state) => state.authReducer.isAuthenticatedData);
     const [formData, setFormData] = useState({
         name: '',
@@ -24,12 +25,14 @@ const signupPage = ({ signupAction }) => {
 
         if (password === re_password) {
             try {
-                signupAction({
-                    name,
-                    email,
-                    password,
-                    re_password,
-                });
+                dispatch(
+                    signupAction({
+                        name,
+                        email,
+                        password,
+                        re_password,
+                    })
+                );
                 setAccountCreated(true);
             } catch {
                 window.scrollTo(0, 0);
@@ -96,4 +99,4 @@ const signupPage = ({ signupAction }) => {
     );
 };
 
-export default connect(null, { signupAction })(signupPage);
+export default connect()(signupPage);

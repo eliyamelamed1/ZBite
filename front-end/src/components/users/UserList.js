@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 
 import DisplayUsers from './DisplayUsers';
 import { loadUserListAction } from '../../redux/actions/auth';
 
-const userList = ({ loadUserListAction }) => {
+const userList = () => {
+    const dispatch = useDispatch();
     const userListData = useSelector((state) => state.authReducer.userListData);
+
     useEffect(() => {
-        loadUserListAction();
-    }, []);
+        dispatch(loadUserListAction());
+    }, [dispatch]);
+
     return (
         <main>
             <div data-testid='usersList'></div>
@@ -17,4 +20,4 @@ const userList = ({ loadUserListAction }) => {
     );
 };
 
-export default connect(null, { loadUserListAction })(userList);
+export default connect()(userList);
