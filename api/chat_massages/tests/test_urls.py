@@ -25,6 +25,18 @@ class TestChatMassageDetails:
 
         assert resolve(chat_massage_details_url).view_name == 'chat_massages:details'
 
+class TestChatMassageUpdate:
+    def test_reverse(self):
+        chat_massage = ChatMassageFactory()
+        chat_massage_update_url = reverse('chat_massages:update', kwargs={'pk': chat_massage.id})
+        assert chat_massage_update_url == f'/api/chat_massages/{chat_massage.id}/update/'
+
+    def test_resolve(self):
+        chat_massage = ChatMassageFactory()
+        chat_massage_update_url = f'/api/chat_massages/{chat_massage.id}/update/'
+
+        assert resolve(chat_massage_update_url).view_name == 'chat_massages:update'
+
 class TestChatMassagesInRoom:
     def test_reverse(self):
         massages_in_room_url = reverse('chat_massages:massages_in_room')

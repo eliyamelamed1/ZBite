@@ -1,7 +1,7 @@
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseForbidden
 from rest_framework import permissions
-from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import RetrieveDestroyAPIView, UpdateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -11,16 +11,23 @@ from chat_groups.models import ChatGroup
 from chat_massages.models import ChatMassage
 from permissions import IsAuthorOrAccessDenied
 
-from .serializers import (ChatMassageCreateSerializer,
-                          ChatMassageDetailsSerializer,
-                          ChatMassagesRoomSerializer)
+from .serializers import (
+    ChatMassageCreateSerializer,
+    ChatMassageDetailsSerializer,
+    ChatMassagesRoomSerializer,
+    ChatMassageUpdateSerializer
+)
 
 
-class ChatMassageDetails(RetrieveUpdateDestroyAPIView):
-    permission_classes = (IsAuthorOrAccessDenied,)
+class ChatMassageDetails(RetrieveDestroyAPIView):
+    permission_classes = (IsAuthorOrAccessDenied, permissions.IsAuthenticated)
     queryset = ChatMassage.objects.all()
     serializer_class = ChatMassageDetailsSerializer
 
+class ChatMassageUpdate(UpdateAPIView):
+    permission_classes = (IsAuthorOrAccessDenied, permissions.IsAuthenticated)
+    queryset = ChatMassage.objects.all()
+    serializer_class = ChatMassageUpdateSerializer
 
 
 class ChatMassagesInRoom(APIView):
