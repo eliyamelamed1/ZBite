@@ -1,14 +1,14 @@
 from rest_framework import permissions
 from rest_framework.generics import (CreateAPIView, DestroyAPIView,
-                                     ListAPIView, RetrieveUpdateDestroyAPIView)
+                                     ListAPIView, RetrieveDestroyAPIView, UpdateAPIView)
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from permissions import IsAuthorOrReadOnly, RecipeAuthorCanDeleteComments
+from permissions import IsAuthorOrReadOnly, RecipeAuthorCanDeleteComments, IsAuthorOrAccessDenied
 from recipes.models import Recipe
 
 from .models import Comment
-from .serializers import CommentsInRecipeSerializer, CommentSerializer
+from .serializers import CommentUpdateSerializer, CommentsInRecipeSerializer, CommentSerializer
 
 
 class CommentCreate(CreateAPIView):
@@ -20,11 +20,16 @@ class CommentCreate(CreateAPIView):
         '''save the current logged in user as the author of the comment'''
         serializer.save(author=self.request.user)
 
-class CommentDetail(RetrieveUpdateDestroyAPIView):
+
+class CommentDetail(RetrieveDestroyAPIView):
     permission_classes = (IsAuthorOrReadOnly, )
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
 
+class CommentUpdate(UpdateAPIView):
+    permission_classes = (IsAuthorOrAccessDenied, )
+    queryset = Comment.objects.all()
+    serializer_class = CommentUpdateSerializer
 
 class CommentDelete(DestroyAPIView):
     permission_classes = (RecipeAuthorCanDeleteComments, )

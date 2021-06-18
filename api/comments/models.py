@@ -19,6 +19,8 @@ class Comment(models.Model):
     author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     image = models.ImageField(upload_to='media/', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
 
 
     def __str__(self):
@@ -27,6 +29,10 @@ class Comment(models.Model):
     def get_absolute_url(self):
         """Return absolute URL to the Comment Detail page."""
         return reverse('comments:detail', kwargs={'pk': self.id})
+
+    def get_update_url(self):
+        """Return absolute URL to the Comment update page."""
+        return reverse('comments:update', kwargs={'pk': self.id})
 
     def get_delete_url(self):
         return reverse('comments:delete', kwargs={'pk': self.id})

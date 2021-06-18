@@ -1,5 +1,5 @@
 import pytest
-from django.urls import resolve, reverse
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 import conftest
 from accounts.models import UserAccount
@@ -168,16 +168,17 @@ class TestDeleteCommentView:
             assert response.status_code == 401
 
 
-# TODO - add test put REQUEST test (update the whole data)
-class TestUpdateCommentView:
+# TODO - add test for updating image)
+class TestUpdateComment:
     class TestIsAuthorOrReadOnly:
         def test_author_can_update_own_comment(self, api_client):
             new_comment = CommentFactory()
             api_client.force_authenticate(new_comment.author)
             data = {
-                'title': 'updated title'
+                'title': 'updated title',
+                # 'image': '#',
             }
-            response = api_client.patch(new_comment.get_absolute_url(), data)
+            response = api_client.patch(new_comment.get_update_url(), data)
 
             assert response.status_code == 200
         
@@ -186,9 +187,9 @@ class TestUpdateCommentView:
             random_user = UserFactory()
             api_client.force_authenticate(random_user)
             data = {
-                'title': 'updated title'
+                'title': 'updated title',
             }
-            response = api_client.patch(new_comment.get_absolute_url(), data)
+            response = api_client.patch(new_comment.get_update_url(), data)
 
             assert response.status_code == 403
 
@@ -196,8 +197,8 @@ class TestUpdateCommentView:
         def test_guest_user_cant_update_comment(self, api_client):
             first_comment = CommentFactory()
             data = {
-                'title': 'updated title'
+                'title': 'updated title',
             }
-            response = api_client.patch(first_comment.get_absolute_url(), data)
+            response = api_client.patch(first_comment.get_update_url(), data)
 
             assert response.status_code == 401
