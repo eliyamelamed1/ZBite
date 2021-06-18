@@ -16,6 +16,7 @@ class Rating(models.Model):
         editable=False
     )
     stars = models.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return str(self.author)
@@ -23,7 +24,6 @@ class Rating(models.Model):
     def get_delete_url(self):
         """Return absolute URL to the Rating Delete page."""
         return reverse('ratings:delete', kwargs={'pk': self.id})
-
 
     @classmethod
     def get_recipe_stars_score(cls, recipe):

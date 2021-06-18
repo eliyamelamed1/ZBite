@@ -17,6 +17,7 @@ class ChatMassage(models.Model):
     author = models.ForeignKey(UserAccount(), on_delete=models.CASCADE)
     text = models.TextField(default=None)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     content_type = models.ForeignKey(ContentType,related_name='content_obj', on_delete=models.CASCADE)
     object_id = models.UUIDField(
         blank=True,
