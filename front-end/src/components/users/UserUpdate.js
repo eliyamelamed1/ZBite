@@ -52,7 +52,7 @@ const userUpdate = ({ id }) => {
     );
 };
 userUpdate.propTypes = {
-    id: PropTypes.array.isRequired,
+    id: PropTypes.string.isRequired,
 };
 
 export default connect()(userUpdate);
