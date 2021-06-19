@@ -2,7 +2,6 @@
 # TODO test perform_create
 
 import pytest
-from django.urls import reverse
 
 from accounts.models import UserAccount
 from factories import RatingFactory, RecipeFactory, UserFactory
@@ -16,7 +15,7 @@ ratings_in_recipe_url = Rating.get_ratings_in_recipe_url()
 create_recipe_url = Recipe.get_create_url()
 class TestRatingCreateView:
     class TestAuthenticatedUsers:
-        def test_rating_page_render(self, api_client):
+        def test_get_request_return_status_code_405(self, api_client):
             new_user = UserFactory()
             api_client.force_authenticate(new_user)
 
@@ -24,7 +23,7 @@ class TestRatingCreateView:
 
             assert response.status_code == 405
         
-        def test_rate_post_request(self, api_client):
+        def test_rate_post_request_returns_status_code_200(self, api_client):
             new_user = UserFactory()
             api_client.force_authenticate(new_user)
             new_recipe = RecipeFactory()
@@ -36,6 +35,20 @@ class TestRatingCreateView:
             response = api_client.post(rating_rate_url, data)
 
             assert response.status_code == 200
+
+        def test_rate_post_request_append_ratings_to_recipe(self, api_client):
+            new_user = UserFactory()
+            api_client.force_authenticate(new_user)
+            new_recipe = RecipeFactory()
+            new_recipe = Recipe.objects.all().get(id__exact=new_recipe.id)
+            data = {
+                'recipe': new_recipe.id,
+                'stars': 5
+            }
+            api_client.post(rating_rate_url, data)
+            new_recipe = Recipe.objects.all().get(id__exact=new_recipe.id)
+
+            assert new_recipe.stars == '5.0'
 
         def test_user_second_rate_will_update_the_first_one(self, api_client):
             new_user = UserFactory()
@@ -69,7 +82,7 @@ class TestRatingCreateView:
                 'recipe': new_recipe.id,
                 'stars': '5'
             }
-            api_client.post(rating_rate_url, data)
+            response = api_client.post(rating_rate_url, data)
             api_client.logout()
 
             new_user2 = UserFactory()
@@ -78,12 +91,13 @@ class TestRatingCreateView:
                 'recipe': new_recipe.id,
                 'stars': '4'
             }
-            api_client.post(rating_rate_url, data)
+            response2 = api_client.post(rating_rate_url, data)
 
             first_rating = Rating.objects.all().get(author__exact=new_user.id)
             second_rating = Rating.objects.all().get(author__exact=new_user2.id)
 
-
+            assert response.status_code == 200
+            assert response2.status_code == 200
             assert Rating.objects.all().count() == 2
             assert first_rating.stars == 5
             assert second_rating.stars== 4
@@ -335,9 +349,9 @@ class TestRatingDeleteView:
 
 
 
-class TestRatingsInRecipeView:
+class TestRatingsInRecipe:
     class TestAuthenticatedUsers:
-        def test_search_page_should_render(self, api_client):
+        def test_get_request_should_return_status_code_405(self, api_client):
             new_rating = RatingFactory()
             api_client.force_authenticate(new_rating.author)
 
@@ -345,7 +359,7 @@ class TestRatingsInRecipeView:
 
             assert response.status_code == 405
 
-        def test_ratings_search_request_should_work(self, api_client):
+        def test_search_post_request_should_return_status_code_200(self, api_client):
             new_rating = RatingFactory()
             api_client.force_authenticate(new_rating.author)
             data = {
@@ -354,15 +368,25 @@ class TestRatingsInRecipeView:
             response = api_client.post(ratings_in_recipe_url, data)
 
             assert response.status_code == 200
-        
+
+        def test_search_post_request_should_return_ratings(self, api_client):
+            new_rating = RatingFactory()
+            api_client.force_authenticate(new_rating.author)
+            data = {
+                'recipe': new_rating.recipe.id
+            }
+            response = api_client.post(ratings_in_recipe_url, data)
+
+            assert f'{new_rating.id}' in f'{response.content}'
+            assert f'{new_rating.stars}' in f'{response.content}'        
         
     class TestGuestUsers:
-        def test_search_page_should_render(self, api_client):
+        def test_get_request_should_return_status_code_200(self, api_client):
             response = api_client.get(ratings_in_recipe_url)
 
             assert response.status_code == 405
 
-        def test_ratings_search_request_success(self, api_client):
+        def test_ratings_search_post_request_return_status_code_200(self, api_client):
             new_rating = RatingFactory()
             data = {
                 'recipe': new_rating.recipe.id
@@ -370,5 +394,16 @@ class TestRatingsInRecipeView:
             response = api_client.post(ratings_in_recipe_url, data)
 
             assert response.status_code == 200
+        
+        
+        def test_ratings_search_post_request_return_ratings(self, api_client):
+            new_rating = RatingFactory()
+            data = {
+                'recipe': new_rating.recipe.id
+            }
+            response = api_client.post(ratings_in_recipe_url, data)
+
+            assert f'{new_rating.id}' in f'{response.content}'
+            assert f'{new_rating.stars}' in f'{response.content}'
         
         

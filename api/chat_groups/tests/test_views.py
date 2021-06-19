@@ -11,7 +11,7 @@ chat_group_list = ChatGroup.get_list_url()
 
 class TestChatGroupList:
     class TestAuthenticatedMembersUsers:
-        def test_chat_group_list_page_should_render(self, api_client):
+        def test_chat_group_list_page_return_status_code_200(self, api_client):
             new_user = UserFactory()
             api_client.force_authenticate(new_user)
 
@@ -31,7 +31,7 @@ class TestChatGroupList:
             assert f'{new_chat_group}' in f'{response.content}'
 
     class TestAuthenticatedNonMembersUsers:
-        def test_chat_group_list_page_should_render(self, api_client):
+        def test_chat_group_list_page_return_status_code_200(self, api_client):
             new_user = UserFactory()
             api_client.force_authenticate(new_user)
 

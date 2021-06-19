@@ -73,9 +73,9 @@ class TestCommentCreateView:
             assert response.status_code == 401
 
 
-class TestCommentsInRecipeView:
+class TestCommentsInRecipe:
     class TestAuthenticatedUsers:
-        def test_comment_search_page_render(self, api_client):
+        def test_comment_search_should_return_405(self, api_client):
             new_user = UserAccount()
             api_client.force_authenticate(new_user)
             comments_in_recipe_url = '/api/comments/comments_in_recipe/'
@@ -83,11 +83,31 @@ class TestCommentsInRecipeView:
 
             assert response.status_code == 405 # 405 = method not allowed - get isnt allowed only post
 
-        def test_comment_search_post_request_allowed(self, api_client, signup_and_login, search_comment_response):
-            response = search_comment_response
+        def test_comment_search_post_request_return_status_code_200(self, api_client):
+            new_user = UserAccount()
+            api_client.force_authenticate(new_user)
+            new_comment = CommentFactory()
+            comments_in_recipe_url = '/api/comments/comments_in_recipe/'
+            data = {
+                'recipe': {new_comment.recipe.id},
+                'title': {new_comment.title}
+            }
+            response = api_client.post(comments_in_recipe_url, data)
+            
+            assert response.status_code == 200 
+        
+        def test_comment_search_post_request_return_comments_searched(self, api_client):
+            new_user = UserAccount()
+            api_client.force_authenticate(new_user)
+            new_comment = CommentFactory()
+            comments_in_recipe_url = '/api/comments/comments_in_recipe/'
+            data = {
+                'recipe': {new_comment.recipe.id},
+                'title': {new_comment.title}
+            }
+            response = api_client.post(comments_in_recipe_url, data)
 
-            assert response.status_code == 200
-
+            assert f'{new_comment}' in f'{response.content}'
 
     class TestGuestUsers:
         def test_comment_search_page_render(self, api_client):
