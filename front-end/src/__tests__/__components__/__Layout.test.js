@@ -9,7 +9,6 @@ import Layout from '../../components/Layout';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { USER_LOADED_FAIL } from '../../redux/actions/types';
 import store from '../../redux/store';
 
 beforeEach(() => {
