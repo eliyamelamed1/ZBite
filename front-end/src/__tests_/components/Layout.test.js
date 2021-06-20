@@ -14,7 +14,7 @@ import store from '../../redux/store';
 
 beforeEach(() => {
     store.subscribe(() => {
-        const action = store.getState().dispatchedActionList;
+        const action = store.getState().dispatchedActions;
         localStorage.setItem(action.type, action.type);
     });
     render(
