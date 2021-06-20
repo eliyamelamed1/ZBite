@@ -12,10 +12,6 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import store from '../../redux/store';
 
 beforeEach(() => {
-    store.subscribe(() => {
-        const action = store.getState().dispatchedActions;
-        localStorage.setItem(action.type, action.payload);
-    });
     render(
         <Provider store={store}>
             <Router>
@@ -29,7 +25,6 @@ beforeEach(() => {
 
 afterEach(() => {
     cleanup();
-    window.localStorage.clear();
 });
 
 describe('Layout', () => {
@@ -44,7 +39,26 @@ describe('Layout', () => {
     });
 });
 
-describe('dispatched actions', () => {
+describe('expected dispatched redux actions', () => {
+    beforeEach(() => {
+        store.subscribe(() => {
+            const action = store.getState().dispatchedActions;
+            localStorage.setItem(action.type, action.payload);
+        });
+        render(
+            <Provider store={store}>
+                <Router>
+                    <Layout>
+                        <div>children</div>
+                    </Layout>
+                </Router>
+            </Provider>
+        );
+    });
+
+    afterEach(() => {
+        cleanup();
+    });
     test('loadLoggedUserDetailsAction should have been dispatched', () => {
         expect(localStorage.USER_LOADED_FAIL).toBeTruthy();
     });
