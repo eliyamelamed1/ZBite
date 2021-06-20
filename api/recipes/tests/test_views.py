@@ -90,31 +90,61 @@ class TestRecipeCreateView:
             assert response.status_code == 401
 
 
-class TestRecipeSearchView:
+class TestRecipeSearch:
     class TestAuthenticatedUsers:
-        def test_recipe_search_page_render(self, api_client):
+        def test_get_request_returns_status_code_405(self, api_client):
             new_user = UserAccount()
             api_client.force_authenticate(new_user)
             response = api_client.get(search_recipe_url)
 
             assert response.status_code == 405 # 405 = method not allowed - get isnt allowed only post
 
-        def test_recipe_search_post_request_allowed(self, api_client, signup_and_login, search_recipe_response):
-            response = search_recipe_response
+        def test_post_request_returns_status_code_200(self, api_client):
+            new_user = UserAccount()
+            api_client.force_authenticate(new_user)
+            data = {
+                'flavor_type': 'Sour',
+            }
+            response = api_client.post(search_recipe_url, data)
 
             assert response.status_code == 200
+            
+        def test_post_request_returns_recipes_filtered_by_flavor_type(self, api_client):
+            new_user = UserAccount()
+            api_client.force_authenticate(new_user)
+            new_recipe = RecipeFactory()
+            data = {
+                'flavor_type': {new_recipe.flavor_type}
+            }
+            response = api_client.post(search_recipe_url, data)
+
+            assert f'{new_recipe.id}' in f'{response.content}'
 
 
     class TestGuestUsers:
-        def test_recipe_search_page_render(self, api_client):
+        def test_get_request_returns_status_code_405(self, api_client):
             response = api_client.get(search_recipe_url)
 
             assert response.status_code == 405 # 405 = method not allowed - get isnt allowed only post
 
-        def test_recipe_search_post_request_allowed(self,api_client,search_recipe_response):
-            response = search_recipe_response
+        def test_post_request_returns_status_code_200(self, api_client):
+            data = {
+                'flavor_type': 'Sour',
+            }
+            response = api_client.post(search_recipe_url, data)
 
             assert response.status_code == 200
+            
+        def test_post_request_returns_recipes_filtered_by_flavor_type(self, api_client):
+            new_recipe = RecipeFactory()
+            data = {
+                'flavor_type': {new_recipe.flavor_type}
+            }
+            response = api_client.post(search_recipe_url, data)
+
+            assert f'{new_recipe.id}' in f'{response.content}'
+
+
 
 class TestRecipeDetailsView:
         class TestAuthenticatedUsers:
@@ -248,7 +278,7 @@ class TestRecipesOfAccountsFollowedView:
 
 class TestTopRatedRecipes:
     class TestAuthenticatedUsers:
-        def test_top_rated_recipes_page_should_render(self, api_client):
+        def test_get_request_return_status_code_200(self, api_client):
             new_user = UserFactory()
             api_client.force_authenticate(new_user)
             response = api_client.get(top_rated_recipes_url) 
@@ -256,7 +286,7 @@ class TestTopRatedRecipes:
             assert response.status_code == 200
     
 
-        def test_should_display_top_rated_recipes(self, api_client):
+        def test_get_request_should_return_top_rated_recipes(self, api_client):
             for i in range(10):
                 new_user = UserFactory() 
                 api_client.force_authenticate(new_user)
@@ -299,12 +329,12 @@ class TestTopRatedRecipes:
                 assert f'{recipe}' not in f'{response.content}'
                 
     class TestGuestUsers:
-        def test_top_rated_recipes_page_should_render(self, api_client):
+        def test_get_request_return_status_code_200(self, api_client):
             response = api_client.get(top_rated_recipes_url) 
 
             assert response.status_code == 200
 
-        def test_should_display_top_rated_recipes(self, api_client):
+        def test_get_request_should_return_top_rated_recipes(self, api_client):
             for i in range(10):
                 new_user = UserFactory() 
                 api_client.force_authenticate(new_user)

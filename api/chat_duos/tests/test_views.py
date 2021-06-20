@@ -11,14 +11,14 @@ chat_duo_list_url = ChatDuo.get_list_url()
 
 class TestChatDuoList:
     class TestAuthenticated:
-        def test_chat_duo_list_page_should_render(self, api_client):
+        def test_chat_duo_list_page_return_status_code_200(self, api_client):
             user = UserFactory()
             api_client.force_authenticate(user)
             response = api_client.get(chat_duo_list_url)
 
             assert response.status_code == 200
         
-        def test_should_load_my_chat_duos(self, api_client):
+        def test_page_should_return_chat_duos_list(self, api_client):
             user = UserFactory()
             user2 = UserFactory()
             chat_duo = ChatDuoFactory.create(members=(user,user2))

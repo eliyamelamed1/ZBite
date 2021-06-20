@@ -17,6 +17,7 @@ class ChatMassage(models.Model):
     author = models.ForeignKey(UserAccount(), on_delete=models.CASCADE)
     text = models.TextField(default=None)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     content_type = models.ForeignKey(ContentType,related_name='content_obj', on_delete=models.CASCADE)
     object_id = models.UUIDField(
         blank=True,
@@ -32,6 +33,10 @@ class ChatMassage(models.Model):
     def get_absolute_url(self):
         """Return absolute URL to the Chat Massage Detail page."""
         return reverse('chat_massages:details', kwargs={"pk": self.id})
+
+    def get_update_url(self):
+        """Return absolute URL to the Chat Massage Update page."""
+        return reverse('chat_massages:update', kwargs={"pk": self.id})
 
     @classmethod
     def get_create_url(cls):

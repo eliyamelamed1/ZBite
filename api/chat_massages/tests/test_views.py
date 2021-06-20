@@ -202,45 +202,6 @@ class TestChatMassageDetails:
 
                 assert response.status_code == 401
 
-    class TestUpdate:
-        class TestAuthor:
-            def test_chat_massage_details_page_should_render(self, api_client):
-                chat_massage = ChatMassageFactory()
-                api_client.force_authenticate(chat_massage.author)
-                updated_chat_massage = {
-                    'text': 'updated_chat_massage'
-                }
-                response = api_client.patch(chat_massage.get_absolute_url(), updated_chat_massage)
-                chat_massage = ChatMassage.objects.get(text=updated_chat_massage['text'])
-
-                assert response.status_code == 200
-                assert f'{chat_massage.id}' in f'{response.content}'
-
-
-        class TestAuthenticated:
-            def test_chat_massage_details_page_should_render(self, api_client):
-                new_user = UserFactory()
-                api_client.force_authenticate(new_user)
-                chat_massage = ChatMassageFactory()
-                updated_chat_massage = {
-                    'text': 'updated_chat_massage'
-                }
-                response = api_client.patch(chat_massage.get_absolute_url(), updated_chat_massage)
-
-                assert response.status_code == 403
-                assert f'{updated_chat_massage}' not in f'{response.content}'
-
-        class TestGuest:
-            def test_chat_massage_details_page_should_not_render(self, api_client):
-                chat_massage = ChatMassageFactory()
-                updated_chat_massage = {
-                    'text': 'updated_chat_massage'
-                }
-                response = api_client.patch(chat_massage.get_absolute_url(), updated_chat_massage)
-
-                assert response.status_code == 401
-                assert f'{chat_massage.id}' not in f'{response.content}'
-
 
     class TestDestroy:
         class TestAuthor:
@@ -275,6 +236,16 @@ class TestChatMassageDetails:
 class TestChatMassagesInRoom:
     class TestGroup:
         class TestMembers:
+            def test_chat_room_massage_page_returns_status_code_405(self, api_client):
+                new_user = UserFactory()
+                new_user2 = UserFactory()
+                api_client.force_authenticate(new_user)
+                ChatGroupFactory.create(members=(new_user, new_user2))
+ 
+                response = api_client.get(massages_in_room_url)
+                
+                assert response.status_code == 405
+                
             def test_chat_post_request_response(self, api_client):
                 new_user = UserFactory()
                 new_user2 = UserFactory()
@@ -298,7 +269,7 @@ class TestChatMassagesInRoom:
                 assert response.status_code == 200
                 assert f'{new_chat_massage}' in f'{response.content}'
         class TestAuthenticatedNonMembers:
-            def test_chat_room_massage_page_should_render(self, api_client):
+            def test_chat_room_massage_page_returns_status_code_405(self, api_client):
                 new_user = UserFactory()
                 api_client.force_authenticate(new_user)
 
@@ -328,7 +299,7 @@ class TestChatMassagesInRoom:
 
                 response = api_client.post(massages_in_room_url, data)
 
-                assert response.status_code == 403
+                assert f'{new_chat_massage}' not in f'{response.content}'
             
         class TestGuest:
             def test_chat_post_request_not_allowed_for_guests(self, api_client):
@@ -363,6 +334,7 @@ class TestChatMassagesInRoom:
                     'room': new_chat_duo.id
                 }
                 response = api_client.post(massages_in_room_url, data)
+
                 assert response.status_code == 200
 
             def test_should_render_duo_chat_massages(self, api_client, chat_massage_create):
@@ -392,6 +364,7 @@ class TestChatMassagesInRoom:
                 response = api_client.post(massages_in_room_url, data)
 
                 assert response.status_code == 403
+
             def test_should_not_render_duo_chat_massages(self, api_client, chat_massage_create):
                 new_chat_massage = chat_massage_create
                 new_chat_duo = ChatDuoFactory()
@@ -405,7 +378,7 @@ class TestChatMassagesInRoom:
 
                 response = api_client.post(massages_in_room_url, data)
 
-                assert response.status_code == 403
+                assert f'{new_chat_massage}' not in f'{response.content}'
         class TestGuest:
             def test_chat_post_request_not_allowed_for_guests(self, api_client):
                 new_user = UserFactory()
@@ -429,5 +402,57 @@ class TestChatMassagesInRoom:
                 }
                 response = api_client.post(massages_in_room_url, data)
 
-                assert response.status_code == 401
                 assert f'{new_chat_massage}' not in f'{response.content}'
+
+# TODO add test to update other field than text (they should fail)
+class TestChatMassageUpdate:
+    class TestAuthor:
+        def test_chat_massage_update_page_should_render(self, api_client):
+            chat_massage = ChatMassageFactory()
+            api_client.force_authenticate(chat_massage.author)
+            response = api_client.get(chat_massage.get_update_url())
+            assert response.status_code == 405
+            
+        def test_chat_massage_text_update_should_work(self, api_client):
+            chat_massage = ChatMassageFactory()
+            api_client.force_authenticate(chat_massage.author)
+            updated_chat_massage = {
+                'text': 'updated_chat_massage'
+            }
+            response = api_client.patch(chat_massage.get_update_url(), updated_chat_massage)
+            chat_massage = ChatMassage.objects.get(text=updated_chat_massage['text'])
+
+            assert response.status_code == 200
+            assert f'{chat_massage}' in f'{response.content}'
+
+    class TestAuthenticated:
+        def test_chat_massage_update_page_should_not_render(self, api_client):
+            chat_massage = ChatMassageFactory()
+            response = api_client.get(chat_massage.get_update_url())
+            assert response.status_code == 401
+
+        def test_chat_massage_update_page_should_render(self, api_client):
+            new_user = UserFactory()
+            api_client.force_authenticate(new_user)
+            chat_massage = ChatMassageFactory()
+            updated_chat_massage = {
+                'text': 'updated_chat_massage'
+            }
+            response = api_client.patch(chat_massage.get_update_url(), updated_chat_massage)
+            assert response.status_code == 403
+            assert f'{updated_chat_massage}' not in f'{response.content}'
+    class TestGuest:
+        def test_chat_massage_update_page_should_not_render(self, api_client):
+            chat_massage = ChatMassageFactory()
+            response = api_client.get(chat_massage.get_update_url())
+            assert response.status_code == 401
+
+        def test_chat_massage_details_page_should_not_render(self, api_client):
+            chat_massage = ChatMassageFactory()
+            updated_chat_massage = {
+                'text': 'updated_chat_massage'
+            }
+
+            response = api_client.patch(chat_massage.get_update_url(), updated_chat_massage)
+            assert response.status_code == 401
+            assert f'{chat_massage}' not in f'{response.content}'

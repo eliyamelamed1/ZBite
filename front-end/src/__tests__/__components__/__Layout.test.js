@@ -27,7 +27,7 @@ afterEach(() => {
     cleanup();
 });
 
-describe('LAyout', () => {
+describe('Layout', () => {
     test('renders without crashing', () => {});
     test('renders children', () => {
         const children = screen.getByText('children');
@@ -36,5 +36,33 @@ describe('LAyout', () => {
     test('render navbar component', () => {
         const navbar = screen.getByTestId('navbar');
         expect(navbar).toBeInTheDocument();
+    });
+});
+
+describe('expected dispatched redux actions', () => {
+    beforeEach(() => {
+        store.subscribe(() => {
+            const action = store.getState().dispatchedActions;
+            localStorage.setItem(action.type, action.payload);
+        });
+        render(
+            <Provider store={store}>
+                <Router>
+                    <Layout>
+                        <div>children</div>
+                    </Layout>
+                </Router>
+            </Provider>
+        );
+    });
+
+    afterEach(() => {
+        cleanup();
+    });
+    test('loadLoggedUserDetailsAction should have been dispatched', () => {
+        expect(localStorage.USER_LOADED_FAIL).toBeTruthy();
+    });
+    test('connectSocket should have been dispatched', () => {
+        expect(localStorage.CONNECT_SOCKET).toBeTruthy();
     });
 });

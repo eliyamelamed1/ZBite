@@ -25,11 +25,11 @@ class TestChatGroupUpdateMembers:
     def test_reverse(self):
         chat_group = ChatGroupFactory()
         url = reverse('chat_groups:update_members', kwargs={'pk': chat_group.id})
-        assert url == f'/api/chat_groups/update_members/{chat_group.id}/'
+        assert url == f'/api/chat_groups/{chat_group.id}/update_members/'
 
     def test_resolve(self):
         chat_group = ChatGroupFactory()
-        url = f'/api/chat_groups/update_members/{chat_group.id}/'
+        url = f'/api/chat_groups/{chat_group.id}/update_members/'
 
         assert resolve(url).view_name == 'chat_groups:update_members'
 

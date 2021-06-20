@@ -29,11 +29,11 @@ class TestDeletelUrl:
     def test_detail_reverse(self):
         new_comment = CommentFactory()
         url = reverse('comments:delete', kwargs={'pk': new_comment.id})
-        assert url == f'/api/comments/delete/{new_comment.id}/'
+        assert url == f'/api/comments/{new_comment.id}/delete/'
 
     def test_detail_resolve(self):
         new_comment = CommentFactory()
-        url = f'/api/comments/delete/{new_comment.id}/'
+        url = f'/api/comments/{new_comment.id}/delete/'
         assert resolve(url).view_name == 'comments:delete'
 
 

@@ -7,6 +7,11 @@ class ChatMassageCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChatMassage
         fields = ('text', 'room',)
+        
+class ChatMassageUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ChatMassage
+        fields = ('text',)
 
 
 class ChatMassageDetailsSerializer(serializers.ModelSerializer):

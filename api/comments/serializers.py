@@ -12,3 +12,7 @@ class CommentsInRecipeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ('recipe',)
+class CommentUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ('title','image',)

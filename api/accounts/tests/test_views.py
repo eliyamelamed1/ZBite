@@ -125,16 +125,16 @@ class TestUserListView:
             assert response.status_code == 200
 
 
-class TestTopChefsFeed:
+class TestTopRatedAccounts:
     class TestAuthenticatedUsers:
-        def test_top_chefs_feed_page_should_render(self, api_client):
+        def test_top_chefs_feed_page_return_status_code_200(self, api_client):
             new_user = UserFactory()
             api_client.force_authenticate(new_user)
             response = api_client.get(top_rated_accounts_url) 
 
             assert response.status_code == 200
         
-        def test_top_chefs_page_should_display_top_rated_chefs(self, api_client):
+        def test_page_should_return_top_rated_accounts(self, api_client):
             for i in range(10):
                 new_user = UserFactory() 
                 new_user.stars = 5
@@ -159,7 +159,7 @@ class TestTopChefsFeed:
 
     class TestGuestUsers:
         
-        def test_top_chefs_feed_page_should_render(self, api_client):
+        def test_top_chefs_feed_page_return_status_code_200(self, api_client):
             response = api_client.get(top_rated_accounts_url) 
 
             assert response.status_code == 200

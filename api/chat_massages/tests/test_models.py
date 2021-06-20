@@ -16,6 +16,12 @@ def test_get_absolute_url(chat_massage_create):
 
     assert chat_massage.get_absolute_url() == details_url
 
+def test_get_update_url(chat_massage_create):
+    chat_massage = chat_massage_create
+    update_url = reverse('chat_massages:update', kwargs={"pk": chat_massage.id})
+
+    assert chat_massage.get_update_url() == update_url
+
 def test_get_create_url():
     create_chat_massage_url = reverse('chat_massages:create')
 
