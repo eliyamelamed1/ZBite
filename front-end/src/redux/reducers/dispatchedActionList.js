@@ -1,4 +1,4 @@
-function dispatchedActionList(state = null, action) {
+function dispatchedActionList(state, action) {
     return action;
 }
 
