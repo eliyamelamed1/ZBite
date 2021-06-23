@@ -1,3 +1,10 @@
+/*tests
+
+action have dispatched
+Test user exisy
+Test user is author
+*/
+
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import React, { useEffect, useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
