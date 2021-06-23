@@ -1,3 +1,9 @@
+/* TODO 
+test onSubmit triggers useUpdateAction (fail/success scenarios) 
+Test Authenticated user redirected to home page
+test account created redirect to login page
+test cant sign up with password different than re password 
+*/
 import { Link, Redirect } from 'react-router-dom';
 import React, { useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
