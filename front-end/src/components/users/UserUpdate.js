@@ -1,4 +1,5 @@
-// TODO - change PropTypes id to .isRequired
+// TODO - test onSubmit triggers useUpdateAction (fail/success scenarios) 
+// TODO - test propTypes
 
 import React, { useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
