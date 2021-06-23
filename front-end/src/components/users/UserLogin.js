@@ -1,3 +1,8 @@
+/* TODO - tests
+test onSubmit dispatch Action (fail/success scenarios) 
+test authenticated user redirected to home
+*/
+
 import { Link, Redirect } from 'react-router-dom';
 import React, { useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
