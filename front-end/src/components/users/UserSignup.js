@@ -1,5 +1,5 @@
 /* TODO 
-test onSubmit triggers useUpdateAction (fail/success scenarios) 
+test onSubmit dispatch Action (fail/success, try/catch scenarios) 
 Test Authenticated user redirected to home page
 test account created redirect to login page
 test cant sign up with password different than re password 
