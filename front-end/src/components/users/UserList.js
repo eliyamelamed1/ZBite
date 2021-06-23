@@ -1,3 +1,8 @@
+/* TODO - test
+test action have dispatched
+test displayedUsers is called and displays users
+*/
+
 import React, { useEffect } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 
