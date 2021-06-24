@@ -1,4 +1,6 @@
 // this page currently is not used (cause we disabled activate email on the backend)
+// test onSubmit dispatch action
+
 
 import React, { useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
