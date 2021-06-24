@@ -1,4 +1,4 @@
-/* - test action have dispatched
+/* - test onSubmit dispatch the action 
  test the redirect
  */
 
