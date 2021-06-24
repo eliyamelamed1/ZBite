@@ -1,4 +1,9 @@
 // TODO add redirect after creating a recipe
+// TODO refractor to useDispatch, useSelector
+
+// test form calls onSubmit
+// test onSubmit dispatch action
+// test redirection after creating recipe + if user is not authenticated
 
 import React, { useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
