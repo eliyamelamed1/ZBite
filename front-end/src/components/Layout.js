@@ -1,3 +1,6 @@
+// test useEffect dispatch action
+// test renders children
+
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
