@@ -1,5 +1,6 @@
-// TODO - change PropTypes id to .isRequired
-// TODO - check the redirect
+/* - test action have dispatched
+ test the redirect
+ */
 
 import { connect, useDispatch } from 'react-redux';
 
