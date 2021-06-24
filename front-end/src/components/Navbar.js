@@ -1,4 +1,6 @@
-// add recipes option in navbar
+// TODO recipes crud to navbar
+// test dispatch action
+// test author and guest links
 
 import { Link, NavLink } from 'react-router-dom';
 import { connect, useDispatch, useSelector } from 'react-redux';
