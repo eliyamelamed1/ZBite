@@ -1,4 +1,6 @@
 // TODO - change PropTypes id to .isRequired
+// test form call onSubmit
+// test onSubmit dispatch action
 
 import React, { useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
