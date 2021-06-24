@@ -1,3 +1,8 @@
+// test propTypes
+// test authorLinks, guestLinks
+// test useEffect
+// test logic
+
 import React, { useEffect, useState } from 'react';
 import { connect, useSelector } from 'react-redux';
 
