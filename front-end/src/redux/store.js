@@ -9,5 +9,9 @@ const initialState = {};
 const middleware = [thunk];
 
 const store = createStore(rootReducer, initialState, composeWithDevTools(applyMiddleware(...middleware)));
-
+// store.subscribe(() => {
+//     const action = store.getState().dispatchedActions;
+//     localStorage.setItem(action.type, action.payload);
+//     console.log(action);
+// });
 export default store;

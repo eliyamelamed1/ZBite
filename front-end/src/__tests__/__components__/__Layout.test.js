@@ -39,7 +39,7 @@ describe('Layout', () => {
     });
 });
 
-describe('expected dispatched redux actions', () => {
+describe('Layout - actions', () => {
     beforeEach(() => {
         store.subscribe(() => {
             const action = store.getState().dispatchedActions;
@@ -61,8 +61,5 @@ describe('expected dispatched redux actions', () => {
     });
     test('loadLoggedUserDetailsAction should have been dispatched', () => {
         expect(localStorage.USER_LOADED_FAIL).toBeTruthy();
-    });
-    test('connectSocket should have been dispatched', () => {
-        expect(localStorage.CONNECT_SOCKET).toBeTruthy();
     });
 });

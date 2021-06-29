@@ -1,5 +1,4 @@
 // TODO recipes crud to navbar
-// test dispatch action
 // test author and guest links
 
 import { Link, NavLink } from 'react-router-dom';

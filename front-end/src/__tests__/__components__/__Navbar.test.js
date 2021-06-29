@@ -10,15 +10,20 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import store from '../../redux/store';
+import userEvent from '@testing-library/user-event';
 
 afterEach(() => {
     cleanup();
 });
 
-describe('authenticated users', () => {
+describe('NavBar - authenticated users', () => {
     beforeEach(() => {
         store.dispatch({ type: 'LOGIN_SUCCESS', payload: { isAuthenticatedData: true } });
         store.dispatch({ type: 'LOAD_USER_SUCCUSS', payload: { user: { email: 'testemail@gmail.com' } } });
+        store.subscribe(() => {
+            const action = store.getState().dispatchedActions;
+            localStorage.setItem(action.type, action.payload);
+        });
         render(
             <Provider store={store}>
                 <Router>
@@ -42,14 +47,22 @@ describe('authenticated users', () => {
     });
     test('logout button should appear on guestLinks', () => {
         const logoutButton = screen.getByRole('button', { name: /logout/i });
-
         expect(logoutButton).toBeInTheDocument();
+    });
+    test('logout button should dispatch logoutAction', () => {
+        const logoutButton = screen.getByRole('button', { name: /logout/i });
+        userEvent.click(logoutButton);
+        expect(localStorage.LOGOUT).toBeTruthy();
     });
 });
 
-describe('guest users', () => {
+describe('NavBar - guest users', () => {
     beforeEach(() => {
         store.dispatch({ type: 'LOGOUT', payload: { isAuthenticatedData: false } });
+        store.subscribe(() => {
+            const action = store.getState().dispatchedActions;
+            localStorage.setItem(action.type, action.payload);
+        });
         render(
             <Provider store={store}>
                 <Router>
