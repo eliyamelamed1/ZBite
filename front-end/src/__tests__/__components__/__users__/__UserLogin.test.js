@@ -4,7 +4,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
 
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import React from 'react';
@@ -13,21 +13,24 @@ import UserLogin from '../../../components/users/UserLogin';
 import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
 
-beforeEach(() => {
-    render(
-        <Provider store={store}>
-            <Router>
-                <UserLogin />
-            </Router>
-        </Provider>
-    );
-});
-
-afterEach(() => {
-    cleanup();
-});
-
 describe('UserLogin', () => {
+    beforeEach(() => {
+        store.subscribe(() => {
+            const action = store.getState().dispatchedActions;
+            localStorage.setItem(action.type, action.payload);
+        });
+        render(
+            <Provider store={store}>
+                <Router>
+                    <UserLogin />
+                </Router>
+            </Provider>
+        );
+    });
+
+    afterEach(() => {
+        cleanup();
+    });
     test('renders without crashing', () => {});
     test('render userLogin', () => {
         const userLogin = screen.getByTestId('userLogin');
@@ -54,17 +57,25 @@ describe('UserLogin', () => {
         expect(passwordInput.value).toBe('123456');
     });
     test('renders submit button', () => {
-        const submitButton = screen.getByRole('button', { name: 'Login' });
-        expect(submitButton).toBeInTheDocument();
+        const loginButton = screen.getByRole('button', { name: 'Login' });
+        expect(loginButton).toBeInTheDocument();
+    });
+    test('Redux - login button dispatch loginAction', () => {
+        const emailInput = screen.getByPlaceholderText(/email/i);
+        const passwordInput = screen.getByPlaceholderText(/password/i);
+        const loginButton = screen.getByRole('button', { name: 'Login' });
+
+        userEvent.type(emailInput, 'test@gmail.com');
+        userEvent.type(passwordInput, '1234567');
+        userEvent.click(loginButton);
+
+        waitFor(() => expect(localStorage.LOGIN_FAIL).toBeTruthy());
     });
 });
 
 // TODO - imporve this tests by checking the redirection url (should be home page)
 describe('UserLogin - redirect', () => {
     beforeEach(() => {
-        cleanup();
-    });
-    test('should redirect authenticated user', async () => {
         store.dispatch({ type: 'LOGIN_SUCCESS', payload: { isAuthenticatedData: true } });
         render(
             <Provider store={store}>
@@ -73,6 +84,11 @@ describe('UserLogin - redirect', () => {
                 </Router>
             </Provider>
         );
+    });
+    afterEach(() => {
+        cleanup();
+    });
+    test('should redirect authenticated user', async () => {
         const userLogin = screen.queryByTestId('userLogin');
         expect(userLogin).not.toBeInTheDocument();
     });
