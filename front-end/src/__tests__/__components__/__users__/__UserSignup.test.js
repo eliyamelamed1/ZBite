@@ -1,10 +1,7 @@
-// TODO - test submit button call on submit function
-// TODO - test onsubmit call signupAction
-
 import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
 
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import React from 'react';
@@ -14,11 +11,10 @@ import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
 
 beforeEach(() => {
-    const onSubmit = jest.fn();
     render(
         <Provider store={store}>
             <Router>
-                <UserSignup onSubmit={onSubmit} />
+                <UserSignup />
             </Router>
         </Provider>
     );
@@ -147,7 +143,38 @@ describe('UserSignup - redirect', () => {
         userEvent.type(passwordTextbox, 'testuser123');
         userEvent.type(confirmTextbox, 'testuser123');
         userEvent.click(signupButton);
-
         expect(userSignup).not.toBeInTheDocument();
+    });
+});
+
+describe('UserSignup - Redux', () => {
+    beforeEach(() => {
+        cleanup();
+    });
+    test('should redirect after signing up and call onSubmit function', async () => {
+        store.dispatch({ type: 'LOGOUT', payload: { isAuthenticatedData: false } });
+        store.subscribe(() => {
+            const action = store.getState().dispatchedActions;
+            localStorage.setItem(action.type, action.payload);
+        });
+        render(
+            <Provider store={store}>
+                <Router>
+                    <UserSignup />
+                </Router>
+            </Provider>
+        );
+        const nameTextbox = screen.getByPlaceholderText('Name*');
+        const emailTextbox = screen.getByPlaceholderText('Email*');
+        const passwordTextbox = screen.getByPlaceholderText('Password*');
+        const confirmTextbox = screen.getByPlaceholderText('Confirm Password*');
+        const signupButton = screen.getByRole('button', { name: 'Register' });
+
+        userEvent.type(nameTextbox, 'testuser');
+        userEvent.type(emailTextbox, 'testuser@gmail.com');
+        userEvent.type(passwordTextbox, 'testuser123');
+        userEvent.type(confirmTextbox, 'testuser123');
+        userEvent.click(signupButton);
+        await waitFor(() => expect(localStorage.SIGNUP_FAIL).toBeTruthy());
     });
 });

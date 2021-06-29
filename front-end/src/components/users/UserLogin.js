@@ -1,5 +1,4 @@
 /* TODO - tests
-test onSubmit dispatch Action (fail/success scenarios) 
 test authenticated user redirected to home
 */
 

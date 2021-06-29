@@ -1,5 +1,4 @@
 // TODO - test redirect after login
-// TODO - test submit calls loginAction
 
 import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
@@ -60,7 +59,7 @@ describe('UserLogin', () => {
         const loginButton = screen.getByRole('button', { name: 'Login' });
         expect(loginButton).toBeInTheDocument();
     });
-    test('Redux - login button dispatch loginAction', () => {
+    test('Redux - login button dispatch loginAction', async () => {
         const emailInput = screen.getByPlaceholderText(/email/i);
         const passwordInput = screen.getByPlaceholderText(/password/i);
         const loginButton = screen.getByRole('button', { name: 'Login' });
@@ -69,7 +68,7 @@ describe('UserLogin', () => {
         userEvent.type(passwordInput, '1234567');
         userEvent.click(loginButton);
 
-        waitFor(() => expect(localStorage.LOGIN_FAIL).toBeTruthy());
+        await waitFor(() => expect(localStorage.LOGIN_FAIL).toBeTruthy());
     });
 });
 
