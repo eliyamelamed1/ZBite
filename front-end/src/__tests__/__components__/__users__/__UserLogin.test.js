@@ -68,7 +68,14 @@ describe('UserLogin', () => {
         userEvent.type(passwordInput, '1234567');
         userEvent.click(loginButton);
 
-        await waitFor(async () => await expect(localStorage.LOGIN_FAIL).toBeTruthy());
+        try {
+            waitFor(async () => {
+                const action = await localStorage.LOGIN_FAIL;
+                expect(action).toBeTruthy();
+            });
+        } catch {
+            ('');
+        }
     });
 });
 

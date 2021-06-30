@@ -143,6 +143,7 @@ describe('UserSignup - redirect', () => {
         userEvent.type(passwordTextbox, 'testuser123');
         userEvent.type(confirmTextbox, 'testuser123');
         userEvent.click(signupButton);
+
         expect(userSignup).not.toBeInTheDocument();
     });
 });
@@ -151,7 +152,7 @@ describe('UserSignup - Redux', () => {
     beforeEach(() => {
         cleanup();
     });
-    test('should redirect after signing up and call onSubmit function', async () => {
+    test('signup should dispatch signupAction', async () => {
         store.dispatch({ type: 'LOGOUT', payload: { isAuthenticatedData: false } });
         store.subscribe(() => {
             const action = store.getState().dispatchedActions;
