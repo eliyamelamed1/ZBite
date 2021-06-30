@@ -7,19 +7,18 @@ import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import React from 'react';
 import UserUpdate from '../../../components/users/UserUpdate';
-import store from '../../../redux/store';
+import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
+const middlewares = [thunk];
+const mockStore = configureStore(middlewares);
+let initialState = {
+    user: { email: 'testemail', name: 'testname', id: '5' },
+};
+const store = mockStore(initialState);
 beforeEach(() => {
-    let initialState = {
-        user: { email: 'testemail', name: 'testname', id: '5' },
-    };
-    store.dispatch({ type: 'USER_LOADED_SUCCESS', payload: initialState.user });
     const id = '5';
-    store.subscribe(() => {
-        const action = store.getState().dispatchedActions;
-        localStorage.setItem(action.type, action.payload);
-    });
     render(
         <Provider store={store}>
             <UserUpdate id={id} />
@@ -94,6 +93,6 @@ describe('UserUpdate - onSubmit', () => {
         userEvent.type(nameInput, 'new name');
         userEvent.click(updateButton);
 
-        await waitFor(() => expect(localStorage.USER_UPDATED_FAIL).toBeTruthy());
+        await waitFor(() => expect(store.getActions()[0].type).toBe('USER_UPDATED_FAIL'));
     });
 });
