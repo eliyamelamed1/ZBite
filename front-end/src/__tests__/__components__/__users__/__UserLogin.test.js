@@ -9,10 +9,7 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import UserLogin from '../../../components/users/UserLogin';
-import configureStore from 'redux-mock-store';
-import { loginAction } from '../../../redux/actions/auth';
 import store from '../../../redux/store';
-import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
 describe('UserLogin', () => {
