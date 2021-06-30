@@ -3,14 +3,19 @@
 import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
 
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 
 import Layout from '../../components/Layout';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import store from '../../redux/store';
+import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 
+const middlewares = [thunk];
+const mockStore = configureStore(middlewares);
+const initialState = { authReducer: {}, socketReducer: {} };
+const store = mockStore(initialState);
 beforeEach(() => {
     render(
         <Provider store={store}>
@@ -41,10 +46,6 @@ describe('Layout', () => {
 
 describe('Layout - actions', () => {
     beforeEach(() => {
-        store.subscribe(() => {
-            const action = store.getState().dispatchedActions;
-            localStorage.setItem(action.type, action.payload);
-        });
         render(
             <Provider store={store}>
                 <Router>
@@ -59,7 +60,7 @@ describe('Layout - actions', () => {
     afterEach(() => {
         cleanup();
     });
-    test('loadLoggedUserDetailsAction should have been dispatched', () => {
-        expect(localStorage.USER_LOADED_FAIL).toBeTruthy();
+    test('loadLoggedUserDetailsAction should have been dispatched', async () => {
+        await waitFor(() => expect(store.getActions()[1].type).toBe('USER_LOADED_FAIL'));
     });
 });

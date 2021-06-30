@@ -3,27 +3,25 @@
 import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
 
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 
 import Navbar from '../../components/Navbar';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import store from '../../redux/store';
+import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
-afterEach(() => {
-    cleanup();
-});
-
+const middlewares = [thunk];
+const mockStore = configureStore(middlewares);
+const initialState = { authReducer: { isAuthenticatedData: true, userDetailsData: { email: 'testemail@gmail.com' } } };
 describe('NavBar - authenticated users', () => {
+    afterEach(() => {
+        cleanup();
+    });
+    const store = mockStore(initialState);
     beforeEach(() => {
-        store.dispatch({ type: 'LOGIN_SUCCESS', payload: { isAuthenticatedData: true } });
-        store.dispatch({ type: 'LOAD_USER_SUCCUSS', payload: { user: { email: 'testemail@gmail.com' } } });
-        store.subscribe(() => {
-            const action = store.getState().dispatchedActions;
-            localStorage.setItem(action.type, action.payload);
-        });
         render(
             <Provider store={store}>
                 <Router>
@@ -49,20 +47,19 @@ describe('NavBar - authenticated users', () => {
         const logoutButton = screen.getByRole('button', { name: /logout/i });
         expect(logoutButton).toBeInTheDocument();
     });
-    test('logout button should dispatch logoutAction', () => {
+    test('logout button should dispatch logoutAction', async () => {
         const logoutButton = screen.getByRole('button', { name: /logout/i });
         userEvent.click(logoutButton);
-        expect(localStorage.LOGOUT).toBeTruthy();
+        await waitFor(() => expect(store.getActions()[0].type).toBe('LOGOUT'));
     });
 });
 
 describe('NavBar - guest users', () => {
+    const initialState = {
+        authReducer: { isAuthenticatedData: false },
+    };
+    const store = mockStore(initialState);
     beforeEach(() => {
-        store.dispatch({ type: 'LOGOUT', payload: { isAuthenticatedData: false } });
-        store.subscribe(() => {
-            const action = store.getState().dispatchedActions;
-            localStorage.setItem(action.type, action.payload);
-        });
         render(
             <Provider store={store}>
                 <Router>

@@ -7,8 +7,16 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import UserSignup from '../../../components/users/UserSignup';
-import store from '../../../redux/store';
+import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
+
+const middlewares = [thunk];
+const mockStore = configureStore(middlewares);
+let initialState = {
+    authReducer: {},
+};
+const store = mockStore(initialState);
 
 beforeEach(() => {
     render(
@@ -111,7 +119,10 @@ describe('UserSignup - redirect', () => {
         cleanup();
     });
     test('should redirect authenticated user', async () => {
-        store.dispatch({ type: 'LOGIN_SUCCESS', payload: { isAuthenticatedData: true } });
+        initialState = {
+            authReducer: { isAuthenticatedData: true },
+        };
+        const store = mockStore(initialState);
         render(
             <Provider store={store}>
                 <Router>
@@ -123,7 +134,10 @@ describe('UserSignup - redirect', () => {
         expect(userSignup).not.toBeInTheDocument();
     });
     test('should redirect after signing up and call onSubmit function', () => {
-        store.dispatch({ type: 'LOGOUT', payload: { isAuthenticatedData: false } });
+        initialState = {
+            authReducer: { isAuthenticatedData: false },
+        };
+        const store = mockStore(initialState);
         render(
             <Provider store={store}>
                 <Router>
@@ -153,11 +167,10 @@ describe('UserSignup - Redux', () => {
         cleanup();
     });
     test('signup should dispatch signupAction', async () => {
-        store.dispatch({ type: 'LOGOUT', payload: { isAuthenticatedData: false } });
-        store.subscribe(() => {
-            const action = store.getState().dispatchedActions;
-            localStorage.setItem(action.type, action.payload);
-        });
+        initialState = {
+            authReducer: { isAuthenticatedData: false },
+        };
+        const store = mockStore(initialState);
         render(
             <Provider store={store}>
                 <Router>
@@ -177,6 +190,6 @@ describe('UserSignup - Redux', () => {
         userEvent.type(confirmTextbox, 'testuser123');
         userEvent.click(signupButton);
 
-        await waitFor(() => expect(localStorage.SIGNUP_FAIL).toBeTruthy());
+        await waitFor(() => expect(store.getActions()[0].type).toBe('SIGNUP_FAIL'));
     });
 });

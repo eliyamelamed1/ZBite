@@ -19,7 +19,7 @@ const userList = () => {
 
     return (
         <main>
-            <div data-testid='usersList'></div>
+            <div data-testid='userList'></div>
             <DisplayUsers users={userListData} />
         </main>
     );

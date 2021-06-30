@@ -9,15 +9,17 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import UserLogin from '../../../components/users/UserLogin';
-import store from '../../../redux/store';
+import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
-describe('UserLogin', () => {
+const middlewares = [thunk];
+const mockStore = configureStore(middlewares);
+let initialState = { authReducer: {} };
+const store = mockStore(initialState);
+
+describe('UserLogin - guest', () => {
     beforeEach(() => {
-        store.subscribe(() => {
-            const action = store.getState().dispatchedActions;
-            localStorage.setItem(action.type, action.payload);
-        });
         render(
             <Provider store={store}>
                 <Router>
@@ -68,14 +70,15 @@ describe('UserLogin', () => {
         userEvent.type(passwordInput, '1234567');
         userEvent.click(loginButton);
 
-        await waitFor(() => expect(localStorage.LOGIN_FAIL).toBeTruthy());
+        await waitFor(() => expect(store.getActions()[0].type).toBe('LOGIN_FAIL'));
     });
 });
 
 // TODO - imporve this tests by checking the redirection url (should be home page)
-describe('UserLogin - redirect', () => {
+describe('UserLogin - authenticated', () => {
+    let initialState = { authReducer: { isAuthenticatedData: true } };
+    const store = mockStore(initialState);
     beforeEach(() => {
-        store.dispatch({ type: 'LOGIN_SUCCESS', payload: { isAuthenticatedData: true } });
         render(
             <Provider store={store}>
                 <Router>
@@ -93,26 +96,3 @@ describe('UserLogin - redirect', () => {
     });
     // test('should redirect after successful login', () => {});
 });
-
-// test('Redux - login button dispatch loginAction', async () => {
-//     const middlewares = [thunk];
-//     const mockStore = configureStore(middlewares);
-//     const initialState = { authReducer: {} };
-//     const store = mockStore(initialState);
-//     render(
-//         <Provider store={store}>
-//             <Router>
-//                 <UserLogin />
-//             </Router>
-//         </Provider>
-//     );
-//     const emailInput = screen.getByPlaceholderText(/email/i);
-//     const passwordInput = screen.getByPlaceholderText(/password/i);
-//     const loginButton = screen.getByRole('button', { name: 'Login' });
-
-//     userEvent.type(emailInput, 'test@gmail.com');
-//     userEvent.type(passwordInput, '1234567');
-//     userEvent.click(loginButton);
-
-//     await waitFor(() => expect(store.getActions()).toEqual([{ type: 'LOGIN_FAIL' }]));
-// });
