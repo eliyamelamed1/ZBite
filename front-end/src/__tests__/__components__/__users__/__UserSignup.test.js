@@ -175,6 +175,7 @@ describe('UserSignup - Redux', () => {
         userEvent.type(passwordTextbox, 'testuser123');
         userEvent.type(confirmTextbox, 'testuser123');
         userEvent.click(signupButton);
+
         await waitFor(() => expect(localStorage.SIGNUP_FAIL).toBeTruthy());
     });
 });
