@@ -1,9 +1,7 @@
-// refactor tests (to many renders)
-
 import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
 
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 
 import Navbar from '../../components/Navbar';
 import { Provider } from 'react-redux';
@@ -17,11 +15,12 @@ import userEvent from '@testing-library/user-event';
 jest.mock('../../redux/actions/auth', () => ({ logoutAction: jest.fn() }));
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
-const initialState = { authReducer: { isAuthenticatedData: true, userDetailsData: { email: 'testemail@gmail.com' } } };
+const userId = 'userId';
+
 describe('NavBar - authenticated users', () => {
-    afterEach(() => {
-        cleanup();
-    });
+    const initialState = {
+        authReducer: { isAuthenticatedData: true, loggedUserData: { email: 'testemail@gmail.com', id: 'userId' } },
+    };
     const store = mockStore(initialState);
     beforeEach(() => {
         render(
@@ -32,6 +31,9 @@ describe('NavBar - authenticated users', () => {
             </Provider>
         );
     });
+    afterEach(() => {
+        cleanup();
+    });
     test('renders without crashing', () => {});
     test('contain global link (home)', () => {
         const homeLink = screen.getByText(/home/i);
@@ -40,6 +42,17 @@ describe('NavBar - authenticated users', () => {
     test('should contain authLinks', () => {
         const authLinks = screen.getByTestId('authLinks');
         expect(authLinks).toBeInTheDocument();
+    });
+    test('authLinks should contain logged user email,profile', () => {
+        const loggedEmail = screen.getByText(/testemail@gmail.com/);
+
+        expect(loggedEmail).toBeInTheDocument();
+    });
+    test('authLinks should contain valid profile link', () => {
+        const profileLink = screen.getByRole('link', { name: /profile/i });
+        const userId = store.getState().authReducer.loggedUserData.id;
+        expect(profileLink).toBeInTheDocument();
+        expect(profileLink.href).toEqual(`http://localhost/users/${userId}`);
     });
     test('should not contain guestLinks', () => {
         const guestLinks = screen.queryByTestId('guestLinks');
