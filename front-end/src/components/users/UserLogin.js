@@ -1,3 +1,8 @@
+/* TODO - tests
+test authenticated user redirected to home
+
+*/
+
 import { Link, Redirect } from 'react-router-dom';
 import React, { useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
@@ -19,8 +24,11 @@ const userLogin = () => {
     const onSubmit = (e) => {
         // TODO - check about this command
         e.preventDefault();
-
-        dispatch(loginAction(email, password));
+        try {
+            dispatch(loginAction({ email, password }));
+        } catch {
+            // window.scrollTo(0, 0);
+        }
     };
 
     if (isAuthenticatedData) return <Redirect exact to='/' />;

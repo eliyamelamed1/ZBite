@@ -52,24 +52,26 @@ export const loadUserListAction = () => async (dispatch) => {
     }
 };
 
-export const userUpdateAction = (id, email, name) => async (dispatch) => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Token ${localStorage.getItem('auth_token')}`,
-        },
+export const userUpdateAction =
+    ({ id, email, name }) =>
+    async (dispatch) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Token ${localStorage.getItem('auth_token')}`,
+            },
+        };
+        const body = JSON.stringify({
+            email,
+            name,
+        });
+        try {
+            const res = await axios.patch(`${process.env.REACT_APP_API_URL}/api/accounts/${id}/`, body, config);
+            dispatch({ type: USER_UPDATED_SUCCESS, payload: res.data });
+        } catch {
+            dispatch({ type: USER_UPDATED_FAIL });
+        }
     };
-    const body = JSON.stringify({
-        email,
-        name,
-    });
-    try {
-        const res = await axios.patch(`${process.env.REACT_APP_API_URL}/api/accounts/${id}/`, body, config);
-        dispatch({ type: USER_UPDATED_SUCCESS, payload: res.data });
-    } catch {
-        dispatch({ type: USER_UPDATED_FAIL });
-    }
-};
 
 // TODO fix gets an error after deleting user
 export const userDeleteAction = (id) => async (dispatch) => {
@@ -113,23 +115,25 @@ export const loadLoggedUserDetailsAction = () => async (dispatch) => {
     }
 };
 
-export const loginAction = (email, password) => async (dispatch) => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-        },
+export const loginAction =
+    ({ email, password }) =>
+    async (dispatch) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+
+        const body = JSON.stringify({ email, password });
+
+        try {
+            const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/djoser/token/login/`, body, config);
+            dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+            dispatch(loadLoggedUserDetailsAction());
+        } catch (err) {
+            dispatch({ type: LOGIN_FAIL });
+        }
     };
-
-    const body = JSON.stringify({ email, password });
-
-    try {
-        const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/djoser/token/login/`, body, config);
-        dispatch({ type: LOGIN_SUCCESS, payload: res.data });
-        dispatch(loadLoggedUserDetailsAction());
-    } catch (err) {
-        dispatch({ type: LOGIN_FAIL });
-    }
-};
 export const signupAction =
     ({ name, email, password, re_password }) =>
     async (dispatch) => {

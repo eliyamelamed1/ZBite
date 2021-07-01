@@ -1,3 +1,6 @@
+// test useEffect dispatch action
+// test renders children
+
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -22,7 +25,11 @@ const layout = ({ children }) => {
     const { socket } = useSelector((state) => state.socketReducer);
 
     useEffect(() => {
-        dispatch(loadLoggedUserDetailsAction());
+        try {
+            dispatch(loadLoggedUserDetailsAction());
+        } catch {
+            // TODO - add err msg
+        }
     }, [dispatch]);
 
     const { loggedUserData } = useSelector((state) => state.authReducer);

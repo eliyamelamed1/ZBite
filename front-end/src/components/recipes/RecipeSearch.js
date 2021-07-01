@@ -1,4 +1,7 @@
 // TODO - test loader
+// test form calls onSubmit
+// test onSubmit dispatch action
+// test loading
 
 import React, { useState } from 'react';
 import { connect, useDispatch } from 'react-redux';

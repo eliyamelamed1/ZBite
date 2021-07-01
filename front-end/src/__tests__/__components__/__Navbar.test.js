@@ -1,5 +1,3 @@
-// refactor tests (to many renders)
-
 import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
 
@@ -9,16 +7,22 @@ import Navbar from '../../components/Navbar';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import store from '../../redux/store';
+import configureStore from 'redux-mock-store';
+import { logoutAction } from '../../redux/actions/auth';
+import thunk from 'redux-thunk';
+import userEvent from '@testing-library/user-event';
 
-afterEach(() => {
-    cleanup();
-});
+jest.mock('../../redux/actions/auth', () => ({ logoutAction: jest.fn() }));
+const middlewares = [thunk];
+const mockStore = configureStore(middlewares);
+const userId = 'userId';
 
-describe('authenticated users', () => {
+describe('NavBar - authenticated users', () => {
+    const initialState = {
+        authReducer: { isAuthenticatedData: true, loggedUserData: { email: 'testemail@gmail.com', id: 'userId' } },
+    };
+    const store = mockStore(initialState);
     beforeEach(() => {
-        store.dispatch({ type: 'LOGIN_SUCCESS', payload: { isAuthenticatedData: true } });
-        store.dispatch({ type: 'LOAD_USER_SUCCUSS', payload: { user: { email: 'testemail@gmail.com' } } });
         render(
             <Provider store={store}>
                 <Router>
@@ -26,6 +30,9 @@ describe('authenticated users', () => {
                 </Router>
             </Provider>
         );
+    });
+    afterEach(() => {
+        cleanup();
     });
     test('renders without crashing', () => {});
     test('contain global link (home)', () => {
@@ -36,20 +43,40 @@ describe('authenticated users', () => {
         const authLinks = screen.getByTestId('authLinks');
         expect(authLinks).toBeInTheDocument();
     });
+    test('authLinks should contain logged user email,profile', () => {
+        const loggedEmail = screen.getByText(/testemail@gmail.com/);
+
+        expect(loggedEmail).toBeInTheDocument();
+    });
+    test('authLinks should contain valid profile link', () => {
+        const profileLink = screen.getByRole('link', { name: /profile/i });
+        const userId = store.getState().authReducer.loggedUserData.id;
+        expect(profileLink).toBeInTheDocument();
+        expect(profileLink.href).toEqual(`http://localhost/users/${userId}`);
+    });
     test('should not contain guestLinks', () => {
         const guestLinks = screen.queryByTestId('guestLinks');
         expect(guestLinks).toBeNull();
     });
     test('logout button should appear on guestLinks', () => {
         const logoutButton = screen.getByRole('button', { name: /logout/i });
-
         expect(logoutButton).toBeInTheDocument();
+    });
+    test('logout button should dispatch logoutAction', async () => {
+        const logoutButton = screen.getByRole('button', { name: /logout/i });
+        userEvent.click(logoutButton);
+
+        const timesActionDispatched = await logoutAction.mock.calls.length;
+        expect(timesActionDispatched).toBe(1);
     });
 });
 
-describe('guest users', () => {
+describe('NavBar - guest users', () => {
+    const initialState = {
+        authReducer: { isAuthenticatedData: false },
+    };
+    const store = mockStore(initialState);
     beforeEach(() => {
-        store.dispatch({ type: 'LOGOUT', payload: { isAuthenticatedData: false } });
         render(
             <Provider store={store}>
                 <Router>

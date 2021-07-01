@@ -1,3 +1,10 @@
+/* TODO 
+test onSubmit dispatch Action (fail/success, try/catch scenarios) 
+Test Authenticated user redirected to home page
+test account created redirect to login page
+test cant sign up with password different than re password 
+*/
+
 import { Link, Redirect } from 'react-router-dom';
 import React, { useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
@@ -35,7 +42,7 @@ const userSignup = () => {
                 );
                 setAccountCreated(true);
             } catch {
-                window.scrollTo(0, 0);
+                // window.scrollTo(0, 0);
             }
         }
     };

@@ -1,3 +1,8 @@
+/* TODO - test
+test action have dispatched
+test displayedUsers is called and displays users
+*/
+
 import React, { useEffect } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 
@@ -9,12 +14,16 @@ const userList = () => {
     const userListData = useSelector((state) => state.authReducer.userListData);
 
     useEffect(() => {
-        dispatch(loadUserListAction());
+        try {
+            dispatch(loadUserListAction());
+        } catch {
+            // TODO  show error massage
+        }
     }, [dispatch]);
 
     return (
         <main>
-            <div data-testid='usersList'></div>
+            <div data-testid='userList'></div>
             <DisplayUsers users={userListData} />
         </main>
     );

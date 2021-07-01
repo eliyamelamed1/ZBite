@@ -1,8 +1,9 @@
-import React from 'react';
-import NotFound from '../../components/NotFound';
-import { cleanup, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import '@testing-library/jest-dom';
+
+import { cleanup, render, screen } from '@testing-library/react';
+
+import NotFound from '../../components/NotFound';
+import React from 'react';
 
 beforeEach(() => {
     render(<NotFound />);

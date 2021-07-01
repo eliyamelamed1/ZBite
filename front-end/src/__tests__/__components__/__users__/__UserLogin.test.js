@@ -1,5 +1,4 @@
 // TODO - test redirect after login
-// TODO - test submit calls loginAction
 
 import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
@@ -10,24 +9,31 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import UserLogin from '../../../components/users/UserLogin';
-import store from '../../../redux/store';
+import configureStore from 'redux-mock-store';
+import { loginAction } from '../../../redux/actions/auth';
+import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
-beforeEach(() => {
-    render(
-        <Provider store={store}>
-            <Router>
-                <UserLogin />
-            </Router>
-        </Provider>
-    );
-});
+const middlewares = [thunk];
+const mockStore = configureStore(middlewares);
+let initialState = { authReducer: {} };
+const store = mockStore(initialState);
+jest.mock('../../../redux/actions/auth', () => ({ loginAction: jest.fn() }));
 
-afterEach(() => {
-    cleanup();
-});
+describe('UserLogin - guest', () => {
+    beforeEach(() => {
+        render(
+            <Provider store={store}>
+                <Router>
+                    <UserLogin />
+                </Router>
+            </Provider>
+        );
+    });
 
-describe('UserLogin', () => {
+    afterEach(() => {
+        cleanup();
+    });
     test('renders without crashing', () => {});
     test('render userLogin', () => {
         const userLogin = screen.getByTestId('userLogin');
@@ -54,18 +60,45 @@ describe('UserLogin', () => {
         expect(passwordInput.value).toBe('123456');
     });
     test('renders submit button', () => {
-        const submitButton = screen.getByRole('button', { name: 'Login' });
-        expect(submitButton).toBeInTheDocument();
+        const loginButton = screen.getByRole('button', { name: 'Login' });
+        expect(loginButton).toBeInTheDocument();
+    });
+    test('Redux - login button dispatch loginAction', async () => {
+        const emailInput = screen.getByPlaceholderText(/email/i);
+        const passwordInput = screen.getByPlaceholderText(/password/i);
+        const loginButton = screen.getByRole('button', { name: 'Login' });
+
+        userEvent.type(emailInput, 'test@gmail.com');
+        userEvent.type(passwordInput, '1234567');
+        userEvent.click(loginButton);
+
+        expect(await loginAction.mock.calls.length).toBe(1);
+    });
+    test('Redux - email and password should pass to the loginAction', async () => {
+        const emailInput = screen.getByPlaceholderText(/email/i);
+        const passwordInput = screen.getByPlaceholderText(/password/i);
+        const loginButton = screen.getByRole('button', { name: 'Login' });
+
+        const emailValue = 'test@gmail.com';
+        const passwordValue = '1234567';
+
+        userEvent.type(emailInput, emailValue);
+        userEvent.type(passwordInput, passwordValue);
+        userEvent.click(loginButton);
+
+        const timesActionDispatched = await loginAction.mock.calls.length;
+
+        expect(timesActionDispatched).toBe(1);
+        expect(await loginAction.mock.calls[0][0].email).toEqual(emailValue);
+        expect(await loginAction.mock.calls[0][0].password).toEqual(passwordValue);
     });
 });
 
 // TODO - imporve this tests by checking the redirection url (should be home page)
-describe('UserLogin - redirect', () => {
+describe('UserLogin - authenticated', () => {
+    let initialState = { authReducer: { isAuthenticatedData: true } };
+    const store = mockStore(initialState);
     beforeEach(() => {
-        cleanup();
-    });
-    test('should redirect authenticated user', async () => {
-        store.dispatch({ type: 'LOGIN_SUCCESS', payload: { isAuthenticatedData: true } });
         render(
             <Provider store={store}>
                 <Router>
@@ -73,6 +106,11 @@ describe('UserLogin - redirect', () => {
                 </Router>
             </Provider>
         );
+    });
+    afterEach(() => {
+        cleanup();
+    });
+    test('should redirect authenticated user', async () => {
         const userLogin = screen.queryByTestId('userLogin');
         expect(userLogin).not.toBeInTheDocument();
     });

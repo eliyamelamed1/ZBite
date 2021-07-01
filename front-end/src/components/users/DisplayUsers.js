@@ -1,3 +1,6 @@
+// test getUser is called
+// test user is displayed
+
 import React from 'react';
 import UserCard from './UserCard';
 

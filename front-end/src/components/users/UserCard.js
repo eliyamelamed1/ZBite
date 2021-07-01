@@ -1,4 +1,9 @@
-// TOOD - change Author proptype to requiered after changing the api to delete recipe which their user have been deleterd - (which leaves recipes without users)
+/*tests
+test proptyoes
+test use card details
+
+
+*/ 
 
 import React from 'react';
 import { Link } from 'react-router-dom';

@@ -1,6 +1,3 @@
-// TODO - test submit button call on submit function
-// TODO - test onsubmit call signupAction
-
 import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
 
@@ -10,15 +7,24 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import UserSignup from '../../../components/users/UserSignup';
-import store from '../../../redux/store';
+import configureStore from 'redux-mock-store';
+import { signupAction } from '../../../redux/actions/auth';
+import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
+const middlewares = [thunk];
+const mockStore = configureStore(middlewares);
+let initialState = {
+    authReducer: {},
+};
+const store = mockStore(initialState);
+jest.mock('../../../redux/actions/auth', () => ({ signupAction: jest.fn() }));
+
 beforeEach(() => {
-    const onSubmit = jest.fn();
     render(
         <Provider store={store}>
             <Router>
-                <UserSignup onSubmit={onSubmit} />
+                <UserSignup />
             </Router>
         </Provider>
     );
@@ -115,7 +121,10 @@ describe('UserSignup - redirect', () => {
         cleanup();
     });
     test('should redirect authenticated user', async () => {
-        store.dispatch({ type: 'LOGIN_SUCCESS', payload: { isAuthenticatedData: true } });
+        initialState = {
+            authReducer: { isAuthenticatedData: true },
+        };
+        const store = mockStore(initialState);
         render(
             <Provider store={store}>
                 <Router>
@@ -126,8 +135,44 @@ describe('UserSignup - redirect', () => {
         const userSignup = screen.queryByTestId('userSignup');
         expect(userSignup).not.toBeInTheDocument();
     });
-    test('should redirect after signing up and call onSubmit function', () => {
-        store.dispatch({ type: 'LOGOUT', payload: { isAuthenticatedData: false } });
+    // test('should redirect after signing up and call onSubmit function', () => {
+    //     initialState = {
+    //         authReducer: { isAuthenticatedData: false },
+    //     };
+    //     const store = mockStore(initialState);
+    //     render(
+    //         <Provider store={store}>
+    //             <Router>
+    //                 <UserSignup />
+    //             </Router>
+    //         </Provider>
+    //     );
+    //     const userSignup = screen.getByTestId('userSignup');
+    //     const nameTextbox = screen.getByPlaceholderText('Name*');
+    //     const emailTextbox = screen.getByPlaceholderText('Email*');
+    //     const passwordTextbox = screen.getByPlaceholderText('Password*');
+    //     const confirmTextbox = screen.getByPlaceholderText('Confirm Password*');
+    //     const signupButton = screen.getByRole('button', { name: 'Register' });
+
+    //     userEvent.type(nameTextbox, 'testuser');
+    //     userEvent.type(emailTextbox, 'testuser@gmail.com');
+    //     userEvent.type(passwordTextbox, 'testuser123');
+    //     userEvent.type(confirmTextbox, 'testuser123');
+    //     userEvent.click(signupButton);
+
+    //     expect(userSignup).not.toBeInTheDocument();
+    // });
+});
+
+describe('UserSignup - Redux', () => {
+    beforeEach(() => {
+        cleanup();
+    });
+    test('Redux - signup should dispatch signupAction', async () => {
+        initialState = {
+            authReducer: { isAuthenticatedData: false },
+        };
+        const store = mockStore(initialState);
         render(
             <Provider store={store}>
                 <Router>
@@ -135,19 +180,29 @@ describe('UserSignup - redirect', () => {
                 </Router>
             </Provider>
         );
-        const userSignup = screen.getByTestId('userSignup');
         const nameTextbox = screen.getByPlaceholderText('Name*');
         const emailTextbox = screen.getByPlaceholderText('Email*');
         const passwordTextbox = screen.getByPlaceholderText('Password*');
         const confirmTextbox = screen.getByPlaceholderText('Confirm Password*');
         const signupButton = screen.getByRole('button', { name: 'Register' });
 
-        userEvent.type(nameTextbox, 'testuser');
-        userEvent.type(emailTextbox, 'testuser@gmail.com');
-        userEvent.type(passwordTextbox, 'testuser123');
-        userEvent.type(confirmTextbox, 'testuser123');
+        const nameValue = 'testuser';
+        const emailValue = 'testuser@gmail.com';
+        const passwordValue = 'testuser123';
+        const rePasswordValue = 'testuser123';
+
+        userEvent.type(nameTextbox, nameValue);
+        userEvent.type(emailTextbox, emailValue);
+        userEvent.type(passwordTextbox, passwordValue);
+        userEvent.type(confirmTextbox, rePasswordValue);
         userEvent.click(signupButton);
 
-        expect(userSignup).not.toBeInTheDocument();
+        const timesActionDispatched = await signupAction.mock.calls.length;
+
+        expect(timesActionDispatched).toBe(1);
+        expect(await signupAction.mock.calls[0][0].name).toEqual(nameValue);
+        expect(await signupAction.mock.calls[0][0].email).toEqual(emailValue);
+        expect(await signupAction.mock.calls[0][0].password).toEqual(passwordValue);
+        expect(await signupAction.mock.calls[0][0].re_password).toEqual(rePasswordValue);
     });
 });

@@ -1,3 +1,6 @@
+// test propTypes
+// test recipes displayed
+
 import PropTypes from 'prop-types';
 import React from 'react';
 import RecipeCard from './RecipeCard';

@@ -1,4 +1,5 @@
-// add recipes option in navbar
+// TODO recipes crud to navbar
+// test author and guest links
 
 import { Link, NavLink } from 'react-router-dom';
 import { connect, useDispatch, useSelector } from 'react-redux';
@@ -12,7 +13,13 @@ const navbar = () => {
     const dispatch = useDispatch();
 
     const profileUrl = loggedUserData ? '/users/' + loggedUserData.id : null;
-
+    const logoutHandler = () => {
+        try {
+            dispatch(logoutAction());
+        } catch {
+            // TODO - add err msg
+        }
+    };
     const authLinks = (
         <section data-testid='authLinks'>
             {loggedUserData ? (
@@ -29,7 +36,7 @@ const navbar = () => {
             ) : null}
             {isAuthenticatedData ? (
                 <li>
-                    <button onClick={() => dispatch(logoutAction())}>Logout</button>
+                    <button onClick={logoutHandler}>Logout</button>
                 </li>
             ) : null}
         </section>
