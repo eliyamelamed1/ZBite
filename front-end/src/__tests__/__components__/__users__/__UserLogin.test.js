@@ -10,6 +10,7 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import UserLogin from '../../../components/users/UserLogin';
 import configureStore from 'redux-mock-store';
+import { loginAction } from '../../../redux/actions/auth';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
@@ -17,7 +18,7 @@ const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 let initialState = { authReducer: {} };
 const store = mockStore(initialState);
-
+jest.mock('../../../redux/actions/auth', () => ({ loginAction: jest.fn() }));
 describe('UserLogin - guest', () => {
     beforeEach(() => {
         render(
@@ -70,7 +71,7 @@ describe('UserLogin - guest', () => {
         userEvent.type(passwordInput, '1234567');
         userEvent.click(loginButton);
 
-        await waitFor(() => expect(store.getActions()[0].type).toBe('LOGIN_FAIL'));
+        await expect(loginAction.mock.calls.length).toBe(1);
     });
 });
 
