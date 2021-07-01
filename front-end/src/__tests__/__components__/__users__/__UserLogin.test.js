@@ -86,7 +86,13 @@ describe('UserLogin - guest', () => {
         userEvent.type(passwordInput, passwordValue);
         userEvent.click(loginButton);
 
-        expect(await loginAction.mock.calls).toEqual([[emailValue, passwordValue]]);
+        const firstArg = await loginAction.mock.calls[0][0];
+        const secondArg = await loginAction.mock.calls[0][1];
+
+        expect(await loginAction.mock.calls[0].length).toEqual(2);
+        expect(await loginAction.mock.calls[0]).toEqual([emailValue, passwordValue]);
+        expect(firstArg).toEqual(emailValue);
+        expect(secondArg).toEqual(passwordValue);
     });
 });
 
