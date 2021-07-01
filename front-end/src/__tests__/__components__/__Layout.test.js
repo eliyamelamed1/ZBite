@@ -10,8 +10,10 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
+import { loadLoggedUserDetailsAction } from '../../redux/actions/auth';
 import thunk from 'redux-thunk';
 
+jest.mock('../../redux/actions/auth', () => ({ loadLoggedUserDetailsAction: jest.fn() }));
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 const initialState = { authReducer: {}, socketReducer: {} };
@@ -42,25 +44,8 @@ describe('Layout', () => {
         const navbar = screen.getByTestId('navbar');
         expect(navbar).toBeInTheDocument();
     });
-});
-
-describe('Layout - actions', () => {
-    beforeEach(() => {
-        render(
-            <Provider store={store}>
-                <Router>
-                    <Layout>
-                        <div>children</div>
-                    </Layout>
-                </Router>
-            </Provider>
-        );
-    });
-
-    afterEach(() => {
-        cleanup();
-    });
     test('loadLoggedUserDetailsAction should have been dispatched', async () => {
-        await waitFor(() => expect(store.getActions()[1].type).toBe('USER_LOADED_FAIL'));
+        const timesActionDispatched = await loadLoggedUserDetailsAction.mock.calls.length;
+        expect(timesActionDispatched).toBe(1);
     });
 });

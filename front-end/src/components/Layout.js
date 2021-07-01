@@ -25,7 +25,11 @@ const layout = ({ children }) => {
     const { socket } = useSelector((state) => state.socketReducer);
 
     useEffect(() => {
-        dispatch(loadLoggedUserDetailsAction());
+        try {
+            dispatch(loadLoggedUserDetailsAction());
+        } catch {
+            // TODO - add err msg
+        }
     }, [dispatch]);
 
     const { loggedUserData } = useSelector((state) => state.authReducer);
