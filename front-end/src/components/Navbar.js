@@ -13,7 +13,13 @@ const navbar = () => {
     const dispatch = useDispatch();
 
     const profileUrl = loggedUserData ? '/users/' + loggedUserData.id : null;
-
+    const logoutHandler = () => {
+        try {
+            dispatch(logoutAction());
+        } catch {
+            // TODO - add err msg
+        }
+    };
     const authLinks = (
         <section data-testid='authLinks'>
             {loggedUserData ? (
@@ -30,7 +36,7 @@ const navbar = () => {
             ) : null}
             {isAuthenticatedData ? (
                 <li>
-                    <button onClick={() => dispatch(logoutAction())}>Logout</button>
+                    <button onClick={logoutHandler}>Logout</button>
                 </li>
             ) : null}
         </section>

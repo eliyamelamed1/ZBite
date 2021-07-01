@@ -100,6 +100,7 @@ describe('onSubmit - should dispatch UserUpdateAction ', () => {
         userEvent.click(updateButton);
 
         const timesActionDispatched = await userUpdateAction.mock.calls.length;
+
         expect(timesActionDispatched).toBe(1);
         expect(await userUpdateAction.mock.calls[0][0].email).toEqual(emailValue);
         expect(await userUpdateAction.mock.calls[0][0].name).toEqual(nameValue);

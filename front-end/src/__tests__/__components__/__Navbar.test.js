@@ -10,9 +10,11 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
+import { logoutAction } from '../../redux/actions/auth';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
+jest.mock('../../redux/actions/auth', () => ({ logoutAction: jest.fn() }));
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 const initialState = { authReducer: { isAuthenticatedData: true, userDetailsData: { email: 'testemail@gmail.com' } } };
@@ -50,7 +52,9 @@ describe('NavBar - authenticated users', () => {
     test('logout button should dispatch logoutAction', async () => {
         const logoutButton = screen.getByRole('button', { name: /logout/i });
         userEvent.click(logoutButton);
-        await waitFor(() => expect(store.getActions()[0].type).toBe('LOGOUT'));
+
+        const timesActionDispatched = await logoutAction.mock.calls.length;
+        expect(timesActionDispatched).toBe(1);
     });
 });
 
