@@ -1,9 +1,9 @@
 import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
 
-import { Provider, useDispatch, useSelector } from 'react-redux';
 import { cleanup, render, screen } from '@testing-library/react';
 
+import { Provider } from 'react-redux';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import UserSignup from '../../../components/users/UserSignup';
@@ -19,11 +19,7 @@ let initialState = {
 };
 const store = mockStore(initialState);
 jest.mock('../../../redux/actions/auth', () => ({ signupAction: jest.fn() }));
-// const mockDispatch = jest.fn();
-// jest.mock('react-redux', () => ({
-//     useSelector: jest.fn(),
-//     useDispatch: () => mockDispatch,
-// }));
+
 beforeEach(() => {
     render(
         <Provider store={store}>

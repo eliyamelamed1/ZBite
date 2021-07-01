@@ -1,4 +1,4 @@
-// TODO - test onSubmit triggers useUpdateAction (fail/success scenarios) 
+// TODO - test onSubmit triggers useUpdateAction (fail/success scenarios)
 // TODO - test propTypes
 
 import React, { useState } from 'react';
@@ -20,7 +20,11 @@ const userUpdate = ({ id }) => {
     const onSubmit = (e) => {
         e.preventDefault();
 
-        dispatch(userUpdateAction(id, email, name));
+        try {
+            dispatch(userUpdateAction({ id, email, name }));
+        } catch {
+            // TODO - add error massage
+        }
     };
 
     return (

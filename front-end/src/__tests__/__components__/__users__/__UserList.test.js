@@ -1,14 +1,16 @@
 import '@testing-library/jest-dom/extend-expect';
 
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import UserList from '../../../components/users/UserList';
 import configureStore from 'redux-mock-store';
+import { loadUserListAction } from '../../../redux/actions/auth';
 import thunk from 'redux-thunk';
 
+jest.mock('../../../redux/actions/auth', () => ({ loadUserListAction: jest.fn() }));
 describe('UserList', () => {
     const middlewares = [thunk];
     const mockStore = configureStore(middlewares);
@@ -37,6 +39,7 @@ describe('UserList', () => {
         expect(screen.getByTestId('displayUsers')).toBeInTheDocument();
     });
     test('users displayed successfully', async () => {
-        await waitFor(() => expect(store.getActions()[0].type).toBe('LOAD_USER_LIST_SUCCESS'));
+        const timesActionDispatched = await loadUserListAction.mock.calls.length;
+        expect(timesActionDispatched).toBe(1);
     });
 });

@@ -14,7 +14,11 @@ const userList = () => {
     const userListData = useSelector((state) => state.authReducer.userListData);
 
     useEffect(() => {
-        dispatch(loadUserListAction());
+        try {
+            dispatch(loadUserListAction());
+        } catch {
+            // TODO  show error massage
+        }
     }, [dispatch]);
 
     return (

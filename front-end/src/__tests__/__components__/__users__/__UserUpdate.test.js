@@ -2,7 +2,7 @@
 
 import '@testing-library/jest-dom';
 
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import React from 'react';
@@ -10,18 +10,20 @@ import UserUpdate from '../../../components/users/UserUpdate';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
+import { userUpdateAction } from '../../../redux/actions/auth';
 
+jest.mock('../../../redux/actions/auth', () => ({ userUpdateAction: jest.fn() }));
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 let initialState = {
     user: { email: 'testemail', name: 'testname', id: '5' },
 };
 const store = mockStore(initialState);
+const idValue = '5';
 beforeEach(() => {
-    const id = '5';
     render(
         <Provider store={store}>
-            <UserUpdate id={id} />
+            <UserUpdate id={idValue} />
         </Provider>
     );
 });
@@ -84,15 +86,23 @@ describe('UserUpdate - update button', () => {
     });
 });
 
-describe('UserUpdate - onSubmit', () => {
+describe('onSubmit - should dispatch UserUpdateAction ', () => {
     test('submit should call UserUpdateAction', async () => {
         const emailInput = screen.getByPlaceholderText(/email/i);
         const nameInput = screen.getByPlaceholderText(/name/i);
         const updateButton = screen.getByRole('button', { name: /update/i });
-        userEvent.type(emailInput, 'new email');
-        userEvent.type(nameInput, 'new name');
+
+        const emailValue = 'testuser@gmail.com';
+        const nameValue = 'testuser';
+
+        userEvent.type(emailInput, emailValue);
+        userEvent.type(nameInput, nameValue);
         userEvent.click(updateButton);
 
-        await waitFor(() => expect(store.getActions()[0].type).toBe('USER_UPDATED_FAIL'));
+        const timesActionDispatched = await userUpdateAction.mock.calls.length;
+        expect(timesActionDispatched).toBe(1);
+        expect(await userUpdateAction.mock.calls[0][0].email).toEqual(emailValue);
+        expect(await userUpdateAction.mock.calls[0][0].name).toEqual(nameValue);
+        expect(await userUpdateAction.mock.calls[0][0].id).toEqual(idValue);
     });
 });
