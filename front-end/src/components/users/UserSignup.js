@@ -32,15 +32,17 @@ const userSignup = () => {
 
         if (password === re_password) {
             try {
-                signupAction({
-                    name,
-                    email,
-                    password,
-                    re_password,
-                });
+                dispatch(
+                    signupAction({
+                        name,
+                        email,
+                        password,
+                        re_password,
+                    })
+                );
                 setAccountCreated(true);
             } catch {
-                window.scrollTo(0, 0);
+                // window.scrollTo(0, 0);
             }
         }
     };

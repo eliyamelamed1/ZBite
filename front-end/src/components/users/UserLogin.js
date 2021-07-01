@@ -24,7 +24,11 @@ const userLogin = () => {
     const onSubmit = (e) => {
         // TODO - check about this command
         e.preventDefault();
-        loginAction({ email, password });
+        try {
+            dispatch(loginAction({ email, password }));
+        } catch {
+            // window.scrollTo(0, 0);
+        }
     };
 
     if (isAuthenticatedData) return <Redirect exact to='/' />;
