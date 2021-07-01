@@ -24,7 +24,7 @@ const userLogin = () => {
         // TODO - check about this command
         e.preventDefault();
 
-        dispatch(loginAction(email, password));
+        loginAction(email, password);
     };
 
     if (isAuthenticatedData) return <Redirect exact to='/' />;

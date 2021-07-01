@@ -19,6 +19,7 @@ const mockStore = configureStore(middlewares);
 let initialState = { authReducer: {} };
 const store = mockStore(initialState);
 jest.mock('../../../redux/actions/auth', () => ({ loginAction: jest.fn() }));
+//  mock dispatch
 describe('UserLogin - guest', () => {
     beforeEach(() => {
         render(
@@ -71,7 +72,21 @@ describe('UserLogin - guest', () => {
         userEvent.type(passwordInput, '1234567');
         userEvent.click(loginButton);
 
-        await expect(loginAction.mock.calls.length).toBe(1);
+        expect(await loginAction.mock.calls.length).toBe(1);
+    });
+    test('Redux - email and password should pass to the loginAction', async () => {
+        const emailInput = screen.getByPlaceholderText(/email/i);
+        const passwordInput = screen.getByPlaceholderText(/password/i);
+        const loginButton = screen.getByRole('button', { name: 'Login' });
+
+        const emailValue = 'test@gmail.com';
+        const passwordValue = '1234567';
+
+        userEvent.type(emailInput, emailValue);
+        userEvent.type(passwordInput, passwordValue);
+        userEvent.click(loginButton);
+
+        expect(await loginAction.mock.calls).toEqual([[emailValue, passwordValue]]);
     });
 });
 
