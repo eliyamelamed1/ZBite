@@ -1,5 +1,6 @@
 /* TODO - tests
 test authenticated user redirected to home
+
 */
 
 import { Link, Redirect } from 'react-router-dom';
@@ -23,8 +24,7 @@ const userLogin = () => {
     const onSubmit = (e) => {
         // TODO - check about this command
         e.preventDefault();
-
-        loginAction(email, password);
+        loginAction({ email, password });
     };
 
     if (isAuthenticatedData) return <Redirect exact to='/' />;

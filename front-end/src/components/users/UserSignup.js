@@ -4,6 +4,7 @@ Test Authenticated user redirected to home page
 test account created redirect to login page
 test cant sign up with password different than re password 
 */
+
 import { Link, Redirect } from 'react-router-dom';
 import React, { useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
@@ -31,14 +32,12 @@ const userSignup = () => {
 
         if (password === re_password) {
             try {
-                dispatch(
-                    signupAction({
-                        name,
-                        email,
-                        password,
-                        re_password,
-                    })
-                );
+                signupAction({
+                    name,
+                    email,
+                    password,
+                    re_password,
+                });
                 setAccountCreated(true);
             } catch {
                 window.scrollTo(0, 0);

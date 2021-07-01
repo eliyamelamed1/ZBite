@@ -3,7 +3,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
 
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import React from 'react';
@@ -19,7 +19,7 @@ const mockStore = configureStore(middlewares);
 let initialState = { authReducer: {} };
 const store = mockStore(initialState);
 jest.mock('../../../redux/actions/auth', () => ({ loginAction: jest.fn() }));
-//  mock dispatch
+
 describe('UserLogin - guest', () => {
     beforeEach(() => {
         render(
@@ -86,13 +86,11 @@ describe('UserLogin - guest', () => {
         userEvent.type(passwordInput, passwordValue);
         userEvent.click(loginButton);
 
-        const firstArg = await loginAction.mock.calls[0][0];
-        const secondArg = await loginAction.mock.calls[0][1];
+        const timesActionDispatched = await loginAction.mock.calls.length;
 
-        expect(await loginAction.mock.calls[0].length).toEqual(2);
-        expect(await loginAction.mock.calls[0]).toEqual([emailValue, passwordValue]);
-        expect(firstArg).toEqual(emailValue);
-        expect(secondArg).toEqual(passwordValue);
+        expect(timesActionDispatched).toBe(1);
+        expect(await loginAction.mock.calls[0][0].email).toEqual(emailValue);
+        expect(await loginAction.mock.calls[0][0].password).toEqual(passwordValue);
     });
 });
 
