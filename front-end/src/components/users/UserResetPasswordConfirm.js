@@ -21,8 +21,6 @@ const userResetPasswordConfirm = (props) => {
             if (new_password == re_new_password) {
                 const { uid } = props.match.params;
                 const { token } = props.match.params;
-                console.log('ani erzah' + uid);
-                console.log('amarti' + token);
                 dispatch(resetPasswordConfirmAction({ uid, token, new_password }));
                 setRequestSent(true);
             }
