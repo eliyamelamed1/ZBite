@@ -9,8 +9,11 @@ import { cleanup, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import React from 'react';
 import UserResetPassword from '../../../components/users/UserResetPassword';
+import { resetPasswordAction } from '../../../redux/actions/auth';
 import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
+
+jest.mock('../../../redux/actions/auth', () => ({ resetPasswordAction: jest.fn() }));
 
 beforeEach(() => {
     render(
@@ -43,15 +46,25 @@ describe('UserResetPassword - email input', () => {
         userEvent.type(emailTextbox, 'test@gmail.com');
         expect(emailTextbox.value).toBe('test@gmail.com');
     });
-});
-
-describe('UserResetPassword - send reset password email button', () => {
-    test('button should render ', () => {
-        const button = screen.getByRole('button', { name: 'Send Password Reset' });
-        expect(button).toBeInTheDocument();
+    test('submit button should render ', () => {
+        const submitButton = screen.getByRole('button', { name: 'Send Password Reset' });
+        expect(submitButton).toBeInTheDocument();
     });
-    test('button type should be submit ', () => {
-        const button = screen.getByRole('button', { name: 'Send Password Reset' });
-        expect(button.type).toBe('submit');
+    test('submit button type should be submit ', () => {
+        const submitButton = screen.getByRole('button', { name: 'Send Password Reset' });
+        expect(submitButton.type).toBe('submit');
+    });
+    test('passing email and clicking the submit button should dispatch resetPasswordAction', async () => {
+        const emailTextbox = screen.getByPlaceholderText('Email');
+        const submitButton = screen.getByRole('button', { name: 'Send Password Reset' });
+        const emailValue = 'test@gmail.com';
+
+        userEvent.type(emailTextbox, emailValue);
+        userEvent.click(submitButton);
+
+        const timesActionDispatched = await resetPasswordAction.mock.calls.length;
+
+        expect(timesActionDispatched).toBe(1);
+        expect(await resetPasswordAction.mock.calls[0][0].email).toEqual(emailValue);
     });
 });

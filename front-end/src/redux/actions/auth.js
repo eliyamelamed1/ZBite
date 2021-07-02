@@ -178,49 +178,57 @@ export const verify = (uid, token) => async (dispatch) => {
     }
 };
 
-export const resetPasswordAction = (email) => async (dispatch) => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-        },
+export const resetPasswordAction =
+    ({ email }) =>
+    async (dispatch) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+
+        const body = JSON.stringify({ email });
+
+        try {
+            const res = await axios.post(
+                `${process.env.REACT_APP_API_URL}/api/djoser/users/reset_password/`,
+                body,
+                config
+            );
+
+            dispatch({ type: RESET_PASSWORD_SUCCESS, payload: res.data });
+        } catch (err) {
+            dispatch({ type: RESET_PASSWORD_FAIL });
+        }
     };
 
-    const body = JSON.stringify({ email });
+export const resetPasswordConfirmAction =
+    ({ uid, token, new_password, re_new_password }) =>
+    async (dispatch) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
 
-    try {
-        const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/djoser/users/reset_password/`, body, config);
+        const body = JSON.stringify({
+            uid,
+            token,
+            new_password,
+            re_new_password,
+        });
 
-        dispatch({ type: RESET_PASSWORD_SUCCESS, payload: res.data });
-    } catch (err) {
-        dispatch({ type: RESET_PASSWORD_FAIL });
-    }
-};
-
-export const resetPasswordConfirmAction = (uid, token, new_password, re_new_password) => async (dispatch) => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        try {
+            const res = await axios.post(
+                `${process.env.REACT_APP_API_URL}/api/djoser/users/reset_password_confirm/`,
+                body,
+                config
+            );
+            dispatch({ type: RESET_PASSWORD_CONFIRM_SUCCESS, payload: res.data });
+        } catch (err) {
+            dispatch({ type: RESET_PASSWORD_CONFIRM_FAIL });
+        }
     };
-
-    const body = JSON.stringify({
-        uid,
-        token,
-        new_password,
-        re_new_password,
-    });
-
-    try {
-        const res = await axios.post(
-            `${process.env.REACT_APP_API_URL}/api/djoser/users/reset_password_confirm/`,
-            body,
-            config
-        );
-        dispatch({ type: RESET_PASSWORD_CONFIRM_SUCCESS, payload: res.data });
-    } catch (err) {
-        dispatch({ type: RESET_PASSWORD_CONFIRM_FAIL });
-    }
-};
 
 export const logoutAction = () => async (dispatch) => {
     dispatch({ type: LOGOUT });

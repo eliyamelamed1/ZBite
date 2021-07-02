@@ -17,13 +17,16 @@ const userResetPasswordConfirm = (props) => {
 
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
 
-        const { uid } = props.match.params;
-        const { token } = props.match.params;
-
-        dispatch(resetPasswordConfirmAction(uid, token, new_password, re_new_password));
+        try {
+            const { uid } = await props.match.params;
+            const { token } = await props.match.params;
+            dispatch(resetPasswordConfirmAction({ uid, token, new_password, re_new_password }));
+        } catch {
+            // TODO - add err msg
+        }
 
         setRequestSent(true);
     };

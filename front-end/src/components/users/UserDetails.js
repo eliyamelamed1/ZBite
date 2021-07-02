@@ -15,6 +15,7 @@ import UserUpdate from './UserUpdate';
 import { loadUserDetailsAction } from '../../redux/actions/auth';
 
 const userDetails = (props) => {
+    console.log(props);
     const [isAuthor, setIsAuthor] = useState(false);
     const [userExist, setUserExist] = useState(false);
     const loggedUserData = useSelector((state) => state.authReducer.loggedUserData);
