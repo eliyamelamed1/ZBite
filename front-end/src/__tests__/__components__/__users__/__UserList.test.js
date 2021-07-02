@@ -2,7 +2,6 @@ import '@testing-library/jest-dom/extend-expect';
 
 import { cleanup, render, screen } from '@testing-library/react';
 
-import DisplayUsers from '../../../components/users/DisplayUsers';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
