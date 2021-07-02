@@ -203,22 +203,20 @@ export const resetPasswordAction =
     };
 
 export const resetPasswordConfirmAction =
-    ({ uid, token, new_password, re_new_password }) =>
+    ({ uid, token, new_password }) =>
     async (dispatch) => {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        };
-
-        const body = JSON.stringify({
-            uid,
-            token,
-            new_password,
-            re_new_password,
-        });
-
         try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            };
+
+            const body = JSON.stringify({
+                uid,
+                token,
+                new_password,
+            });
             const res = await axios.post(
                 `${process.env.REACT_APP_API_URL}/api/djoser/users/reset_password_confirm/`,
                 body,

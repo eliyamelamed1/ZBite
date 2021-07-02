@@ -7,28 +7,29 @@ import { resetPasswordConfirmAction } from '../../redux/actions/auth';
 const userResetPasswordConfirm = (props) => {
     const dispatch = useDispatch();
     const [requestSent, setRequestSent] = useState(false);
-
     const [formData, setFormData] = useState({
         new_password: '',
         re_new_password: '',
     });
-
+    const { uid } = props.match;
+    console.log(uid);
     const { new_password, re_new_password } = formData;
 
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    const onSubmit = async (e) => {
+    const onSubmit = (e) => {
         e.preventDefault();
-
         try {
-            const { uid } = await props.match.params;
-            const { token } = await props.match.params;
-            dispatch(resetPasswordConfirmAction({ uid, token, new_password, re_new_password }));
+            if (new_password == re_new_password) {
+                const { uid } = props.match.params;
+                const { token } = props.match.params;
+                dispatch(resetPasswordConfirmAction({ uid, token, new_password }));
+                setRequestSent(true);
+            }
         } catch {
+            console.log('err');
             // TODO - add err msg
         }
-
-        setRequestSent(true);
     };
 
     if (requestSent) return <Redirect to='/' />;
@@ -58,9 +59,7 @@ const userResetPasswordConfirm = (props) => {
                         required
                     />
                 </div>
-                <button className='btn btn-primary' type='submit'>
-                    Reset Password
-                </button>
+                <button type='submit'>Reset Password</button>
             </form>
         </div>
     );
