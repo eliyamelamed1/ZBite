@@ -11,8 +11,6 @@ const userResetPasswordConfirm = (props) => {
         new_password: '',
         re_new_password: '',
     });
-    const { uid } = props.match;
-    console.log(uid);
     const { new_password, re_new_password } = formData;
 
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,11 +21,12 @@ const userResetPasswordConfirm = (props) => {
             if (new_password == re_new_password) {
                 const { uid } = props.match.params;
                 const { token } = props.match.params;
+                console.log('ani erzah' + uid);
+                console.log('amarti' + token);
                 dispatch(resetPasswordConfirmAction({ uid, token, new_password }));
                 setRequestSent(true);
             }
         } catch {
-            console.log('err');
             // TODO - add err msg
         }
     };
