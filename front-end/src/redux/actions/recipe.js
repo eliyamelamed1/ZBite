@@ -35,27 +35,29 @@ export const recipeDeleteAction =
         }
     };
 
-export const recipeCreateAction = (title, description, flavor_type) => async (dispatch) => {
-    try {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Token ${localStorage.getItem('auth_token')}`,
-            },
-        };
+export const recipeCreateAction =
+    ({ title, description, flavor_type }) =>
+    async (dispatch) => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Token ${localStorage.getItem('auth_token')}`,
+                },
+            };
 
-        const body = JSON.stringify({
-            title,
-            description,
-            flavor_type,
-        });
-        await axios.post(`${process.env.REACT_APP_API_URL}/api/recipes/create/`, body, config);
-        dispatch({ type: RECIPE_CREATED_SUCCESS });
-        window.scrollTo(0, 0);
-    } catch {
-        dispatch({ type: RECIPE_CREATED_FAIL });
-    }
-};
+            const body = JSON.stringify({
+                title,
+                description,
+                flavor_type,
+            });
+            await axios.post(`${process.env.REACT_APP_API_URL}/api/recipes/create/`, body, config);
+            dispatch({ type: RECIPE_CREATED_SUCCESS });
+            window.scrollTo(0, 0);
+        } catch {
+            dispatch({ type: RECIPE_CREATED_FAIL });
+        }
+    };
 
 export const recipeUpdateAction =
     ({ id, title, description, flavor_type }) =>

@@ -18,7 +18,7 @@ const mockStore = configureStore(middlewares);
 const initialState = {};
 const store = mockStore(initialState);
 
-const recipeId = 1;
+const recipeId = '1';
 jest.mock('../../../redux/actions/recipe', () => ({ recipeDeleteAction: jest.fn() }));
 describe('RecipeDelete', () => {
     beforeEach(() => {

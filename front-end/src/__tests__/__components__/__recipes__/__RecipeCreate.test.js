@@ -10,9 +10,11 @@ import { cleanup, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import React from 'react';
 import RecipeCreate from '../../../components/recipes/RecipeCreate';
+import { recipeCreateAction } from '../../../redux/actions/recipe';
 import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
 
+jest.mock('../../../redux/actions/recipe', () => ({ recipeCreateAction: jest.fn() }));
 beforeEach(() => {
     render(
         <Provider store={store}>
@@ -105,10 +107,21 @@ describe('submit button', () => {
         const button = screen.getByRole('button', { name: /create recipe/i });
         expect(button.type).toBe('submit');
     });
-    test('clicking the submit button should call onSubmit function', () => {
+    test('clicking the submit button should call dispatch recipeCreateAction', () => {
+        const titleTextbox = screen.getByPlaceholderText(/title/i);
+        const descriptionTextbox = screen.getByPlaceholderText(/description/i);
+        const combobox = screen.getByRole('combobox');
         const button = screen.getByRole('button', { name: /create recipe/i });
+
+        userEvent.type(titleTextbox, 'new title');
+        userEvent.type(descriptionTextbox, 'new description');
+        userEvent.selectOptions(combobox, 'Sour');
         userEvent.click(button);
-        const onSubmitHaveBeenCalled = screen.getByTestId('onSubmitHaveBeenCalled');
-        expect(onSubmitHaveBeenCalled).toBeInTheDocument();
+
+        const timesActionDispatched = recipeCreateAction.mock.calls.length;
+        expect(timesActionDispatched).toBe(1);
+        expect(recipeCreateAction.mock.calls[0][0].title).toBe('new title');
+        expect(recipeCreateAction.mock.calls[0][0].description).toBe('new description');
+        expect(recipeCreateAction.mock.calls[0][0].flavor_type).toBe('Sour');
     });
 });

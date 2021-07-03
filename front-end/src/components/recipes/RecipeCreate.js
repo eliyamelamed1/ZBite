@@ -13,7 +13,6 @@ import { recipeCreateAction } from '../../redux/actions/recipe';
 
 const recipeCreate = ({ isAuthenticatedData }) => {
     const dispatch = useDispatch();
-    const [onSubmitHaveBeenCalled, setOnSubmitHaveBeenCalled] = useState(false);
     const [formData, setFormData] = useState({
         title: '',
         description: '',
@@ -28,15 +27,13 @@ const recipeCreate = ({ isAuthenticatedData }) => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        setOnSubmitHaveBeenCalled(true);
-
-        dispatch(recipeCreateAction(title, description, flavor_type));
+        try {
+            dispatch(recipeCreateAction({ title, description, flavor_type }));
+        } catch {
+            // TODO - add err msg
+        }
     };
-    const testing = (
-        <main>
-            <div>{onSubmitHaveBeenCalled ? <div data-testid='onSubmitHaveBeenCalled'></div> : null}</div>
-        </main>
-    );
+
     return (
         <div data-testid='recipeCreate'>
             <form onSubmit={(e) => onSubmit(e)}>
@@ -70,7 +67,6 @@ const recipeCreate = ({ isAuthenticatedData }) => {
                 </div>
                 <button type='submit'>Create Recipe</button>
             </form>
-            <div>{testing}</div>
         </div>
     );
 };
