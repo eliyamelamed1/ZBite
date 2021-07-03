@@ -15,23 +15,25 @@ import {
 
 import axios from 'axios';
 
-export const recipeDeleteAction = (id) => async (dispatch) => {
-    try {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Token ${localStorage.getItem('auth_token')}`,
-            },
-        };
+export const recipeDeleteAction =
+    ({ id }) =>
+    async (dispatch) => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Token ${localStorage.getItem('auth_token')}`,
+                },
+            };
 
-        await axios.delete(`${process.env.REACT_APP_API_URL}/api/recipes/${id}/`, config);
-        dispatch({ type: RECIPE_DELETED_SUCCESS });
-        window.scrollTo(0, 0);
-    } catch {
-        dispatch({ type: RECIPE_DELETED_FAIL });
-        window.scrollTo(0, 0);
-    }
-};
+            await axios.delete(`${process.env.REACT_APP_API_URL}/api/recipes/${id}/`, config);
+            dispatch({ type: RECIPE_DELETED_SUCCESS });
+            window.scrollTo(0, 0);
+        } catch {
+            dispatch({ type: RECIPE_DELETED_FAIL });
+            window.scrollTo(0, 0);
+        }
+    };
 
 export const recipeCreateAction = (title, description, flavor_type) => async (dispatch) => {
     try {
