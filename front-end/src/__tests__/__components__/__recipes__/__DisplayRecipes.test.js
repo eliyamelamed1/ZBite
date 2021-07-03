@@ -6,28 +6,35 @@ import DisplayRecipes from '../../../components/recipes/DisplayRecipes';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import store from '../../../redux/store';
+import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 
+const middlewares = [thunk];
+const mockStore = configureStore(middlewares);
+
+const data = {
+    title: 'recipe title',
+    flavor_type: 'Sour',
+    photo_main: 'recipe image #',
+    id: 'recipeId',
+    author: 'recipe author',
+};
+const data2 = {
+    title: 'recipe title2',
+    flavor_type: 'Sour',
+    photo_main: 'recipe image #2',
+    id: 'recipeId2',
+    author: 'recipe author2',
+};
+let initialState = {
+    recipeReducer: { recipeListData: [data, data2] },
+};
+const store = mockStore(initialState);
 beforeEach(() => {
-    const data = {
-        title: 'recipe title',
-        flavor_type: 'Sour',
-        photo_main: 'recipe image #',
-        id: 'recipeId',
-        author: 'recipe author',
-    };
-    const data2 = {
-        title: 'recipe title2',
-        flavor_type: 'Sour',
-        photo_main: 'recipe image #2',
-        id: 'recipeId2',
-        author: 'recipe author2',
-    };
-    const recipes = [data, data2];
     render(
         <Provider store={store}>
             <Router>
-                <DisplayRecipes recipes={recipes} />
+                <DisplayRecipes />
             </Router>
         </Provider>
     );

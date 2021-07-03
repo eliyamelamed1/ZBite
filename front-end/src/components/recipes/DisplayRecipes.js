@@ -4,14 +4,16 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import RecipeCard from './RecipeCard';
+import { useSelector } from 'react-redux';
 
 //שינוי לגיט
-const displayRecipes = ({ recipes }) => {
+const displayRecipes = () => {
+    const { recipeListData } = useSelector((state) => state.recipeReducer);
     const getRecipes = () => {
         const recipesOnPage = [];
         const result = [];
 
-        recipes.map((recipe) =>
+        recipeListData.map((recipe) =>
             recipesOnPage.push(
                 <RecipeCard
                     title={recipe.title}
@@ -24,7 +26,7 @@ const displayRecipes = ({ recipes }) => {
         );
 
         // 3 is for 3 recipes on page
-        for (let i = 0; i < recipes.length; i += 1) {
+        for (let i = 0; i < recipeListData.length; i += 1) {
             result.push(
                 <div key={i}>
                     <div>{recipesOnPage[i] ? recipesOnPage[i] : null}</div>
@@ -34,7 +36,7 @@ const displayRecipes = ({ recipes }) => {
 
         return result;
     };
-    return <div data-testid='displayRecipes'>{recipes ? getRecipes() : null}</div>;
+    return <div data-testid='displayRecipes'>{recipeListData ? getRecipes() : null}</div>;
 };
 
 displayRecipes.propTypes = {

@@ -6,7 +6,6 @@ import { connect, useDispatch } from 'react-redux';
 
 import DisplayRecipes from './DisplayRecipes';
 import { loadRecipeListAction } from '../../redux/actions/recipe';
-import { useSelector } from 'react-redux';
 
 const recipeList = () => {
     const dispatch = useDispatch();
@@ -18,12 +17,10 @@ const recipeList = () => {
         }
     }, [dispatch]);
 
-    const { recipeListData } = useSelector((state) => state.recipeReducer);
-
     return (
         <main>
             <div data-testid='recipeList'></div>
-            <DisplayRecipes recipes={recipeListData} />
+            <DisplayRecipes />
         </main>
     );
 };
