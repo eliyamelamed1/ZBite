@@ -1,5 +1,4 @@
 import '@testing-library/jest-dom/extend-expect';
-import '@testing-library/jest-dom';
 
 import { cleanup, render, screen } from '@testing-library/react';
 
@@ -7,7 +6,10 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import RecipeList from '../../../components/recipes/RecipeList';
 import { act } from 'react-dom/test-utils';
+import { loadRecipeListAction } from '../../../redux/actions/recipe';
 import store from '../../../redux/store';
+
+jest.mock('../../../redux/actions/recipe', () => ({ loadRecipeListAction: jest.fn() }));
 
 describe('RecipeList', () => {
     beforeEach(() => {
@@ -41,5 +43,9 @@ describe('RecipeList', () => {
         const DisplayRecipes = screen.getByTestId('displayRecipes');
         expect(DisplayRecipes).toBeInTheDocument();
     });
-    // should dispatch loadRecipeListAction
+    test('should dispatch loadRecipeListAction', () => {
+        const timesActionDispatched = loadRecipeListAction.mock.calls.length;
+
+        expect(timesActionDispatched).toBe(1);
+    });
 });

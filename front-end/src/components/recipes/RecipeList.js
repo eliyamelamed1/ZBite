@@ -1,5 +1,5 @@
 // test useEffect dispatch action
-// test use list is displayed 
+// test use list is displayed
 
 import React, { useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
@@ -11,7 +11,11 @@ import { useSelector } from 'react-redux';
 const recipeList = () => {
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(loadRecipeListAction());
+        try {
+            dispatch(loadRecipeListAction());
+        } catch {
+            // TODO - display err msg
+        }
     }, [dispatch]);
 
     const { recipeListData } = useSelector((state) => state.recipeReducer);

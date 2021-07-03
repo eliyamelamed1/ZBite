@@ -5,7 +5,6 @@ import { cleanup, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import React from 'react';
 import RecipeSearch from '../../../components/recipes/RecipeSearch';
-import { act } from 'react-dom/test-utils';
 import { recipeSearchAction } from '../../../redux/actions/recipe';
 import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
