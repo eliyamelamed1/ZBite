@@ -93,22 +93,28 @@ export const loadRecipeListAction = () => async (dispatch) => {
     }
 };
 
-export const recipeSearchAction = (flavor_type) => async (dispatch) => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    };
+export const recipeSearchAction =
+    ({ flavor_type }) =>
+    async (dispatch) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
 
-    try {
-        const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/recipes/search/`, { flavor_type }, config);
-        dispatch({ type: RECIPE_SEARCH_SUCCESS, payload: res.data });
-        window.scrollTo(0, 0);
-    } catch {
-        dispatch({ type: RECIPE_SEARCH_FAIL });
-        window.scrollTo(0, 0);
-    }
-};
+        try {
+            const res = await axios.post(
+                `${process.env.REACT_APP_API_URL}/api/recipes/search/`,
+                { flavor_type },
+                config
+            );
+            dispatch({ type: RECIPE_SEARCH_SUCCESS, payload: res.data });
+            window.scrollTo(0, 0);
+        } catch {
+            dispatch({ type: RECIPE_SEARCH_FAIL });
+            window.scrollTo(0, 0);
+        }
+    };
 
 export const loadRecipeDetailsAction = (id) => async (dispatch) => {
     const config = {

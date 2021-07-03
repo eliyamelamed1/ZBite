@@ -6,9 +6,11 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import RecipeSearch from '../../../components/recipes/RecipeSearch';
 import { act } from 'react-dom/test-utils';
+import { recipeSearchAction } from '../../../redux/actions/recipe';
 import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
 
+jest.mock('../../../redux/actions/recipe', () => ({ recipeSearchAction: jest.fn() }));
 beforeEach(() => {
     render(
         <Provider store={store}>
@@ -36,15 +38,15 @@ describe('RecipeSearch', () => {
     test('search button render', () => {
         expect(screen.getByRole('button', { name: 'Search' })).toBeInTheDocument();
     });
+    test('submit button should dispatch recipeSearchAction', () => {
+        const flavorCombobox = screen.getByRole('combobox');
+        const searchButton = screen.getByRole('button', { name: 'Search' });
 
-    test('submit button should call onSubmit function', async () => {
-        act(() => {
-            userEvent.selectOptions(screen.getByRole('combobox'), 'Sweet');
-            userEvent.click(screen.getByText('Search'));
-        });
-        const onSubmitHaveBeenCalled = await screen.findByTestId('onSubmitHaveBeenCalled');
-        expect(onSubmitHaveBeenCalled).toBeInTheDocument();
+        userEvent.selectOptions(flavorCombobox, 'Sour');
+        userEvent.click(searchButton);
+        const timesActionDispatched = recipeSearchAction.mock.calls.length;
+
+        expect(timesActionDispatched).toBe(1);
+        expect(recipeSearchAction.mock.calls[0][0].flavor_type).toBe('Sour');
     });
 });
-
-// test('submit button should dispatch recipeSearchAction, () => {});

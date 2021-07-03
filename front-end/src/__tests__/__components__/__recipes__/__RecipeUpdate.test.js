@@ -115,7 +115,6 @@ describe('RecipeUpdate - update button', () => {
         const titleTextbox = screen.getByPlaceholderText(/title/i);
         const descriptionTextbox = screen.getByPlaceholderText(/description/i);
         const updateButton = screen.getByRole('button', { name: /update/i });
-
         const updatedTitle = 'updatedTitle';
         const updatedDescription = 'updatedDescription';
         const updatedFlavor = 'Sour';
@@ -124,7 +123,6 @@ describe('RecipeUpdate - update button', () => {
         userEvent.type(descriptionTextbox, updatedDescription);
         userEvent.selectOptions(flavorCombobox, updatedFlavor);
         userEvent.click(updateButton);
-
         const timesActionDispatched = recipeUpdateAction.mock.calls.length;
 
         expect(timesActionDispatched).toBe(1);
