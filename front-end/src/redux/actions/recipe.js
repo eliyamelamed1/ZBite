@@ -55,27 +55,29 @@ export const recipeCreateAction = (title, description, flavor_type) => async (di
     }
 };
 
-export const recipeUpdateAction = (id, title, description, flavor_type) => async (dispatch) => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Token ${localStorage.getItem('auth_token')}`,
-        },
-    };
+export const recipeUpdateAction =
+    ({ id, title, description, flavor_type }) =>
+    async (dispatch) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Token ${localStorage.getItem('auth_token')}`,
+            },
+        };
 
-    try {
-        const body = JSON.stringify({
-            title,
-            description,
-            flavor_type,
-        });
-        const res = await axios.patch(`${process.env.REACT_APP_API_URL}/api/recipes/${id}/`, body, config);
-        dispatch({ type: RECIPE_UPDATED_SUCCESS, payload: res.data });
-        window.scrollTo(0, 0);
-    } catch {
-        dispatch({ type: RECIPE_UPDATED_FAIL });
-    }
-};
+        try {
+            const body = JSON.stringify({
+                title,
+                description,
+                flavor_type,
+            });
+            const res = await axios.patch(`${process.env.REACT_APP_API_URL}/api/recipes/${id}/`, body, config);
+            dispatch({ type: RECIPE_UPDATED_SUCCESS, payload: res.data });
+            window.scrollTo(0, 0);
+        } catch {
+            dispatch({ type: RECIPE_UPDATED_FAIL });
+        }
+    };
 
 export const loadRecipeListAction = () => async (dispatch) => {
     const config = {

@@ -2,7 +2,6 @@
 // test onSubmit dispatch actiob
 // test form calls onSubmit
 
-
 import React, { useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 
@@ -10,7 +9,6 @@ import { recipeUpdateAction } from '../../redux/actions/recipe';
 
 const recipeUpdate = ({ id }) => {
     const dispatch = useDispatch();
-    const [onSubmitHaveBeenCalled, setOnSubmitHaveBeenCalled] = useState(false);
     const [formData, setFormData] = useState({
         title: '',
         description: '',
@@ -21,17 +19,15 @@ const recipeUpdate = ({ id }) => {
 
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
-        setOnSubmitHaveBeenCalled(true);
-
-        dispatch(recipeUpdateAction(id, title, description, flavor_type));
+        try {
+            dispatch(recipeUpdateAction({ id, title, description, flavor_type }));
+        } catch (e) {
+            // TODO - add err msg
+        }
     };
-    const testing = (
-        <main>
-            <div>{onSubmitHaveBeenCalled ? <div data-testid='onSubmitHaveBeenCalled'></div> : null}</div>
-        </main>
-    );
+
     return (
         <div data-testid='recipeUpdate'>
             <form onSubmit={(e) => onSubmit(e)}>
@@ -65,7 +61,6 @@ const recipeUpdate = ({ id }) => {
                 </div>
                 <button type='submit'>update</button>
             </form>
-            <div>{testing}</div>
         </div>
     );
 };
