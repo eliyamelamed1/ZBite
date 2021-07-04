@@ -21,7 +21,7 @@ const recipeList = () => {
     return (
         <main>
             <div data-testid='recipeList'></div>
-            {recipeListData ? <DisplayRecipes recipes={recipeListData} /> : null}
+            {recipeListData ? <DisplayRecipes recipesToDisplay={recipeListData} /> : null}
         </main>
     );
 };

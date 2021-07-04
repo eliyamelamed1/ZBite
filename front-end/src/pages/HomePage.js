@@ -17,7 +17,7 @@ const homePage = () => {
             </HelmetProvider>
             <section>
                 <RecipeSearch />
-                {recipeSearchedListData ? <DisplayRecipes recipes={recipeSearchedListData} /> : null}
+                {recipeSearchedListData ? <DisplayRecipes recipesToDisplay={recipeSearchedListData} /> : null}
             </section>
         </main>
     );

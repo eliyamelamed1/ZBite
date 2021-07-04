@@ -34,7 +34,7 @@ beforeEach(() => {
     render(
         <Provider store={store}>
             <Router>
-                <DisplayRecipes recipes={[data, data2]} />
+                <DisplayRecipes recipesToDisplay={[data, data2]} />
             </Router>
         </Provider>
     );

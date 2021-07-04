@@ -37,6 +37,14 @@ describe('IsRecipeAuthor - author', () => {
         const authorLinks = screen.getByTestId('authorLinks');
         expect(authorLinks).toBeInTheDocument();
     });
+    test('authorLinks should contains RecipeUpdate', () => {
+        const authorLinks = screen.getByTestId('recipeUpdate');
+        expect(authorLinks).toBeInTheDocument();
+    });
+    test('authorLinks should contains RecipeDelete', () => {
+        const authorLinks = screen.getByTestId('recipeDelete');
+        expect(authorLinks).toBeInTheDocument();
+    });
 });
 
 describe('IsRecipeAuthor - not author', () => {
