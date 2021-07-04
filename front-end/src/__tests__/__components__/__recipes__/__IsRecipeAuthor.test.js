@@ -7,33 +7,18 @@ import { cleanup, render, screen } from '@testing-library/react';
 import IsRecipeAuthor from '../../../components/recipes/IsRecipeAuthor';
 import { Provider } from 'react-redux';
 import React from 'react';
-import store from '../../../redux/store';
+import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 
 afterEach(() => {
     cleanup();
 });
-
-describe('IsRecipeAuthor - general', () => {
-    beforeEach(() => {
-        const recipe = {
-            title: 'recipeTitle',
-            flavor_type: 'Sour',
-            id: 'recipeId',
-            author: '1',
-            photo_main: 'recipeImage',
-        };
-        render(
-            <Provider store={store}>
-                <IsRecipeAuthor recipe={recipe} />
-            </Provider>
-        );
-    });
-    test('should render without crashing', () => {});
-});
-
+const middlewares = [thunk];
+const mockStore = configureStore(middlewares);
 describe('IsRecipeAuthor - author', () => {
     beforeEach(() => {
-        store.dispatch({ type: 'USER_LOADED_SUCCESS', payload: { id: 1 } });
+        let initialState = { authReducer: { loggedUserData: { id: 1 } } };
+        let store = mockStore(initialState);
         const recipe = {
             title: 'recipeTitle',
             flavor_type: 'Sour',
@@ -54,9 +39,10 @@ describe('IsRecipeAuthor - author', () => {
     });
 });
 
-describe('IsRecipeAuthor - guest', () => {
+describe('IsRecipeAuthor - not author', () => {
     beforeEach(() => {
-        store.dispatch({ type: 'USER_LOADED_SUCCESS', payload: { id: 2 } });
+        let initialState = { authReducer: { loggedUserData: { id: 2 } } };
+        let store = mockStore(initialState);
         const recipe = {
             title: 'recipeTitle',
             flavor_type: 'Sour',
