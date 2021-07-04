@@ -29,7 +29,7 @@ const isRecipeAuthor = ({ recipe }) => {
             }
         }
     });
-    return <div>{isAuthor ? authorLinks : guestLinks}</div>;
+    return <div data-testid='isRecipeAuthor'>{isAuthor ? authorLinks : guestLinks}</div>;
 };
 
 isRecipeAuthor.propTypes = {

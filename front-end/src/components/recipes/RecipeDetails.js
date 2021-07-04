@@ -12,6 +12,7 @@ import { loadRecipeDetailsAction } from '../../redux/actions/recipe';
 
 const recipeDetails = (props) => {
     const dispatch = useDispatch();
+
     useEffect(() => {
         dispatch(loadRecipeDetailsAction(props.match.params.id));
     }, [props.match.params.id, dispatch]);
