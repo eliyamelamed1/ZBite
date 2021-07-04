@@ -28,15 +28,13 @@ const data2 = {
     id: 'recipeId2',
     author: 'recipe author2',
 };
-let initialState = {
-    recipeReducer: { recipeListData: [data, data2] },
-};
+let initialState = {};
 const store = mockStore(initialState);
 beforeEach(() => {
     render(
         <Provider store={store}>
             <Router>
-                <DisplayRecipes />
+                <DisplayRecipes recipes={[data, data2]} />
             </Router>
         </Provider>
     );

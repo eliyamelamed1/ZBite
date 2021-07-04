@@ -17,12 +17,10 @@ const homePage = () => {
             </HelmetProvider>
             <section>
                 <RecipeSearch />
-            </section>
-            <section>
-                <DisplayRecipes recipes={recipeSearchedListData} />
+                {recipeSearchedListData ? <DisplayRecipes recipes={recipeSearchedListData} /> : null}
             </section>
         </main>
     );
 };
 
-export default connect(null, null)(homePage);
+export default connect()(homePage);

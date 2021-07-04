@@ -4,16 +4,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import RecipeCard from './RecipeCard';
-import { useSelector } from 'react-redux';
 
 //שינוי לגיט
-const displayRecipes = () => {
-    const { recipeListData } = useSelector((state) => state.recipeReducer);
+const displayRecipes = ({ recipes }) => {
     const getRecipes = () => {
         const recipesOnPage = [];
         const result = [];
 
-        recipeListData.map((recipe) =>
+        recipes.map((recipe) =>
             recipesOnPage.push(
                 <RecipeCard
                     title={recipe.title}
@@ -26,7 +24,7 @@ const displayRecipes = () => {
         );
 
         // 3 is for 3 recipes on page
-        for (let i = 0; i < recipeListData.length; i += 1) {
+        for (let i = 0; i < recipes.length; i += 1) {
             result.push(
                 <div key={i}>
                     <div>{recipesOnPage[i] ? recipesOnPage[i] : null}</div>
@@ -36,11 +34,11 @@ const displayRecipes = () => {
 
         return result;
     };
-    return <div data-testid='displayRecipes'>{recipeListData ? getRecipes() : null}</div>;
+    return <div data-testid='displayRecipes'>{recipes ? getRecipes() : null}</div>;
 };
 
 displayRecipes.propTypes = {
-    recipes: PropTypes.array,
+    recipes: PropTypes.array.isRequired,
 };
 
 export default displayRecipes;

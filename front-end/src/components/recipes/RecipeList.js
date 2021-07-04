@@ -2,12 +2,13 @@
 // test use list is displayed
 
 import React, { useEffect } from 'react';
-import { connect, useDispatch } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 
 import DisplayRecipes from './DisplayRecipes';
 import { loadRecipeListAction } from '../../redux/actions/recipe';
 
 const recipeList = () => {
+    const recipeListData = useSelector((state) => state.recipeReducer.recipeListData);
     const dispatch = useDispatch();
     useEffect(() => {
         try {
@@ -20,7 +21,7 @@ const recipeList = () => {
     return (
         <main>
             <div data-testid='recipeList'></div>
-            <DisplayRecipes />
+            {recipeListData ? <DisplayRecipes recipes={recipeListData} /> : null}
         </main>
     );
 };
