@@ -7,9 +7,11 @@ import React from 'react';
 import RecipeDetails from '../../../components/recipes/RecipeDetails';
 import { BrowserRouter as Router } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
+import { loadRecipeDetailsAction } from '../../../redux/actions/recipe';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
+jest.mock('../../../redux/actions/recipe', () => ({ loadRecipeDetailsAction: jest.fn() }));
 const middleware = [thunk];
 const mockStore = configureStore(middleware);
 const match = {
@@ -49,13 +51,19 @@ describe('RecipeDetails - author', () => {
         const recipeDetailsTestId = screen.getByTestId('recipeDetails');
         expect(recipeDetailsTestId).toBeInTheDocument();
     });
-    // test('should render the recipe details ', () => {
-    //     const recipeTitle = screen.getByText(/recipeTitle/i);
-    //     const recipeDescription = screen.getByText(/recipeDescription/i);
+    test('should dispatch loadRecipeDetailsAction', () => {
+        const timesActionDispatched = loadRecipeDetailsAction.mock.calls.length;
 
-    //     expect(recipeTitle).toBeInTheDocument();
-    //     expect(recipeDescription).toBeInTheDocument();
-    // });
+        expect(timesActionDispatched).toBe(1);
+        expect(loadRecipeDetailsAction.mock.calls[0][0].id).toBe(match.params.id);
+    });
+    test('should render the recipe details ', () => {
+        const recipeTitle = screen.getByText(/recipeTitle/i);
+        const recipeDescription = screen.getByText(/recipeDescription/i);
+
+        expect(recipeTitle).toBeInTheDocument();
+        expect(recipeDescription).toBeInTheDocument();
+    });
     test('should render authorLinks', () => {
         const authorLinks = screen.getByTestId('authorLinks');
 
@@ -104,13 +112,19 @@ describe('RecipeDetails - not author', () => {
         const recipeDetailsTestId = screen.getByTestId('recipeDetails');
         expect(recipeDetailsTestId).toBeInTheDocument();
     });
-    // test('should render the recipe details ', () => {
-    //     const recipeTitle = screen.getByText(/recipeTitle/i);
-    //     const recipeDescription = screen.getByText(/recipeDescription/i);
+    test('should dispatch loadRecipeDetailsAction', () => {
+        const timesActionDispatched = loadRecipeDetailsAction.mock.calls.length;
 
-    //     expect(recipeTitle).toBeInTheDocument();
-    //     expect(recipeDescription).toBeInTheDocument();
-    // });
+        expect(timesActionDispatched).toBe(1);
+        expect(loadRecipeDetailsAction.mock.calls[0][0].id).toBe(match.params.id);
+    });
+    test('should render the recipe details ', () => {
+        const recipeTitle = screen.getByText(/recipeTitle/i);
+        const recipeDescription = screen.getByText(/recipeDescription/i);
+
+        expect(recipeTitle).toBeInTheDocument();
+        expect(recipeDescription).toBeInTheDocument();
+    });
     test('should render guestLinks', () => {
         const guestLinks = screen.getByTestId('guestLinks');
         expect(guestLinks).toBeInTheDocument();
@@ -123,5 +137,30 @@ describe('RecipeDetails - not author', () => {
         const recipeUpdateTestId = screen.queryByTestId('recipeUpdate');
 
         expect(recipeUpdateTestId).not.toBeInTheDocument();
+    });
+});
+
+describe('RecipeDetails - Non-existing recipe ', () => {
+    beforeEach(() => {
+        let initialState = {
+            recipeReducer: {},
+        };
+        let store = mockStore(initialState);
+        render(
+            <Provider store={store}>
+                <Router>
+                    <RecipeDetails match={match} />
+                </Router>
+            </Provider>
+        );
+    });
+    afterEach(() => {
+        cleanup();
+    });
+
+    test('should render NotFound', () => {
+        const notFoundTestId = screen.getByTestId('notFound');
+
+        expect(notFoundTestId).toBeInTheDocument();
     });
 });

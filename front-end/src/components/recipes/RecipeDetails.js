@@ -6,16 +6,22 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 
 import IsRecipeAuthor from './IsRecipeAuthor';
 import { Link } from 'react-router-dom';
+import NotFound from '../NotFound';
 import { loadRecipeDetailsAction } from '../../redux/actions/recipe';
 
 // import PropTypes from 'prop-types';
 
 const recipeDetails = (props) => {
     const dispatch = useDispatch();
+    const { id } = props.match.params;
 
     useEffect(() => {
-        dispatch(loadRecipeDetailsAction(props.match.params.id));
-    }, [props.match.params.id, dispatch]);
+        try {
+            dispatch(loadRecipeDetailsAction({ id }));
+        } catch {
+            // TODO - add err msg
+        }
+    }, [id, dispatch]);
     const recipeDetailData = useSelector((state) => state.recipeReducer.recipeDetailData);
 
     const displayInteriorImages = () => {
@@ -39,43 +45,47 @@ const recipeDetails = (props) => {
         }
     };
 
-    const guestLinks = (
-        <div>
-            {recipeDetailData ? (
-                <div>
-                    <Link to={`/users/${recipeDetailData.author}/`}>recipe Author: {recipeDetailData.author}</Link>
-                    <h1>recipe title: {recipeDetailData.title}</h1>
-                    <Link to='/'>Home</Link> /{recipeDetailData.title}
-                    <img src={recipeDetailData.photo_main} alt='' />
-                    <ul>
-                        <li>
-                            Flavor Type:
-                            {recipeDetailData.flavor_type}
-                        </li>
-                    </ul>
-                    <p>recipe description: {recipeDetailData.description}</p>
-                    {displayInteriorImages()}
-                </div>
-            ) : null}
-        </div>
-    );
-
     const authorLinks = <section>{recipeDetailData ? <IsRecipeAuthor recipe={recipeDetailData} /> : null}</section>;
 
     return (
-        <div data-testid='recipeDetails'>
-            <HelmetProvider>
-                <Helmet>
+        <div>
+            <header data-testid='recipeDetails'>
+                <HelmetProvider>
+                    <Helmet>
+                        {recipeDetailData ? (
+                            <title>ZBite - recipes |{`${recipeDetailData.title}`}</title>
+                        ) : (
+                            <title>ZBite - recipes </title>
+                        )}
+                        <meta name='description' content='recipes detail' />
+                    </Helmet>
+                </HelmetProvider>
+            </header>
+            <main>
+                <section>{authorLinks}</section>
+                <section>
                     {recipeDetailData ? (
-                        <title>ZBite - recipes |{`${recipeDetailData.title}`}</title>
+                        <div>
+                            <Link to={`/users/${recipeDetailData.author}/`}>
+                                recipe Author: {recipeDetailData.author}
+                            </Link>
+                            <h1>recipe title: {recipeDetailData.title}</h1>
+                            <Link to='/'>Home</Link>
+                            <img src={recipeDetailData.photo_main} alt='' />
+                            <ul>
+                                <li>
+                                    Flavor Type:
+                                    {recipeDetailData.flavor_type}
+                                </li>
+                            </ul>
+                            <p>recipe description: {recipeDetailData.description}</p>
+                            {displayInteriorImages()}
+                        </div>
                     ) : (
-                        <title>ZBite - recipes </title>
+                        <NotFound />
                     )}
-                    <meta name='description' content='recipes detail' />
-                </Helmet>
-            </HelmetProvider>
-            <div>{authorLinks}</div>
-            <div>{guestLinks}</div>
+                </section>
+            </main>
         </div>
     );
 };

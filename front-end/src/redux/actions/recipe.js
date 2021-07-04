@@ -120,17 +120,19 @@ export const recipeSearchAction =
         }
     };
 
-export const loadRecipeDetailsAction = (id) => async (dispatch) => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    };
+export const loadRecipeDetailsAction =
+    ({ id }) =>
+    async (dispatch) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
 
-    try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/recipes/${id}/`, config);
-        dispatch({ type: LOAD_RECIPE_DETAILS_SUCCESS, payload: res.data });
-    } catch {
-        dispatch({ type: LOAD_RECIPE_DETAILS_FAIL });
-    }
-};
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/recipes/${id}/`, config);
+            dispatch({ type: LOAD_RECIPE_DETAILS_SUCCESS, payload: res.data });
+        } catch {
+            dispatch({ type: LOAD_RECIPE_DETAILS_FAIL });
+        }
+    };
