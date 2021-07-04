@@ -6,13 +6,14 @@
 // test redirection after creating recipe + if user is not authenticated
 
 import React, { useState } from 'react';
-import { connect, useDispatch } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 
 import { Redirect } from 'react-router-dom';
 import { recipeCreateAction } from '../../redux/actions/recipe';
 
-const recipeCreate = ({ isAuthenticatedData }) => {
+const recipeCreate = () => {
     const dispatch = useDispatch();
+    const [recipeCreated, setRecipeCreated] = useState(false);
     const [formData, setFormData] = useState({
         title: '',
         description: '',
@@ -22,13 +23,15 @@ const recipeCreate = ({ isAuthenticatedData }) => {
     const { title, description, flavor_type } = formData;
 
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+    const isAuthenticatedData = useSelector((state) => state.authReducer.isAuthenticatedData);
 
-    if (isAuthenticatedData == false) return <Redirect to='/' />;
+    if (isAuthenticatedData == false || recipeCreated == true) return <Redirect to='/' />;
 
     const onSubmit = (e) => {
         e.preventDefault();
         try {
             dispatch(recipeCreateAction({ title, description, flavor_type }));
+            setRecipeCreated(true);
         } catch {
             // TODO - add err msg
         }
@@ -71,4 +74,4 @@ const recipeCreate = ({ isAuthenticatedData }) => {
     );
 };
 
-export default connect(null, { recipeCreateAction })(recipeCreate);
+export default connect()(recipeCreate);

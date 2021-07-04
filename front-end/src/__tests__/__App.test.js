@@ -8,7 +8,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 import App from '../App';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { act } from 'react-dom/test-utils';
+import store from '../redux/store';
 
 describe('App - home page url should match component', () => {
     beforeEach(() => {
@@ -73,6 +73,7 @@ describe('App - signup page url should match component ', () => {
 
 describe('App - recipe create page url should match component ', () => {
     beforeEach(() => {
+        store.dispatch(store.dispatch({ type: 'TEST_CASE_AUTH', payload: { isAuthenticatedData: true } }));
         const renderWithRouter = (ui, { route = '/recipes/create' } = {}) => {
             window.history.pushState({}, 'Test page', route);
 

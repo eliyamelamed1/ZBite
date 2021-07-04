@@ -1,24 +1,24 @@
-// TODO - test: redirect when recipe is created
-// TODO - test: redirect guest users
-// TODO - add tests to verify onSubmit function is working properly
+// TODO - test: redirect when recipe is created to HomePage
+// TODO - test: redirect guest user HomePage
 
 import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
 
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import React from 'react';
 import RecipeCreate from '../../../components/recipes/RecipeCreate';
+import { BrowserRouter as Router } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 import { recipeCreateAction } from '../../../redux/actions/recipe';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
+jest.mock('../../../redux/actions/recipe', () => ({ recipeCreateAction: jest.fn() }));
+
 const middleware = [thunk];
 const mockStore = configureStore(middleware);
-
-jest.mock('../../../redux/actions/recipe', () => ({ recipeCreateAction: jest.fn() }));
 
 describe('authenticated users', () => {
     let initialState = { authReducer: { isAuthenticatedData: true } };
@@ -26,7 +26,9 @@ describe('authenticated users', () => {
     beforeEach(() => {
         render(
             <Provider store={store}>
-                <RecipeCreate />
+                <Router>
+                    <RecipeCreate />
+                </Router>
             </Provider>
         );
     });
@@ -131,24 +133,43 @@ describe('authenticated users', () => {
             expect(recipeCreateAction.mock.calls[0][0].description).toBe('new description');
             expect(recipeCreateAction.mock.calls[0][0].flavor_type).toBe('Sour');
         });
+        // test('should redirect after recipe is created', () => {
+        //     const titleTextbox = screen.getByPlaceholderText(/title/i);
+        //     const descriptionTextbox = screen.getByPlaceholderText(/description/i);
+        //     const combobox = screen.getByRole('combobox');
+        //     const button = screen.getByRole('button', { name: /create recipe/i });
+
+        //     userEvent.type(titleTextbox, 'new title');
+        //     userEvent.type(descriptionTextbox, 'new description');
+        //     userEvent.selectOptions(combobox, 'Sour');
+        //     userEvent.click(button);
+
+        //     const recipeCreateTestId = screen.queryByTestId('recipeCreate');
+        //     expect(recipeCreateTestId).not.toBeInTheDocument();
+        // });
     });
 });
+
 describe('guest users', () => {
     let initialState = { authReducer: { isAuthenticatedData: false } };
     const store = mockStore(initialState);
     beforeEach(() => {
         render(
             <Provider store={store}>
-                <RecipeCreate />
+                <Router>
+                    <RecipeCreate />
+                </Router>
             </Provider>
         );
     });
     afterEach(() => {
         cleanup();
     });
-    test('should redirect guest users to home page', () => {
+    test('should redirect guest users', async () => {
         const recipeCreateTestId = screen.queryByTestId('recipeCreate');
+        // const homePageTestId = await screen.findByTestId('homePage');
 
-        expect(recipeCreateTestId).toBeInTheDocument();
+        expect(recipeCreateTestId).not.toBeInTheDocument();
+        // await waitFor(() => expect(homePageTestId).toBeInTheDocument());
     });
 });
