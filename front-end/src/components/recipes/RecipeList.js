@@ -1,25 +1,27 @@
 // test useEffect dispatch action
-// test use list is displayed 
+// test use list is displayed
 
 import React, { useEffect } from 'react';
-import { connect, useDispatch } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 
 import DisplayRecipes from './DisplayRecipes';
 import { loadRecipeListAction } from '../../redux/actions/recipe';
-import { useSelector } from 'react-redux';
 
 const recipeList = () => {
+    const recipeListData = useSelector((state) => state.recipeReducer.recipeListData);
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(loadRecipeListAction());
+        try {
+            dispatch(loadRecipeListAction());
+        } catch {
+            // TODO - display err msg
+        }
     }, [dispatch]);
-
-    const { recipeListData } = useSelector((state) => state.recipeReducer);
 
     return (
         <main>
             <div data-testid='recipeList'></div>
-            <DisplayRecipes recipes={recipeListData} />
+            {recipeListData ? <DisplayRecipes recipesToDisplay={recipeListData} /> : null}
         </main>
     );
 };

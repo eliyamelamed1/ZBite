@@ -1,10 +1,9 @@
-// TOOD - change Author proptype to requiered after changing the api to delete recipe which their user have been deleterd - (which leaves recipes without users)
-// test proptypes
+// TODO - test proptypes
 // test card details
 
-import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 const recipeCard = (props) => (
     <div data-testid='recipeCard'>
@@ -21,7 +20,7 @@ recipeCard.propTypes = {
     photo_main: PropTypes.string,
     flavor_type: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
-    author: PropTypes.string,
+    author: PropTypes.string.isRequired,
 };
 
 export default recipeCard;

@@ -18,9 +18,12 @@ const userResetPassword = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-
-        dispatch(resetPasswordAction(email));
-        setRequestSent(true);
+        try {
+            dispatch(resetPasswordAction({ email }));
+            setRequestSent(true);
+        } catch {
+            // TODO - add err msg
+        }
     };
 
     if (requestSent) return <Redirect to='/' />;

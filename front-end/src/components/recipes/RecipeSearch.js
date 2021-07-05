@@ -11,7 +11,6 @@ import { recipeSearchAction } from '../../redux/actions/recipe';
 
 const recipeSearch = () => {
     const dispatch = useDispatch();
-    const [onSubmitHaveBeenCalled, setOnSubmitHaveBeenCalled] = useState(false);
     const [flavorType, setFlavorType] = useState({
         flavor_type: 'Sour',
     });
@@ -24,18 +23,16 @@ const recipeSearch = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        setOnSubmitHaveBeenCalled(true);
-        setLoading(true);
 
-        dispatch(recipeSearchAction(flavor_type));
+        setLoading(true);
+        try {
+            dispatch(recipeSearchAction({ flavor_type }));
+        } catch (e) {
+            // TODO - display err msg
+        }
         setLoading(false);
     };
 
-    const testing = (
-        <main>
-            <div>{onSubmitHaveBeenCalled ? <div data-testid='onSubmitHaveBeenCalled'></div> : null}</div>
-        </main>
-    );
     return (
         <div data-testid='RecipeSearch'>
             <form onSubmit={(e) => onSubmit(e)}>
@@ -62,7 +59,6 @@ const recipeSearch = () => {
                     </div>
                 </div>
             </form>
-            <div>{testing}</div>
         </div>
     );
 };

@@ -8,9 +8,16 @@ import { cleanup, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import React from 'react';
 import RecipeUpdate from '../../../components/recipes/RecipeUpdate';
-import store from '../../../redux/store';
+import configureStore from 'redux-mock-store';
+import { recipeUpdateAction } from '../../../redux/actions/recipe';
+import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
+const middlewares = [thunk];
+const mockStore = configureStore(middlewares);
+const initialState = {};
+const store = mockStore(initialState);
+jest.mock('../../../redux/actions/recipe', () => ({ recipeUpdateAction: jest.fn() }));
 beforeEach(() => {
     const id = '1';
     render(
@@ -103,10 +110,24 @@ describe('RecipeUpdate - update button', () => {
         const updateButton = screen.getByRole('button', { name: /update/i });
         expect(updateButton.type).toBe('submit');
     });
-    test('update button should call onSubmit function', () => {
+    test('update button should dispatch recipeUpdateAction ', () => {
+        const flavorCombobox = screen.getByRole('combobox');
+        const titleTextbox = screen.getByPlaceholderText(/title/i);
+        const descriptionTextbox = screen.getByPlaceholderText(/description/i);
         const updateButton = screen.getByRole('button', { name: /update/i });
+        const updatedTitle = 'updatedTitle';
+        const updatedDescription = 'updatedDescription';
+        const updatedFlavor = 'Sour';
+
+        userEvent.type(titleTextbox, updatedTitle);
+        userEvent.type(descriptionTextbox, updatedDescription);
+        userEvent.selectOptions(flavorCombobox, updatedFlavor);
         userEvent.click(updateButton);
-        const onSubmitHaveBeenCalled = screen.getByTestId('onSubmitHaveBeenCalled');
-        expect(onSubmitHaveBeenCalled).toBeInTheDocument();
+        const timesActionDispatched = recipeUpdateAction.mock.calls.length;
+
+        expect(timesActionDispatched).toBe(1);
+        expect(recipeUpdateAction.mock.calls[0][0].title).toBe(updatedTitle);
+        expect(recipeUpdateAction.mock.calls[0][0].description).toBe(updatedDescription);
+        expect(recipeUpdateAction.mock.calls[0][0].flavor_type).toBe(updatedFlavor);
     });
 });

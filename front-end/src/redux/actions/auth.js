@@ -24,19 +24,21 @@ import {
 
 import axios from 'axios';
 
-export const loadUserDetailsAction = (id) => async (dispatch) => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-        },
+export const loadUserDetailsAction =
+    ({ id }) =>
+    async (dispatch) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/accounts/${id}/`, config);
+            dispatch({ type: LOAD_USER_DETAILS_SUCCESS, payload: res.data });
+        } catch {
+            dispatch({ type: LOAD_USER_DETAILS_FAIL });
+        }
     };
-    try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/accounts/${id}/`, config);
-        dispatch({ type: LOAD_USER_DETAILS_SUCCESS, payload: res.data });
-    } catch {
-        dispatch({ type: LOAD_USER_DETAILS_FAIL });
-    }
-};
 
 export const loadUserListAction = () => async (dispatch) => {
     const config = {
@@ -74,23 +76,25 @@ export const userUpdateAction =
     };
 
 // TODO fix gets an error after deleting user
-export const userDeleteAction = (id) => async (dispatch) => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Token ${localStorage.getItem('auth_token')}`,
-            Accept: 'application/json',
-        },
-    };
+export const userDeleteAction =
+    ({ id }) =>
+    async (dispatch) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Token ${localStorage.getItem('auth_token')}`,
+                Accept: 'application/json',
+            },
+        };
 
-    try {
-        const res = await axios.delete(`${process.env.REACT_APP_API_URL}/api/accounts/${id}/`, config);
-        dispatch({ type: USER_DELETED_SUCCESS, payload: res.data });
-        dispatch(logoutAction());
-    } catch {
-        dispatch({ type: USER_DELETED_FAIL });
-    }
-};
+        try {
+            const res = await axios.delete(`${process.env.REACT_APP_API_URL}/api/accounts/${id}/`, config);
+            dispatch({ type: USER_DELETED_SUCCESS, payload: res.data });
+            dispatch(logoutAction());
+        } catch {
+            dispatch({ type: USER_DELETED_FAIL });
+        }
+    };
 
 // load the the details of the connects user loadLoggedUserDetailsAction
 export const loadLoggedUserDetailsAction = () => async (dispatch) => {
@@ -160,67 +164,75 @@ export const signupAction =
     };
 
 // activate account - activation email is turned off right now (from the api side)
-export const verify = (uid, token) => async (dispatch) => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-        },
+export const verify =
+    ({ uid, token }) =>
+    async (dispatch) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+
+        const body = JSON.stringify({ uid, token });
+
+        try {
+            const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/djoser/users/activation/`, body, config);
+
+            dispatch({ type: ACTIVATION_SUCCESS, payload: res.data });
+        } catch (err) {
+            dispatch({ type: ACTIVATION_FAIL });
+        }
     };
 
-    const body = JSON.stringify({ uid, token });
+export const resetPasswordAction =
+    ({ email }) =>
+    async (dispatch) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
 
-    try {
-        const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/djoser/users/activation/`, body, config);
+        const body = JSON.stringify({ email });
 
-        dispatch({ type: ACTIVATION_SUCCESS, payload: res.data });
-    } catch (err) {
-        dispatch({ type: ACTIVATION_FAIL });
-    }
-};
+        try {
+            const res = await axios.post(
+                `${process.env.REACT_APP_API_URL}/api/djoser/users/reset_password/`,
+                body,
+                config
+            );
 
-export const resetPasswordAction = (email) => async (dispatch) => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-        },
+            dispatch({ type: RESET_PASSWORD_SUCCESS, payload: res.data });
+        } catch (err) {
+            dispatch({ type: RESET_PASSWORD_FAIL });
+        }
     };
 
-    const body = JSON.stringify({ email });
+export const resetPasswordConfirmAction =
+    ({ uid, token, new_password }) =>
+    async (dispatch) => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            };
 
-    try {
-        const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/djoser/users/reset_password/`, body, config);
-
-        dispatch({ type: RESET_PASSWORD_SUCCESS, payload: res.data });
-    } catch (err) {
-        dispatch({ type: RESET_PASSWORD_FAIL });
-    }
-};
-
-export const resetPasswordConfirmAction = (uid, token, new_password, re_new_password) => async (dispatch) => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-        },
+            const body = JSON.stringify({
+                uid,
+                token,
+                new_password,
+            });
+            const res = await axios.post(
+                `${process.env.REACT_APP_API_URL}/api/djoser/users/reset_password_confirm/`,
+                body,
+                config
+            );
+            dispatch({ type: RESET_PASSWORD_CONFIRM_SUCCESS, payload: res.data });
+        } catch (err) {
+            dispatch({ type: RESET_PASSWORD_CONFIRM_FAIL });
+        }
     };
-
-    const body = JSON.stringify({
-        uid,
-        token,
-        new_password,
-        re_new_password,
-    });
-
-    try {
-        const res = await axios.post(
-            `${process.env.REACT_APP_API_URL}/api/djoser/users/reset_password_confirm/`,
-            body,
-            config
-        );
-        dispatch({ type: RESET_PASSWORD_CONFIRM_SUCCESS, payload: res.data });
-    } catch (err) {
-        dispatch({ type: RESET_PASSWORD_CONFIRM_FAIL });
-    }
-};
 
 export const logoutAction = () => async (dispatch) => {
     dispatch({ type: LOGOUT });

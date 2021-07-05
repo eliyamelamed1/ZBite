@@ -7,33 +7,18 @@ import { cleanup, render, screen } from '@testing-library/react';
 import IsRecipeAuthor from '../../../components/recipes/IsRecipeAuthor';
 import { Provider } from 'react-redux';
 import React from 'react';
-import store from '../../../redux/store';
+import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 
 afterEach(() => {
     cleanup();
 });
-
-describe('IsRecipeAuthor - general', () => {
-    beforeEach(() => {
-        const recipe = {
-            title: 'recipeTitle',
-            flavor_type: 'Sour',
-            id: 'recipeId',
-            author: '1',
-            photo_main: 'recipeImage',
-        };
-        render(
-            <Provider store={store}>
-                <IsRecipeAuthor recipe={recipe} />
-            </Provider>
-        );
-    });
-    test('should render without crashing', () => {});
-});
-
+const middlewares = [thunk];
+const mockStore = configureStore(middlewares);
 describe('IsRecipeAuthor - author', () => {
     beforeEach(() => {
-        store.dispatch({ type: 'USER_LOADED_SUCCESS', payload: { id: 1 } });
+        let initialState = { authReducer: { loggedUserData: { id: 1 } } };
+        let store = mockStore(initialState);
         const recipe = {
             title: 'recipeTitle',
             flavor_type: 'Sour',
@@ -52,11 +37,20 @@ describe('IsRecipeAuthor - author', () => {
         const authorLinks = screen.getByTestId('authorLinks');
         expect(authorLinks).toBeInTheDocument();
     });
+    test('authorLinks should contains RecipeUpdate', () => {
+        const authorLinks = screen.getByTestId('recipeUpdate');
+        expect(authorLinks).toBeInTheDocument();
+    });
+    test('authorLinks should contains RecipeDelete', () => {
+        const authorLinks = screen.getByTestId('recipeDelete');
+        expect(authorLinks).toBeInTheDocument();
+    });
 });
 
-describe('IsRecipeAuthor - guest', () => {
+describe('IsRecipeAuthor - not author', () => {
     beforeEach(() => {
-        store.dispatch({ type: 'USER_LOADED_SUCCESS', payload: { id: 2 } });
+        let initialState = { authReducer: { loggedUserData: { id: 2 } } };
+        let store = mockStore(initialState);
         const recipe = {
             title: 'recipeTitle',
             flavor_type: 'Sour',
@@ -74,5 +68,13 @@ describe('IsRecipeAuthor - guest', () => {
     test('should render guestLinks', () => {
         const guestLinks = screen.getByTestId('guestLinks');
         expect(guestLinks).toBeInTheDocument();
+    });
+    test('authorLinks should not contain RecipeUpdate', () => {
+        const authorLinks = screen.queryByTestId('recipeUpdate');
+        expect(authorLinks).not.toBeInTheDocument();
+    });
+    test('authorLinks should not contain RecipeDelete', () => {
+        const authorLinks = screen.queryByTestId('recipeDelete');
+        expect(authorLinks).not.toBeInTheDocument();
     });
 });

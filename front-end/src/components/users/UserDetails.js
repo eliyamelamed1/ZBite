@@ -20,9 +20,16 @@ const userDetails = (props) => {
     const loggedUserData = useSelector((state) => state.authReducer.loggedUserData);
     const userDetailsData = useSelector((state) => state.authReducer.userDetailsData);
     const dispatch = useDispatch();
+
+    const { id } = props.match.params;
+
     useEffect(() => {
-        dispatch(loadUserDetailsAction(props.match.params.id));
-    }, [props.match.params.id, dispatch]);
+        try {
+            dispatch(loadUserDetailsAction({ id }));
+        } catch {
+            // TODO - add err msg
+        }
+    }, [id, dispatch]);
 
     useEffect(() => {
         if (userDetailsData) {
@@ -41,7 +48,7 @@ const userDetails = (props) => {
     }, [props.match.params.id, loggedUserData]);
 
     const guestLinks = (
-        <main>
+        <main data-testid='guestLinks'>
             {userExist ? (
                 <div>
                     <p>user name: {userDetailsData.name}</p>
@@ -54,7 +61,7 @@ const userDetails = (props) => {
     );
 
     const authorLinks = (
-        <div>
+        <main data-testid='authorLinks'>
             <UserDelete id={props.match.params.id} />
             <UserUpdate id={props.match.params.id} />
             {loggedUserData ? (
@@ -65,7 +72,7 @@ const userDetails = (props) => {
             ) : (
                 { guestLinks }
             )}
-        </div>
+        </main>
     );
 
     return (
@@ -77,7 +84,7 @@ const userDetails = (props) => {
                 </Helmet>
             </HelmetProvider>
             <div>
-                <div>{isAuthor == true ? <p>{authorLinks}</p> : <p>{guestLinks}</p>}</div>
+                <div>{isAuthor == true ? <div>{authorLinks}</div> : <div>{guestLinks}</div>}</div>
             </div>
         </div>
     );

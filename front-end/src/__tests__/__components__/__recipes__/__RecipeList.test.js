@@ -1,33 +1,45 @@
 import '@testing-library/jest-dom/extend-expect';
-import '@testing-library/jest-dom';
 
 import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import React from 'react';
 import RecipeList from '../../../components/recipes/RecipeList';
-import { act } from 'react-dom/test-utils';
-import store from '../../../redux/store';
+import { BrowserRouter as Router } from 'react-router-dom';
+import configureStore from 'redux-mock-store';
+import { loadRecipeListAction } from '../../../redux/actions/recipe';
+import thunk from 'redux-thunk';
 
+jest.mock('../../../redux/actions/recipe', () => ({ loadRecipeListAction: jest.fn() }));
+const middlewares = [thunk];
+const mockStore = configureStore(middlewares);
+const data = {
+    title: 'recipe title',
+    flavor_type: 'Sour',
+    photo_main: 'recipe image #',
+    id: 'recipeId',
+    author: 'recipe author',
+};
+const data2 = {
+    title: 'recipe title2',
+    flavor_type: 'Sour',
+    photo_main: 'recipe image #2',
+    id: 'recipeId2',
+    author: 'recipe author2',
+};
+let initialState = {
+    recipeReducer: { recipeListData: [data, data2] },
+};
+const store = mockStore(initialState);
 describe('RecipeList', () => {
     beforeEach(() => {
-        act(() => {
-            let initialState = {
-                recipeListData: {
-                    title: 'recipeTitle',
-                    flavor_type: 'Sour',
-                    id: 'recipeId',
-                    author: '1',
-                    photo_main: 'recipeImage',
-                },
-            };
-            store.dispatch({ type: 'LOAD_RECIPE_LIST_ACTION', payload: initialState });
-            render(
-                <Provider store={store}>
+        render(
+            <Provider store={store}>
+                <Router>
                     <RecipeList />
-                </Provider>
-            );
-        });
+                </Router>
+            </Provider>
+        );
     });
     afterEach(() => {
         cleanup();
@@ -41,5 +53,9 @@ describe('RecipeList', () => {
         const DisplayRecipes = screen.getByTestId('displayRecipes');
         expect(DisplayRecipes).toBeInTheDocument();
     });
-    // should dispatch loadRecipeListAction
+    test('should dispatch loadRecipeListAction', () => {
+        const timesActionDispatched = loadRecipeListAction.mock.calls.length;
+
+        expect(timesActionDispatched).toBe(1);
+    });
 });

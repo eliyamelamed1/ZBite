@@ -1,5 +1,4 @@
 /* TODO - test
-test action have dispatched
 test displayedUsers is called and displays users
 */
 
@@ -24,7 +23,7 @@ const userList = () => {
     return (
         <main>
             <div data-testid='userList'></div>
-            <DisplayUsers users={userListData} />
+            <DisplayUsers usersToDisplay={userListData} />
         </main>
     );
 };
