@@ -76,23 +76,25 @@ export const userUpdateAction =
     };
 
 // TODO fix gets an error after deleting user
-export const userDeleteAction = (id) => async (dispatch) => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Token ${localStorage.getItem('auth_token')}`,
-            Accept: 'application/json',
-        },
-    };
+export const userDeleteAction =
+    ({ id }) =>
+    async (dispatch) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Token ${localStorage.getItem('auth_token')}`,
+                Accept: 'application/json',
+            },
+        };
 
-    try {
-        const res = await axios.delete(`${process.env.REACT_APP_API_URL}/api/accounts/${id}/`, config);
-        dispatch({ type: USER_DELETED_SUCCESS, payload: res.data });
-        dispatch(logoutAction());
-    } catch {
-        dispatch({ type: USER_DELETED_FAIL });
-    }
-};
+        try {
+            const res = await axios.delete(`${process.env.REACT_APP_API_URL}/api/accounts/${id}/`, config);
+            dispatch({ type: USER_DELETED_SUCCESS, payload: res.data });
+            dispatch(logoutAction());
+        } catch {
+            dispatch({ type: USER_DELETED_FAIL });
+        }
+    };
 
 // load the the details of the connects user loadLoggedUserDetailsAction
 export const loadLoggedUserDetailsAction = () => async (dispatch) => {
@@ -162,23 +164,25 @@ export const signupAction =
     };
 
 // activate account - activation email is turned off right now (from the api side)
-export const verify = (uid, token) => async (dispatch) => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-        },
+export const verify =
+    ({ uid, token }) =>
+    async (dispatch) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+
+        const body = JSON.stringify({ uid, token });
+
+        try {
+            const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/djoser/users/activation/`, body, config);
+
+            dispatch({ type: ACTIVATION_SUCCESS, payload: res.data });
+        } catch (err) {
+            dispatch({ type: ACTIVATION_FAIL });
+        }
     };
-
-    const body = JSON.stringify({ uid, token });
-
-    try {
-        const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/djoser/users/activation/`, body, config);
-
-        dispatch({ type: ACTIVATION_SUCCESS, payload: res.data });
-    } catch (err) {
-        dispatch({ type: ACTIVATION_FAIL });
-    }
-};
 
 export const resetPasswordAction =
     ({ email }) =>

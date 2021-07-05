@@ -87,7 +87,7 @@ describe('authenticated users', () => {
     });
 
     describe('onSubmit - should dispatch UserUpdateAction ', () => {
-        test('submit should call UserUpdateAction', async () => {
+        test('submit should call UserUpdateAction', () => {
             const emailInput = screen.getByPlaceholderText(/email/i);
             const nameInput = screen.getByPlaceholderText(/name/i);
             const updateButton = screen.getByRole('button', { name: /update/i });
@@ -99,12 +99,12 @@ describe('authenticated users', () => {
             userEvent.type(nameInput, nameValue);
             userEvent.click(updateButton);
 
-            const timesActionDispatched = await userUpdateAction.mock.calls.length;
+            const timesActionDispatched = userUpdateAction.mock.calls.length;
 
             expect(timesActionDispatched).toBe(1);
-            expect(await userUpdateAction.mock.calls[0][0].email).toEqual(emailValue);
-            expect(await userUpdateAction.mock.calls[0][0].name).toEqual(nameValue);
-            expect(await userUpdateAction.mock.calls[0][0].id).toEqual(idValue);
+            expect(userUpdateAction.mock.calls[0][0].email).toEqual(emailValue);
+            expect(userUpdateAction.mock.calls[0][0].name).toEqual(nameValue);
+            expect(userUpdateAction.mock.calls[0][0].id).toEqual(idValue);
         });
     });
 });

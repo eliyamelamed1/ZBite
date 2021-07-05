@@ -14,7 +14,11 @@ const userDelete = ({ id }) => {
     const dispatch = useDispatch();
     const onSubmit = (e) => {
         e.preventDefault();
-        dispatch(userDeleteAction(id));
+        try {
+            dispatch(userDeleteAction({ id }));
+        } catch {
+            // TODO - add err msg
+        }
     };
     // add permissions
     return (
