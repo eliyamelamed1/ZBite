@@ -24,19 +24,21 @@ import {
 
 import axios from 'axios';
 
-export const loadUserDetailsAction = (id) => async (dispatch) => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-        },
+export const loadUserDetailsAction =
+    ({ id }) =>
+    async (dispatch) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/accounts/${id}/`, config);
+            dispatch({ type: LOAD_USER_DETAILS_SUCCESS, payload: res.data });
+        } catch {
+            dispatch({ type: LOAD_USER_DETAILS_FAIL });
+        }
     };
-    try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/accounts/${id}/`, config);
-        dispatch({ type: LOAD_USER_DETAILS_SUCCESS, payload: res.data });
-    } catch {
-        dispatch({ type: LOAD_USER_DETAILS_FAIL });
-    }
-};
 
 export const loadUserListAction = () => async (dispatch) => {
     const config = {

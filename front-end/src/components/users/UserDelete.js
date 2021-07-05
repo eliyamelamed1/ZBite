@@ -18,11 +18,11 @@ const userDelete = ({ id }) => {
     };
     // add permissions
     return (
-        <div data-testid='userDelete'>
+        <main data-testid='userDelete'>
             <form onSubmit={(e) => onSubmit(e)}>
                 <button type='submit'>delete user</button>
             </form>
-        </div>
+        </main>
     );
 };
 
