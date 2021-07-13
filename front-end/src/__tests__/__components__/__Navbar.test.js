@@ -15,7 +15,6 @@ import userEvent from '@testing-library/user-event';
 jest.mock('../../redux/actions/auth', () => ({ logoutAction: jest.fn() }));
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
-const userId = 'userId';
 
 describe('NavBar - authenticated users', () => {
     const initialState = {

@@ -28,10 +28,8 @@ export const recipeDeleteAction =
 
             await axios.delete(`${process.env.REACT_APP_API_URL}/api/recipes/${id}/`, config);
             dispatch({ type: RECIPE_DELETED_SUCCESS });
-            window.scrollTo(0, 0);
         } catch {
             dispatch({ type: RECIPE_DELETED_FAIL });
-            window.scrollTo(0, 0);
         }
     };
 
@@ -53,7 +51,6 @@ export const recipeCreateAction =
             });
             await axios.post(`${process.env.REACT_APP_API_URL}/api/recipes/create/`, body, config);
             dispatch({ type: RECIPE_CREATED_SUCCESS });
-            window.scrollTo(0, 0);
         } catch {
             dispatch({ type: RECIPE_CREATED_FAIL });
         }
@@ -77,7 +74,6 @@ export const recipeUpdateAction =
             });
             const res = await axios.patch(`${process.env.REACT_APP_API_URL}/api/recipes/${id}/`, body, config);
             dispatch({ type: RECIPE_UPDATED_SUCCESS, payload: res.data });
-            window.scrollTo(0, 0);
         } catch {
             dispatch({ type: RECIPE_UPDATED_FAIL });
         }
@@ -113,10 +109,8 @@ export const recipeSearchAction =
                 config
             );
             dispatch({ type: RECIPE_SEARCH_SUCCESS, payload: res.data });
-            window.scrollTo(0, 0);
         } catch {
             dispatch({ type: RECIPE_SEARCH_FAIL });
-            window.scrollTo(0, 0);
         }
     };
 

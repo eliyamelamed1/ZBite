@@ -1,7 +1,5 @@
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 
-import ChatDetails from './components/chats/ChatDetails';
-import Chats from './components/chats/Chats';
 import HomePage from './pages/HomePage';
 import Layout from './components/Layout';
 import NotFound from './components/NotFound';
@@ -35,8 +33,6 @@ const App = () => (
                     <Route exact path='/reset_password' component={UserResetPassword} />
                     <Route exact path='/password/reset/confirm/:uid/:token' component={UserResetPasswordConfirm} />
                     <Route exact path='/activate/:uid/:token' component={UserActivate} />
-                    <Route exact path='/chats' component={Chats} />
-                    <Route exact path='/chats/chat/:chatId' component={ChatDetails} />
                     <Route component={NotFound} />
                 </Switch>
             </Layout>
