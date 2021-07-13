@@ -2,12 +2,11 @@
 // test renders children
 
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 import Navbar from './Navbar';
-import NewMessage from './notifications/NewMessage';
 import { connect } from 'react-redux';
 import { loadLoggedUserDetailsAction } from '../redux/actions/auth';
+import { useDispatch } from 'react-redux';
 
 const layout = ({ children }) => {
     const dispatch = useDispatch();
