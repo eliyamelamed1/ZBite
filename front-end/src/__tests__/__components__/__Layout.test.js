@@ -1,9 +1,8 @@
 // TODO test loadLoggedUserDetailsAction() is called
 
 import '@testing-library/jest-dom/extend-expect';
-import '@testing-library/jest-dom';
 
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 
 import Layout from '../../components/Layout';
 import { Provider } from 'react-redux';
