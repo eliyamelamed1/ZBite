@@ -24,7 +24,7 @@ import {
 
 import axios from 'axios';
 
-export const testAxios = () => {
+export const testAxios = () => (dispatch) => {
     axios.get('blah');
 };
 
@@ -50,13 +50,10 @@ export const loadUserListAction = () => async (dispatch) => {
             'Content-Type': 'application/json',
         },
     };
-    console.log('start');
     try {
         const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/accounts/list/`, config);
-        console.log('success');
         dispatch({ type: LOAD_USER_LIST_SUCCESS, payload: res.data });
     } catch {
-        console.log('fail');
         dispatch({ type: LOAD_USER_LIST_FAIL });
     }
 };
