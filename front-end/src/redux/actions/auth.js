@@ -24,10 +24,6 @@ import {
 
 import axios from 'axios';
 
-export const testAxios = () => (dispatch) => {
-    axios.get('blah');
-};
-
 export const loadUserDetailsAction =
     ({ id }) =>
     async (dispatch) => {
