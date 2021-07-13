@@ -5,7 +5,6 @@ import {
     loadUserDetailsAction,
     loadUserListAction,
     loginAction,
-    logoutAction,
     resetPasswordAction,
     resetPasswordConfirmAction,
     signupAction,
@@ -17,6 +16,11 @@ import {
 import axios from 'axios';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+
+const middlewares = [thunk];
+const mockStore = configureStore(middlewares);
+let initialState = {};
+const store = mockStore(initialState);
 
 jest.mock('axios');
 
@@ -49,11 +53,6 @@ const re_password = 'password';
 const new_password = 'new_password';
 const uid = 'uid';
 const token = 'token';
-
-const middlewares = [thunk];
-const mockStore = configureStore(middlewares);
-let initialState = {};
-const store = mockStore(initialState);
 
 describe('axios request should match url endpoint, and parameters', () => {
     test('loadUserListAction', () => {
@@ -161,6 +160,7 @@ describe('axios request should match url endpoint, and parameters', () => {
         expect(axios.post.mock.calls[0][1]).toStrictEqual(body);
         expect(axios.post.mock.calls[0][2]).toStrictEqual(config);
     });
+    //  TODO fix this test
     // test('logoutAction', async () => {
     //     const store = mockStore(initialState);
     //     jest.mock('../../../redux/actions/auth', () => ({ logoutAction: jest.fn() }));
