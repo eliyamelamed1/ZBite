@@ -30,6 +30,7 @@ export const loadUserDetailsAction =
         const config = {
             headers: {
                 'Content-Type': 'application/json',
+                Accept: 'application/json',
             },
         };
         try {
@@ -44,6 +45,7 @@ export const loadUserListAction = () => async (dispatch) => {
     const config = {
         headers: {
             'Content-Type': 'application/json',
+            Accept: 'application/json',
         },
     };
     try {
@@ -60,6 +62,8 @@ export const userUpdateAction =
         const config = {
             headers: {
                 'Content-Type': 'application/json',
+                Accept: 'application/json',
+
                 Authorization: `Token ${localStorage.getItem('auth_token')}`,
             },
         };
@@ -82,8 +86,8 @@ export const userDeleteAction =
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Token ${localStorage.getItem('auth_token')}`,
                 Accept: 'application/json',
+                Authorization: `Token ${localStorage.getItem('auth_token')}`,
             },
         };
 
@@ -102,8 +106,8 @@ export const loadLoggedUserDetailsAction = () => async (dispatch) => {
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Token ${localStorage.getItem('auth_token')}`,
                 Accept: 'application/json',
+                Authorization: `Token ${localStorage.getItem('auth_token')}`,
             },
         };
 
@@ -125,6 +129,7 @@ export const loginAction =
         const config = {
             headers: {
                 'Content-Type': 'application/json',
+                Accept: 'application/json',
             },
         };
 
@@ -144,6 +149,7 @@ export const signupAction =
         const config = {
             headers: {
                 'Content-Type': 'application/json',
+                Accept: 'application/json',
             },
         };
 
@@ -170,6 +176,7 @@ export const verify =
         const config = {
             headers: {
                 'Content-Type': 'application/json',
+                Accept: 'application/json',
             },
         };
 
@@ -190,6 +197,7 @@ export const resetPasswordAction =
         const config = {
             headers: {
                 'Content-Type': 'application/json',
+                Accept: 'application/json',
             },
         };
 
@@ -215,6 +223,7 @@ export const resetPasswordConfirmAction =
             const config = {
                 headers: {
                     'Content-Type': 'application/json',
+                    Accept: 'application/json',
                 },
             };
 

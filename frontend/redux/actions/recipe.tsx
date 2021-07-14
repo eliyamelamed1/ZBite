@@ -22,6 +22,7 @@ export const recipeDeleteAction =
             const config = {
                 headers: {
                     'Content-Type': 'application/json',
+                    Accept: 'application/json',
                     Authorization: `Token ${localStorage.getItem('auth_token')}`,
                 },
             };
@@ -40,6 +41,8 @@ export const recipeCreateAction =
             const config = {
                 headers: {
                     'Content-Type': 'application/json',
+                    Accept: 'application/json',
+
                     Authorization: `Token ${localStorage.getItem('auth_token')}`,
                 },
             };
@@ -62,6 +65,8 @@ export const recipeUpdateAction =
         const config = {
             headers: {
                 'Content-Type': 'application/json',
+                Accept: 'application/json',
+
                 Authorization: `Token ${localStorage.getItem('auth_token')}`,
             },
         };
@@ -83,6 +88,7 @@ export const loadRecipeListAction = () => async (dispatch) => {
     const config = {
         headers: {
             'Content-Type': 'application/json',
+            Accept: 'application/json',
         },
     };
     try {
@@ -99,6 +105,7 @@ export const recipeSearchAction =
         const config = {
             headers: {
                 'Content-Type': 'application/json',
+                Accept: 'application/json',
             },
         };
 
@@ -120,6 +127,7 @@ export const loadRecipeDetailsAction =
         const config = {
             headers: {
                 'Content-Type': 'application/json',
+                Accept: 'application/json',
             },
         };
 

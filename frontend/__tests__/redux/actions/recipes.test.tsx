@@ -21,20 +21,24 @@ const store = mockStore(initialState);
 jest.mock('axios');
 localStorage.setItem('auth_token', 'tokenValue');
 
-const title = 'title';
-const description = 'description';
-const id = 'id';
-const flavor_type = 'flavor_type';
+const parameters = {
+    title: 'title',
+    description: 'description',
+    id: 'id',
+    flavor_type: 'flavor_type',
+};
 
 const config = {
     headers: {
         'Content-Type': 'application/json',
+        Accept: 'application/json',
     },
 };
 
-const config2 = {
+const configWithAuthToken = {
     headers: {
         'Content-Type': 'application/json',
+        Accept: 'application/json',
         Authorization: `Token ${localStorage.getItem('auth_token')}`,
     },
 };
@@ -44,15 +48,17 @@ describe('axios request should match url endpoint, and parameters', () => {
         jest.clearAllMocks();
     });
     test('recipeDeleteAction', () => {
+        const { id } = parameters;
         const endpointUrl = `${process.env.REACT_APP_API_URL}/api/recipes/${id}/`;
 
         store.dispatch(recipeDeleteAction({ id }));
 
         expect(axios.delete.mock.calls.length).toBe(1);
         expect(axios.delete.mock.calls[0][0]).toStrictEqual(endpointUrl);
-        expect(axios.delete.mock.calls[0][1]).toStrictEqual(config2);
+        expect(axios.delete.mock.calls[0][1]).toStrictEqual(configWithAuthToken);
     });
     test('recipeCreateAction', () => {
+        const { title, description, flavor_type } = parameters;
         const endpointUrl = `${process.env.REACT_APP_API_URL}/api/recipes/create/`;
         const body = JSON.stringify({ title, description, flavor_type });
 
@@ -61,9 +67,10 @@ describe('axios request should match url endpoint, and parameters', () => {
         expect(axios.post.mock.calls.length).toBe(1);
         expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointUrl);
         expect(axios.post.mock.calls[0][1]).toStrictEqual(body);
-        expect(axios.post.mock.calls[0][2]).toStrictEqual(config2);
+        expect(axios.post.mock.calls[0][2]).toStrictEqual(configWithAuthToken);
     });
     test('recipeUpdateAction', () => {
+        const { id, title, description, flavor_type } = parameters;
         const endpointUrl = `${process.env.REACT_APP_API_URL}/api/recipes/${id}/`;
         const body = JSON.stringify({ title, description, flavor_type });
 
@@ -72,7 +79,7 @@ describe('axios request should match url endpoint, and parameters', () => {
         expect(axios.patch.mock.calls.length).toBe(1);
         expect(axios.patch.mock.calls[0][0]).toStrictEqual(endpointUrl);
         expect(axios.patch.mock.calls[0][1]).toStrictEqual(body);
-        expect(axios.patch.mock.calls[0][2]).toStrictEqual(config2);
+        expect(axios.patch.mock.calls[0][2]).toStrictEqual(configWithAuthToken);
     });
     test('loadRecipeListAction', () => {
         const endpointUrl = `${process.env.REACT_APP_API_URL}/api/recipes/list/`;
@@ -84,6 +91,7 @@ describe('axios request should match url endpoint, and parameters', () => {
         expect(axios.get.mock.calls[0][1]).toStrictEqual(config);
     });
     test('recipeSearchAction', () => {
+        const { flavor_type } = parameters;
         const endpointUrl = `${process.env.REACT_APP_API_URL}/api/recipes/search/`;
 
         store.dispatch(recipeSearchAction({ flavor_type }));
@@ -94,6 +102,7 @@ describe('axios request should match url endpoint, and parameters', () => {
         expect(axios.post.mock.calls[0][2]).toStrictEqual(config);
     });
     test('loadRecipeDetailsAction', () => {
+        const { id } = parameters;
         const endpointUrl = `${process.env.REACT_APP_API_URL}/api/recipes/${id}/`;
 
         store.dispatch(loadRecipeDetailsAction({ id }));
