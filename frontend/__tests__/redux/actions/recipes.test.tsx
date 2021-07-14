@@ -48,7 +48,7 @@ describe('axios request should match url endpoint, and parameters', () => {
     });
     test('recipeDeleteAction', () => {
         const { id } = parameters;
-        const endpointUrl = `${process.env.REACT_APP_API_URL}/api/recipes/${id}/`;
+        const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}/`;
 
         store.dispatch(recipeDeleteAction({ id }));
 
@@ -58,7 +58,7 @@ describe('axios request should match url endpoint, and parameters', () => {
     });
     test('recipeCreateAction', () => {
         const { title, description, flavor_type } = parameters;
-        const endpointUrl = `${process.env.REACT_APP_API_URL}/api/recipes/create/`;
+        const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/create/`;
         const body = JSON.stringify({ title, description, flavor_type });
 
         store.dispatch(recipeCreateAction({ title, description, flavor_type }));
@@ -70,7 +70,7 @@ describe('axios request should match url endpoint, and parameters', () => {
     });
     test('recipeUpdateAction', () => {
         const { id, title, description, flavor_type } = parameters;
-        const endpointUrl = `${process.env.REACT_APP_API_URL}/api/recipes/${id}/`;
+        const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}/`;
         const body = JSON.stringify({ title, description, flavor_type });
 
         store.dispatch(recipeUpdateAction({ id, title, description, flavor_type }));
@@ -81,7 +81,7 @@ describe('axios request should match url endpoint, and parameters', () => {
         expect(axios.patch.mock.calls[0][2]).toStrictEqual(configWithAuthToken);
     });
     test('loadRecipeListAction', () => {
-        const endpointUrl = `${process.env.REACT_APP_API_URL}/api/recipes/list/`;
+        const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/list/`;
 
         store.dispatch(loadRecipeListAction());
 
@@ -91,7 +91,7 @@ describe('axios request should match url endpoint, and parameters', () => {
     });
     test('recipeSearchAction', () => {
         const { flavor_type } = parameters;
-        const endpointUrl = `${process.env.REACT_APP_API_URL}/api/recipes/search/`;
+        const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/search/`;
 
         store.dispatch(recipeSearchAction({ flavor_type }));
 
@@ -102,7 +102,7 @@ describe('axios request should match url endpoint, and parameters', () => {
     });
     test('loadRecipeDetailsAction', () => {
         const { id } = parameters;
-        const endpointUrl = `${process.env.REACT_APP_API_URL}/api/recipes/${id}/`;
+        const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}/`;
 
         store.dispatch(loadRecipeDetailsAction({ id }));
 

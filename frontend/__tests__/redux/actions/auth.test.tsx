@@ -55,7 +55,7 @@ describe('axios request should match url endpoint, and parameters', () => {
     });
     test('loadUserListAction', () => {
         store.dispatch(loadUserListAction());
-        const endpointUrl = `${process.env.REACT_APP_API_URL}/api/accounts/list/`;
+        const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/accounts/list/`;
 
         expect(axios.get.mock.calls.length).toBe(1);
         expect(axios.get.mock.calls[0][0]).toStrictEqual(endpointUrl);
@@ -63,7 +63,7 @@ describe('axios request should match url endpoint, and parameters', () => {
     });
     test('loadUserDetailsAction', () => {
         const { id } = parameters;
-        const endpointUrl = `${process.env.REACT_APP_API_URL}/api/accounts/${id}/`;
+        const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/accounts/${id}/`;
         store.dispatch(loadUserDetailsAction({ id }));
 
         expect(axios.get.mock.calls.length).toBe(1);
@@ -73,7 +73,7 @@ describe('axios request should match url endpoint, and parameters', () => {
     test('userUpdateAction', () => {
         const { email, name, id } = parameters;
         const body = JSON.stringify({ email, name });
-        const endpointUrl = `${process.env.REACT_APP_API_URL}/api/accounts/${id}/`;
+        const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/accounts/${id}/`;
 
         store.dispatch(userUpdateAction({ id, email, name }));
 
@@ -86,7 +86,7 @@ describe('axios request should match url endpoint, and parameters', () => {
         // test logoutAction have been dispatched
         // jest.mock('../../../redux/actions/auth', () => ({ logoutAction: jest.fn() }));
         const { id } = parameters;
-        const endpointUrl = `${process.env.REACT_APP_API_URL}/api/accounts/${id}/`;
+        const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/accounts/${id}/`;
 
         store.dispatch(userDeleteAction({ id }));
 
@@ -96,7 +96,7 @@ describe('axios request should match url endpoint, and parameters', () => {
         // expect(logoutAction.mock.calls.length).toBe('1');
     });
     test('loadLoggedUserDetailsAction', () => {
-        const endpointUrl = `${process.env.REACT_APP_API_URL}/api/djoser/users/me/`;
+        const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/djoser/users/me/`;
 
         store.dispatch(loadLoggedUserDetailsAction());
 
@@ -107,7 +107,7 @@ describe('axios request should match url endpoint, and parameters', () => {
     test('loginAction', () => {
         const { email, password } = parameters;
         const body = JSON.stringify({ email, password });
-        const endpointUrl = `${process.env.REACT_APP_API_URL}/api/djoser/token/login/`;
+        const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/djoser/token/login/`;
 
         store.dispatch(loginAction({ email, password }));
 
@@ -120,7 +120,7 @@ describe('axios request should match url endpoint, and parameters', () => {
     test('signupAction', () => {
         const { name, email, password, re_password } = parameters;
         const body = JSON.stringify({ name, email, password, re_password });
-        const endpointUrl = `${process.env.REACT_APP_API_URL}/api/djoser/users/`;
+        const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/djoser/users/`;
 
         store.dispatch(signupAction({ name, email, password, re_password }));
 
@@ -132,7 +132,7 @@ describe('axios request should match url endpoint, and parameters', () => {
     test('verify', () => {
         const { uid, token } = parameters;
         const body = JSON.stringify({ uid, token });
-        const endpointUrl = `${process.env.REACT_APP_API_URL}/api/djoser/users/activation/`;
+        const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/djoser/users/activation/`;
 
         store.dispatch(verify({ uid, token }));
 
@@ -144,7 +144,7 @@ describe('axios request should match url endpoint, and parameters', () => {
     test('resetPasswordAction', () => {
         const { email } = parameters;
         const body = JSON.stringify({ email });
-        const endpointUrl = `${process.env.REACT_APP_API_URL}/api/djoser/users/reset_password/`;
+        const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/djoser/users/reset_password/`;
 
         store.dispatch(resetPasswordAction({ email }));
 
@@ -157,7 +157,7 @@ describe('axios request should match url endpoint, and parameters', () => {
     test('resetPasswordConfirmAction', () => {
         const { uid, token, new_password } = parameters;
         const body = JSON.stringify({ uid, token, new_password });
-        const endpointUrl = `${process.env.REACT_APP_API_URL}/api/djoser/users/reset_password_confirm/`;
+        const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/djoser/users/reset_password_confirm/`;
 
         store.dispatch(resetPasswordConfirmAction({ uid, token, new_password }));
 

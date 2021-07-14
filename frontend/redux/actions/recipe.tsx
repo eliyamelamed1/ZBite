@@ -27,7 +27,7 @@ export const recipeDeleteAction =
                 },
             };
 
-            await axios.delete(`${process.env.REACT_APP_API_URL}/api/recipes/${id}/`, config);
+            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}/`, config);
             dispatch({ type: RECIPE_DELETED_SUCCESS });
         } catch {
             dispatch({ type: RECIPE_DELETED_FAIL });
@@ -52,7 +52,7 @@ export const recipeCreateAction =
                 description,
                 flavor_type,
             });
-            await axios.post(`${process.env.REACT_APP_API_URL}/api/recipes/create/`, body, config);
+            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/recipes/create/`, body, config);
             dispatch({ type: RECIPE_CREATED_SUCCESS });
         } catch {
             dispatch({ type: RECIPE_CREATED_FAIL });
@@ -77,7 +77,7 @@ export const recipeUpdateAction =
                 description,
                 flavor_type,
             });
-            const res = await axios.patch(`${process.env.REACT_APP_API_URL}/api/recipes/${id}/`, body, config);
+            const res = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}/`, body, config);
             dispatch({ type: RECIPE_UPDATED_SUCCESS, payload: res.data });
         } catch {
             dispatch({ type: RECIPE_UPDATED_FAIL });
@@ -92,7 +92,7 @@ export const loadRecipeListAction = () => async (dispatch) => {
         },
     };
     try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/recipes/list/`, config);
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/recipes/list/`, config);
         dispatch({ type: LOAD_RECIPE_LIST_SUCCESS, payload: res.data });
     } catch {
         dispatch({ type: LOAD_RECIPE_LIST_FAIL });
@@ -111,7 +111,7 @@ export const recipeSearchAction =
 
         try {
             const res = await axios.post(
-                `${process.env.REACT_APP_API_URL}/api/recipes/search/`,
+                `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/search/`,
                 { flavor_type },
                 config
             );
@@ -132,7 +132,7 @@ export const loadRecipeDetailsAction =
         };
 
         try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/recipes/${id}/`, config);
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}/`, config);
             dispatch({ type: LOAD_RECIPE_DETAILS_SUCCESS, payload: res.data });
         } catch {
             dispatch({ type: LOAD_RECIPE_DETAILS_FAIL });

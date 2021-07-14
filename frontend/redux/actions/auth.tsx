@@ -34,7 +34,7 @@ export const loadUserDetailsAction =
             },
         };
         try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/accounts/${id}/`, config);
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/accounts/${id}/`, config);
             dispatch({ type: LOAD_USER_DETAILS_SUCCESS, payload: res.data });
         } catch {
             dispatch({ type: LOAD_USER_DETAILS_FAIL });
@@ -49,7 +49,7 @@ export const loadUserListAction = () => async (dispatch) => {
         },
     };
     try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/accounts/list/`, config);
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/accounts/list/`, config);
         dispatch({ type: LOAD_USER_LIST_SUCCESS, payload: res.data });
     } catch {
         dispatch({ type: LOAD_USER_LIST_FAIL });
@@ -72,7 +72,7 @@ export const userUpdateAction =
             name,
         });
         try {
-            const res = await axios.patch(`${process.env.REACT_APP_API_URL}/api/accounts/${id}/`, body, config);
+            const res = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/accounts/${id}/`, body, config);
             dispatch({ type: USER_UPDATED_SUCCESS, payload: res.data });
         } catch {
             dispatch({ type: USER_UPDATED_FAIL });
@@ -92,7 +92,7 @@ export const userDeleteAction =
         };
 
         try {
-            const res = await axios.delete(`${process.env.REACT_APP_API_URL}/api/accounts/${id}/`, config);
+            const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/accounts/${id}/`, config);
             dispatch({ type: USER_DELETED_SUCCESS, payload: res.data });
             dispatch(logoutAction());
         } catch {
@@ -112,7 +112,7 @@ export const loadLoggedUserDetailsAction = () => async (dispatch) => {
         };
 
         try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/djoser/users/me/`, config);
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/djoser/users/me/`, config);
 
             dispatch({ type: USER_LOADED_SUCCESS, payload: res.data });
         } catch (err) {
@@ -136,7 +136,7 @@ export const loginAction =
         const body = JSON.stringify({ email, password });
 
         try {
-            const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/djoser/token/login/`, body, config);
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/djoser/token/login/`, body, config);
             dispatch({ type: LOGIN_SUCCESS, payload: res.data });
             dispatch(loadLoggedUserDetailsAction());
         } catch (err) {
@@ -161,7 +161,7 @@ export const signupAction =
         });
 
         try {
-            const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/djoser/users/`, body, config);
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/djoser/users/`, body, config);
 
             dispatch({ type: SIGNUP_SUCCESS, payload: res.data });
         } catch (err) {
@@ -183,7 +183,11 @@ export const verify =
         const body = JSON.stringify({ uid, token });
 
         try {
-            const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/djoser/users/activation/`, body, config);
+            const res = await axios.post(
+                `${process.env.NEXT_PUBLIC_API_URL}/api/djoser/users/activation/`,
+                body,
+                config
+            );
 
             dispatch({ type: ACTIVATION_SUCCESS, payload: res.data });
         } catch (err) {
@@ -205,7 +209,7 @@ export const resetPasswordAction =
 
         try {
             const res = await axios.post(
-                `${process.env.REACT_APP_API_URL}/api/djoser/users/reset_password/`,
+                `${process.env.NEXT_PUBLIC_API_URL}/api/djoser/users/reset_password/`,
                 body,
                 config
             );
@@ -233,7 +237,7 @@ export const resetPasswordConfirmAction =
                 new_password,
             });
             const res = await axios.post(
-                `${process.env.REACT_APP_API_URL}/api/djoser/users/reset_password_confirm/`,
+                `${process.env.NEXT_PUBLIC_API_URL}/api/djoser/users/reset_password_confirm/`,
                 body,
                 config
             );
