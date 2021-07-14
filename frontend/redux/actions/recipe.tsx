@@ -11,7 +11,7 @@ import {
     RECIPE_SEARCH_SUCCESS,
     RECIPE_UPDATED_FAIL,
     RECIPE_UPDATED_SUCCESS,
-} from './types.js';
+} from './types';
 
 import axios from 'axios';
 

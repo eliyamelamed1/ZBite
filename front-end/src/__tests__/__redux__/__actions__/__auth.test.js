@@ -22,8 +22,6 @@ const mockStore = configureStore(middlewares);
 let initialState = {};
 const store = mockStore(initialState);
 
-jest.mock('axios');
-
 localStorage.setItem('auth_token', 'tokenValue');
 const config = {
     headers: {

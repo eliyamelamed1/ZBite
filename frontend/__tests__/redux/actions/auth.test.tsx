@@ -1,3 +1,5 @@
+// TODO refactor config variables and parameters variables
+
 import '@testing-library/jest-dom/extend-expect';
 
 import {
@@ -21,8 +23,6 @@ const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 let initialState = {};
 const store = mockStore(initialState);
-
-jest.mock('axios');
 
 localStorage.setItem('auth_token', 'tokenValue');
 const config = {
@@ -55,6 +55,9 @@ const uid = 'uid';
 const token = 'token';
 
 describe('axios request should match url endpoint, and parameters', () => {
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
     test('loadUserListAction', () => {
         store.dispatch(loadUserListAction());
         const endpointUrl = `${process.env.REACT_APP_API_URL}/api/accounts/list/`;

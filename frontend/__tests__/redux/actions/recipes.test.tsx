@@ -40,6 +40,9 @@ const config2 = {
 };
 
 describe('axios request should match url endpoint, and parameters', () => {
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
     test('recipeDeleteAction', () => {
         const endpointUrl = `${process.env.REACT_APP_API_URL}/api/recipes/${id}/`;
 
