@@ -1,5 +1,5 @@
-// test useEffect dispatch action
-// test use list is displayed
+//  TODO - test recipesToDisplay param of DisplayRecipes is getting passed
+//  TODO - test component without renders recipes
 
 import React, { useEffect } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';

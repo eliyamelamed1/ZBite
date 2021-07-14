@@ -20,7 +20,6 @@ const recipeCreate = () => {
     if (isAuthenticatedData == false) {
         Router.push('/');
     }
-
     const onSubmit = (e) => {
         e.preventDefault();
         try {

@@ -5,7 +5,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import React from 'react';
-import RecipeCreate from '../../../components/recipes/RecipeCreate';
+import RecipeCreate from '../../../pages/recipes/create';
 import Router from 'next/router';
 import configureStore from 'redux-mock-store';
 import { recipeCreateAction } from '../../../redux/actions/recipe';

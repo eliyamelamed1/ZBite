@@ -11,8 +11,6 @@ import Link from 'next/link';
 import { loadRecipeDetailsAction } from '../../redux/actions/recipe';
 import { useRouter } from 'next/router';
 
-// import PropTypes from 'prop-types';
-
 const recipeDetails = () => {
     const dispatch = useDispatch();
     const router = useRouter();

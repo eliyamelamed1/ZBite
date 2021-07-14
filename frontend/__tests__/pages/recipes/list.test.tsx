@@ -4,12 +4,13 @@ import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import React from 'react';
-import RecipeList from '../../../pages/recipes';
+import RecipeList from '../../../pages/recipes/list';
 import configureStore from 'redux-mock-store';
 import { loadRecipeListAction } from '../../../redux/actions/recipe';
 import thunk from 'redux-thunk';
 
 jest.mock('../../../redux/actions/recipe', () => ({ loadRecipeListAction: jest.fn() }));
+
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 const data = {

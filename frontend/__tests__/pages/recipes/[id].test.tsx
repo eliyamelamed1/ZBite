@@ -9,8 +9,6 @@ import configureStore from 'redux-mock-store';
 import { loadRecipeDetailsAction } from '../../../redux/actions/recipe';
 import thunk from 'redux-thunk';
 
-// import userEvent from '@testing-library/user-event';
-
 const dynamicIdParam = '5';
 
 jest.mock('../../../redux/actions/recipe', () => ({ loadRecipeDetailsAction: jest.fn() }));
