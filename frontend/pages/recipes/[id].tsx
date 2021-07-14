@@ -3,18 +3,21 @@
 import React, { useEffect } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 
-import Custom404 from '../../pages/404';
+import Custom404 from '../404';
 import Head from 'next/head';
 import Image from 'next/image';
-import IsRecipeAuthor from './IsRecipeAuthor';
+import IsRecipeAuthor from '../../components/recipes/IsRecipeAuthor';
 import Link from 'next/link';
 import { loadRecipeDetailsAction } from '../../redux/actions/recipe';
+import { useRouter } from 'next/router';
 
 // import PropTypes from 'prop-types';
 
-const recipeDetails = (props) => {
+const recipeDetails = () => {
     const dispatch = useDispatch();
-    const { id } = props.match.params;
+    const router = useRouter();
+
+    const { id } = router.query;
 
     useEffect(() => {
         try {
@@ -23,6 +26,7 @@ const recipeDetails = (props) => {
             // TODO - add err msg
         }
     }, [id, dispatch]);
+
     const { recipeDetailData } = useSelector((state) => state.recipeReducer);
 
     const displayInteriorImages = () => {
