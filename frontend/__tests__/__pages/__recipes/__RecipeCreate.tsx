@@ -5,7 +5,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import React from 'react';
-import RecipeCreate from '../../../pages/recipes/create';
+import RecipeCreate from '../../../pages/recipes/RecipeCreate';
 import Router from 'next/router';
 import configureStore from 'redux-mock-store';
 import { recipeCreateAction } from '../../../redux/actions/recipe';
@@ -180,7 +180,7 @@ describe('guest users', () => {
         cleanup();
         jest.clearAllMocks();
     });
-    test('should redirect guest users', async () => {
+    test('should redirect guest users', () => {
         expect(Router.push.mock.calls.length).toBe(1);
         expect(Router.push.mock.calls[0][0]).toBe('/');
     });

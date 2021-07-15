@@ -4,7 +4,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import React from 'react';
-import RecipeSearch from '../../../pages/recipes/search';
+import RecipeSearch from '../../../pages/recipes/RecipeSearch';
 import configureStore from 'redux-mock-store';
 import { recipeSearchAction } from '../../../redux/actions/recipe';
 import thunk from 'redux-thunk';

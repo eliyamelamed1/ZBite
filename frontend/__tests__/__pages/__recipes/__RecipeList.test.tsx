@@ -4,7 +4,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import React from 'react';
-import RecipeList from '../../../pages/recipes/list';
+import RecipeList from '../../../pages/recipes/RecipeList';
 import configureStore from 'redux-mock-store';
 import { loadRecipeListAction } from '../../../redux/actions/recipe';
 import thunk from 'redux-thunk';
