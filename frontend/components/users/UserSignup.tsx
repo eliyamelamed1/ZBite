@@ -5,10 +5,11 @@ test account created redirect to login page
 test cant sign up with password different than re password 
 */
 
-import { Link, Redirect } from 'react-router-dom';
 import React, { useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 
+import Link from 'next/link';
+import Router from 'next/router';
 import { signupAction } from '../../redux/actions/auth';
 
 const userSignup = () => {
@@ -20,8 +21,6 @@ const userSignup = () => {
         password: '',
         re_password: '',
     });
-
-    const [accountCreated, setAccountCreated] = useState(false);
 
     const { name, email, password, re_password } = formData;
 
@@ -40,15 +39,16 @@ const userSignup = () => {
                         re_password,
                     })
                 );
-                setAccountCreated(true);
+                Router.push('/login');
             } catch {
                 // window.scrollTo(0, 0);
             }
         }
     };
 
-    if (isAuthenticatedData) return <Redirect to='/' />;
-    if (accountCreated) return <Redirect to='/login' />;
+    if (isAuthenticatedData) {
+        Router.push('/');
+    }
 
     return (
         <div data-testid='userSignup'>
@@ -100,7 +100,7 @@ const userSignup = () => {
                 <button type='submit'>Register</button>
             </form>
             <p>
-                Already have an account? <Link to='/login'>Sign In</Link>
+                Already have an account? <Link href='/login'>Sign In</Link>
             </p>
         </div>
     );
