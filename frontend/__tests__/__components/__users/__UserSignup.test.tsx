@@ -1,5 +1,4 @@
 import '@testing-library/jest-dom/extend-expect';
-import '@testing-library/jest-dom';
 
 import { cleanup, render, screen } from '@testing-library/react';
 
@@ -40,9 +39,9 @@ describe('UserSignup - guest user', () => {
     describe('UserSignup - general', () => {
         test('renders without crashing', () => {});
         test('should render Already have an account? linking to the login page', () => {
-            const signin = screen.getByRole('link', { name: /Sign in/i });
-            expect(signin).toBeInTheDocument();
-            expect(signin.href).toBe('http://localhost/login');
+            const signIn = screen.getByRole('link', { name: /Sign in/i });
+            expect(signIn).toBeInTheDocument();
+            expect(signIn.href).toBe('http://localhost/login');
         });
     });
     

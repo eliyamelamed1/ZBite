@@ -3,15 +3,16 @@ test authenticated user redirected to home
 
 */
 
-import { Link, Redirect } from 'react-router-dom';
 import React, { useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 
+import Link from 'next/link';
+import Router from 'next/router';
 import { loginAction } from '../../redux/actions/auth';
 
 const userLogin = () => {
     const dispatch = useDispatch();
-    const isAuthenticatedData = useSelector((state) => state.authReducer.isAuthenticatedData);
+    const { isAuthenticatedData } = useSelector((state) => state.authReducer);
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -22,16 +23,15 @@ const userLogin = () => {
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
     const onSubmit = (e) => {
-        // TODO - check about this command
         e.preventDefault();
         try {
             dispatch(loginAction({ email, password }));
-        } catch {
-            // window.scrollTo(0, 0);
-        }
+        } catch {}
     };
 
-    if (isAuthenticatedData) return <Redirect exact to='/' />;
+    if (isAuthenticatedData) {
+        Router.push('/');
+    }
 
     return (
         <div data-testid='userLogin'>
@@ -58,13 +58,13 @@ const userLogin = () => {
                         required
                     />
                 </div>
-                <button type='Submit'>Login</button>
+                <button type='submit'>Login</button>
             </form>
             <p>
-                Do not have an account? <Link to='/signup'>Sign Up</Link>
+                Do not have an account? <Link href='/signup'>Sign Up</Link>
             </p>
             <p>
-                Forgot your password? <Link to='/reset_password'>Reset your password</Link>
+                Forgot your password? <Link href='/reset_password'>Reset your password</Link>
             </p>
         </div>
     );

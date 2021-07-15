@@ -7,7 +7,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import Router from 'next/router';
 import UserLogin from '../../../components/users/UserLogin';
 import configureStore from 'redux-mock-store';
 import { loginAction } from '../../../redux/actions/auth';
@@ -18,21 +18,20 @@ const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 let initialState = { authReducer: {} };
 const store = mockStore(initialState);
-jest.mock('../../../redux/actions/auth', () => ({ loginAction: jest.fn() }));
-
+jest.mock('../../../redux/actions/auth', () => ({ loginAction: jest.fn().mockImplementation(() => true) }));
+jest.mock('next/router', () => ({ push: jest.fn() }));
 describe('UserLogin - guest', () => {
     beforeEach(() => {
         render(
             <Provider store={store}>
-                <Router>
-                    <UserLogin />
-                </Router>
+                <UserLogin />
             </Provider>
         );
     });
 
     afterEach(() => {
         cleanup();
+        jest.clearAllMocks();
     });
     test('renders without crashing', () => {});
     test('render userLogin', () => {
@@ -63,7 +62,7 @@ describe('UserLogin - guest', () => {
         const loginButton = screen.getByRole('button', { name: 'Login' });
         expect(loginButton).toBeInTheDocument();
     });
-    test('Redux - login button dispatch loginAction', async () => {
+    test('Redux - login button dispatch loginAction', () => {
         const emailInput = screen.getByPlaceholderText(/email/i);
         const passwordInput = screen.getByPlaceholderText(/password/i);
         const loginButton = screen.getByRole('button', { name: 'Login' });
@@ -72,9 +71,9 @@ describe('UserLogin - guest', () => {
         userEvent.type(passwordInput, '1234567');
         userEvent.click(loginButton);
 
-        expect(await loginAction.mock.calls.length).toBe(1);
+        expect(loginAction.mock.calls.length).toBe(1);
     });
-    test('Redux - email and password should pass to the loginAction', async () => {
+    test('Redux - email and password should pass to the loginAction', () => {
         const emailInput = screen.getByPlaceholderText(/email/i);
         const passwordInput = screen.getByPlaceholderText(/password/i);
         const loginButton = screen.getByRole('button', { name: 'Login' });
@@ -86,33 +85,30 @@ describe('UserLogin - guest', () => {
         userEvent.type(passwordInput, passwordValue);
         userEvent.click(loginButton);
 
-        const timesActionDispatched = await loginAction.mock.calls.length;
+        const timesActionDispatched = loginAction.mock.calls.length;
 
         expect(timesActionDispatched).toBe(1);
-        expect(await loginAction.mock.calls[0][0].email).toEqual(emailValue);
-        expect(await loginAction.mock.calls[0][0].password).toEqual(passwordValue);
+        expect(loginAction.mock.calls[0][0].email).toEqual(emailValue);
+        expect(loginAction.mock.calls[0][0].password).toEqual(passwordValue);
     });
 });
 
 // TODO - imporve this tests by checking the redirection url (should be home page)
-describe('UserLogin - authenticated', () => {
+describe('UserLogin - authenticated user', () => {
     let initialState = { authReducer: { isAuthenticatedData: true } };
     const store = mockStore(initialState);
     beforeEach(() => {
         render(
             <Provider store={store}>
-                <Router>
-                    <UserLogin />
-                </Router>
+                <UserLogin />
             </Provider>
         );
     });
     afterEach(() => {
         cleanup();
     });
-    test('should redirect authenticated user', async () => {
-        const userLogin = screen.queryByTestId('userLogin');
-        expect(userLogin).not.toBeInTheDocument();
+    test('should redirect authenticated user to home page', async () => {
+        expect(Router.push.mock.calls.length).toBe(1);
+        expect(Router.push.mock.calls[0][0]).toBe('/');
     });
-    // test('should redirect after successful login', () => {});
 });

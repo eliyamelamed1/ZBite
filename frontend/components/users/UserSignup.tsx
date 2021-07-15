@@ -40,9 +40,7 @@ const userSignup = () => {
                     })
                 );
                 Router.push('/login');
-            } catch {
-                // window.scrollTo(0, 0);
-            }
+            } catch {}
         }
     };
 
