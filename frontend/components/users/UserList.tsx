@@ -10,7 +10,7 @@ import { loadUserListAction } from '../../redux/actions/auth';
 
 const userList = () => {
     const dispatch = useDispatch();
-    const userListData = useSelector((state) => state.authReducer.userListData);
+    const { userListData } = useSelector((state) => state.authReducer);
 
     useEffect(() => {
         try {

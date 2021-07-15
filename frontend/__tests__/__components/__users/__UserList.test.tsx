@@ -4,7 +4,6 @@ import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
 import UserList from '../../../components/users/UserList';
 import configureStore from 'redux-mock-store';
 import { loadUserListAction } from '../../../redux/actions/auth';
@@ -35,22 +34,21 @@ describe('UserList', () => {
     beforeEach(() => {
         render(
             <Provider store={store}>
-                <Router>
-                    <UserList />
-                </Router>
+                <UserList />
             </Provider>
         );
     });
 
     afterEach(() => {
         cleanup();
+        jest.clearAllMocks();
     });
     test('render without crashing', () => {});
     test('match userList data-test-id', () => {
         expect(screen.getByTestId('userList')).toBeInTheDocument();
     });
-    test('loadUserListAction should be dispatched', async () => {
-        const timesActionDispatched = await loadUserListAction.mock.calls.length;
+    test('loadUserListAction should be dispatched', () => {
+        const timesActionDispatched = loadUserListAction.mock.calls.length;
         expect(timesActionDispatched).toBe(1);
     });
     test('renders displayUsers component', () => {

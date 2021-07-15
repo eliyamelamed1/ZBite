@@ -30,6 +30,7 @@ describe('authenticated users', () => {
 
     afterEach(() => {
         cleanup();
+        jest.clearAllMocks();
     });
 
     describe('UserUpdate - General', () => {

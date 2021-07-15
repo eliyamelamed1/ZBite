@@ -5,23 +5,23 @@ Test user exisy
 Test user is author
 */
 
-import { Helmet, HelmetProvider } from 'react-helmet-async';
 import React, { useEffect, useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 
-import NotFound from '../NotFound';
-import UserDelete from './UserDelete';
-import UserUpdate from './UserUpdate';
+import Custom404 from '../404';
+import Head from 'next/head';
+import UserDelete from '../../components/users/UserDelete';
+import UserUpdate from '../../components/users/UserUpdate';
 import { loadUserDetailsAction } from '../../redux/actions/auth';
+import { useRouter } from 'next/router';
 
-const userDetails = (props) => {
+const userDetails = () => {
     const [isAuthor, setIsAuthor] = useState(false);
     const [userExist, setUserExist] = useState(false);
-    const loggedUserData = useSelector((state) => state.authReducer.loggedUserData);
-    const userDetailsData = useSelector((state) => state.authReducer.userDetailsData);
+    const { loggedUserData, userDetailsData } = useSelector((state) => state.authReducer);
+    const router = useRouter();
     const dispatch = useDispatch();
-
-    const { id } = props.match.params;
+    const id = router.query.UserDetails_Id;
 
     useEffect(() => {
         try {
@@ -41,11 +41,11 @@ const userDetails = (props) => {
 
     useEffect(() => {
         if (loggedUserData != null) {
-            if (loggedUserData.id == props.match.params.id) {
+            if (loggedUserData.id == id) {
                 setIsAuthor(true);
             }
         }
-    }, [props.match.params.id, loggedUserData]);
+    }, [id, loggedUserData]);
 
     const guestLinks = (
         <main data-testid='guestLinks'>
@@ -55,15 +55,15 @@ const userDetails = (props) => {
                     <p>user email: {userDetailsData.email}</p>
                 </div>
             ) : (
-                <NotFound />
+                <Custom404 />
             )}
         </main>
     );
 
     const authorLinks = (
         <main data-testid='authorLinks'>
-            <UserDelete id={props.match.params.id} />
-            <UserUpdate id={props.match.params.id} />
+            <UserDelete id={id} />
+            <UserUpdate id={id} />
             {loggedUserData ? (
                 <div>
                     <div>user name: {loggedUserData.name}</div>
@@ -77,12 +77,10 @@ const userDetails = (props) => {
 
     return (
         <div data-testid='userDetails'>
-            <HelmetProvider>
-                <Helmet>
-                    <title>ZBite - User Details Page </title>
-                    <meta name='description' content='recipes detail' />
-                </Helmet>
-            </HelmetProvider>
+            <Head>
+                <title>ZBite - User Details Page </title>
+                <meta name='description' content='recipes detail' />
+            </Head>
             <div>
                 <div>{isAuthor == true ? <div>{authorLinks}</div> : <div>{guestLinks}</div>}</div>
             </div>

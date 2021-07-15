@@ -19,7 +19,6 @@ const userUpdate = ({ id }) => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-
         try {
             dispatch(userUpdateAction({ id, email, name }));
         } catch {
