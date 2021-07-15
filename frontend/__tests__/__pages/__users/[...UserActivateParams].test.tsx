@@ -10,14 +10,14 @@ import React from 'react';
 import UserActivate from '../../../pages/users/[...UserActivateParams]';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+import { userActivateAction } from '../../../redux/actions/auth';
 import userEvent from '@testing-library/user-event';
-import { verify } from '../../../redux/actions/auth';
 
 const dynamicUrlParams = {
     uid: 'MGQ5ZGQ4ZWUtMTBjZS00Y2NhLWJhM2UtY2JhZGYwMTIyMmJh',
     token: '89b3de6f0de10203e42495277a6a245b',
 };
-jest.mock('../../../redux/actions/auth', () => ({ verify: jest.fn().mockReturnValue(() => true) }));
+jest.mock('../../../redux/actions/auth', () => ({ userActivateAction: jest.fn().mockReturnValue(() => true) }));
 jest.mock('next/router', () => ({
     push: jest.fn(),
     useRouter: jest.fn(() => ({
@@ -63,17 +63,17 @@ describe('Authenticated users', () => {
             const verifyAccountButton = screen.getByRole('button', { name: /verify/i });
 
             userEvent.click(verifyAccountButton);
-            const timesActionDispatched = verify.mock.calls.length;
+            const timesActionDispatched = userActivateAction.mock.calls.length;
 
             expect(timesActionDispatched).toBe(1);
-            expect(verify.mock.calls[0][0].uid).toBe(dynamicUrlParams.uid);
-            expect(verify.mock.calls[0][0].token).toBe(dynamicUrlParams.token);
+            expect(userActivateAction.mock.calls[0][0].uid).toBe(dynamicUrlParams.uid);
+            expect(userActivateAction.mock.calls[0][0].token).toBe(dynamicUrlParams.token);
         });
         test('should redirect when user is activated', () => {
             const verifyAccountButton = screen.getByRole('button', { name: /verify/i });
             userEvent.click(verifyAccountButton);
 
-            const timesActionDispatched = verify.mock.calls.length;
+            const timesActionDispatched = userActivateAction.mock.calls.length;
 
             expect(timesActionDispatched).toBe(1);
             expect(Router.push.mock.calls.length).toBe(1);

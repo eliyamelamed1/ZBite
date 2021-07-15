@@ -8,9 +8,9 @@ import {
     resetPasswordAction,
     resetPasswordConfirmAction,
     signupAction,
+    userActivateAction,
     userDeleteAction,
     userUpdateAction,
-    verify,
 } from '../../../redux/actions/auth';
 
 import axios from 'axios';
@@ -134,7 +134,7 @@ describe('axios request should match url endpoint, and parameters', () => {
         const body = JSON.stringify({ uid, token });
         const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/djoser/users/activation/`;
 
-        store.dispatch(verify({ uid, token }));
+        store.dispatch(userActivateAction({ uid, token }));
 
         expect(axios.post.mock.calls.length).toBe(1);
         expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointUrl);

@@ -170,7 +170,7 @@ export const signupAction =
     };
 
 // activate account - activation email is turned off right now (from the api side)
-export const verify =
+export const userActivateAction =
     ({ uid, token }) =>
     async (dispatch) => {
         const config = {

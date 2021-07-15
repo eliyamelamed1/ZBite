@@ -5,7 +5,7 @@ import Router, { useRouter } from 'next/router';
 import { connect, useDispatch, useSelector } from 'react-redux';
 
 import React from 'react';
-import { verify } from '../../redux/actions/auth';
+import { userActivateAction } from '../../redux/actions/auth';
 
 const userActivate = () => {
     const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const userActivate = () => {
         const uid = UserActivateParams?.[0];
         const token = UserActivateParams?.[1];
         try {
-            dispatch(verify({ uid, token }));
+            dispatch(userActivateAction({ uid, token }));
             Router.push('/');
         } catch {
             // TODO - add err msg
