@@ -4,7 +4,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import React from 'react';
-import RecipeDetails from '../../../pages/recipes/[RecipeDetails_IdParam]';
+import RecipeDetails from '../../../pages/recipes/[RecipeDetails_Id]';
 import configureStore from 'redux-mock-store';
 import { loadRecipeDetailsAction } from '../../../redux/actions/recipe';
 import thunk from 'redux-thunk';
@@ -14,7 +14,7 @@ const dynamicIdParam = '5';
 jest.mock('../../../redux/actions/recipe', () => ({ loadRecipeDetailsAction: jest.fn() }));
 jest.mock('next/router', () => ({
     useRouter: jest.fn(() => ({
-        query: { RecipeDetails_IdParam: dynamicIdParam },
+        query: { RecipeDetails_Id: dynamicIdParam },
     })),
 }));
 

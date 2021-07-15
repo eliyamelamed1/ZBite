@@ -1,10 +1,14 @@
 import {
     ACTIVATION_FAIL,
     ACTIVATION_SUCCESS,
-    LOAD_USER_DETAILS_FAIL,
-    LOAD_USER_DETAILS_SUCCESS,
-    LOAD_USER_LIST_FAIL,
-    LOAD_USER_LIST_SUCCESS,
+    DELETE_USER_FAIL,
+    DELETE_USER_SUCCESS,
+    GET_LOGGED_USER_DETAILS_FAIL,
+    GET_LOGGED_USER_DETAILS_SUCCESS,
+    GET_USER_DETAILS_FAIL,
+    GET_USER_DETAILS_SUCCESS,
+    GET_USER_LIST_FAIL,
+    GET_USER_LIST_SUCCESS,
     LOGIN_FAIL,
     LOGIN_SUCCESS,
     LOGOUT,
@@ -14,12 +18,8 @@ import {
     RESET_PASSWORD_SUCCESS,
     SIGNUP_FAIL,
     SIGNUP_SUCCESS,
-    USER_DELETED_FAIL,
-    USER_DELETED_SUCCESS,
-    USER_LOADED_FAIL,
-    USER_LOADED_SUCCESS,
-    USER_UPDATED_FAIL,
-    USER_UPDATED_SUCCESS,
+    UPDATE_USER_FAIL,
+    UPDATE_USER_SUCCESS,
 } from './types';
 
 import axios from 'axios';
@@ -35,9 +35,9 @@ export const loadUserDetailsAction =
         };
         try {
             const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/accounts/${id}/`, config);
-            dispatch({ type: LOAD_USER_DETAILS_SUCCESS, payload: res.data });
+            dispatch({ type: GET_USER_DETAILS_SUCCESS, payload: res.data });
         } catch {
-            dispatch({ type: LOAD_USER_DETAILS_FAIL });
+            dispatch({ type: GET_USER_DETAILS_FAIL });
         }
     };
 
@@ -50,9 +50,9 @@ export const loadUserListAction = () => async (dispatch) => {
     };
     try {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/accounts/list/`, config);
-        dispatch({ type: LOAD_USER_LIST_SUCCESS, payload: res.data });
+        dispatch({ type: GET_USER_LIST_SUCCESS, payload: res.data });
     } catch {
-        dispatch({ type: LOAD_USER_LIST_FAIL });
+        dispatch({ type: GET_USER_LIST_FAIL });
     }
 };
 
@@ -73,9 +73,9 @@ export const userUpdateAction =
         });
         try {
             const res = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/accounts/${id}/`, body, config);
-            dispatch({ type: USER_UPDATED_SUCCESS, payload: res.data });
+            dispatch({ type: UPDATE_USER_SUCCESS, payload: res.data });
         } catch {
-            dispatch({ type: USER_UPDATED_FAIL });
+            dispatch({ type: UPDATE_USER_FAIL });
         }
     };
 
@@ -93,10 +93,10 @@ export const userDeleteAction =
 
         try {
             const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/accounts/${id}/`, config);
-            dispatch({ type: USER_DELETED_SUCCESS, payload: res.data });
+            dispatch({ type: DELETE_USER_SUCCESS, payload: res.data });
             dispatch(logoutAction());
         } catch {
-            dispatch({ type: USER_DELETED_FAIL });
+            dispatch({ type: DELETE_USER_FAIL });
         }
     };
 
@@ -114,12 +114,12 @@ export const loadLoggedUserDetailsAction = () => async (dispatch) => {
         try {
             const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/djoser/users/me/`, config);
 
-            dispatch({ type: USER_LOADED_SUCCESS, payload: res.data });
+            dispatch({ type: GET_LOGGED_USER_DETAILS_SUCCESS, payload: res.data });
         } catch (err) {
-            dispatch({ type: USER_LOADED_FAIL });
+            dispatch({ type: GET_LOGGED_USER_DETAILS_FAIL });
         }
     } else {
-        dispatch({ type: USER_LOADED_FAIL });
+        dispatch({ type: GET_LOGGED_USER_DETAILS_FAIL });
     }
 };
 

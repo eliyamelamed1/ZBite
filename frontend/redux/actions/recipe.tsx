@@ -1,16 +1,16 @@
 import {
-    LOAD_RECIPE_DETAILS_FAIL,
-    LOAD_RECIPE_DETAILS_SUCCESS,
-    LOAD_RECIPE_LIST_FAIL,
-    LOAD_RECIPE_LIST_SUCCESS,
-    RECIPE_CREATED_FAIL,
-    RECIPE_CREATED_SUCCESS,
-    RECIPE_DELETED_FAIL,
-    RECIPE_DELETED_SUCCESS,
-    RECIPE_SEARCH_FAIL,
-    RECIPE_SEARCH_SUCCESS,
-    RECIPE_UPDATED_FAIL,
-    RECIPE_UPDATED_SUCCESS,
+    CREATE_RECIPE_FAIL,
+    CREATE_RECIPE_SUCCESS,
+    DELETE_RECIPE_FAIL,
+    DELETE_RECIPE_SUCCESS,
+    GET_RECIPE_DETAILS_FAIL,
+    GET_RECIPE_DETAILS_SUCCESS,
+    GET_RECIPE_LIST_FAIL,
+    GET_RECIPE_LIST_SUCCESS,
+    SEARCH_RECIPE_FAIL,
+    SEARCH_RECIPE_SUCCESS,
+    UPDATE_RECIPE_FAIL,
+    UPDATE_RECIPE_SUCCESS,
 } from './types';
 
 import axios from 'axios';
@@ -28,9 +28,9 @@ export const recipeDeleteAction =
             };
 
             await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}/`, config);
-            dispatch({ type: RECIPE_DELETED_SUCCESS });
+            dispatch({ type: DELETE_RECIPE_SUCCESS });
         } catch {
-            dispatch({ type: RECIPE_DELETED_FAIL });
+            dispatch({ type: DELETE_RECIPE_FAIL });
         }
     };
 
@@ -53,9 +53,9 @@ export const recipeCreateAction =
                 flavor_type,
             });
             await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/recipes/create/`, body, config);
-            dispatch({ type: RECIPE_CREATED_SUCCESS });
+            dispatch({ type: CREATE_RECIPE_SUCCESS });
         } catch {
-            dispatch({ type: RECIPE_CREATED_FAIL });
+            dispatch({ type: CREATE_RECIPE_FAIL });
         }
     };
 
@@ -78,9 +78,9 @@ export const recipeUpdateAction =
                 flavor_type,
             });
             const res = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}/`, body, config);
-            dispatch({ type: RECIPE_UPDATED_SUCCESS, payload: res.data });
+            dispatch({ type: UPDATE_RECIPE_SUCCESS, payload: res.data });
         } catch {
-            dispatch({ type: RECIPE_UPDATED_FAIL });
+            dispatch({ type: UPDATE_RECIPE_FAIL });
         }
     };
 
@@ -93,9 +93,9 @@ export const loadRecipeListAction = () => async (dispatch) => {
     };
     try {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/recipes/list/`, config);
-        dispatch({ type: LOAD_RECIPE_LIST_SUCCESS, payload: res.data });
+        dispatch({ type: GET_RECIPE_LIST_SUCCESS, payload: res.data });
     } catch {
-        dispatch({ type: LOAD_RECIPE_LIST_FAIL });
+        dispatch({ type: GET_RECIPE_LIST_FAIL });
     }
 };
 
@@ -115,9 +115,9 @@ export const recipeSearchAction =
                 { flavor_type },
                 config
             );
-            dispatch({ type: RECIPE_SEARCH_SUCCESS, payload: res.data });
+            dispatch({ type: SEARCH_RECIPE_SUCCESS, payload: res.data });
         } catch {
-            dispatch({ type: RECIPE_SEARCH_FAIL });
+            dispatch({ type: SEARCH_RECIPE_FAIL });
         }
     };
 
@@ -133,8 +133,8 @@ export const loadRecipeDetailsAction =
 
         try {
             const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}/`, config);
-            dispatch({ type: LOAD_RECIPE_DETAILS_SUCCESS, payload: res.data });
+            dispatch({ type: GET_RECIPE_DETAILS_SUCCESS, payload: res.data });
         } catch {
-            dispatch({ type: LOAD_RECIPE_DETAILS_FAIL });
+            dispatch({ type: GET_RECIPE_DETAILS_FAIL });
         }
     };

@@ -1,19 +1,19 @@
 import {
-    LOAD_USER_DETAILS_FAIL,
-    LOAD_USER_DETAILS_SUCCESS,
-    LOAD_USER_LIST_FAIL,
-    LOAD_USER_LIST_SUCCESS,
+    DELETE_USER_FAIL,
+    DELETE_USER_SUCCESS,
+    GET_LOGGED_USER_DETAILS_FAIL,
+    GET_LOGGED_USER_DETAILS_SUCCESS,
+    GET_USER_DETAILS_FAIL,
+    GET_USER_DETAILS_SUCCESS,
+    GET_USER_LIST_FAIL,
+    GET_USER_LIST_SUCCESS,
     LOGIN_FAIL,
     LOGIN_SUCCESS,
     LOGOUT,
     SIGNUP_FAIL,
     SIGNUP_SUCCESS,
-    USER_DELETED_FAIL,
-    USER_DELETED_SUCCESS,
-    USER_LOADED_FAIL,
-    USER_LOADED_SUCCESS,
-    USER_UPDATED_FAIL,
-    USER_UPDATED_SUCCESS,
+    UPDATE_USER_FAIL,
+    UPDATE_USER_SUCCESS,
 } from '../actions/types';
 
 const TEST_CASE_AUTH = 'TEST_CASE_AUTH';
@@ -39,17 +39,17 @@ export default function authReducer(state = initialState, action) {
                 userListData: payload.userListData,
                 userDetailsData: payload.userDetailsData,
             };
-        case LOAD_USER_DETAILS_SUCCESS:
+        case GET_USER_DETAILS_SUCCESS:
             return {
                 ...state,
                 userDetailsData: payload,
             };
-        case LOAD_USER_LIST_SUCCESS:
+        case GET_USER_LIST_SUCCESS:
             return {
                 ...state,
                 userListData: payload,
             };
-        case USER_UPDATED_SUCCESS:
+        case UPDATE_USER_SUCCESS:
             return {
                 ...state,
                 loggedUserData: payload,
@@ -61,7 +61,7 @@ export default function authReducer(state = initialState, action) {
                 isAuthenticatedData: true,
                 auth_token: payload.auth_token,
             };
-        case USER_LOADED_SUCCESS:
+        case GET_LOGGED_USER_DETAILS_SUCCESS:
             return {
                 ...state,
                 loggedUserData: payload,
@@ -71,12 +71,12 @@ export default function authReducer(state = initialState, action) {
                 ...state,
                 isAuthenticatedData: false,
             };
-        case USER_LOADED_FAIL:
+        case GET_LOGGED_USER_DETAILS_FAIL:
             return {
                 ...state,
                 loggedUserData: null,
             };
-        case USER_DELETED_SUCCESS:
+        case DELETE_USER_SUCCESS:
         case SIGNUP_FAIL:
         case LOGIN_FAIL:
         case LOGOUT:
@@ -87,10 +87,10 @@ export default function authReducer(state = initialState, action) {
                 isAuthenticatedData: false,
                 loggedUserData: null,
             };
-        case LOAD_USER_DETAILS_FAIL:
-        case LOAD_USER_LIST_FAIL:
-        case USER_UPDATED_FAIL:
-        case USER_DELETED_FAIL:
+        case GET_USER_DETAILS_FAIL:
+        case GET_USER_LIST_FAIL:
+        case UPDATE_USER_FAIL:
+        case DELETE_USER_FAIL:
             return {
                 ...state,
             };

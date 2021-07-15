@@ -40,10 +40,8 @@ const userDetails = () => {
     }, [userDetailsData]);
 
     useEffect(() => {
-        if (loggedUserData != null) {
-            if (loggedUserData.id == id) {
-                setIsAuthor(true);
-            }
+        if (loggedUserData?.id == id) {
+            setIsAuthor(true);
         }
     }, [id, loggedUserData]);
 

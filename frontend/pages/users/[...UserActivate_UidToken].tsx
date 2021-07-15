@@ -13,9 +13,9 @@ const userActivate = () => {
     const { isAuthenticatedData } = useSelector((state) => state.authReducer);
 
     const onSubmit = () => {
-        const { UserActivate_UidTokenParams } = router.query;
-        const uid = UserActivate_UidTokenParams?.[0];
-        const token = UserActivate_UidTokenParams?.[1];
+        const { UserActivate_UidToken } = router.query;
+        const uid = UserActivate_UidToken?.[0];
+        const token = UserActivate_UidToken?.[1];
         try {
             dispatch(userActivateAction({ uid, token }));
             Router.push('/');

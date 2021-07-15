@@ -1,16 +1,16 @@
 import {
-    LOAD_RECIPE_DETAILS_FAIL,
-    LOAD_RECIPE_DETAILS_SUCCESS,
-    LOAD_RECIPE_LIST_FAIL,
-    LOAD_RECIPE_LIST_SUCCESS,
-    RECIPE_CREATED_FAIL,
-    RECIPE_CREATED_SUCCESS,
-    RECIPE_DELETED_FAIL,
-    RECIPE_DELETED_SUCCESS,
-    RECIPE_SEARCH_FAIL,
-    RECIPE_SEARCH_SUCCESS,
-    RECIPE_UPDATED_FAIL,
-    RECIPE_UPDATED_SUCCESS,
+    CREATE_RECIPE_FAIL,
+    CREATE_RECIPE_SUCCESS,
+    DELETE_RECIPE_FAIL,
+    DELETE_RECIPE_SUCCESS,
+    GET_RECIPE_DETAILS_FAIL,
+    GET_RECIPE_DETAILS_SUCCESS,
+    GET_RECIPE_LIST_FAIL,
+    GET_RECIPE_LIST_SUCCESS,
+    SEARCH_RECIPE_FAIL,
+    SEARCH_RECIPE_SUCCESS,
+    UPDATE_RECIPE_FAIL,
+    UPDATE_RECIPE_SUCCESS,
 } from '../actions/types';
 
 const initialState = {
@@ -32,21 +32,21 @@ export default function recipeReducer(state = initialState, action) {
                 recipeSearchedListData: payload.recipeSearchedListData,
                 recipeDetailData: payload.recipeDetailData,
             };
-        case LOAD_RECIPE_LIST_SUCCESS: //
+        case GET_RECIPE_LIST_SUCCESS: //
             return { ...state, recipeListData: payload };
-        case RECIPE_SEARCH_SUCCESS:
+        case SEARCH_RECIPE_SUCCESS:
             return { ...state, recipeSearchedListData: payload };
-        case RECIPE_UPDATED_SUCCESS: //
-        case LOAD_RECIPE_DETAILS_SUCCESS: //
+        case UPDATE_RECIPE_SUCCESS: //
+        case GET_RECIPE_DETAILS_SUCCESS: //
             return { ...state, recipeDetailData: payload };
-        case RECIPE_DELETED_SUCCESS: //
-        case RECIPE_DELETED_FAIL:
-        case RECIPE_CREATED_SUCCESS:
-        case RECIPE_CREATED_FAIL:
-        case RECIPE_UPDATED_FAIL:
-        case LOAD_RECIPE_DETAILS_FAIL:
-        case LOAD_RECIPE_LIST_FAIL:
-        case RECIPE_SEARCH_FAIL:
+        case DELETE_RECIPE_SUCCESS: //
+        case DELETE_RECIPE_FAIL:
+        case CREATE_RECIPE_SUCCESS:
+        case CREATE_RECIPE_FAIL:
+        case UPDATE_RECIPE_FAIL:
+        case GET_RECIPE_DETAILS_FAIL:
+        case GET_RECIPE_LIST_FAIL:
+        case SEARCH_RECIPE_FAIL:
             return { ...state };
         default:
             return state;

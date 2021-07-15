@@ -19,9 +19,9 @@ describe('reducers - auth ', () => {
         store.dispatch({ type: 'TEST_CASE_AUTH', payload: initialState });
         return initialState;
     });
-    test('case LOAD_USER_DETAILS_FAIL', () => {
+    test('case GET_USER_DETAILS_FAIL', () => {
         initialState['userDetailsData'] = { email: 'testEmail', name: 'testName', id: 'testId' };
-        store.dispatch({ type: 'LOAD_USER_DETAILS_FAIL', payload: initialState.userDetailsData });
+        store.dispatch({ type: 'GET_USER_DETAILS_FAIL', payload: initialState.userDetailsData });
         initialState = store.getState();
 
         expect(initialState.authReducer.isAuthenticatedData).toBe('initialValue');
@@ -30,9 +30,9 @@ describe('reducers - auth ', () => {
         expect(initialState.authReducer.userListData).toBe('initialValue');
         expect(initialState.authReducer.userDetailsData).toBe('initialValue');
     });
-    test('case LOAD_USER_DETAILS_SUCCESS', () => {
+    test('case GET_USER_DETAILS_SUCCESS', () => {
         initialState['userDetailsData'] = { email: 'testEmail', name: 'testName', id: 'testId' };
-        store.dispatch({ type: 'LOAD_USER_DETAILS_SUCCESS', payload: initialState.userDetailsData });
+        store.dispatch({ type: 'GET_USER_DETAILS_SUCCESS', payload: initialState.userDetailsData });
         initialState = store.getState();
 
         expect(initialState.authReducer.isAuthenticatedData).toBe('initialValue');
@@ -45,9 +45,9 @@ describe('reducers - auth ', () => {
             id: 'testId',
         });
     });
-    test('case LOAD_USER_LIST_FAIL', () => {
+    test('case GET_USER_LIST_FAIL', () => {
         initialState['userListData'] = { firstUser: { name: 'testName' }, secondeUser: { name: 'testName2' } };
-        store.dispatch({ type: 'LOAD_USER_LIST_FAIL', payload: initialState.userListData });
+        store.dispatch({ type: 'GET_USER_LIST_FAIL', payload: initialState.userListData });
         initialState = store.getState();
 
         expect(initialState.authReducer.isAuthenticatedData).toBe('initialValue');
@@ -56,9 +56,9 @@ describe('reducers - auth ', () => {
         expect(initialState.authReducer.userListData).toBe('initialValue');
         expect(initialState.authReducer.userDetailsData).toBe('initialValue');
     });
-    test('case LOAD_USER_LIST_SUCCESS', () => {
+    test('case GET_USER_LIST_SUCCESS', () => {
         initialState['userListData'] = { firstUser: { name: 'testName' }, secondeUser: { name: 'testName2' } };
-        store.dispatch({ type: 'LOAD_USER_LIST_SUCCESS', payload: initialState.userListData });
+        store.dispatch({ type: 'GET_USER_LIST_SUCCESS', payload: initialState.userListData });
         initialState = store.getState();
 
         expect(initialState.authReducer.isAuthenticatedData).toBe('initialValue');
@@ -70,12 +70,12 @@ describe('reducers - auth ', () => {
         });
         expect(initialState.authReducer.userDetailsData).toBe('initialValue');
     });
-    test('case USER_DELETED_FAIL', () => {
+    test('case DELETE_USER_FAIL', () => {
         initialState['loggedUserData'] = { email: 'testEmail', name: 'testName', id: 'testId' };
         initialState['auth_token'] = 'testToken';
         initialState['isAuthenticatedData'] = true;
         store.dispatch({ type: 'TEST_CASE_AUTH', payload: initialState });
-        store.dispatch({ type: 'USER_DELETED_fail' });
+        store.dispatch({ type: 'DELETE_USER_FAIL' });
         initialState = store.getState();
 
         expect(initialState.authReducer.isAuthenticatedData).toBe(true);
@@ -88,12 +88,12 @@ describe('reducers - auth ', () => {
         expect(initialState.authReducer.userListData).toBe('initialValue');
         expect(initialState.authReducer.userDetailsData).toBe('initialValue');
     });
-    test('case USER_DELETED_SUCCESS', () => {
+    test('case DELETE_USER_SUCCESS', () => {
         initialState['loggedUserData'] = { email: 'testEmail', name: 'testName', id: 'testId' };
         initialState['auth_token'] = 'testToken';
         initialState['isAuthenticatedData'] = true;
         store.dispatch({ type: 'TEST_CASE_AUTH', payload: initialState });
-        store.dispatch({ type: 'USER_DELETED_SUCCESS' });
+        store.dispatch({ type: 'DELETE_USER_SUCCESS' });
         initialState = store.getState();
 
         expect(initialState.authReducer.auth_token).toBe(null);
@@ -103,11 +103,11 @@ describe('reducers - auth ', () => {
         expect(initialState.authReducer.userDetailsData).toBe('initialValue');
     });
 
-    test('case USER_UPDATED_FAIL ', () => {
+    test('case UPDATE_USER_FAIL ', () => {
         initialState['loggedUserData'] = { email: 'testEmail', name: 'testName', id: 'testId' };
         store.dispatch({ type: 'TEST_CASE_AUTH', payload: initialState });
         initialState['loggedUserData'] = { email: 'testEmail2', name: 'testName2' };
-        store.dispatch({ type: 'USER_UPDATED_FAIL', payload: initialState });
+        store.dispatch({ type: 'UPDATE_USER_FAIL', payload: initialState });
         initialState = store.getState();
 
         expect(initialState.authReducer.isAuthenticatedData).toBe('initialValue');
@@ -120,11 +120,11 @@ describe('reducers - auth ', () => {
         expect(initialState.authReducer.userListData).toBe('initialValue');
         expect(initialState.authReducer.userDetailsData).toBe('initialValue');
     });
-    test('case USER_UPDATED_SUCCESS ', () => {
+    test('case UPDATE_USER_SUCCESS ', () => {
         initialState['loggedUserData'] = { email: 'testEmail', name: 'testName', id: 'testId' };
         store.dispatch({ type: 'TEST_CASE_AUTH', payload: initialState });
         initialState['loggedUserData'] = { email: 'testEmail2', name: 'testName2' };
-        store.dispatch({ type: 'USER_UPDATED_SUCCESS', payload: initialState.loggedUserData });
+        store.dispatch({ type: 'UPDATE_USER_SUCCESS', payload: initialState.loggedUserData });
         initialState = store.getState();
 
         expect(initialState.authReducer.isAuthenticatedData).toBe('initialValue');
@@ -148,9 +148,9 @@ describe('reducers - auth ', () => {
         expect(initialState.authReducer.userListData).toBe('initialValue');
         expect(initialState.authReducer.userDetailsData).toBe('initialValue');
     });
-    test('case USER_LOADED_SUCCESS', () => {
+    test('case GET_LOGGED_USER_DETAILS_SUCCESS', () => {
         initialState['loggedUserData'] = { email: 'testEmail', name: 'testName', id: 'testId' };
-        store.dispatch({ type: 'USER_LOADED_SUCCESS', payload: initialState.loggedUserData });
+        store.dispatch({ type: 'GET_LOGGED_USER_DETAILS_SUCCESS', payload: initialState.loggedUserData });
         initialState = store.getState();
 
         expect(initialState.authReducer.auth_token).toBe('initialValue');
@@ -172,8 +172,8 @@ describe('reducers - auth ', () => {
         expect(initialState.authReducer.userListData).toBe('initialValue');
         expect(initialState.authReducer.userDetailsData).toBe('initialValue');
     });
-    test('case USER_LOADED_FAIL', () => {
-        store.dispatch({ type: 'USER_LOADED_FAIL' });
+    test('case GET_LOGGED_USER_DETAILS_FAIL', () => {
+        store.dispatch({ type: 'GET_LOGGED_USER_DETAILS_FAIL' });
         initialState = store.getState();
         expect(initialState.authReducer.auth_token).toBe('initialValue');
         expect(initialState.authReducer.isAuthenticatedData).toBe('initialValue');

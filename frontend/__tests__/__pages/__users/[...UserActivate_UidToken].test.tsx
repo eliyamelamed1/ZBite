@@ -7,7 +7,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import React from 'react';
-import UserActivate from '../../../pages/users/[...UserActivate_UidTokenParams]';
+import UserActivate from '../../../pages/users/[...UserActivate_UidToken]';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { userActivateAction } from '../../../redux/actions/auth';
@@ -22,7 +22,7 @@ jest.mock('next/router', () => ({
     push: jest.fn(),
     useRouter: jest.fn(() => ({
         query: {
-            UserActivate_UidTokenParams: [dynamicUrlParams.uid, dynamicUrlParams.token]
+            UserActivate_UidToken: [dynamicUrlParams.uid, dynamicUrlParams.token]
         },
     })),
 }));
