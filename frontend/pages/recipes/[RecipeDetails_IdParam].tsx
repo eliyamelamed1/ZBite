@@ -15,7 +15,8 @@ const recipeDetails = () => {
     const dispatch = useDispatch();
     const router = useRouter();
 
-    const { id } = router.query;
+    const { RecipeDetails_IdParam } = router.query;
+    const id = RecipeDetails_IdParam;
 
     useEffect(() => {
         try {

@@ -2,6 +2,7 @@ import '@testing-library/jest-dom/extend-expect';
 
 import { cleanup, render, screen } from '@testing-library/react';
 
+import DisplayRecipes from '../../../components/recipes/DisplayRecipes';
 import { Provider } from 'react-redux';
 import React from 'react';
 import RecipeList from '../../../pages/recipes/RecipeList';
@@ -13,22 +14,26 @@ jest.mock('../../../redux/actions/recipe', () => ({ loadRecipeListAction: jest.f
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
-const data = {
-    title: 'recipe title',
-    flavor_type: 'Sour',
-    photo_main: '/recipe image #',
-    id: 'recipeId',
-    author: 'recipe author',
+const params = {
+    data: {
+        title: 'first recipe title',
+        flavor_type: 'Sour',
+        photo_main: '/recipe image #',
+        id: 'first recipe id',
+        author: 'first recipe author',
+    },
+
+    data2: {
+        title: 'second recipe title',
+        flavor_type: 'Sweet',
+        photo_main: '/recipe image #2',
+        id: 'second recipe id',
+        author: 'second recipe author',
+    },
 };
-const data2 = {
-    title: 'recipe title2',
-    flavor_type: 'Sour',
-    photo_main: '/recipe image #2',
-    id: 'recipeId2',
-    author: 'recipe author2',
-};
+const recipeListData = [params.data, params.data2];
 let initialState = {
-    recipeReducer: { recipeListData: [data, data2] },
+    recipeReducer: { recipeListData: recipeListData },
 };
 const store = mockStore(initialState);
 describe('RecipeList', () => {
@@ -45,10 +50,6 @@ describe('RecipeList', () => {
         jest.resetAllMocks();
     });
     test('renders without crashing', () => {});
-    test('should render RecipeList component', () => {
-        const RecipeList = screen.getByTestId('recipeList');
-        expect(RecipeList).toBeInTheDocument();
-    });
     test('should render DisplayRecipes component', () => {
         const DisplayRecipes = screen.getByTestId('displayRecipes');
         expect(DisplayRecipes).toBeInTheDocument();
@@ -58,4 +59,31 @@ describe('RecipeList', () => {
 
         expect(timesActionDispatched).toBe(1);
     });
+    test('should render RecipeList component', () => {
+        const RecipeList = screen.getByTestId('recipeList');
+        expect(RecipeList).toBeInTheDocument();
+    });
 });
+
+// jest.mock('../../../components/recipes/DisplayRecipes', () => {
+//     return jest.fn(() => null);
+// });
+// describe('asdasd', () => {
+//     beforeEach(() => {
+//         render(
+//             <Provider store={store}>
+//                 <RecipeList />
+//             </Provider>
+//         );
+//     });
+
+//     afterEach(() => {
+//         cleanup();
+//         jest.resetAllMocks();
+//     });
+
+//     test('DisplayUsers.propType.recipesToDisplay should get recipeListData', () => {
+//         expect(DisplayRecipes).toHaveBeenCalled();
+//         expect(DisplayRecipes).toHaveBeenCalledWith({ recipesToDisplay: recipeListData }, {});
+//     });
+// });

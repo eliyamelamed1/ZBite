@@ -19,8 +19,7 @@ const recipeList = () => {
     }, [dispatch]);
 
     return (
-        <main>
-            <div data-testid='recipeList'></div>
+        <main data-testid='recipeList'>
             {recipeListData ? <DisplayRecipes recipesToDisplay={recipeListData} /> : null}
         </main>
     );

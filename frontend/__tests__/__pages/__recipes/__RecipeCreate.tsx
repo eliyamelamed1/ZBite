@@ -19,7 +19,6 @@ jest.mock('next/router', () => ({ push: jest.fn() }));
 
 const middleware = [thunk];
 const mockStore = configureStore(middleware);
-jest.mock('next/router', () => ({ push: jest.fn() }));
 
 describe('authenticated users', () => {
     let initialState = { authReducer: { isAuthenticatedData: true } };
