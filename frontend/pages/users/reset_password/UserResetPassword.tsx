@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 
 import Router from 'next/router';
-import { resetPasswordAction } from '../../redux/actions/auth';
+import { resetPasswordAction } from '../../../redux/actions/auth';
 
 const userResetPassword = () => {
     const dispatch = useDispatch();
