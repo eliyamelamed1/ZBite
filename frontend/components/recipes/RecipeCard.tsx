@@ -3,7 +3,7 @@ import Link from 'next/link';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const recipeCard = (props) => (
+const RecipeCard = (props) => (
     <React.Fragment>
         <div data-testid='recipeCard'>
             <h3>Title: {props.title}</h3>
@@ -17,7 +17,7 @@ const recipeCard = (props) => (
     </React.Fragment>
 );
 
-recipeCard.propTypes = {
+RecipeCard.propTypes = {
     title: PropTypes.string.isRequired,
     photo_main: PropTypes.string,
     flavor_type: PropTypes.string.isRequired,
@@ -25,4 +25,4 @@ recipeCard.propTypes = {
     author: PropTypes.string.isRequired,
 };
 
-export default recipeCard;
+export default RecipeCard;

@@ -7,10 +7,7 @@ import { connect, useDispatch } from 'react-redux';
 import React from 'react';
 import { userDeleteAction } from '../../redux/actions/auth';
 
-// import { Redirect } from 'react-router-dom';
-
-const userDelete = ({ id }) => {
-    // if (redirect == true) return (<Redirect to='/' />).then(() => window.location.reload());
+const UserDelete = ({ id }) => {
     const dispatch = useDispatch();
     const onSubmit = (e) => {
         e.preventDefault();
@@ -30,4 +27,4 @@ const userDelete = ({ id }) => {
     );
 };
 
-export default connect()(userDelete);
+export default connect()(UserDelete);

@@ -12,7 +12,7 @@ import Link from 'next/link';
 import Router from 'next/router';
 import { signupAction } from '../../redux/actions/auth';
 
-const userSignup = () => {
+const UserSignup = () => {
     const dispatch = useDispatch();
     const isAuthenticatedData = useSelector((state) => state.authReducer.isAuthenticatedData);
     const [formData, setFormData] = useState({
@@ -104,4 +104,4 @@ const userSignup = () => {
     );
 };
 
-export default connect()(userSignup);
+export default connect()(UserSignup);

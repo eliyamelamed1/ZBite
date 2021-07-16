@@ -9,7 +9,7 @@ import DisplayRecipes from '../../components/recipes/DisplayRecipes';
 import Loader from 'react-loader-spinner';
 import { recipeSearchAction } from '../../redux/actions/recipe';
 
-const recipeSearch = () => {
+const RecipeSearch = () => {
     const dispatch = useDispatch();
     const [flavorType, setFlavorType] = useState({
         flavor_type: 'Sour',
@@ -60,4 +60,4 @@ const recipeSearch = () => {
     );
 };
 
-export default connect()(recipeSearch);
+export default connect()(RecipeSearch);

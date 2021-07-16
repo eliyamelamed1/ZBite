@@ -7,7 +7,7 @@ import Link from 'next/link';
 import React from 'react';
 import { logoutAction } from '../redux/actions/auth';
 
-const navbar = () => {
+const Navbar = () => {
     const isAuthenticatedData = useSelector((state) => state.authReducer.isAuthenticatedData);
     const loggedUserData = useSelector((state) => state.authReducer.loggedUserData);
     const dispatch = useDispatch();
@@ -65,4 +65,4 @@ const navbar = () => {
     );
 };
 
-export default connect()(navbar);
+export default connect()(Navbar);

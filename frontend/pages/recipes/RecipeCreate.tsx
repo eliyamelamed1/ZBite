@@ -4,7 +4,7 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
 import { recipeCreateAction } from '../../redux/actions/recipe';
 
-const recipeCreate = () => {
+const RecipeCreate = () => {
     const dispatch = useDispatch();
     const [formData, setFormData] = useState({
         title: '',
@@ -67,4 +67,4 @@ const recipeCreate = () => {
     );
 };
 
-export default connect()(recipeCreate);
+export default connect()(RecipeCreate);

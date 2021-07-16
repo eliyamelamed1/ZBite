@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { recipeDeleteAction } from '../../redux/actions/recipe';
 
-const recipeDelete = ({ id }) => {
+const RecipeDelete = ({ id }) => {
     const dispatch = useDispatch();
 
     const onSubmit = (e) => {
@@ -28,8 +28,8 @@ const recipeDelete = ({ id }) => {
     );
 };
 
-recipeDelete.propTypes = {
+RecipeDelete.propTypes = {
     id: PropTypes.string,
 };
 
-export default connect()(recipeDelete);
+export default connect()(RecipeDelete);

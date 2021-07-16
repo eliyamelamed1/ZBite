@@ -4,7 +4,7 @@ import { connect, useDispatch } from 'react-redux';
 import Router from 'next/router';
 import { resetPasswordAction } from '../../../redux/actions/auth';
 
-const userResetPassword = () => {
+const UserResetPassword = () => {
     const dispatch = useDispatch();
     const [formData, setFormData] = useState({
         email: '',
@@ -44,4 +44,4 @@ const userResetPassword = () => {
     );
 };
 
-export default connect()(userResetPassword);
+export default connect()(UserResetPassword);

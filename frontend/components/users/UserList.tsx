@@ -8,7 +8,7 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import DisplayUsers from './DisplayUsers';
 import { loadUserListAction } from '../../redux/actions/auth';
 
-const userList = () => {
+const UserList = () => {
     const dispatch = useDispatch();
     const { userListData } = useSelector((state) => state.authReducer);
 
@@ -28,4 +28,4 @@ const userList = () => {
     );
 };
 
-export default connect()(userList);
+export default connect()(UserList);

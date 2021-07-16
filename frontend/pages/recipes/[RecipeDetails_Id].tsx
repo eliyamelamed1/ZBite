@@ -11,7 +11,7 @@ import Link from 'next/link';
 import { loadRecipeDetailsAction } from '../../redux/actions/recipe';
 import { useRouter } from 'next/router';
 
-const recipeDetails = () => {
+const RecipeDetails = () => {
     const dispatch = useDispatch();
     const router = useRouter();
 
@@ -92,4 +92,4 @@ const recipeDetails = () => {
     );
 };
 
-export default connect()(recipeDetails);
+export default connect()(RecipeDetails);

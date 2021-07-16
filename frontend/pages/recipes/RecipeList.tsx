@@ -7,7 +7,7 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import DisplayRecipes from '../../components/recipes/DisplayRecipes';
 import { loadRecipeListAction } from '../../redux/actions/recipe';
 
-const recipeList = () => {
+const RecipeList = () => {
     const recipeListData = useSelector((state) => state.recipeReducer.recipeListData);
     const dispatch = useDispatch();
     useEffect(() => {
@@ -25,4 +25,4 @@ const recipeList = () => {
     );
 };
 
-export default connect()(recipeList);
+export default connect()(RecipeList);

@@ -7,7 +7,7 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import React from 'react';
 import { userActivateAction } from '../../../redux/actions/auth';
 
-const userActivate = () => {
+const UserActivate = () => {
     const dispatch = useDispatch();
     const router = useRouter();
     const { isAuthenticatedData } = useSelector((state) => state.authReducer);
@@ -36,4 +36,4 @@ const userActivate = () => {
     );
 };
 
-export default connect()(userActivate);
+export default connect()(UserActivate);

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import RecipeCard from './RecipeCard';
 
-const displayRecipes = ({ recipesToDisplay }) => {
+const DisplayRecipes = ({ recipesToDisplay }) => {
     const getRecipes = () => {
         if (recipesToDisplay) {
             const recipesOnPage = [];
@@ -40,8 +40,8 @@ const displayRecipes = ({ recipesToDisplay }) => {
     return <div data-testid='displayRecipes'>{getRecipes()}</div>;
 };
 
-displayRecipes.propTypes = {
+DisplayRecipes.propTypes = {
     recipesToDisplay: PropTypes.array.isRequired,
 };
 
-export default displayRecipes;
+export default DisplayRecipes;

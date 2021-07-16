@@ -4,7 +4,7 @@ import { connect, useDispatch } from 'react-redux';
 
 import { resetPasswordConfirmAction } from '../../../redux/actions/auth';
 
-const userResetPasswordConfirm = () => {
+const UserResetPasswordConfirm = () => {
     const dispatch = useDispatch();
     const [formData, setFormData] = useState({
         new_password: '',
@@ -62,4 +62,4 @@ const userResetPasswordConfirm = () => {
     );
 };
 
-export default connect()(userResetPasswordConfirm);
+export default connect()(UserResetPasswordConfirm);

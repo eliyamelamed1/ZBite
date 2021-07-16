@@ -10,7 +10,7 @@ import Link from 'next/link';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const userCard = (props) => (
+const UserCard = (props) => (
     <div data-testid='userCard'>
         <h3>name: {props.name}</h3>
         <h3>email: {props.email}</h3>
@@ -19,11 +19,11 @@ const userCard = (props) => (
     </div>
 );
 
-userCard.propTypes = {
+UserCard.propTypes = {
     name: PropTypes.string.isRequired,
     photo_main: PropTypes.string,
     email: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
 };
 
-export default userCard;
+export default UserCard;

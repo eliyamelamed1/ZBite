@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { loadLoggedUserDetailsAction } from '../redux/actions/auth';
 import { useDispatch } from 'react-redux';
 
-const layout = ({ children }) => {
+const Layout = ({ children }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -29,4 +29,4 @@ const layout = ({ children }) => {
     );
 };
 
-export default connect()(layout);
+export default connect()(Layout);

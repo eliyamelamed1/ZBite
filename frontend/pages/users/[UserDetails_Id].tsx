@@ -15,7 +15,7 @@ import UserUpdate from '../../components/users/UserUpdate';
 import { loadUserDetailsAction } from '../../redux/actions/auth';
 import { useRouter } from 'next/router';
 
-const userDetails = () => {
+const UserDetails = () => {
     const [isAuthor, setIsAuthor] = useState(false);
     const [userExist, setUserExist] = useState(false);
     const { loggedUserData, userDetailsData } = useSelector((state) => state.authReducer);
@@ -86,4 +86,4 @@ const userDetails = () => {
     );
 };
 
-export default connect()(userDetails);
+export default connect()(UserDetails);

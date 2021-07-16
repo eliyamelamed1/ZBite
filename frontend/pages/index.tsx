@@ -2,7 +2,7 @@ import { connect, useSelector } from 'react-redux';
 
 import React from 'react';
 
-const homePage = () => {
+const HomePage = () => {
     return (
         <React.Fragment>
             <div>home page</div>
@@ -10,4 +10,4 @@ const homePage = () => {
     );
 };
 
-export default connect()(homePage);
+export default connect()(HomePage);

@@ -7,7 +7,7 @@ import { connect, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { userUpdateAction } from '../../redux/actions/auth';
 
-const userUpdate = ({ id }) => {
+const UserUpdate = ({ id }) => {
     const dispatch = useDispatch();
     const [formData, setFormData] = useState({
         name: '',
@@ -55,8 +55,8 @@ const userUpdate = ({ id }) => {
         </div>
     );
 };
-userUpdate.propTypes = {
+UserUpdate.propTypes = {
     id: PropTypes.string.isRequired,
 };
 
-export default connect()(userUpdate);
+export default connect()(UserUpdate);

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import UserCard from './UserCard';
 
-const displayUsers = ({ usersToDisplay }) => {
+const DisplayUsers = ({ usersToDisplay }) => {
     const getUsers = () => {
         if (usersToDisplay) {
             const usersOnPage = [];
@@ -34,8 +34,8 @@ const displayUsers = ({ usersToDisplay }) => {
     return <div data-testid='displayUsers'>{getUsers()}</div>;
 };
 
-displayUsers.propTypes = {
+DisplayUsers.propTypes = {
     usersToDisplay: PropTypes.array.isRequired,
 };
 
-export default displayUsers;
+export default DisplayUsers;

@@ -10,10 +10,10 @@ import PropTypes from 'prop-types';
 import RecipeDelete from './RecipeDelete';
 import RecipeUpdate from './RecipeUpdate';
 
-const isRecipeAuthor = ({ recipe }) => {
+const IsRecipeAuthor = ({ recipe }) => {
     const [isAuthor, setIsAuthor] = useState(false);
+    const { loggedUserData } = useSelector((state) => state.authReducer);
     const guestLinks = <div data-testid='guestLinks'>you are not the recipe author </div>;
-    const loggedUserData = useSelector((state) => state.authReducer.loggedUserData);
 
     const authorLinks = (
         <div data-testid='authorLinks'>
@@ -28,12 +28,12 @@ const isRecipeAuthor = ({ recipe }) => {
                 setIsAuthor(true);
             }
         }
-    });
+    }, [loggedUserData, recipe.author]);
     return <div data-testid='isRecipeAuthor'>{isAuthor ? authorLinks : guestLinks}</div>;
 };
 
-isRecipeAuthor.propTypes = {
+IsRecipeAuthor.propTypes = {
     recipe: PropTypes.object.isRequired,
 };
 
-export default connect()(isRecipeAuthor);
+export default connect()(IsRecipeAuthor);
