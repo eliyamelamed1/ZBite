@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 
-import { Redirect } from 'react-router-dom';
+import Router from 'next/router';
 import { resetPasswordAction } from '../../redux/actions/auth';
 
 const userResetPassword = () => {
     const dispatch = useDispatch();
-    const [requestSent, setRequestSent] = useState(false);
-
     const [formData, setFormData] = useState({
         email: '',
     });
@@ -20,13 +18,11 @@ const userResetPassword = () => {
         e.preventDefault();
         try {
             dispatch(resetPasswordAction({ email }));
-            setRequestSent(true);
+            Router.push('/');
         } catch {
             // TODO - add err msg
         }
     };
-
-    if (requestSent) return <Redirect to='/' />;
 
     return (
         <div data-testid='userResetPassword'>
