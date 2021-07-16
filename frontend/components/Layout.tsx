@@ -4,7 +4,6 @@
 import React, { useEffect } from 'react';
 
 import Navbar from './Navbar';
-import { connect } from 'react-redux';
 import { loadLoggedUserDetailsAction } from '../redux/actions/auth';
 import { useDispatch } from 'react-redux';
 
@@ -29,4 +28,4 @@ const Layout = ({ children }) => {
     );
 };
 
-export default connect()(Layout);
+export default Layout;

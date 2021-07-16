@@ -3,9 +3,9 @@
 // test form calls onSubmit
 
 import React, { useState } from 'react';
-import { connect, useDispatch } from 'react-redux';
 
 import { recipeUpdateAction } from '../../redux/actions/recipe';
+import { useDispatch } from 'react-redux';
 
 const RecipeUpdate = ({ id }) => {
     const dispatch = useDispatch();
@@ -65,4 +65,4 @@ const RecipeUpdate = ({ id }) => {
     );
 };
 
-export default connect()(RecipeUpdate);
+export default RecipeUpdate;

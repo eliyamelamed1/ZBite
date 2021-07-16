@@ -1,7 +1,7 @@
 // check difference between props.match.params.id && props.id
 
 import React, { useEffect } from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Custom404 from '../404';
 import Head from 'next/head';
@@ -92,4 +92,4 @@ const RecipeDetails = () => {
     );
 };
 
-export default connect()(RecipeDetails);
+export default RecipeDetails;

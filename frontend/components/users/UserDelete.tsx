@@ -2,9 +2,8 @@
  test the redirect
  */
 
-import { connect, useDispatch } from 'react-redux';
-
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { userDeleteAction } from '../../redux/actions/auth';
 
 const UserDelete = ({ id }) => {
@@ -27,4 +26,4 @@ const UserDelete = ({ id }) => {
     );
 };
 
-export default connect()(UserDelete);
+export default UserDelete;

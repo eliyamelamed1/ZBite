@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Router from 'next/router';
 import { recipeCreateAction } from '../../redux/actions/recipe';
@@ -67,4 +67,4 @@ const RecipeCreate = () => {
     );
 };
 
-export default connect()(RecipeCreate);
+export default RecipeCreate;

@@ -1,7 +1,7 @@
 // TODO recipes crud to navbar
 // test author and guest links
 
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Link from 'next/link';
 import React from 'react';
@@ -65,4 +65,4 @@ const Navbar = () => {
     );
 };
 
-export default connect()(Navbar);
+export default Navbar;

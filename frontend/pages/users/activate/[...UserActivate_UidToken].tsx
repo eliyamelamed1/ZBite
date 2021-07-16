@@ -2,7 +2,7 @@
 // Test redirect after successful dispatch
 
 import Router, { useRouter } from 'next/router';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import React from 'react';
 import { userActivateAction } from '../../../redux/actions/auth';
@@ -36,4 +36,4 @@ const UserActivate = () => {
     );
 };
 
-export default connect()(UserActivate);
+export default UserActivate;

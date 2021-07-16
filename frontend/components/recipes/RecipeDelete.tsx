@@ -1,12 +1,11 @@
 // TODO - change PropTypes id to .isRequired
 // TODO test propTypes
 
-import { connect, useDispatch } from 'react-redux';
-
 import PropTypes from 'prop-types';
 import React from 'react';
 import Router from 'next/router';
 import { recipeDeleteAction } from '../../redux/actions/recipe';
+import { useDispatch } from 'react-redux';
 
 const RecipeDelete = ({ id }) => {
     const dispatch = useDispatch();
@@ -34,4 +33,4 @@ RecipeDelete.propTypes = {
     id: PropTypes.string,
 };
 
-export default connect()(RecipeDelete);
+export default RecipeDelete;

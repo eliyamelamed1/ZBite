@@ -3,7 +3,7 @@
 //  TODO - test component without renders recipes
 
 import React, { useState } from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import DisplayRecipes from '../../components/recipes/DisplayRecipes';
 import Loader from 'react-loader-spinner';
@@ -60,4 +60,4 @@ const RecipeSearch = () => {
     );
 };
 
-export default connect()(RecipeSearch);
+export default RecipeSearch;

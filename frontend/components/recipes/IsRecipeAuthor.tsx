@@ -4,11 +4,11 @@
 // test logic
 
 import React, { useEffect, useState } from 'react';
-import { connect, useSelector } from 'react-redux';
 
 import PropTypes from 'prop-types';
 import RecipeDelete from './RecipeDelete';
 import RecipeUpdate from './RecipeUpdate';
+import { useSelector } from 'react-redux';
 
 const IsRecipeAuthor = ({ recipe }) => {
     const [isAuthor, setIsAuthor] = useState(false);
@@ -36,4 +36,4 @@ IsRecipeAuthor.propTypes = {
     recipe: PropTypes.object.isRequired,
 };
 
-export default connect()(IsRecipeAuthor);
+export default IsRecipeAuthor;

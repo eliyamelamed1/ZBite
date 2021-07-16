@@ -1,12 +1,5 @@
-/*tests
-
-action have dispatched
-Test user exisy
-Test user is author
-*/
-
 import React, { useEffect, useState } from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Custom404 from '../404';
 import Head from 'next/head';
@@ -86,4 +79,4 @@ const UserDetails = () => {
     );
 };
 
-export default connect()(UserDetails);
+export default UserDetails;

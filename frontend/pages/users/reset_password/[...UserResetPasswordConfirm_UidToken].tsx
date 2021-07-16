@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Router, { useRouter } from 'next/router';
-import { connect, useDispatch } from 'react-redux';
 
 import { resetPasswordConfirmAction } from '../../../redux/actions/auth';
+import { useDispatch } from 'react-redux';
 
 const UserResetPasswordConfirm = () => {
     const dispatch = useDispatch();
@@ -62,4 +62,4 @@ const UserResetPasswordConfirm = () => {
     );
 };
 
-export default connect()(UserResetPasswordConfirm);
+export default UserResetPasswordConfirm;

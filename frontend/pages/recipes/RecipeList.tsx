@@ -2,7 +2,7 @@
 //  TODO - test component without renders recipes
 
 import React, { useEffect } from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import DisplayRecipes from '../../components/recipes/DisplayRecipes';
 import { loadRecipeListAction } from '../../redux/actions/recipe';
@@ -25,4 +25,4 @@ const RecipeList = () => {
     );
 };
 
-export default connect()(RecipeList);
+export default RecipeList;

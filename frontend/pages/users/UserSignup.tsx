@@ -1,12 +1,9 @@
 /* TODO 
-test onSubmit dispatch Action (fail/success, try/catch scenarios) 
-Test Authenticated user redirected to home page
-test account created redirect to login page
 test cant sign up with password different than re password 
 */
 
 import React, { useState } from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Link from 'next/link';
 import Router from 'next/router';
@@ -104,4 +101,4 @@ const UserSignup = () => {
     );
 };
 
-export default connect()(UserSignup);
+export default UserSignup;

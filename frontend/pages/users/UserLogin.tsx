@@ -1,10 +1,5 @@
-/* TODO - tests
-test authenticated user redirected to home
-
-*/
-
 import React, { useState } from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Link from 'next/link';
 import Router from 'next/router';
@@ -70,4 +65,4 @@ const UserLogin = () => {
     );
 };
 
-export default connect()(UserLogin);
+export default UserLogin;

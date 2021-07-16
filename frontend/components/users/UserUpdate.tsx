@@ -2,9 +2,9 @@
 // TODO - test propTypes
 
 import React, { useState } from 'react';
-import { connect, useDispatch } from 'react-redux';
 
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import { userUpdateAction } from '../../redux/actions/auth';
 
 const UserUpdate = ({ id }) => {
@@ -59,4 +59,4 @@ UserUpdate.propTypes = {
     id: PropTypes.string.isRequired,
 };
 
-export default connect()(UserUpdate);
+export default UserUpdate;
