@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
+import Router, { useRouter } from 'next/router';
 import { connect, useDispatch } from 'react-redux';
 
-import { Redirect } from 'react-router-dom';
 import { resetPasswordConfirmAction } from '../../redux/actions/auth';
 
-const userResetPasswordConfirm = (props) => {
+const userResetPasswordConfirm = () => {
     const dispatch = useDispatch();
-    const [requestSent, setRequestSent] = useState(false);
     const [formData, setFormData] = useState({
         new_password: '',
         re_new_password: '',
     });
     const { new_password, re_new_password } = formData;
+    const router = useRouter();
 
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -19,17 +19,17 @@ const userResetPasswordConfirm = (props) => {
         e.preventDefault();
         try {
             if (new_password == re_new_password) {
-                const { uid } = props.match.params;
-                const { token } = props.match.params;
+                const params = router.query.UserResetPasswordConfirm_UidToken;
+                const uid = params?.[0];
+                const token = params?.[1];
                 dispatch(resetPasswordConfirmAction({ uid, token, new_password }));
-                setRequestSent(true);
+                Router.push('/');
             }
         } catch {
             // TODO - add err msg
         }
     };
 
-    if (requestSent) return <Redirect to='/' />;
     return (
         <div data-testid='userResetPasswordConfirm'>
             <form onSubmit={(e) => onSubmit(e)}>

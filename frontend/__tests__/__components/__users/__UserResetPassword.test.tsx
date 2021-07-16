@@ -72,4 +72,22 @@ describe('UserResetPassword - email input', () => {
         expect(Router.push.mock.calls.length).toBe(1);
         expect(Router.push.mock.calls[0][0]).toBe('/');
     });
+    test('completing the reset password form should dispatch resetPasswordAction fail and not redirect', async () => {
+        resetPasswordAction.mockReturnValueOnce(() => {
+            throw new Error();
+        });
+
+        const emailTextbox = screen.getByPlaceholderText('Email');
+        const submitButton = screen.getByRole('button', { name: 'Send Password Reset' });
+        const emailValue = 'test@gmail.com';
+
+        userEvent.type(emailTextbox, emailValue);
+        userEvent.click(submitButton);
+
+        const timesActionDispatched = resetPasswordAction.mock.calls.length;
+
+        expect(timesActionDispatched).toBe(1);
+        expect(resetPasswordAction.mock.calls[0][0].email).toEqual(emailValue);
+        expect(Router.push.mock.calls.length).toBe(0);
+    });
 });
