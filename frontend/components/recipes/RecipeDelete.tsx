@@ -5,6 +5,7 @@ import { connect, useDispatch } from 'react-redux';
 
 import PropTypes from 'prop-types';
 import React from 'react';
+import Router from 'next/router';
 import { recipeDeleteAction } from '../../redux/actions/recipe';
 
 const RecipeDelete = ({ id }) => {
@@ -14,6 +15,7 @@ const RecipeDelete = ({ id }) => {
         e.preventDefault();
         try {
             dispatch(recipeDeleteAction({ id }));
+            Router.push('/');
         } catch {
             // TODO - add err msg
         }

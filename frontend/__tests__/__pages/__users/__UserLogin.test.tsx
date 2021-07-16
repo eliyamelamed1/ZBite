@@ -8,7 +8,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import React from 'react';
 import Router from 'next/router';
-import UserLogin from '../../../components/users/UserLogin';
+import UserLogin from '../../../pages/users/UserLogin';
 import configureStore from 'redux-mock-store';
 import { loginAction } from '../../../redux/actions/auth';
 import thunk from 'redux-thunk';

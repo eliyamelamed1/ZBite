@@ -5,7 +5,7 @@ test displayedUsers is called and displays users
 import React, { useEffect } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 
-import DisplayUsers from './DisplayUsers';
+import DisplayUsers from '../../components/users/DisplayUsers';
 import { loadUserListAction } from '../../redux/actions/auth';
 
 const UserList = () => {
