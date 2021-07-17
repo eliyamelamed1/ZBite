@@ -22,7 +22,6 @@ const Layout = ({ children }) => {
         <div data-testid='layout'>
             <meta name='csrf_token' content='{{ csrf_token }}'></meta>
             <Navbar />
-
             {children}
         </div>
     );

@@ -40,7 +40,7 @@ describe('RecipeList', () => {
     beforeEach(() => {
         render(
             <Provider store={store}>
-                <RecipeList />
+                <RecipeList recipeListData={recipeListData} />
             </Provider>
         );
     });

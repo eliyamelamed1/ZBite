@@ -1,28 +1,28 @@
 //  TODO - test recipesToDisplay param of DisplayRecipes is getting passed
 //  TODO - test component without renders recipes
 
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
 import DisplayRecipes from '../../components/recipes/DisplayRecipes';
+import React from 'react';
 import { loadRecipeListAction } from '../../redux/actions/recipe';
+import { wrapper } from '../../redux/store';
 
-const RecipeList = () => {
-    const recipeListData = useSelector((state) => state.recipeReducer.recipeListData);
-    const dispatch = useDispatch();
-    useEffect(() => {
-        try {
-            dispatch(loadRecipeListAction());
-        } catch {
-            // TODO - display err msg
-        }
-    }, [dispatch]);
-
+const RecipeList = ({ recipeListData }) => {
     return (
         <main data-testid='recipeList'>
             {recipeListData ? <DisplayRecipes recipesToDisplay={recipeListData} /> : null}
         </main>
     );
 };
+
+export const getStaticProps = wrapper.getStaticProps((store) => async () => {
+    await store.dispatch(loadRecipeListAction());
+    const recipeListData = store.getState().recipeReducer.recipeListData;
+
+    return {
+        props: {
+            recipeListData,
+        },
+    };
+});
 
 export default RecipeList;

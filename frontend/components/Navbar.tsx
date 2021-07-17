@@ -43,25 +43,25 @@ const Navbar = () => {
     const guestLinks = (
         <div data-testid='guestLinks'>
             <li>
-                <Link href='/login'>Login</Link>
+                <Link href='/users/login'>Login</Link>
             </li>
             <li>
-                <Link href='/signup'>Sign Up</Link>
+                <Link href='/users/signup'>Sign Up</Link>
             </li>
         </div>
     );
     return (
-        <nav data-testid='navbar'>
+        <div data-testid='navbar'>
             <Link href='/'>Auth System</Link>
             <div>
                 <ul>
                     <li>
                         <Link href='/'>Home</Link>
                     </li>
-                    <>{isAuthenticatedData ? authLinks : guestLinks}</>
+                    <li>{isAuthenticatedData ? authLinks : guestLinks}</li>
                 </ul>
             </div>
-        </nav>
+        </div>
     );
 };
 

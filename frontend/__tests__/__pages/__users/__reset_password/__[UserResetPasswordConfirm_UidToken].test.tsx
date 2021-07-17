@@ -9,7 +9,7 @@ import React from 'react';
 import Router from 'next/router';
 import UserResetPasswordConfirm from '../../../../pages/users/reset_password/[...UserResetPasswordConfirm_UidToken]';
 import { resetPasswordConfirmAction } from '../../../../redux/actions/auth';
-import store from '../../../../redux/store';
+import { store } from '../../../../redux/store';
 import userEvent from '@testing-library/user-event';
 
 const dynamicUrlParams = {
