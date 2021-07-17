@@ -95,7 +95,7 @@ describe('UserLogin - guest', () => {
 
 // TODO - imporve this tests by checking the redirection url (should be home page)
 describe('UserLogin - authenticated user', () => {
-    let initialState = { authReducer: { isAuthenticatedData: true } };
+    let initialState = { authReducer: { isUserAuthenticated: true } };
     const store = mockStore(initialState);
     beforeEach(() => {
         render(

@@ -167,7 +167,7 @@ describe('UserSignup - guest user', () => {
 
 describe('UserSignup - guest authenticated users', () => {
     initialState = {
-        authReducer: { isAuthenticatedData: true },
+        authReducer: { isUserAuthenticated: true },
     };
     const store = mockStore(initialState);
     beforeEach(() => {

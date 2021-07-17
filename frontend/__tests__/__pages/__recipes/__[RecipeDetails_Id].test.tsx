@@ -23,9 +23,9 @@ const mockStore = configureStore(middleware);
 
 describe('RecipeDetails - author', () => {
     let initialState = {
-        authReducer: { loggedUserData: { id: 'eliya' } },
+        authReducer: { loggedUserDetails: { id: 'eliya' } },
         recipeReducer: {
-            recipeDetailData: {
+            recipeDetails: {
                 id: '5',
                 title: 'recipeTitle',
                 description: 'recipeDescription',
@@ -84,9 +84,9 @@ describe('RecipeDetails - author', () => {
 });
 describe('RecipeDetails - not author', () => {
     let initialState = {
-        authReducer: { loggedUserData: { id: 'eilon' } },
+        authReducer: { loggedUserDetails: { id: 'eilon' } },
         recipeReducer: {
-            recipeDetailData: {
+            recipeDetails: {
                 id: '5',
                 title: 'recipeTitle',
                 description: 'recipeDescription',

@@ -1,4 +1,4 @@
-// TODO - test DisplayUsers with empty userListData
+// TODO - test DisplayUsers with empty listOfUsers
 
 import '@testing-library/jest-dom';
 

@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 const UserDetails = () => {
     const [isAuthor, setIsAuthor] = useState(false);
     const [userExist, setUserExist] = useState(false);
-    const { loggedUserData, userDetailsData } = useSelector((state) => state.authReducer);
+    const { loggedUserDetails, searchedUserDetails } = useSelector((state) => state.authReducer);
     const router = useRouter();
     const dispatch = useDispatch();
     const id = router.query.UserDetails_Id;
@@ -25,25 +25,25 @@ const UserDetails = () => {
     }, [id, dispatch]);
 
     useEffect(() => {
-        if (userDetailsData) {
-            if (Object.prototype.hasOwnProperty.call(userDetailsData, 'name')) {
+        if (searchedUserDetails) {
+            if (Object.prototype.hasOwnProperty.call(searchedUserDetails, 'name')) {
                 setUserExist(true);
             }
         }
-    }, [userDetailsData]);
+    }, [searchedUserDetails]);
 
     useEffect(() => {
-        if (loggedUserData?.id == id) {
+        if (loggedUserDetails?.id == id) {
             setIsAuthor(true);
         }
-    }, [id, loggedUserData]);
+    }, [id, loggedUserDetails]);
 
     const guestLinks = (
         <main data-testid='guestLinks'>
             {userExist ? (
                 <div>
-                    <p>user name: {userDetailsData.name}</p>
-                    <p>user email: {userDetailsData.email}</p>
+                    <p>user name: {searchedUserDetails.name}</p>
+                    <p>user email: {searchedUserDetails.email}</p>
                 </div>
             ) : (
                 <Custom404 />
@@ -55,10 +55,10 @@ const UserDetails = () => {
         <main data-testid='authorLinks'>
             <UserDelete id={id} />
             <UserUpdate id={id} />
-            {loggedUserData ? (
+            {loggedUserDetails ? (
                 <div>
-                    <div>user name: {loggedUserData.name}</div>
-                    <div>user email: {loggedUserData.email}</div>
+                    <div>user name: {loggedUserDetails.name}</div>
+                    <div>user email: {loggedUserDetails.email}</div>
                 </div>
             ) : (
                 { guestLinks }

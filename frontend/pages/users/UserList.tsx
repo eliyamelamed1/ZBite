@@ -10,7 +10,7 @@ import { loadUserListAction } from '../../redux/actions/auth';
 
 const UserList = () => {
     const dispatch = useDispatch();
-    const { userListData } = useSelector((state) => state.authReducer);
+    const { listOfUsers } = useSelector((state) => state.authReducer);
 
     useEffect(() => {
         try {
@@ -23,7 +23,7 @@ const UserList = () => {
     return (
         <main>
             <div data-testid='userList'></div>
-            <DisplayUsers usersToDisplay={userListData} />
+            <DisplayUsers usersToDisplay={listOfUsers} />
         </main>
     );
 };

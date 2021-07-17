@@ -16,7 +16,7 @@ describe('UserList', () => {
     const mockStore = configureStore(middlewares);
     const initialState = {
         authReducer: {
-            userListData: [
+            listOfUsers: [
                 {
                     email: 'firstUser@gmail.com',
                     name: 'firstUserName',

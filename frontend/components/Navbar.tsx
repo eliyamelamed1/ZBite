@@ -8,11 +8,10 @@ import React from 'react';
 import { logoutAction } from '../redux/actions/auth';
 
 const Navbar = () => {
-    const isAuthenticatedData = useSelector((state) => state.authReducer.isAuthenticatedData);
-    const loggedUserData = useSelector((state) => state.authReducer.loggedUserData);
+    const { isUserAuthenticated, loggedUserDetails } = useSelector((state) => state.authReducer);
     const dispatch = useDispatch();
 
-    const profileUrl = loggedUserData ? '/users/' + loggedUserData.id : null;
+    const profileUrl = loggedUserDetails ? '/users/' + loggedUserDetails.id : null;
     const logoutHandler = () => {
         try {
             dispatch(logoutAction());
@@ -22,17 +21,17 @@ const Navbar = () => {
     };
     const authLinks = (
         <section data-testid='authLinks'>
-            {loggedUserData ? (
+            {loggedUserDetails ? (
                 <div>
-                    <div>you are currently logged in as {loggedUserData.email}</div>
+                    <div>you are currently logged in as {loggedUserDetails.email}</div>
                     <div>
-                        <Link href={profileUrl}>Profile</Link>
+                        <Link href={profileUrl}>profile</Link>
                         <br />
                         <Link href='/chats'>chats</Link>
                     </div>
                 </div>
             ) : null}
-            {isAuthenticatedData ? (
+            {isUserAuthenticated ? (
                 <li>
                     <button onClick={logoutHandler}>Logout</button>
                 </li>
@@ -51,17 +50,17 @@ const Navbar = () => {
         </div>
     );
     return (
-        <div data-testid='navbar'>
+        <nav data-testid='navbar'>
             <Link href='/'>Auth System</Link>
             <div>
                 <ul>
                     <li>
                         <Link href='/'>Home</Link>
                     </li>
-                    <li>{isAuthenticatedData ? authLinks : guestLinks}</li>
+                    <>{isUserAuthenticated ? authLinks : guestLinks}</>
                 </ul>
             </div>
-        </div>
+        </nav>
     );
 };
 

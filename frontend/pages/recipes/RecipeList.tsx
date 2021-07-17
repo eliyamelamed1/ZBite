@@ -6,21 +6,21 @@ import React from 'react';
 import { loadRecipeListAction } from '../../redux/actions/recipe';
 import { wrapper } from '../../redux/store';
 
-const RecipeList = ({ recipeListData }) => {
+const RecipeList = ({ listOfRecipes }) => {
     return (
         <main data-testid='recipeList'>
-            {recipeListData ? <DisplayRecipes recipesToDisplay={recipeListData} /> : null}
+            {listOfRecipes ? <DisplayRecipes recipesToDisplay={listOfRecipes} /> : null}
         </main>
     );
 };
 
 export const getStaticProps = wrapper.getStaticProps((store) => async () => {
     await store.dispatch(loadRecipeListAction());
-    const recipeListData = store.getState().recipeReducer.recipeListData;
+    const listOfRecipes = store.getState().recipeReducer.listOfRecipes;
 
     return {
         props: {
-            recipeListData,
+            listOfRecipes,
         },
     };
 });
