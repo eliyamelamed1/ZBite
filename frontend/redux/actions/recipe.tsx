@@ -11,7 +11,7 @@ import {
     SEARCH_RECIPE_SUCCESS,
     UPDATE_RECIPE_FAIL,
     UPDATE_RECIPE_SUCCESS,
-} from './types.js';
+} from './types';
 
 import axios from 'axios';
 
@@ -22,11 +22,12 @@ export const recipeDeleteAction =
             const config = {
                 headers: {
                     'Content-Type': 'application/json',
+                    Accept: 'application/json',
                     Authorization: `Token ${localStorage.getItem('auth_token')}`,
                 },
             };
 
-            await axios.delete(`${process.env.REACT_APP_API_URL}/api/recipes/${id}/`, config);
+            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}/`, config);
             dispatch({ type: DELETE_RECIPE_SUCCESS });
         } catch {
             dispatch({ type: DELETE_RECIPE_FAIL });
@@ -40,6 +41,8 @@ export const recipeCreateAction =
             const config = {
                 headers: {
                     'Content-Type': 'application/json',
+                    Accept: 'application/json',
+
                     Authorization: `Token ${localStorage.getItem('auth_token')}`,
                 },
             };
@@ -49,7 +52,7 @@ export const recipeCreateAction =
                 description,
                 flavor_type,
             });
-            await axios.post(`${process.env.REACT_APP_API_URL}/api/recipes/create/`, body, config);
+            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/recipes/create/`, body, config);
             dispatch({ type: CREATE_RECIPE_SUCCESS });
         } catch {
             dispatch({ type: CREATE_RECIPE_FAIL });
@@ -62,6 +65,8 @@ export const recipeUpdateAction =
         const config = {
             headers: {
                 'Content-Type': 'application/json',
+                Accept: 'application/json',
+
                 Authorization: `Token ${localStorage.getItem('auth_token')}`,
             },
         };
@@ -72,7 +77,7 @@ export const recipeUpdateAction =
                 description,
                 flavor_type,
             });
-            const res = await axios.patch(`${process.env.REACT_APP_API_URL}/api/recipes/${id}/`, body, config);
+            const res = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}/`, body, config);
             dispatch({ type: UPDATE_RECIPE_SUCCESS, payload: res.data });
         } catch {
             dispatch({ type: UPDATE_RECIPE_FAIL });
@@ -83,10 +88,11 @@ export const loadRecipeListAction = () => async (dispatch) => {
     const config = {
         headers: {
             'Content-Type': 'application/json',
+            Accept: 'application/json',
         },
     };
     try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/recipes/list/`, config);
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/recipes/list/`, config);
         dispatch({ type: GET_RECIPE_LIST_SUCCESS, payload: res.data });
     } catch {
         dispatch({ type: GET_RECIPE_LIST_FAIL });
@@ -99,12 +105,13 @@ export const recipeSearchAction =
         const config = {
             headers: {
                 'Content-Type': 'application/json',
+                Accept: 'application/json',
             },
         };
 
         try {
             const res = await axios.post(
-                `${process.env.REACT_APP_API_URL}/api/recipes/search/`,
+                `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/search/`,
                 { flavor_type },
                 config
             );
@@ -120,11 +127,12 @@ export const loadRecipeDetailsAction =
         const config = {
             headers: {
                 'Content-Type': 'application/json',
+                Accept: 'application/json',
             },
         };
 
         try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/recipes/${id}/`, config);
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}/`, config);
             dispatch({ type: GET_RECIPE_DETAILS_SUCCESS, payload: res.data });
         } catch {
             dispatch({ type: GET_RECIPE_DETAILS_FAIL });

@@ -30,10 +30,11 @@ export const loadUserDetailsAction =
         const config = {
             headers: {
                 'Content-Type': 'application/json',
+                Accept: 'application/json',
             },
         };
         try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/accounts/${id}/`, config);
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/accounts/${id}/`, config);
             dispatch({ type: GET_USER_DETAILS_SUCCESS, payload: res.data });
         } catch {
             dispatch({ type: GET_USER_DETAILS_FAIL });
@@ -44,10 +45,11 @@ export const loadUserListAction = () => async (dispatch) => {
     const config = {
         headers: {
             'Content-Type': 'application/json',
+            Accept: 'application/json',
         },
     };
     try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/accounts/list/`, config);
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/accounts/list/`, config);
         dispatch({ type: GET_USER_LIST_SUCCESS, payload: res.data });
     } catch {
         dispatch({ type: GET_USER_LIST_FAIL });
@@ -60,6 +62,8 @@ export const userUpdateAction =
         const config = {
             headers: {
                 'Content-Type': 'application/json',
+                Accept: 'application/json',
+
                 Authorization: `Token ${localStorage.getItem('auth_token')}`,
             },
         };
@@ -68,7 +72,7 @@ export const userUpdateAction =
             name,
         });
         try {
-            const res = await axios.patch(`${process.env.REACT_APP_API_URL}/api/accounts/${id}/`, body, config);
+            const res = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/accounts/${id}/`, body, config);
             dispatch({ type: UPDATE_USER_SUCCESS, payload: res.data });
         } catch {
             dispatch({ type: UPDATE_USER_FAIL });
@@ -82,13 +86,13 @@ export const userDeleteAction =
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Token ${localStorage.getItem('auth_token')}`,
                 Accept: 'application/json',
+                Authorization: `Token ${localStorage.getItem('auth_token')}`,
             },
         };
 
         try {
-            const res = await axios.delete(`${process.env.REACT_APP_API_URL}/api/accounts/${id}/`, config);
+            const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/accounts/${id}/`, config);
             dispatch({ type: DELETE_USER_SUCCESS, payload: res.data });
             dispatch(logoutAction());
         } catch {
@@ -102,13 +106,13 @@ export const loadLoggedUserDetailsAction = () => async (dispatch) => {
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Token ${localStorage.getItem('auth_token')}`,
                 Accept: 'application/json',
+                Authorization: `Token ${localStorage.getItem('auth_token')}`,
             },
         };
 
         try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/djoser/users/me/`, config);
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/djoser/users/me/`, config);
 
             dispatch({ type: GET_LOGGED_USER_DETAILS_SUCCESS, payload: res.data });
         } catch (err) {
@@ -125,13 +129,14 @@ export const loginAction =
         const config = {
             headers: {
                 'Content-Type': 'application/json',
+                Accept: 'application/json',
             },
         };
 
         const body = JSON.stringify({ email, password });
 
         try {
-            const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/djoser/token/login/`, body, config);
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/djoser/token/login/`, body, config);
             dispatch({ type: LOGIN_SUCCESS, payload: res.data });
             dispatch(loadLoggedUserDetailsAction());
         } catch (err) {
@@ -144,6 +149,7 @@ export const signupAction =
         const config = {
             headers: {
                 'Content-Type': 'application/json',
+                Accept: 'application/json',
             },
         };
 
@@ -155,7 +161,7 @@ export const signupAction =
         });
 
         try {
-            const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/djoser/users/`, body, config);
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/djoser/users/`, body, config);
 
             dispatch({ type: SIGNUP_SUCCESS, payload: res.data });
         } catch (err) {
@@ -164,19 +170,24 @@ export const signupAction =
     };
 
 // activate account - activation email is turned off right now (from the api side)
-export const verify =
+export const userActivateAction =
     ({ uid, token }) =>
     async (dispatch) => {
         const config = {
             headers: {
                 'Content-Type': 'application/json',
+                Accept: 'application/json',
             },
         };
 
         const body = JSON.stringify({ uid, token });
 
         try {
-            const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/djoser/users/activation/`, body, config);
+            const res = await axios.post(
+                `${process.env.NEXT_PUBLIC_API_URL}/api/djoser/users/activation/`,
+                body,
+                config
+            );
 
             dispatch({ type: ACTIVATION_SUCCESS, payload: res.data });
         } catch (err) {
@@ -190,6 +201,7 @@ export const resetPasswordAction =
         const config = {
             headers: {
                 'Content-Type': 'application/json',
+                Accept: 'application/json',
             },
         };
 
@@ -197,7 +209,7 @@ export const resetPasswordAction =
 
         try {
             const res = await axios.post(
-                `${process.env.REACT_APP_API_URL}/api/djoser/users/reset_password/`,
+                `${process.env.NEXT_PUBLIC_API_URL}/api/djoser/users/reset_password/`,
                 body,
                 config
             );
@@ -215,6 +227,7 @@ export const resetPasswordConfirmAction =
             const config = {
                 headers: {
                     'Content-Type': 'application/json',
+                    Accept: 'application/json',
                 },
             };
 
@@ -224,7 +237,7 @@ export const resetPasswordConfirmAction =
                 new_password,
             });
             const res = await axios.post(
-                `${process.env.REACT_APP_API_URL}/api/djoser/users/reset_password_confirm/`,
+                `${process.env.NEXT_PUBLIC_API_URL}/api/djoser/users/reset_password_confirm/`,
                 body,
                 config
             );

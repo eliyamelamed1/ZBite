@@ -19,8 +19,8 @@ import {
 const TEST_CASE_AUTH = 'TEST_CASE_AUTH';
 
 const initialState = {
-    auth_token: localStorage.getItem('auth_token'),
-    isAuthenticatedData: !!localStorage.getItem('auth_token'),
+    auth_token: process.browser ? localStorage.getItem('auth_token') : null,
+    isAuthenticatedData: process.browser ? !!localStorage.getItem('auth_token') : null,
     loggedUserData: null,
     userListData: null,
     userDetailsData: null,
