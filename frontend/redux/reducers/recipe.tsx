@@ -13,8 +13,6 @@ import {
     UPDATE_RECIPE_SUCCESS,
 } from '../actions/types';
 
-import { HYDRATE } from 'next-redux-wrapper';
-
 const initialState = {
     listOfRecipes: null,
     listOfSearchedRecipes: null,
@@ -27,8 +25,6 @@ export default function recipeReducer(state = initialState, action) {
     const { type, payload } = action;
 
     switch (type) {
-        case HYDRATE:
-            return { ...state, ...action.payload };
         case TEST_CASE_RECIPE:
             return {
                 ...state,

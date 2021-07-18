@@ -16,8 +16,6 @@ import {
     UPDATE_USER_SUCCESS,
 } from '../actions/types';
 
-import { HYDRATE } from 'next-redux-wrapper';
-
 const TEST_CASE_AUTH = 'TEST_CASE_AUTH';
 
 const initialState = {
@@ -32,8 +30,6 @@ export default function authReducer(state = initialState, action) {
     const { type, payload } = action;
 
     switch (type) {
-        case HYDRATE:
-            return { ...state, ...action.payload };
         case TEST_CASE_AUTH:
             return {
                 ...state,

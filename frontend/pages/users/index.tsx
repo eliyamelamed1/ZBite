@@ -2,30 +2,24 @@
 test displayedUsers is called and displays users
 */
 
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
 import DisplayUsers from '../../components/users/DisplayUsers';
+import React from 'react';
 import { loadUserListAction } from '../../redux/actions/auth';
+import { useSelector } from 'react-redux';
+import { wrapper } from '../../redux/store';
 
 const UserList = () => {
-    const dispatch = useDispatch();
     const { listOfUsers } = useSelector((state) => state.authReducer);
-
-    useEffect(() => {
-        try {
-            dispatch(loadUserListAction());
-        } catch {
-            // TODO  show error massage
-        }
-    }, [dispatch]);
 
     return (
         <main>
             <div data-testid='userList'></div>
-            <DisplayUsers usersToDisplay={listOfUsers} />
+            {listOfUsers ? <DisplayUsers usersToDisplay={listOfUsers} /> : null}
         </main>
     );
 };
+export const getStaticProps = wrapper.getStaticProps((store) => async () => {
+    await store.dispatch(loadUserListAction());
+});
 
 export default UserList;
