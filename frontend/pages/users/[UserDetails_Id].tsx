@@ -6,6 +6,7 @@ import Head from 'next/head';
 import UserDelete from '../../components/users/UserDelete';
 import UserUpdate from '../../components/users/UserUpdate';
 import { loadUserDetailsAction } from '../../redux/actions/auth';
+import { render } from '@testing-library/react';
 import { useRouter } from 'next/router';
 
 const UserDetails = () => {
@@ -15,7 +16,6 @@ const UserDetails = () => {
     const router = useRouter();
     const dispatch = useDispatch();
     const id = router.query.UserDetails_Id;
-
     useEffect(() => {
         try {
             dispatch(loadUserDetailsAction({ id }));
@@ -23,7 +23,6 @@ const UserDetails = () => {
             // TODO - add err msg
         }
     }, [id, dispatch]);
-
     useEffect(() => {
         if (searchedUserDetails) {
             if (Object.prototype.hasOwnProperty.call(searchedUserDetails, 'name')) {
@@ -31,13 +30,11 @@ const UserDetails = () => {
             }
         }
     }, [searchedUserDetails]);
-
     useEffect(() => {
         if (loggedUserDetails?.id == id) {
             setIsAuthor(true);
         }
     }, [id, loggedUserDetails]);
-
     const guestLinks = (
         <main data-testid='guestLinks'>
             {userExist ? (
@@ -50,7 +47,6 @@ const UserDetails = () => {
             )}
         </main>
     );
-
     const authorLinks = (
         <main data-testid='authorLinks'>
             <UserDelete id={id} />
@@ -61,11 +57,10 @@ const UserDetails = () => {
                     <div>user email: {loggedUserDetails.email}</div>
                 </div>
             ) : (
-                { guestLinks }
+                <div>{guestLinks}</div>
             )}
         </main>
     );
-
     return (
         <div data-testid='userDetails'>
             <Head>
