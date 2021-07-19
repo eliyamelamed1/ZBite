@@ -8,9 +8,9 @@ import React from 'react';
 import { logoutAction } from '../redux/actions/auth';
 
 const Navbar = () => {
-    const { isUserAuthenticated, loggedUserDetails } = useSelector((state) => state.authReducer);
+    // console.log(process.browser ? JSON.parse(localStorage.getItem('loggedUserDetails')) : null);
+    const { isUserAuthenticated, loggedUserDetails, auth_token } = useSelector((state) => state.authReducer);
     const dispatch = useDispatch();
-
     const profileUrl = loggedUserDetails ? '/users/' + loggedUserDetails.id : null;
     const logoutHandler = () => {
         try {
@@ -41,11 +41,19 @@ const Navbar = () => {
 
     const guestLinks = (
         <div data-testid='guestLinks'>
+            <Link href='/users/login'>Login</Link>
+            <br />
+            <Link href='/users/signup'>Sign Up</Link>
+        </div>
+    );
+
+    const mutualLinks = (
+        <div>
             <li>
-                <Link href='/users/login'>Login</Link>
-            </li>
-            <li>
-                <Link href='/users/signup'>Sign Up</Link>
+                <br />
+                <Link href='/users'>user list</Link>
+                <br />
+                <Link href='/recipes/RecipeList'>recipe list</Link>
             </li>
         </div>
     );
@@ -57,7 +65,10 @@ const Navbar = () => {
                     <li>
                         <Link href='/'>Home</Link>
                     </li>
-                    <>{isUserAuthenticated ? authLinks : guestLinks}</>
+                    <div>{isUserAuthenticated ? authLinks : guestLinks}</div>
+                    <>{isUserAuthenticated ? <div>true</div> : <div>false</div>}</>
+                    <br />
+                    <div>{mutualLinks}</div>
                 </ul>
             </div>
         </nav>

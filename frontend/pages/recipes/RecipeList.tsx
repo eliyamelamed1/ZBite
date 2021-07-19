@@ -4,9 +4,11 @@
 import DisplayRecipes from '../../components/recipes/DisplayRecipes';
 import React from 'react';
 import { loadRecipeListAction } from '../../redux/actions/recipe';
+import { useSelector } from 'react-redux';
 import { wrapperStore } from '../../redux/store';
 
-const RecipeList = ({ listOfRecipes }) => {
+const RecipeList = () => {
+    const { listOfRecipes } = useSelector((state) => state.recipeReducer);
     return (
         <main data-testid='recipeList'>
             {listOfRecipes ? <DisplayRecipes recipesToDisplay={listOfRecipes} /> : null}
@@ -16,13 +18,6 @@ const RecipeList = ({ listOfRecipes }) => {
 
 export const getStaticProps = wrapperStore.getStaticProps((store) => async () => {
     await store.dispatch(loadRecipeListAction());
-    const listOfRecipes = store.getState().recipeReducer.listOfRecipes;
-
-    return {
-        props: {
-            listOfRecipes,
-        },
-    };
 });
 
 export default RecipeList;

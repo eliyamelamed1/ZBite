@@ -21,7 +21,7 @@ const TEST_CASE_AUTH = 'TEST_CASE_AUTH';
 const initialState = {
     auth_token: process.browser ? localStorage.getItem('auth_token') : null,
     isUserAuthenticated: process.browser ? !!localStorage.getItem('auth_token') : null,
-    loggedUserDetails: null,
+    loggedUserDetails: process.browser ? JSON.parse(localStorage.getItem('loggedUserDetails')) : null,
     listOfUsers: null,
     searchedUserDetails: null,
 };
@@ -50,6 +50,7 @@ export default function authReducer(state = initialState, action) {
                 listOfUsers: payload,
             };
         case UPDATE_USER_SUCCESS:
+            localStorage.setItem('loggedUserDetails', JSON.stringify(payload));
             return {
                 ...state,
                 loggedUserDetails: payload,
@@ -62,8 +63,10 @@ export default function authReducer(state = initialState, action) {
                 auth_token: payload.auth_token,
             };
         case GET_LOGGED_USER_DETAILS_SUCCESS:
+            localStorage.setItem('loggedUserDetails', JSON.stringify(payload));
             return {
                 ...state,
+
                 loggedUserDetails: payload,
             };
         case SIGNUP_SUCCESS:
@@ -72,6 +75,7 @@ export default function authReducer(state = initialState, action) {
                 isUserAuthenticated: false,
             };
         case GET_LOGGED_USER_DETAILS_FAIL:
+            localStorage.removeItem('loggedUserDetails');
             return {
                 ...state,
                 loggedUserDetails: null,
