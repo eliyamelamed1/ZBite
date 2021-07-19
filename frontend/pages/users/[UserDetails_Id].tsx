@@ -49,8 +49,12 @@ const UserDetails = () => {
     );
     const authorLinks = (
         <main data-testid='authorLinks'>
-            <UserDelete id={id} />
-            <UserUpdate id={id} />
+            {id ? (
+                <div>
+                    <UserDelete id={id} />
+                    <UserUpdate id={id} />
+                </div>
+            ) : null}
             {loggedUserDetails ? (
                 <div>
                     <div>user name: {loggedUserDetails.name}</div>
