@@ -4,7 +4,7 @@
 import DisplayRecipes from '../../components/recipes/DisplayRecipes';
 import React from 'react';
 import { loadRecipeListAction } from '../../redux/actions/recipe';
-import { wrapper } from '../../redux/store';
+import { wrapperStore } from '../../redux/store';
 
 const RecipeList = ({ listOfRecipes }) => {
     return (
@@ -14,7 +14,7 @@ const RecipeList = ({ listOfRecipes }) => {
     );
 };
 
-export const getStaticProps = wrapper.getStaticProps((store) => async () => {
+export const getStaticProps = wrapperStore.getStaticProps((store) => async () => {
     await store.dispatch(loadRecipeListAction());
     const listOfRecipes = store.getState().recipeReducer.listOfRecipes;
 

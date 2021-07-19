@@ -9,32 +9,59 @@ import thunk from 'redux-thunk';
 const initialState = {};
 const middleware = [thunk];
 
-const saveAuthReducerData = (state, nextState) => {
-    if (state.authReducer.auth_token) nextState.authReducer.auth_token = state.authReducer.auth_token;
-    if (state.authReducer.isUserAuthenticated)
-        nextState.authReducer.isUserAuthenticated = state.authReducer.isUserAuthenticated;
-    if (state.authReducer.loggedUserDetails)
-        nextState.authReducer.loggedUserDetails = state.authReducer.loggedUserDetails;
-
-    return nextState;
-};
-
-const reducer = (state, action) => {
-    if (action.type === HYDRATE) {
-        console.log(state);
-        const nextState = {
-            ...state,
-            ...action.payload,
-        };
-        saveAuthReducerData(state, nextState);
-        return nextState;
+const isObjectDefined = (object) => {
+    if (object !== null && object !== undefined) {
+        return true;
     } else {
-        return rootReducer(state, action);
+        return false;
     }
 };
 
-export const store = createStore(reducer, initialState, composeWithDevTools(applyMiddleware(...middleware)));
+// const saveAuthReducerData = (previousState, newState) => {
+//     const { auth_token, isUserAuthenticated, loggedUserDetails } = previousState.authReducer;
+//     const values = { auth_token, isUserAuthenticated, loggedUserDetails };
+//     for (const value in values) {
+//         if (isObjectDefined(values[value])) return (newState.authReducer.value = values[value]);
+//         else return false;
+//     }
 
-const makeStore = () => createStore(reducer, initialState, composeWithDevTools(applyMiddleware(...middleware)));
+//     return newState;
+// };
 
-export const wrapper = createWrapper(makeStore, { debug: true });
+const saveAuthReducerData = (previousState, newState) => {
+    const auth_token = previousState.authReducer.auth_token;
+    const isUserAuthenticated = previousState.authReducer.isUserAuthenticated;
+    const loggedUserDetails = previousState.authReducer.loggedUserDetails;
+    const listOfUsers = previousState.authReducer.listOfUsers;
+    const searchedUserDetails = previousState.authReducer.searchedUserDetails;
+
+    if (isObjectDefined(auth_token)) newState.authReducer.auth_token = auth_token;
+    if (isObjectDefined(isUserAuthenticated)) newState.authReducer.isUserAuthenticated = isUserAuthenticated;
+    if (isObjectDefined(loggedUserDetails)) newState.authReducer.loggedUserDetails = loggedUserDetails;
+    if (isObjectDefined(listOfUsers)) newState.authReducer.listOfUsers = listOfUsers;
+    if (isObjectDefined(searchedUserDetails)) newState.authReducer.searchedUserDetails = searchedUserDetails;
+
+    return newState;
+};
+
+const wrapperReducer = (previousState, action) => {
+    if (action.type === HYDRATE) {
+        const newState = {
+            ...previousState,
+
+            // update the previous state
+            ...action.payload,
+        };
+
+        saveAuthReducerData(previousState, newState);
+        return newState;
+    } else {
+        return rootReducer(previousState, action);
+    }
+};
+
+export const store = createStore(wrapperReducer, initialState, composeWithDevTools(applyMiddleware(...middleware)));
+
+const makeStore = () => createStore(wrapperReducer, initialState, composeWithDevTools(applyMiddleware(...middleware)));
+
+export const wrapperStore = createWrapper(makeStore, { debug: false });

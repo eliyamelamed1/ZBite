@@ -6,7 +6,7 @@ import DisplayUsers from '../../components/users/DisplayUsers';
 import React from 'react';
 import { loadUserListAction } from '../../redux/actions/auth';
 import { useSelector } from 'react-redux';
-import { wrapper } from '../../redux/store';
+import { wrapperStore } from '../../redux/store';
 
 const UserList = () => {
     const { listOfUsers } = useSelector((state) => state.authReducer);
@@ -18,7 +18,7 @@ const UserList = () => {
         </main>
     );
 };
-export const getStaticProps = wrapper.getStaticProps((store) => async () => {
+export const getStaticProps = wrapperStore.getStaticProps((store) => async () => {
     await store.dispatch(loadUserListAction());
 });
 
