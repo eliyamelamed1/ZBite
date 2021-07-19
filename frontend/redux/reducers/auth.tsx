@@ -75,7 +75,7 @@ export default function authReducer(state = initialState, action) {
                 isUserAuthenticated: false,
             };
         case GET_LOGGED_USER_DETAILS_FAIL:
-            localStorage.removeItem('loggedUserDetails');
+            process.browser ? localStorage.removeItem('loggedUserDetails') : null;
             return {
                 ...state,
                 loggedUserDetails: null,

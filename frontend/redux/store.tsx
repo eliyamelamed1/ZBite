@@ -18,12 +18,17 @@ const isDefined = (object) => {
 };
 
 const updateState = (previousState, newState) => {
-    previousState = previousState.authReducer;
     newState = newState.authReducer;
-    Object.entries(previousState).map(([key, value]) => {
-        isDefined(value) ? (newState[key] = value) : null;
-        return newState;
-    });
+    previousState = previousState.authReducer;
+    const auth_token = previousState.auth_token;
+    const isUserAuthenticated = previousState.isUserAuthenticated;
+    const loggedUserDetails = previousState.loggedUserDetails;
+
+    if (isDefined(auth_token)) newState.auth_token = auth_token;
+    if (isDefined(isUserAuthenticated)) newState.isUserAuthenticated = isUserAuthenticated;
+    if (isDefined(loggedUserDetails)) newState.loggedUserDetails = loggedUserDetails;
+
+    return newState;
 };
 
 const wrappedReducer = (previousState, action) => {
