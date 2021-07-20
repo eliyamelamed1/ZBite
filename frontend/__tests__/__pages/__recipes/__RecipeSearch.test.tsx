@@ -28,7 +28,7 @@ const data2 = {
     author: 'recipe author2',
 };
 let initialState = {
-    recipeReducer: { recipeSearchedListData: [data, data2] },
+    recipeReducer: { listOfSearchedRecipes: [data, data2] },
 };
 const store = mockStore(initialState);
 

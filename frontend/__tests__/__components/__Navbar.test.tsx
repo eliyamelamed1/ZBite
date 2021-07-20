@@ -17,7 +17,7 @@ const mockStore = configureStore(middlewares);
 
 describe('NavBar - authenticated users', () => {
     const initialState = {
-        authReducer: { isAuthenticatedData: true, loggedUserData: { email: 'testemail@gmail.com', id: 'userId' } },
+        authReducer: { isUserAuthenticated: true, loggedUserDetails: { email: 'testemail@gmail.com', id: 'userId' } },
     };
     const store = mockStore(initialState);
     beforeEach(() => {
@@ -46,7 +46,7 @@ describe('NavBar - authenticated users', () => {
     });
     test('authLinks should contain valid profile link', () => {
         const profileLink = screen.getByRole('link', { name: /profile/i });
-        const userId = store.getState().authReducer.loggedUserData.id;
+        const userId = store.getState().authReducer.loggedUserDetails.id;
         expect(profileLink).toBeInTheDocument();
         expect(profileLink.href).toEqual(`http://localhost/users/${userId}`);
     });
@@ -69,7 +69,7 @@ describe('NavBar - authenticated users', () => {
 
 describe('NavBar - guest users', () => {
     const initialState = {
-        authReducer: { isAuthenticatedData: false },
+        authReducer: { isUserAuthenticated: false },
     };
     const store = mockStore(initialState);
     beforeEach(() => {
@@ -104,7 +104,7 @@ describe('NavBar - guest users', () => {
         const signupLink = screen.getByRole('link', { name: /sign up/i });
         const loginLink = screen.getByRole('link', { name: /login/i });
 
-        expect(signupLink.href).toBe('http://localhost/signup');
-        expect(loginLink.href).toBe('http://localhost/login');
+        expect(signupLink.href).toBe('http://localhost/users/signup');
+        expect(loginLink.href).toBe('http://localhost/users/login');
     });
 });

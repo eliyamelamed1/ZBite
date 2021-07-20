@@ -14,7 +14,7 @@ const RecipeSearch = () => {
     const [flavorType, setFlavorType] = useState({
         flavor_type: 'Sour',
     });
-    const { recipeSearchedListData } = useSelector((state) => state.recipeReducer);
+    const { listOfSearchedRecipes } = useSelector((state) => state.recipeReducer);
     const { flavor_type } = flavorType;
 
     const [loading, setLoading] = useState(false);
@@ -54,7 +54,7 @@ const RecipeSearch = () => {
                         <button type='submit'>Search</button>
                     )}
                 </div>
-                {recipeSearchedListData ? <DisplayRecipes recipesToDisplay={recipeSearchedListData} /> : null}
+                {listOfSearchedRecipes ? <DisplayRecipes recipesToDisplay={listOfSearchedRecipes} /> : null}
             </form>
         </div>
     );

@@ -31,16 +31,16 @@ const params = {
         author: 'second recipe author',
     },
 };
-const recipeListData = [params.data, params.data2];
+const listOfRecipes = [params.data, params.data2];
 let initialState = {
-    recipeReducer: { recipeListData: recipeListData },
+    recipeReducer: { listOfRecipes: listOfRecipes },
 };
 const store = mockStore(initialState);
 describe('RecipeList', () => {
     beforeEach(() => {
         render(
             <Provider store={store}>
-                <RecipeList />
+                <RecipeList listOfRecipes={listOfRecipes} />
             </Provider>
         );
     });
@@ -82,8 +82,8 @@ describe('RecipeList', () => {
 //         jest.resetAllMocks();
 //     });
 
-//     test('DisplayUsers.propType.recipesToDisplay should get recipeListData', () => {
+//     test('DisplayUsers.propType.recipesToDisplay should get  listOfRecipes', () => {
 //         expect(DisplayRecipes).toHaveBeenCalled();
-//         expect(DisplayRecipes).toHaveBeenCalledWith({ recipesToDisplay: recipeListData }, {});
+//         expect(DisplayRecipes).toHaveBeenCalledWith({ recipesToDisplay:  listOfRecipes }, {});
 //     });
 // });

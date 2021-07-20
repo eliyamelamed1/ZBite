@@ -6,16 +6,16 @@ import Head from 'next/head';
 import UserDelete from '../../components/users/UserDelete';
 import UserUpdate from '../../components/users/UserUpdate';
 import { loadUserDetailsAction } from '../../redux/actions/auth';
+import { render } from '@testing-library/react';
 import { useRouter } from 'next/router';
 
 const UserDetails = () => {
     const [isAuthor, setIsAuthor] = useState(false);
     const [userExist, setUserExist] = useState(false);
-    const { loggedUserData, userDetailsData } = useSelector((state) => state.authReducer);
+    const { loggedUserDetails, searchedUserDetails } = useSelector((state) => state.authReducer);
     const router = useRouter();
     const dispatch = useDispatch();
     const id = router.query.UserDetails_Id;
-
     useEffect(() => {
         try {
             dispatch(loadUserDetailsAction({ id }));
@@ -23,49 +23,48 @@ const UserDetails = () => {
             // TODO - add err msg
         }
     }, [id, dispatch]);
-
     useEffect(() => {
-        if (userDetailsData) {
-            if (Object.prototype.hasOwnProperty.call(userDetailsData, 'name')) {
+        if (searchedUserDetails) {
+            if (Object.prototype.hasOwnProperty.call(searchedUserDetails, 'name')) {
                 setUserExist(true);
             }
         }
-    }, [userDetailsData]);
-
+    }, [searchedUserDetails]);
     useEffect(() => {
-        if (loggedUserData?.id == id) {
+        if (loggedUserDetails?.id == id) {
             setIsAuthor(true);
         }
-    }, [id, loggedUserData]);
-
+    }, [id, loggedUserDetails]);
     const guestLinks = (
         <main data-testid='guestLinks'>
             {userExist ? (
                 <div>
-                    <p>user name: {userDetailsData.name}</p>
-                    <p>user email: {userDetailsData.email}</p>
+                    <p>user name: {searchedUserDetails.name}</p>
+                    <p>user email: {searchedUserDetails.email}</p>
                 </div>
             ) : (
                 <Custom404 />
             )}
         </main>
     );
-
     const authorLinks = (
         <main data-testid='authorLinks'>
-            <UserDelete id={id} />
-            <UserUpdate id={id} />
-            {loggedUserData ? (
+            {id ? (
                 <div>
-                    <div>user name: {loggedUserData.name}</div>
-                    <div>user email: {loggedUserData.email}</div>
+                    <UserDelete id={id} />
+                    <UserUpdate id={id} />
+                </div>
+            ) : null}
+            {loggedUserDetails ? (
+                <div>
+                    <div>user name: {loggedUserDetails.name}</div>
+                    <div>user email: {loggedUserDetails.email}</div>
                 </div>
             ) : (
-                { guestLinks }
+                <div>{guestLinks}</div>
             )}
         </main>
     );
-
     return (
         <div data-testid='userDetails'>
             <Head>

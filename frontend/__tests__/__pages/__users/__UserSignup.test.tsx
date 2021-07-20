@@ -5,7 +5,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import React from 'react';
 import Router from 'next/router';
-import UserSignup from '../../../pages/users/UserSignup';
+import UserSignup from '../../../pages/users/signup';
 import configureStore from 'redux-mock-store';
 import { signupAction } from '../../../redux/actions/auth';
 import thunk from 'redux-thunk';
@@ -167,7 +167,7 @@ describe('UserSignup - guest user', () => {
 
 describe('UserSignup - guest authenticated users', () => {
     initialState = {
-        authReducer: { isAuthenticatedData: true },
+        authReducer: { isUserAuthenticated: true },
     };
     const store = mockStore(initialState);
     beforeEach(() => {

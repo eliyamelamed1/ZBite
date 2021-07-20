@@ -31,7 +31,7 @@ const middleware = [thunk];
 const mockStore = configureStore(middleware);
 
 describe('Authenticated users', () => {
-    let initialState = { authReducer: { isAuthenticatedData: true } };
+    let initialState = { authReducer: { isUserAuthenticated: true } };
     const store = mockStore(initialState);
     beforeEach(() => {
         render(
@@ -83,7 +83,7 @@ describe('Authenticated users', () => {
 });
 
 describe('Guest users', () => {
-    let initialState = { authReducer: { isAuthenticatedData: false } };
+    let initialState = { authReducer: { isUserAuthenticated: false } };
     const store = mockStore(initialState);
     beforeEach(() => {
         render(

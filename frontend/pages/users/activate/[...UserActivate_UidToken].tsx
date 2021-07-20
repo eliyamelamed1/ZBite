@@ -10,7 +10,7 @@ import { userActivateAction } from '../../../redux/actions/auth';
 const UserActivate = () => {
     const dispatch = useDispatch();
     const router = useRouter();
-    const { isAuthenticatedData } = useSelector((state) => state.authReducer);
+    const { isUserAuthenticated } = useSelector((state) => state.authReducer);
 
     const onSubmit = () => {
         const { UserActivate_UidToken } = router.query;
@@ -23,7 +23,7 @@ const UserActivate = () => {
             // TODO - add err msg
         }
     };
-    if (isAuthenticatedData === false) Router.push('/');
+    if (isUserAuthenticated === false) Router.push('/');
     return (
         <div data-testid='userActivate'>
             <div>

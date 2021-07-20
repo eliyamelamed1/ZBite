@@ -1,7 +1,4 @@
-/* - test onSubmit dispatch the action 
- test the redirect
- */
-
+import PropTypes from 'prop-types';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { userDeleteAction } from '../../redux/actions/auth';
@@ -24,6 +21,9 @@ const UserDelete = ({ id }) => {
             </form>
         </main>
     );
+};
+UserDelete.propTypes = {
+    id: PropTypes.string.isRequired,
 };
 
 export default UserDelete;

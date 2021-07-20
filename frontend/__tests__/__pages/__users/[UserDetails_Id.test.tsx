@@ -29,7 +29,7 @@ jest.mock('next/router', () => ({
 }));
 describe('UserDetails - author (profile page)', () => {
     let initialState = {
-        authReducer: { loggedUserData: { id: params.firstUserId, email: params.email, name: params.name } },
+        authReducer: { loggedUserDetails: { id: params.firstUserId, email: params.email, name: params.name } },
     };
     let store = mockStore(initialState);
     beforeEach(() => {
@@ -86,7 +86,7 @@ describe('UserDetails - author (profile page)', () => {
 
 describe('UserDetails - not author', () => {
     let initialState = {
-        authReducer: { userDetailsData: { id: params.secondUserId, email: params.email, name: params.name } },
+        authReducer: { searchedUserDetails: { id: params.secondUserId, email: params.email, name: params.name } },
     };
     let store = mockStore(initialState);
     beforeEach(() => {
@@ -143,7 +143,7 @@ describe('UserDetails - not author', () => {
 describe('UserDetails - Non-existing user ', () => {
     beforeEach(() => {
         let initialState = {
-            authReducer: { loggedUserData: { id: params.nonExistingId, email: params.email, name: params.name } },
+            authReducer: { loggedUserDetails: { id: params.nonExistingId, email: params.email, name: params.name } },
         };
         let store = mockStore(initialState);
         render(

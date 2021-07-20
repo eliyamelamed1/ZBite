@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 
 const IsRecipeAuthor = ({ recipe }) => {
     const [isAuthor, setIsAuthor] = useState(false);
-    const { loggedUserData } = useSelector((state) => state.authReducer);
+    const { loggedUserDetails } = useSelector((state) => state.authReducer);
     const guestLinks = <div data-testid='guestLinks'>you are not the recipe author </div>;
 
     const authorLinks = (
@@ -23,12 +23,12 @@ const IsRecipeAuthor = ({ recipe }) => {
     );
 
     useEffect(() => {
-        if (loggedUserData != null) {
-            if (recipe.author == loggedUserData.id) {
+        if (loggedUserDetails != null) {
+            if (recipe.author == loggedUserDetails.id) {
                 setIsAuthor(true);
             }
         }
-    }, [loggedUserData, recipe.author]);
+    }, [loggedUserDetails, recipe.author]);
     return <div data-testid='isRecipeAuthor'>{isAuthor ? authorLinks : guestLinks}</div>;
 };
 

@@ -8,7 +8,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import React from 'react';
 import Router from 'next/router';
-import UserLogin from '../../../pages/users/UserLogin';
+import UserLogin from '../../../pages/users/login';
 import configureStore from 'redux-mock-store';
 import { loginAction } from '../../../redux/actions/auth';
 import thunk from 'redux-thunk';
@@ -95,7 +95,7 @@ describe('UserLogin - guest', () => {
 
 // TODO - imporve this tests by checking the redirection url (should be home page)
 describe('UserLogin - authenticated user', () => {
-    let initialState = { authReducer: { isAuthenticatedData: true } };
+    let initialState = { authReducer: { isUserAuthenticated: true } };
     const store = mockStore(initialState);
     beforeEach(() => {
         render(

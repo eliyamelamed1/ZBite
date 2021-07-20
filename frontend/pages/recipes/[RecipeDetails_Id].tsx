@@ -26,18 +26,18 @@ const RecipeDetails = () => {
         }
     }, [id, dispatch]);
 
-    const { recipeDetailData } = useSelector((state) => state.recipeReducer);
+    const { recipeDetails } = useSelector((state) => state.recipeReducer);
 
     const displayInteriorImages = () => {
-        if (recipeDetailData) {
+        if (recipeDetails) {
             const images = [];
 
             images.push(
                 <div key={1}>
                     <div>
-                        {recipeDetailData.photo_1 ? (
+                        {recipeDetails.photo_1 ? (
                             <div>
-                                <Image src={recipeDetailData.photo_1} alt='' height={100} width={100} />
+                                <Image src={recipeDetails.photo_1} alt='' height={100} width={100} />
                             </div>
                         ) : (
                             <div>* this recipe has no photos *</div>
@@ -49,13 +49,13 @@ const RecipeDetails = () => {
         }
     };
 
-    const authorLinks = <section>{recipeDetailData ? <IsRecipeAuthor recipe={recipeDetailData} /> : null}</section>;
+    const authorLinks = <section>{recipeDetails ? <IsRecipeAuthor recipe={recipeDetails} /> : null}</section>;
 
     return (
         <React.Fragment>
             <Head>
-                {recipeDetailData ? (
-                    <title>ZBite - recipes |{`${recipeDetailData.title}`}</title>
+                {recipeDetails ? (
+                    <title>ZBite - recipes |{`${recipeDetails.title}`}</title>
                 ) : (
                     <title>ZBite - recipes </title>
                 )}
@@ -64,23 +64,23 @@ const RecipeDetails = () => {
             <main data-testid='recipeDetails'>
                 <section>{authorLinks}</section>
                 <section>
-                    {recipeDetailData ? (
+                    {recipeDetails ? (
                         <div>
-                            <Link href={`/users/${recipeDetailData.author}/`} passHref>
-                                <p>recipe Author: {recipeDetailData.author}</p>
+                            <Link href={`/users/${recipeDetails.author}/`} passHref>
+                                <p>recipe Author: {recipeDetails.author}</p>
                             </Link>
-                            <h1>recipe title: {recipeDetailData.title}</h1>
+                            <h1>recipe title: {recipeDetails.title}</h1>
                             <Link href='/'>Home</Link>
-                            {recipeDetailData.photo_main ? (
-                                <Image src={recipeDetailData.photo_main} alt='' height={100} width={100} />
+                            {recipeDetails.photo_main ? (
+                                <Image src={recipeDetails.photo_main} alt='' height={100} width={100} />
                             ) : null}
                             <ul>
                                 <li>
                                     Flavor Type:
-                                    {recipeDetailData.flavor_type}
+                                    {recipeDetails.flavor_type}
                                 </li>
                             </ul>
-                            <p>recipe description: {recipeDetailData.description}</p>
+                            <p>recipe description: {recipeDetails.description}</p>
                             {displayInteriorImages()}
                         </div>
                     ) : (

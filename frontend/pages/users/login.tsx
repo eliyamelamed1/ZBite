@@ -7,7 +7,7 @@ import { loginAction } from '../../redux/actions/auth';
 
 const UserLogin = () => {
     const dispatch = useDispatch();
-    const { isAuthenticatedData } = useSelector((state) => state.authReducer);
+    const { isUserAuthenticated } = useSelector((state) => state.authReducer);
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -24,7 +24,7 @@ const UserLogin = () => {
         } catch {}
     };
 
-    if (isAuthenticatedData) {
+    if (isUserAuthenticated) {
         Router.push('/');
     }
 
