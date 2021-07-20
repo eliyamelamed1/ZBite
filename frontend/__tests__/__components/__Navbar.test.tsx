@@ -12,6 +12,7 @@ import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
 jest.mock('../../redux/actions/auth', () => ({ logoutAction: jest.fn() }));
+jest.mock('../../redux/actions/auth', () => ({ logoutAction: jest.fn() }));
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 

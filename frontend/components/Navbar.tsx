@@ -1,16 +1,23 @@
 // TODO recipes crud to navbar
 // test author and guest links
 
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { loadLoggedUserDetailsAction, logoutAction } from '../redux/actions/auth';
 
 import Link from 'next/link';
-import React from 'react';
-import { logoutAction } from '../redux/actions/auth';
+import { store } from '../redux/store';
+import { useDispatch } from 'react-redux';
 
 const Navbar = () => {
-    const { isUserAuthenticated, loggedUserDetails } = useSelector((state) => state.authReducer);
-    const dispatch = useDispatch();
+    const [isUserAuthenticated, setIsUserAuthenticated] = useState();
+    const [loggedUserDetails, setLoggedUserDetails] = useState();
     const profileUrl = loggedUserDetails ? '/users/' + loggedUserDetails.id : null;
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        setIsUserAuthenticated(store.getState().authReducer.isUserAuthenticated);
+        setLoggedUserDetails(store.getState().authReducer.loggedUserDetails);
+    }, [dispatch, isUserAuthenticated, loggedUserDetails]);
 
     const logoutHandler = () => {
         try {
