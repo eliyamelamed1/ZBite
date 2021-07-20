@@ -11,6 +11,7 @@ const Navbar = () => {
     const { isUserAuthenticated, loggedUserDetails } = useSelector((state) => state.authReducer);
     const dispatch = useDispatch();
     const profileUrl = loggedUserDetails ? '/users/' + loggedUserDetails.id : null;
+
     const logoutHandler = () => {
         try {
             dispatch(logoutAction());

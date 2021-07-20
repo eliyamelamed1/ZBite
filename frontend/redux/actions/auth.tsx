@@ -102,7 +102,7 @@ export const userDeleteAction =
 
 // load the the details of the connects user loadLoggedUserDetailsAction
 export const loadLoggedUserDetailsAction = () => async (dispatch) => {
-    if (process.browser ? localStorage.getItem('auth_token') : false) {
+    if (localStorage.getItem('auth_token')) {
         const config = {
             headers: {
                 'Content-Type': 'application/json',

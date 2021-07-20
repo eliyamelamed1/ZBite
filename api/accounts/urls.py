@@ -8,3 +8,4 @@ urlpatterns = [
     path('<uuid:pk>/', UserDetailView.as_view(), name='detail'),
     path('top/', TopRatedAccounts.as_view(), name='top'),
 ]
+
