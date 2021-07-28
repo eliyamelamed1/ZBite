@@ -1,12 +1,8 @@
-// TODO recipes crud to navbar
-// test author and guest links
-
 import React, { useEffect, useState } from 'react';
-import { loadLoggedUserDetailsAction, logoutAction } from '../redux/actions/auth';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Link from 'next/link';
-import { store } from '../redux/store';
+import { logoutAction } from '../redux/actions/auth';
 
 const Navbar = () => {
     const dispatch = useDispatch();
@@ -62,7 +58,7 @@ const Navbar = () => {
         <div>
             <li>
                 <br />
-                <Link href='/users'>user list</Link>
+                <Link href='/users/UserList'>user list</Link>
                 <br />
                 <Link href='/recipes/RecipeList'>recipe list</Link>
             </li>

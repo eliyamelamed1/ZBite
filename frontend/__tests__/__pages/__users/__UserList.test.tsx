@@ -4,7 +4,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import React from 'react';
-import UserList from '../../../pages/users';
+import UserList from '../../../pages/users/UserList';
 import configureStore from 'redux-mock-store';
 import { loadUserListAction } from '../../../redux/actions/auth';
 import thunk from 'redux-thunk';
