@@ -3,21 +3,25 @@
 
 import React, { useEffect, useState } from 'react';
 import { loadLoggedUserDetailsAction, logoutAction } from '../redux/actions/auth';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Link from 'next/link';
 import { store } from '../redux/store';
-import { useDispatch } from 'react-redux';
 
 const Navbar = () => {
-    const [isUserAuthenticated, setIsUserAuthenticated] = useState();
-    const [loggedUserDetails, setLoggedUserDetails] = useState();
-    const profileUrl = loggedUserDetails ? '/users/' + loggedUserDetails.id : null;
     const dispatch = useDispatch();
 
+    const updatedIsUserAuthenticated = useSelector((state) => state.authReducer.isUserAuthenticated);
+    const updatedLoggedUserDetails = useSelector((state) => state.authReducer.loggedUserDetails);
+
+    const [isUserAuthenticated, setIsUserAuthenticated] = useState();
+    const [loggedUserDetails, setLoggedUserDetails] = useState();
     useEffect(() => {
-        setIsUserAuthenticated(store.getState().authReducer.isUserAuthenticated);
-        setLoggedUserDetails(store.getState().authReducer.loggedUserDetails);
-    }, [dispatch, isUserAuthenticated, loggedUserDetails]);
+        setIsUserAuthenticated(updatedIsUserAuthenticated);
+        setLoggedUserDetails(updatedLoggedUserDetails);
+    }, [dispatch, updatedIsUserAuthenticated, updatedLoggedUserDetails]);
+
+    const profileUrl = loggedUserDetails ? '/users/' + loggedUserDetails.id : null;
 
     const logoutHandler = () => {
         try {
@@ -75,7 +79,6 @@ const Navbar = () => {
                     <div>{isUserAuthenticated ? authLinks : guestLinks}</div>
                     <br />
                     <div>{mutualLinks}</div>
-                    <>{isUserAuthenticated ? <div>true</div> : <div>false</div>}</>
                 </ul>
             </div>
         </nav>

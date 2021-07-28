@@ -12,7 +12,6 @@ import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
 jest.mock('../../redux/actions/auth', () => ({ logoutAction: jest.fn() }));
-jest.mock('../../redux/actions/auth', () => ({ logoutAction: jest.fn() }));
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 
@@ -55,8 +54,8 @@ describe('NavBar - authenticated users', () => {
         const guestLinks = screen.queryByTestId('guestLinks');
         expect(guestLinks).toBeNull();
     });
-    test('logout button should appear on guestLinks', () => {
-        const logoutButton = screen.getByRole('button', { name: /logout/i });
+    test('logout button should appear on authLinks', async () => {
+        const logoutButton = await screen.findByRole('button', { name: /logout/i });
         expect(logoutButton).toBeInTheDocument();
     });
     test('logout button should dispatch logoutAction', async () => {
