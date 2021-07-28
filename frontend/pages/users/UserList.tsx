@@ -7,7 +7,8 @@ import React from 'react';
 import { loadUserListAction } from '../../redux/actions/auth';
 import store from '../../redux/store';
 
-const UserList = ({ listOfUsers }) => {
+const UserList = (props) => {
+    const listOfUsers = props.listOfUsers;
     return (
         <main>
             <div data-testid='userList'></div>
@@ -18,7 +19,7 @@ const UserList = ({ listOfUsers }) => {
 
 export async function getStaticProps() {
     await store.dispatch(loadUserListAction());
-    const { listOfUsers } = await store.getState().authReducer;
+    const { listOfUsers } = store.getState().authReducer;
     return { props: { listOfUsers }, revalidate: 10 };
 }
 export default UserList;
