@@ -6,22 +6,63 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import RecipeDetails from '../../../pages/recipes/[RecipeDetails_Id]';
 import configureStore from 'redux-mock-store';
+import { getServerSideProps } from '../../../pages/recipes/[RecipeDetails_Id]';
 import { loadRecipeDetailsAction } from '../../../redux/actions/recipe';
 import thunk from 'redux-thunk';
 
-const dynamicIdParam = '5';
-
+const existingRecipeId = '5';
+const nonExistingRecipeId = 'nonExistingRecipe';
+const existingRecipeContext = {
+    params: { RecipeDetails_Id: existingRecipeId },
+};
+const nonExistingRecipeContext = {
+    params: { RecipeDetails_Id: nonExistingRecipeId },
+};
+const recipeDetails = {
+    id: '5',
+    title: 'recipeTitle',
+    description: 'recipeDescription',
+    flavor_type: 'Sour',
+    author: 'eliya',
+    photo_main: '/#',
+};
 jest.mock('../../../redux/actions/recipe', () => ({ loadRecipeDetailsAction: jest.fn() }));
-jest.mock('next/router', () => ({
-    useRouter: jest.fn(() => ({
-        query: { RecipeDetails_Id: dynamicIdParam },
+jest.mock('../../../redux/store.tsx', () => ({
+    dispatch: jest.fn(),
+    getState: jest.fn(() => ({
+        recipeReducer: {
+            recipeDetails: recipeDetails,
+        },
     })),
 }));
-
 const middleware = [thunk];
 const mockStore = configureStore(middleware);
 
-describe('RecipeDetails - author', () => {
+describe('RecipeDetails - getServerSideProps', () => {
+    beforeEach(async () => {
+        await getServerSideProps(existingRecipeContext);
+    });
+    afterEach(() => {
+        cleanup();
+        jest.clearAllMocks();
+    });
+    test('should dispatch loadRecipeDetailsAction', () => {
+        const timesActionDispatched = loadRecipeDetailsAction.mock.calls.length;
+
+        expect(timesActionDispatched).toBe(1);
+        expect(loadRecipeDetailsAction.mock.calls[0][0].id).toBe(existingRecipeId);
+    });
+    test('getStaticProps - should return matching props', async () => {
+        const props = (await getServerSideProps(existingRecipeContext)).props;
+        expect(props.recipeDetails).toEqual(recipeDetails);
+    });
+    test('getStaticProps - should return matching props', async () => {
+        const notFound = (await getServerSideProps(nonExistingRecipeContext)).notFound;
+        expect(notFound).toEqual(true);
+    });
+});
+
+describe('RecipeDetails - author of recipe', () => {
     let initialState = {
         authReducer: { loggedUserDetails: { id: 'eliya' } },
         recipeReducer: {
@@ -36,10 +77,11 @@ describe('RecipeDetails - author', () => {
         },
     };
     let store = mockStore(initialState);
-    beforeEach(() => {
+    beforeEach(async () => {
+        const { recipeDetails } = (await getServerSideProps(existingRecipeContext)).props;
         render(
             <Provider store={store}>
-                <RecipeDetails />
+                <RecipeDetails recipeDetails={recipeDetails} />
             </Provider>
         );
     });
@@ -52,12 +94,6 @@ describe('RecipeDetails - author', () => {
     test('should render match own data-testid', () => {
         const recipeDetailsTestId = screen.getByTestId('recipeDetails');
         expect(recipeDetailsTestId).toBeInTheDocument();
-    });
-    test('should dispatch loadRecipeDetailsAction', () => {
-        const timesActionDispatched = loadRecipeDetailsAction.mock.calls.length;
-
-        expect(timesActionDispatched).toBe(1);
-        expect(loadRecipeDetailsAction.mock.calls[0][0].id).toBe(dynamicIdParam);
     });
     test('should render the recipe details ', () => {
         const recipeTitle = screen.getByText(/recipeTitle/i);
@@ -82,25 +118,16 @@ describe('RecipeDetails - author', () => {
         expect(recipeUpdateTestId).toBeInTheDocument();
     });
 });
-describe('RecipeDetails - not author', () => {
+describe('RecipeDetails - not the recipe author', () => {
     let initialState = {
         authReducer: { loggedUserDetails: { id: 'eilon' } },
-        recipeReducer: {
-            recipeDetails: {
-                id: '5',
-                title: 'recipeTitle',
-                description: 'recipeDescription',
-                flavor_type: 'Sour',
-                author: 'eliya',
-                photo_1: '/#',
-            },
-        },
     };
     let store = mockStore(initialState);
-    beforeEach(() => {
+    beforeEach(async () => {
+        const { recipeDetails } = (await getServerSideProps(existingRecipeContext)).props;
         render(
             <Provider store={store}>
-                <RecipeDetails />
+                <RecipeDetails recipeDetails={recipeDetails} />
             </Provider>
         );
     });
@@ -114,12 +141,7 @@ describe('RecipeDetails - not author', () => {
         const recipeDetailsTestId = screen.getByTestId('recipeDetails');
         expect(recipeDetailsTestId).toBeInTheDocument();
     });
-    test('should dispatch loadRecipeDetailsAction', () => {
-        const timesActionDispatched = loadRecipeDetailsAction.mock.calls.length;
 
-        expect(timesActionDispatched).toBe(1);
-        expect(loadRecipeDetailsAction.mock.calls[0][0].id).toBe(dynamicIdParam);
-    });
     test('should render the recipe details ', () => {
         const recipeTitle = screen.getByText(/recipeTitle/i);
         const recipeDescription = screen.getByText(/recipeDescription/i);
@@ -139,28 +161,5 @@ describe('RecipeDetails - not author', () => {
         const recipeUpdateTestId = screen.queryByTestId('recipeUpdate');
 
         expect(recipeUpdateTestId).not.toBeInTheDocument();
-    });
-});
-
-describe('RecipeDetails - Non-existing recipe ', () => {
-    beforeEach(() => {
-        let initialState = {
-            recipeReducer: {},
-        };
-        let store = mockStore(initialState);
-        render(
-            <Provider store={store}>
-                <RecipeDetails />
-            </Provider>
-        );
-    });
-    afterEach(() => {
-        cleanup();
-    });
-
-    test('should render custom404', () => {
-        const custom404TestId = screen.getByTestId('custom404');
-
-        expect(custom404TestId).toBeInTheDocument();
     });
 });

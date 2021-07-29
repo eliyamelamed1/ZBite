@@ -1,33 +1,16 @@
 // check difference between props.match.params.id && props.id
 
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
 import Custom404 from '../404';
 import Head from 'next/head';
 import Image from 'next/image';
 import IsRecipeAuthor from '../../components/recipes/IsRecipeAuthor';
 import Link from 'next/link';
+import React from 'react';
 import { loadRecipeDetailsAction } from '../../redux/actions/recipe';
-import { useRouter } from 'next/router';
+import store from '../../redux/store';
 
-const RecipeDetails = () => {
-    const dispatch = useDispatch();
-    const router = useRouter();
-
-    const { RecipeDetails_Id } = router.query;
-    const id = RecipeDetails_Id;
-
-    useEffect(() => {
-        try {
-            dispatch(loadRecipeDetailsAction({ id }));
-        } catch {
-            // TODO - add err msg
-        }
-    }, [id, dispatch]);
-
-    const { recipeDetails } = useSelector((state) => state.recipeReducer);
-
+const RecipeDetails = (props) => {
+    const recipeDetails = props.recipeDetails;
     const displayInteriorImages = () => {
         if (recipeDetails) {
             const images = [];
@@ -91,5 +74,17 @@ const RecipeDetails = () => {
         </React.Fragment>
     );
 };
+
+export async function getServerSideProps(context) {
+    const id = context.params.RecipeDetails_Id;
+    await store.dispatch(loadRecipeDetailsAction({ id }));
+    const { recipeDetails } = store.getState().recipeReducer;
+
+    if (recipeDetails?.id == id) {
+        return { props: { recipeDetails } };
+    } else {
+        return { notFound: true };
+    }
+}
 
 export default RecipeDetails;
