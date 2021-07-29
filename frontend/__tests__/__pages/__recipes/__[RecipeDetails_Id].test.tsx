@@ -10,7 +10,7 @@ import { getServerSideProps } from '../../../pages/recipes/[RecipeDetails_Id]';
 import { loadRecipeDetailsAction } from '../../../redux/actions/recipe';
 import thunk from 'redux-thunk';
 
-const recipeValues = {
+const recipeParams = {
     existingRecipeId: '5',
     nonExistingRecipeId: 'nonExistingRecipe',
     recipeDetails: {
@@ -22,12 +22,12 @@ const recipeValues = {
         photo_main: '/#',
     },
 };
-const contextValues = {
-    existingRecipeContext: {
-        params: { RecipeDetails_Id: recipeValues.existingRecipeId },
+const contextParams = {
+    existingRecipe: {
+        params: { RecipeDetails_Id: recipeParams.existingRecipeId },
     },
-    nonExistingRecipeContext: {
-        params: { RecipeDetails_Id: recipeValues.nonExistingRecipeId },
+    nonExistingRecipe: {
+        params: { RecipeDetails_Id: recipeParams.nonExistingRecipeId },
     },
 };
 
@@ -36,7 +36,7 @@ jest.mock('../../../redux/store.tsx', () => ({
     dispatch: jest.fn(),
     getState: jest.fn(() => ({
         recipeReducer: {
-            recipeDetails: recipeValues.recipeDetails,
+            recipeDetails: recipeParams.recipeDetails,
         },
     })),
 }));
@@ -44,25 +44,23 @@ const middleware = [thunk];
 const mockStore = configureStore(middleware);
 
 describe('RecipeDetails - getServerSideProps', () => {
-    beforeEach(async () => {
-        await getServerSideProps(contextValues.existingRecipeContext);
-    });
     afterEach(() => {
         cleanup();
         jest.clearAllMocks();
     });
-    test('should dispatch loadRecipeDetailsAction', () => {
+    test('should dispatch loadRecipeDetailsAction', async () => {
+        await getServerSideProps(contextParams.existingRecipe);
         const timesActionDispatched = loadRecipeDetailsAction.mock.calls.length;
 
         expect(timesActionDispatched).toBe(1);
-        expect(loadRecipeDetailsAction.mock.calls[0][0].id).toBe(recipeValues.existingRecipeId);
+        expect(loadRecipeDetailsAction.mock.calls[0][0].id).toBe(recipeParams.existingRecipeId);
     });
     test('getStaticProps - should return matching props', async () => {
-        const props = (await getServerSideProps(contextValues.existingRecipeContext)).props;
-        expect(props.recipeDetails).toEqual(recipeValues.recipeDetails);
+        const props = (await getServerSideProps(contextParams.existingRecipe)).props;
+        expect(props.recipeDetails).toEqual(recipeParams.recipeDetails);
     });
-    test('getStaticProps - should return matching props', async () => {
-        const notFound = (await getServerSideProps(contextValues.nonExistingRecipeContext)).notFound;
+    test('getStaticProps - if recipe doesnt exist return not found', async () => {
+        const notFound = (await getServerSideProps(contextParams.nonExistingRecipe)).notFound;
         expect(notFound).toEqual(true);
     });
 });
@@ -83,7 +81,7 @@ describe('RecipeDetails - author of recipe', () => {
     };
     let store = mockStore(initialState);
     beforeEach(async () => {
-        const { recipeDetails } = (await getServerSideProps(contextValues.existingRecipeContext)).props;
+        const { recipeDetails } = (await getServerSideProps(contextParams.existingRecipe)).props;
         render(
             <Provider store={store}>
                 <RecipeDetails recipeDetails={recipeDetails} />
@@ -129,7 +127,7 @@ describe('RecipeDetails - not the recipe author', () => {
     };
     let store = mockStore(initialState);
     beforeEach(async () => {
-        const { recipeDetails } = (await getServerSideProps(contextValues.existingRecipeContext)).props;
+        const { recipeDetails } = (await getServerSideProps(contextParams.existingRecipe)).props;
         render(
             <Provider store={store}>
                 <RecipeDetails recipeDetails={recipeDetails} />

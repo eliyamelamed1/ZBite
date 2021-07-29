@@ -6,76 +6,67 @@ import Head from 'next/head';
 import UserDelete from '../../components/users/UserDelete';
 import UserUpdate from '../../components/users/UserUpdate';
 import { loadUserDetailsAction } from '../../redux/actions/auth';
-import { render } from '@testing-library/react';
+import store from '../../redux/store';
 import { useRouter } from 'next/router';
 
-const UserDetails = () => {
-    const [isAuthor, setIsAuthor] = useState(false);
-    const [userExist, setUserExist] = useState(false);
-    const { loggedUserDetails, searchedUserDetails } = useSelector((state) => state.authReducer);
-    const router = useRouter();
-    const dispatch = useDispatch();
-    const id = router.query.UserDetails_Id;
+const UserDetails = (props) => {
+    // TODO - create variable isMyProfile
+    const [isMyProfile, setIsMyProfile] = useState(false);
+    const [userDetails, setUserDetails] = useState({});
+    const { loggedUserDetails } = useSelector((state) => state.authReducer);
+    const { searchedUserDetails } = props;
+    const { id } = searchedUserDetails;
+
     useEffect(() => {
-        try {
-            dispatch(loadUserDetailsAction({ id }));
-        } catch {
-            // TODO - add err msg
+        if (loggedUserDetails) {
+            setUserDetails({ ...loggedUserDetails });
+        } else if (searchedUserDetails) {
+            setUserDetails({ ...searchedUserDetails });
         }
-    }, [id, dispatch]);
+    }, [searchedUserDetails, loggedUserDetails]);
+
     useEffect(() => {
-        if (searchedUserDetails) {
-            if (Object.prototype.hasOwnProperty.call(searchedUserDetails, 'name')) {
-                setUserExist(true);
-            }
+        if (loggedUserDetails?.id == searchedUserDetails.id) {
+            setIsMyProfile(true);
         }
-    }, [searchedUserDetails]);
-    useEffect(() => {
-        if (loggedUserDetails?.id == id) {
-            setIsAuthor(true);
-        }
-    }, [id, loggedUserDetails]);
-    const guestLinks = (
-        <main data-testid='guestLinks'>
-            {userExist ? (
-                <div>
-                    <p>user name: {searchedUserDetails.name}</p>
-                    <p>user email: {searchedUserDetails.email}</p>
-                </div>
-            ) : (
-                <Custom404 />
-            )}
-        </main>
-    );
-    const authorLinks = (
-        <main data-testid='authorLinks'>
-            {id ? (
-                <div>
-                    <UserDelete id={id} />
-                    <UserUpdate id={id} />
-                </div>
-            ) : null}
-            {loggedUserDetails ? (
-                <div>
-                    <div>user name: {loggedUserDetails.name}</div>
-                    <div>user email: {loggedUserDetails.email}</div>
-                </div>
-            ) : (
-                <div>{guestLinks}</div>
-            )}
+    }, [searchedUserDetails.id, loggedUserDetails]);
+
+    const myProfileLinks = (
+        <main data-testid='myProfileLinks'>
+            <div>
+                <UserDelete id={id} />
+                <UserUpdate id={id} />
+            </div>
         </main>
     );
     return (
-        <div data-testid='userDetails'>
+        <React.Fragment>
             <Head>
                 <title>ZBite - User Details Page </title>
                 <meta name='description' content='recipes detail' />
             </Head>
-            <div>
-                <div>{isAuthor == true ? <div>{authorLinks}</div> : <div>{guestLinks}</div>}</div>
-            </div>
-        </div>
+            <main data-testid='userDetails'>
+                <div>
+                    <p>user name: {userDetails?.name}</p>
+                    <p>user email: {userDetails?.email}</p>
+                </div>
+                <div>{isMyProfile ? <div>{myProfileLinks}</div> : null}</div>
+            </main>
+        </React.Fragment>
     );
 };
+
+export async function getServerSideProps(context) {
+    const id = context.params.UserDetails_Id;
+    await store.dispatch(loadUserDetailsAction({ id }));
+    const { searchedUserDetails } = store.getState().authReducer;
+
+    // find a name to this function
+    if (searchedUserDetails?.id === id) {
+        return { props: { searchedUserDetails } };
+    } else {
+        return { notFound: true };
+    }
+}
 
 export default UserDetails;

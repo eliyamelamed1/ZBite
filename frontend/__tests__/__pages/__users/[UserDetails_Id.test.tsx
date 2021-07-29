@@ -6,36 +6,77 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import UserDetails_Id from '../../../pages/users/[UserDetails_Id]';
 import configureStore from 'redux-mock-store';
+import { getServerSideProps } from '../../../pages/users/[UserDetails_Id]';
 import { loadUserDetailsAction } from '../../../redux/actions/auth';
 import thunk from 'redux-thunk';
-import { useRouter } from 'next/router';
 
-const params = {
+const userParams = {
     firstUserId: 'firstUserId',
     secondUserId: 'secondUserId',
     nonExistingId: 'nonExistingId',
     email: 'testEmail',
     name: 'testName',
 };
+const searchedUserDetails = {
+    id: userParams.firstUserId,
+    email: userParams.email,
+    name: userParams.name,
+};
+const contextParams = {
+    existingUser: {
+        params: { UserDetails_Id: userParams.firstUserId },
+    },
+    nonExistingUser: {
+        params: { UserDetails_Id: userParams.nonExistingId },
+    },
+};
 jest.mock('../../../redux/actions/auth', () => ({ loadUserDetailsAction: jest.fn() }));
+jest.mock('../../../redux/store.tsx', () => ({
+    dispatch: jest.fn(),
+    getState: jest.fn(() => ({
+        authReducer: {
+            searchedUserDetails: { id: userParams.firstUserId, email: userParams.email, name: userParams.name },
+        },
+    })),
+}));
 
 const middleware = [thunk];
 const mockStore = configureStore(middleware);
 
-jest.mock('next/router', () => ({
-    useRouter: jest.fn(() => ({
-        query: { UserDetails_Id: params.firstUserId },
-    })),
-}));
-describe('UserDetails - author (profile page)', () => {
+describe('UserDetails - getServerSideProps', () => {
+    afterEach(() => {
+        cleanup();
+        jest.clearAllMocks();
+    });
+    test('should dispatch loadUserDetailsAction', async () => {
+        await getServerSideProps(contextParams.existingUser);
+        const timesActionDispatched = loadUserDetailsAction.mock.calls.length;
+
+        expect(timesActionDispatched).toBe(1);
+        expect(loadUserDetailsAction.mock.calls[0][0].id).toBe(userParams.firstUserId);
+    });
+    test('should return matching props', async () => {
+        const props = (await getServerSideProps(contextParams.existingUser)).props;
+        expect(props.searchedUserDetails).toEqual(searchedUserDetails);
+    });
+    test('if recipe doesnt exist return not found', async () => {
+        const notFound = (await getServerSideProps(contextParams.nonExistingUser)).notFound;
+        expect(notFound).toEqual(true);
+    });
+});
+
+describe('UserDetails - my profile', () => {
     let initialState = {
-        authReducer: { loggedUserDetails: { id: params.firstUserId, email: params.email, name: params.name } },
+        authReducer: {
+            loggedUserDetails: { id: userParams.firstUserId, email: userParams.email, name: userParams.name },
+        },
     };
     let store = mockStore(initialState);
-    beforeEach(() => {
+    beforeEach(async () => {
+        const { searchedUserDetails } = (await getServerSideProps(contextParams.existingUser)).props;
         render(
             <Provider store={store}>
-                <UserDetails_Id />
+                <UserDetails_Id searchedUserDetails={searchedUserDetails} />
             </Provider>
         );
     });
@@ -49,12 +90,6 @@ describe('UserDetails - author (profile page)', () => {
         const userDetailsTestId = screen.getByTestId('userDetails');
         expect(userDetailsTestId).toBeInTheDocument();
     });
-    test('should dispatch loadUserDetailsAction', () => {
-        const timesActionDispatched = loadUserDetailsAction.mock.calls.length;
-
-        expect(timesActionDispatched).toBe(1);
-        expect(loadUserDetailsAction.mock.calls[0][0].id).toBe(params.firstUserId);
-    });
     test('should render the user details ', () => {
         const userEmail = screen.getByText(/testEmail/i);
         const userName = screen.getByText(/testName/i);
@@ -62,10 +97,10 @@ describe('UserDetails - author (profile page)', () => {
         expect(userEmail).toBeInTheDocument();
         expect(userName).toBeInTheDocument();
     });
-    test('should render authorLinks', () => {
-        const authorLinks = screen.getByTestId('authorLinks');
+    test('should render myProfileLinks', () => {
+        const myProfileLinks = screen.getByTestId('myProfileLinks');
 
-        expect(authorLinks).toBeInTheDocument();
+        expect(myProfileLinks).toBeInTheDocument();
     });
     test('should render UserUpdate component', () => {
         const userUpdateTestId = screen.getByTestId('userUpdate');
@@ -84,15 +119,19 @@ describe('UserDetails - author (profile page)', () => {
     });
 });
 
-describe('UserDetails - not author', () => {
+describe('UserDetails - other account profile', () => {
     let initialState = {
-        authReducer: { searchedUserDetails: { id: params.secondUserId, email: params.email, name: params.name } },
+        authReducer: {
+            searchedUserDetails: { id: userParams.secondUserId, email: userParams.email, name: userParams.name },
+        },
     };
     let store = mockStore(initialState);
-    beforeEach(() => {
+    beforeEach(async () => {
+        const { searchedUserDetails } = (await getServerSideProps(contextParams.existingUser)).props;
+
         render(
             <Provider store={store}>
-                <UserDetails_Id />
+                <UserDetails_Id searchedUserDetails={searchedUserDetails} />
             </Provider>
         );
     });
@@ -110,7 +149,7 @@ describe('UserDetails - not author', () => {
         const timesActionDispatched = loadUserDetailsAction.mock.calls.length;
 
         expect(timesActionDispatched).toBe(1);
-        expect(loadUserDetailsAction.mock.calls[0][0].id).toBe(params.firstUserId);
+        expect(loadUserDetailsAction.mock.calls[0][0].id).toBe(userParams.firstUserId);
     });
     test('should render the user details ', () => {
         const userEmail = screen.getByText(/testEmail/i);
@@ -119,9 +158,9 @@ describe('UserDetails - not author', () => {
         expect(userEmail).toBeInTheDocument();
         expect(userName).toBeInTheDocument();
     });
-    test('should render guestLinks', () => {
-        const guestLinks = screen.getByTestId('guestLinks');
-        expect(guestLinks).toBeInTheDocument();
+    test('should not render myProfileLinks', () => {
+        const myProfileLinks = screen.queryByTestId('myProfileLinks');
+        expect(myProfileLinks).not.toBeInTheDocument();
     });
     test('hould not render UserUpdate component', () => {
         const userUpdateTestId = screen.queryByTestId('userUpdate');
@@ -137,29 +176,5 @@ describe('UserDetails - not author', () => {
         const custom404TestId = screen.queryByTestId('custom404');
 
         expect(custom404TestId).not.toBeInTheDocument();
-    });
-});
-
-describe('UserDetails - Non-existing user ', () => {
-    beforeEach(() => {
-        let initialState = {
-            authReducer: { loggedUserDetails: { id: params.nonExistingId, email: params.email, name: params.name } },
-        };
-        let store = mockStore(initialState);
-        render(
-            <Provider store={store}>
-                <UserDetails_Id />
-            </Provider>
-        );
-    });
-    afterEach(() => {
-        cleanup();
-        jest.clearAllMocks();
-    });
-
-    test('should render NotFound', () => {
-        const custom404TestId = screen.getByTestId('custom404');
-
-        expect(custom404TestId).toBeInTheDocument();
     });
 });

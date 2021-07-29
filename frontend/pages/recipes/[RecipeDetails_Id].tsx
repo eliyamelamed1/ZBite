@@ -80,7 +80,7 @@ export async function getServerSideProps(context) {
     await store.dispatch(loadRecipeDetailsAction({ id }));
     const { recipeDetails } = store.getState().recipeReducer;
 
-    if (recipeDetails?.id == id) {
+    if (recipeDetails?.id === id) {
         return { props: { recipeDetails } };
     } else {
         return { notFound: true };
