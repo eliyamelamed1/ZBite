@@ -104,7 +104,7 @@ describe('NavBar - guest users', () => {
         const signupLink = screen.getByRole('link', { name: /sign up/i });
         const loginLink = screen.getByRole('link', { name: /login/i });
 
-        expect(signupLink.href).toBe('http://localhost/users/signup');
-        expect(loginLink.href).toBe('http://localhost/users/login');
+        expect(signupLink.href).toBe('http://localhost/users/UserSignup');
+        expect(loginLink.href).toBe('http://localhost/users/UserLogin');
     });
 });

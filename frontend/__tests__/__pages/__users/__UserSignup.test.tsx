@@ -5,7 +5,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import React from 'react';
 import Router from 'next/router';
-import UserSignup from '../../../pages/users/signup';
+import UserSignup from '../../../pages/users/UserSignup';
 import configureStore from 'redux-mock-store';
 import { signupAction } from '../../../redux/actions/auth';
 import thunk from 'redux-thunk';
@@ -41,7 +41,7 @@ describe('UserSignup - guest user', () => {
         test('should render Already have an account? linking to the login page', () => {
             const signIn = screen.getByRole('link', { name: /Sign in/i });
             expect(signIn).toBeInTheDocument();
-            expect(signIn.href).toBe('http://localhost/login');
+            expect(signIn.href).toBe('http://localhost/UserLogin');
         });
     });
     
@@ -158,7 +158,7 @@ describe('UserSignup - guest user', () => {
         
             expect(signupAction.mock.calls.length).toBe(1)
             expect(Router.push.mock.calls.length).toBe(1)
-            expect(Router.push.mock.calls[0][0]).toBe('/login')
+            expect(Router.push.mock.calls[0][0]).toBe('/UserLogin')
         });
         });
     });

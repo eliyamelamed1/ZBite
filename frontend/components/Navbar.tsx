@@ -48,9 +48,9 @@ const Navbar = () => {
 
     const guestLinks = (
         <div data-testid='guestLinks'>
-            <Link href='/users/login'>Login</Link>
+            <Link href='/users/UserLogin'>Login</Link>
             <br />
-            <Link href='/users/signup'>Sign Up</Link>
+            <Link href='/users/UserSignup'>Sign Up</Link>
         </div>
     );
 

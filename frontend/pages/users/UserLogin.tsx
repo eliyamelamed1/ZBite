@@ -56,7 +56,7 @@ const UserLogin = () => {
                 <button type='submit'>Login</button>
             </form>
             <p>
-                Do not have an account? <Link href='/signup'>Sign Up</Link>
+                Do not have an account? <Link href='/UserSignup'>Sign Up</Link>
             </p>
             <p>
                 Forgot your password? <Link href='/reset_password'>Reset your password</Link>

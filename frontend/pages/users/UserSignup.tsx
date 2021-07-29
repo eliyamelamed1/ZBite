@@ -36,7 +36,7 @@ const UserSignup = () => {
                         re_password,
                     })
                 );
-                Router.push('/login');
+                Router.push('/UserLogin');
             } catch {}
         }
     };
@@ -95,7 +95,7 @@ const UserSignup = () => {
                 <button type='submit'>Register</button>
             </form>
             <p>
-                Already have an account? <Link href='/login'>Sign In</Link>
+                Already have an account? <Link href='/UserLogin'>Sign In</Link>
             </p>
         </div>
     );
