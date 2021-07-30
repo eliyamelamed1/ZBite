@@ -99,8 +99,8 @@ export const userDeleteAction =
         }
     };
 
-// load the the details of the connects user loadLoggedUserDetailsAction
-export const loadLoggedUserDetailsAction = () => async (dispatch) => {
+// load the the details of the connects user loadloggedUserDataAction
+export const loadloggedUserDataAction = () => async (dispatch) => {
     try {
         const config = {
             headers: {
@@ -132,7 +132,7 @@ export const loginAction =
         try {
             const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/djoser/token/login/`, body, config);
             dispatch({ type: LOGIN_SUCCESS, payload: res.data });
-            dispatch(loadLoggedUserDetailsAction());
+            dispatch(loadloggedUserDataAction());
         } catch (err) {
             dispatch({ type: LOGIN_FAIL });
         }

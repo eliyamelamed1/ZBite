@@ -17,7 +17,7 @@ const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 describe('IsRecipeAuthor - author', () => {
     beforeEach(() => {
-        let initialState = { authReducer: { loggedUserDetails: { id: 1 } } };
+        let initialState = { authReducer: { loggedUserData: { id: 1 } } };
         let store = mockStore(initialState);
         const recipe = {
             title: 'recipeTitle',
@@ -49,7 +49,7 @@ describe('IsRecipeAuthor - author', () => {
 
 describe('IsRecipeAuthor - not author', () => {
     beforeEach(() => {
-        let initialState = { authReducer: { loggedUserDetails: { id: 2 } } };
+        let initialState = { authReducer: { loggedUserData: { id: 2 } } };
         let store = mockStore(initialState);
         const recipe = {
             title: 'recipeTitle',

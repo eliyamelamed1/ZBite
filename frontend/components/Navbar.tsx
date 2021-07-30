@@ -8,16 +8,16 @@ const Navbar = () => {
     const dispatch = useDispatch();
 
     const updatedIsUserAuthenticated = useSelector((state) => state.authReducer.isUserAuthenticated);
-    const updatedLoggedUserDetails = useSelector((state) => state.authReducer.loggedUserDetails);
+    const updatedloggedUserData = useSelector((state) => state.authReducer.loggedUserData);
 
     const [isUserAuthenticated, setIsUserAuthenticated] = useState();
-    const [loggedUserDetails, setLoggedUserDetails] = useState();
+    const [loggedUserData, setloggedUserData] = useState();
     useEffect(() => {
         setIsUserAuthenticated(updatedIsUserAuthenticated);
-        setLoggedUserDetails(updatedLoggedUserDetails);
-    }, [dispatch, updatedIsUserAuthenticated, updatedLoggedUserDetails]);
+        setloggedUserData(updatedloggedUserData);
+    }, [dispatch, updatedIsUserAuthenticated, updatedloggedUserData]);
 
-    const profileUrl = loggedUserDetails ? '/users/' + loggedUserDetails.id : null;
+    const profileUrl = loggedUserData ? '/users/' + loggedUserData.id : null;
 
     const logoutHandler = () => {
         try {
@@ -28,9 +28,9 @@ const Navbar = () => {
     };
     const authLinks = (
         <section data-testid='authLinks'>
-            {loggedUserDetails ? (
+            {loggedUserData ? (
                 <div>
-                    <div>you are currently logged in as {loggedUserDetails.email}</div>
+                    <div>you are currently logged in as {loggedUserData.email}</div>
                     <div>
                         <Link href={profileUrl}>profile</Link>
                         <br />

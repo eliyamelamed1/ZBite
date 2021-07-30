@@ -35,7 +35,7 @@ jest.mock('../../../redux/store.tsx', () => ({
     dispatch: jest.fn(),
     getState: jest.fn(() => ({
         authReducer: {
-            searchedUserDetails: { id: userParams.firstUserId, email: userParams.email, name: userParams.name },
+            searchedUserData: { id: userParams.firstUserId, email: userParams.email, name: userParams.name },
         },
     })),
 }));
@@ -68,7 +68,7 @@ describe('UserDetails - getServerSideProps', () => {
 describe('UserDetails - my profile', () => {
     let initialState = {
         authReducer: {
-            loggedUserDetails: { id: userParams.firstUserId, email: userParams.email, name: userParams.name },
+            loggedUserData: { id: userParams.firstUserId, email: userParams.email, name: userParams.name },
         },
     };
     let store = mockStore(initialState);
@@ -122,7 +122,7 @@ describe('UserDetails - my profile', () => {
 describe('UserDetails - other account profile', () => {
     let initialState = {
         authReducer: {
-            searchedUserDetails: { id: userParams.secondUserId, email: userParams.email, name: userParams.name },
+            searchedUserData: { id: userParams.secondUserId, email: userParams.email, name: userParams.name },
         },
     };
     let store = mockStore(initialState);

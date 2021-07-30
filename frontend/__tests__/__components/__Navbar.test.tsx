@@ -17,7 +17,7 @@ const mockStore = configureStore(middlewares);
 
 describe('NavBar - authenticated users', () => {
     const initialState = {
-        authReducer: { isUserAuthenticated: true, loggedUserDetails: { email: 'testemail@gmail.com', id: 'userId' } },
+        authReducer: { isUserAuthenticated: true, loggedUserData: { email: 'testemail@gmail.com', id: 'userId' } },
     };
     const store = mockStore(initialState);
     beforeEach(() => {
@@ -46,7 +46,7 @@ describe('NavBar - authenticated users', () => {
     });
     test('authLinks should contain valid profile link', () => {
         const profileLink = screen.getByRole('link', { name: /profile/i });
-        const userId = store.getState().authReducer.loggedUserDetails.id;
+        const userId = store.getState().authReducer.loggedUserData.id;
         expect(profileLink).toBeInTheDocument();
         expect(profileLink.href).toEqual(`http://localhost/users/${userId}`);
     });

@@ -10,17 +10,17 @@ import { loadRecipeDetailsAction } from '../../redux/actions/recipe';
 import store from '../../redux/store';
 
 const RecipeDetails = (props) => {
-    const recipeData = props.recipeData;
+    const searchedRecipeData = props.searchedRecipeData;
     const displayInteriorImages = () => {
-        if (recipeData) {
+        if (searchedRecipeData) {
             const images = [];
 
             images.push(
                 <div key={1}>
                     <div>
-                        {recipeData.photo_1 ? (
+                        {searchedRecipeData.photo_1 ? (
                             <div>
-                                <Image src={recipeData.photo_1} alt='' height={100} width={100} />
+                                <Image src={searchedRecipeData.photo_1} alt='' height={100} width={100} />
                             </div>
                         ) : (
                             <div>* this recipe has no photos *</div>
@@ -32,34 +32,38 @@ const RecipeDetails = (props) => {
         }
     };
 
-    const authorLinks = <section>{recipeData ? <IsRecipeAuthor recipe={recipeData} /> : null}</section>;
+    const authorLinks = <section>{searchedRecipeData ? <IsRecipeAuthor recipe={searchedRecipeData} /> : null}</section>;
 
     return (
         <React.Fragment>
             <Head>
-                {recipeData ? <title>ZBite - recipes |{`${recipeData.title}`}</title> : <title>ZBite - recipes </title>}
+                {searchedRecipeData ? (
+                    <title>ZBite - recipes |{`${searchedRecipeData.title}`}</title>
+                ) : (
+                    <title>ZBite - recipes </title>
+                )}
                 <meta name='description' content='recipes detail' />
             </Head>
             <main data-testid='recipeDetails'>
                 <section>{authorLinks}</section>
                 <section>
-                    {recipeData ? (
+                    {searchedRecipeData ? (
                         <div>
-                            <Link href={`/users/${recipeData.author}/`} passHref>
-                                <p>recipe Author: {recipeData.author}</p>
+                            <Link href={`/users/${searchedRecipeData.author}/`} passHref>
+                                <p>recipe Author: {searchedRecipeData.author}</p>
                             </Link>
-                            <h1>recipe title: {recipeData.title}</h1>
+                            <h1>recipe title: {searchedRecipeData.title}</h1>
                             <Link href='/'>Home</Link>
-                            {recipeData.photo_main ? (
-                                <Image src={recipeData.photo_main} alt='' height={100} width={100} />
+                            {searchedRecipeData.photo_main ? (
+                                <Image src={searchedRecipeData.photo_main} alt='' height={100} width={100} />
                             ) : null}
                             <ul>
                                 <li>
                                     Flavor Type:
-                                    {recipeData.flavor_type}
+                                    {searchedRecipeData.flavor_type}
                                 </li>
                             </ul>
-                            <p>recipe description: {recipeData.description}</p>
+                            <p>recipe description: {searchedRecipeData.description}</p>
                             {displayInteriorImages()}
                         </div>
                     ) : (
@@ -74,12 +78,12 @@ const RecipeDetails = (props) => {
 export async function getServerSideProps(context) {
     const id = context.params.RecipeDetails_Id;
     await store.dispatch(loadRecipeDetailsAction({ id }));
-    const recipeData = store.getState().recipeReducer.recipeDetails;
+    const searchedRecipeData = store.getState().recipeReducer.searchedRecipeData;
 
-    const isRecipeDataIdMatchSearchedId = recipeData?.id === id;
+    const isRecipeDataIdMatchSearchedId = searchedRecipeData?.id === id;
 
     if (isRecipeDataIdMatchSearchedId) {
-        return { props: { recipeData } };
+        return { props: { searchedRecipeData } };
     } else {
         return { notFound: true };
     }

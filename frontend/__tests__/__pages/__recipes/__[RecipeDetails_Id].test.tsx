@@ -13,7 +13,7 @@ import thunk from 'redux-thunk';
 const recipeParams = {
     existingRecipeId: '5',
     nonExistingRecipeId: 'nonExistingRecipe',
-    recipeData: {
+    searchedRecipeData: {
         id: '5',
         title: 'recipeTitle',
         description: 'recipeDescription',
@@ -36,7 +36,7 @@ jest.mock('../../../redux/store.tsx', () => ({
     dispatch: jest.fn(),
     getState: jest.fn(() => ({
         recipeReducer: {
-            recipeDetails: recipeParams.recipeData,
+            searchedRecipeData: recipeParams.searchedRecipeData,
         },
     })),
 }));
@@ -57,7 +57,7 @@ describe('RecipeDetails - getServerSideProps', () => {
     });
     test('getStaticProps - should return matching props', async () => {
         const props = (await getServerSideProps(contextParams.existingRecipe)).props;
-        expect(props.recipeData).toEqual(recipeParams.recipeData);
+        expect(props.searchedRecipeData).toEqual(recipeParams.searchedRecipeData);
     });
     test('getStaticProps - if recipe doesnt exist return not found', async () => {
         const notFound = (await getServerSideProps(contextParams.nonExistingRecipe)).notFound;
@@ -67,9 +67,9 @@ describe('RecipeDetails - getServerSideProps', () => {
 
 describe('RecipeDetails - author of recipe', () => {
     let initialState = {
-        authReducer: { loggedUserDetails: { id: 'eliya' } },
+        authReducer: { loggedUserData: { id: 'eliya' } },
         recipeReducer: {
-            recipeDetails: {
+            searchedRecipeData: {
                 id: '5',
                 title: 'recipeTitle',
                 description: 'recipeDescription',
@@ -81,10 +81,10 @@ describe('RecipeDetails - author of recipe', () => {
     };
     let store = mockStore(initialState);
     beforeEach(async () => {
-        const { recipeData } = (await getServerSideProps(contextParams.existingRecipe)).props;
+        const { searchedRecipeData } = (await getServerSideProps(contextParams.existingRecipe)).props;
         render(
             <Provider store={store}>
-                <RecipeDetails recipeData={recipeData} />
+                <RecipeDetails searchedRecipeData={searchedRecipeData} />
             </Provider>
         );
     });
@@ -123,14 +123,14 @@ describe('RecipeDetails - author of recipe', () => {
 });
 describe('RecipeDetails - not the recipe author', () => {
     let initialState = {
-        authReducer: { loggedUserDetails: { id: 'eilon' } },
+        authReducer: { loggedUserData: { id: 'eilon' } },
     };
     let store = mockStore(initialState);
     beforeEach(async () => {
-        const { recipeData } = (await getServerSideProps(contextParams.existingRecipe)).props;
+        const { searchedRecipeData } = (await getServerSideProps(contextParams.existingRecipe)).props;
         render(
             <Provider store={store}>
-                <RecipeDetails recipeData={recipeData} />
+                <RecipeDetails searchedRecipeData={searchedRecipeData} />
             </Provider>
         );
     });

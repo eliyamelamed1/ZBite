@@ -11,7 +11,7 @@ import store from '../../redux/store';
 
 const UserDetails = (props) => {
     const [isMyProfile, setIsMyProfile] = useState(false);
-    const { loggedUserDetails, searchedUserDetails } = useSelector((state) => state.authReducer);
+    const { loggedUserData, searchedUserData } = useSelector((state) => state.authReducer);
     const [userData, setUserData] = useState(props.userData);
 
     useEffect(() => {
@@ -26,21 +26,21 @@ const UserDetails = (props) => {
         when updating searched account data (by following etc...) migrate the changes to the userData
         */
 
-        if (searchedUserDetails) {
-            setUserData(searchedUserDetails);
+        if (searchedUserData) {
+            setUserData(searchedUserData);
         }
-    }, [searchedUserDetails]);
+    }, [searchedUserData]);
 
     useEffect(() => {
         /*
          check if the userDetailsPage is the profile of the logged user.
          when updating logged account data migrate the changes to the userData
         */
-        if (loggedUserDetails?.id == userData?.id) {
-            setUserData(loggedUserDetails);
+        if (loggedUserData?.id == userData?.id) {
+            setUserData(loggedUserData);
             setIsMyProfile(true);
         }
-    }, [userData?.id, loggedUserDetails]);
+    }, [userData?.id, loggedUserData]);
 
     const myProfileLinks = (
         <main data-testid='myProfileLinks'>
@@ -72,7 +72,7 @@ const UserDetails = (props) => {
 export async function getServerSideProps(context) {
     const id = context.params.UserDetails_Id;
     await store.dispatch(loadUserDetailsAction({ id }));
-    const userData = store.getState().authReducer.searchedUserDetails;
+    const userData = store.getState().authReducer.searchedUserData;
 
     const isUserDataIdMatchSearchedId = userData?.id === id;
 

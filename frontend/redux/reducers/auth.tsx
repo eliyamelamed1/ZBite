@@ -20,9 +20,9 @@ import {
 const initialState = {
     auth_token: process.browser ? localStorage.getItem('auth_token') : null,
     isUserAuthenticated: process.browser ? !!localStorage.getItem('auth_token') : null,
-    loggedUserDetails: process.browser ? JSON.parse(localStorage.getItem('loggedUserDetails')) : null,
+    loggedUserData: process.browser ? JSON.parse(localStorage.getItem('loggedUserData')) : null,
     listOfUsers: null,
-    searchedUserDetails: null,
+    searchedUserData: null,
 };
 
 export default function authReducer(state = initialState, action) {
@@ -34,14 +34,14 @@ export default function authReducer(state = initialState, action) {
                 ...state,
                 auth_token: payload.auth_token,
                 isUserAuthenticated: payload.isUserAuthenticated,
-                loggedUserDetails: payload.loggedUserDetails,
+                loggedUserData: payload.loggedUserData,
                 listOfUsers: payload.listOfUsers,
-                searchedUserDetails: payload.searchedUserDetails,
+                searchedUserData: payload.searchedUserData,
             };
         case GET_USER_DETAILS_SUCCESS:
             return {
                 ...state,
-                searchedUserDetails: payload,
+                searchedUserData: payload,
             };
         case GET_USER_LIST_SUCCESS:
             return {
@@ -49,10 +49,10 @@ export default function authReducer(state = initialState, action) {
                 listOfUsers: payload,
             };
         case UPDATE_USER_SUCCESS:
-            localStorage.setItem('loggedUserDetails', JSON.stringify(payload));
+            localStorage.setItem('loggedUserData', JSON.stringify(payload));
             return {
                 ...state,
-                loggedUserDetails: payload,
+                loggedUserData: payload,
             };
         case LOGIN_SUCCESS:
             localStorage.setItem('auth_token', payload.auth_token);
@@ -62,11 +62,11 @@ export default function authReducer(state = initialState, action) {
                 auth_token: payload.auth_token,
             };
         case GET_LOGGED_USER_DETAILS_SUCCESS:
-            localStorage.setItem('loggedUserDetails', JSON.stringify(payload));
+            localStorage.setItem('loggedUserData', JSON.stringify(payload));
             return {
                 ...state,
 
-                loggedUserDetails: payload,
+                loggedUserData: payload,
             };
         case SIGNUP_SUCCESS:
             return {
@@ -74,22 +74,22 @@ export default function authReducer(state = initialState, action) {
                 isUserAuthenticated: false,
             };
         case GET_LOGGED_USER_DETAILS_FAIL:
-            process.browser ? localStorage.removeItem('loggedUserDetails') : null;
+            process.browser ? localStorage.removeItem('loggedUserData') : null;
             return {
                 ...state,
-                loggedUserDetails: null,
+                loggedUserData: null,
             };
         case DELETE_USER_SUCCESS:
         case SIGNUP_FAIL:
         case LOGIN_FAIL:
         case LOGOUT:
             localStorage.removeItem('auth_token');
-            localStorage.removeItem('loggedUserDetails');
+            localStorage.removeItem('loggedUserData');
             return {
                 ...state,
                 auth_token: null,
                 isUserAuthenticated: false,
-                loggedUserDetails: null,
+                loggedUserData: null,
             };
         case GET_USER_DETAILS_FAIL:
         case GET_USER_LIST_FAIL:

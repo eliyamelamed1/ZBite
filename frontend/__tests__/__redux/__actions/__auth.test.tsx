@@ -1,9 +1,9 @@
 import '@testing-library/jest-dom/extend-expect';
 
 import {
-    loadLoggedUserDetailsAction,
     loadUserDetailsAction,
     loadUserListAction,
+    loadloggedUserDataAction,
     loginAction,
     resetPasswordAction,
     resetPasswordConfirmAction,
@@ -95,10 +95,10 @@ describe('axios request should match url endpoint, and parameters', () => {
         expect(axios.delete.mock.calls[0][1]).toStrictEqual(configWithAuthToken);
         // expect(logoutAction.mock.calls.length).toBe('1');
     });
-    test('loadLoggedUserDetailsAction', () => {
+    test('loadloggedUserDataAction', () => {
         const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/djoser/users/me/`;
 
-        store.dispatch(loadLoggedUserDetailsAction());
+        store.dispatch(loadloggedUserDataAction());
 
         expect(axios.get.mock.calls.length).toBe(1);
         expect(axios.get.mock.calls[0][0]).toStrictEqual(endpointUrl);
@@ -115,7 +115,7 @@ describe('axios request should match url endpoint, and parameters', () => {
         expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointUrl);
         expect(axios.post.mock.calls[0][1]).toStrictEqual(body);
         expect(axios.post.mock.calls[0][2]).toStrictEqual(config);
-        // test should dispatch loadLoggedUserDetailsAction
+        // test should dispatch loadloggedUserDataAction
     });
     test('signupAction', () => {
         const { name, email, password, re_password } = parameters;

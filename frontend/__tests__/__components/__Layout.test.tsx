@@ -1,5 +1,3 @@
-// TODO test loadLoggedUserDetailsAction() is called
-
 import '@testing-library/jest-dom/extend-expect';
 
 import { cleanup, render, screen } from '@testing-library/react';
