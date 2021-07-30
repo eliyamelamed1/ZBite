@@ -96,7 +96,7 @@ describe('axios request should match url endpoint, and parameters', () => {
         // expect(logoutAction.mock.calls.length).toBe('1');
     });
     test('loadloggedUserDataAction', () => {
-        const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/djoser/users/me/`;
+        const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/accounts/logged_user/`;
 
         store.dispatch(loadloggedUserDataAction());
 

@@ -158,7 +158,7 @@ describe('UserSignup - guest user', () => {
         
             expect(signupAction.mock.calls.length).toBe(1)
             expect(Router.push.mock.calls.length).toBe(1)
-            expect(Router.push.mock.calls[0][0]).toBe('/UserLogin')
+            expect(Router.push.mock.calls[0][0]).toBe('/users/UserLogin')
         });
         });
     });

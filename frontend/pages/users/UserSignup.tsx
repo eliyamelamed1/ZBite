@@ -36,7 +36,7 @@ const UserSignup = () => {
                         re_password,
                     })
                 );
-                Router.push('/UserLogin');
+                Router.push('/users/UserLogin');
             } catch {}
         }
     };

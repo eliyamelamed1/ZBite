@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import Custom404 from '../404';
 import FollowUnFollow from '../../components/followers/FollowUnFollow';
 import Head from 'next/head';
 import UserDelete from '../../components/users/UserDelete';
@@ -16,10 +15,10 @@ const UserDetails = (props) => {
 
     useEffect(() => {
         // updates userData when navigating between accounts on the browser
-        if (props.userDetails) {
-            setUserData(props.userDetails);
+        if (props.userData) {
+            setUserData(props.userData);
         }
-    }, [props.userDetails]);
+    }, [props.userData]);
 
     useEffect(() => {
         /*

@@ -109,7 +109,7 @@ export const loadloggedUserDataAction = () => async (dispatch) => {
                 Authorization: `Token ${localStorage.getItem('auth_token')}`,
             },
         };
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/djoser/users/me/`, config);
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/accounts/logged_user/`, config);
 
         dispatch({ type: GET_LOGGED_USER_DETAILS_SUCCESS, payload: res.data });
     } catch (err) {
