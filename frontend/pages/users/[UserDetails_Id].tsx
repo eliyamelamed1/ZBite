@@ -12,21 +12,9 @@ import { useRouter } from 'next/router';
 const UserDetails = (props) => {
     // TODO - create variable isMyProfile
     const [isMyProfile, setIsMyProfile] = useState(false);
-    const [userDetails, setUserDetails] = useState({});
     const { loggedUserDetails } = useSelector((state) => state.authReducer);
     const { searchedUserDetails } = props;
     const { id } = searchedUserDetails;
-
-    console.log(userDetails);
-
-    useEffect(() => {
-        if (loggedUserDetails) {
-            setUserDetails({ ...loggedUserDetails });
-        }
-        if (searchedUserDetails) {
-            setUserDetails({ ...searchedUserDetails });
-        }
-    }, [searchedUserDetails, loggedUserDetails]);
 
     useEffect(() => {
         if (loggedUserDetails?.id == searchedUserDetails.id) {
@@ -50,10 +38,10 @@ const UserDetails = (props) => {
             </Head>
             <main data-testid='userDetails'>
                 <div>
-                    <p>user name: {userDetails?.name}</p>
-                    <p>user email: {userDetails?.email}</p>
-                    <p>following: {userDetails?.following?.length}</p>
-                    <p>followers: {userDetails?.followers?.length}</p>
+                    <p>user name: {searchedUserDetails?.name}</p>
+                    <p>user email: {searchedUserDetails?.email}</p>
+                    <p>following: {searchedUserDetails?.following?.length}</p>
+                    <p>followers: {searchedUserDetails?.followers?.length}</p>
                 </div>
                 <div>{isMyProfile ? <div>{myProfileLinks}</div> : null}</div>
             </main>
