@@ -1,7 +1,7 @@
 import { FOLLOW_UNFOLLOW_USER_FAIL, FOLLOW_UNFOLLOW_USER_SUCCESS } from '../types';
 
 import axios from 'axios';
-import { loadUserDetailsAction } from './user';
+import { loadloggedUserDataAction, loadUserDetailsAction } from './user';
 
 export const followUnFollowAction =
     ({ user_followed }) =>
@@ -18,6 +18,7 @@ export const followUnFollowAction =
             const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/followers/follow/`, body, config);
             dispatch({ type: FOLLOW_UNFOLLOW_USER_SUCCESS, payload: res.data });
             dispatch(loadUserDetailsAction({ id: user_followed }));
+            dispatch(loadloggedUserDataAction());
         } catch {
             dispatch({ type: FOLLOW_UNFOLLOW_USER_FAIL });
         }
