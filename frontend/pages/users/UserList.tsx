@@ -4,7 +4,7 @@ test displayedUsers is called and displays users
 
 import DisplayUsers from '../../components/users/DisplayUsers';
 import React from 'react';
-import { loadUserListAction } from '../../redux/actions/auth';
+import { loadUserListAction } from '../../redux/actions/user';
 import store from '../../redux/store';
 
 const UserList = (props) => {
@@ -19,7 +19,7 @@ const UserList = (props) => {
 
 export async function getStaticProps() {
     await store.dispatch(loadUserListAction());
-    const { listOfUsers } = store.getState().authReducer;
+    const { listOfUsers } = store.getState().userReducer;
     return { props: { listOfUsers }, revalidate: 10 };
 }
 export default UserList;

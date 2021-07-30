@@ -10,11 +10,11 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import Router from 'next/router';
 import UserResetPassword from '../../../../pages/users/reset_password/UserResetPassword';
-import { resetPasswordAction } from '../../../../redux/actions/auth';
+import { resetPasswordAction } from '../../../../redux/actions/user';
 import store from '../../../../redux/store';
 import userEvent from '@testing-library/user-event';
 
-jest.mock('../../../../redux/actions/auth', () => ({ resetPasswordAction: jest.fn().mockReturnValue(() => true) }));
+jest.mock('../../../../redux/actions/user', () => ({ resetPasswordAction: jest.fn().mockReturnValue(() => true) }));
 jest.mock('next/router', () => ({ push: jest.fn() }));
 
 beforeEach(() => {

@@ -6,12 +6,12 @@ import FollowUnFollow from '../../components/followers/FollowUnFollow';
 import Head from 'next/head';
 import UserDelete from '../../components/users/UserDelete';
 import UserUpdate from '../../components/users/UserUpdate';
-import { loadUserDetailsAction } from '../../redux/actions/auth';
+import { loadUserDetailsAction } from '../../redux/actions/user';
 import store from '../../redux/store';
 
 const UserDetails = (props) => {
     const [isMyProfile, setIsMyProfile] = useState(false);
-    const { loggedUserData, searchedUserData } = useSelector((state) => state.authReducer);
+    const { loggedUserData, requestedUserData } = useSelector((state) => state.userReducer);
     const [userData, setUserData] = useState(props.userData);
 
     useEffect(() => {
@@ -26,10 +26,10 @@ const UserDetails = (props) => {
         when updating searched account data (by following etc...) migrate the changes to the userData
         */
 
-        if (searchedUserData) {
-            setUserData(searchedUserData);
+        if (requestedUserData) {
+            setUserData(requestedUserData);
         }
-    }, [searchedUserData]);
+    }, [requestedUserData]);
 
     useEffect(() => {
         /*
@@ -72,7 +72,7 @@ const UserDetails = (props) => {
 export async function getServerSideProps(context) {
     const id = context.params.UserDetails_Id;
     await store.dispatch(loadUserDetailsAction({ id }));
-    const userData = store.getState().authReducer.searchedUserData;
+    const userData = store.getState().userReducer.requestedUserData;
 
     const isUserDataIdMatchSearchedId = userData?.id === id;
 

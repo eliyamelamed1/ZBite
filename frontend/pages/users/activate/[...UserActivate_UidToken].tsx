@@ -5,12 +5,12 @@ import Router, { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 
 import React from 'react';
-import { userActivateAction } from '../../../redux/actions/auth';
+import { userActivateAction } from '../../../redux/actions/user';
 
 const UserActivate = () => {
     const dispatch = useDispatch();
     const router = useRouter();
-    const { isUserAuthenticated } = useSelector((state) => state.authReducer);
+    const { isUserAuthenticated } = useSelector((state) => state.userReducer);
 
     const onSubmit = () => {
         const { UserActivate_UidToken } = router.query;

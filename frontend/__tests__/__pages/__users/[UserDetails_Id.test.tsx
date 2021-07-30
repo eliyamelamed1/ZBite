@@ -7,7 +7,7 @@ import React from 'react';
 import UserDetails_Id from '../../../pages/users/[UserDetails_Id]';
 import configureStore from 'redux-mock-store';
 import { getServerSideProps } from '../../../pages/users/[UserDetails_Id]';
-import { loadUserDetailsAction } from '../../../redux/actions/auth';
+import { loadUserDetailsAction } from '../../../redux/actions/user';
 import thunk from 'redux-thunk';
 
 const userParams = {
@@ -30,12 +30,12 @@ const contextParams = {
         params: { UserDetails_Id: userParams.nonExistingId },
     },
 };
-jest.mock('../../../redux/actions/auth', () => ({ loadUserDetailsAction: jest.fn() }));
+jest.mock('../../../redux/actions/user', () => ({ loadUserDetailsAction: jest.fn() }));
 jest.mock('../../../redux/store.tsx', () => ({
     dispatch: jest.fn(),
     getState: jest.fn(() => ({
-        authReducer: {
-            searchedUserData: { id: userParams.firstUserId, email: userParams.email, name: userParams.name },
+        userReducer: {
+            requestedUserData: { id: userParams.firstUserId, email: userParams.email, name: userParams.name },
         },
     })),
 }));
@@ -67,7 +67,7 @@ describe('UserDetails - getServerSideProps', () => {
 
 describe('UserDetails - my profile', () => {
     let initialState = {
-        authReducer: {
+        userReducer: {
             loggedUserData: { id: userParams.firstUserId, email: userParams.email, name: userParams.name },
         },
     };
@@ -121,8 +121,8 @@ describe('UserDetails - my profile', () => {
 
 describe('UserDetails - other account profile', () => {
     let initialState = {
-        authReducer: {
-            searchedUserData: { id: userParams.secondUserId, email: userParams.email, name: userParams.name },
+        userReducer: {
+            requestedUserData: { id: userParams.secondUserId, email: userParams.email, name: userParams.name },
         },
     };
     let store = mockStore(initialState);

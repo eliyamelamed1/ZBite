@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { userDeleteAction } from '../../redux/actions/auth';
+import { userDeleteAction } from '../../redux/actions/user';
 
 const UserDelete = ({ id }) => {
     const dispatch = useDispatch();

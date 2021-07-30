@@ -1,7 +1,7 @@
 import { FOLLOW_UNFOLLOW_USER_FAIL, FOLLOW_UNFOLLOW_USER_SUCCESS } from '../types';
 
 import axios from 'axios';
-import { loadUserDetailsAction } from './auth';
+import { loadUserDetailsAction } from './user';
 
 export const followUnFollowAction =
     ({ user_followed }) =>

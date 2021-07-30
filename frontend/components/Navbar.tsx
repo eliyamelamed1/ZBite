@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Link from 'next/link';
-import { logoutAction } from '../redux/actions/auth';
+import { logoutAction } from '../redux/actions/user';
 
 const Navbar = () => {
     const dispatch = useDispatch();
 
-    const updatedIsUserAuthenticated = useSelector((state) => state.authReducer.isUserAuthenticated);
-    const updatedloggedUserData = useSelector((state) => state.authReducer.loggedUserData);
+    const updatedIsUserAuthenticated = useSelector((state) => state.userReducer.isUserAuthenticated);
+    const updatedloggedUserData = useSelector((state) => state.userReducer.loggedUserData);
 
     const [isUserAuthenticated, setIsUserAuthenticated] = useState();
     const [loggedUserData, setloggedUserData] = useState();

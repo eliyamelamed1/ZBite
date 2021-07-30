@@ -11,7 +11,7 @@ import {
     userActivateAction,
     userDeleteAction,
     userUpdateAction,
-} from '../../../redux/actions/auth';
+} from '../../../redux/actions/user';
 
 import axios from 'axios';
 import configureStore from 'redux-mock-store';
@@ -84,7 +84,7 @@ describe('axios request should match url endpoint, and parameters', () => {
     });
     test('userDeleteAction', () => {
         // test logoutAction have been dispatched
-        // jest.mock('../../../redux/actions/auth', () => ({ logoutAction: jest.fn() }));
+        // jest.mock('../../../redux/actions/user', () => ({ logoutAction: jest.fn() }));
         const { id } = parameters;
         const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/accounts/${id}/`;
 
@@ -169,7 +169,7 @@ describe('axios request should match url endpoint, and parameters', () => {
     //  TODO fix this test
     // test('logoutAction', async () => {
     //     const store = mockStore(initialState);
-    //     jest.mock('../../../redux/actions/auth', () => ({ logoutAction: jest.fn() }));
+    //     jest.mock('../../../redux/actions/user', () => ({ logoutAction: jest.fn() }));
     //     store.dispatch(logoutAction());
 
     //     expect(await logoutAction.mock.calls.length).toBe('');

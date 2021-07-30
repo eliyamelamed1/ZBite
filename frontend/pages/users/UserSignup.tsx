@@ -7,11 +7,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Link from 'next/link';
 import Router from 'next/router';
-import { signupAction } from '../../redux/actions/auth';
+import { signupAction } from '../../redux/actions/user';
 
 const UserSignup = () => {
     const dispatch = useDispatch();
-    const isUserAuthenticated = useSelector((state) => state.authReducer.isUserAuthenticated);
+    const isUserAuthenticated = useSelector((state) => state.userReducer.isUserAuthenticated);
     const [formData, setFormData] = useState({
         name: '',
         email: '',

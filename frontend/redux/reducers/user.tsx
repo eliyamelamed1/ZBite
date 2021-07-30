@@ -22,10 +22,10 @@ const initialState = {
     isUserAuthenticated: process.browser ? !!localStorage.getItem('auth_token') : null,
     loggedUserData: process.browser ? JSON.parse(localStorage.getItem('loggedUserData')) : null,
     listOfUsers: null,
-    searchedUserData: null,
+    requestedUserData: null,
 };
 
-export default function authReducer(state = initialState, action) {
+export default function userReducer(state = initialState, action) {
     const { type, payload } = action;
 
     switch (type) {
@@ -36,12 +36,12 @@ export default function authReducer(state = initialState, action) {
                 isUserAuthenticated: payload.isUserAuthenticated,
                 loggedUserData: payload.loggedUserData,
                 listOfUsers: payload.listOfUsers,
-                searchedUserData: payload.searchedUserData,
+                requestedUserData: payload.requestedUserData,
             };
         case GET_USER_DETAILS_SUCCESS:
             return {
                 ...state,
-                searchedUserData: payload,
+                requestedUserData: payload,
             };
         case GET_USER_LIST_SUCCESS:
             return {

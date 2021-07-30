@@ -6,7 +6,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import React from 'react';
 import configureStore from 'redux-mock-store';
-import { loadUserListAction } from '../../../redux/actions/auth';
+import { loadUserListAction } from '../../../redux/actions/user';
 import thunk from 'redux-thunk';
 
 const listOfUsers = [
@@ -24,10 +24,10 @@ const listOfUsers = [
 jest.mock('../../../redux/store.tsx', () => ({
     dispatch: jest.fn(),
     getState: jest.fn(() => ({
-        authReducer: { listOfUsers: listOfUsers },
+        userReducer: { listOfUsers: listOfUsers },
     })),
 }));
-jest.mock('../../../redux/actions/auth', () => ({ loadUserListAction: jest.fn() }));
+jest.mock('../../../redux/actions/user', () => ({ loadUserListAction: jest.fn() }));
 describe('UserList', () => {
     const middlewares = [thunk];
     const mockStore = configureStore(middlewares);

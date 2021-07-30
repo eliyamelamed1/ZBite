@@ -7,17 +7,17 @@ import Navbar from '../../components/Navbar';
 import { Provider } from 'react-redux';
 import React from 'react';
 import configureStore from 'redux-mock-store';
-import { logoutAction } from '../../redux/actions/auth';
+import { logoutAction } from '../../redux/actions/user';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
-jest.mock('../../redux/actions/auth', () => ({ logoutAction: jest.fn() }));
+jest.mock('../../redux/actions/user', () => ({ logoutAction: jest.fn() }));
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 
 describe('NavBar - authenticated users', () => {
     const initialState = {
-        authReducer: { isUserAuthenticated: true, loggedUserData: { email: 'testemail@gmail.com', id: 'userId' } },
+        userReducer: { isUserAuthenticated: true, loggedUserData: { email: 'testemail@gmail.com', id: 'userId' } },
     };
     const store = mockStore(initialState);
     beforeEach(() => {
@@ -46,7 +46,7 @@ describe('NavBar - authenticated users', () => {
     });
     test('authLinks should contain valid profile link', () => {
         const profileLink = screen.getByRole('link', { name: /profile/i });
-        const userId = store.getState().authReducer.loggedUserData.id;
+        const userId = store.getState().userReducer.loggedUserData.id;
         expect(profileLink).toBeInTheDocument();
         expect(profileLink.href).toEqual(`http://localhost/users/${userId}`);
     });
@@ -69,7 +69,7 @@ describe('NavBar - authenticated users', () => {
 
 describe('NavBar - guest users', () => {
     const initialState = {
-        authReducer: { isUserAuthenticated: false },
+        userReducer: { isUserAuthenticated: false },
     };
     const store = mockStore(initialState);
     beforeEach(() => {

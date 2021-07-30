@@ -7,17 +7,17 @@ import React from 'react';
 import Router from 'next/router';
 import UserSignup from '../../../pages/users/UserSignup';
 import configureStore from 'redux-mock-store';
-import { signupAction } from '../../../redux/actions/auth';
+import { signupAction } from '../../../redux/actions/user';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 let initialState = {
-    authReducer: {},
+    userReducer: {},
 };
 const store = mockStore(initialState);
-jest.mock('../../../redux/actions/auth', () => ({
+jest.mock('../../../redux/actions/user', () => ({
      signupAction: jest.fn().mockReturnValue(()=> true) 
 }));
 jest.mock('next/router', () => ({ push: jest.fn() }));
@@ -167,7 +167,7 @@ describe('UserSignup - guest user', () => {
 
 describe('UserSignup - guest authenticated users', () => {
     initialState = {
-        authReducer: { isUserAuthenticated: true },
+        userReducer: { isUserAuthenticated: true },
     };
     const store = mockStore(initialState);
     beforeEach(() => {
