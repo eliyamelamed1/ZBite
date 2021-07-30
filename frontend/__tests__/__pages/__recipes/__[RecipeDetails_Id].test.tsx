@@ -13,7 +13,7 @@ import thunk from 'redux-thunk';
 const recipeParams = {
     existingRecipeId: '5',
     nonExistingRecipeId: 'nonExistingRecipe',
-    recipeDetails: {
+    recipeData: {
         id: '5',
         title: 'recipeTitle',
         description: 'recipeDescription',
@@ -36,7 +36,7 @@ jest.mock('../../../redux/store.tsx', () => ({
     dispatch: jest.fn(),
     getState: jest.fn(() => ({
         recipeReducer: {
-            recipeDetails: recipeParams.recipeDetails,
+            recipeDetails: recipeParams.recipeData,
         },
     })),
 }));
@@ -57,7 +57,7 @@ describe('RecipeDetails - getServerSideProps', () => {
     });
     test('getStaticProps - should return matching props', async () => {
         const props = (await getServerSideProps(contextParams.existingRecipe)).props;
-        expect(props.recipeDetails).toEqual(recipeParams.recipeDetails);
+        expect(props.recipeData).toEqual(recipeParams.recipeData);
     });
     test('getStaticProps - if recipe doesnt exist return not found', async () => {
         const notFound = (await getServerSideProps(contextParams.nonExistingRecipe)).notFound;
@@ -81,10 +81,10 @@ describe('RecipeDetails - author of recipe', () => {
     };
     let store = mockStore(initialState);
     beforeEach(async () => {
-        const { recipeDetails } = (await getServerSideProps(contextParams.existingRecipe)).props;
+        const { recipeData } = (await getServerSideProps(contextParams.existingRecipe)).props;
         render(
             <Provider store={store}>
-                <RecipeDetails recipeDetails={recipeDetails} />
+                <RecipeDetails recipeData={recipeData} />
             </Provider>
         );
     });
@@ -127,10 +127,10 @@ describe('RecipeDetails - not the recipe author', () => {
     };
     let store = mockStore(initialState);
     beforeEach(async () => {
-        const { recipeDetails } = (await getServerSideProps(contextParams.existingRecipe)).props;
+        const { recipeData } = (await getServerSideProps(contextParams.existingRecipe)).props;
         render(
             <Provider store={store}>
-                <RecipeDetails recipeDetails={recipeDetails} />
+                <RecipeDetails recipeData={recipeData} />
             </Provider>
         );
     });

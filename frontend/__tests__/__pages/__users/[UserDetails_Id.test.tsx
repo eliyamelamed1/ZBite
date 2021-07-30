@@ -17,7 +17,7 @@ const userParams = {
     email: 'testEmail',
     name: 'testName',
 };
-const searchedUserDetails = {
+const userData = {
     id: userParams.firstUserId,
     email: userParams.email,
     name: userParams.name,
@@ -57,7 +57,7 @@ describe('UserDetails - getServerSideProps', () => {
     });
     test('should return matching props', async () => {
         const props = (await getServerSideProps(contextParams.existingUser)).props;
-        expect(props.searchedUserDetails).toEqual(searchedUserDetails);
+        expect(props.userData).toEqual(userData);
     });
     test('if recipe doesnt exist return not found', async () => {
         const notFound = (await getServerSideProps(contextParams.nonExistingUser)).notFound;
@@ -73,10 +73,10 @@ describe('UserDetails - my profile', () => {
     };
     let store = mockStore(initialState);
     beforeEach(async () => {
-        const { searchedUserDetails } = (await getServerSideProps(contextParams.existingUser)).props;
+        const { userData } = (await getServerSideProps(contextParams.existingUser)).props;
         render(
             <Provider store={store}>
-                <UserDetails_Id searchedUserDetails={searchedUserDetails} />
+                <UserDetails_Id userData={userData} />
             </Provider>
         );
     });
@@ -112,10 +112,10 @@ describe('UserDetails - my profile', () => {
 
         expect(userDeleteTestId).toBeInTheDocument();
     });
-    test('should not render NotFound', () => {
-        const custom404TestId = screen.queryByTestId('custom404');
+    test('should not render follow/unfollow component', () => {
+        const followUnFollow = screen.queryByTestId('followUnFollow');
 
-        expect(custom404TestId).not.toBeInTheDocument();
+        expect(followUnFollow).not.toBeInTheDocument();
     });
 });
 
@@ -127,11 +127,11 @@ describe('UserDetails - other account profile', () => {
     };
     let store = mockStore(initialState);
     beforeEach(async () => {
-        const { searchedUserDetails } = (await getServerSideProps(contextParams.existingUser)).props;
+        const { userData } = (await getServerSideProps(contextParams.existingUser)).props;
 
         render(
             <Provider store={store}>
-                <UserDetails_Id searchedUserDetails={searchedUserDetails} />
+                <UserDetails_Id userData={userData} />
             </Provider>
         );
     });
@@ -172,9 +172,9 @@ describe('UserDetails - other account profile', () => {
 
         expect(userDeleteTestId).not.toBeInTheDocument();
     });
-    test('should not render NotFound', () => {
-        const custom404TestId = screen.queryByTestId('custom404');
+    test('should render follow/unfollow component', () => {
+        const followUnFollow = screen.getByTestId('followUnFollow');
 
-        expect(custom404TestId).not.toBeInTheDocument();
+        expect(followUnFollow).toBeInTheDocument();
     });
 });

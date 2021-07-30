@@ -10,17 +10,17 @@ import { loadRecipeDetailsAction } from '../../redux/actions/recipe';
 import store from '../../redux/store';
 
 const RecipeDetails = (props) => {
-    const recipeDetails = props.recipeDetails;
+    const recipeData = props.recipeData;
     const displayInteriorImages = () => {
-        if (recipeDetails) {
+        if (recipeData) {
             const images = [];
 
             images.push(
                 <div key={1}>
                     <div>
-                        {recipeDetails.photo_1 ? (
+                        {recipeData.photo_1 ? (
                             <div>
-                                <Image src={recipeDetails.photo_1} alt='' height={100} width={100} />
+                                <Image src={recipeData.photo_1} alt='' height={100} width={100} />
                             </div>
                         ) : (
                             <div>* this recipe has no photos *</div>
@@ -32,38 +32,34 @@ const RecipeDetails = (props) => {
         }
     };
 
-    const authorLinks = <section>{recipeDetails ? <IsRecipeAuthor recipe={recipeDetails} /> : null}</section>;
+    const authorLinks = <section>{recipeData ? <IsRecipeAuthor recipe={recipeData} /> : null}</section>;
 
     return (
         <React.Fragment>
             <Head>
-                {recipeDetails ? (
-                    <title>ZBite - recipes |{`${recipeDetails.title}`}</title>
-                ) : (
-                    <title>ZBite - recipes </title>
-                )}
+                {recipeData ? <title>ZBite - recipes |{`${recipeData.title}`}</title> : <title>ZBite - recipes </title>}
                 <meta name='description' content='recipes detail' />
             </Head>
             <main data-testid='recipeDetails'>
                 <section>{authorLinks}</section>
                 <section>
-                    {recipeDetails ? (
+                    {recipeData ? (
                         <div>
-                            <Link href={`/users/${recipeDetails.author}/`} passHref>
-                                <p>recipe Author: {recipeDetails.author}</p>
+                            <Link href={`/users/${recipeData.author}/`} passHref>
+                                <p>recipe Author: {recipeData.author}</p>
                             </Link>
-                            <h1>recipe title: {recipeDetails.title}</h1>
+                            <h1>recipe title: {recipeData.title}</h1>
                             <Link href='/'>Home</Link>
-                            {recipeDetails.photo_main ? (
-                                <Image src={recipeDetails.photo_main} alt='' height={100} width={100} />
+                            {recipeData.photo_main ? (
+                                <Image src={recipeData.photo_main} alt='' height={100} width={100} />
                             ) : null}
                             <ul>
                                 <li>
                                     Flavor Type:
-                                    {recipeDetails.flavor_type}
+                                    {recipeData.flavor_type}
                                 </li>
                             </ul>
-                            <p>recipe description: {recipeDetails.description}</p>
+                            <p>recipe description: {recipeData.description}</p>
                             {displayInteriorImages()}
                         </div>
                     ) : (
@@ -78,10 +74,12 @@ const RecipeDetails = (props) => {
 export async function getServerSideProps(context) {
     const id = context.params.RecipeDetails_Id;
     await store.dispatch(loadRecipeDetailsAction({ id }));
-    const { recipeDetails } = store.getState().recipeReducer;
+    const recipeData = store.getState().recipeReducer.recipeDetails;
 
-    if (recipeDetails?.id === id) {
-        return { props: { recipeDetails } };
+    const isRecipeDataIdMatchSearchedId = recipeData?.id === id;
+
+    if (isRecipeDataIdMatchSearchedId) {
+        return { props: { recipeData } };
     } else {
         return { notFound: true };
     }

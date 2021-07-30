@@ -59,19 +59,19 @@ export const loadUserListAction = () => async (dispatch) => {
 export const userUpdateAction =
     ({ id, email, name }) =>
     async (dispatch) => {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-
-                Authorization: `Token ${localStorage.getItem('auth_token')}`,
-            },
-        };
-        const body = JSON.stringify({
-            email,
-            name,
-        });
         try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+
+                    Authorization: `Token ${localStorage.getItem('auth_token')}`,
+                },
+            };
+            const body = JSON.stringify({
+                email,
+                name,
+            });
             const res = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/accounts/${id}/`, body, config);
             dispatch({ type: UPDATE_USER_SUCCESS, payload: res.data });
         } catch {
@@ -83,15 +83,14 @@ export const userUpdateAction =
 export const userDeleteAction =
     ({ id }) =>
     async (dispatch) => {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-                Authorization: `Token ${localStorage.getItem('auth_token')}`,
-            },
-        };
-
         try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                    Authorization: `Token ${localStorage.getItem('auth_token')}`,
+                },
+            };
             const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/accounts/${id}/`, config);
             dispatch({ type: DELETE_USER_SUCCESS, payload: res.data });
             dispatch(logoutAction());
@@ -102,7 +101,7 @@ export const userDeleteAction =
 
 // load the the details of the connects user loadLoggedUserDetailsAction
 export const loadLoggedUserDetailsAction = () => async (dispatch) => {
-    if (localStorage.getItem('auth_token')) {
+    try {
         const config = {
             headers: {
                 'Content-Type': 'application/json',
@@ -110,15 +109,10 @@ export const loadLoggedUserDetailsAction = () => async (dispatch) => {
                 Authorization: `Token ${localStorage.getItem('auth_token')}`,
             },
         };
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/djoser/users/me/`, config);
 
-        try {
-            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/djoser/users/me/`, config);
-
-            dispatch({ type: GET_LOGGED_USER_DETAILS_SUCCESS, payload: res.data });
-        } catch (err) {
-            dispatch({ type: GET_LOGGED_USER_DETAILS_FAIL });
-        }
-    } else {
+        dispatch({ type: GET_LOGGED_USER_DETAILS_SUCCESS, payload: res.data });
+    } catch (err) {
         dispatch({ type: GET_LOGGED_USER_DETAILS_FAIL });
     }
 };
