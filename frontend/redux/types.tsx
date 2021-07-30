@@ -35,9 +35,5 @@ export const CREATE_RECIPE_FAIL = 'CREATE_RECIPE_FAIL';
 export const DELETE_RECIPE_SUCCESS = 'DELETE_RECIPE_SUCCESS';
 export const DELETE_RECIPE_FAIL = 'DELETE_RECIPE_FAIL';
 
-//socket
-export const CONNECT_SOCKET = 'CONNECT_SOCKET';
-
-//chats
-export const CHAT_LIST_SUCCESS = 'CHAT_LIST_SUCCESS';
-export const CHAT_LIST_FAIL = 'CHAT_LIST_FAIL';
+// test
+export const TEST_CASE_AUTH = 'TEST_CASE_AUTH';

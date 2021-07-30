@@ -20,7 +20,7 @@ import {
     SIGNUP_SUCCESS,
     UPDATE_USER_FAIL,
     UPDATE_USER_SUCCESS,
-} from './types';
+} from '../types';
 
 import axios from 'axios';
 

@@ -1,6 +1,3 @@
-// test useEffect dispatch action
-// test renders children
-
 import Navbar from './Navbar';
 import React from 'react';
 

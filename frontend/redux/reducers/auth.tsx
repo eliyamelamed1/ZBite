@@ -12,11 +12,10 @@ import {
     LOGOUT,
     SIGNUP_FAIL,
     SIGNUP_SUCCESS,
+    TEST_CASE_AUTH,
     UPDATE_USER_FAIL,
     UPDATE_USER_SUCCESS,
-} from '../actions/types';
-
-const TEST_CASE_AUTH = 'TEST_CASE_AUTH';
+} from '../types';
 
 const initialState = {
     auth_token: process.browser ? localStorage.getItem('auth_token') : null,

@@ -11,7 +11,7 @@ import {
     SEARCH_RECIPE_SUCCESS,
     UPDATE_RECIPE_FAIL,
     UPDATE_RECIPE_SUCCESS,
-} from './types';
+} from '../types';
 
 import axios from 'axios';
 

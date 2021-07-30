@@ -17,10 +17,13 @@ const UserDetails = (props) => {
     const { searchedUserDetails } = props;
     const { id } = searchedUserDetails;
 
+    console.log(userDetails);
+
     useEffect(() => {
         if (loggedUserDetails) {
             setUserDetails({ ...loggedUserDetails });
-        } else if (searchedUserDetails) {
+        }
+        if (searchedUserDetails) {
             setUserDetails({ ...searchedUserDetails });
         }
     }, [searchedUserDetails, loggedUserDetails]);
@@ -49,6 +52,8 @@ const UserDetails = (props) => {
                 <div>
                     <p>user name: {userDetails?.name}</p>
                     <p>user email: {userDetails?.email}</p>
+                    <p>following: {userDetails?.following?.length}</p>
+                    <p>followers: {userDetails?.followers?.length}</p>
                 </div>
                 <div>{isMyProfile ? <div>{myProfileLinks}</div> : null}</div>
             </main>
