@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 
 import FollowUnFollow from '../../components/followers/FollowUnFollow';
 import Head from 'next/head';
@@ -7,6 +6,7 @@ import UserDelete from '../../components/users/UserDelete';
 import UserUpdate from '../../components/users/UserUpdate';
 import { loadUserDetailsAction } from '../../redux/actions/user';
 import store from '../../redux/store';
+import { useSelector } from 'react-redux';
 
 const UserDetails = (props) => {
     const [isMyProfile, setIsMyProfile] = useState(false);
@@ -22,7 +22,7 @@ const UserDetails = (props) => {
 
     useEffect(() => {
         /*
-        when updating searched account data (by following etc...) migrate the changes to the userData
+        when updating requested account data (by following etc...) migrate the changes to the userData
         */
 
         if (requestedUserData) {

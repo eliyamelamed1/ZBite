@@ -9,7 +9,8 @@ const FollowUnFollow = ({ user_followed }) => {
     const { loggedUserData } = useSelector((state) => state.userReducer);
 
     useEffect(() => {
-        if (loggedUserData?.following.includes(user_followed)) {
+        const isUserAlreadyFollowed = loggedUserData?.following.includes(user_followed);
+        if (isUserAlreadyFollowed) {
             setButton('unfollow');
         } else {
             setButton('follow');
