@@ -73,10 +73,10 @@ export async function getServerSideProps(context) {
     await store.dispatch(loadUserDetailsAction({ id }));
     const userData = store.getState().userReducer.requestedUserData;
 
-    const isUserDataIdMatchSearchedId = userData?.id === id;
+    const isUserDataIdMatchRequestedId = userData?.id === id;
 
     // find a name to this function
-    if (isUserDataIdMatchSearchedId) {
+    if (isUserDataIdMatchRequestedId) {
         return { props: { userData } };
     } else {
         return { notFound: true };
