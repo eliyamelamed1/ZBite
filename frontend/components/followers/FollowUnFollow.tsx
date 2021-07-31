@@ -1,9 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { followUnFollowAction } from '../../redux/actions/follower';
-import { useDispatch } from 'react-redux';
 
 const FollowUnFollow = ({ user_followed }) => {
     const dispatch = useDispatch();
+    const [button, setButton] = useState('follow');
+    const { loggedUserData } = useSelector((state) => state.userReducer);
+
+    useEffect(() => {
+        if (loggedUserData?.following.includes(user_followed)) {
+            setButton('unfollow');
+        } else {
+            setButton('follow');
+        }
+    }, [dispatch, loggedUserData, user_followed]);
+
     const onSubmit = (e) => {
         e.preventDefault();
         try {
@@ -13,7 +25,7 @@ const FollowUnFollow = ({ user_followed }) => {
     return (
         <div data-testid='followUnFollow'>
             <form onSubmit={(e) => onSubmit(e)}>
-                <button>follow</button>
+                <button>{button}</button>
             </form>
         </div>
     );
