@@ -62,9 +62,7 @@ const UserDetails = (props) => {
                     <p>following: {userData?.following?.length}</p>
                     <p>followers: {userData?.followers?.length}</p>
                 </div>
-                <div>
-                    {isMyProfile ? <div>{myProfileLinks}</div> : <FollowUnFollow user_to_follow={userData?.id} />}
-                </div>
+                <div>{isMyProfile ? <div>{myProfileLinks}</div> : <FollowUnFollow userToFollow={userData?.id} />}</div>
             </main>
         </React.Fragment>
     );

@@ -33,7 +33,7 @@ describe('FollowUnFollow - isUserAlreadyFollowed false', () => {
         const store = mockStore(initialState);
         render(
             <Provider store={store}>
-                <FollowUnFollow user_to_follow={userToFollow} />
+                <FollowUnFollow userToFollow={userToFollow} />
             </Provider>
         );
     });
@@ -77,7 +77,7 @@ describe('FollowUnFollow - isUserAlreadyFollowed true', () => {
         const store = mockStore(initialState);
         render(
             <Provider store={store}>
-                <FollowUnFollow user_to_follow={userToFollow} />
+                <FollowUnFollow userToFollow={userToFollow} />
             </Provider>
         );
     });
