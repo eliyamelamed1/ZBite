@@ -10,24 +10,22 @@ import { getServerSideProps } from '../../../pages/users/[UserDetails_Id]';
 import { loadUserDetailsAction } from '../../../redux/actions/user';
 import thunk from 'redux-thunk';
 
-const userParams = {
-    firstUserId: 'firstUserId',
-    secondUserId: 'secondUserId',
-    nonExistingId: 'nonExistingId',
-    email: 'testEmail',
-    name: 'testName',
+const firstUser = {
+    id: 'firstUserId',
+    email: 'firstEmail',
+    name: 'firstName',
 };
-const userData = {
-    id: userParams.firstUserId,
-    email: userParams.email,
-    name: userParams.name,
+
+const nonExistingUser = {
+    id: 'id',
 };
+
 const contextParams = {
-    existingUser: {
-        params: { UserDetails_Id: userParams.firstUserId },
+    firstExistingUser: {
+        params: { UserDetails_Id: firstUser.id },
     },
     nonExistingUser: {
-        params: { UserDetails_Id: userParams.nonExistingId },
+        params: { UserDetails_Id: nonExistingUser.id },
     },
 };
 jest.mock('../../../redux/actions/user', () => ({ loadUserDetailsAction: jest.fn() }));
@@ -35,7 +33,7 @@ jest.mock('../../../redux/store.tsx', () => ({
     dispatch: jest.fn(),
     getState: jest.fn(() => ({
         userReducer: {
-            requestedUserData: { id: userParams.firstUserId, email: userParams.email, name: userParams.name },
+            requestedUserData: { id: firstUser.id, email: firstUser.email, name: firstUser.name },
         },
     })),
 }));
@@ -49,32 +47,36 @@ describe('UserDetails - getServerSideProps', () => {
         jest.clearAllMocks();
     });
     test('should dispatch loadUserDetailsAction', async () => {
-        await getServerSideProps(contextParams.existingUser);
+        await getServerSideProps(contextParams.firstExistingUser);
         const timesActionDispatched = loadUserDetailsAction.mock.calls.length;
 
         expect(timesActionDispatched).toBe(1);
-        expect(loadUserDetailsAction.mock.calls[0][0].id).toBe(userParams.firstUserId);
+        expect(loadUserDetailsAction.mock.calls[0][0].id).toBe(firstUser.id);
     });
     test('should return matching props', async () => {
-        const props = (await getServerSideProps(contextParams.existingUser)).props;
-        expect(props.userData).toEqual(userData);
+        const props = (await getServerSideProps(contextParams.firstExistingUser)).props;
+        expect(props.userData).toEqual(firstUser);
     });
 
     test('if recipe doesnt exist return not found', async () => {
         const notFound = (await getServerSideProps(contextParams.nonExistingUser)).notFound;
         expect(notFound).toEqual(true);
     });
+    test('should return matching props', async () => {
+        const props = (await getServerSideProps(contextParams.firstExistingUser)).props;
+        expect(props.userData).toEqual(firstUser);
+    });
 });
 
 describe('UserDetails - my profile', () => {
     let initialState = {
         userReducer: {
-            loggedUserData: { id: userParams.firstUserId, email: userParams.email, name: userParams.name },
+            loggedUserData: { id: firstUser.id, email: firstUser.email, name: firstUser.name },
         },
     };
     let store = mockStore(initialState);
     beforeEach(async () => {
-        const { userData } = (await getServerSideProps(contextParams.existingUser)).props;
+        const { userData } = (await getServerSideProps(contextParams.firstExistingUser)).props;
         render(
             <Provider store={store}>
                 <UserDetails_Id userData={userData} />
@@ -92,8 +94,8 @@ describe('UserDetails - my profile', () => {
         expect(userDetailsTestId).toBeInTheDocument();
     });
     test('should render the user details ', () => {
-        const userEmail = screen.getByText(/testEmail/i);
-        const userName = screen.getByText(/testName/i);
+        const userEmail = screen.getByText(/firstEmail/i);
+        const userName = screen.getByText(/firstName/i);
 
         expect(userEmail).toBeInTheDocument();
         expect(userName).toBeInTheDocument();
@@ -123,12 +125,12 @@ describe('UserDetails - my profile', () => {
 describe('UserDetails - other account profile', () => {
     let initialState = {
         userReducer: {
-            requestedUserData: { id: userParams.secondUserId, email: userParams.email, name: userParams.name },
+            requestedUserData: { id: firstUser.id, email: firstUser.email, name: firstUser.name },
         },
     };
     let store = mockStore(initialState);
     beforeEach(async () => {
-        const { userData } = (await getServerSideProps(contextParams.existingUser)).props;
+        const { userData } = (await getServerSideProps(contextParams.firstExistingUser)).props;
 
         render(
             <Provider store={store}>
@@ -150,11 +152,11 @@ describe('UserDetails - other account profile', () => {
         const timesActionDispatched = loadUserDetailsAction.mock.calls.length;
 
         expect(timesActionDispatched).toBe(1);
-        expect(loadUserDetailsAction.mock.calls[0][0].id).toBe(userParams.firstUserId);
+        expect(loadUserDetailsAction.mock.calls[0][0].id).toBe(firstUser.id);
     });
     test('should render the user details ', () => {
-        const userEmail = screen.getByText(/testEmail/i);
-        const userName = screen.getByText(/testName/i);
+        const userEmail = screen.getByText(/firstEmail/i);
+        const userName = screen.getByText(/firstName/i);
 
         expect(userEmail).toBeInTheDocument();
         expect(userName).toBeInTheDocument();

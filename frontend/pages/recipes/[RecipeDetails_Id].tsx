@@ -82,9 +82,9 @@ export async function getServerSideProps(context) {
     await store.dispatch(loadRecipeDetailsAction({ id }));
     const requestedRecipeData = store.getState().recipeReducer.requestedRecipeData;
 
-    const isRecipeDataIdMatchRequestedId = requestedRecipeData?.id === id;
+    const isRequestedRecipeIdExist = requestedRecipeData?.id === id;
 
-    if (isRecipeDataIdMatchRequestedId) {
+    if (isRequestedRecipeIdExist) {
         return { props: { requestedRecipeData } };
     } else {
         return { notFound: true };
