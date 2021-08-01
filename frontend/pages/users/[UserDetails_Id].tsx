@@ -23,12 +23,15 @@ const UserDetails = (props) => {
 
     useEffect(() => {
         // when updating requested account data (by following etc...) migrate the changes to the userData
-        // bug after following a user and navigating to other account the data doesnt change
-        if (requestedUserData?.id === props.userData?.id) {
+        /*
+        bug after following a user and navigating to other account the data doesnt change
+        the following if statement fix the bug
+        */
+        if (requestedUserData?.id === userData?.id) {
             setUserData(requestedUserData);
             console.log('requestedUserData' + '    ,    ' + requestedUserData?.name);
         }
-    }, [requestedUserData, props.userData?.id]);
+    }, [requestedUserData, userData?.id]);
 
     useEffect(() => {
         /*
