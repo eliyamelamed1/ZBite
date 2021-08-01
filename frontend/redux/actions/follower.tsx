@@ -1,10 +1,10 @@
 import { FOLLOW_UNFOLLOW_USER_FAIL, FOLLOW_UNFOLLOW_USER_SUCCESS } from '../types';
+import { loadUserDetailsAction, loadloggedUserDataAction } from './user';
 
 import axios from 'axios';
-import { loadloggedUserDataAction, loadUserDetailsAction } from './user';
 
 export const followUnFollowAction =
-    ({ user_followed }) =>
+    ({ user_to_follow }) =>
     async (dispatch) => {
         try {
             const config = {
@@ -14,10 +14,10 @@ export const followUnFollowAction =
                     Authorization: `Token ${localStorage.getItem('auth_token')}`,
                 },
             };
-            const body = JSON.stringify({ user_followed });
+            const body = JSON.stringify({ user_to_follow });
             const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/followers/follow/`, body, config);
             dispatch({ type: FOLLOW_UNFOLLOW_USER_SUCCESS, payload: res.data });
-            dispatch(loadUserDetailsAction({ id: user_followed }));
+            dispatch(loadUserDetailsAction({ id: user_to_follow }));
             dispatch(loadloggedUserDataAction());
         } catch {
             dispatch({ type: FOLLOW_UNFOLLOW_USER_FAIL });

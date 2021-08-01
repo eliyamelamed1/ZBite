@@ -7,7 +7,7 @@ from django.urls import reverse
 
 
 class Follower(models.Model):
-    user_followed = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    user_to_follow = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,

@@ -13,19 +13,18 @@ const UserDetails = (props) => {
     const [userData, setUserData] = useState(props.userData);
     const { loggedUserData, requestedUserData } = useSelector((state) => state.userReducer);
 
+    console.log(userData);
+
     useEffect(() => {
         // updates userData when navigating between accounts on the browser
-
         if (props.userData) {
             setUserData(props.userData);
         }
     }, [props.userData]);
 
     useEffect(() => {
-        /*
-        when updating requested account data (by following etc...) migrate the changes to the userData
-        */
-
+        // when updating requested account data (by following etc...) migrate the changes to the userData
+        // bug after following a user and navigating to other account the data doesnt change
         if (requestedUserData) {
             setUserData(requestedUserData);
         }
@@ -63,7 +62,9 @@ const UserDetails = (props) => {
                     <p>following: {userData?.following?.length}</p>
                     <p>followers: {userData?.followers?.length}</p>
                 </div>
-                <div>{isMyProfile ? <div>{myProfileLinks}</div> : <FollowUnFollow user_followed={userData?.id} />}</div>
+                <div>
+                    {isMyProfile ? <div>{myProfileLinks}</div> : <FollowUnFollow user_to_follow={userData?.id} />}
+                </div>
             </main>
         </React.Fragment>
     );

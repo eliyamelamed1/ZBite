@@ -3,26 +3,25 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { followUnFollowAction } from '../../redux/actions/follower';
 
-const FollowUnFollow = ({ user_followed }) => {
+const FollowUnFollow = ({ user_to_follow }) => {
     const dispatch = useDispatch();
     const [button, setButton] = useState('follow');
-    const { loggedUserData } = useSelector((state) => state.userReducer);
-
+    const loggedUserData = useSelector((state) => state.userReducer.loggedUserData);
     useEffect(() => {
         try {
-            const isUserAlreadyFollowed = loggedUserData?.following.includes(user_followed);
+            const isUserAlreadyFollowed = loggedUserData?.following.includes(user_to_follow);
             if (isUserAlreadyFollowed) {
                 setButton('unfollow');
             } else {
                 setButton('follow');
             }
         } catch {}
-    }, [dispatch, loggedUserData, user_followed]);
+    }, [dispatch, loggedUserData, user_to_follow]);
 
     const onSubmit = (e) => {
         e.preventDefault();
         try {
-            dispatch(followUnFollowAction({ user_followed }));
+            dispatch(followUnFollowAction({ user_to_follow }));
         } catch {}
     };
     return (
