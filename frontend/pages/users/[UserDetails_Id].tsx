@@ -13,22 +13,22 @@ const UserDetails = (props) => {
     const [userData, setUserData] = useState(props.userData);
     const { loggedUserData, requestedUserData } = useSelector((state) => state.userReducer);
 
-    console.log(userData);
-
     useEffect(() => {
         // updates userData when navigating between accounts on the browser
         if (props.userData) {
             setUserData(props.userData);
+            console.log('props.userData' + '  ,   ' + props.userData?.name);
         }
     }, [props.userData]);
 
     useEffect(() => {
         // when updating requested account data (by following etc...) migrate the changes to the userData
         // bug after following a user and navigating to other account the data doesnt change
-        if (requestedUserData) {
+        if (requestedUserData?.id === props.userData?.id) {
             setUserData(requestedUserData);
+            console.log('requestedUserData' + '    ,    ' + requestedUserData?.name);
         }
-    }, [requestedUserData]);
+    }, [requestedUserData, props.userData?.id]);
 
     useEffect(() => {
         /*
