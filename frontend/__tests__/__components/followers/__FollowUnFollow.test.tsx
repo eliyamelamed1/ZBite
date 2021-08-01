@@ -1,32 +1,41 @@
 import '@testing-library/jest-dom/extend-expect';
 
+import { Provider, useSelector } from 'react-redux';
 import { cleanup, render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 
 import FollowUnFollow from '../../../components/followers/FollowUnFollow';
 import React from 'react';
+import configureStore from 'redux-mock-store';
 import { followUnFollowAction } from '../../../redux/actions/follower';
-import { useSelector } from 'react-redux';
+import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
-jest.mock('../../../redux/actions/follower', () => ({ followUnFollowAction: jest.fn() }));
-
-jest.mock('react-redux', () => ({
-    useDispatch: jest.fn(),
-    useSelector: jest.fn(),
+jest.mock('../../../redux/actions/follower', () => ({
+    followUnFollowAction: jest.fn(),
 }));
 
-describe('FollowUnFollow - logged user is not following the request user', () => {
-    const userToFollow = '5';
-    const loggedUserData = {
-        id: 'id',
-        name: 'name',
-        email: 'email',
-        following: [],
-        followers: [],
-    };
-    useSelector.mockReturnValue(loggedUserData);
+const userToFollow = '5';
+const middlewares = [thunk];
+const mockStore = configureStore(middlewares);
+
+describe('FollowUnFollow - isUserAlreadyFollowed false', () => {
     beforeEach(() => {
-        render(<FollowUnFollow user_to_follow={userToFollow} />);
+        const loggedUserData = {
+            id: 'id',
+            name: 'name',
+            email: 'email',
+            following: [],
+            followers: [],
+        };
+        const initialState = {
+            userReducer: { isUserAuthenticated: true, loggedUserData: loggedUserData },
+        };
+        const store = mockStore(initialState);
+        render(
+            <Provider store={store}>
+                <FollowUnFollow user_to_follow={userToFollow} />
+            </Provider>
+        );
     });
 
     afterEach(() => {
@@ -39,39 +48,38 @@ describe('FollowUnFollow - logged user is not following the request user', () =>
         expect(followUnFollow).toBeInTheDocument();
     });
     test('should render follow button', () => {
-        const followButton = screen.getByRole('button', { name: /follow/ });
+        const followButton = screen.getByRole('button', { name: 'follow' });
         expect(followButton).toBeInTheDocument();
     });
     test('follow button should dispatch followUnFollowAction ', () => {
-        const followButton = screen.getByRole('button', { name: /follow/ });
+        const followButton = screen.getByRole('button', { name: 'follow' });
 
         userEvent.click(followButton);
-
         const timesActionHaveDispatched = followUnFollowAction.mock.calls.length;
         expect(timesActionHaveDispatched).toBe(1);
         expect(followUnFollowAction.mock.calls[0][0].user_to_follow).toBe(userToFollow);
-    });
-    test('follow button should transform to unfollow after following a user ', () => {
-        // const followButton = screen.getByRole('button', { name: 'follow' });
-        // userEvent.click(followButton);
-        // const unFollowButton = screen.findByRole('button', { name: 'unfollow' });
-        // expect(followButton).not.toBeInTheDocument();
+
+        // const unFollowButton = screen.getByRole('button', { name: 'unfollow' });
         // expect(unFollowButton).toBeInTheDocument();
     });
 });
 
-describe('FollowUnFollow - logged user is already following the requested user', () => {
-    const userToFollow = '5';
-    const loggedUserData = {
-        id: 'id',
-        name: 'name',
-        email: 'email',
-        following: ['5'],
-        followers: [],
-    };
-    useSelector.mockReturnValue(loggedUserData);
+describe('FollowUnFollow - isUserAlreadyFollowed true', () => {
     beforeEach(() => {
-        render(<FollowUnFollow user_to_follow={userToFollow} />);
+        const loggedUserData = {
+            id: 'id',
+            name: 'name',
+            email: 'email',
+            following: [userToFollow],
+            followers: [],
+        };
+        const initialState = { userReducer: { isUserAuthenticated: true, loggedUserData: loggedUserData } };
+        const store = mockStore(initialState);
+        render(
+            <Provider store={store}>
+                <FollowUnFollow user_to_follow={userToFollow} />
+            </Provider>
+        );
     });
 
     afterEach(() => {
@@ -84,16 +92,18 @@ describe('FollowUnFollow - logged user is already following the requested user',
         expect(followUnFollow).toBeInTheDocument();
     });
     test('should render follow button', () => {
-        const unFollowButton = screen.getByRole('button', { name: /unfollow/ });
+        const unFollowButton = screen.getByRole('button', { name: 'unfollow' });
         expect(unFollowButton).toBeInTheDocument();
     });
     test('follow button should dispatch followUnFollowAction ', () => {
-        const unFollowButton = screen.getByRole('button', { name: /unfollow/ });
+        const unFollowButton = screen.getByRole('button', { name: 'unfollow' });
 
         userEvent.click(unFollowButton);
 
         const timesActionHaveDispatched = followUnFollowAction.mock.calls.length;
         expect(timesActionHaveDispatched).toBe(1);
         expect(followUnFollowAction.mock.calls[0][0].user_to_follow).toBe(userToFollow);
+        // const followButton = screen.getByRole('button', { name: 'unfollow' });
+        // expect(followButton).toBeInTheDocument();
     });
 });

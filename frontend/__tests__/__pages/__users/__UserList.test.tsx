@@ -3,11 +3,8 @@ import '@testing-library/jest-dom/extend-expect';
 import UserList, { getStaticProps } from '../../../pages/users/UserList';
 import { cleanup, render, screen } from '@testing-library/react';
 
-import { Provider } from 'react-redux';
 import React from 'react';
-import configureStore from 'redux-mock-store';
 import { loadUserListAction } from '../../../redux/actions/user';
-import thunk from 'redux-thunk';
 
 const listOfUsers = [
     {
@@ -29,17 +26,9 @@ jest.mock('../../../redux/store.tsx', () => ({
 }));
 jest.mock('../../../redux/actions/user', () => ({ loadUserListAction: jest.fn() }));
 describe('UserList', () => {
-    const middlewares = [thunk];
-    const mockStore = configureStore(middlewares);
-    const initialState = {};
-    const store = mockStore(initialState);
     beforeEach(async () => {
         const listOfUsers = (await getStaticProps()).props.listOfUsers;
-        render(
-            <Provider store={store}>
-                <UserList listOfUsers={listOfUsers} />
-            </Provider>
-        );
+        render(<UserList listOfUsers={listOfUsers} />);
     });
 
     afterEach(() => {
