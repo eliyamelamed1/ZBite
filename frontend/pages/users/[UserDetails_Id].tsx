@@ -15,6 +15,7 @@ const UserDetails = (props) => {
 
     useEffect(() => {
         // updates userData when navigating between accounts on the browser
+
         if (props.userData) {
             setUserData(props.userData);
         }
@@ -33,7 +34,7 @@ const UserDetails = (props) => {
     useEffect(() => {
         /*
          check if the userDetailsPage is the profile of the logged user.
-         when updating logged account data migrate the changes to the userData
+         + when logged account update his data, migrate the changes to the profile page
         */
         if (loggedUserData?.id == userData?.id) {
             setUserData(loggedUserData);
@@ -73,10 +74,9 @@ export async function getServerSideProps(context) {
     await store.dispatch(loadUserDetailsAction({ id }));
     const userData = store.getState().userReducer.requestedUserData;
 
-    const isUserDataIdMatchRequestedId = userData?.id === id;
+    const isRequestedUserIdExist = userData?.id === id;
 
-    // find a name to this function
-    if (isUserDataIdMatchRequestedId) {
+    if (isRequestedUserIdExist) {
         return { props: { userData } };
     } else {
         return { notFound: true };

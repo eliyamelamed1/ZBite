@@ -59,6 +59,7 @@ describe('UserDetails - getServerSideProps', () => {
         const props = (await getServerSideProps(contextParams.existingUser)).props;
         expect(props.userData).toEqual(userData);
     });
+
     test('if recipe doesnt exist return not found', async () => {
         const notFound = (await getServerSideProps(contextParams.nonExistingUser)).notFound;
         expect(notFound).toEqual(true);

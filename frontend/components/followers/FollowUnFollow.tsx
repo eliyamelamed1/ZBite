@@ -9,12 +9,14 @@ const FollowUnFollow = ({ user_followed }) => {
     const { loggedUserData } = useSelector((state) => state.userReducer);
 
     useEffect(() => {
-        const isUserAlreadyFollowed = loggedUserData?.following.includes(user_followed);
-        if (isUserAlreadyFollowed) {
-            setButton('unfollow');
-        } else {
-            setButton('follow');
-        }
+        try {
+            const isUserAlreadyFollowed = loggedUserData?.following.includes(user_followed);
+            if (isUserAlreadyFollowed) {
+                setButton('unfollow');
+            } else {
+                setButton('follow');
+            }
+        } catch {}
     }, [dispatch, loggedUserData, user_followed]);
 
     const onSubmit = (e) => {
