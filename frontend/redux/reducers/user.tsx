@@ -1,6 +1,8 @@
 import {
     DELETE_USER_FAIL,
     DELETE_USER_SUCCESS,
+    FOLLOW_UNFOLLOW_USER_FAIL,
+    FOLLOW_UNFOLLOW_USER_SUCCESS,
     GET_LOGGED_USER_DETAILS_FAIL,
     GET_LOGGED_USER_DETAILS_SUCCESS,
     GET_USER_DETAILS_FAIL,
@@ -65,7 +67,6 @@ export default function userReducer(state = initialState, action) {
             localStorage.setItem('loggedUserData', JSON.stringify(payload));
             return {
                 ...state,
-
                 loggedUserData: payload,
             };
         case SIGNUP_SUCCESS:
@@ -91,10 +92,12 @@ export default function userReducer(state = initialState, action) {
                 isUserAuthenticated: false,
                 loggedUserData: null,
             };
+        case FOLLOW_UNFOLLOW_USER_FAIL:
         case GET_USER_DETAILS_FAIL:
         case GET_USER_LIST_FAIL:
         case UPDATE_USER_FAIL:
         case DELETE_USER_FAIL:
+        case FOLLOW_UNFOLLOW_USER_SUCCESS:
             return {
                 ...state,
             };

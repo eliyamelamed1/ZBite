@@ -110,7 +110,6 @@ export const loadloggedUserDataAction = () => async (dispatch) => {
             },
         };
         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/accounts/logged_user/`, config);
-
         dispatch({ type: GET_LOGGED_USER_DETAILS_SUCCESS, payload: res.data });
     } catch (err) {
         dispatch({ type: GET_LOGGED_USER_DETAILS_FAIL });

@@ -1,18 +1,39 @@
 import '@testing-library/jest-dom/extend-expect';
 
+import * as follower from '../../../redux/actions/follower';
+
 import { Provider, useSelector } from 'react-redux';
 import { cleanup, render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 
 import FollowUnFollow from '../../../components/followers/FollowUnFollow';
 import React from 'react';
 import configureStore from 'redux-mock-store';
-import { followUnFollowAction } from '../../../redux/actions/follower';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
-jest.mock('../../../redux/actions/follower', () => ({
-    followUnFollowAction: jest.fn(),
-}));
+const followUnFollowAction = jest.spyOn(follower, 'followUnFollowAction');
+// jest.mock('axios', () => ({
+//     post: () =>
+//         Promise.resolve({
+//             data: {
+//                 id: 'id',
+//                 name: 'name',
+//                 email: 'email',
+//                 following: [userToFollow],
+//                 followers: [userToFollow],
+//             },
+//         }),
+//     get: () =>
+//         Promise.resolve({
+//             data: {
+//                 id: 'id',
+//                 name: 'name',
+//                 email: 'email',
+//                 following: [userToFollow],
+//                 followers: [userToFollow],
+//             },
+//         }),
+// }));
 
 const userToFollow = '5';
 const middlewares = [thunk];
@@ -51,15 +72,14 @@ describe('FollowUnFollow - isUserAlreadyFollowed false', () => {
         const followButton = screen.getByRole('button', { name: 'follow' });
         expect(followButton).toBeInTheDocument();
     });
-    test('follow button should dispatch followUnFollowAction ', () => {
+    test('follow button should dispatch followUnFollowAction ', async () => {
         const followButton = screen.getByRole('button', { name: 'follow' });
 
         userEvent.click(followButton);
         const timesActionHaveDispatched = followUnFollowAction.mock.calls.length;
         expect(timesActionHaveDispatched).toBe(1);
         expect(followUnFollowAction.mock.calls[0][0].user_to_follow).toBe(userToFollow);
-
-        // const unFollowButton = screen.getByRole('button', { name: 'unfollow' });
+        // const unFollowButton = await screen.findByRole('button', { name: 'unfollow' });
         // expect(unFollowButton).toBeInTheDocument();
     });
 });
