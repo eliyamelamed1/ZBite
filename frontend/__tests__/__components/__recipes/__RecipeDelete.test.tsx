@@ -10,7 +10,7 @@ import React from 'react';
 import RecipeDelete from '../../../components/recipes/RecipeDelete';
 import Router from 'next/router';
 import configureStore from 'redux-mock-store';
-import { recipeDeleteAction } from '../../../redux/actions/recipe';
+import { recipeDeleteAction } from '../../../redux/actions/recipeActions';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
@@ -20,7 +20,9 @@ const initialState = {};
 const store = mockStore(initialState);
 
 const recipeId = '1';
-jest.mock('../../../redux/actions/recipe', () => ({ recipeDeleteAction: jest.fn().mockReturnValue(() => true) }));
+jest.mock('../../../redux/actions/recipeActions', () => ({
+    recipeDeleteAction: jest.fn().mockReturnValue(() => true),
+}));
 jest.mock('next/router', () => ({ push: jest.fn() }));
 
 describe('RecipeDelete', () => {

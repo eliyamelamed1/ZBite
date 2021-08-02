@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Router from 'next/router';
-import { recipeCreateAction } from '../../redux/actions/recipe';
+import { recipeCreateAction } from '../../redux/actions/recipeActions';
 
 const RecipeCreate = () => {
     const dispatch = useDispatch();
@@ -15,7 +15,7 @@ const RecipeCreate = () => {
     const { title, description, flavor_type } = formData;
 
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
-    const { isUserAuthenticated } = useSelector((state) => state.authReducer);
+    const { isUserAuthenticated } = useSelector((state) => state.userReducer);
 
     if (isUserAuthenticated == false) {
         Router.push('/');

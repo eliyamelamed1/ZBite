@@ -5,19 +5,19 @@ import { cleanup, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import React from 'react';
 import Router from 'next/router';
-import UserSignup from '../../../pages/users/signup';
+import UserSignup from '../../../pages/users/UserSignup';
 import configureStore from 'redux-mock-store';
-import { signupAction } from '../../../redux/actions/auth';
+import { signupAction } from '../../../redux/actions/userActions';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 let initialState = {
-    authReducer: {},
+    userReducer: {},
 };
 const store = mockStore(initialState);
-jest.mock('../../../redux/actions/auth', () => ({
+jest.mock('../../../redux/actions/userActions', () => ({
      signupAction: jest.fn().mockReturnValue(()=> true) 
 }));
 jest.mock('next/router', () => ({ push: jest.fn() }));
@@ -41,7 +41,7 @@ describe('UserSignup - guest user', () => {
         test('should render Already have an account? linking to the login page', () => {
             const signIn = screen.getByRole('link', { name: /Sign in/i });
             expect(signIn).toBeInTheDocument();
-            expect(signIn.href).toBe('http://localhost/login');
+            expect(signIn.href).toBe('http://localhost/UserLogin');
         });
     });
     
@@ -158,7 +158,7 @@ describe('UserSignup - guest user', () => {
         
             expect(signupAction.mock.calls.length).toBe(1)
             expect(Router.push.mock.calls.length).toBe(1)
-            expect(Router.push.mock.calls[0][0]).toBe('/login')
+            expect(Router.push.mock.calls[0][0]).toBe('/users/UserLogin')
         });
         });
     });
@@ -167,7 +167,7 @@ describe('UserSignup - guest user', () => {
 
 describe('UserSignup - guest authenticated users', () => {
     initialState = {
-        authReducer: { isUserAuthenticated: true },
+        userReducer: { isUserAuthenticated: true },
     };
     const store = mockStore(initialState);
     beforeEach(() => {

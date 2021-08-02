@@ -7,17 +7,17 @@ import Navbar from '../../components/Navbar';
 import { Provider } from 'react-redux';
 import React from 'react';
 import configureStore from 'redux-mock-store';
-import { logoutAction } from '../../redux/actions/auth';
+import { logoutAction } from '../../redux/actions/userActions';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
-jest.mock('../../redux/actions/auth', () => ({ logoutAction: jest.fn() }));
+jest.mock('../../redux/actions/userActions', () => ({ logoutAction: jest.fn() }));
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 
 describe('NavBar - authenticated users', () => {
     const initialState = {
-        authReducer: { isUserAuthenticated: true, loggedUserDetails: { email: 'testemail@gmail.com', id: 'userId' } },
+        userReducer: { isUserAuthenticated: true, loggedUserData: { email: 'testemail@gmail.com', id: 'userId' } },
     };
     const store = mockStore(initialState);
     beforeEach(() => {
@@ -46,7 +46,7 @@ describe('NavBar - authenticated users', () => {
     });
     test('authLinks should contain valid profile link', () => {
         const profileLink = screen.getByRole('link', { name: /profile/i });
-        const userId = store.getState().authReducer.loggedUserDetails.id;
+        const userId = store.getState().userReducer.loggedUserData.id;
         expect(profileLink).toBeInTheDocument();
         expect(profileLink.href).toEqual(`http://localhost/users/${userId}`);
     });
@@ -54,8 +54,8 @@ describe('NavBar - authenticated users', () => {
         const guestLinks = screen.queryByTestId('guestLinks');
         expect(guestLinks).toBeNull();
     });
-    test('logout button should appear on guestLinks', () => {
-        const logoutButton = screen.getByRole('button', { name: /logout/i });
+    test('logout button should appear on authLinks', async () => {
+        const logoutButton = await screen.findByRole('button', { name: /logout/i });
         expect(logoutButton).toBeInTheDocument();
     });
     test('logout button should dispatch logoutAction', async () => {
@@ -69,7 +69,7 @@ describe('NavBar - authenticated users', () => {
 
 describe('NavBar - guest users', () => {
     const initialState = {
-        authReducer: { isUserAuthenticated: false },
+        userReducer: { isUserAuthenticated: false },
     };
     const store = mockStore(initialState);
     beforeEach(() => {
@@ -104,7 +104,7 @@ describe('NavBar - guest users', () => {
         const signupLink = screen.getByRole('link', { name: /sign up/i });
         const loginLink = screen.getByRole('link', { name: /login/i });
 
-        expect(signupLink.href).toBe('http://localhost/users/signup');
-        expect(loginLink.href).toBe('http://localhost/users/login');
+        expect(signupLink.href).toBe('http://localhost/users/UserSignup');
+        expect(loginLink.href).toBe('http://localhost/users/UserLogin');
     });
 });

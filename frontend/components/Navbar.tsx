@@ -1,16 +1,23 @@
-// TODO recipes crud to navbar
-// test author and guest links
-
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Link from 'next/link';
-import React from 'react';
-import { logoutAction } from '../redux/actions/auth';
+import { logoutAction } from '../redux/actions/userActions';
 
 const Navbar = () => {
-    const { isUserAuthenticated, loggedUserDetails } = useSelector((state) => state.authReducer);
     const dispatch = useDispatch();
-    const profileUrl = loggedUserDetails ? '/users/' + loggedUserDetails.id : null;
+
+    const updatedIsUserAuthenticated = useSelector((state) => state.userReducer.isUserAuthenticated);
+    const updatedloggedUserData = useSelector((state) => state.userReducer.loggedUserData);
+
+    const [isUserAuthenticated, setIsUserAuthenticated] = useState();
+    const [loggedUserData, setloggedUserData] = useState();
+    useEffect(() => {
+        setIsUserAuthenticated(updatedIsUserAuthenticated);
+        setloggedUserData(updatedloggedUserData);
+    }, [dispatch, updatedIsUserAuthenticated, updatedloggedUserData]);
+
+    const profileUrl = loggedUserData ? '/users/' + loggedUserData.id : null;
 
     const logoutHandler = () => {
         try {
@@ -21,9 +28,9 @@ const Navbar = () => {
     };
     const authLinks = (
         <section data-testid='authLinks'>
-            {loggedUserDetails ? (
+            {loggedUserData ? (
                 <div>
-                    <div>you are currently logged in as {loggedUserDetails.email}</div>
+                    <div>you are currently logged in as {loggedUserData.email}</div>
                     <div>
                         <Link href={profileUrl}>profile</Link>
                         <br />
@@ -41,9 +48,9 @@ const Navbar = () => {
 
     const guestLinks = (
         <div data-testid='guestLinks'>
-            <Link href='/users/login'>Login</Link>
+            <Link href='/users/UserLogin'>Login</Link>
             <br />
-            <Link href='/users/signup'>Sign Up</Link>
+            <Link href='/users/UserSignup'>Sign Up</Link>
         </div>
     );
 
@@ -51,7 +58,7 @@ const Navbar = () => {
         <div>
             <li>
                 <br />
-                <Link href='/users'>user list</Link>
+                <Link href='/users/UserList'>user list</Link>
                 <br />
                 <Link href='/recipes/RecipeList'>recipe list</Link>
             </li>
@@ -68,7 +75,6 @@ const Navbar = () => {
                     <div>{isUserAuthenticated ? authLinks : guestLinks}</div>
                     <br />
                     <div>{mutualLinks}</div>
-                    <>{isUserAuthenticated ? <div>true</div> : <div>false</div>}</>
                 </ul>
             </div>
         </nav>

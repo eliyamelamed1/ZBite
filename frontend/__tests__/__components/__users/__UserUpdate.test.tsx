@@ -10,14 +10,14 @@ import UserUpdate from '../../../components/users/UserUpdate';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
-import { userUpdateAction } from '../../../redux/actions/auth';
+import { userUpdateAction } from '../../../redux/actions/userActions';
 
-jest.mock('../../../redux/actions/auth', () => ({ userUpdateAction: jest.fn() }));
+jest.mock('../../../redux/actions/userActions', () => ({ userUpdateAction: jest.fn() }));
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 
 describe('authenticated users', () => {
-    let initialState = { authReducer: { isUserAuthenticated: true } };
+    let initialState = { userReducer: { isUserAuthenticated: true } };
     const store = mockStore(initialState);
     const idValue = '5';
     beforeEach(() => {

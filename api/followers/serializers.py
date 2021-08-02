@@ -7,4 +7,4 @@ from followers.models import Follower
 class FollowSerializer(serializers.ModelSerializer):
     class Meta:
         model = Follower
-        fields = ('user_followed', )
+        fields = ('user_to_follow', )

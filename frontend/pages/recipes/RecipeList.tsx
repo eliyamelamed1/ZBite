@@ -3,10 +3,11 @@
 
 import DisplayRecipes from '../../components/recipes/DisplayRecipes';
 import React from 'react';
-import { loadRecipeListAction } from '../../redux/actions/recipe';
-import { store } from '../../redux/store';
+import { loadRecipeListAction } from '../../redux/actions/recipeActions';
+import store from '../../redux/store';
 
-const RecipeList = ({ listOfRecipes }) => {
+const RecipeList = (props) => {
+    const listOfRecipes = props.listOfRecipes;
     return (
         <main data-testid='recipeList'>
             {listOfRecipes ? <DisplayRecipes recipesToDisplay={listOfRecipes} /> : null}
@@ -14,9 +15,9 @@ const RecipeList = ({ listOfRecipes }) => {
     );
 };
 
-export async function getStaticProps(context) {
+export async function getStaticProps() {
     await store.dispatch(loadRecipeListAction());
-    const { listOfRecipes } = await store.getState().recipeReducer;
+    const { listOfRecipes } = store.getState().recipeReducer;
 
     return { props: { listOfRecipes }, revalidate: 10 };
 }

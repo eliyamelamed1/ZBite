@@ -8,11 +8,11 @@ import React from 'react';
 import RecipeCreate from '../../../pages/recipes/RecipeCreate';
 import Router from 'next/router';
 import configureStore from 'redux-mock-store';
-import { recipeCreateAction } from '../../../redux/actions/recipe';
+import { recipeCreateAction } from '../../../redux/actions/recipeActions';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
-jest.mock('../../../redux/actions/recipe', () => ({
+jest.mock('../../../redux/actions/recipeActions', () => ({
     recipeCreateAction: jest.fn().mockReturnValue(() => true),
 }));
 jest.mock('next/router', () => ({ push: jest.fn() }));
@@ -21,7 +21,7 @@ const middleware = [thunk];
 const mockStore = configureStore(middleware);
 
 describe('authenticated users', () => {
-    let initialState = { authReducer: { isUserAuthenticated: true } };
+    let initialState = { userReducer: { isUserAuthenticated: true } };
     const store = mockStore(initialState);
     beforeEach(() => {
         render(
@@ -166,7 +166,7 @@ describe('authenticated users', () => {
 });
 
 describe('guest users', () => {
-    let initialState = { authReducer: { isUserAuthenticated: false } };
+    let initialState = { userReducer: { isUserAuthenticated: false } };
     const store = mockStore(initialState);
     beforeEach(() => {
         render(

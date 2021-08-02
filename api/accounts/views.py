@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import generics, permissions
 from rest_framework.response import Response
+from rest_framework.serializers import Serializer
 from rest_framework.views import APIView
 
 from .models import UserAccount
@@ -17,6 +18,16 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthorOrReadOnly, )
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
+
+class LoggedUserDetailView(APIView):
+# TODO test this function
+    serializer_class = UserSerializer 
+    def get(self, request):
+        logged_user = UserAccount.objects.get(id=request.user.id) 
+        
+        serializer = UserSerializer(logged_user)
+
+        return Response(serializer.data)
 
 class TopRatedAccounts(APIView):
     '''display the top rated recipes'''

@@ -10,7 +10,7 @@ import React from 'react';
 import UserDelete from '../../../components/users/UserDelete';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { userDeleteAction } from '../../../redux/actions/auth';
+import { userDeleteAction } from '../../../redux/actions/userActions';
 import userEvent from '@testing-library/user-event';
 
 const middlewares = [thunk];
@@ -19,7 +19,7 @@ const initialState = {};
 const store = mockStore(initialState);
 
 const userId = 'testId';
-jest.mock('../../../redux/actions/auth', () => ({ userDeleteAction: jest.fn() }));
+jest.mock('../../../redux/actions/userActions', () => ({ userDeleteAction: jest.fn() }));
 describe('UserDelete', () => {
     beforeEach(() => {
         render(

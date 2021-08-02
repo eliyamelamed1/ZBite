@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import DisplayRecipes from '../../components/recipes/DisplayRecipes';
 import Loader from 'react-loader-spinner';
-import { recipeSearchAction } from '../../redux/actions/recipe';
+import { recipeSearchAction } from '../../redux/actions/recipeActions';
 
 const RecipeSearch = () => {
     const dispatch = useDispatch();

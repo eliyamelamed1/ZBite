@@ -1,5 +1,3 @@
-// TODO test loadLoggedUserDetailsAction() is called
-
 import '@testing-library/jest-dom/extend-expect';
 
 import { cleanup, render, screen } from '@testing-library/react';
@@ -12,7 +10,7 @@ import thunk from 'redux-thunk';
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
-const initialState = { authReducer: {}, socketReducer: {} };
+const initialState = { userReducer: {}, socketReducer: {} };
 const store = mockStore(initialState);
 beforeEach(() => {
     render(
