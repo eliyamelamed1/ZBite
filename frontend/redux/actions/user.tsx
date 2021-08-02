@@ -3,6 +3,8 @@ import {
     ACTIVATION_SUCCESS,
     DELETE_USER_FAIL,
     DELETE_USER_SUCCESS,
+    FOLLOW_UNFOLLOW_USER_FAIL,
+    FOLLOW_UNFOLLOW_USER_SUCCESS,
     GET_LOGGED_USER_DETAILS_FAIL,
     GET_LOGGED_USER_DETAILS_SUCCESS,
     GET_USER_DETAILS_FAIL,
@@ -24,10 +26,26 @@ import {
 
 import axios from 'axios';
 
-export const testAction = () => (dispatch) => {
-    const res = { name: 'ELIYA' };
-    dispatch({ type: 'TEST_SUCCESS', payload: res });
-};
+export const followUnFollowAction =
+    ({ user_to_follow }) =>
+    async (dispatch) => {
+        try {
+            const config = {
+                headers: {
+                    'content-Type': 'application/json',
+                    Accept: 'application/json',
+                    Authorization: `Token ${localStorage.getItem('auth_token')}`,
+                },
+            };
+            const body = JSON.stringify({ user_to_follow });
+            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/followers/follow/`, body, config);
+            dispatch({ type: FOLLOW_UNFOLLOW_USER_SUCCESS });
+            dispatch(loadUserDetailsAction({ id: user_to_follow }));
+            dispatch(loadloggedUserDataAction());
+        } catch {
+            dispatch({ type: FOLLOW_UNFOLLOW_USER_FAIL });
+        }
+    };
 
 export const loadUserDetailsAction =
     ({ id }) =>

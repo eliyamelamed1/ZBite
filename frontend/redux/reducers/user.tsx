@@ -101,12 +101,6 @@ export default function userReducer(state = initialState, action) {
             return {
                 ...state,
             };
-        case 'TEST_SUCCESS':
-            return {
-                ...state,
-                loggedUserData: payload,
-            };
-
         default:
             return state;
     }

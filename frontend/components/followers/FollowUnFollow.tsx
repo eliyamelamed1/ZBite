@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { followUnFollowAction } from '../../redux/actions/follower';
+import { followUnFollowAction } from '../../redux/actions/user';
 
 const FollowUnFollow = ({ userToFollow }) => {
     const dispatch = useDispatch();

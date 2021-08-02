@@ -1,22 +1,21 @@
 import '@testing-library/jest-dom/extend-expect';
 
-import * as follower from '../../../redux/actions/follower';
+import * as userActions from '../../../redux/actions/user';
 
-import { Provider, useSelector } from 'react-redux';
-import { cleanup, render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 
 import FollowUnFollow from '../../../components/followers/FollowUnFollow';
+import { Provider } from 'react-redux';
 import React from 'react';
 import { TEST_CASE_AUTH } from '../../../redux/types';
 import axios from 'axios';
 import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
-import userReducer from '../../../redux/reducers/user';
 
-const followUnFollowAction = jest.spyOn(follower, 'followUnFollowAction');
+const followUnFollowAction = jest.spyOn(userActions, 'followUnFollowAction');
 jest.mock('axios');
 
-const userToFollow = '5';
+const userToFollow = 'userToFollow';
 
 describe('FollowUnFollow - isUserAlreadyFollowed false', () => {
     const data = {
@@ -29,7 +28,7 @@ describe('FollowUnFollow - isUserAlreadyFollowed false', () => {
 
     beforeEach(() => {
         axios.get.mockReturnValueOnce({ data });
-        axios.post.mockReturnValueOnce({ data });
+        axios.post.mockReturnValueOnce(() => {});
         const loggedUserData = {
             id: 'id',
             name: 'name',
@@ -90,7 +89,7 @@ describe('FollowUnFollow - isUserAlreadyFollowed true', () => {
 
     beforeEach(() => {
         axios.get.mockReturnValueOnce({ data });
-        axios.post.mockReturnValueOnce({ data });
+        axios.post.mockReturnValueOnce(() => {});
         const loggedUserData = {
             id: 'id',
             name: 'name',
