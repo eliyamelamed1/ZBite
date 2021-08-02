@@ -7,11 +7,11 @@ import Navbar from '../../components/Navbar';
 import { Provider } from 'react-redux';
 import React from 'react';
 import configureStore from 'redux-mock-store';
-import { logoutAction } from '../../redux/actions/user';
+import { logoutAction } from '../../redux/actions/userActions';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
-jest.mock('../../redux/actions/user', () => ({ logoutAction: jest.fn() }));
+jest.mock('../../redux/actions/userActions', () => ({ logoutAction: jest.fn() }));
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 

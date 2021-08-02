@@ -4,7 +4,7 @@ test displayedUsers is called and displays users
 
 import DisplayUsers from '../../components/users/DisplayUsers';
 import React from 'react';
-import { loadUserListAction } from '../../redux/actions/user';
+import { loadUserListAction } from '../../redux/actions/userActions';
 import store from '../../redux/store';
 
 const UserList = (props) => {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Router from 'next/router';
-import { recipeCreateAction } from '../../redux/actions/recipe';
+import { recipeCreateAction } from '../../redux/actions/recipeActions';
 
 const RecipeCreate = () => {
     const dispatch = useDispatch();

@@ -10,7 +10,7 @@ import React from 'react';
 import Router from 'next/router';
 import UserLogin from '../../../pages/users/UserLogin';
 import configureStore from 'redux-mock-store';
-import { loginAction } from '../../../redux/actions/user';
+import { loginAction } from '../../../redux/actions/userActions';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
@@ -18,7 +18,7 @@ const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 let initialState = { userReducer: {} };
 const store = mockStore(initialState);
-jest.mock('../../../redux/actions/user', () => ({ loginAction: jest.fn().mockImplementation(() => true) }));
+jest.mock('../../../redux/actions/userActions', () => ({ loginAction: jest.fn().mockImplementation(() => true) }));
 jest.mock('next/router', () => ({ push: jest.fn() }));
 describe('UserLogin - guest', () => {
     beforeEach(() => {

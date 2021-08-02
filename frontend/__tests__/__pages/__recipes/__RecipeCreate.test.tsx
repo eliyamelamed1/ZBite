@@ -8,11 +8,11 @@ import React from 'react';
 import RecipeCreate from '../../../pages/recipes/RecipeCreate';
 import Router from 'next/router';
 import configureStore from 'redux-mock-store';
-import { recipeCreateAction } from '../../../redux/actions/recipe';
+import { recipeCreateAction } from '../../../redux/actions/recipeActions';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
-jest.mock('../../../redux/actions/recipe', () => ({
+jest.mock('../../../redux/actions/recipeActions', () => ({
     recipeCreateAction: jest.fn().mockReturnValue(() => true),
 }));
 jest.mock('next/router', () => ({ push: jest.fn() }));

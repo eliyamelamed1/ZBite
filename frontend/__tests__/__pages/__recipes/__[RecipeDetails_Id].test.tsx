@@ -7,7 +7,7 @@ import React from 'react';
 import RecipeDetails from '../../../pages/recipes/[RecipeDetails_Id]';
 import configureStore from 'redux-mock-store';
 import { getServerSideProps } from '../../../pages/recipes/[RecipeDetails_Id]';
-import { loadRecipeDetailsAction } from '../../../redux/actions/recipe';
+import { loadRecipeDetailsAction } from '../../../redux/actions/recipeActions';
 import thunk from 'redux-thunk';
 
 const recipeParams = {
@@ -31,7 +31,7 @@ const contextParams = {
     },
 };
 
-jest.mock('../../../redux/actions/recipe', () => ({ loadRecipeDetailsAction: jest.fn() }));
+jest.mock('../../../redux/actions/recipeActions', () => ({ loadRecipeDetailsAction: jest.fn() }));
 jest.mock('../../../redux/store.tsx', () => ({
     dispatch: jest.fn(),
     getState: jest.fn(() => ({

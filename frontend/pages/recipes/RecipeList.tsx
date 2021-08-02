@@ -3,7 +3,7 @@
 
 import DisplayRecipes from '../../components/recipes/DisplayRecipes';
 import React from 'react';
-import { loadRecipeListAction } from '../../redux/actions/recipe';
+import { loadRecipeListAction } from '../../redux/actions/recipeActions';
 import store from '../../redux/store';
 
 const RecipeList = (props) => {

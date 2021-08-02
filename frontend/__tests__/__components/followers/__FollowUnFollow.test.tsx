@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
 
-import * as userActions from '../../../redux/actions/user';
+import * as userActions from '../../../redux/actions/userActions';
 
 import { cleanup, render, screen } from '@testing-library/react';
 

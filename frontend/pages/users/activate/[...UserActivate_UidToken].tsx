@@ -5,7 +5,7 @@ import Router, { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 
 import React from 'react';
-import { userActivateAction } from '../../../redux/actions/user';
+import { userActivateAction } from '../../../redux/actions/userActions';
 
 const UserActivate = () => {
     const dispatch = useDispatch();

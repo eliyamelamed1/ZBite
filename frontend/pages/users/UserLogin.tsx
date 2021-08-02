@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Link from 'next/link';
 import Router from 'next/router';
-import { loginAction } from '../../redux/actions/user';
+import { loginAction } from '../../redux/actions/userActions';
 
 const UserLogin = () => {
     const dispatch = useDispatch();

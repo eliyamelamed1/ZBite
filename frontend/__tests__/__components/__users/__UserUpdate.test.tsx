@@ -10,9 +10,9 @@ import UserUpdate from '../../../components/users/UserUpdate';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
-import { userUpdateAction } from '../../../redux/actions/user';
+import { userUpdateAction } from '../../../redux/actions/userActions';
 
-jest.mock('../../../redux/actions/user', () => ({ userUpdateAction: jest.fn() }));
+jest.mock('../../../redux/actions/userActions', () => ({ userUpdateAction: jest.fn() }));
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 

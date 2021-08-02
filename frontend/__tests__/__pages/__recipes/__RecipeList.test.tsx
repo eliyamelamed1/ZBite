@@ -7,10 +7,12 @@ import DisplayRecipes from '../../../components/recipes/DisplayRecipes';
 import { Provider } from 'react-redux';
 import React from 'react';
 import configureStore from 'redux-mock-store';
-import { loadRecipeListAction } from '../../../redux/actions/recipe';
+import { loadRecipeListAction } from '../../../redux/actions/recipeActions';
 import thunk from 'redux-thunk';
 
-jest.mock('../../../redux/actions/recipe', () => ({ loadRecipeListAction: jest.fn().mockReturnValue(() => true) }));
+jest.mock('../../../redux/actions/recipeActions', () => ({
+    loadRecipeListAction: jest.fn().mockReturnValue(() => true),
+}));
 const listOfRecipes = [
     {
         title: 'first recipe title',

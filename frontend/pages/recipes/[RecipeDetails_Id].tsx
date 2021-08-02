@@ -6,7 +6,7 @@ import Image from 'next/image';
 import IsRecipeAuthor from '../../components/recipes/IsRecipeAuthor';
 import Link from 'next/link';
 import React from 'react';
-import { loadRecipeDetailsAction } from '../../redux/actions/recipe';
+import { loadRecipeDetailsAction } from '../../redux/actions/recipeActions';
 import store from '../../redux/store';
 
 const RecipeDetails = (props) => {

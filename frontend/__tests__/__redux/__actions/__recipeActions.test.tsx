@@ -7,7 +7,7 @@ import {
     recipeDeleteAction,
     recipeSearchAction,
     recipeUpdateAction,
-} from '../../../redux/actions/recipe';
+} from '../../../redux/actions/recipeActions';
 
 import axios from 'axios';
 import configureStore from 'redux-mock-store';

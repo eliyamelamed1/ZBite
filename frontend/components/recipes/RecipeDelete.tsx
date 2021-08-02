@@ -4,7 +4,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import Router from 'next/router';
-import { recipeDeleteAction } from '../../redux/actions/recipe';
+import { recipeDeleteAction } from '../../redux/actions/recipeActions';
 import { useDispatch } from 'react-redux';
 
 const RecipeDelete = ({ id }) => {

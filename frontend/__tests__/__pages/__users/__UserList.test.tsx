@@ -4,7 +4,7 @@ import UserList, { getStaticProps } from '../../../pages/users/UserList';
 import { cleanup, render, screen } from '@testing-library/react';
 
 import React from 'react';
-import { loadUserListAction } from '../../../redux/actions/user';
+import { loadUserListAction } from '../../../redux/actions/userActions';
 
 const listOfUsers = [
     {
@@ -24,7 +24,7 @@ jest.mock('../../../redux/store.tsx', () => ({
         userReducer: { listOfUsers: listOfUsers },
     })),
 }));
-jest.mock('../../../redux/actions/user', () => ({ loadUserListAction: jest.fn() }));
+jest.mock('../../../redux/actions/userActions', () => ({ loadUserListAction: jest.fn() }));
 describe('UserList', () => {
     beforeEach(async () => {
         const listOfUsers = (await getStaticProps()).props.listOfUsers;

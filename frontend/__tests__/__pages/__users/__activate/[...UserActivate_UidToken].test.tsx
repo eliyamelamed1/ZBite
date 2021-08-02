@@ -10,14 +10,14 @@ import React from 'react';
 import UserActivate from '../../../../pages/users/activate/[...UserActivate_UidToken]';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { userActivateAction } from '../../../../redux/actions/user';
+import { userActivateAction } from '../../../../redux/actions/userActions';
 import userEvent from '@testing-library/user-event';
 
 const dynamicUrlParams = {
     uid: 'MGQ5ZGQ4ZWUtMTBjZS00Y2NhLWJhM2UtY2JhZGYwMTIyMmJh',
     token: '89b3de6f0de10203e42495277a6a245b',
 };
-jest.mock('../../../../redux/actions/user', () => ({ userActivateAction: jest.fn().mockReturnValue(() => true) }));
+jest.mock('../../../../redux/actions/userActions', () => ({ userActivateAction: jest.fn().mockReturnValue(() => true) }));
 jest.mock('next/router', () => ({
     push: jest.fn(),
     useRouter: jest.fn(() => ({

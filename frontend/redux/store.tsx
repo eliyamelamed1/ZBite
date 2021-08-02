@@ -2,9 +2,9 @@ import { applyMiddleware, createStore } from 'redux';
 
 import { combineReducers } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import recipeReducer from './reducers/recipe';
+import recipeReducer from './reducers/recipeReducer';
 import thunk from 'redux-thunk';
-import userReducer from './reducers/user';
+import userReducer from './reducers/userReducer';
 
 const rootReducer = combineReducers({
     userReducer,

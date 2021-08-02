@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { userUpdateAction } from '../../redux/actions/user';
+import { userUpdateAction } from '../../redux/actions/userActions';
 
 const UserUpdate = ({ id }) => {
     const dispatch = useDispatch();

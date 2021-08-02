@@ -6,11 +6,11 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import RecipeSearch from '../../../pages/recipes/RecipeSearch';
 import configureStore from 'redux-mock-store';
-import { recipeSearchAction } from '../../../redux/actions/recipe';
+import { recipeSearchAction } from '../../../redux/actions/recipeActions';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
-jest.mock('../../../redux/actions/recipe', () => ({ recipeSearchAction: jest.fn() }));
+jest.mock('../../../redux/actions/recipeActions', () => ({ recipeSearchAction: jest.fn() }));
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 const data = {

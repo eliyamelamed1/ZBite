@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import Router from 'next/router';
 import UserResetPasswordConfirm from '../../../../pages/users/reset_password/[...UserResetPasswordConfirm_UidToken]';
-import { resetPasswordConfirmAction } from '../../../../redux/actions/user';
+import { resetPasswordConfirmAction } from '../../../../redux/actions/userActions';
 import store from '../../../../redux/store';
 import userEvent from '@testing-library/user-event';
 
@@ -16,7 +16,7 @@ const dynamicUrlParams = {
     uid: 'MGQ5ZGQ4ZWUtMTBjZS00Y2NhLWJhM2UtY2JhZGYwMTIyMmJh',
     token: '89b3de6f0de10203e42495277a6a245b',
 };
-jest.mock('../../../../redux/actions/user', () => ({
+jest.mock('../../../../redux/actions/userActions', () => ({
     resetPasswordConfirmAction: jest.fn().mockReturnValue(() => true),
 }));
 jest.mock('next/router', () => ({

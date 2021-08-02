@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Link from 'next/link';
 import Router from 'next/router';
-import { signupAction } from '../../redux/actions/user';
+import { signupAction } from '../../redux/actions/userActions';
 
 const UserSignup = () => {
     const dispatch = useDispatch();

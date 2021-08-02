@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import RecipeUpdate from '../../../components/recipes/RecipeUpdate';
 import configureStore from 'redux-mock-store';
-import { recipeUpdateAction } from '../../../redux/actions/recipe';
+import { recipeUpdateAction } from '../../../redux/actions/recipeActions';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
@@ -17,7 +17,7 @@ const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 const initialState = {};
 const store = mockStore(initialState);
-jest.mock('../../../redux/actions/recipe', () => ({ recipeUpdateAction: jest.fn() }));
+jest.mock('../../../redux/actions/recipeActions', () => ({ recipeUpdateAction: jest.fn() }));
 beforeEach(() => {
     const id = '1';
     render(

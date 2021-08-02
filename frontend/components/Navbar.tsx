@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Link from 'next/link';
-import { logoutAction } from '../redux/actions/user';
+import { logoutAction } from '../redux/actions/userActions';
 
 const Navbar = () => {
     const dispatch = useDispatch();

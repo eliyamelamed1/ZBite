@@ -4,7 +4,7 @@ import FollowUnFollow from '../../components/followers/FollowUnFollow';
 import Head from 'next/head';
 import UserDelete from '../../components/users/UserDelete';
 import UserUpdate from '../../components/users/UserUpdate';
-import { loadUserDetailsAction } from '../../redux/actions/user';
+import { loadUserDetailsAction } from '../../redux/actions/userActions';
 import store from '../../redux/store';
 import { useSelector } from 'react-redux';
 

@@ -4,7 +4,7 @@
 
 import React, { useState } from 'react';
 
-import { recipeUpdateAction } from '../../redux/actions/recipe';
+import { recipeUpdateAction } from '../../redux/actions/recipeActions';
 import { useDispatch } from 'react-redux';
 
 const RecipeUpdate = ({ id }) => {

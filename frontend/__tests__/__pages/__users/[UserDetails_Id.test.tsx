@@ -7,7 +7,7 @@ import React from 'react';
 import UserDetails_Id from '../../../pages/users/[UserDetails_Id]';
 import configureStore from 'redux-mock-store';
 import { getServerSideProps } from '../../../pages/users/[UserDetails_Id]';
-import { loadUserDetailsAction } from '../../../redux/actions/user';
+import { loadUserDetailsAction } from '../../../redux/actions/userActions';
 import thunk from 'redux-thunk';
 
 const firstUser = {
@@ -28,7 +28,7 @@ const contextParams = {
         params: { UserDetails_Id: nonExistingUser.id },
     },
 };
-jest.mock('../../../redux/actions/user', () => ({ loadUserDetailsAction: jest.fn() }));
+jest.mock('../../../redux/actions/userActions', () => ({ loadUserDetailsAction: jest.fn() }));
 jest.mock('../../../redux/store.tsx', () => ({
     dispatch: jest.fn(),
     getState: jest.fn(() => ({

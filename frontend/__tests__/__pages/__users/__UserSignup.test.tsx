@@ -7,7 +7,7 @@ import React from 'react';
 import Router from 'next/router';
 import UserSignup from '../../../pages/users/UserSignup';
 import configureStore from 'redux-mock-store';
-import { signupAction } from '../../../redux/actions/user';
+import { signupAction } from '../../../redux/actions/userActions';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
@@ -17,7 +17,7 @@ let initialState = {
     userReducer: {},
 };
 const store = mockStore(initialState);
-jest.mock('../../../redux/actions/user', () => ({
+jest.mock('../../../redux/actions/userActions', () => ({
      signupAction: jest.fn().mockReturnValue(()=> true) 
 }));
 jest.mock('next/router', () => ({ push: jest.fn() }));
