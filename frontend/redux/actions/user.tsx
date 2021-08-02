@@ -24,6 +24,11 @@ import {
 
 import axios from 'axios';
 
+export const testAction = () => (dispatch) => {
+    const res = { name: 'ELIYA' };
+    dispatch({ type: 'TEST_SUCCESS', payload: res });
+};
+
 export const loadUserDetailsAction =
     ({ id }) =>
     async (dispatch) => {
