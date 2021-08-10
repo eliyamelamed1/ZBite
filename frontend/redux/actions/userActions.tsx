@@ -26,10 +26,16 @@ import {
 
 import axios from 'axios';
 
+export const testAction = () => async (dispatch) => {
+    dispatch(secondTestAction());
+};
+export const secondTestAction = () => {
+    console.log('second action have been dispatched');
+};
+
 export const followUnFollowAction =
     ({ user_to_follow }) =>
     async (dispatch) => {
-        await dispatch(loadloggedUserDataAction());
         try {
             const config = {
                 headers: {
