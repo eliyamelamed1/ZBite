@@ -1,7 +1,5 @@
 import '@testing-library/jest-dom/extend-expect';
 
-import * as userActions from '../../../redux/actions/userActions';
-
 import {
     followUnFollowAction,
     loadUserDetailsAction,
@@ -18,8 +16,6 @@ import {
 
 import axios from 'axios';
 import store from '../../../redux/store';
-
-// const loadloggedUserDataActionSpy = jest.spyOn(userActions, 'loadloggedUserDataAction');
 
 localStorage.setItem('auth_token', 'tokenValue');
 const config = {
@@ -62,8 +58,7 @@ describe('axios request should match url endpoint, and parameters', () => {
         expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointUrl);
         expect(axios.post.mock.calls[0][1]).toStrictEqual(body);
         expect(axios.post.mock.calls[0][2]).toStrictEqual(configWithAuthToken);
-
-        // expect(loadloggedUserDataActionSpy.mock.calls.length).toBe(1);
+        // TODO test loadUserDetailsAction + loadloggedUserDataAction dispatched
     });
     test('loadUserListAction', () => {
         store.dispatch(loadUserListAction());
