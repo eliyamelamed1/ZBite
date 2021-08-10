@@ -59,6 +59,7 @@ class Recipe(models.Model):
         return reverse('recipes:top_rated')
 
     @classmethod
+    # get_recipes_of_followed_accounts
     def get_users_followed(cls, request):
         user = request.user
         user = UserAccount.objects.all().get(id=user.id)
