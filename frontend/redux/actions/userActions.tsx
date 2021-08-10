@@ -29,19 +29,20 @@ import axios from 'axios';
 export const followUnFollowAction =
     ({ user_to_follow }) =>
     async (dispatch) => {
+        await dispatch(loadloggedUserDataAction());
         try {
             const config = {
                 headers: {
-                    'content-Type': 'application/json',
+                    'Content-Type': 'application/json',
                     Accept: 'application/json',
                     Authorization: `Token ${localStorage.getItem('auth_token')}`,
                 },
             };
             const body = JSON.stringify({ user_to_follow });
             await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/followers/follow/`, body, config);
+            await dispatch(loadUserDetailsAction({ id: user_to_follow }));
+            await dispatch(loadloggedUserDataAction());
             dispatch({ type: FOLLOW_UNFOLLOW_USER_SUCCESS });
-            dispatch(loadUserDetailsAction({ id: user_to_follow }));
-            dispatch(loadloggedUserDataAction());
         } catch {
             dispatch({ type: FOLLOW_UNFOLLOW_USER_FAIL });
         }

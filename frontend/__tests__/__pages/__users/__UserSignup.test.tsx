@@ -20,7 +20,7 @@ const store = mockStore(initialState);
 jest.mock('../../../redux/actions/userActions', () => ({
      signupAction: jest.fn().mockReturnValue(()=> true) 
 }));
-jest.mock('next/router', () => ({ push: jest.fn() }));
+jest.mock('next/router');
 describe('UserSignup - guest user', () => {
     
     beforeEach(() => {

@@ -1,6 +1,9 @@
 import '@testing-library/jest-dom/extend-expect';
 
+import * as userActions from '../../../redux/actions/userActions';
+
 import {
+    followUnFollowAction,
     loadUserDetailsAction,
     loadUserListAction,
     loadloggedUserDataAction,
@@ -14,13 +17,9 @@ import {
 } from '../../../redux/actions/userActions';
 
 import axios from 'axios';
-import configureStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
+import store from '../../../redux/store';
 
-const middlewares = [thunk];
-const mockStore = configureStore(middlewares);
-let initialState = {};
-const store = mockStore(initialState);
+// const loadloggedUserDataActionSpy = jest.spyOn(userActions, 'loadloggedUserDataAction');
 
 localStorage.setItem('auth_token', 'tokenValue');
 const config = {
@@ -52,6 +51,19 @@ const parameters = {
 describe('axios request should match url endpoint, and parameters', () => {
     afterEach(() => {
         jest.clearAllMocks();
+    });
+    test('followUnFollowAction', async () => {
+        const user_to_follow = 'userToFollow';
+        const body = JSON.stringify({ user_to_follow });
+        await store.dispatch(followUnFollowAction({ user_to_follow }));
+        const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/followers/follow/`;
+
+        expect(axios.post.mock.calls.length).toBe(1);
+        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointUrl);
+        expect(axios.post.mock.calls[0][1]).toStrictEqual(body);
+        expect(axios.post.mock.calls[0][2]).toStrictEqual(configWithAuthToken);
+
+        // expect(loadloggedUserDataActionSpy.mock.calls.length).toBe(1);
     });
     test('loadUserListAction', () => {
         store.dispatch(loadUserListAction());

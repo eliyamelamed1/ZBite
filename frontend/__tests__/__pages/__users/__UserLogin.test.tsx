@@ -19,7 +19,7 @@ const mockStore = configureStore(middlewares);
 let initialState = { userReducer: {} };
 const store = mockStore(initialState);
 jest.mock('../../../redux/actions/userActions', () => ({ loginAction: jest.fn().mockImplementation(() => true) }));
-jest.mock('next/router', () => ({ push: jest.fn() }));
+jest.mock('next/router');
 describe('UserLogin - guest', () => {
     beforeEach(() => {
         render(

@@ -20,7 +20,6 @@ jest.mock('../../../../redux/actions/userActions', () => ({
     resetPasswordConfirmAction: jest.fn().mockReturnValue(() => true),
 }));
 jest.mock('next/router', () => ({
-    push: jest.fn(),
     useRouter: jest.fn(() => ({
         query: {
             UserResetPasswordConfirm_UidToken: [dynamicUrlParams.uid, dynamicUrlParams.token],

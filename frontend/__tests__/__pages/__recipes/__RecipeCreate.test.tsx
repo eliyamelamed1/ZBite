@@ -15,7 +15,7 @@ import userEvent from '@testing-library/user-event';
 jest.mock('../../../redux/actions/recipeActions', () => ({
     recipeCreateAction: jest.fn().mockReturnValue(() => true),
 }));
-jest.mock('next/router', () => ({ push: jest.fn() }));
+jest.mock('next/router');
 
 const middleware = [thunk];
 const mockStore = configureStore(middleware);

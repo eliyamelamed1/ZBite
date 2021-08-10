@@ -19,7 +19,6 @@ const dynamicUrlParams = {
 };
 jest.mock('../../../../redux/actions/userActions', () => ({ userActivateAction: jest.fn().mockReturnValue(() => true) }));
 jest.mock('next/router', () => ({
-    push: jest.fn(),
     useRouter: jest.fn(() => ({
         query: {
             UserActivate_UidToken: [dynamicUrlParams.uid, dynamicUrlParams.token]

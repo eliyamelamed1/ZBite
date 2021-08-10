@@ -23,7 +23,7 @@ const recipeId = '1';
 jest.mock('../../../redux/actions/recipeActions', () => ({
     recipeDeleteAction: jest.fn().mockReturnValue(() => true),
 }));
-jest.mock('next/router', () => ({ push: jest.fn() }));
+jest.mock('next/router');
 
 describe('RecipeDelete', () => {
     beforeEach(() => {

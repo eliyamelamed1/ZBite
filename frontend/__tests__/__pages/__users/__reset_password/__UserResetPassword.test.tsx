@@ -17,7 +17,7 @@ import userEvent from '@testing-library/user-event';
 jest.mock('../../../../redux/actions/userActions', () => ({
     resetPasswordAction: jest.fn().mockReturnValue(() => true),
 }));
-jest.mock('next/router', () => ({ push: jest.fn() }));
+jest.mock('next/router');
 
 beforeEach(() => {
     render(
