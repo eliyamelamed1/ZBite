@@ -51,7 +51,7 @@ class RecipesOfAccountsFollowed(APIView):
     serializer_class = RecipeSerializer
 
     def get(self, request):
-        all_recipes = Recipe.get_users_followed(request)
+        all_recipes = Recipe.get_recipes_of_followed_accounts(request)
         queryset = all_recipes.order_by('-created_at')
         serializer = RecipeSerializer(queryset, many=True)
         

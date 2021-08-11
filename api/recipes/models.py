@@ -59,18 +59,17 @@ class Recipe(models.Model):
         return reverse('recipes:top_rated')
 
     @classmethod
-    # get_recipes_of_followed_accounts
-    def get_users_followed(cls, request):
+    def get_recipes_of_followed_accounts(cls, request):
         user = request.user
         user = UserAccount.objects.all().get(id=user.id)
         users_followed = user.following.all()
-        all_recipes = Recipe.objects.none()
+        recipes_of_followed_accounts = Recipe.objects.none()
 
         for user in users_followed:
             try:
-                all_recipes = all_recipes | Recipe.objects.all().filter(author=user.id)
+                recipes_of_followed_accounts = recipes_of_followed_accounts | Recipe.objects.all().filter(author=user.id)
 
             except:
                 pass
 
-        return all_recipes
+        return recipes_of_followed_accounts
