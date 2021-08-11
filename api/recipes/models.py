@@ -28,6 +28,7 @@ class Recipe(models.Model):
     likes = models.ManyToManyField(get_user_model(), default=None, blank=True)
     stars = models.TextField(blank=True)
 
+
     def __str__(self):
         return self.title
     

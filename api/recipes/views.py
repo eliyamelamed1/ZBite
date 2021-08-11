@@ -68,3 +68,4 @@ class TopRatedRecipes(APIView):
         serializer = RecipeSerializer(queryset, many=True)
 
         return Response(serializer.data)
+

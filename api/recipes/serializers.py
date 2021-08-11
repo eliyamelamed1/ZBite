@@ -18,3 +18,4 @@ class RecipeSearchSerializer(serializers.ModelSerializer):
         model = Recipe
         fields = ('flavor_type',)
 
+
