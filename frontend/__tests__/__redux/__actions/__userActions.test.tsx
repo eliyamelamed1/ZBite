@@ -64,7 +64,7 @@ describe('axios request should match url endpoint, and parameters', () => {
         await store.dispatch(followUnFollowAction({ user_to_follow }));
 
         expect(axios.post.mock.calls.length).toBe(1);
-        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute.users.followUnFollow);
+        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute().users.followUnFollow);
         expect(axios.post.mock.calls[0][1]).toStrictEqual(body);
         expect(axios.post.mock.calls[0][2]).toStrictEqual(configWithAuthToken);
         // TODO test loadUserDetailsAction + loadloggedUserDataAction dispatched
@@ -73,7 +73,7 @@ describe('axios request should match url endpoint, and parameters', () => {
         store.dispatch(loadUserListAction());
 
         expect(axios.get.mock.calls.length).toBe(1);
-        expect(axios.get.mock.calls[0][0]).toStrictEqual(endpointRoute.users.userListData);
+        expect(axios.get.mock.calls[0][0]).toStrictEqual(endpointRoute().users.list);
         expect(axios.get.mock.calls[0][1]).toStrictEqual(config);
     });
     test('loadUserDetailsAction', () => {
@@ -114,7 +114,7 @@ describe('axios request should match url endpoint, and parameters', () => {
         store.dispatch(loadloggedUserDataAction());
 
         expect(axios.get.mock.calls.length).toBe(1);
-        expect(axios.get.mock.calls[0][0]).toStrictEqual(endpointRoute.users.loggedUserData);
+        expect(axios.get.mock.calls[0][0]).toStrictEqual(endpointRoute().users.loggedUserData);
         expect(axios.get.mock.calls[0][1]).toStrictEqual(configWithAuthToken);
     });
     test('loginAction', () => {
@@ -124,7 +124,7 @@ describe('axios request should match url endpoint, and parameters', () => {
         store.dispatch(loginAction({ email, password }));
 
         expect(axios.post.mock.calls.length).toBe(1);
-        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute.users.login);
+        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute().users.login);
         expect(axios.post.mock.calls[0][1]).toStrictEqual(body);
         expect(axios.post.mock.calls[0][2]).toStrictEqual(config);
         // test should dispatch loadloggedUserDataAction
@@ -135,7 +135,7 @@ describe('axios request should match url endpoint, and parameters', () => {
         store.dispatch(signupAction({ name, email, password, re_password }));
 
         expect(axios.post.mock.calls.length).toBe(1);
-        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute.users.signup);
+        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute().users.signup);
         expect(axios.post.mock.calls[0][1]).toStrictEqual(body);
         expect(axios.post.mock.calls[0][2]).toStrictEqual(config);
     });
@@ -145,7 +145,7 @@ describe('axios request should match url endpoint, and parameters', () => {
         store.dispatch(userActivateAction({ uid, token }));
 
         expect(axios.post.mock.calls.length).toBe(1);
-        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute.users.activate);
+        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute().users.activate);
         expect(axios.post.mock.calls[0][1]).toStrictEqual(body);
         expect(axios.post.mock.calls[0][2]).toStrictEqual(config);
     });
@@ -156,7 +156,7 @@ describe('axios request should match url endpoint, and parameters', () => {
         store.dispatch(resetPasswordAction({ email }));
 
         expect(axios.post.mock.calls.length).toBe(1);
-        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute.users.resetPassword);
+        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute().users.resetPassword);
         expect(axios.post.mock.calls[0][1]).toStrictEqual(body);
         expect(axios.post.mock.calls[0][2]).toStrictEqual(config);
     });
@@ -168,7 +168,7 @@ describe('axios request should match url endpoint, and parameters', () => {
         store.dispatch(resetPasswordConfirmAction({ uid, token, new_password }));
 
         expect(axios.post.mock.calls.length).toBe(1);
-        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute.users.resetPasswordConfirm);
+        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute().users.resetPasswordConfirm);
         expect(axios.post.mock.calls[0][1]).toStrictEqual(body);
         expect(axios.post.mock.calls[0][2]).toStrictEqual(config);
     });

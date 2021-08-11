@@ -28,7 +28,7 @@ export const recipeDeleteAction =
                 },
             };
 
-            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}/`, config);
+            await axios.delete(endpointRoute(id).recipes.details, config);
             dispatch({ type: DELETE_RECIPE_SUCCESS });
         } catch {
             dispatch({ type: DELETE_RECIPE_FAIL });
@@ -53,7 +53,7 @@ export const recipeCreateAction =
                 description,
                 flavor_type,
             });
-            await axios.post(endpointRoute.recipes.create, body, config);
+            await axios.post(endpointRoute().recipes.create, body, config);
             dispatch({ type: CREATE_RECIPE_SUCCESS });
         } catch {
             dispatch({ type: CREATE_RECIPE_FAIL });
@@ -78,7 +78,7 @@ export const recipeUpdateAction =
                 description,
                 flavor_type,
             });
-            const res = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}/`, body, config);
+            const res = await axios.patch(endpointRoute(id).recipes.details, body, config);
             dispatch({ type: UPDATE_RECIPE_SUCCESS, payload: res.data });
         } catch {
             dispatch({ type: UPDATE_RECIPE_FAIL });
@@ -93,7 +93,7 @@ export const loadRecipeListAction = () => async (dispatch) => {
         },
     };
     try {
-        const res = await axios.get(endpointRoute.recipes.recipeListData, config);
+        const res = await axios.get(endpointRoute().recipes.list, config);
         dispatch({ type: GET_RECIPE_LIST_SUCCESS, payload: res.data });
     } catch {
         dispatch({ type: GET_RECIPE_LIST_FAIL });
@@ -111,7 +111,7 @@ export const recipeSearchAction =
         };
 
         try {
-            const res = await axios.post(endpointRoute.recipes.search, { flavor_type }, config);
+            const res = await axios.post(endpointRoute().recipes.search, { flavor_type }, config);
             dispatch({ type: SEARCH_RECIPE_SUCCESS, payload: res.data });
         } catch {
             dispatch({ type: SEARCH_RECIPE_FAIL });
@@ -129,7 +129,7 @@ export const loadRecipeDetailsAction =
         };
 
         try {
-            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}/`, config);
+            const res = await axios.get(endpointRoute(id).recipes.details, config);
             dispatch({ type: GET_RECIPE_DETAILS_SUCCESS, payload: res.data });
         } catch {
             dispatch({ type: GET_RECIPE_DETAILS_FAIL });

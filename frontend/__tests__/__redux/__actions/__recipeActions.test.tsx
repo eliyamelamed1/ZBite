@@ -64,7 +64,7 @@ describe('axios request should match url endpoint, and parameters', () => {
         store.dispatch(recipeCreateAction({ title, description, flavor_type }));
 
         expect(axios.post.mock.calls.length).toBe(1);
-        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute.recipes.create);
+        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute().recipes.create);
         expect(axios.post.mock.calls[0][1]).toStrictEqual(body);
         expect(axios.post.mock.calls[0][2]).toStrictEqual(configWithAuthToken);
     });
@@ -84,7 +84,7 @@ describe('axios request should match url endpoint, and parameters', () => {
         store.dispatch(loadRecipeListAction());
 
         expect(axios.get.mock.calls.length).toBe(1);
-        expect(axios.get.mock.calls[0][0]).toStrictEqual(endpointRoute.recipes.recipeListData);
+        expect(axios.get.mock.calls[0][0]).toStrictEqual(endpointRoute().recipes.list);
         expect(axios.get.mock.calls[0][1]).toStrictEqual(config);
     });
     test('recipeSearchAction', () => {
@@ -93,7 +93,7 @@ describe('axios request should match url endpoint, and parameters', () => {
         store.dispatch(recipeSearchAction({ flavor_type }));
 
         expect(axios.post.mock.calls.length).toBe(1);
-        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute.recipes.search);
+        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute().recipes.search);
         expect(axios.post.mock.calls[0][1]).toStrictEqual({ flavor_type });
         expect(axios.post.mock.calls[0][2]).toStrictEqual(config);
     });
