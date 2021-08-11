@@ -39,7 +39,6 @@ urlpatterns = [
     path('api/likes/', include('likes.urls', namespace='likes')), 
     path('api/followers/', include('followers.urls', namespace='followers')), 
     path('api/ratings/', include('ratings.urls', namespace='ratings')),
-    path('api/reviews/', include('reviews.urls', namespace='reviews')),
 
     # chat
     path('api/chat_groups/', include('chat_groups.urls', namespace='chat_groups')),
