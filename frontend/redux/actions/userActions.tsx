@@ -46,7 +46,7 @@ export const followUnFollowAction =
                 },
             };
             const body = JSON.stringify({ user_to_follow });
-            await axios.post(endpointRoute.followUnFollow, body, config);
+            await axios.post(endpointRoute.users.followUnFollow, body, config);
             await dispatch(loadUserDetailsAction({ id: user_to_follow }));
             await dispatch(loadloggedUserDataAction());
             dispatch({ type: FOLLOW_UNFOLLOW_USER_SUCCESS });
@@ -80,7 +80,7 @@ export const loadUserListAction = () => async (dispatch) => {
         },
     };
     try {
-        const res = await axios.get(endpointRoute.userList, config);
+        const res = await axios.get(endpointRoute.users.userListData, config);
         dispatch({ type: GET_USER_LIST_SUCCESS, payload: res.data });
     } catch {
         dispatch({ type: GET_USER_LIST_FAIL });
@@ -140,7 +140,7 @@ export const loadloggedUserDataAction = () => async (dispatch) => {
                 Authorization: `Token ${localStorage.getItem('auth_token')}`,
             },
         };
-        const res = await axios.get(endpointRoute.loggedUserData, config);
+        const res = await axios.get(endpointRoute.users.loggedUserData, config);
         dispatch({ type: GET_LOGGED_USER_DETAILS_SUCCESS, payload: res.data });
     } catch (err) {
         dispatch({ type: GET_LOGGED_USER_DETAILS_FAIL });
@@ -160,7 +160,7 @@ export const loginAction =
         const body = JSON.stringify({ email, password });
 
         try {
-            const res = await axios.post(endpointRoute.login, body, config);
+            const res = await axios.post(endpointRoute.users.login, body, config);
             dispatch({ type: LOGIN_SUCCESS, payload: res.data });
             dispatch(loadloggedUserDataAction());
         } catch (err) {
@@ -185,7 +185,7 @@ export const signupAction =
         });
 
         try {
-            const res = await axios.post(endpointRoute.signup, body, config);
+            const res = await axios.post(endpointRoute.users.signup, body, config);
 
             dispatch({ type: SIGNUP_SUCCESS, payload: res.data });
         } catch (err) {
@@ -207,7 +207,7 @@ export const userActivateAction =
         const body = JSON.stringify({ uid, token });
 
         try {
-            const res = await axios.post(endpointRoute.activate, body, config);
+            const res = await axios.post(endpointRoute.users.activate, body, config);
 
             dispatch({ type: ACTIVATION_SUCCESS, payload: res.data });
         } catch (err) {
@@ -228,7 +228,7 @@ export const resetPasswordAction =
         const body = JSON.stringify({ email });
 
         try {
-            const res = await axios.post(endpointRoute.resetPassword, body, config);
+            const res = await axios.post(endpointRoute.users.resetPassword, body, config);
 
             dispatch({ type: RESET_PASSWORD_SUCCESS, payload: res.data });
         } catch (err) {
@@ -252,7 +252,7 @@ export const resetPasswordConfirmAction =
                 token,
                 new_password,
             });
-            const res = await axios.post(endpointRoute.resetPasswordConfirm, body, config);
+            const res = await axios.post(endpointRoute.users.resetPasswordConfirm, body, config);
             dispatch({ type: RESET_PASSWORD_CONFIRM_SUCCESS, payload: res.data });
         } catch (err) {
             dispatch({ type: RESET_PASSWORD_CONFIRM_FAIL });
