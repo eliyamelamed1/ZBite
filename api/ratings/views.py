@@ -28,6 +28,7 @@ class RatingCreate(APIView):
         rate = data['stars']
         
         try:
+            # update rating
             recipe = Recipe.objects.all().get(id=recipe)
             recipe_ratings = Rating.objects.all().filter(recipe=recipe)
             user_rating_of_recipe = recipe_ratings.filter(author=user)
@@ -35,7 +36,8 @@ class RatingCreate(APIView):
             user_rating_of_recipe.delete()
             Rating.objects.all().create(recipe=recipe, author=user, stars=rate)
             
-        except:
+        except():
+            # create rating
             recipe = Recipe.objects.all().get(id=recipe)
             Rating.objects.all().create(recipe=recipe, author=user, stars=rate)
 
