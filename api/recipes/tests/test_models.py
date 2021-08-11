@@ -35,7 +35,6 @@ def test_get_top_rated_recipes_url():
 def test_get_save_favorite_recipe_url():
     assert Recipe.get_save_favorite_recipe_url() == reverse('recipes:favorites')
 
-
 def test_get_all_likes(api_client):
     new_recipe = RecipeFactory()
     new_user = new_recipe.author
