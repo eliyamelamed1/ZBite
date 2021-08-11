@@ -8,6 +8,7 @@ import React from 'react';
 import RecipeCreate from '../../../pages/recipes/RecipeCreate';
 import Router from 'next/router';
 import configureStore from 'redux-mock-store';
+import { pageRoute } from '../../../globals';
 import { recipeCreateAction } from '../../../redux/actions/recipeActions';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
@@ -132,7 +133,7 @@ describe('authenticated users', () => {
             expect(recipeCreateAction.mock.calls[0][0].description).toBe('new description');
             expect(recipeCreateAction.mock.calls[0][0].flavor_type).toBe('Sour');
         });
-        test('should redirect after recipe is created', () => {
+        test('should redirect to home page after recipe is created', () => {
             const titleTextbox = screen.getByPlaceholderText(/title/i);
             const descriptionTextbox = screen.getByPlaceholderText(/description/i);
             const combobox = screen.getByRole('combobox');
@@ -144,7 +145,7 @@ describe('authenticated users', () => {
             userEvent.click(button);
 
             expect(Router.push.mock.calls.length).toBe(1);
-            expect(Router.push.mock.calls[0][0]).toBe('/');
+            expect(Router.push.mock.calls[0][0]).toBe(pageRoute.home);
         });
         test('should not redirect after recipe creation fail', () => {
             recipeCreateAction.mockReturnValueOnce(() => {
@@ -179,8 +180,8 @@ describe('guest users', () => {
         cleanup();
         jest.clearAllMocks();
     });
-    test('should redirect guest users', () => {
+    test('should redirect guest users to home page', () => {
         expect(Router.push.mock.calls.length).toBe(1);
-        expect(Router.push.mock.calls[0][0]).toBe('/');
+        expect(Router.push.mock.calls[0][0]).toBe(pageRoute.home);
     });
 });

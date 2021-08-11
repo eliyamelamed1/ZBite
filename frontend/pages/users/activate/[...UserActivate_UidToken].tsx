@@ -24,7 +24,7 @@ const UserActivate = () => {
             // TODO - add err msg
         }
     };
-    if (isUserAuthenticated === false) Router.push('/');
+    if (isUserAuthenticated === false) Router.push(pageRoute.home);
     return (
         <div data-testid='userActivate'>
             <div>

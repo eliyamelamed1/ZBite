@@ -10,6 +10,7 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import Router from 'next/router';
 import UserResetPassword from '../../../../pages/users/reset_password/UserResetPassword';
+import { pageRoute } from '../../../../globals';
 import { resetPasswordAction } from '../../../../redux/actions/userActions';
 import store from '../../../../redux/store';
 import userEvent from '@testing-library/user-event';
@@ -72,7 +73,7 @@ describe('UserResetPassword - email input', () => {
         expect(timesActionDispatched).toBe(1);
         expect(resetPasswordAction.mock.calls[0][0].email).toEqual(emailValue);
         expect(Router.push.mock.calls.length).toBe(1);
-        expect(Router.push.mock.calls[0][0]).toBe('/');
+        expect(Router.push.mock.calls[0][0]).toBe(pageRoute.home);
     });
     test('completing the reset password form should dispatch resetPasswordAction fail and not redirect', async () => {
         resetPasswordAction.mockReturnValueOnce(() => {

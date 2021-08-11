@@ -11,6 +11,7 @@ import Router from 'next/router';
 import UserLogin from '../../../pages/users/UserLogin';
 import configureStore from 'redux-mock-store';
 import { loginAction } from '../../../redux/actions/userActions';
+import { pageRoute } from '../../../globals';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
@@ -109,6 +110,6 @@ describe('UserLogin - authenticated user', () => {
     });
     test('should redirect authenticated user to home page', async () => {
         expect(Router.push.mock.calls.length).toBe(1);
-        expect(Router.push.mock.calls[0][0]).toBe('/');
+        expect(Router.push.mock.calls[0][0]).toBe(pageRoute.home);
     });
 });
