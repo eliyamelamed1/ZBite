@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import TopRatedAccounts, UserDetailView, UserListView, LoggedUserDetailView,SaveFavoriteRecipe
+from .views import TopRatedAccounts, UserDetailView, UserListView, LoggedUserDetailView
 
 app_name = 'accounts'
 urlpatterns = [
@@ -8,6 +8,5 @@ urlpatterns = [
     path('<uuid:pk>/', UserDetailView.as_view(), name='detail'),
     path('top/', TopRatedAccounts.as_view(), name='top'),
     path('logged_user/', LoggedUserDetailView.as_view(), name='logged_user'),
-    path('favorites/', SaveFavoriteRecipe.as_view(), name='favorites'),
 ]
 

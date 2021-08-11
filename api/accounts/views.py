@@ -1,14 +1,12 @@
-from recipes.models import Recipe
 from django.contrib.auth import get_user_model
-from django.http.response import Http404, HttpResponse
+from django.http.response import HttpResponse
 from rest_framework import generics, permissions
 from rest_framework.response import Response
-from rest_framework.serializers import Serializer
 from rest_framework.views import APIView
 
 from .models import UserAccount
 from .permissions import IsAuthorOrReadOnly
-from .serializers import FavoriteRecipeSerializer, UserSerializer
+from .serializers import UserSerializer
 
 
 class UserListView(generics.ListCreateAPIView):
@@ -44,22 +42,3 @@ class TopRatedAccounts(APIView):
 
         return Response(serializer.data)
 
-class SaveFavoriteRecipe(APIView):
-    serializer_class = FavoriteRecipeSerializer
-
-    def perform_create(self, serializer):
-        '''set the logged user as the one who make the request of saving favorites recipe'''
-        serializer.save(author=self.request.user)
-
-    def post(self, request, format=None):
-        user = request.user
-        input_recipe = request.data['favorites']
-
-        try:
-            user_already_saved_recipe = user.favorites.all().get(id__exact=input_recipe)
-            if user_already_saved_recipe:
-                user.favorites.remove(input_recipe)
-        except:
-            user.favorites.add(input_recipe)
-
-        return Response()

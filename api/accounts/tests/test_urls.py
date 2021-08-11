@@ -40,3 +40,4 @@ class TestLoggedUserDetailViewUrl:
     def test_logged_user_details_url_resolve(self):
         url = f'/api/accounts/logged_user/'
         assert resolve(url).view_name == 'accounts:logged_user'
+
