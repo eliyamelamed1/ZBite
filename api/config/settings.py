@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'likes',
     'followers',
     'ratings',
+    'reviews',
     'chat_groups',
     'chat_duos',
     'chat_massages',

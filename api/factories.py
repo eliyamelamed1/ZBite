@@ -10,6 +10,7 @@ from comments.models import Comment
 from likes.models import Like
 from ratings.models import Rating
 from recipes.models import Recipe
+from reviews.models import Review
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -50,6 +51,14 @@ class RatingFactory(factory.django.DjangoModelFactory):
     stars = 5
     class Meta:
         model = Rating
+
+class ReviewFactory(factory.django.DjangoModelFactory):
+    author = factory.SubFactory(UserFactory)
+    recipe = factory.SubFactory(RecipeFactory) 
+    stars = 5
+    comment = factory.fuzzy.FuzzyText()
+    class Meta:
+        model = Review
 
 
 class ChatDuoFactory(factory.django.DjangoModelFactory):
