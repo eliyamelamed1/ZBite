@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.http.response import Http404, HttpResponse
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework.serializers import Serializer
@@ -23,12 +24,13 @@ class LoggedUserDetailView(APIView):
 # TODO test this function
     serializer_class = UserSerializer 
     def get(self, request):
-        logged_user = UserAccount.objects.get(id=request.user.id) 
-        
-        serializer = UserSerializer(logged_user)
+        try:
+            logged_user = UserAccount.objects.get(id=request.user.id) 
+            serializer = UserSerializer(logged_user)
 
-        return Response(serializer.data)
-
+            return Response(serializer.data)
+        except:
+            return HttpResponse('Unauthorized', status=401)
 class TopRatedAccounts(APIView):
     '''display the top rated recipes'''
     serializer_class = UserSerializer
