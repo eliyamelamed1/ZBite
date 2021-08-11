@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Router, { useRouter } from 'next/router';
 
+import { pageRoute } from '../../../globals';
 import { resetPasswordConfirmAction } from '../../../redux/actions/userActions';
 import { useDispatch } from 'react-redux';
 
@@ -23,7 +24,7 @@ const UserResetPasswordConfirm = () => {
                 const uid = params?.[0];
                 const token = params?.[1];
                 dispatch(resetPasswordConfirmAction({ uid, token, new_password }));
-                Router.push('/');
+                Router.push(pageRoute.home);
             }
         } catch {
             // TODO - add err msg

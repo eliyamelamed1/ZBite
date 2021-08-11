@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import Router from 'next/router';
 import { loginAction } from '../../redux/actions/userActions';
+import { pageRoute } from '../../globals';
 
 const UserLogin = () => {
     const dispatch = useDispatch();
@@ -25,7 +26,7 @@ const UserLogin = () => {
     };
 
     if (isUserAuthenticated) {
-        Router.push('/');
+        Router.push(pageRoute.home);
     }
 
     return (

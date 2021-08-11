@@ -1,7 +1,5 @@
 import '@testing-library/jest-dom/extend-expect';
 
-import * as userActions from '../../../redux/actions/userActions';
-
 import {
     followUnFollowAction,
     loadUserDetailsAction,
@@ -19,12 +17,14 @@ import {
 import axios from 'axios';
 import store from '../../../redux/store';
 
-const secondTestActionSpy = jest.spyOn(userActions, 'secondTestAction');
+// import * as userActions from '../../../redux/actions/userActions';
 
-test('should dispatch secondTestActions ', () => {
-    store.dispatch(userActions.testAction());
-    expect(secondTestActionSpy.mock.calls.length).toBe(1);
-});
+// const secondTestActionSpy = jest.spyOn(userActions, 'secondTestAction');
+
+// test('should dispatch secondTestActions ', () => {
+//     store.dispatch(userActions.testAction());
+//     expect(secondTestActionSpy.mock.calls.length).toBe(1);
+// });
 
 localStorage.setItem('auth_token', 'tokenValue');
 const config = {
