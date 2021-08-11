@@ -55,16 +55,11 @@ describe('UserDetails - getServerSideProps', () => {
     });
     test('should return matching props', async () => {
         const props = (await getServerSideProps(contextParams.firstExistingUser)).props;
-        expect(props.userData).toEqual(firstUser);
+        expect(props.serverUserData).toEqual(firstUser);
     });
-
     test('if recipe doesnt exist return not found', async () => {
         const notFound = (await getServerSideProps(contextParams.nonExistingUser)).notFound;
         expect(notFound).toEqual(true);
-    });
-    test('should return matching props', async () => {
-        const props = (await getServerSideProps(contextParams.firstExistingUser)).props;
-        expect(props.userData).toEqual(firstUser);
     });
 });
 
@@ -76,10 +71,10 @@ describe('UserDetails - my profile', () => {
     };
     let store = mockStore(initialState);
     beforeEach(async () => {
-        const { userData } = (await getServerSideProps(contextParams.firstExistingUser)).props;
+        const { serverUserData } = (await getServerSideProps(contextParams.firstExistingUser)).props;
         render(
             <Provider store={store}>
-                <UserDetails_Id userData={userData} />
+                <UserDetails_Id serverUserData={serverUserData} />
             </Provider>
         );
     });
@@ -130,11 +125,11 @@ describe('UserDetails - other account profile', () => {
     };
     let store = mockStore(initialState);
     beforeEach(async () => {
-        const { userData } = (await getServerSideProps(contextParams.firstExistingUser)).props;
+        const { serverUserData } = (await getServerSideProps(contextParams.firstExistingUser)).props;
 
         render(
             <Provider store={store}>
-                <UserDetails_Id userData={userData} />
+                <UserDetails_Id serverUserData={serverUserData} />
             </Provider>
         );
     });

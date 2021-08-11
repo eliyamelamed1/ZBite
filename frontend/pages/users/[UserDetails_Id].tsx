@@ -10,39 +10,48 @@ import { useSelector } from 'react-redux';
 
 const UserDetails = (props) => {
     const [isMyProfile, setIsMyProfile] = useState(false);
-    const [userData, setUserData] = useState(props.userData);
+    const [userData, setUserData] = useState(props.serverUserData);
     const { loggedUserData, requestedUserData } = useSelector((state) => state.userReducer);
 
-    useEffect(() => {
-        // updates userData when navigating between accounts on the browser
-        if (props.userData) {
-            setUserData(props.userData);
-            console.log('props.userData' + '  ,   ' + props.userData?.name);
-        }
-    }, [props.userData]);
+    useEffect(
+        function updateServerSideProps() {
+            // updates userData when navigating between accounts on the browser
+            if (props.serverUserData) {
+                setUserData(props.serverUserData);
+                console.log('props.serverUserData' + '  ,   ' + props.serverUserData?.name);
+            }
+        },
+        [props.serverUserData]
+    );
 
-    useEffect(() => {
-        // when updating requested account data (by following etc...) migrate the changes to the userData
-        /*
+    useEffect(
+        function updateRequestedUserData() {
+            // when updating requested account data (by following etc...) migrate the changes to the userData
+            /*
         bug after following a user and navigating to other account the data doesnt change
         the following if statement fix the bug
         */
-        if (requestedUserData?.id === userData?.id) {
-            setUserData(requestedUserData);
-            console.log('requestedUserData' + '    ,    ' + requestedUserData?.name);
-        }
-    }, [requestedUserData, userData?.id]);
+            if (requestedUserData?.id === userData?.id) {
+                setUserData(requestedUserData);
+                console.log('requestedUserData' + '    ,    ' + requestedUserData?.name);
+            }
+        },
+        [requestedUserData, userData?.id]
+    );
 
-    useEffect(() => {
-        /*
+    useEffect(
+        function updateLoggedUserData() {
+            /*
          check if the userDetailsPage is the profile of the logged user.
          + when logged account update his data, migrate the changes to the profile page
         */
-        if (loggedUserData?.id == userData?.id) {
-            setUserData(loggedUserData);
-            setIsMyProfile(true);
-        }
-    }, [userData?.id, loggedUserData]);
+            if (loggedUserData?.id == userData?.id) {
+                setUserData(loggedUserData);
+                setIsMyProfile(true);
+            }
+        },
+        [userData?.id, loggedUserData]
+    );
 
     const myProfileLinks = (
         <main data-testid='myProfileLinks'>
@@ -74,12 +83,12 @@ const UserDetails = (props) => {
 export async function getServerSideProps(context) {
     const id = context.params.UserDetails_Id;
     await store.dispatch(loadUserDetailsAction({ id }));
-    const userData = store.getState().userReducer.requestedUserData;
+    const serverUserData = store.getState().userReducer.requestedUserData;
 
-    const isRequestedUserIdExist = userData?.id === id;
+    const isRequestedUserIdExist = serverUserData?.id === id;
 
     if (isRequestedUserIdExist) {
-        return { props: { userData } };
+        return { props: { serverUserData } };
     } else {
         return { notFound: true };
     }
