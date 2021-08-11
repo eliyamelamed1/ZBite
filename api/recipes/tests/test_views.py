@@ -12,7 +12,7 @@ pytestmark = pytest.mark.django_db
 recipe_list_url = Recipe.get_list_url()
 create_recipe_url = Recipe.get_create_url()
 search_recipe_url = Recipe.get_search_url()
-save_favorite_recipe_url = reverse('recipes:favorites')
+save_favorite_recipe_url = Recipe.get_save_favorite_recipe_url()
 
 recipes_of_accounts_followed_url = Recipe.get_recipes_of_accounts_followed_url()
 top_rated_recipes_url = Recipe.get_top_rated_recipes_url()
