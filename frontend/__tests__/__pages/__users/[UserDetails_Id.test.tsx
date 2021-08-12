@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 
 import * as reactRedux from 'react-redux';
+import * as userActions from '../../../redux/actions/userActions';
 
 import { cleanup, render, screen } from '@testing-library/react';
 import { ssrContextParams, userParams } from '../../../globals';
@@ -9,12 +10,14 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import UserDetails_Id from '../../../pages/users/[UserDetails_Id]';
 import { getServerSideProps } from '../../../pages/users/[UserDetails_Id]';
-import { loadUserDetailsAction } from '../../../redux/actions/userActions';
 import store from '../../../redux/store';
+import userEvent from '@testing-library/user-event';
 
 const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
+// const followUnFollowActionSpy = jest.spyOn(userActions, 'followUnFollowAction');
 
-jest.mock('../../../redux/actions/userActions', () => ({ loadUserDetailsAction: jest.fn() }));
+// jest.mock('axios');
+jest.mock('../../../redux/actions/userActions');
 jest.mock('../../../redux/store.tsx');
 
 describe('UserDetails - getServerSideProps', () => {
@@ -29,10 +32,10 @@ describe('UserDetails - getServerSideProps', () => {
     });
     test('should dispatch loadUserDetailsAction', async () => {
         await getServerSideProps(ssrContextParams.loggedUser);
-        const timesActionDispatched = loadUserDetailsAction.mock.calls.length;
+        const timesActionDispatched = userActions.loadUserDetailsAction.mock.calls.length;
 
         expect(timesActionDispatched).toBe(1);
-        expect(loadUserDetailsAction.mock.calls[0][0].id).toBe(userParams.loggedUser.id);
+        expect(userActions.loadUserDetailsAction.mock.calls[0][0].id).toBe(userParams.loggedUser.id);
     });
     test('should return matching props', async () => {
         const props = (await getServerSideProps(ssrContextParams.loggedUser)).props;
@@ -133,10 +136,10 @@ describe('UserDetails - loggedUser visiting other account profile', () => {
         expect(userDetailsTestId).toBeInTheDocument();
     });
     test('should dispatch loadUserDetailsAction', () => {
-        const timesActionDispatched = loadUserDetailsAction.mock.calls.length;
+        const timesActionDispatched = userActions.loadUserDetailsAction.mock.calls.length;
 
         expect(timesActionDispatched).toBe(1);
-        expect(loadUserDetailsAction.mock.calls[0][0].id).toBe(userParams.otherUser.id);
+        expect(userActions.loadUserDetailsAction.mock.calls[0][0].id).toBe(userParams.otherUser.id);
     });
     test('should render the user details ', () => {
         const userEmail = screen.getByText(userParams.otherUser.email);
@@ -166,6 +169,7 @@ describe('UserDetails - loggedUser visiting other account profile', () => {
     });
     test('should render follow/unfollow button', () => {
         const followButton = screen.getByRole('button');
+        userEvent.click(followButton);
 
         expect(followButton).toBeInTheDocument();
     });

@@ -1,3 +1,5 @@
+// TODO - ADD TESTS FOR GUEST USER
+
 import '@testing-library/jest-dom/extend-expect';
 
 import * as userActions from '../../../redux/actions/userActions';
