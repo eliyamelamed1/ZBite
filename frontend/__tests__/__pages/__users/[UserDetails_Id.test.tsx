@@ -44,11 +44,12 @@ describe('UserDetails - getServerSideProps', () => {
     });
 });
 
-describe('UserDetails - my profile', () => {
+describe('UserDetails - loggedUser visit his own profile', () => {
     beforeEach(async () => {
         useSelectorMock.mockReturnValue({
             loggedUserData: userParams.loggedUser,
             requestedUserData: userParams.loggedUser,
+            isUserAuthenticated: true,
         });
         store.getState = () => ({
             userReducer: {
@@ -101,11 +102,12 @@ describe('UserDetails - my profile', () => {
     });
 });
 
-describe('UserDetails - other account profile', () => {
+describe('UserDetails - loggedUser visiting other account profile', () => {
     beforeEach(async () => {
         useSelectorMock.mockReturnValue({
             loggedUserData: userParams.loggedUser,
             requestedUserData: userParams.otherUser,
+            isUserAuthenticated: true,
         });
         store.getState = () => ({
             userReducer: {
@@ -161,5 +163,10 @@ describe('UserDetails - other account profile', () => {
         const followUnFollow = screen.getByTestId('followUnFollow');
 
         expect(followUnFollow).toBeInTheDocument();
+    });
+    test('should render follow/unfollow button', () => {
+        const followButton = screen.getByRole('button');
+
+        expect(followButton).toBeInTheDocument();
     });
 });
