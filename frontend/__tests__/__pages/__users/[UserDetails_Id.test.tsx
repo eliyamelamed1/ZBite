@@ -10,15 +10,14 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import UserDetails_Id from '../../../pages/users/[UserDetails_Id]';
 import { getServerSideProps } from '../../../pages/users/[UserDetails_Id]';
-import { loadUserDetailsAction } from '../../../redux/actions/userActions';
 import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
 
 const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
-jest.spyOn(userActions, 'loadUserDetailsAction');
+const loadUserDetailsActionSpy = jest.spyOn(userActions, 'loadUserDetailsAction');
 const followUnFollowActionSpy = jest.spyOn(userActions, 'followUnFollowAction');
 
-userActions.loadUserDetailsAction.mockImplementation(() => jest.fn());
+loadUserDetailsActionSpy.mockImplementation(() => jest.fn());
 
 jest.mock('../../../redux/store.tsx');
 
@@ -34,10 +33,10 @@ describe('UserDetails - getServerSideProps', () => {
     });
     test('should dispatch loadUserDetailsAction', async () => {
         await getServerSideProps(ssrContextParams.loggedUser);
-        const timesActionDispatched = loadUserDetailsAction.mock.calls.length;
+        const timesActionDispatched = loadUserDetailsActionSpy.mock.calls.length;
 
         expect(timesActionDispatched).toBe(1);
-        expect(loadUserDetailsAction.mock.calls[0][0].id).toBe(userParams.loggedUser.id);
+        expect(loadUserDetailsActionSpy.mock.calls[0][0].id).toBe(userParams.loggedUser.id);
     });
     test('should return matching props', async () => {
         const props = (await getServerSideProps(ssrContextParams.loggedUser)).props;
@@ -138,10 +137,10 @@ describe('UserDetails - loggedUser visiting other account profile', () => {
         expect(userDetailsTestId).toBeInTheDocument();
     });
     test('should dispatch loadUserDetailsAction', () => {
-        const timesActionDispatched = loadUserDetailsAction.mock.calls.length;
+        const timesActionDispatched = loadUserDetailsActionSpy.mock.calls.length;
 
         expect(timesActionDispatched).toBe(1);
-        expect(loadUserDetailsAction.mock.calls[0][0].id).toBe(userParams.otherUser.id);
+        expect(loadUserDetailsActionSpy.mock.calls[0][0].id).toBe(userParams.otherUser.id);
     });
     test('should render the user details ', () => {
         const userEmail = screen.getByText(userParams.otherUser.email);
