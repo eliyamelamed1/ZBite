@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 
 import * as reactRedux from 'react-redux';
+import * as userActions from '../../../redux/actions/userActions';
 
 import { cleanup, render, screen } from '@testing-library/react';
 import { ssrContextParams, userParams } from '../../../globals';
@@ -14,8 +15,11 @@ import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
 
 const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
+jest.spyOn(userActions, 'loadUserDetailsAction');
+const followUnFollowActionSpy = jest.spyOn(userActions, 'followUnFollowAction');
 
-jest.mock('../../../redux/actions/userActions');
+userActions.loadUserDetailsAction.mockImplementation(() => jest.fn());
+
 jest.mock('../../../redux/store.tsx');
 
 describe('UserDetails - getServerSideProps', () => {
