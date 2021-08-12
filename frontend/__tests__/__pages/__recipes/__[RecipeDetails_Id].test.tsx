@@ -8,6 +8,7 @@ import RecipeDetails from '../../../pages/recipes/[RecipeDetails_Id]';
 import configureStore from 'redux-mock-store';
 import { getServerSideProps } from '../../../pages/recipes/[RecipeDetails_Id]';
 import { loadRecipeDetailsAction } from '../../../redux/actions/recipeActions';
+import store from '../../../redux/store';
 import thunk from 'redux-thunk';
 
 const recipeParams = {
@@ -32,14 +33,12 @@ const contextParams = {
 };
 
 jest.mock('../../../redux/actions/recipeActions', () => ({ loadRecipeDetailsAction: jest.fn() }));
-jest.mock('../../../redux/store.tsx', () => ({
-    dispatch: jest.fn(),
-    getState: jest.fn(() => ({
-        recipeReducer: {
-            requestedRecipeData: recipeParams.requestedRecipeData,
-        },
-    })),
-}));
+jest.mock('../../../redux/store.tsx');
+store.getState = () => ({
+    recipeReducer: {
+        requestedRecipeData: recipeParams.requestedRecipeData,
+    },
+});
 const middleware = [thunk];
 const mockStore = configureStore(middleware);
 

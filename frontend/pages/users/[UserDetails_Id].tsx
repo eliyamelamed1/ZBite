@@ -18,7 +18,6 @@ const UserDetails = (props) => {
             // updates userData when navigating between accounts on the browser
             if (props.serverUserData) {
                 setUserData(props.serverUserData);
-                console.log('props.serverUserData' + '  ,   ' + props.serverUserData?.name);
             }
         },
         [props.serverUserData]
@@ -33,7 +32,6 @@ const UserDetails = (props) => {
         */
             if (requestedUserData?.id === userData?.id) {
                 setUserData(requestedUserData);
-                console.log('requestedUserData' + '    ,    ' + requestedUserData?.name);
             }
         },
         [requestedUserData, userData?.id]

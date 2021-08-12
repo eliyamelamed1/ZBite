@@ -6,9 +6,8 @@ import { cleanup, render, screen } from '@testing-library/react';
 import DisplayRecipes from '../../../components/recipes/DisplayRecipes';
 import { Provider } from 'react-redux';
 import React from 'react';
-import configureStore from 'redux-mock-store';
 import { loadRecipeListAction } from '../../../redux/actions/recipeActions';
-import thunk from 'redux-thunk';
+import store from '../../../redux/store';
 
 jest.mock('../../../redux/actions/recipeActions', () => ({
     loadRecipeListAction: jest.fn().mockReturnValue(() => true),
@@ -29,17 +28,11 @@ const listOfRecipes = [
         author: 'second recipe author',
     },
 ];
-const middlewares = [thunk];
-const mockStore = configureStore(middlewares);
-const initialState = {};
-const store = mockStore(initialState);
-jest.mock('../../../redux/store.tsx', () => ({
-    dispatch: jest.fn(),
-    getState: jest.fn(() => ({
-        recipeReducer: { listOfRecipes: listOfRecipes },
-    })),
-}));
 
+jest.mock('../../../redux/store.tsx');
+store.getState = () => ({
+    recipeReducer: { listOfRecipes: listOfRecipes },
+});
 describe('RecipeList', () => {
     beforeEach(async () => {
         const listOfRecipes = (await getStaticProps()).props.listOfRecipes;

@@ -5,6 +5,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 
 import React from 'react';
 import { loadUserListAction } from '../../../redux/actions/userActions';
+import store from '../../../redux/store';
 
 const listOfUsers = [
     {
@@ -18,12 +19,11 @@ const listOfUsers = [
         id: '2',
     },
 ];
-jest.mock('../../../redux/store.tsx', () => ({
-    dispatch: jest.fn(),
-    getState: jest.fn(() => ({
-        userReducer: { listOfUsers: listOfUsers },
-    })),
-}));
+
+jest.mock('../../../redux/store.tsx');
+store.getState = () => ({
+    userReducer: { listOfUsers: listOfUsers },
+});
 jest.mock('../../../redux/actions/userActions', () => ({ loadUserListAction: jest.fn() }));
 describe('UserList', () => {
     beforeEach(async () => {

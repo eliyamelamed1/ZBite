@@ -8,6 +8,7 @@ import UserDetails_Id from '../../../pages/users/[UserDetails_Id]';
 import configureStore from 'redux-mock-store';
 import { getServerSideProps } from '../../../pages/users/[UserDetails_Id]';
 import { loadUserDetailsAction } from '../../../redux/actions/userActions';
+import store from '../../../redux/store';
 import thunk from 'redux-thunk';
 
 const firstUser = {
@@ -29,14 +30,13 @@ const contextParams = {
     },
 };
 jest.mock('../../../redux/actions/userActions', () => ({ loadUserDetailsAction: jest.fn() }));
-jest.mock('../../../redux/store.tsx', () => ({
-    dispatch: jest.fn(),
-    getState: jest.fn(() => ({
-        userReducer: {
-            requestedUserData: { id: firstUser.id, email: firstUser.email, name: firstUser.name },
-        },
-    })),
-}));
+
+jest.mock('../../../redux/store.tsx');
+store.getState = () => ({
+    userReducer: {
+        requestedUserData: firstUser,
+    },
+});
 
 const middleware = [thunk];
 const mockStore = configureStore(middleware);
@@ -176,3 +176,12 @@ describe('UserDetails - other account profile', () => {
         expect(followUnFollow).toBeInTheDocument();
     });
 });
+
+// test('should ', async () => {
+//     const { serverUserData } = (await getServerSideProps(contextParams.firstExistingUser)).props;
+//     render(
+//         <Provider store={store}>
+//             <UserDetails_Id serverUserData={serverUserData} />
+//         </Provider>
+//     );
+// });
