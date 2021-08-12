@@ -21,3 +21,33 @@ export const pageRoute = {
     home: '/',
     login: '/users/UserLogin',
 };
+
+export const userParams = {
+    loggedUser: {
+        id: 'loggedUserId',
+        email: 'loggedUser@gmail.com',
+        name: 'loggedUser',
+        following: [],
+        followers: [],
+    },
+    otherUser: {
+        id: 'otherUserId',
+        email: 'otherUser@gmail.com',
+        name: 'otherUser',
+        following: [],
+        followers: [],
+    },
+
+    nonExistingUser: {},
+};
+export const ssrContextParams = {
+    loggedUser: {
+        params: { UserDetails_Id: userParams.loggedUser.id },
+    },
+    otherUser: {
+        params: { UserDetails_Id: userParams.otherUser.id },
+    },
+    nonExistingUser: {
+        params: { UserDetails_Id: userParams.nonExistingUser.id },
+    },
+};

@@ -3,6 +3,7 @@ import '@testing-library/jest-dom/extend-expect';
 import * as reactRedux from 'react-redux';
 
 import { cleanup, render, screen } from '@testing-library/react';
+import { ssrContextParams, userParams } from '../../../globals';
 
 import { Provider } from 'react-redux';
 import React from 'react';
@@ -10,37 +11,6 @@ import UserDetails_Id from '../../../pages/users/[UserDetails_Id]';
 import { getServerSideProps } from '../../../pages/users/[UserDetails_Id]';
 import { loadUserDetailsAction } from '../../../redux/actions/userActions';
 import store from '../../../redux/store';
-
-const loggedUser = {
-    id: 'loggedUserId',
-    email: 'loggedUser@gmail.com',
-    name: 'loggedUser',
-    following: [],
-    followers: [],
-};
-const otherUser = {
-    id: 'otherUserId',
-    email: 'otherUser@gmail.com',
-    name: 'otherUser',
-    following: [],
-    followers: [],
-};
-
-const nonExistingUser = {
-    id: 'id',
-};
-
-const contextParams = {
-    loggedUser: {
-        params: { UserDetails_Id: loggedUser.id },
-    },
-    otherUser: {
-        params: { UserDetails_Id: otherUser.id },
-    },
-    nonExistingUser: {
-        params: { UserDetails_Id: nonExistingUser.id },
-    },
-};
 
 const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
 
@@ -54,22 +24,22 @@ describe('UserDetails - getServerSideProps', () => {
     });
     store.getState = () => ({
         userReducer: {
-            requestedUserData: loggedUser,
+            requestedUserData: userParams.loggedUser,
         },
     });
     test('should dispatch loadUserDetailsAction', async () => {
-        await getServerSideProps(contextParams.loggedUser);
+        await getServerSideProps(ssrContextParams.loggedUser);
         const timesActionDispatched = loadUserDetailsAction.mock.calls.length;
 
         expect(timesActionDispatched).toBe(1);
-        expect(loadUserDetailsAction.mock.calls[0][0].id).toBe(loggedUser.id);
+        expect(loadUserDetailsAction.mock.calls[0][0].id).toBe(userParams.loggedUser.id);
     });
     test('should return matching props', async () => {
-        const props = (await getServerSideProps(contextParams.loggedUser)).props;
-        expect(props.serverUserData).toEqual(loggedUser);
+        const props = (await getServerSideProps(ssrContextParams.loggedUser)).props;
+        expect(props.serverUserData).toEqual(userParams.loggedUser);
     });
     test('if recipe doesnt exist return not found', async () => {
-        const notFound = (await getServerSideProps(contextParams.nonExistingUser)).notFound;
+        const notFound = (await getServerSideProps(ssrContextParams.nonExistingUser)).notFound;
         expect(notFound).toEqual(true);
     });
 });
@@ -77,14 +47,15 @@ describe('UserDetails - getServerSideProps', () => {
 describe('UserDetails - my profile', () => {
     beforeEach(async () => {
         useSelectorMock.mockReturnValue({
-            loggedUserData: loggedUser,
+            loggedUserData: userParams.loggedUser,
+            requestedUserData: userParams.loggedUser,
         });
         store.getState = () => ({
             userReducer: {
-                requestedUserData: loggedUser,
+                requestedUserData: userParams.loggedUser,
             },
         });
-        const { serverUserData } = (await getServerSideProps(contextParams.loggedUser)).props;
+        const { serverUserData } = (await getServerSideProps(ssrContextParams.loggedUser)).props;
         render(
             <Provider store={store}>
                 <UserDetails_Id serverUserData={serverUserData} />
@@ -102,8 +73,8 @@ describe('UserDetails - my profile', () => {
         expect(userDetailsTestId).toBeInTheDocument();
     });
     test('should render the user details ', () => {
-        const userEmail = screen.getByText(loggedUser.email);
-        const userName = screen.getByText(loggedUser.name);
+        const userEmail = screen.getByText(userParams.loggedUser.email);
+        const userName = screen.getByText(userParams.loggedUser.name);
 
         expect(userEmail).toBeInTheDocument();
         expect(userName).toBeInTheDocument();
@@ -133,14 +104,15 @@ describe('UserDetails - my profile', () => {
 describe('UserDetails - other account profile', () => {
     beforeEach(async () => {
         useSelectorMock.mockReturnValue({
-            requestedUserData: otherUser,
+            loggedUserData: userParams.loggedUser,
+            requestedUserData: userParams.otherUser,
         });
         store.getState = () => ({
             userReducer: {
-                requestedUserData: otherUser,
+                requestedUserData: userParams.otherUser,
             },
         });
-        const { serverUserData } = (await getServerSideProps(contextParams.otherUser)).props;
+        const { serverUserData } = (await getServerSideProps(ssrContextParams.otherUser)).props;
 
         render(
             <Provider store={store}>
@@ -162,11 +134,11 @@ describe('UserDetails - other account profile', () => {
         const timesActionDispatched = loadUserDetailsAction.mock.calls.length;
 
         expect(timesActionDispatched).toBe(1);
-        expect(loadUserDetailsAction.mock.calls[0][0].id).toBe(otherUser.id);
+        expect(loadUserDetailsAction.mock.calls[0][0].id).toBe(userParams.otherUser.id);
     });
     test('should render the user details ', () => {
-        const userEmail = screen.getByText(otherUser.email);
-        const userName = screen.getByText(otherUser.name);
+        const userEmail = screen.getByText(userParams.otherUser.email);
+        const userName = screen.getByText(userParams.otherUser.name);
 
         expect(userEmail).toBeInTheDocument();
         expect(userName).toBeInTheDocument();
