@@ -12,7 +12,7 @@ const UserDetails = (props) => {
     const [isMyProfile, setIsMyProfile] = useState(false);
     const [userData, setUserData] = useState(props.serverUserData);
     const { loggedUserData, requestedUserData } = useSelector((state) => state.userReducer);
-    const userReducer = useSelector((state) => state.userReducer);
+
     useEffect(
         function updateServerSideProps() {
             // updates userData when navigating between accounts on the browser
@@ -67,8 +67,10 @@ const UserDetails = (props) => {
             </Head>
             <main data-testid='userDetails'>
                 <div>
-                    <p>user name: {userData?.name}</p>
-                    <p>user email: {userData?.email}</p>
+                    <p>user name:</p>
+                    <p>{userData?.name}</p>
+                    <p>user email:</p>
+                    <p>{userData?.email}</p>
                     <p>following: {userData?.following?.length}</p>
                     <p>followers: {userData?.followers?.length}</p>
                 </div>

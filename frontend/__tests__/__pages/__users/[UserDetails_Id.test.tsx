@@ -11,10 +11,19 @@ import { getServerSideProps } from '../../../pages/users/[UserDetails_Id]';
 import { loadUserDetailsAction } from '../../../redux/actions/userActions';
 import store from '../../../redux/store';
 
-const firstUser = {
-    id: 'firstUserId',
-    email: 'firstEmail',
-    name: 'firstName',
+const loggedUser = {
+    id: 'loggedUserId',
+    email: 'loggedUser@gmail.com',
+    name: 'loggedUser',
+    following: [],
+    followers: [],
+};
+const otherUser = {
+    id: 'otherUserId',
+    email: 'otherUser@gmail.com',
+    name: 'otherUser',
+    following: [],
+    followers: [],
 };
 
 const nonExistingUser = {
@@ -22,8 +31,11 @@ const nonExistingUser = {
 };
 
 const contextParams = {
-    firstExistingUser: {
-        params: { UserDetails_Id: firstUser.id },
+    loggedUser: {
+        params: { UserDetails_Id: loggedUser.id },
+    },
+    otherUser: {
+        params: { UserDetails_Id: otherUser.id },
     },
     nonExistingUser: {
         params: { UserDetails_Id: nonExistingUser.id },
@@ -34,27 +46,27 @@ const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
 
 jest.mock('../../../redux/actions/userActions', () => ({ loadUserDetailsAction: jest.fn() }));
 jest.mock('../../../redux/store.tsx');
-store.getState = () => ({
-    userReducer: {
-        requestedUserData: firstUser,
-    },
-});
 
 describe('UserDetails - getServerSideProps', () => {
     afterEach(() => {
         cleanup();
         jest.clearAllMocks();
     });
+    store.getState = () => ({
+        userReducer: {
+            requestedUserData: loggedUser,
+        },
+    });
     test('should dispatch loadUserDetailsAction', async () => {
-        await getServerSideProps(contextParams.firstExistingUser);
+        await getServerSideProps(contextParams.loggedUser);
         const timesActionDispatched = loadUserDetailsAction.mock.calls.length;
 
         expect(timesActionDispatched).toBe(1);
-        expect(loadUserDetailsAction.mock.calls[0][0].id).toBe(firstUser.id);
+        expect(loadUserDetailsAction.mock.calls[0][0].id).toBe(loggedUser.id);
     });
     test('should return matching props', async () => {
-        const props = (await getServerSideProps(contextParams.firstExistingUser)).props;
-        expect(props.serverUserData).toEqual(firstUser);
+        const props = (await getServerSideProps(contextParams.loggedUser)).props;
+        expect(props.serverUserData).toEqual(loggedUser);
     });
     test('if recipe doesnt exist return not found', async () => {
         const notFound = (await getServerSideProps(contextParams.nonExistingUser)).notFound;
@@ -65,9 +77,14 @@ describe('UserDetails - getServerSideProps', () => {
 describe('UserDetails - my profile', () => {
     beforeEach(async () => {
         useSelectorMock.mockReturnValue({
-            loggedUserData: { id: firstUser.id, email: firstUser.email, name: firstUser.name },
+            loggedUserData: loggedUser,
         });
-        const { serverUserData } = (await getServerSideProps(contextParams.firstExistingUser)).props;
+        store.getState = () => ({
+            userReducer: {
+                requestedUserData: loggedUser,
+            },
+        });
+        const { serverUserData } = (await getServerSideProps(contextParams.loggedUser)).props;
         render(
             <Provider store={store}>
                 <UserDetails_Id serverUserData={serverUserData} />
@@ -85,8 +102,8 @@ describe('UserDetails - my profile', () => {
         expect(userDetailsTestId).toBeInTheDocument();
     });
     test('should render the user details ', () => {
-        const userEmail = screen.getByText(/firstEmail/i);
-        const userName = screen.getByText(/firstName/i);
+        const userEmail = screen.getByText(loggedUser.email);
+        const userName = screen.getByText(loggedUser.name);
 
         expect(userEmail).toBeInTheDocument();
         expect(userName).toBeInTheDocument();
@@ -116,9 +133,14 @@ describe('UserDetails - my profile', () => {
 describe('UserDetails - other account profile', () => {
     beforeEach(async () => {
         useSelectorMock.mockReturnValue({
-            requestedUserData: { id: firstUser.id, email: firstUser.email, name: firstUser.name },
+            requestedUserData: otherUser,
         });
-        const { serverUserData } = (await getServerSideProps(contextParams.firstExistingUser)).props;
+        store.getState = () => ({
+            userReducer: {
+                requestedUserData: otherUser,
+            },
+        });
+        const { serverUserData } = (await getServerSideProps(contextParams.otherUser)).props;
 
         render(
             <Provider store={store}>
@@ -140,11 +162,11 @@ describe('UserDetails - other account profile', () => {
         const timesActionDispatched = loadUserDetailsAction.mock.calls.length;
 
         expect(timesActionDispatched).toBe(1);
-        expect(loadUserDetailsAction.mock.calls[0][0].id).toBe(firstUser.id);
+        expect(loadUserDetailsAction.mock.calls[0][0].id).toBe(otherUser.id);
     });
     test('should render the user details ', () => {
-        const userEmail = screen.getByText(/firstEmail/i);
-        const userName = screen.getByText(/firstName/i);
+        const userEmail = screen.getByText(otherUser.email);
+        const userName = screen.getByText(otherUser.name);
 
         expect(userEmail).toBeInTheDocument();
         expect(userName).toBeInTheDocument();
