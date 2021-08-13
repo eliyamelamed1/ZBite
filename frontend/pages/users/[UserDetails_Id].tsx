@@ -13,43 +13,34 @@ const UserDetails = (props) => {
     const [userData, setUserData] = useState(props.serverUserData);
     const { loggedUserData, requestedUserData } = useSelector((state) => state.userReducer);
 
-    useEffect(
-        function updateServerSideProps() {
-            // updates userData when navigating between accounts on the browser
-            if (props.serverUserData) {
-                setUserData(props.serverUserData);
-            }
-        },
-        [props.serverUserData]
-    );
+    const updateServerSideProps = useEffect(() => {
+        // updates userData when navigating between accounts on the browser
+        if (props.serverUserData) {
+            setUserData(props.serverUserData);
+        }
+    }, [props.serverUserData]);
 
-    useEffect(
-        function updateRequestedUserData() {
-            // when updating requested account data (by following etc...) migrate the changes to the userData
-            /*
+    const updateRequestedUserData = useEffect(() => {
+        // when updating requested account data (by following etc...) migrate the changes to the userData
+        /*
         bug after following a user and navigating to other account the data doesnt change
         the following if statement fix the bug
         */
-            if (requestedUserData?.id === userData?.id) {
-                setUserData(requestedUserData);
-            }
-        },
-        [requestedUserData, userData?.id]
-    );
+        if (requestedUserData?.id === userData?.id) {
+            setUserData(requestedUserData);
+        }
+    }, [requestedUserData, userData?.id]);
 
-    useEffect(
-        function updateLoggedUserData() {
-            /*
+    const updateLoggedUserData = useEffect(() => {
+        /*
          check if the userDetailsPage is the profile of the logged user.
          + when logged account update his data, migrate the changes to the profile page
         */
-            if (loggedUserData?.id == userData?.id) {
-                setUserData(loggedUserData);
-                setIsMyProfile(true);
-            }
-        },
-        [userData?.id, loggedUserData]
-    );
+        if (loggedUserData?.id == userData?.id) {
+            setUserData(loggedUserData);
+            setIsMyProfile(true);
+        }
+    }, [userData?.id, loggedUserData]);
 
     const myProfileLinks = (
         <main data-testid='myProfileLinks'>
@@ -93,5 +84,4 @@ export async function getServerSideProps(context) {
         return { notFound: true };
     }
 }
-
 export default UserDetails;
