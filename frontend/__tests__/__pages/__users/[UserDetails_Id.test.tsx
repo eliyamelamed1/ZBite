@@ -15,7 +15,6 @@ import userEvent from '@testing-library/user-event';
 
 const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
 const loadUserDetailsActionSpy = jest.spyOn(userActions, 'loadUserDetailsAction');
-const followUnFollowActionSpy = jest.spyOn(userActions, 'followUnFollowAction');
 
 loadUserDetailsActionSpy.mockImplementation(() => jest.fn());
 
