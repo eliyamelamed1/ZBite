@@ -3,17 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { followUnFollowAction } from '../../redux/actions/userActions';
 
-const FollowUnFollow = ({ userToFollow, setUserData }) => {
+const FollowUnFollow = ({ userToFollow }) => {
     const dispatch = useDispatch();
     const [button, setButton] = useState('follow');
     const { requestedUserData, loggedUserData, isUserAuthenticated } = useSelector((state) => state.userReducer);
-
-    useEffect(() => {
-        // TODO - need to be tested
-        if (requestedUserData?.id == userToFollow) {
-            setUserData(requestedUserData);
-        }
-    }, [requestedUserData, userToFollow, setUserData]);
 
     useEffect(() => {
         try {

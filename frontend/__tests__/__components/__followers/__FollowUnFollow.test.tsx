@@ -45,7 +45,7 @@ describe('FollowUnFollow - isUserAlreadyFollowed false', () => {
         store.dispatch({ type: TEST_CASE_AUTH, payload: initialState });
         render(
             <Provider store={store}>
-                <FollowUnFollow userToFollow={userToFollow} setUserData={() => {}} />
+                <FollowUnFollow userToFollow={userToFollow} />
             </Provider>
         );
     });
@@ -106,7 +106,7 @@ describe('FollowUnFollow - isUserAlreadyFollowed true', () => {
         store.dispatch({ type: TEST_CASE_AUTH, payload: initialState });
         render(
             <Provider store={store}>
-                <FollowUnFollow userToFollow={userToFollow} setUserData={() => {}} />
+                <FollowUnFollow userToFollow={userToFollow} />
             </Provider>
         );
     });

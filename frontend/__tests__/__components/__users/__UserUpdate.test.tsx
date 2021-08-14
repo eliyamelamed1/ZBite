@@ -23,7 +23,7 @@ describe('authenticated users', () => {
     beforeEach(() => {
         render(
             <Provider store={store}>
-                <UserUpdate id={idValue} setUserData={() => {}} />
+                <UserUpdate id={idValue} />
             </Provider>
         );
     });

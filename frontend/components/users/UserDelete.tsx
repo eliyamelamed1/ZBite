@@ -7,7 +7,8 @@ import { userDeleteAction } from '../../redux/actions/userActions';
 
 const UserDelete = ({ id }) => {
     const dispatch = useDispatch();
-    const onSubmit = async () => {
+    const onSubmit = async (e) => {
+        e.preventDefault();
         try {
             await dispatch(userDeleteAction({ id }));
             Router.push(pageRoute.home);

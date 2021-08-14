@@ -7,21 +7,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { userUpdateAction } from '../../redux/actions/userActions';
 
-const UserUpdate = ({ id, setUserData }) => {
+const UserUpdate = ({ id }) => {
     const dispatch = useDispatch();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
     });
     const { name, email } = formData;
-    const { loggedUserData } = useSelector((state) => state.userReducer);
 
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
-
-    useEffect(() => {
-        // TODO - need to be tested
-        setUserData(loggedUserData);
-    }, [loggedUserData, setUserData]);
 
     const onSubmit = (e) => {
         e.preventDefault();
