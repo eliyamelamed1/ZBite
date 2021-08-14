@@ -1,10 +1,10 @@
 import '@testing-library/jest-dom/extend-expect';
 
+import * as DisplayRecipes from '../../../components/recipes/DisplayRecipes';
+
 import RecipeList, { getStaticProps } from '../../../pages/recipes/RecipeList';
 import { cleanup, render, screen } from '@testing-library/react';
 
-import DisplayRecipes from '../../../components/recipes/DisplayRecipes';
-import { Provider } from 'react-redux';
 import React from 'react';
 import { loadRecipeListAction } from '../../../redux/actions/recipeActions';
 import store from '../../../redux/store';
@@ -12,6 +12,7 @@ import store from '../../../redux/store';
 jest.mock('../../../redux/actions/recipeActions', () => ({
     loadRecipeListAction: jest.fn().mockReturnValue(() => true),
 }));
+const displayRecipesSpy = jest.spyOn(DisplayRecipes, 'default');
 const listOfRecipes = [
     {
         title: 'first recipe title',
@@ -37,11 +38,7 @@ describe('RecipeList', () => {
     beforeEach(async () => {
         const listOfRecipes = (await getStaticProps()).props.listOfRecipes;
 
-        render(
-            <Provider store={store}>
-                <RecipeList listOfRecipes={listOfRecipes} />
-            </Provider>
-        );
+        render(<RecipeList listOfRecipes={listOfRecipes} />);
     });
 
     afterEach(() => {
@@ -70,27 +67,8 @@ describe('RecipeList', () => {
         const props = (await getStaticProps()).props;
         expect(props.listOfRecipes).toEqual(listOfRecipes);
     });
+    test('DisplayUsers.propType.recipesToDisplay should get  listOfRecipes', () => {
+        expect(displayRecipesSpy).toHaveBeenCalled();
+        expect(displayRecipesSpy).toHaveBeenCalledWith({ recipesToDisplay: listOfRecipes }, {});
+    });
 });
-
-// jest.mock('../../../components/recipes/DisplayRecipes', () => {
-//     return jest.fn(() => true);
-// });
-// describe('asdasd', () => {
-//     beforeEach(() => {
-//         render(
-//             <Provider store={store}>
-//                 <RecipeList listOfRecipes={params} />
-//             </Provider>
-//         );
-//     });
-
-//     afterEach(() => {
-//         cleanup();
-//         // jest.resetAllMocks();
-//     });
-
-//     test('DisplayUsers.propType.recipesToDisplay should get  listOfRecipes', () => {
-//         expect(DisplayRecipes).toHaveBeenCalled();
-//         expect(DisplayRecipes).toHaveBeenCalledWith({ recipesToDisplay: params }, {});
-//     });
-// });

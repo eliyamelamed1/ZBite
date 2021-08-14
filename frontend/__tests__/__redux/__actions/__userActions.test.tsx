@@ -1,11 +1,14 @@
 import '@testing-library/jest-dom/extend-expect';
 
+import * as userActions from '../../../redux/actions/userActions';
+
 import {
     followUnFollowAction,
     loadUserDetailsAction,
     loadUserListAction,
     loadloggedUserDataAction,
     loginAction,
+    logoutAction,
     resetPasswordAction,
     resetPasswordConfirmAction,
     signupAction,
@@ -18,10 +21,9 @@ import axios from 'axios';
 import { endpointRoute } from '../../../globals';
 import store from '../../../redux/store';
 
-// import * as userActions from '../../../redux/actions/userActions';
+const logoutActionSpy = jest.spyOn(userActions, 'logoutAction');
 
 // const secondTestActionSpy = jest.spyOn(userActions, 'secondTestAction');
-
 // test('should dispatch secondTestActions ', () => {
 //     store.dispatch(userActions.testAction());
 //     expect(secondTestActionSpy.mock.calls.length).toBe(1);
@@ -172,12 +174,9 @@ describe('axios request should match url endpoint, and parameters', () => {
         expect(axios.post.mock.calls[0][1]).toStrictEqual(body);
         expect(axios.post.mock.calls[0][2]).toStrictEqual(config);
     });
-    //  TODO fix this test
-    // test('logoutAction', async () => {
-    //     const store = mockStore(initialState);
-    //     jest.mock('../../../redux/actions/userActions', () => ({ logoutAction: jest.fn() }));
-    //     store.dispatch(logoutAction());
+    test('logoutAction', async () => {
+        store.dispatch(logoutAction());
 
-    //     expect(await logoutAction.mock.calls.length).toBe('');
-    // });
+        expect(await logoutActionSpy.mock.calls.length).toBe(1);
+    });
 });
