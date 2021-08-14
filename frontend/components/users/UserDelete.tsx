@@ -1,14 +1,19 @@
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import PropTypes from 'prop-types';
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import Router from 'next/router';
+import { pageRoute } from '../../globals';
 import { userDeleteAction } from '../../redux/actions/userActions';
 
-const UserDelete = ({ id }) => {
+const UserDelete = ({ id, setUserData }) => {
     const dispatch = useDispatch();
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
         try {
-            dispatch(userDeleteAction({ id }));
+            await dispatch(userDeleteAction({ id }));
+            // TODO - test the redirection
+            Router.push(pageRoute.home);
         } catch {
             // TODO - add err msg
         }

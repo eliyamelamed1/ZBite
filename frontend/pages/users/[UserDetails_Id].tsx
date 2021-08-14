@@ -11,8 +11,7 @@ import { useSelector } from 'react-redux';
 const UserDetails = (props) => {
     const [isMyProfile, setIsMyProfile] = useState(false);
     const [userData, setUserData] = useState(props.serverUserData);
-    const { loggedUserData, requestedUserData } = useSelector((state) => state.userReducer);
-
+    const { loggedUserData, requestedUserData, isUserAuthenticated } = useSelector((state) => state.userReducer);
     useEffect(
         function updateServerSideProps() {
             // updates userData when navigating between accounts on the browser
@@ -23,39 +22,21 @@ const UserDetails = (props) => {
         [props.serverUserData]
     );
 
-    useEffect(
-        function updateRequestedUserData() {
-            // when updating requested account data (by following etc...) migrate the changes to the userData
-            /*
-        bug after following a user and navigating to other account the data doesnt change
-        the following if statement fix the bug
-        */
-            if (requestedUserData?.id === userData?.id) {
-                setUserData(requestedUserData);
-            }
-        },
-        [requestedUserData, userData?.id]
-    );
-
-    useEffect(
-        function updateLoggedUserData() {
-            /*
+    useEffect(() => {
+        /*
          check if the userDetailsPage is the profile of the logged user.
          + when logged account update his data, migrate the changes to the profile page
         */
-            if (loggedUserData?.id == userData?.id) {
-                setUserData(loggedUserData);
-                setIsMyProfile(true);
-            }
-        },
-        [userData?.id, loggedUserData]
-    );
+        if (loggedUserData?.id == userData?.id) {
+            setIsMyProfile(true);
+        }
+    }, [userData?.id, loggedUserData]);
 
     const myProfileLinks = (
         <main data-testid='myProfileLinks'>
             <div>
-                <UserDelete id={userData?.id} />
-                <UserUpdate id={userData?.id} />
+                <UserDelete id={userData?.id} setUserData={setUserData} />
+                <UserUpdate id={userData?.id} setUserData={setUserData} />
             </div>
         </main>
     );
@@ -74,7 +55,13 @@ const UserDetails = (props) => {
                     <p>following: {userData?.following?.length}</p>
                     <p>followers: {userData?.followers?.length}</p>
                 </div>
-                <div>{isMyProfile ? <div>{myProfileLinks}</div> : <FollowUnFollow userToFollow={userData?.id} />}</div>
+                <div>
+                    {isMyProfile ? (
+                        <div>{myProfileLinks}</div>
+                    ) : (
+                        <FollowUnFollow userToFollow={userData?.id} setUserData={setUserData} />
+                    )}
+                </div>
             </main>
         </React.Fragment>
     );
@@ -84,7 +71,6 @@ export async function getServerSideProps(context) {
     const id = context.params.UserDetails_Id;
     await store.dispatch(loadUserDetailsAction({ id }));
     const serverUserData = store.getState().userReducer.requestedUserData;
-
     const isRequestedUserIdExist = serverUserData?.id === id;
 
     if (isRequestedUserIdExist) {

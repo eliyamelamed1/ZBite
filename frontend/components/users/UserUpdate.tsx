@@ -1,21 +1,37 @@
 // TODO - test onSubmit triggers useUpdateAction (fail/success scenarios)
 // TODO - test propTypes
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
 import { userUpdateAction } from '../../redux/actions/userActions';
 
-const UserUpdate = ({ id }) => {
+const UserUpdate = ({ id, setUserData }) => {
     const dispatch = useDispatch();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
     });
     const { name, email } = formData;
+    const { loggedUserData } = useSelector((state) => state.userReducer);
 
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+
+    useEffect(
+        function updateLoggedUserData() {
+            // TODO - need to be tested
+
+            /*
+         check if the userDetailsPage is the profile of the logged user.
+         + when logged account update his data, migrate the changes to the profile page
+        */
+            if (loggedUserData?.id == id) {
+                setUserData(loggedUserData);
+            }
+        },
+        [id, loggedUserData, setUserData]
+    );
 
     const onSubmit = (e) => {
         e.preventDefault();
