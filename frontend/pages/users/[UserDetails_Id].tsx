@@ -14,6 +14,7 @@ const UserDetails = (props) => {
     const { loggedUserData, requestedUserData, isUserAuthenticated } = useSelector((state) => state.userReducer);
     useEffect(
         function updateServerSideProps() {
+            // TODO - need to be tested
             // updates userData when navigating between accounts on the browser
             if (props.serverUserData) {
                 setUserData(props.serverUserData);

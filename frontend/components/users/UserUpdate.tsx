@@ -21,14 +21,7 @@ const UserUpdate = ({ id, setUserData }) => {
     useEffect(
         function updateLoggedUserData() {
             // TODO - need to be tested
-
-            /*
-         check if the userDetailsPage is the profile of the logged user.
-         + when logged account update his data, migrate the changes to the profile page
-        */
-            if (loggedUserData?.id == id) {
-                setUserData(loggedUserData);
-            }
+            setUserData(loggedUserData);
         },
         [id, loggedUserData, setUserData]
     );
