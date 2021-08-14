@@ -1,5 +1,4 @@
 // TODO - add test to redirect after recipe have been deleted
-// TODO - add tests to verify onSubmit function is working properly
 
 import '@testing-library/jest-dom/extend-expect';
 
