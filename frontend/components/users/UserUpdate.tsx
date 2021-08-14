@@ -18,13 +18,10 @@ const UserUpdate = ({ id, setUserData }) => {
 
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    useEffect(
-        function updateLoggedUserData() {
-            // TODO - need to be tested
-            setUserData(loggedUserData);
-        },
-        [id, loggedUserData, setUserData]
-    );
+    useEffect(() => {
+        // TODO - need to be tested
+        setUserData(loggedUserData);
+    }, [loggedUserData, setUserData]);
 
     const onSubmit = (e) => {
         e.preventDefault();

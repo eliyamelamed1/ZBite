@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 const UserDetails = (props) => {
     const [isMyProfile, setIsMyProfile] = useState(false);
     const [userData, setUserData] = useState(props.serverUserData);
-    const { loggedUserData, requestedUserData, isUserAuthenticated } = useSelector((state) => state.userReducer);
+    const { loggedUserData } = useSelector((state) => state.userReducer);
     useEffect(
         function updateServerSideProps() {
             // TODO - need to be tested
