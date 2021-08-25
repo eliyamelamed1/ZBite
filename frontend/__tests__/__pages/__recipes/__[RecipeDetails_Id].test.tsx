@@ -1,5 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 
+import * as reactRedux from 'react-redux';
+
 import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
@@ -11,10 +13,12 @@ import { loadRecipeDetailsAction } from '../../../redux/actions/recipeActions';
 import store from '../../../redux/store';
 import thunk from 'redux-thunk';
 
+const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
+
 const recipeParams = {
     existingRecipeId: '5',
     nonExistingRecipeId: 'nonExistingRecipe',
-    requestedRecipeData: {
+    recipeData: {
         id: '5',
         title: 'recipeTitle',
         description: 'recipeDescription',
@@ -36,7 +40,7 @@ jest.mock('../../../redux/actions/recipeActions', () => ({ loadRecipeDetailsActi
 jest.mock('../../../redux/store.tsx');
 store.getState = () => ({
     recipeReducer: {
-        requestedRecipeData: recipeParams.requestedRecipeData,
+        requestedRecipeData: recipeParams.recipeData,
     },
 });
 const middleware = [thunk];
@@ -56,7 +60,7 @@ describe('RecipeDetails - getServerSideProps', () => {
     });
     test('getStaticProps - should return matching props', async () => {
         const props = (await getServerSideProps(contextParams.existingRecipe)).props;
-        expect(props.requestedRecipeData).toEqual(recipeParams.requestedRecipeData);
+        expect(props.serverRecipeData).toEqual(recipeParams.recipeData);
     });
     test('getStaticProps - if recipe doesnt exist return not found', async () => {
         const notFound = (await getServerSideProps(contextParams.nonExistingRecipe)).notFound;
@@ -80,10 +84,10 @@ describe('RecipeDetails - author of recipe', () => {
     };
     let store = mockStore(initialState);
     beforeEach(async () => {
-        const { requestedRecipeData } = (await getServerSideProps(contextParams.existingRecipe)).props;
+        const { serverRecipeData } = (await getServerSideProps(contextParams.existingRecipe)).props;
         render(
             <Provider store={store}>
-                <RecipeDetails requestedRecipeData={requestedRecipeData} />
+                <RecipeDetails serverRecipeData={serverRecipeData} />
             </Provider>
         );
     });
@@ -126,10 +130,13 @@ describe('RecipeDetails - not the recipe author', () => {
     };
     let store = mockStore(initialState);
     beforeEach(async () => {
-        const { requestedRecipeData } = (await getServerSideProps(contextParams.existingRecipe)).props;
+        useSelectorMock.mockReturnValue({
+            requestedRecipeData: recipeParams.recipeData,
+        });
+        const { serverRecipeData } = (await getServerSideProps(contextParams.existingRecipe)).props;
         render(
             <Provider store={store}>
-                <RecipeDetails requestedRecipeData={requestedRecipeData} />
+                <RecipeDetails serverRecipeData={serverRecipeData} />
             </Provider>
         );
     });
