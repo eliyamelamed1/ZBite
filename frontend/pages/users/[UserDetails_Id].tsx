@@ -13,7 +13,7 @@ const UserDetails = (props) => {
     const [userData, setUserData] = useState(props.serverUserData);
     const { loggedUserData, requestedUserData } = useSelector((state) => state.userReducer);
     useEffect(
-        function updateServerSideProps() {
+        function migrateServerSideProps() {
             // updates userData when navigating between accounts on the browser
             if (props.serverUserData) {
                 setUserData(props.serverUserData);
@@ -23,7 +23,7 @@ const UserDetails = (props) => {
     );
 
     useEffect(
-        function updateRequestedUserData() {
+        function migrateRequestedUserData() {
             // when updating requested account data (by following etc...) migrate the changes to the userData
             /*
         bug after following a user and navigating to other account the data doesnt change
@@ -37,7 +37,7 @@ const UserDetails = (props) => {
     );
 
     useEffect(
-        function updateLoggedUserData() {
+        function migrateLoggedUserData() {
             /*
          check if the userDetailsPage is the profile of the logged user.
          + when logged account update his data, migrate the changes to the profile page
