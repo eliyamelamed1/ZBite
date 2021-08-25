@@ -24,12 +24,12 @@ const UserSignup = () => {
 
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
 
         if (password === re_password) {
             try {
-                dispatch(
+                await dispatch(
                     signupAction({
                         name,
                         email,

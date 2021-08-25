@@ -21,6 +21,8 @@ const store = mockStore(initialState);
 jest.mock('../../../redux/actions/userActions', () => ({
      signupAction: jest.fn().mockReturnValue(()=> true) 
 }));
+
+
 jest.mock('next/router');
 describe('UserSignup - guest user', () => {
     
@@ -111,14 +113,12 @@ describe('UserSignup - guest user', () => {
         });
     });
     
-    describe('UserSignup- register button', () => {
+    describe('UserSignup- signupForm form', () => {
         test('should render register button', () => {
             const button = screen.getByRole('button', { name: 'Register' });
             expect(button).toBeInTheDocument();
         });
-        
-        describe('UserSignup - signupForm', () => {
-            test('signup should dispatch signupAction',  () => {
+        test('signup should dispatch signupAction', async () => {
             const nameTextbox = screen.getByPlaceholderText('Name*');
             const emailTextbox = screen.getByPlaceholderText('Email*');
             const passwordTextbox = screen.getByPlaceholderText('Password*');
@@ -136,15 +136,15 @@ describe('UserSignup - guest user', () => {
             userEvent.type(confirmTextbox, rePasswordValue);
             userEvent.click(signupButton);
             
-            const timesActionDispatched =  signupAction.mock.calls.length;
+            const timesActionDispatched = await signupAction.mock.calls.length;
             
             expect(timesActionDispatched).toBe(1);
-            expect( signupAction.mock.calls[0][0].name).toEqual(nameValue);
-            expect( signupAction.mock.calls[0][0].email).toEqual(emailValue);
-            expect( signupAction.mock.calls[0][0].password).toEqual(passwordValue);
-            expect( signupAction.mock.calls[0][0].re_password).toEqual(rePasswordValue);
+            expect(signupAction.mock.calls[0][0].name).toEqual(nameValue);
+            expect(signupAction.mock.calls[0][0].email).toEqual(emailValue);
+            expect(signupAction.mock.calls[0][0].password).toEqual(passwordValue);
+            expect(signupAction.mock.calls[0][0].re_password).toEqual(rePasswordValue);
         });
-        test('successful signup should redirect user to login page', () => {
+        test('successful signup should redirect user to login page', async () => {
             const nameTextbox = screen.getByPlaceholderText('Name*');
             const emailTextbox = screen.getByPlaceholderText('Email*');
             const passwordTextbox = screen.getByPlaceholderText('Password*');
@@ -157,16 +157,34 @@ describe('UserSignup - guest user', () => {
             userEvent.type(confirmTextbox, 'testuser123');
             userEvent.click(signupButton);
         
-            expect(signupAction.mock.calls.length).toBe(1)
+            expect(await signupAction.mock.calls.length).toBe(1)
             expect(Router.push.mock.calls.length).toBe(1)
             expect(Router.push.mock.calls[0][0]).toBe(pageRoute.login)
         });
+        test('failed signup should not redirect user', async () => {
+            signupAction.mockReturnValueOnce(() => {
+                throw new Error();
+            });
+            const nameTextbox = screen.getByPlaceholderText('Name*');
+            const emailTextbox = screen.getByPlaceholderText('Email*');
+            const passwordTextbox = screen.getByPlaceholderText('Password*');
+            const confirmTextbox = screen.getByPlaceholderText('Confirm Password*');
+            const signupButton = screen.getByRole('button', { name: 'Register' });
+        
+            userEvent.type(nameTextbox, 'testuser');
+            userEvent.type(emailTextbox, 'testuser@gmail.com');
+            userEvent.type(passwordTextbox, 'testuser123');
+            userEvent.type(confirmTextbox, 'testuser123');
+            userEvent.click(signupButton);
+
+            expect(await signupAction.mock.calls.length).toBe(1)
+            expect(Router.push.mock.calls.length).toBe(0)
         });
     });
-})
+});
 
 
-describe('UserSignup - guest authenticated users', () => {
+describe('UserSignup - authenticated users', () => {
     initialState = {
         userReducer: { isUserAuthenticated: true },
     };
@@ -183,3 +201,4 @@ describe('UserSignup - guest authenticated users', () => {
         expect(Router.push.mock.calls.[0][0]).toBe(pageRoute.home);
     });
 });
+
