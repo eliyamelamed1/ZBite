@@ -1,5 +1,4 @@
 // TODO - add test to redirect after recipe have been deleted
-// TODO - add tests to verify onSubmit function is working properly
 
 import '@testing-library/jest-dom/extend-expect';
 
@@ -10,6 +9,7 @@ import React from 'react';
 import RecipeDelete from '../../../components/recipes/RecipeDelete';
 import Router from 'next/router';
 import configureStore from 'redux-mock-store';
+import { pageRoute } from '../../../globals';
 import { recipeDeleteAction } from '../../../redux/actions/recipeActions';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
@@ -23,7 +23,7 @@ const recipeId = '1';
 jest.mock('../../../redux/actions/recipeActions', () => ({
     recipeDeleteAction: jest.fn().mockReturnValue(() => true),
 }));
-jest.mock('next/router', () => ({ push: jest.fn() }));
+jest.mock('next/router');
 
 describe('RecipeDelete', () => {
     beforeEach(() => {
@@ -51,7 +51,7 @@ describe('RecipeDelete', () => {
         expect(timesActionDispatched).toBe(1);
         expect(recipeDeleteAction.mock.calls[0][0].id).toBe(recipeId);
         expect(Router.push.mock.calls.length).toBe(1);
-        expect(Router.push.mock.calls[0][0]).toBe('/');
+        expect(Router.push.mock.calls[0][0]).toBe(pageRoute.home);
     });
     test('failure form submit should call recipeDeleteAction and not redirect to home page', () => {
         recipeDeleteAction.mockReturnValueOnce(() => {

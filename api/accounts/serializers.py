@@ -4,6 +4,7 @@ from rest_framework import serializers
 User = get_user_model()
 
 class UserCreateSerializer(serializers.ModelSerializer):
+# ref_name field is added to enable the api docs 
     class Meta:
         model = User
         fields = ('id', 'email', 'name', 'password')
@@ -15,5 +16,8 @@ class UserSerializer(serializers.ModelSerializer):
         fields = '__all__'
         ref_name = "user_details"
 
+class FavoriteRecipeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('favorites',)
 
-# ref_name field is added to enable the api docs 

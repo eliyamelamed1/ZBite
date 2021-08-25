@@ -1,6 +1,7 @@
 # TODO add tests for MIN and MAX values of stars 
 # TODO test perform_create
 
+from django.core.exceptions import ValidationError
 import pytest
 
 from accounts.models import UserAccount
@@ -33,9 +34,10 @@ class TestRatingCreateView:
                 'stars': 5
             }
             response = api_client.post(rating_rate_url, data)
+            new_recipe = Recipe.objects.all().get(id__exact=new_recipe.id)
 
             assert response.status_code == 200
-
+    
         def test_rate_post_request_append_ratings_to_recipe(self, api_client):
             new_user = UserFactory()
             api_client.force_authenticate(new_user)
@@ -49,6 +51,33 @@ class TestRatingCreateView:
             new_recipe = Recipe.objects.all().get(id__exact=new_recipe.id)
 
             assert new_recipe.stars == '5.0'
+
+        def test_rating_above_5_stars_raise_validation_error(self, api_client):
+            with pytest.raises(ValidationError):
+                new_user = UserFactory()
+                api_client.force_authenticate(new_user)
+                new_recipe = RecipeFactory()
+                new_recipe = Recipe.objects.all().get(id__exact=new_recipe.id)
+                data = {
+                    'recipe': new_recipe.id,
+                    'stars': 5.1
+                }
+                api_client.post(rating_rate_url, data)
+                new_recipe = Recipe.objects.all().get(id__exact=new_recipe.id)
+
+        def test_rating_below_1_stars_raise_validation_error(self, api_client):
+            with pytest.raises(ValidationError):
+                new_user = UserFactory()
+                api_client.force_authenticate(new_user)
+                new_recipe = RecipeFactory()
+                new_recipe = Recipe.objects.all().get(id__exact=new_recipe.id)
+                data = {
+                    'recipe': new_recipe.id,
+                    'stars': 0.9
+                }
+                api_client.post(rating_rate_url, data)
+                new_recipe = Recipe.objects.all().get(id__exact=new_recipe.id)
+
 
         def test_user_second_rate_will_update_the_first_one(self, api_client):
             new_user = UserFactory()

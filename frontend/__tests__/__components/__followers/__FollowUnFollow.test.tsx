@@ -1,3 +1,5 @@
+// TODO - ADD TESTS FOR GUEST USER
+
 import '@testing-library/jest-dom/extend-expect';
 
 import * as userActions from '../../../redux/actions/userActions';
@@ -12,7 +14,7 @@ import axios from 'axios';
 import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
 
-const followUnFollowAction = jest.spyOn(userActions, 'followUnFollowAction');
+const followUnFollowActionSpy = jest.spyOn(userActions, 'followUnFollowAction');
 jest.mock('axios');
 
 const userToFollow = 'userToFollow';
@@ -65,9 +67,9 @@ describe('FollowUnFollow - isUserAlreadyFollowed false', () => {
         const followButton = screen.getByRole('button', { name: 'follow' });
 
         userEvent.click(followButton);
-        const timesActionHaveDispatched = followUnFollowAction.mock.calls.length;
+        const timesActionHaveDispatched = followUnFollowActionSpy.mock.calls.length;
         expect(timesActionHaveDispatched).toBe(1);
-        expect(followUnFollowAction.mock.calls[0][0].user_to_follow).toBe(userToFollow);
+        expect(followUnFollowActionSpy.mock.calls[0][0].user_to_follow).toBe(userToFollow);
     });
     test('clicking the "follow" button should change the text to: "unfollow" ', async () => {
         let followButton = screen.getByRole('button', { name: 'follow' });
@@ -127,9 +129,9 @@ describe('FollowUnFollow - isUserAlreadyFollowed true', () => {
 
         userEvent.click(unFollowButton);
 
-        const timesActionHaveDispatched = followUnFollowAction.mock.calls.length;
+        const timesActionHaveDispatched = followUnFollowActionSpy.mock.calls.length;
         expect(timesActionHaveDispatched).toBe(1);
-        expect(followUnFollowAction.mock.calls[0][0].user_to_follow).toBe(userToFollow);
+        expect(followUnFollowActionSpy.mock.calls[0][0].user_to_follow).toBe(userToFollow);
     });
     test('clicking the "unfollow" button should change the text to: "follow" ', async () => {
         let unFollowButton = screen.getByRole('button', { name: 'unfollow' });

@@ -11,6 +11,7 @@ import {
 
 import axios from 'axios';
 import configureStore from 'redux-mock-store';
+import { endpointRoute } from '../../../globals';
 import thunk from 'redux-thunk';
 
 const middlewares = [thunk];
@@ -58,13 +59,12 @@ describe('axios request should match url endpoint, and parameters', () => {
     });
     test('recipeCreateAction', () => {
         const { title, description, flavor_type } = parameters;
-        const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/create/`;
         const body = JSON.stringify({ title, description, flavor_type });
 
         store.dispatch(recipeCreateAction({ title, description, flavor_type }));
 
         expect(axios.post.mock.calls.length).toBe(1);
-        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointUrl);
+        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute().recipes.create);
         expect(axios.post.mock.calls[0][1]).toStrictEqual(body);
         expect(axios.post.mock.calls[0][2]).toStrictEqual(configWithAuthToken);
     });
@@ -81,22 +81,19 @@ describe('axios request should match url endpoint, and parameters', () => {
         expect(axios.patch.mock.calls[0][2]).toStrictEqual(configWithAuthToken);
     });
     test('loadRecipeListAction', () => {
-        const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/list/`;
-
         store.dispatch(loadRecipeListAction());
 
         expect(axios.get.mock.calls.length).toBe(1);
-        expect(axios.get.mock.calls[0][0]).toStrictEqual(endpointUrl);
+        expect(axios.get.mock.calls[0][0]).toStrictEqual(endpointRoute().recipes.list);
         expect(axios.get.mock.calls[0][1]).toStrictEqual(config);
     });
     test('recipeSearchAction', () => {
         const { flavor_type } = parameters;
-        const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/search/`;
 
         store.dispatch(recipeSearchAction({ flavor_type }));
 
         expect(axios.post.mock.calls.length).toBe(1);
-        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointUrl);
+        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute().recipes.search);
         expect(axios.post.mock.calls[0][1]).toStrictEqual({ flavor_type });
         expect(axios.post.mock.calls[0][2]).toStrictEqual(config);
     });

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Router from 'next/router';
+import { pageRoute } from '../../globals';
 import { recipeCreateAction } from '../../redux/actions/recipeActions';
 
 const RecipeCreate = () => {
@@ -18,13 +19,13 @@ const RecipeCreate = () => {
     const { isUserAuthenticated } = useSelector((state) => state.userReducer);
 
     if (isUserAuthenticated == false) {
-        Router.push('/');
+        Router.push(pageRoute.home);
     }
     const onSubmit = (e) => {
         e.preventDefault();
         try {
             dispatch(recipeCreateAction({ title, description, flavor_type }));
-            Router.push('/');
+            Router.push(pageRoute.home);
         } catch (err) {
             // console.log(err);
         }

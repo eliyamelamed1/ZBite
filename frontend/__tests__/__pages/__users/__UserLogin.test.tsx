@@ -11,6 +11,7 @@ import Router from 'next/router';
 import UserLogin from '../../../pages/users/UserLogin';
 import configureStore from 'redux-mock-store';
 import { loginAction } from '../../../redux/actions/userActions';
+import { pageRoute } from '../../../globals';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
@@ -19,7 +20,7 @@ const mockStore = configureStore(middlewares);
 let initialState = { userReducer: {} };
 const store = mockStore(initialState);
 jest.mock('../../../redux/actions/userActions', () => ({ loginAction: jest.fn().mockImplementation(() => true) }));
-jest.mock('next/router', () => ({ push: jest.fn() }));
+jest.mock('next/router');
 describe('UserLogin - guest', () => {
     beforeEach(() => {
         render(
@@ -109,6 +110,6 @@ describe('UserLogin - authenticated user', () => {
     });
     test('should redirect authenticated user to home page', async () => {
         expect(Router.push.mock.calls.length).toBe(1);
-        expect(Router.push.mock.calls[0][0]).toBe('/');
+        expect(Router.push.mock.calls[0][0]).toBe(pageRoute.home);
     });
 });

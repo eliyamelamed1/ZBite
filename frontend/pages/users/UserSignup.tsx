@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Link from 'next/link';
 import Router from 'next/router';
+import { pageRoute } from '../../globals';
 import { signupAction } from '../../redux/actions/userActions';
 
 const UserSignup = () => {
@@ -36,13 +37,13 @@ const UserSignup = () => {
                         re_password,
                     })
                 );
-                Router.push('/users/UserLogin');
+                Router.push(pageRoute.login);
             } catch {}
         }
     };
 
     if (isUserAuthenticated) {
-        Router.push('/');
+        Router.push(pageRoute.home);
     }
 
     return (

@@ -4,6 +4,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import Router from 'next/router';
+import { pageRoute } from '../../globals';
 import { recipeDeleteAction } from '../../redux/actions/recipeActions';
 import { useDispatch } from 'react-redux';
 
@@ -14,7 +15,7 @@ const RecipeDelete = ({ id }) => {
         e.preventDefault();
         try {
             dispatch(recipeDeleteAction({ id }));
-            Router.push('/');
+            Router.push(pageRoute.home);
         } catch {
             // TODO - add err msg
         }

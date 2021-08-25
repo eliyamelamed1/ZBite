@@ -28,6 +28,7 @@ class Recipe(models.Model):
     likes = models.ManyToManyField(get_user_model(), default=None, blank=True)
     stars = models.TextField(blank=True)
 
+
     def __str__(self):
         return self.title
     
@@ -59,17 +60,21 @@ class Recipe(models.Model):
         return reverse('recipes:top_rated')
 
     @classmethod
-    def get_users_followed(cls, request):
+    def get_save_favorite_recipe_url(cls):
+        return reverse('recipes:favorites')
+
+    @classmethod
+    def get_recipes_of_followed_accounts(cls, request):
         user = request.user
         user = UserAccount.objects.all().get(id=user.id)
         users_followed = user.following.all()
-        all_recipes = Recipe.objects.none()
+        recipes_of_followed_accounts = Recipe.objects.none()
 
         for user in users_followed:
             try:
-                all_recipes = all_recipes | Recipe.objects.all().filter(author=user.id)
+                recipes_of_followed_accounts = recipes_of_followed_accounts | Recipe.objects.all().filter(author=user.id)
 
             except:
                 pass
 
-        return all_recipes
+        return recipes_of_followed_accounts

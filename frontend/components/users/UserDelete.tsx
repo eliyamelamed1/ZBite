@@ -1,14 +1,17 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import Router from 'next/router';
+import { pageRoute } from '../../globals';
 import { useDispatch } from 'react-redux';
 import { userDeleteAction } from '../../redux/actions/userActions';
 
 const UserDelete = ({ id }) => {
     const dispatch = useDispatch();
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
         try {
-            dispatch(userDeleteAction({ id }));
+            await dispatch(userDeleteAction({ id }));
+            Router.push(pageRoute.home);
         } catch {
             // TODO - add err msg
         }

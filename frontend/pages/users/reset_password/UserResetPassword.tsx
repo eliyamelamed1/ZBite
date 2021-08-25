@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import Router from 'next/router';
+import { pageRoute } from '../../../globals';
 import { resetPasswordAction } from '../../../redux/actions/userActions';
 import { useDispatch } from 'react-redux';
 
@@ -18,7 +19,7 @@ const UserResetPassword = () => {
         e.preventDefault();
         try {
             dispatch(resetPasswordAction({ email }));
-            Router.push('/');
+            Router.push(pageRoute.home);
         } catch {
             // TODO - add err msg
         }

@@ -17,9 +17,8 @@ class LikeRecipe(APIView):
 
     def post(self, request, format=None):
         recipes_queryset = Recipe.objects.all()
-        input_data = request.data
         user = request.user
-        input_recipe_id = input_data['recipe']
+        input_recipe_id = request.data['recipe']
         recipe = recipes_queryset.get(id__exact=input_recipe_id)
         
         try:

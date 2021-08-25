@@ -6,7 +6,8 @@ import { followUnFollowAction } from '../../redux/actions/userActions';
 const FollowUnFollow = ({ userToFollow }) => {
     const dispatch = useDispatch();
     const [button, setButton] = useState('follow');
-    const { loggedUserData, isUserAuthenticated } = useSelector((state) => state.userReducer);
+    const { requestedUserData, loggedUserData, isUserAuthenticated } = useSelector((state) => state.userReducer);
+
     useEffect(() => {
         try {
             const isUserAlreadyFollowed = loggedUserData?.following.includes(userToFollow);
@@ -29,8 +30,8 @@ const FollowUnFollow = ({ userToFollow }) => {
             <button>{button}</button>
         </form>
     );
-
     return <div data-testid='followUnFollow'>{isUserAuthenticated ? <div>{authLinks}</div> : null}</div>;
+    // raise error when isUserAuthenticated is true on the client because he is null at the server and true !== null
 };
 
 export default FollowUnFollow;

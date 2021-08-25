@@ -1,10 +1,10 @@
 // TODO - test onSubmit triggers useUpdateAction (fail/success scenarios)
 // TODO - test propTypes
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
 import { userUpdateAction } from '../../redux/actions/userActions';
 
 const UserUpdate = ({ id }) => {

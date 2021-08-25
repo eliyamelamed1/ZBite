@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from rest_framework import permissions
 from rest_framework.generics import DestroyAPIView
 from rest_framework.response import Response
@@ -17,7 +18,7 @@ class RatingCreate(APIView):
 
     def perform_create(self, serializer):
         '''save the current logged in user as the author of the comment'''
-        
+
         serializer.save(author=self.request.user)
 
     def post(self, request, format=None):
@@ -26,7 +27,12 @@ class RatingCreate(APIView):
 
         recipe = data['recipe']
         rate = data['stars']
+
+
+        if (1<float(rate)>5):
+            raise ValidationError('rating stars should be between above 1 and below 5')
         
+        # if already rated update rating
         try:
             recipe = Recipe.objects.all().get(id=recipe)
             recipe_ratings = Rating.objects.all().filter(recipe=recipe)
@@ -34,11 +40,11 @@ class RatingCreate(APIView):
 
             user_rating_of_recipe.delete()
             Rating.objects.all().create(recipe=recipe, author=user, stars=rate)
-            
+
+        # else create rating
         except:
             recipe = Recipe.objects.all().get(id=recipe)
             Rating.objects.all().create(recipe=recipe, author=user, stars=rate)
-
 
         recipe.stars = Rating.get_recipe_stars_score(recipe=recipe)
         recipe.save()
@@ -46,7 +52,6 @@ class RatingCreate(APIView):
         recipe_author = recipe.author
         recipe_author.stars = Rating.get_account_stars_score(user=recipe_author)
         recipe_author.save()
-   
 
         return Response()
 

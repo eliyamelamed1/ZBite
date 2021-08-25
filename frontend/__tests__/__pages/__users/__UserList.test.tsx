@@ -1,10 +1,15 @@
 import '@testing-library/jest-dom/extend-expect';
 
+import * as DisplayUsers from '../../../components/users/DisplayUsers';
+
 import UserList, { getStaticProps } from '../../../pages/users/UserList';
 import { cleanup, render, screen } from '@testing-library/react';
 
 import React from 'react';
 import { loadUserListAction } from '../../../redux/actions/userActions';
+import store from '../../../redux/store';
+
+const displayUsersSpy = jest.spyOn(DisplayUsers, 'default');
 
 const listOfUsers = [
     {
@@ -18,13 +23,12 @@ const listOfUsers = [
         id: '2',
     },
 ];
-jest.mock('../../../redux/store.tsx', () => ({
-    dispatch: jest.fn(),
-    getState: jest.fn(() => ({
-        userReducer: { listOfUsers: listOfUsers },
-    })),
-}));
+
 jest.mock('../../../redux/actions/userActions', () => ({ loadUserListAction: jest.fn() }));
+jest.mock('../../../redux/store.tsx');
+store.getState = () => ({
+    userReducer: { listOfUsers: listOfUsers },
+});
 describe('UserList', () => {
     beforeEach(async () => {
         const listOfUsers = (await getStaticProps()).props.listOfUsers;
@@ -58,5 +62,9 @@ describe('UserList', () => {
     test('getStaticProps - should return matching props', async () => {
         const props = (await getStaticProps()).props;
         expect(props.listOfUsers).toEqual(listOfUsers);
+    });
+    test('DisplayUsers.propType.recipesToDisplay should get  listOfRecipes', () => {
+        expect(displayUsersSpy).toHaveBeenCalled();
+        expect(displayUsersSpy).toHaveBeenCalledWith({ usersToDisplay: listOfUsers }, {});
     });
 });

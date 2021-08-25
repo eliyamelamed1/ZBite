@@ -5,13 +5,8 @@ import { cleanup, render, screen } from '@testing-library/react';
 import Layout from '../../components/Layout';
 import { Provider } from 'react-redux';
 import React from 'react';
-import configureStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
+import store from '../../redux/store';
 
-const middlewares = [thunk];
-const mockStore = configureStore(middlewares);
-const initialState = { userReducer: {}, socketReducer: {} };
-const store = mockStore(initialState);
 beforeEach(() => {
     render(
         <Provider store={store}>

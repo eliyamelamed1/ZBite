@@ -1,15 +1,14 @@
+from accounts.serializers import FavoriteRecipeSerializer
 from rest_framework import permissions
-from rest_framework.generics import (CreateAPIView, ListAPIView,
-                                     RetrieveUpdateDestroyAPIView)
+from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from permissions import IsAuthorOrReadOnly
 
 from .models import Recipe
-from .serializers import (RecipeCreateSerializer, RecipeSearchSerializer,
-                          RecipeSerializer)
-# 
+from .serializers import RecipeCreateSerializer, RecipeSearchSerializer, RecipeSerializer
+
 
 class RecipeList(ListAPIView):
     queryset = Recipe.objects.order_by('-updated_at')
@@ -51,7 +50,7 @@ class RecipesOfAccountsFollowed(APIView):
     serializer_class = RecipeSerializer
 
     def get(self, request):
-        all_recipes = Recipe.get_users_followed(request)
+        all_recipes = Recipe.get_recipes_of_followed_accounts(request)
         queryset = all_recipes.order_by('-created_at')
         serializer = RecipeSerializer(queryset, many=True)
         
@@ -68,3 +67,23 @@ class TopRatedRecipes(APIView):
         serializer = RecipeSerializer(queryset, many=True)
 
         return Response(serializer.data)
+
+class SaveFavoriteRecipe(APIView):
+    serializer_class = FavoriteRecipeSerializer
+
+    def perform_create(self, serializer):
+        '''set the logged user as the one who make the request of saving favorites recipe'''
+        serializer.save(author=self.request.user)
+
+    def post(self, request, format=None):
+        user = request.user
+        input_recipe = request.data['favorites']
+
+        try:
+            user_already_saved_recipe = user.favorites.all().get(id__exact=input_recipe)
+            if user_already_saved_recipe:
+                user.favorites.remove(input_recipe)
+        except:
+            user.favorites.add(input_recipe)
+
+        return Response()

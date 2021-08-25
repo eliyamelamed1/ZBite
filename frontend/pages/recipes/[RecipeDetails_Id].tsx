@@ -1,26 +1,40 @@
 // check difference between props.match.params.id && props.id
 
+import React, { useEffect, useState } from 'react';
+
 import Custom404 from '../404';
 import Head from 'next/head';
 import Image from 'next/image';
 import IsRecipeAuthor from '../../components/recipes/IsRecipeAuthor';
 import Link from 'next/link';
-import React from 'react';
 import { loadRecipeDetailsAction } from '../../redux/actions/recipeActions';
 import store from '../../redux/store';
+import { useSelector } from 'react-redux';
 
 const RecipeDetails = (props) => {
-    const requestedRecipeData = props.requestedRecipeData;
+    const [recipeData, setRecipeData] = useState(props.serverRecipeData);
+    const { requestedRecipeData } = useSelector((state) => state.recipeReducer);
+
+    useEffect(
+        function migrateRequestedRecipeData() {
+            // when updating recipe data (title, description etc..) migrate the changes to the userData
+            if (requestedRecipeData?.id === recipeData?.id) {
+                setRecipeData(requestedRecipeData);
+            }
+        },
+        [requestedRecipeData, recipeData?.id]
+    );
+
     const displayInteriorImages = () => {
-        if (requestedRecipeData) {
+        if (recipeData) {
             const images = [];
 
             images.push(
                 <div key={1}>
                     <div>
-                        {requestedRecipeData.photo_1 ? (
+                        {recipeData.photo_1 ? (
                             <div>
-                                <Image src={requestedRecipeData.photo_1} alt='' height={100} width={100} />
+                                <Image src={recipeData.photo_1} alt='' height={100} width={100} />
                             </div>
                         ) : (
                             <div>* this recipe has no photos *</div>
@@ -32,40 +46,34 @@ const RecipeDetails = (props) => {
         }
     };
 
-    const authorLinks = (
-        <section>{requestedRecipeData ? <IsRecipeAuthor recipe={requestedRecipeData} /> : null}</section>
-    );
+    const authorLinks = <section>{recipeData ? <IsRecipeAuthor recipe={recipeData} /> : null}</section>;
 
     return (
         <React.Fragment>
             <Head>
-                {requestedRecipeData ? (
-                    <title>ZBite - recipes |{`${requestedRecipeData.title}`}</title>
-                ) : (
-                    <title>ZBite - recipes </title>
-                )}
+                {recipeData ? <title>ZBite - recipes |{`${recipeData.title}`}</title> : <title>ZBite - recipes </title>}
                 <meta name='description' content='recipes detail' />
             </Head>
             <main data-testid='recipeDetails'>
                 <section>{authorLinks}</section>
                 <section>
-                    {requestedRecipeData ? (
+                    {recipeData ? (
                         <div>
-                            <Link href={`/users/${requestedRecipeData.author}/`} passHref>
-                                <p>recipe Author: {requestedRecipeData.author}</p>
+                            <Link href={`/users/${recipeData.author}/`} passHref>
+                                <p>recipe Author: {recipeData.author}</p>
                             </Link>
-                            <h1>recipe title: {requestedRecipeData.title}</h1>
+                            <h1>recipe title: {recipeData.title}</h1>
                             <Link href='/'>Home</Link>
-                            {requestedRecipeData.photo_main ? (
-                                <Image src={requestedRecipeData.photo_main} alt='' height={100} width={100} />
+                            {recipeData.photo_main ? (
+                                <Image src={recipeData.photo_main} alt='' height={100} width={100} />
                             ) : null}
                             <ul>
                                 <li>
                                     Flavor Type:
-                                    {requestedRecipeData.flavor_type}
+                                    {recipeData.flavor_type}
                                 </li>
                             </ul>
-                            <p>recipe description: {requestedRecipeData.description}</p>
+                            <p>recipe description: {recipeData.description}</p>
                             {displayInteriorImages()}
                         </div>
                     ) : (
@@ -80,12 +88,12 @@ const RecipeDetails = (props) => {
 export async function getServerSideProps(context) {
     const id = context.params.RecipeDetails_Id;
     await store.dispatch(loadRecipeDetailsAction({ id }));
-    const requestedRecipeData = store.getState().recipeReducer.requestedRecipeData;
+    const serverRecipeData = store.getState().recipeReducer.requestedRecipeData;
 
-    const isRequestedRecipeIdExist = requestedRecipeData?.id === id;
+    const isRequestedRecipeIdExist = serverRecipeData?.id === id;
 
     if (isRequestedRecipeIdExist) {
-        return { props: { requestedRecipeData } };
+        return { props: { serverRecipeData } };
     } else {
         return { notFound: true };
     }

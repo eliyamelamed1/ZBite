@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import Router from 'next/router';
 import UserResetPasswordConfirm from '../../../../pages/users/reset_password/[...UserResetPasswordConfirm_UidToken]';
+import { pageRoute } from '../../../../globals';
 import { resetPasswordConfirmAction } from '../../../../redux/actions/userActions';
 import store from '../../../../redux/store';
 import userEvent from '@testing-library/user-event';
@@ -78,7 +79,7 @@ describe('form submit', () => {
         const resetPasswordButton = screen.getByRole('button', { name: 'Reset Password' });
         expect(resetPasswordButton).toBeInTheDocument();
     });
-    test('successful form completion should call resetPasswordConfirmAction and redirect ', async () => {
+    test('successful form completion should call resetPasswordConfirmAction and redirect to home page ', async () => {
         const newPasswordTextbox = screen.getByPlaceholderText('New password');
         const confirmPasswordTextbox = screen.getByPlaceholderText('Confirm New Password');
         const resetPasswordButton = screen.getByRole('button', { name: 'Reset Password' });
@@ -93,7 +94,7 @@ describe('form submit', () => {
         expect(resetPasswordConfirmAction.mock.calls[0][0].uid).toBe(dynamicUrlParams.uid);
         expect(resetPasswordConfirmAction.mock.calls[0][0].token).toBe(dynamicUrlParams.token);
         expect(Router.push.mock.calls.length).toBe(1);
-        expect(Router.push.mock.calls[0][0]).toBe('/');
+        expect(Router.push.mock.calls[0][0]).toBe(pageRoute.home);
     });
     test('failed form completion should call resetPasswordConfirmAction and should not redirect ', async () => {
         resetPasswordConfirmAction.mockReturnValueOnce(() => {

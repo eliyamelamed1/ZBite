@@ -5,6 +5,7 @@ import Router, { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 
 import React from 'react';
+import { pageRoute } from '../../../globals';
 import { userActivateAction } from '../../../redux/actions/userActions';
 
 const UserActivate = () => {
@@ -18,12 +19,12 @@ const UserActivate = () => {
         const token = UserActivate_UidToken?.[1];
         try {
             dispatch(userActivateAction({ uid, token }));
-            Router.push('/');
+            Router.push(pageRoute.home);
         } catch {
             // TODO - add err msg
         }
     };
-    if (isUserAuthenticated === false) Router.push('/');
+    if (isUserAuthenticated === false) Router.push(pageRoute.home);
     return (
         <div data-testid='userActivate'>
             <div>

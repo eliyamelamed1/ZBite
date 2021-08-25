@@ -1,10 +1,14 @@
 import '@testing-library/jest-dom/extend-expect';
 
+import * as userActions from '../../../redux/actions/userActions';
+
 import {
+    followUnFollowAction,
     loadUserDetailsAction,
     loadUserListAction,
     loadloggedUserDataAction,
     loginAction,
+    logoutAction,
     resetPasswordAction,
     resetPasswordConfirmAction,
     signupAction,
@@ -14,13 +18,16 @@ import {
 } from '../../../redux/actions/userActions';
 
 import axios from 'axios';
-import configureStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
+import { endpointRoute } from '../../../globals';
+import store from '../../../redux/store';
 
-const middlewares = [thunk];
-const mockStore = configureStore(middlewares);
-let initialState = {};
-const store = mockStore(initialState);
+const logoutActionSpy = jest.spyOn(userActions, 'logoutAction');
+
+// const secondTestActionSpy = jest.spyOn(userActions, 'secondTestAction');
+// test('should dispatch secondTestActions ', () => {
+//     store.dispatch(userActions.testAction());
+//     expect(secondTestActionSpy.mock.calls.length).toBe(1);
+// });
 
 localStorage.setItem('auth_token', 'tokenValue');
 const config = {
@@ -53,12 +60,22 @@ describe('axios request should match url endpoint, and parameters', () => {
     afterEach(() => {
         jest.clearAllMocks();
     });
+    test('followUnFollowAction', async () => {
+        const user_to_follow = 'userToFollow';
+        const body = JSON.stringify({ user_to_follow });
+        await store.dispatch(followUnFollowAction({ user_to_follow }));
+
+        expect(axios.post.mock.calls.length).toBe(1);
+        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute().users.followUnFollow);
+        expect(axios.post.mock.calls[0][1]).toStrictEqual(body);
+        expect(axios.post.mock.calls[0][2]).toStrictEqual(configWithAuthToken);
+        // TODO test loadUserDetailsAction + loadloggedUserDataAction dispatched
+    });
     test('loadUserListAction', () => {
         store.dispatch(loadUserListAction());
-        const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/accounts/list/`;
 
         expect(axios.get.mock.calls.length).toBe(1);
-        expect(axios.get.mock.calls[0][0]).toStrictEqual(endpointUrl);
+        expect(axios.get.mock.calls[0][0]).toStrictEqual(endpointRoute().users.list);
         expect(axios.get.mock.calls[0][1]).toStrictEqual(config);
     });
     test('loadUserDetailsAction', () => {
@@ -96,23 +113,20 @@ describe('axios request should match url endpoint, and parameters', () => {
         // expect(logoutAction.mock.calls.length).toBe('1');
     });
     test('loadloggedUserDataAction', () => {
-        const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/accounts/logged_user/`;
-
         store.dispatch(loadloggedUserDataAction());
 
         expect(axios.get.mock.calls.length).toBe(1);
-        expect(axios.get.mock.calls[0][0]).toStrictEqual(endpointUrl);
+        expect(axios.get.mock.calls[0][0]).toStrictEqual(endpointRoute().users.loggedUserData);
         expect(axios.get.mock.calls[0][1]).toStrictEqual(configWithAuthToken);
     });
     test('loginAction', () => {
         const { email, password } = parameters;
         const body = JSON.stringify({ email, password });
-        const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/djoser/token/login/`;
 
         store.dispatch(loginAction({ email, password }));
 
         expect(axios.post.mock.calls.length).toBe(1);
-        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointUrl);
+        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute().users.login);
         expect(axios.post.mock.calls[0][1]).toStrictEqual(body);
         expect(axios.post.mock.calls[0][2]).toStrictEqual(config);
         // test should dispatch loadloggedUserDataAction
@@ -120,36 +134,31 @@ describe('axios request should match url endpoint, and parameters', () => {
     test('signupAction', () => {
         const { name, email, password, re_password } = parameters;
         const body = JSON.stringify({ name, email, password, re_password });
-        const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/djoser/users/`;
-
         store.dispatch(signupAction({ name, email, password, re_password }));
 
         expect(axios.post.mock.calls.length).toBe(1);
-        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointUrl);
+        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute().users.signup);
         expect(axios.post.mock.calls[0][1]).toStrictEqual(body);
         expect(axios.post.mock.calls[0][2]).toStrictEqual(config);
     });
-    test('verify', () => {
+    test('activate', () => {
         const { uid, token } = parameters;
         const body = JSON.stringify({ uid, token });
-        const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/djoser/users/activation/`;
-
         store.dispatch(userActivateAction({ uid, token }));
 
         expect(axios.post.mock.calls.length).toBe(1);
-        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointUrl);
+        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute().users.activate);
         expect(axios.post.mock.calls[0][1]).toStrictEqual(body);
         expect(axios.post.mock.calls[0][2]).toStrictEqual(config);
     });
     test('resetPasswordAction', () => {
         const { email } = parameters;
         const body = JSON.stringify({ email });
-        const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/djoser/users/reset_password/`;
 
         store.dispatch(resetPasswordAction({ email }));
 
         expect(axios.post.mock.calls.length).toBe(1);
-        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointUrl);
+        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute().users.resetPassword);
         expect(axios.post.mock.calls[0][1]).toStrictEqual(body);
         expect(axios.post.mock.calls[0][2]).toStrictEqual(config);
     });
@@ -157,21 +166,17 @@ describe('axios request should match url endpoint, and parameters', () => {
     test('resetPasswordConfirmAction', () => {
         const { uid, token, new_password } = parameters;
         const body = JSON.stringify({ uid, token, new_password });
-        const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/djoser/users/reset_password_confirm/`;
 
         store.dispatch(resetPasswordConfirmAction({ uid, token, new_password }));
 
         expect(axios.post.mock.calls.length).toBe(1);
-        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointUrl);
+        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute().users.resetPasswordConfirm);
         expect(axios.post.mock.calls[0][1]).toStrictEqual(body);
         expect(axios.post.mock.calls[0][2]).toStrictEqual(config);
     });
-    //  TODO fix this test
-    // test('logoutAction', async () => {
-    //     const store = mockStore(initialState);
-    //     jest.mock('../../../redux/actions/userActions', () => ({ logoutAction: jest.fn() }));
-    //     store.dispatch(logoutAction());
+    test('logoutAction', async () => {
+        store.dispatch(logoutAction());
 
-    //     expect(await logoutAction.mock.calls.length).toBe('');
-    // });
+        expect(await logoutActionSpy.mock.calls.length).toBe(1);
+    });
 });
