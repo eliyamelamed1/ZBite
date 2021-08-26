@@ -56,3 +56,22 @@ test('should increment following count by 1, after successfully following', asyn
     const updatedFollowingCount = await screen.findByText(/following: 1/i);
     expect(updatedFollowingCount).toBeInTheDocument();
 });
+
+test('should decrement following count by 1, after successfully unfollowing', async () => {
+    axios.get.mockReturnValue({ data: data });
+    const { serverUserData } = (await getServerSideProps(ssrContextParams.otherUser)).props;
+    axios.get.mockReturnValue({ data: defaultUser });
+
+    render(
+        <reactRedux.Provider store={store}>
+            <UserDetails_Id serverUserData={serverUserData} />
+        </reactRedux.Provider>
+    );
+
+    const followButton = screen.getByRole('button');
+    waitForElementToBeRemoved(await screen.findByText(/following: 1/i));
+    userEvent.click(followButton);
+
+    const updatedFollowingCount = await screen.findByText(/following: 0/i);
+    expect(updatedFollowingCount).toBeInTheDocument();
+});
