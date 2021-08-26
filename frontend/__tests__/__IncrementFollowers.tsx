@@ -50,9 +50,9 @@ test('should increment following count by 1, after successfully following', asyn
     );
 
     const followButton = screen.getByRole('button');
+    waitForElementToBeRemoved(await screen.findByText(/following: 0/i));
     userEvent.click(followButton);
 
-    // waitForElementToBeRemoved(await screen.findByText(/following: 02/i));
     const updatedFollowingCount = await screen.findByText(/following: 1/i);
     expect(updatedFollowingCount).toBeInTheDocument();
 });
