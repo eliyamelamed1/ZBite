@@ -16,10 +16,6 @@ import userEvent from '@testing-library/user-event';
 const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
 const loadUserDetailsActionSpy = jest.spyOn(userActions, 'loadUserDetailsAction');
 
-loadUserDetailsActionSpy.mockImplementation(() => jest.fn());
-
-jest.mock('../../../redux/store.tsx');
-
 describe('UserDetails - getServerSideProps', () => {
     afterEach(() => {
         cleanup();

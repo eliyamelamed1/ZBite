@@ -12,6 +12,7 @@ const UserDetails = (props) => {
     const [isMyProfile, setIsMyProfile] = useState(false);
     const [userData, setUserData] = useState(props.serverUserData);
     const { loggedUserData, requestedUserData } = useSelector((state) => state.userReducer);
+    const userReducer = useSelector((state) => state.userReducer);
     useEffect(
         function migrateServerSideProps() {
             // updates userData when navigating between accounts on the browser
