@@ -48,9 +48,11 @@ test('should increment following count by 1, after successfully following', asyn
             <UserDetails_Id serverUserData={serverUserData} />
         </reactRedux.Provider>
     );
-
     const followButton = screen.getByRole('button');
-    waitForElementToBeRemoved(await screen.findByText(/following: 0/i));
+
+    const initialFollowingCount = await screen.findByText(/following: 0/i);
+    waitForElementToBeRemoved(initialFollowingCount);
+
     userEvent.click(followButton);
 
     const updatedFollowingCount = await screen.findByText(/following: 1/i);
@@ -67,9 +69,10 @@ test('should decrement following count by 1, after successfully unfollowing', as
             <UserDetails_Id serverUserData={serverUserData} />
         </reactRedux.Provider>
     );
-
     const followButton = screen.getByRole('button');
-    waitForElementToBeRemoved(await screen.findByText(/following: 1/i));
+
+    const initialFollowingCount = await screen.findByText(/following: 1/i);
+    waitForElementToBeRemoved(initialFollowingCount);
     userEvent.click(followButton);
 
     const updatedFollowingCount = await screen.findByText(/following: 0/i);
