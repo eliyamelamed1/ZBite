@@ -4,7 +4,7 @@ import '@testing-library/jest-dom/extend-expect';
 
 import * as userActions from '../../../redux/actions/userActions';
 
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, render, screen, waitForElementToBeRemoved } from '@testing-library/react';
 
 import FollowUnFollow from '../../../components/followers/FollowUnFollow';
 import { Provider } from 'react-redux';
@@ -72,7 +72,8 @@ describe('FollowUnFollow - isUserAlreadyFollowed false', () => {
         expect(followUnFollowActionSpy.mock.calls[0][0].user_to_follow).toBe(userToFollow);
     });
     test('clicking the "follow" button should change the text to: "unfollow" ', async () => {
-        let followButton = screen.getByRole('button', { name: 'follow' });
+        let followButton = await screen.findByRole('button', { name: 'follow' });
+        waitForElementToBeRemoved(followButton);
         userEvent.click(followButton);
 
         let unFollowButton = await screen.findByRole('button', { name: 'unfollow' });
@@ -120,12 +121,12 @@ describe('FollowUnFollow - isUserAlreadyFollowed true', () => {
         const followUnFollow = screen.getByTestId('followUnFollow');
         expect(followUnFollow).toBeInTheDocument();
     });
-    test('should render follow button', () => {
-        const unFollowButton = screen.getByRole('button', { name: 'unfollow' });
+    test('should render follow button', async () => {
+        const unFollowButton = await screen.findByRole('button', { name: 'unfollow' });
         expect(unFollowButton).toBeInTheDocument();
     });
-    test('follow button should dispatch followUnFollowAction ', () => {
-        const unFollowButton = screen.getByRole('button', { name: 'unfollow' });
+    test('follow button should dispatch followUnFollowAction ', async () => {
+        const unFollowButton = await screen.findByRole('button', { name: 'unfollow' });
 
         userEvent.click(unFollowButton);
 
@@ -134,7 +135,8 @@ describe('FollowUnFollow - isUserAlreadyFollowed true', () => {
         expect(followUnFollowActionSpy.mock.calls[0][0].user_to_follow).toBe(userToFollow);
     });
     test('clicking the "unfollow" button should change the text to: "follow" ', async () => {
-        let unFollowButton = screen.getByRole('button', { name: 'unfollow' });
+        let unFollowButton = await screen.findByRole('button', { name: 'unfollow' });
+        waitForElementToBeRemoved(unFollowButton);
         userEvent.click(unFollowButton);
 
         let followButton = await screen.findByRole('button', { name: 'follow' });
