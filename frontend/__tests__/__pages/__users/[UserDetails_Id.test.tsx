@@ -8,23 +8,23 @@ import { ssrContextParams, userParams } from '../../../globals';
 
 import { Provider } from 'react-redux';
 import React from 'react';
+import { TEST_CASE_AUTH } from '../../../redux/types';
 import UserDetails_Id from '../../../pages/users/[UserDetails_Id]';
+import axios from 'axios';
 import { getServerSideProps } from '../../../pages/users/[UserDetails_Id]';
 import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
 
-const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
 const loadUserDetailsActionSpy = jest.spyOn(userActions, 'loadUserDetailsAction');
+jest.mock('axios');
 
 describe('UserDetails - getServerSideProps', () => {
+    beforeEach(() => {
+        axios.get.mockReturnValueOnce({ data: userParams.loggedUser });
+    });
     afterEach(() => {
         cleanup();
         jest.clearAllMocks();
-    });
-    store.getState = () => ({
-        userReducer: {
-            requestedUserData: userParams.loggedUser,
-        },
     });
     test('should dispatch loadUserDetailsAction', async () => {
         await getServerSideProps(ssrContextParams.loggedUser);
@@ -45,16 +45,14 @@ describe('UserDetails - getServerSideProps', () => {
 
 describe('UserDetails - loggedUser visit his own profile', () => {
     beforeEach(async () => {
-        useSelectorMock.mockReturnValue({
+        const initialState = {
             loggedUserData: userParams.loggedUser,
             requestedUserData: userParams.loggedUser,
             isUserAuthenticated: true,
-        });
-        store.getState = () => ({
-            userReducer: {
-                requestedUserData: userParams.loggedUser,
-            },
-        });
+        };
+        store.dispatch({ type: TEST_CASE_AUTH, payload: initialState });
+
+        axios.get.mockReturnValueOnce({ data: userParams.loggedUser });
         const { serverUserData } = (await getServerSideProps(ssrContextParams.loggedUser)).props;
         render(
             <Provider store={store}>
@@ -103,18 +101,14 @@ describe('UserDetails - loggedUser visit his own profile', () => {
 
 describe('UserDetails - loggedUser visiting other account profile', () => {
     beforeEach(async () => {
-        useSelectorMock.mockReturnValue({
+        const initialState = {
             loggedUserData: userParams.loggedUser,
             requestedUserData: userParams.otherUser,
             isUserAuthenticated: true,
-        });
-        store.getState = () => ({
-            userReducer: {
-                requestedUserData: userParams.otherUser,
-            },
-        });
+        };
+        store.dispatch({ type: TEST_CASE_AUTH, payload: initialState });
+        axios.get.mockReturnValueOnce({ data: userParams.otherUser });
         const { serverUserData } = (await getServerSideProps(ssrContextParams.otherUser)).props;
-
         render(
             <Provider store={store}>
                 <UserDetails_Id serverUserData={serverUserData} />

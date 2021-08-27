@@ -14,20 +14,14 @@ import userEvent from '@testing-library/user-event';
 
 jest.mock('axios');
 
-const data = {
-    id: 'otherUserId',
-    name: 'otherUser34',
-    email: 'otherUser4',
+const userWithOneFollowing = {
+    ...userParams.otherUser,
     following: ['otherUser'],
-    followers: [],
 };
 
-const defaultUser = {
-    id: 'otherUserId',
-    name: 'otherUser',
-    email: 'otherUser',
+const userWithZeroFollowing = {
+    ...userParams.otherUser,
     following: [],
-    followers: [],
 };
 
 axios.post.mockReturnValue(() => {});
@@ -39,9 +33,9 @@ const initialState = {
 store.dispatch({ type: TEST_CASE_AUTH, payload: initialState });
 
 test('should increment following count by 1, after successfully following', async () => {
-    axios.get.mockReturnValue({ data: defaultUser });
+    axios.get.mockReturnValue({ data: userWithZeroFollowing });
     const { serverUserData } = (await getServerSideProps(ssrContextParams.otherUser)).props;
-    axios.get.mockReturnValue({ data });
+    axios.get.mockReturnValue({ data: userWithOneFollowing });
 
     render(
         <reactRedux.Provider store={store}>
@@ -60,9 +54,9 @@ test('should increment following count by 1, after successfully following', asyn
 });
 
 test('should decrement following count by 1, after successfully unfollowing', async () => {
-    axios.get.mockReturnValue({ data: data });
+    axios.get.mockReturnValue({ data: userWithOneFollowing });
     const { serverUserData } = (await getServerSideProps(ssrContextParams.otherUser)).props;
-    axios.get.mockReturnValue({ data: defaultUser });
+    axios.get.mockReturnValue({ data: userWithZeroFollowing });
 
     render(
         <reactRedux.Provider store={store}>
