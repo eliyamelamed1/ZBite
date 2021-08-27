@@ -3,7 +3,7 @@ import '@testing-library/jest-dom/extend-expect';
 import * as recipeActions from '../../../redux/actions/recipeActions';
 
 import { TEST_CASE_AUTH, TEST_CASE_RECIPE } from '../../../redux/types';
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, render, screen, waitForElementToBeRemoved } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import React from 'react';
@@ -11,8 +11,10 @@ import RecipeDetails from '../../../pages/recipes/[RecipeDetails_Id]';
 import axios from 'axios';
 import { getServerSideProps } from '../../../pages/recipes/[RecipeDetails_Id]';
 import store from '../../../redux/store';
+import userEvent from '@testing-library/user-event';
 
 const loadRecipeDetailsActionSpy = jest.spyOn(recipeActions, 'loadRecipeDetailsAction');
+const recipeUpdateActionSpy = jest.spyOn(recipeActions, 'recipeUpdateAction');
 
 const recipeParams = {
     existingRecipeId: '5',
@@ -36,13 +38,13 @@ const contextParams = {
 };
 
 jest.mock('axios');
-axios.get.mockReturnValue({ data: recipeParams.recipeData });
 
-describe('RecipeDetails', () => {
+describe('RecipeDetails - recipe author', () => {
     describe('RecipeDetails - getServerSideProps', () => {
-        afterEach(() => {
+        beforeEach(() => {
             cleanup();
             jest.clearAllMocks();
+            axios.get.mockReturnValueOnce({ data: recipeParams.recipeData });
         });
         test('should dispatch loadRecipeDetailsAction', async () => {
             await getServerSideProps(contextParams.existingRecipe);
@@ -77,13 +79,24 @@ describe('RecipeDetails', () => {
             },
         };
 
+        const updatedRecipe = {
+            id: '5',
+            title: 'updatedRecipeTitle',
+            description: 'updatedRecipeDescription',
+            flavor_type: 'Sweet',
+            author: 'eliya',
+            photo_main: '/#',
+        };
         beforeEach(async () => {
-            store.dispatch({ type: TEST_CASE_AUTH, payload: userInitialState });
-            store.dispatch({ type: TEST_CASE_RECIPE, payload: recipeInitialState });
             cleanup();
             jest.clearAllMocks();
 
+            store.dispatch({ type: TEST_CASE_AUTH, payload: userInitialState });
+            store.dispatch({ type: TEST_CASE_RECIPE, payload: recipeInitialState });
+
+            axios.get.mockReturnValueOnce({ data: recipeParams.recipeData });
             const { serverRecipeData } = (await getServerSideProps(contextParams.existingRecipe)).props;
+            axios.patch.mockReturnValueOnce({ data: updatedRecipe });
             render(
                 <Provider store={store}>
                     <RecipeDetails serverRecipeData={serverRecipeData} />
@@ -118,7 +131,29 @@ describe('RecipeDetails', () => {
 
             expect(recipeUpdateTestId).toBeInTheDocument();
         });
-        test('after updating recipe data should display the new data', () => {});
+        test('migrateRequestedRecipeData - after updating recipe data should display the new data', async () => {
+            const flavorCombobox = screen.getByRole('combobox');
+            const titleTextbox = screen.getByPlaceholderText(/title/i);
+            const descriptionTextbox = screen.getByPlaceholderText(/description/i);
+            const updateRecipeButton = screen.getByRole('button', { name: /update/i });
+
+            userEvent.type(titleTextbox, updatedRecipe.title);
+            userEvent.type(descriptionTextbox, updatedRecipe.description);
+            userEvent.selectOptions(flavorCombobox, updatedRecipe.flavor_type);
+            await userEvent.click(updateRecipeButton);
+
+            const timesActionDispatched = recipeUpdateActionSpy.mock.calls.length;
+
+            expect(timesActionDispatched).toBe(1);
+            const updatedTitle = await screen.findByText(updatedRecipe.title);
+            const updatedDescription = await screen.findByText(updatedRecipe.description);
+            const updatedFlavor = await screen.findAllByText(updatedRecipe.flavor_type);
+
+            expect(updatedTitle).toBeInTheDocument();
+            expect(updatedDescription).toBeInTheDocument();
+            expect(updatedFlavor.length).toBe(2);
+            expect(updatedFlavor[1]).toBeInTheDocument();
+        });
     });
 });
 
@@ -129,11 +164,12 @@ describe('RecipeDetails - not the recipe author', () => {
     };
 
     beforeEach(async () => {
-        store.dispatch({ type: TEST_CASE_AUTH, payload: userInitialState });
-
         cleanup();
         jest.clearAllMocks();
 
+        store.dispatch({ type: TEST_CASE_AUTH, payload: userInitialState });
+
+        axios.get.mockReturnValueOnce({ data: recipeParams.recipeData });
         const { serverRecipeData } = (await getServerSideProps(contextParams.existingRecipe)).props;
         render(
             <Provider store={store}>
