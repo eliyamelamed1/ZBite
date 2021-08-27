@@ -60,24 +60,24 @@ const RecipeDetails = (props) => {
                     {recipeData ? (
                         <div>
                             <Link href={`/users/${recipeData.author}/`} passHref>
-                                <p>
+                                <div>
                                     recipe Author: <p>{recipeData.author}</p>
-                                </p>
+                                </div>
                             </Link>
-                            <h1>
+                            <div>
                                 recipe title: <h1>{recipeData.title}</h1>
-                            </h1>
+                            </div>
                             <Link href='/'>Home</Link>
                             {recipeData.photo_main ? (
                                 <Image src={recipeData.photo_main} alt='' height={100} width={100} />
                             ) : null}
                             <ul>
                                 <li>
-                                    Flavor Type:<p>{recipeData.flavor_type}</p>
-                                    <p>
+                                    <div>
+                                        Flavor Type:<p>{recipeData.flavor_type}</p>
                                         recipe description: <p>{recipeData.description}</p>
-                                    </p>
-                                    {displayInteriorImages()}
+                                        {displayInteriorImages()}
+                                    </div>
                                 </li>
                             </ul>
                         </div>
