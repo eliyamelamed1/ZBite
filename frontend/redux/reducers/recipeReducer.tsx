@@ -9,6 +9,7 @@ import {
     GET_RECIPE_LIST_SUCCESS,
     SEARCH_RECIPE_FAIL,
     SEARCH_RECIPE_SUCCESS,
+    TEST_CASE_RECIPE,
     UPDATE_RECIPE_FAIL,
     UPDATE_RECIPE_SUCCESS,
 } from '../types';
@@ -18,8 +19,6 @@ const initialState = {
     listOfSearchedRecipes: null,
     requestedRecipeData: null,
 };
-
-const TEST_CASE_RECIPE = 'TEST_CASE_RECIPE';
 
 export default function recipeReducer(state = initialState, action) {
     const { type, payload } = action;
