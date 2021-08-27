@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom/extend-expect';
 
-import * as reactRedux from 'react-redux';
 import * as recipeActions from '../../../redux/actions/recipeActions';
 
 import { TEST_CASE_AUTH, TEST_CASE_RECIPE } from '../../../redux/types';
@@ -10,8 +9,8 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import RecipeDetails from '../../../pages/recipes/[RecipeDetails_Id]';
 import axios from 'axios';
-import { createTestStore } from '../../../redux/store';
 import { getServerSideProps } from '../../../pages/recipes/[RecipeDetails_Id]';
+import store from '../../../redux/store';
 
 const loadRecipeDetailsActionSpy = jest.spyOn(recipeActions, 'loadRecipeDetailsAction');
 
@@ -63,12 +62,11 @@ describe('RecipeDetails', () => {
     });
 
     describe('RecipeDetails - author of recipe', () => {
-        const store = createTestStore();
-        let userInitialState = {
+        const userInitialState = {
             loggedUserData: { id: 'eliya' },
             isUserAuthenticated: true,
         };
-        let recipeInitialState = {
+        const recipeInitialState = {
             requestedRecipeData: {
                 id: '5',
                 title: 'recipeTitle',
@@ -78,10 +76,10 @@ describe('RecipeDetails', () => {
                 photo_main: '/#',
             },
         };
-        store.dispatch({ type: TEST_CASE_AUTH, payload: userInitialState });
-        store.dispatch({ type: TEST_CASE_RECIPE, payload: recipeInitialState });
 
         beforeEach(async () => {
+            store.dispatch({ type: TEST_CASE_AUTH, payload: userInitialState });
+            store.dispatch({ type: TEST_CASE_RECIPE, payload: recipeInitialState });
             cleanup();
             jest.clearAllMocks();
 
@@ -125,14 +123,14 @@ describe('RecipeDetails', () => {
 });
 
 describe('RecipeDetails - not the recipe author', () => {
-    const store = createTestStore();
-    let userInitialState = {
+    const userInitialState = {
         loggedUserData: { id: 'eilon' },
         isUserAuthenticated: true,
     };
-    store.dispatch({ type: TEST_CASE_AUTH, payload: userInitialState });
 
     beforeEach(async () => {
+        store.dispatch({ type: TEST_CASE_AUTH, payload: userInitialState });
+
         cleanup();
         jest.clearAllMocks();
 
