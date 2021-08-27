@@ -44,6 +44,14 @@ describe('UserDetails - getServerSideProps', () => {
 });
 
 describe('UserDetails - loggedUser visit his own profile', () => {
+    const outdatedUserData = {
+        ...userParams.loggedUser,
+    };
+    const updatedUserData = {
+        ...userParams.loggedUser,
+        email: 'updatedEmail',
+        name: 'updatedName',
+    };
     beforeEach(async () => {
         cleanup();
         jest.clearAllMocks();
@@ -57,13 +65,13 @@ describe('UserDetails - loggedUser visit his own profile', () => {
 
         axios.get.mockReturnValueOnce({ data: userParams.loggedUser });
         const { serverUserData } = (await getServerSideProps(ssrContextParams.loggedUser)).props;
+        axios.patch.mockReturnValueOnce({ data: updatedUserData });
         render(
             <Provider store={store}>
                 <UserDetails_Id serverUserData={serverUserData} />
             </Provider>
         );
     });
-
     test('should render without crashing', () => {});
     test('should render match own data-testid', () => {
         const userDetailsTestId = screen.getByTestId('userDetails');
@@ -95,6 +103,26 @@ describe('UserDetails - loggedUser visit his own profile', () => {
         const followUnFollow = screen.queryByTestId('followUnFollow');
 
         expect(followUnFollow).not.toBeInTheDocument();
+    });
+
+    test('migrateLoggedUserData  - should display updated user data', async () => {
+        const emailInput = screen.getByPlaceholderText(/email/i);
+        const nameInput = screen.getByPlaceholderText(/name/i);
+        const updateButton = screen.getByRole('button', { name: /update/i });
+        const emailValue = updatedUserData.email;
+        const nameValue = updatedUserData.name;
+        userEvent.type(emailInput, emailValue);
+        userEvent.type(nameInput, nameValue);
+
+        const outdatedEmail = await screen.findByText(outdatedUserData.email);
+        const outdatedName = await screen.findByText(outdatedUserData.name);
+        waitForElementToBeRemoved(outdatedEmail && outdatedName);
+
+        userEvent.click(updateButton);
+        const updatedEmail = await screen.findByText(updatedUserData.email);
+        const updatedName = await screen.findByText(updatedUserData.name);
+        expect(updatedEmail).toBeInTheDocument();
+        expect(updatedName).toBeInTheDocument();
     });
 });
 
