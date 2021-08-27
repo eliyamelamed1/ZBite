@@ -3,7 +3,7 @@ import '@testing-library/jest-dom/extend-expect';
 import * as reactRedux from 'react-redux';
 import * as userActions from '../../../redux/actions/userActions';
 
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, render, screen, waitForElementToBeRemoved } from '@testing-library/react';
 import { ssrContextParams, userParams } from '../../../globals';
 
 import { Provider } from 'react-redux';
@@ -142,7 +142,7 @@ describe('UserDetails - loggedUser visiting other account profile', () => {
         const myProfileLinks = screen.queryByTestId('myProfileLinks');
         expect(myProfileLinks).not.toBeInTheDocument();
     });
-    test('hould not render UserUpdate component', () => {
+    test('should not render UserUpdate component', () => {
         const userUpdateTestId = screen.queryByTestId('userUpdate');
 
         expect(userUpdateTestId).not.toBeInTheDocument();
@@ -162,5 +162,60 @@ describe('UserDetails - loggedUser visiting other account profile', () => {
         userEvent.click(followButton);
 
         expect(followButton).toBeInTheDocument();
+    });
+    describe('migrateRequestedUserData - following a user should increment/decrement following count', () => {
+        beforeEach(() => {
+            cleanup();
+        });
+        const userWithOneFollowing = {
+            ...userParams.otherUser,
+            following: ['otherUser'],
+        };
+
+        const userWithZeroFollowing = {
+            ...userParams.otherUser,
+            following: [],
+        };
+
+        test('should increment following count by 1, after successfully following', async () => {
+            axios.get.mockReturnValueOnce({ data: userWithZeroFollowing });
+            const { serverUserData } = (await getServerSideProps(ssrContextParams.otherUser)).props;
+            axios.get.mockReturnValueOnce({ data: userWithOneFollowing });
+
+            render(
+                <reactRedux.Provider store={store}>
+                    <UserDetails_Id serverUserData={serverUserData} />
+                </reactRedux.Provider>
+            );
+            const followButton = screen.getByRole('button');
+
+            const initialFollowingCount = await screen.findByText(/following: 0/i);
+            waitForElementToBeRemoved(initialFollowingCount);
+
+            userEvent.click(followButton);
+
+            const updatedFollowingCount = await screen.findByText(/following: 1/i);
+            expect(updatedFollowingCount).toBeInTheDocument();
+        });
+
+        test('should decrement following count by 1, after successfully unfollowing', async () => {
+            axios.get.mockReturnValueOnce({ data: userWithOneFollowing });
+            const { serverUserData } = (await getServerSideProps(ssrContextParams.otherUser)).props;
+            axios.get.mockReturnValueOnce({ data: userWithZeroFollowing });
+
+            render(
+                <reactRedux.Provider store={store}>
+                    <UserDetails_Id serverUserData={serverUserData} />
+                </reactRedux.Provider>
+            );
+            const followButton = screen.getByRole('button');
+
+            const initialFollowingCount = await screen.findByText(/following: 1/i);
+            waitForElementToBeRemoved(initialFollowingCount);
+            userEvent.click(followButton);
+
+            const updatedFollowingCount = await screen.findByText(/following: 0/i);
+            expect(updatedFollowingCount).toBeInTheDocument();
+        });
     });
 });
