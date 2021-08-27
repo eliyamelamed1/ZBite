@@ -45,6 +45,9 @@ describe('UserDetails - getServerSideProps', () => {
 
 describe('UserDetails - loggedUser visit his own profile', () => {
     beforeEach(async () => {
+        cleanup();
+        jest.clearAllMocks();
+
         const initialState = {
             loggedUserData: userParams.loggedUser,
             requestedUserData: userParams.loggedUser,
@@ -61,10 +64,6 @@ describe('UserDetails - loggedUser visit his own profile', () => {
         );
     });
 
-    afterEach(() => {
-        cleanup();
-        jest.clearAllMocks();
-    });
     test('should render without crashing', () => {});
     test('should render match own data-testid', () => {
         const userDetailsTestId = screen.getByTestId('userDetails');
@@ -101,6 +100,8 @@ describe('UserDetails - loggedUser visit his own profile', () => {
 
 describe('UserDetails - loggedUser visiting other account profile', () => {
     beforeEach(async () => {
+        cleanup();
+        jest.clearAllMocks();
         const initialState = {
             loggedUserData: userParams.loggedUser,
             requestedUserData: userParams.otherUser,
@@ -116,10 +117,6 @@ describe('UserDetails - loggedUser visiting other account profile', () => {
         );
     });
 
-    afterEach(() => {
-        cleanup();
-        jest.clearAllMocks();
-    });
     test('should render without crashing', () => {});
     test('should render match own data-testid', () => {
         const userDetailsTestId = screen.getByTestId('userDetails');
@@ -167,20 +164,20 @@ describe('UserDetails - loggedUser visiting other account profile', () => {
         beforeEach(() => {
             cleanup();
         });
-        const userWithOneFollowing = {
+        const userFollowingCount1 = {
             ...userParams.otherUser,
             following: ['otherUser'],
         };
 
-        const userWithZeroFollowing = {
+        const userFollowingCount0 = {
             ...userParams.otherUser,
             following: [],
         };
 
         test('should increment following count by 1, after successfully following', async () => {
-            axios.get.mockReturnValueOnce({ data: userWithZeroFollowing });
+            axios.get.mockReturnValueOnce({ data: userFollowingCount0 });
             const { serverUserData } = (await getServerSideProps(ssrContextParams.otherUser)).props;
-            axios.get.mockReturnValueOnce({ data: userWithOneFollowing });
+            axios.get.mockReturnValueOnce({ data: userFollowingCount1 });
 
             render(
                 <reactRedux.Provider store={store}>
@@ -199,9 +196,9 @@ describe('UserDetails - loggedUser visiting other account profile', () => {
         });
 
         test('should decrement following count by 1, after successfully unfollowing', async () => {
-            axios.get.mockReturnValueOnce({ data: userWithOneFollowing });
+            axios.get.mockReturnValueOnce({ data: userFollowingCount1 });
             const { serverUserData } = (await getServerSideProps(ssrContextParams.otherUser)).props;
-            axios.get.mockReturnValueOnce({ data: userWithZeroFollowing });
+            axios.get.mockReturnValueOnce({ data: userFollowingCount0 });
 
             render(
                 <reactRedux.Provider store={store}>
