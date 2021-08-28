@@ -8,7 +8,8 @@ from chat_groups.models import ChatGroup
 from chat_massages.models import ChatMassage
 from comments.models import Comment
 from likes.models import Like
-from ratings.models import Rating
+from reviews.models import Review
+
 from recipes.models import Recipe
 
 
@@ -44,12 +45,12 @@ class LikeFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Like
 
-class RatingFactory(factory.django.DjangoModelFactory):
+class ReviewFactory(factory.django.DjangoModelFactory):
     author = factory.SubFactory(UserFactory)
     recipe = factory.SubFactory(RecipeFactory) 
     stars = 5
     class Meta:
-        model = Rating
+        model = Review
 
 
 class ChatDuoFactory(factory.django.DjangoModelFactory):

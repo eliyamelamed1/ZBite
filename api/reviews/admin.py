@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Rating
+from .models import Review
 
 
 class CommentAdmin(admin.ModelAdmin):
@@ -10,4 +10,4 @@ class CommentAdmin(admin.ModelAdmin):
     search_fields = ('stars',)
     list_per_page = 25
 
-admin.site.register(Rating, CommentAdmin)
+admin.site.register(Review, CommentAdmin)
