@@ -16,8 +16,9 @@ const RecipeDetails = (props) => {
     const { requestedRecipeData } = useSelector((state) => state.recipeReducer);
 
     useEffect(
+        // when updating recipe data (title, description etc..) migrate the changes to the userData
         function migrateRequestedRecipeData() {
-            // when updating recipe data (title, description etc..) migrate the changes to the userData
+            // TODO - TEST THIS STATEMENT
             if (requestedRecipeData?.id === recipeData?.id) {
                 setRecipeData(requestedRecipeData);
             }

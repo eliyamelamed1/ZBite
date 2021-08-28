@@ -49,7 +49,7 @@ export const followUnFollowAction =
             await axios.post(endpointRoute().users.followUnFollow, body, config);
             await dispatch(loadUserDetailsAction({ id: user_to_follow }));
             await dispatch(loadloggedUserDataAction());
-            dispatch({ type: FOLLOW_UNFOLLOW_USER_SUCCESS });
+            await dispatch({ type: FOLLOW_UNFOLLOW_USER_SUCCESS });
         } catch {
             dispatch({ type: FOLLOW_UNFOLLOW_USER_FAIL });
         }
@@ -161,8 +161,8 @@ export const loginAction =
 
         try {
             const res = await axios.post(endpointRoute().users.login, body, config);
-            dispatch({ type: LOGIN_SUCCESS, payload: res.data });
-            dispatch(loadloggedUserDataAction());
+            await dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+            await dispatch(loadloggedUserDataAction());
         } catch (err) {
             dispatch({ type: LOGIN_FAIL });
         }

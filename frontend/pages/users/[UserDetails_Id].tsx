@@ -13,8 +13,9 @@ const UserDetails = (props) => {
     const [userData, setUserData] = useState(props.serverUserData);
     const { loggedUserData, requestedUserData } = useSelector((state) => state.userReducer);
     useEffect(
+        // updates userData when navigating between accounts on the browser
         function migrateServerSideProps() {
-            // updates userData when navigating between accounts on the browser
+            // TODO - TEST THIS STATEMENT
             if (props.serverUserData) {
                 setUserData(props.serverUserData);
             }
@@ -23,12 +24,13 @@ const UserDetails = (props) => {
     );
 
     useEffect(
+        // when updating requested account data (by following etc...) migrate the changes to the userData
         function migrateRequestedUserData() {
-            // when updating requested account data (by following etc...) migrate the changes to the userData
             /*
         bug after following a user and navigating to other account the data doesnt change
         the following if statement fix the bug
-        */
+        TODO - TEST THIS STATEMENT
+    */
             if (requestedUserData?.id === userData?.id) {
                 setUserData(requestedUserData);
             }
@@ -37,11 +39,12 @@ const UserDetails = (props) => {
     );
 
     useEffect(
+        /*
+        check if the userDetailsPage is the profile of the logged user.
+        + when logged account update his data, migrate the changes to the profile page
+    */
         function migrateLoggedUserData() {
-            /*
-         check if the userDetailsPage is the profile of the logged user.
-         + when logged account update his data, migrate the changes to the profile page
-        */
+            // TODO - TEST THIS STATEMENT
             if (loggedUserData?.id == userData?.id) {
                 setUserData(loggedUserData);
                 setIsMyProfile(true);
