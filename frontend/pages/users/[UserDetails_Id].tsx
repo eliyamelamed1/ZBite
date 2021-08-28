@@ -12,13 +12,12 @@ const UserDetails = (props) => {
     const [isMyProfile, setIsMyProfile] = useState(false);
     const [userData, setUserData] = useState(props.serverUserData);
     const { loggedUserData, requestedUserData } = useSelector((state) => state.userReducer);
+
     useEffect(
         // updates userData when navigating between accounts on the browser
         function migrateServerSideProps() {
             // TODO - TEST THIS STATEMENT
-            if (props.serverUserData) {
-                setUserData(props.serverUserData);
-            }
+            setUserData(props.serverUserData);
         },
         [props.serverUserData]
     );
@@ -31,7 +30,8 @@ const UserDetails = (props) => {
         the following if statement fix the bug
         TODO - TEST THIS STATEMENT
     */
-            if (requestedUserData?.id === userData?.id) {
+            const isReqUserIdMatchUserDataId = requestedUserData?.id === userData?.id;
+            if (isReqUserIdMatchUserDataId) {
                 setUserData(requestedUserData);
             }
         },
@@ -45,7 +45,8 @@ const UserDetails = (props) => {
     */
         function migrateLoggedUserData() {
             // TODO - TEST THIS STATEMENT
-            if (loggedUserData?.id == userData?.id) {
+            const isReqUserIdMatchUserDataId = loggedUserData?.id == userData?.id;
+            if (isReqUserIdMatchUserDataId) {
                 setUserData(loggedUserData);
                 setIsMyProfile(true);
             }
