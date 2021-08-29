@@ -18,9 +18,8 @@ const RecipeCreate = () => {
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
     const { isUserAuthenticated } = useSelector((state) => state.userReducer);
 
-    if (isUserAuthenticated == false) {
-        Router.push(pageRoute.home);
-    }
+    isUserAuthenticated === false ? Router.push(pageRoute.home) : null;
+
     const onSubmit = (e) => {
         e.preventDefault();
         try {

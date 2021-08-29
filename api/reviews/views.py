@@ -29,12 +29,13 @@ class ReviewCreate(APIView):
         stars = data['stars']
         
 
-        
+        # comment is optional so check for value 
         try:
             comment = data['comment']
         except:
             comment = ''
 
+        # image is optional so check for value 
         try:
             image = data['image']
         except:

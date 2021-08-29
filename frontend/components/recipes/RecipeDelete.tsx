@@ -1,5 +1,4 @@
 // TODO - change PropTypes id to .isRequired
-// TODO test propTypes
 
 import PropTypes from 'prop-types';
 import React from 'react';
