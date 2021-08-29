@@ -16,6 +16,8 @@ class Review(models.Model):
         editable=False
     )
     stars = models.IntegerField()
+    comment = models.CharField(max_length=255, blank=True)
+    image = models.ImageField(upload_to='media/', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

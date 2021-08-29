@@ -27,6 +27,18 @@ class ReviewCreate(APIView):
 
         recipe = data['recipe']
         stars = data['stars']
+        
+
+        
+        try:
+            comment = data['comment']
+        except:
+            comment = ''
+
+        try:
+            image = data['image']
+        except:
+            image = ''
 
 
         if (1<float(stars)>5):
@@ -39,12 +51,12 @@ class ReviewCreate(APIView):
             user_review_of_recipe = recipe_reviews.filter(author=user)
 
             user_review_of_recipe.delete()
-            Review.objects.all().create(recipe=recipe, author=user, stars=stars)
+            Review.objects.all().create(recipe=recipe, author=user, stars=stars, comment=comment, image=image)
 
         # else create review
         except:
             recipe = Recipe.objects.all().get(id=recipe)
-            Review.objects.all().create(recipe=recipe, author=user, stars=stars)
+            Review.objects.all().create(recipe=recipe, author=user, stars=stars, comment=comment, image=image)
 
         recipe.stars = Review.get_recipe_stars_score(recipe=recipe)
         recipe.save()

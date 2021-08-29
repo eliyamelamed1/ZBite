@@ -49,6 +49,8 @@ class ReviewFactory(factory.django.DjangoModelFactory):
     author = factory.SubFactory(UserFactory)
     recipe = factory.SubFactory(RecipeFactory) 
     stars = 5
+    comment = factory.fuzzy.FuzzyText()
+
     class Meta:
         model = Review
 

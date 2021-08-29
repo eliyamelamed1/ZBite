@@ -40,19 +40,36 @@ class TestRatingCreateView:
 
             assert response.status_code == 200
     
-        def test_create_review_post_request_append_review_to_recipe(self, api_client):
+        def test_creating_a_review_match_it_to_a_recipe(self, api_client):
             new_user = UserFactory()
             api_client.force_authenticate(new_user)
             new_recipe = RecipeFactory()
             new_recipe = Recipe.objects.all().get(id__exact=new_recipe.id)
             data = {
                 'recipe': new_recipe.id,
-                'stars': 5
+                'stars': 5,
+                'comment': 'comment',
+                'image': 'image'
             }
             api_client.post(review_create_url, data)
             new_recipe = Recipe.objects.all().get(id__exact=new_recipe.id)
 
             assert new_recipe.stars == '5.0'
+
+        def test_creating_a_review_without_image_and_comment_should_be_successfull(self, api_client):
+            new_user = UserFactory()
+            api_client.force_authenticate(new_user)
+            new_recipe = RecipeFactory()
+            data = {
+                'recipe': new_recipe.id,
+                'stars': 5,
+            }
+            api_client.post(review_create_url, data)
+            review = Review.objects.all().get(author__exact=new_user.id)
+
+            assert review.stars == 5
+            assert review.comment == ''
+            assert review.image == ''
 
         def test_review_above_5_stars_raise_validation_error(self, api_client):
             with pytest.raises(ValidationError):
@@ -62,7 +79,8 @@ class TestRatingCreateView:
                 new_recipe = Recipe.objects.all().get(id__exact=new_recipe.id)
                 data = {
                     'recipe': new_recipe.id,
-                    'stars': 5.1
+                    'stars': 5.1,
+                    'comment': 'comment'
                 }
                 api_client.post(review_create_url, data)
                 new_recipe = Recipe.objects.all().get(id__exact=new_recipe.id)
@@ -75,26 +93,29 @@ class TestRatingCreateView:
                 new_recipe = Recipe.objects.all().get(id__exact=new_recipe.id)
                 data = {
                     'recipe': new_recipe.id,
-                    'stars': 0.9
+                    'stars': 0.9,
+                    'comment': 'comment'
                 }
                 api_client.post(review_create_url, data)
                 new_recipe = Recipe.objects.all().get(id__exact=new_recipe.id)
-
 
         def test_user_second_review_will_update_the_first_one(self, api_client):
             new_user = UserFactory()
             api_client.force_authenticate(new_user)
             new_recipe = RecipeFactory()
-            new_recipe = Recipe.objects.all().get(id__exact=new_recipe.id)
             data = {
                 'recipe': new_recipe.id,
-                'stars': 5
+                'stars': 5,
+                'comment': 'comment',
+                'image': 'image'
             }
             
             api_client.post(review_create_url, data)
             data = {
                 'recipe': new_recipe.id,
-                'stars': 4
+                'stars': 4,
+                'comment': 'comment2',
+                'image': 'image2'
             }
             response = api_client.post(review_create_url, data)
 
@@ -102,6 +123,8 @@ class TestRatingCreateView:
 
             assert response.status_code == 200
             assert review.stars == 4
+            assert review.comment == 'comment2'
+            assert review.image == 'image2'
             assert Review.objects.all().count() == 1  
 
         def test_reviews_from_different_users(self, api_client):
@@ -111,7 +134,8 @@ class TestRatingCreateView:
 
             data = {
                 'recipe': new_recipe.id,
-                'stars': '5'
+                'stars': '5',
+                'comment': 'comment'
             }
             response = api_client.post(review_create_url, data)
             api_client.logout()
@@ -120,7 +144,8 @@ class TestRatingCreateView:
             api_client.force_authenticate(new_user2)
             data = {
                 'recipe': new_recipe.id,
-                'stars': '4'
+                'stars': '4',
+                'comment': 'comment'
             }
             response2 = api_client.post(review_create_url, data)
 
@@ -132,6 +157,8 @@ class TestRatingCreateView:
             assert Review.objects.all().count() == 2
             assert first_review.stars == 5
             assert second_review.stars== 4
+            assert first_review.comment == 'comment'
+            assert second_review.comment == 'comment'
         
         def test_multiple_reviews_from_different_users(self, api_client):
             new_user = UserFactory()
@@ -375,9 +402,6 @@ class TestRatingDeleteView:
 
             assert response.status_code == 401
             assert Review.objects.all().count() == 1
-        
-        
-
 
 
 class TestRatingsInRecipe:

@@ -14,7 +14,7 @@ class ReviewDetailSerializer(serializers.ModelSerializer):
 class ReviewCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = ('stars', 'recipe',)
+        fields = ('stars', 'recipe','comment','image')
 
 class ReviewsInRecipeSerializer(serializers.ModelSerializer):
     class Meta:
