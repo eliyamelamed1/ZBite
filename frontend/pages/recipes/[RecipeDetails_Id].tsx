@@ -19,8 +19,8 @@ const RecipeDetails = (props) => {
         // when updating recipe data (title, description etc..) migrate the changes to the userData
         function migrateRequestedRecipeData() {
             // TODO - TEST THIS STATEMENT
-            const isReqRecipeIdMatchRecipeDataId = requestedRecipeData?.id === recipeData?.id;
-            if (isReqRecipeIdMatchRecipeDataId) {
+            const isRecipeDataMatchReqId = requestedRecipeData?.id === recipeData?.id;
+            if (isRecipeDataMatchReqId) {
                 setRecipeData(requestedRecipeData);
             }
         },

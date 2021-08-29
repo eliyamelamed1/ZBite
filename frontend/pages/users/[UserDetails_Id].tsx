@@ -30,8 +30,8 @@ const UserDetails = (props) => {
         the following if statement fix the bug
         TODO - TEST THIS STATEMENT
     */
-            const isReqUserIdMatchUserDataId = requestedUserData?.id === userData?.id;
-            if (isReqUserIdMatchUserDataId) {
+            const isUserDataMatchReqId = requestedUserData?.id === userData?.id;
+            if (isUserDataMatchReqId) {
                 setUserData(requestedUserData);
             }
         },
@@ -45,8 +45,8 @@ const UserDetails = (props) => {
     */
         function migrateLoggedUserData() {
             // TODO - TEST THIS STATEMENT
-            const isReqUserIdMatchUserDataId = loggedUserData?.id == userData?.id;
-            if (isReqUserIdMatchUserDataId) {
+            const isUserDataMatchReqId = loggedUserData?.id == userData?.id;
+            if (isUserDataMatchReqId) {
                 setUserData(loggedUserData);
                 setIsMyProfile(true);
             }
