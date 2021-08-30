@@ -1,34 +1,35 @@
 import pytest
 from django.urls import reverse
 
-from factories import RatingFactory, RecipeFactory, UserFactory
-from ratings.models import Rating
+from factories import ReviewFactory, RecipeFactory, UserFactory
+from reviews.models import Review
+
 from recipes.models import Recipe
 
 pytestmark = pytest.mark.django_db
-rating_create_url = Rating.get_create_url()
+review_create_url = Review.get_create_url()
 
 def test__str__():
-    new_rating = RatingFactory()
+    new_review = ReviewFactory()
 
-    assert new_rating.__str__() == str(new_rating.author)
+    assert new_review.__str__() == str(new_review.author)
 
 def test_get_delete_url():
-    new_rating = RatingFactory()
+    new_review = ReviewFactory()
     
-    assert new_rating.get_delete_url() == reverse('ratings:delete', kwargs={"pk": new_rating.id})
+    assert new_review.get_delete_url() == reverse('reviews:delete', kwargs={"pk": new_review.id})
 
 
 def test_get_create_url():
-    assert Rating.get_create_url() == reverse('ratings:create')
+    assert Review.get_create_url() == reverse('reviews:create')
 
-def test_get_ratings_in_recipe_url():
-    assert Rating.get_ratings_in_recipe_url() == reverse('ratings:ratings_in_recipe')
-
-
+def test_get_reviews_in_recipe_url():
+    assert Review.get_reviews_in_recipe_url() == reverse('reviews:reviews_in_recipe')
 
 
-def test_get_recipe_avg_rating_score(api_client):
+
+
+def test_get_recipe_avg_review_score(api_client):
     new_recipe = RecipeFactory()
     api_client.force_authenticate(new_recipe.author)
     new_recipe = Recipe.objects.all().get(id__exact=new_recipe.id)
@@ -36,7 +37,7 @@ def test_get_recipe_avg_rating_score(api_client):
         'recipe': new_recipe.id,
         'stars': 5
     }
-    api_client.post(rating_create_url, data)
+    api_client.post(review_create_url, data)
     api_client.logout()
 
     new_user = UserFactory()
@@ -45,9 +46,9 @@ def test_get_recipe_avg_rating_score(api_client):
         'recipe': new_recipe.id,
         'stars': 1
     }
-    api_client.post(rating_create_url, data)
+    api_client.post(review_create_url, data)
 
-    recipe_avg_stars = Rating.get_recipe_stars_score(recipe=new_recipe)
+    recipe_avg_stars = Review.get_recipe_stars_score(recipe=new_recipe)
 
     assert recipe_avg_stars == 3.0
 
@@ -77,13 +78,13 @@ def test_get_account_stars_score(api_client):
         'recipe': first_recipe.id,
         'stars': 5
     }
-    api_client.post(rating_create_url, data)  
+    api_client.post(review_create_url, data)  
     second_recipe = Recipe.objects.all().get(title__exact=second_recipe.title)
     data = {
         'recipe': second_recipe.id,
         'stars': 0
     }
-    api_client.post(rating_create_url, data)  
+    api_client.post(review_create_url, data)  
 
     second_user = UserFactory()
     api_client.force_authenticate(second_user)
@@ -92,13 +93,13 @@ def test_get_account_stars_score(api_client):
         'recipe': first_recipe.id,
         'stars': 1
     }
-    api_client.post(rating_create_url, data)  
+    api_client.post(review_create_url, data)  
     data = {
         'recipe': second_recipe.id,
         'stars': 3
     }
-    api_client.post(rating_create_url, data)  
+    api_client.post(review_create_url, data)  
 
-    account_avg_stars = Rating.get_account_stars_score(user=user)
+    account_avg_stars = Review.get_account_stars_score(user=user)
 
     assert account_avg_stars == 2.25

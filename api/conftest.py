@@ -4,8 +4,7 @@ from django.urls.base import reverse
 from rest_framework.test import APIClient
 
 from accounts.models import UserAccount
-from factories import (ChatDuoFactory, ChatGroupFactory, ChatMassageFactory,
-                       CommentFactory, RecipeFactory, UserFactory)
+from factories import (ChatDuoFactory, ChatGroupFactory, ChatMassageFactory, RecipeFactory, UserFactory)
 from recipes.models import Recipe
 
 
@@ -75,18 +74,18 @@ def search_recipe_response(api_client):
 
     return response
 
-@pytest.fixture
-def search_comment_response(api_client):
-    new_recipe = RecipeFactory()
-    comments_in_recipe_url = '/api/comments/comments_in_recipe/'
+# @pytest.fixture
+# def search_comment_response(api_client):
+#     new_recipe = RecipeFactory()
+#     comments_in_recipe_url = '/api/comments/comments_in_recipe/'
 
-    data = {
-        'recipe': {new_recipe.id},
-    }
+#     data = {
+#         'recipe': {new_recipe.id},
+#     }
 
-    response = api_client.post(comments_in_recipe_url, data)
+#     response = api_client.post(comments_in_recipe_url, data)
 
-    return response
+#     return response
 
 @pytest.fixture
 def chat_massage_create():

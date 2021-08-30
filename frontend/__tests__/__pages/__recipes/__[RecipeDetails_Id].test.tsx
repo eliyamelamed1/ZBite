@@ -1,19 +1,20 @@
 import '@testing-library/jest-dom/extend-expect';
 
-import * as reactRedux from 'react-redux';
+import * as recipeActions from '../../../redux/actions/recipeActions';
 
-import { cleanup, render, screen } from '@testing-library/react';
+import { TEST_CASE_AUTH, TEST_CASE_RECIPE } from '../../../redux/types';
+import { cleanup, render, screen, waitForElementToBeRemoved } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import React from 'react';
 import RecipeDetails from '../../../pages/recipes/[RecipeDetails_Id]';
-import configureStore from 'redux-mock-store';
+import axios from 'axios';
 import { getServerSideProps } from '../../../pages/recipes/[RecipeDetails_Id]';
-import { loadRecipeDetailsAction } from '../../../redux/actions/recipeActions';
 import store from '../../../redux/store';
-import thunk from 'redux-thunk';
+import userEvent from '@testing-library/user-event';
 
-const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
+const loadRecipeDetailsActionSpy = jest.spyOn(recipeActions, 'loadRecipeDetailsAction');
+const recipeUpdateActionSpy = jest.spyOn(recipeActions, 'recipeUpdateAction');
 
 const recipeParams = {
     existingRecipeId: '5',
@@ -36,42 +37,38 @@ const contextParams = {
     },
 };
 
-jest.mock('../../../redux/actions/recipeActions', () => ({ loadRecipeDetailsAction: jest.fn() }));
-jest.mock('../../../redux/store.tsx');
-store.getState = () => ({
-    recipeReducer: {
-        requestedRecipeData: recipeParams.recipeData,
-    },
-});
-const middleware = [thunk];
-const mockStore = configureStore(middleware);
+jest.mock('axios');
 
-describe('RecipeDetails - getServerSideProps', () => {
-    afterEach(() => {
-        cleanup();
-        jest.clearAllMocks();
-    });
-    test('should dispatch loadRecipeDetailsAction', async () => {
-        await getServerSideProps(contextParams.existingRecipe);
-        const timesActionDispatched = loadRecipeDetailsAction.mock.calls.length;
+describe('RecipeDetails - recipe author', () => {
+    describe('RecipeDetails - getServerSideProps', () => {
+        beforeEach(() => {
+            cleanup();
+            jest.clearAllMocks();
+            axios.get.mockReturnValueOnce({ data: recipeParams.recipeData });
+        });
+        test('should dispatch loadRecipeDetailsAction', async () => {
+            await getServerSideProps(contextParams.existingRecipe);
+            const timesActionDispatched = loadRecipeDetailsActionSpy.mock.calls.length;
 
-        expect(timesActionDispatched).toBe(1);
-        expect(loadRecipeDetailsAction.mock.calls[0][0].id).toBe(recipeParams.existingRecipeId);
+            expect(timesActionDispatched).toBe(1);
+            expect(loadRecipeDetailsActionSpy.mock.calls[0][0].id).toBe(recipeParams.existingRecipeId);
+        });
+        test('getStaticProps - should return matching props', async () => {
+            const props = (await getServerSideProps(contextParams.existingRecipe)).props;
+            expect(props.serverRecipeData).toEqual(recipeParams.recipeData);
+        });
+        test('getStaticProps - if recipe doesnt exist return not found', async () => {
+            const notFound = (await getServerSideProps(contextParams.nonExistingRecipe)).notFound;
+            expect(notFound).toEqual(true);
+        });
     });
-    test('getStaticProps - should return matching props', async () => {
-        const props = (await getServerSideProps(contextParams.existingRecipe)).props;
-        expect(props.serverRecipeData).toEqual(recipeParams.recipeData);
-    });
-    test('getStaticProps - if recipe doesnt exist return not found', async () => {
-        const notFound = (await getServerSideProps(contextParams.nonExistingRecipe)).notFound;
-        expect(notFound).toEqual(true);
-    });
-});
 
-describe('RecipeDetails - author of recipe', () => {
-    let initialState = {
-        userReducer: { loggedUserData: { id: 'eliya' } },
-        recipeReducer: {
+    describe('RecipeDetails - author of recipe', () => {
+        const userInitialState = {
+            loggedUserData: { id: 'eliya' },
+            isUserAuthenticated: true,
+        };
+        const recipeInitialState = {
             requestedRecipeData: {
                 id: '5',
                 title: 'recipeTitle',
@@ -80,59 +77,99 @@ describe('RecipeDetails - author of recipe', () => {
                 author: 'eliya',
                 photo_main: '/#',
             },
-        },
-    };
-    let store = mockStore(initialState);
-    beforeEach(async () => {
-        const { serverRecipeData } = (await getServerSideProps(contextParams.existingRecipe)).props;
-        render(
-            <Provider store={store}>
-                <RecipeDetails serverRecipeData={serverRecipeData} />
-            </Provider>
-        );
-    });
+        };
 
-    afterEach(() => {
-        cleanup();
-        jest.clearAllMocks();
-    });
-    test('should render without crashing', () => {});
-    test('should render match own data-testid', () => {
-        const recipeDetailsTestId = screen.getByTestId('recipeDetails');
-        expect(recipeDetailsTestId).toBeInTheDocument();
-    });
-    test('should render the recipe details ', () => {
-        const recipeTitle = screen.getByText(/recipeTitle/i);
-        const recipeDescription = screen.getByText(/recipeDescription/i);
+        const updatedRecipe = {
+            id: '5',
+            title: 'updatedRecipeTitle',
+            description: 'updatedRecipeDescription',
+            flavor_type: 'Sweet',
+            author: 'eliya',
+            photo_main: '/#',
+        };
+        beforeEach(async () => {
+            cleanup();
+            jest.clearAllMocks();
 
-        expect(recipeTitle).toBeInTheDocument();
-        expect(recipeDescription).toBeInTheDocument();
-    });
-    test('should render authorLinks', () => {
-        const authorLinks = screen.getByTestId('authorLinks');
+            store.dispatch({ type: TEST_CASE_AUTH, payload: userInitialState });
+            store.dispatch({ type: TEST_CASE_RECIPE, payload: recipeInitialState });
 
-        expect(authorLinks).toBeInTheDocument();
-    });
-    test('authorLinks should contain IsRecipeAuthor component', () => {
-        const isRecipeAuthorTestId = screen.getByTestId('isRecipeAuthor');
+            axios.get.mockReturnValueOnce({ data: recipeParams.recipeData });
+            const { serverRecipeData } = (await getServerSideProps(contextParams.existingRecipe)).props;
+            axios.patch.mockReturnValueOnce({ data: updatedRecipe });
+            render(
+                <Provider store={store}>
+                    <RecipeDetails serverRecipeData={serverRecipeData} />
+                </Provider>
+            );
+        });
 
-        expect(isRecipeAuthorTestId).toBeInTheDocument();
-    });
-    test('IsRecipeAuthor should render RecipeUpdate component', () => {
-        const recipeUpdateTestId = screen.getByTestId('recipeUpdate');
+        test('should render without crashing', () => {});
+        test('should render match own data-testid', () => {
+            const recipeDetailsTestId = screen.getByTestId('recipeDetails');
+            expect(recipeDetailsTestId).toBeInTheDocument();
+        });
+        test('should render the recipe details ', () => {
+            const recipeTitle = screen.getByText(/recipeTitle/i);
+            const recipeDescription = screen.getByText(/recipeDescription/i);
 
-        expect(recipeUpdateTestId).toBeInTheDocument();
+            expect(recipeTitle).toBeInTheDocument();
+            expect(recipeDescription).toBeInTheDocument();
+        });
+        test('should render authorLinks', () => {
+            const authorLinks = screen.getByTestId('authorLinks');
+
+            expect(authorLinks).toBeInTheDocument();
+        });
+        test('authorLinks should contain IsRecipeAuthor component', () => {
+            const isRecipeAuthorTestId = screen.getByTestId('isRecipeAuthor');
+
+            expect(isRecipeAuthorTestId).toBeInTheDocument();
+        });
+        test('IsRecipeAuthor should render RecipeUpdate component', () => {
+            const recipeUpdateTestId = screen.getByTestId('recipeUpdate');
+
+            expect(recipeUpdateTestId).toBeInTheDocument();
+        });
+        test('migrateRequestedRecipeData - after updating recipe data should display the new data', async () => {
+            const flavorCombobox = screen.getByRole('combobox');
+            const titleTextbox = screen.getByPlaceholderText(/title/i);
+            const descriptionTextbox = screen.getByPlaceholderText(/description/i);
+            const updateRecipeButton = screen.getByRole('button', { name: /update/i });
+
+            userEvent.type(titleTextbox, updatedRecipe.title);
+            userEvent.type(descriptionTextbox, updatedRecipe.description);
+            userEvent.selectOptions(flavorCombobox, updatedRecipe.flavor_type);
+            await userEvent.click(updateRecipeButton);
+
+            const timesActionDispatched = recipeUpdateActionSpy.mock.calls.length;
+
+            expect(timesActionDispatched).toBe(1);
+            const updatedTitle = await screen.findByText(updatedRecipe.title);
+            const updatedDescription = await screen.findByText(updatedRecipe.description);
+            const updatedFlavor = await screen.findAllByText(updatedRecipe.flavor_type);
+
+            expect(updatedTitle).toBeInTheDocument();
+            expect(updatedDescription).toBeInTheDocument();
+            expect(updatedFlavor.length).toBe(2);
+            expect(updatedFlavor[1]).toBeInTheDocument();
+        });
     });
 });
+
 describe('RecipeDetails - not the recipe author', () => {
-    let initialState = {
-        userReducer: { loggedUserData: { id: 'eilon' } },
+    const userInitialState = {
+        loggedUserData: { id: 'eilon' },
+        isUserAuthenticated: true,
     };
-    let store = mockStore(initialState);
+
     beforeEach(async () => {
-        useSelectorMock.mockReturnValue({
-            requestedRecipeData: recipeParams.recipeData,
-        });
+        cleanup();
+        jest.clearAllMocks();
+
+        store.dispatch({ type: TEST_CASE_AUTH, payload: userInitialState });
+
+        axios.get.mockReturnValueOnce({ data: recipeParams.recipeData });
         const { serverRecipeData } = (await getServerSideProps(contextParams.existingRecipe)).props;
         render(
             <Provider store={store}>
@@ -141,10 +178,6 @@ describe('RecipeDetails - not the recipe author', () => {
         );
     });
 
-    afterEach(() => {
-        cleanup();
-        jest.clearAllMocks();
-    });
     test('should render without crashing', () => {});
     test('should render match own data-testid', () => {
         const recipeDetailsTestId = screen.getByTestId('recipeDetails');

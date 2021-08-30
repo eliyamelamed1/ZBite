@@ -43,7 +43,6 @@ export const recipeCreateAction =
                 headers: {
                     'Content-Type': 'application/json',
                     Accept: 'application/json',
-
                     Authorization: `Token ${localStorage.getItem('auth_token')}`,
                 },
             };

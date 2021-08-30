@@ -6,9 +6,10 @@ from accounts.models import UserAccount
 from chat_duos.models import ChatDuo
 from chat_groups.models import ChatGroup
 from chat_massages.models import ChatMassage
-from comments.models import Comment
+# from comments.models import Comment
 from likes.models import Like
-from ratings.models import Rating
+from reviews.models import Review
+
 from recipes.models import Recipe
 
 
@@ -30,13 +31,13 @@ class RecipeFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = Recipe
-class CommentFactory(factory.django.DjangoModelFactory):
-    recipe = factory.SubFactory(RecipeFactory)
-    author = factory.SubFactory(UserFactory)
-    title = factory.fuzzy.FuzzyText()
+# class CommentFactory(factory.django.DjangoModelFactory):
+#     recipe = factory.SubFactory(RecipeFactory)
+#     author = factory.SubFactory(UserFactory)
+#     title = factory.fuzzy.FuzzyText()
 
-    class Meta:
-        model = Comment
+#     class Meta:
+#         model = Comment
 
 class LikeFactory(factory.django.DjangoModelFactory):
     recipe = factory.SubFactory(RecipeFactory)
@@ -44,12 +45,14 @@ class LikeFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Like
 
-class RatingFactory(factory.django.DjangoModelFactory):
+class ReviewFactory(factory.django.DjangoModelFactory):
     author = factory.SubFactory(UserFactory)
     recipe = factory.SubFactory(RecipeFactory) 
     stars = 5
+    comment = factory.fuzzy.FuzzyText()
+
     class Meta:
-        model = Rating
+        model = Review
 
 
 class ChatDuoFactory(factory.django.DjangoModelFactory):

@@ -17,7 +17,7 @@ const DisplayUsers = ({ usersToDisplay }) => {
                 )
             );
 
-            // 3 is for 3 users on page
+            // 3 is for 3 users on page etc...
             for (let i = 0; i < usersToDisplay.length; i += 1) {
                 result.push(
                     <div key={i}>

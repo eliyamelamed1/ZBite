@@ -16,9 +16,11 @@ const RecipeDetails = (props) => {
     const { requestedRecipeData } = useSelector((state) => state.recipeReducer);
 
     useEffect(
+        // when updating recipe data (title, description etc..) migrate the changes to the userData
         function migrateRequestedRecipeData() {
-            // when updating recipe data (title, description etc..) migrate the changes to the userData
-            if (requestedRecipeData?.id === recipeData?.id) {
+            // TODO - TEST THIS STATEMENT
+            const isRecipeDataMatchReqId = requestedRecipeData?.id === recipeData?.id;
+            if (isRecipeDataMatchReqId) {
                 setRecipeData(requestedRecipeData);
             }
         },
@@ -60,21 +62,26 @@ const RecipeDetails = (props) => {
                     {recipeData ? (
                         <div>
                             <Link href={`/users/${recipeData.author}/`} passHref>
-                                <p>recipe Author: {recipeData.author}</p>
+                                <div>
+                                    recipe Author: <p>{recipeData.author}</p>
+                                </div>
                             </Link>
-                            <h1>recipe title: {recipeData.title}</h1>
+                            <div>
+                                recipe title: <h1>{recipeData.title}</h1>
+                            </div>
                             <Link href='/'>Home</Link>
                             {recipeData.photo_main ? (
                                 <Image src={recipeData.photo_main} alt='' height={100} width={100} />
                             ) : null}
                             <ul>
                                 <li>
-                                    Flavor Type:
-                                    {recipeData.flavor_type}
+                                    <div>
+                                        Flavor Type:<p>{recipeData.flavor_type}</p>
+                                        recipe description: <p>{recipeData.description}</p>
+                                        {displayInteriorImages()}
+                                    </div>
                                 </li>
                             </ul>
-                            <p>recipe description: {recipeData.description}</p>
-                            {displayInteriorImages()}
                         </div>
                     ) : (
                         <Custom404 />
@@ -89,7 +96,7 @@ export async function getServerSideProps(context) {
     const id = context.params.RecipeDetails_Id;
     await store.dispatch(loadRecipeDetailsAction({ id }));
     const serverRecipeData = store.getState().recipeReducer.requestedRecipeData;
-
+    // dispatch reviewsInRecipeAction
     const isRequestedRecipeIdExist = serverRecipeData?.id === id;
 
     if (isRequestedRecipeIdExist) {

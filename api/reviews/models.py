@@ -7,7 +7,7 @@ from django.urls import reverse
 from recipes.models import Recipe
 
 
-class Rating(models.Model):
+class Review(models.Model):
     author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     id = models.UUIDField(
@@ -16,6 +16,8 @@ class Rating(models.Model):
         editable=False
     )
     stars = models.IntegerField()
+    comment = models.CharField(max_length=255, blank=True)
+    image = models.ImageField(upload_to='media/', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -23,22 +25,22 @@ class Rating(models.Model):
 
     def get_delete_url(self):
         """Return absolute URL to the Rating Delete page."""
-        return reverse('ratings:delete', kwargs={'pk': self.id})
+        return reverse('reviews:delete', kwargs={'pk': self.id})
 
     @classmethod
     def get_recipe_stars_score(cls, recipe):
-        recipe_ratings_queryset = Rating.objects.all().filter(recipe=recipe)
-        total_users_who_rated_recipe = recipe_ratings_queryset.count()
+        recipe_reviews_queryset = Review.objects.all().filter(recipe=recipe)
+        total_users_who_reviewed_recipe = recipe_reviews_queryset.count()
 
         total_recipe_stars = 0
         recipe_stars_score = 0
 
-        for i in range(total_users_who_rated_recipe):
-            recipe_rating = recipe_ratings_queryset[i]
-            total_recipe_stars += int(recipe_rating.stars)
+        for i in range(total_users_who_reviewed_recipe):
+            recipe_review = recipe_reviews_queryset[i]
+            total_recipe_stars += int(recipe_review.stars)
 
         try:
-            recipe_stars_score = total_recipe_stars/total_users_who_rated_recipe
+            recipe_stars_score = total_recipe_stars/total_users_who_reviewed_recipe
 
         except:
             recipe_stars_score = 0
@@ -52,7 +54,7 @@ class Rating(models.Model):
         sum_of_recipes_scores = 0
 
         for recipe in user_own_recipes:
-            sum_of_recipes_scores += Rating.get_recipe_stars_score(recipe=recipe)
+            sum_of_recipes_scores += Review.get_recipe_stars_score(recipe=recipe)
 
         try:
             account_stars_score = sum_of_recipes_scores/user_own_recipes_count
@@ -64,8 +66,8 @@ class Rating(models.Model):
 
     @classmethod
     def get_create_url(cls):
-        return reverse('ratings:create')
+        return reverse('reviews:create')
 
     @classmethod
-    def get_ratings_in_recipe_url(cls):
-        return reverse('ratings:ratings_in_recipe')
+    def get_reviews_in_recipe_url(cls):
+        return reverse('reviews:reviews_in_recipe')
