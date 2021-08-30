@@ -16,6 +16,7 @@ describe('reducers - auth ', () => {
             listOfRecipes: 'initialValue',
             listOfSearchedRecipes: 'initialValue',
             requestedRecipeData: 'initialValue',
+            listOfFilteredReviews: 'initialValue',
         };
         store.dispatch({ type: 'TEST_CASE_RECIPE', payload: initialState });
         return initialState;
@@ -35,6 +36,7 @@ describe('reducers - auth ', () => {
             secondRecipe: { title: 'testTitle2' },
         });
         expect(initialState.recipeReducer.requestedRecipeData).toBe('initialValue');
+        expect(initialState.recipeReducer.listOfFilteredReviews).toBe('initialValue');
     });
     test('case GET_RECIPE_DETAILS_SUCCESS', () => {
         initialState['requestedRecipeData'] = {
@@ -45,6 +47,7 @@ describe('reducers - auth ', () => {
         initialState = store.getState();
 
         expect(initialState.recipeReducer.listOfRecipes).toBe('initialValue');
+        expect(initialState.recipeReducer.listOfFilteredReviews).toBe('initialValue');
         expect(initialState.recipeReducer.listOfSearchedRecipes).toBe('initialValue');
         expect(initialState.recipeReducer.requestedRecipeData).toStrictEqual({
             firstRecipe: { title: 'testTitle' },
@@ -59,6 +62,7 @@ describe('reducers - auth ', () => {
         store.dispatch({ type: 'UPDATE_RECIPE_SUCCESS', payload: initialState.requestedRecipeData });
         initialState = store.getState();
 
+        expect(initialState.recipeReducer.listOfFilteredReviews).toBe('initialValue');
         expect(initialState.recipeReducer.listOfRecipes).toBe('initialValue');
         expect(initialState.recipeReducer.listOfSearchedRecipes).toBe('initialValue');
         expect(initialState.recipeReducer.requestedRecipeData).toStrictEqual({
@@ -80,6 +84,7 @@ describe('reducers - auth ', () => {
         });
         expect(initialState.recipeReducer.listOfSearchedRecipes).toBe('initialValue');
         expect(initialState.recipeReducer.requestedRecipeData).toBe('initialValue');
+        expect(initialState.recipeReducer.listOfFilteredReviews).toBe('initialValue');
     });
 });
 
@@ -93,6 +98,7 @@ describe('reducers - recipe : cases that return ...state', () => {
             listOfRecipes: 'initialValue',
             listOfSearchedRecipes: 'initialValue',
             requestedRecipeData: 'initialValue',
+            listOfFilteredReviews: 'initialValue',
         };
         store.dispatch({ type: 'TEST_CASE_RECIPE', payload: initialState });
         return initialState;
@@ -104,6 +110,7 @@ describe('reducers - recipe : cases that return ...state', () => {
         expect(initialState.recipeReducer.listOfRecipes).toBe('initialValue');
         expect(initialState.recipeReducer.listOfSearchedRecipes).toBe('initialValue');
         expect(initialState.recipeReducer.requestedRecipeData).toBe('initialValue');
+        expect(initialState.recipeReducer.listOfFilteredReviews).toBe('initialValue');
     });
 
     test('case DELETE_RECIPE_FAIL ', () => {
@@ -112,6 +119,7 @@ describe('reducers - recipe : cases that return ...state', () => {
         expect(initialState.recipeReducer.listOfRecipes).toBe('initialValue');
         expect(initialState.recipeReducer.listOfSearchedRecipes).toBe('initialValue');
         expect(initialState.recipeReducer.requestedRecipeData).toBe('initialValue');
+        expect(initialState.recipeReducer.listOfFilteredReviews).toBe('initialValue');
     });
     test('case CREATE_RECIPE_SUCCESS ', () => {
         store.dispatch({ type: 'CREATE_RECIPE_SUCCESS', payload: initialState });
@@ -119,6 +127,7 @@ describe('reducers - recipe : cases that return ...state', () => {
         expect(initialState.recipeReducer.listOfRecipes).toBe('initialValue');
         expect(initialState.recipeReducer.listOfSearchedRecipes).toBe('initialValue');
         expect(initialState.recipeReducer.requestedRecipeData).toBe('initialValue');
+        expect(initialState.recipeReducer.listOfFilteredReviews).toBe('initialValue');
     });
     test('case CREATE_RECIPE_FAIL ', () => {
         store.dispatch({ type: 'CREATE_RECIPE_FAIL', payload: initialState });
@@ -126,6 +135,7 @@ describe('reducers - recipe : cases that return ...state', () => {
         expect(initialState.recipeReducer.listOfRecipes).toBe('initialValue');
         expect(initialState.recipeReducer.listOfSearchedRecipes).toBe('initialValue');
         expect(initialState.recipeReducer.requestedRecipeData).toBe('initialValue');
+        expect(initialState.recipeReducer.listOfFilteredReviews).toBe('initialValue');
     });
     test('case UPDATE_RECIPE_FAIL ', () => {
         store.dispatch({ type: 'UPDATE_RECIPE_FAIL', payload: initialState });
@@ -133,6 +143,7 @@ describe('reducers - recipe : cases that return ...state', () => {
         expect(initialState.recipeReducer.listOfRecipes).toBe('initialValue');
         expect(initialState.recipeReducer.listOfSearchedRecipes).toBe('initialValue');
         expect(initialState.recipeReducer.requestedRecipeData).toBe('initialValue');
+        expect(initialState.recipeReducer.listOfFilteredReviews).toBe('initialValue');
     });
     test('case GET_RECIPE_DETAILS_FAIL ', () => {
         store.dispatch({ type: 'GET_RECIPE_DETAILS_FAIL', payload: initialState });
@@ -140,6 +151,7 @@ describe('reducers - recipe : cases that return ...state', () => {
         expect(initialState.recipeReducer.listOfRecipes).toBe('initialValue');
         expect(initialState.recipeReducer.listOfSearchedRecipes).toBe('initialValue');
         expect(initialState.recipeReducer.requestedRecipeData).toBe('initialValue');
+        expect(initialState.recipeReducer.listOfFilteredReviews).toBe('initialValue');
     });
     test('case GET_RECIPE_LIST_FAIL ', () => {
         store.dispatch({ type: 'GET_RECIPE_LIST_FAIL', payload: initialState });
@@ -147,6 +159,7 @@ describe('reducers - recipe : cases that return ...state', () => {
         expect(initialState.recipeReducer.listOfRecipes).toBe('initialValue');
         expect(initialState.recipeReducer.listOfSearchedRecipes).toBe('initialValue');
         expect(initialState.recipeReducer.requestedRecipeData).toBe('initialValue');
+        expect(initialState.recipeReducer.listOfFilteredReviews).toBe('initialValue');
     });
     test('case SEARCH_RECIPE_FAIL ', () => {
         store.dispatch({ type: 'SEARCH_RECIPE_FAIL', payload: initialState });
@@ -154,6 +167,7 @@ describe('reducers - recipe : cases that return ...state', () => {
         expect(initialState.recipeReducer.listOfRecipes).toBe('initialValue');
         expect(initialState.recipeReducer.listOfSearchedRecipes).toBe('initialValue');
         expect(initialState.recipeReducer.requestedRecipeData).toBe('initialValue');
+        expect(initialState.recipeReducer.listOfFilteredReviews).toBe('initialValue');
     });
     test('case - default', () => {
         store.dispatch({ type: 'default', payload: initialState });
@@ -161,5 +175,6 @@ describe('reducers - recipe : cases that return ...state', () => {
         expect(initialState.recipeReducer.listOfRecipes).toBe('initialValue');
         expect(initialState.recipeReducer.listOfSearchedRecipes).toBe('initialValue');
         expect(initialState.recipeReducer.requestedRecipeData).toBe('initialValue');
+        expect(initialState.recipeReducer.listOfFilteredReviews).toBe('initialValue');
     });
 });

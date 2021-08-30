@@ -66,8 +66,8 @@ export const reviewsInRecipeAction =
             const body = JSON.stringify({
                 recipe,
             });
-            await axios.post(endpointRoute().reviews.reviews_in_recipe, body, config);
-            dispatch({ type: REVIEWS_IN_RECIPE_SUCCESS });
+            const res = await axios.post(endpointRoute().reviews.reviews_in_recipe, body, config);
+            dispatch({ type: REVIEWS_IN_RECIPE_SUCCESS, payload: res.data });
         } catch {
             dispatch({ type: REVIEWS_IN_RECIPE_FAIL });
         }
