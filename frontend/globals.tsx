@@ -22,10 +22,11 @@ export const endpointRoute = (id = String) => ({
         reviews_in_recipe: `${process.env.NEXT_PUBLIC_API_URL}/api/reviews/reviews_in_recipe`,
     },
 });
-export const pageRoute = {
+export const pageRoute = (id = String) => ({
     home: '/',
     login: '/users/UserLogin',
-};
+    profile: `/users/${id}`,
+});
 
 export const userParams = {
     loggedUser: {
@@ -55,4 +56,12 @@ export const ssrContextParams = {
     nonExistingUser: {
         params: { UserDetails_Id: userParams.nonExistingUser.id },
     },
+};
+
+export const reviewParams = {
+    author: 'authorId',
+    recipe: 'recipeId',
+    stars: 'starsCount',
+    comment: 'commentText',
+    image: '/image',
 };

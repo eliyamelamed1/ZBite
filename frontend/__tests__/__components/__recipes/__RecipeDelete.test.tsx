@@ -1,5 +1,3 @@
-// TODO - add test to redirect after recipe have been deleted
-
 import '@testing-library/jest-dom/extend-expect';
 
 import { cleanup, render, screen } from '@testing-library/react';

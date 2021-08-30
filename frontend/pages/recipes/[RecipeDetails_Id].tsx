@@ -96,7 +96,7 @@ export async function getServerSideProps(context) {
     const id = context.params.RecipeDetails_Id;
     await store.dispatch(loadRecipeDetailsAction({ id }));
     const serverRecipeData = store.getState().recipeReducer.requestedRecipeData;
-
+    // dispatch reviewsInRecipeAction
     const isRequestedRecipeIdExist = serverRecipeData?.id === id;
 
     if (isRequestedRecipeIdExist) {
