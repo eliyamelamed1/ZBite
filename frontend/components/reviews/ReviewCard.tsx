@@ -4,16 +4,16 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { pageRoute } from '../../globals';
 
-const ReviewCard = ({ author, recipe, stars, comment, image }) => {
+const ReviewCard = (props) => {
     const reviewProps = (
         <div>
-            <Link href={pageRoute(author).profile} passHref>
-                {author}
+            <Link href={pageRoute(props.author).profile} passHref>
+                {props.author}
             </Link>
-            <p>{recipe}</p>
-            <p>{stars}</p>
-            {comment ? <p>{comment}</p> : null}
-            {image ? <Image src={image} alt='Review Image' height={100} width={100} /> : null}
+            <p>{props.recipe}</p>
+            <p>{props.stars}</p>
+            {props.comment ? <p>{props.comment}</p> : null}
+            {props.image ? <Image src={props.image} alt='Review Image' height={100} width={100} /> : null}
         </div>
     );
 

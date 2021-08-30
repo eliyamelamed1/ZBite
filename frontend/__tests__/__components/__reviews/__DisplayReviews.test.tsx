@@ -1,4 +1,40 @@
+import * as ReviewCard from '../../../components/reviews/ReviewCard';
+
+import { render, screen } from '@testing-library/react';
+
+import DisplayReviews from '../../../components/reviews/DisplayReviews';
+import { cleanup } from 'next-page-tester';
+
+const reviewCardSpy = jest.spyOn(ReviewCard, 'default');
+const firstReviewData = {
+    author: 'firstAuthorId',
+    recipe: 'recipe',
+    stars: 'stars',
+    comment: 'comment',
+    image: '/image',
+};
+const secondReviewData = {
+    author: 'secondAuthorId',
+    recipe: 'recipe',
+    stars: 'stars2',
+    comment: 'comment2',
+    image: '/image2',
+};
+
+const reviewsToDisplay = [firstReviewData, secondReviewData];
+
 describe('DisplayReviews', () => {
-    test.todo('render without crashing');
-    test.todo('');
+    beforeEach(() => {
+        cleanup();
+        jest.clearAllMocks();
+        render(<DisplayReviews reviewsToDisplay={reviewsToDisplay} />);
+    });
+    test('render without crashing', () => {});
+    test('should have called ReviewCard twice', () => {
+        expect(reviewCardSpy.mock.calls.length).toBe(2);
+    });
+    test('should have called ReviewCard with the proper reviews data', () => {
+        expect(reviewCardSpy.mock.calls[0][0]).toEqual(firstReviewData);
+        expect(reviewCardSpy.mock.calls[1][0]).toEqual(secondReviewData);
+    });
 });

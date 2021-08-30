@@ -35,7 +35,7 @@ describe('DisplayRecipes', () => {
     test('should have called recipeCard twice', () => {
         expect(recipeCardSpy.mock.calls.length).toBe(2);
     });
-    test('should have called recipeCard with the proper recipe data', () => {
+    test('should have called recipeCard with the proper recipes data', () => {
         expect(recipeCardSpy.mock.calls[0][0]).toEqual(firstRecipeData);
         expect(recipeCardSpy.mock.calls[1][0]).toEqual(secondRecipeData);
     });
