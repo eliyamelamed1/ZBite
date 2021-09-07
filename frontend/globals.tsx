@@ -43,6 +43,13 @@ export const userParams = {
         following: [],
         followers: [],
     },
+    otherUser2: {
+        id: 'otherUser2',
+        email: 'otherUser2@gmail.com',
+        name: 'otherUser2',
+        following: [],
+        followers: [],
+    },
 
     nonExistingUser: {},
 };

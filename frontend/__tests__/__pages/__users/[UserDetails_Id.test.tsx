@@ -63,8 +63,7 @@ describe('UserDetails - loggedUser visit his own profile', () => {
         };
         store.dispatch({ type: TEST_CASE_AUTH, payload: initialState });
 
-        axios.get.mockReturnValueOnce({ data: userParams.loggedUser });
-        const { serverUserData } = (await getServerSideProps(ssrContextParams.loggedUser)).props;
+        const serverUserData = userParams.loggedUser;
         axios.patch.mockReturnValueOnce({ data: updatedUserData });
         render(
             <Provider store={store}>
@@ -132,29 +131,19 @@ describe('UserDetails - loggedUser visiting other account profile', () => {
         jest.clearAllMocks();
         const initialState = {
             loggedUserData: userParams.loggedUser,
-            requestedUserData: userParams.otherUser,
             isUserAuthenticated: true,
         };
         store.dispatch({ type: TEST_CASE_AUTH, payload: initialState });
-        axios.get.mockReturnValueOnce({ data: userParams.otherUser });
-        const { serverUserData } = (await getServerSideProps(ssrContextParams.otherUser)).props;
         render(
             <Provider store={store}>
-                <UserDetails_Id serverUserData={serverUserData} />
+                <UserDetails_Id serverUserData={userParams.otherUser} />
             </Provider>
         );
     });
-
     test('should render without crashing', () => {});
     test('should render match own data-testid', () => {
         const userDetailsTestId = screen.getByTestId('userDetails');
         expect(userDetailsTestId).toBeInTheDocument();
-    });
-    test('should dispatch loadUserDetailsAction', () => {
-        const timesActionDispatched = loadUserDetailsActionSpy.mock.calls.length;
-
-        expect(timesActionDispatched).toBe(1);
-        expect(loadUserDetailsActionSpy.mock.calls[0][0].id).toBe(userParams.otherUser.id);
     });
     test('should render the user details ', () => {
         const userEmail = screen.getByText(userParams.otherUser.email);
@@ -188,59 +177,40 @@ describe('UserDetails - loggedUser visiting other account profile', () => {
 
         expect(followButton).toBeInTheDocument();
     });
-    describe('migrateRequestedUserData - following a user should increment/decrement following count', () => {
-        beforeEach(() => {
-            cleanup();
-        });
-        const userFollowingCount1 = {
+    test('migrateRequestedUserData => isUserDataMatchReqId === true => should update userData', async () => {
+        const updatedUserData = {
             ...userParams.otherUser,
+            email: 'updatedEmail@gmail.com',
+            name: 'updatedName',
             following: ['otherUser'],
         };
-
-        const userFollowingCount0 = {
-            ...userParams.otherUser,
-            following: [],
+        const initialState = {
+            requestedUserData: updatedUserData,
+            loggedUserData: userParams.loggedUser,
+            isUserAuthenticated: true,
         };
+        store.dispatch({ type: TEST_CASE_AUTH, payload: initialState });
 
-        test('should increment following count by 1, after successfully following', async () => {
-            axios.get.mockReturnValueOnce({ data: userFollowingCount0 });
-            const { serverUserData } = (await getServerSideProps(ssrContextParams.otherUser)).props;
-            axios.get.mockReturnValueOnce({ data: userFollowingCount1 });
+        const updatedFollowingCount = await screen.findByText(/following: 1/i);
+        const updatedUserEmail = await screen.findByText(updatedUserData.name);
+        const updatedUserName = await screen.findByText(updatedUserData.email);
 
-            render(
-                <reactRedux.Provider store={store}>
-                    <UserDetails_Id serverUserData={serverUserData} />
-                </reactRedux.Provider>
-            );
-            const followButton = screen.getByRole('button');
+        expect(updatedFollowingCount).toBeInTheDocument();
+        expect(updatedUserEmail).toBeInTheDocument();
+        expect(updatedUserName).toBeInTheDocument();
+    });
+    test('migrateRequestedUserData => isUserDataMatchReqId === false => should not update userData', async () => {
+        const initialState = {
+            requestedUserData: userParams.otherUser2,
+            loggedUserData: userParams.loggedUser,
+            isUserAuthenticated: true,
+        };
+        await store.dispatch({ type: TEST_CASE_AUTH, payload: initialState });
 
-            const initialFollowingCount = await screen.findByText(/following: 0/i);
-            waitForElementToBeRemoved(initialFollowingCount);
+        const serverSideUserEmail = await screen.findByText(userParams.otherUser.email);
+        expect(serverSideUserEmail).toBeInTheDocument();
 
-            userEvent.click(followButton);
-
-            const updatedFollowingCount = await screen.findByText(/following: 1/i);
-            expect(updatedFollowingCount).toBeInTheDocument();
-        });
-
-        test('should decrement following count by 1, after successfully unfollowing', async () => {
-            axios.get.mockReturnValueOnce({ data: userFollowingCount1 });
-            const { serverUserData } = (await getServerSideProps(ssrContextParams.otherUser)).props;
-            axios.get.mockReturnValueOnce({ data: userFollowingCount0 });
-
-            render(
-                <reactRedux.Provider store={store}>
-                    <UserDetails_Id serverUserData={serverUserData} />
-                </reactRedux.Provider>
-            );
-            const followButton = screen.getByRole('button');
-
-            const initialFollowingCount = await screen.findByText(/following: 1/i);
-            waitForElementToBeRemoved(initialFollowingCount);
-            userEvent.click(followButton);
-
-            const updatedFollowingCount = await screen.findByText(/following: 0/i);
-            expect(updatedFollowingCount).toBeInTheDocument();
-        });
+        const updatedUserEmail = screen.queryByText(userParams.otherUser2.email);
+        expect(updatedUserEmail).not.toBeInTheDocument();
     });
 });
