@@ -130,7 +130,7 @@ describe('RecipeDetails - recipe of author', () => {
 
         expect(recipeUpdateTestId).toBeInTheDocument();
     });
-    test('migrateRequestedRecipeData TRUE- after updating recipe data should display the new data', async () => {
+    test('migrateRequestedRecipeData isUserDataMatchReqId === true - should not update recipeData', async () => {
         const initialState = {
             requestedRecipeData: updatedRecipe,
         };
@@ -144,7 +144,7 @@ describe('RecipeDetails - recipe of author', () => {
         expect(updatedFlavor.length).toBe(2);
         expect(updatedFlavor[1]).toBeInTheDocument();
     });
-    test('migrateRequestedRecipeData FALSE - after updating recipe data should display the new data', async () => {
+    test('migrateRequestedRecipeData => isUserDataMatchReqId === false - should not update recipeData', async () => {
         updatedRecipe = {
             ...updatedRecipe,
             id: 'differentRecipeId',
