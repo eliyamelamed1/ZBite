@@ -61,7 +61,7 @@ export const ssrContextParams = {
         params: { UserDetails_Id: userParams.otherUser.id },
     },
     nonExistingUser: {
-        params: { UserDetails_Id: userParams.nonExistingUser.id },
+        params: { UserDetails_Id: userParams.nonExistingUser?.id },
     },
 };
 

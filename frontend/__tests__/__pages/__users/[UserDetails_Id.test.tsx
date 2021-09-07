@@ -44,10 +44,10 @@ describe('UserDetails - getServerSideProps', () => {
 });
 
 describe('UserDetails - loggedUser visit his own profile', () => {
-    const outdatedUserData = {
+    const serverSideUserData = {
         ...userParams.loggedUser,
     };
-    const updatedUserData = {
+    let updatedUserData = {
         ...userParams.loggedUser,
         email: 'updatedEmail',
         name: 'updatedName',
@@ -64,7 +64,6 @@ describe('UserDetails - loggedUser visit his own profile', () => {
         store.dispatch({ type: TEST_CASE_AUTH, payload: initialState });
 
         const serverUserData = userParams.loggedUser;
-        axios.patch.mockReturnValueOnce({ data: updatedUserData });
         render(
             <Provider store={store}>
                 <UserDetails_Id serverUserData={serverUserData} />
@@ -103,25 +102,47 @@ describe('UserDetails - loggedUser visit his own profile', () => {
 
         expect(followUnFollow).not.toBeInTheDocument();
     });
+    test('migrateLoggedUserData => isUserDataMatchReqId === true => should update user data', async () => {
+        const initialState = {
+            loggedUserData: updatedUserData,
+            requestedUserData: userParams.loggedUser,
+            isUserAuthenticated: true,
+        };
+        await store.dispatch({ type: TEST_CASE_AUTH, payload: initialState });
 
-    test('migrateLoggedUserData  - should display updated user data', async () => {
-        const emailInput = screen.getByPlaceholderText(/email/i);
-        const nameInput = screen.getByPlaceholderText(/name/i);
-        const updateButton = screen.getByRole('button', { name: /update/i });
-        const emailValue = updatedUserData.email;
-        const nameValue = updatedUserData.name;
-        userEvent.type(emailInput, emailValue);
-        userEvent.type(nameInput, nameValue);
-
-        const outdatedEmail = await screen.findByText(outdatedUserData.email);
-        const outdatedName = await screen.findByText(outdatedUserData.name);
-        waitForElementToBeRemoved(outdatedEmail && outdatedName);
-
-        userEvent.click(updateButton);
         const updatedEmail = await screen.findByText(updatedUserData.email);
         const updatedName = await screen.findByText(updatedUserData.name);
+        const serverSideEmail = screen.queryByText(serverSideUserData.email);
+        const serverSideName = screen.queryByText(serverSideUserData.name);
+
         expect(updatedEmail).toBeInTheDocument();
         expect(updatedName).toBeInTheDocument();
+        expect(serverSideEmail).not.toBeInTheDocument();
+        expect(serverSideName).not.toBeInTheDocument();
+    });
+    test('migrateLoggedUserData => isUserDataMatchReqId === false => should not update user data', async () => {
+        updatedUserData = {
+            ...updatedUserData,
+            id: 'someRandomUserId',
+            email: 'someRandomUserEmail',
+            name: 'someRandomUserName',
+        };
+        const initialState = {
+            loggedUserData: updatedUserData,
+            requestedUserData: userParams.loggedUser,
+            isUserAuthenticated: true,
+        };
+        store.dispatch({ type: TEST_CASE_AUTH, payload: initialState });
+
+        const serverSideEmail = screen.getByText(serverSideUserData.email);
+        const serverSideName = screen.getByText(serverSideUserData.name);
+        const updatedEmail = screen.queryByText(updatedUserData.email);
+        const updatedName = screen.queryByText(updatedUserData.name);
+
+        expect(serverSideEmail).toBeInTheDocument();
+        expect(serverSideName).toBeInTheDocument();
+        expect(updatedEmail).not.toBeInTheDocument();
+        expect(updatedName).not.toBeInTheDocument();
     });
 });
 
@@ -170,12 +191,6 @@ describe('UserDetails - loggedUser visiting other account profile', () => {
         const followUnFollow = screen.getByTestId('followUnFollow');
 
         expect(followUnFollow).toBeInTheDocument();
-    });
-    test('should render follow/unfollow button', () => {
-        const followButton = screen.getByRole('button');
-        userEvent.click(followButton);
-
-        expect(followButton).toBeInTheDocument();
     });
     test('migrateRequestedUserData => isUserDataMatchReqId === true => should update userData', async () => {
         const updatedUserData = {
