@@ -53,17 +53,6 @@ export const userParams = {
 
     nonExistingUser: {},
 };
-export const ssrContextParams = {
-    loggedUser: {
-        params: { UserDetails_Id: userParams.loggedUser.id },
-    },
-    otherUser: {
-        params: { UserDetails_Id: userParams.otherUser.id },
-    },
-    nonExistingUser: {
-        params: { UserDetails_Id: userParams.nonExistingUser?.id },
-    },
-};
 
 export const reviewParams = {
     author: 'authorId',

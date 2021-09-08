@@ -3,7 +3,7 @@ import '@testing-library/jest-dom/extend-expect';
 import * as recipeActions from '../../../redux/actions/recipeActions';
 
 import { TEST_CASE_AUTH, TEST_CASE_RECIPE } from '../../../redux/types';
-import { cleanup, render, screen, waitForElementToBeRemoved } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import React from 'react';
@@ -11,11 +11,8 @@ import RecipeDetails from '../../../pages/recipes/[RecipeDetails_Id]';
 import axios from 'axios';
 import { getServerSideProps } from '../../../pages/recipes/[RecipeDetails_Id]';
 import store from '../../../redux/store';
-import userEvent from '@testing-library/user-event';
-import { userParams } from '../../../globals';
 
 const loadRecipeDetailsActionSpy = jest.spyOn(recipeActions, 'loadRecipeDetailsAction');
-const recipeUpdateActionSpy = jest.spyOn(recipeActions, 'recipeUpdateAction');
 
 const recipeParams = {
     existingRecipeId: '5',
@@ -95,7 +92,6 @@ describe('RecipeDetails - recipe of author', () => {
         store.dispatch({ type: TEST_CASE_RECIPE, payload: recipeInitialState });
 
         const serverRecipeData = recipeParams.recipeData;
-        axios.patch.mockReturnValueOnce({ data: updatedRecipe });
         render(
             <Provider store={store}>
                 <RecipeDetails serverRecipeData={serverRecipeData} />

@@ -1,10 +1,8 @@
 import '@testing-library/jest-dom/extend-expect';
 
-import * as reactRedux from 'react-redux';
 import * as userActions from '../../../redux/actions/userActions';
 
-import { cleanup, render, screen, waitForElementToBeRemoved } from '@testing-library/react';
-import { ssrContextParams, userParams } from '../../../globals';
+import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import React from 'react';
@@ -13,10 +11,22 @@ import UserDetails_Id from '../../../pages/users/[UserDetails_Id]';
 import axios from 'axios';
 import { getServerSideProps } from '../../../pages/users/[UserDetails_Id]';
 import store from '../../../redux/store';
-import userEvent from '@testing-library/user-event';
+import { userParams } from '../../../globals';
 
 const loadUserDetailsActionSpy = jest.spyOn(userActions, 'loadUserDetailsAction');
 jest.mock('axios');
+
+const ssrContextParams = {
+    loggedUser: {
+        params: { UserDetails_Id: userParams.loggedUser.id },
+    },
+    otherUser: {
+        params: { UserDetails_Id: userParams.otherUser.id },
+    },
+    nonExistingUser: {
+        params: { UserDetails_Id: userParams.nonExistingUser?.id },
+    },
+};
 
 describe('UserDetails - getServerSideProps', () => {
     beforeEach(() => {
