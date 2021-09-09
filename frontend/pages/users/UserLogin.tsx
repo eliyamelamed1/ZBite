@@ -26,7 +26,7 @@ const UserLogin = () => {
     };
 
     if (isUserAuthenticated) {
-        Router.push(pageRoute.home);
+        Router.push(pageRoute().home);
     }
 
     return (
