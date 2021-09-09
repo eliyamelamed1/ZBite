@@ -35,7 +35,7 @@ export const reviewCreateAction =
     };
 
 export const reviewDeleteAction =
-    ({ review }) =>
+    ({ id }) =>
     async (dispatch) => {
         try {
             const config = {
@@ -45,7 +45,7 @@ export const reviewDeleteAction =
                     Authorization: `Token ${localStorage.getItem('auth_token')}`,
                 },
             };
-            await axios.post(endpointRoute(review).reviews.delete, config);
+            await axios.post(endpointRoute(id).reviews.delete, config);
             dispatch({ type: REVIEW_DELETE_SUCCESS });
         } catch {
             dispatch({ type: REVIEW_DELETE_FAIL });
