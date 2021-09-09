@@ -60,7 +60,6 @@ export const reviewsInRecipeAction =
                 headers: {
                     'Content-Type': 'application/json',
                     Accept: 'application/json',
-                    Authorization: `Token ${localStorage.getItem('auth_token')}`,
                 },
             };
             const body = JSON.stringify({

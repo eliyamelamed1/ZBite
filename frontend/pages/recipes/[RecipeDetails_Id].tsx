@@ -8,13 +8,14 @@ import Image from 'next/image';
 import IsRecipeAuthor from '../../components/recipes/IsRecipeAuthor';
 import Link from 'next/link';
 import { loadRecipeDetailsAction } from '../../redux/actions/recipeActions';
+import { reviewsInRecipeAction } from '../../redux/actions/reviewsActions';
 import store from '../../redux/store';
 import { useSelector } from 'react-redux';
 
 const RecipeDetails = (props) => {
     const [recipeData, setRecipeData] = useState(props.serverRecipeData);
     const { requestedRecipeData } = useSelector((state) => state.recipeReducer);
-
+    console.log(props.serverReviewData);
     useEffect(
         // when updating recipe data (title, description etc..) migrate the changes to the userData
         function migrateRequestedRecipeData() {
@@ -97,10 +98,12 @@ export async function getServerSideProps(context) {
     await store.dispatch(loadRecipeDetailsAction({ id }));
     const serverRecipeData = store.getState().recipeReducer.requestedRecipeData;
     // dispatch reviewsInRecipeAction
+    await store.dispatch(reviewsInRecipeAction({ recipe: id }));
+    const serverReviewData = store.getState().recipeReducer.listOfFilteredReviews;
     const isRequestedRecipeIdExist = serverRecipeData?.id === id;
 
     if (isRequestedRecipeIdExist) {
-        return { props: { serverRecipeData } };
+        return { props: { serverRecipeData, serverReviewData } };
     } else {
         return { notFound: true };
     }

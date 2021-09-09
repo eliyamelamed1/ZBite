@@ -110,6 +110,6 @@ describe('UserLogin - authenticated user', () => {
     });
     test('should redirect authenticated user to home page', async () => {
         expect(Router.push.mock.calls.length).toBe(1);
-        expect(Router.push.mock.calls[0][0]).toBe(pageRoute.home);
+        expect(Router.push.mock.calls[0][0]).toBe(pageRoute().home);
     });
 });
