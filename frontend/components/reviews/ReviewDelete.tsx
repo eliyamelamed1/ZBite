@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { reviewDeleteAction } from '../../redux/actions/reviewsActions';
+import { reviewDeleteAction } from '../../redux/actions/recipeActions';
 import { useDispatch } from 'react-redux';
 
 const ReviewDelete = ({ id }) => {

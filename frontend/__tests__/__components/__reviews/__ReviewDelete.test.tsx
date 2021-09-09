@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
 
-import * as ReviewActions from '../../../redux/actions/reviewsActions';
+import * as RecipeActions from '../../../redux/actions/recipeActions';
 
 import { Provider } from 'react-redux';
 import ReviewDelete from '../../../components/reviews/ReviewDelete';
@@ -10,7 +10,7 @@ import { screen } from '@testing-library/dom';
 import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
 
-const reviewDeleteActionSpy = jest.spyOn(ReviewActions, 'reviewDeleteAction');
+const reviewDeleteActionSpy = jest.spyOn(RecipeActions, 'reviewDeleteAction');
 
 describe('ReviewDelete', () => {
     describe('authenticated as the review author ', () => {

@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Router from 'next/router';
 import { pageRoute } from '../../globals';
-import { reviewCreateAction } from '../../redux/actions/reviewsActions';
+import { reviewCreateAction } from '../../redux/actions/recipeActions';
 import { useState } from 'react';
 
 const ReviewCreate = ({ recipe }) => {
