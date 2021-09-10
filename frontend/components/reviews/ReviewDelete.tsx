@@ -3,12 +3,12 @@ import React from 'react';
 import { reviewDeleteAction } from '../../redux/actions/recipeActions';
 import { useDispatch } from 'react-redux';
 
-const ReviewDelete = ({ id }) => {
+const ReviewDelete = ({ reviewId }) => {
     const dispatch = useDispatch();
     const onSubmit = (e) => {
         e.preventDefault();
         try {
-            dispatch(reviewDeleteAction({ id }));
+            dispatch(reviewDeleteAction({ reviewId }));
         } catch {}
     };
 
@@ -22,7 +22,7 @@ const ReviewDelete = ({ id }) => {
 };
 
 ReviewDelete.propTypes = {
-    id: PropTypes.string.isRequired,
+    reviewId: PropTypes.string.isRequired,
 };
 
 export default ReviewDelete;

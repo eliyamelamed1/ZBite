@@ -20,7 +20,7 @@ describe('ReviewDelete', () => {
             cleanup();
             render(
                 <Provider store={store}>
-                    <ReviewDelete id={reviewId} />
+                    <ReviewDelete reviewId={reviewId} />
                 </Provider>
             );
         });
@@ -39,7 +39,7 @@ describe('ReviewDelete', () => {
             const timesActionDispatched = reviewDeleteActionSpy.mock.calls.length;
 
             expect(timesActionDispatched).toBe(1);
-            expect(reviewDeleteActionSpy.mock.calls[0][0].id).toBe(reviewId);
+            expect(reviewDeleteActionSpy.mock.calls[0][0]).toEqual({ reviewId: reviewId });
         });
         test('failure in deleting a review should not dispatch reviewDeleteAction  ', () => {
             reviewDeleteActionSpy.mockReturnValueOnce(() => {
@@ -51,7 +51,7 @@ describe('ReviewDelete', () => {
             const timesActionDispatched = reviewDeleteActionSpy.mock.calls.length;
 
             expect(timesActionDispatched).toBe(1);
-            expect(reviewDeleteActionSpy.mock.calls[0][0].id).toBe(reviewId);
+            expect(reviewDeleteActionSpy.mock.calls[0][0]).toEqual({ reviewId: reviewId });
         });
     });
 });
