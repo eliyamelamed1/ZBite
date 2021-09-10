@@ -1,9 +1,8 @@
 import * as ReviewCard from '../../../components/reviews/ReviewCard';
 
-import { render, screen } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 
 import DisplayReviews from '../../../components/reviews/DisplayReviews';
-import { cleanup } from 'next-page-tester';
 
 const reviewCardSpy = jest.spyOn(ReviewCard, 'default');
 const firstReviewData = {

@@ -2,10 +2,9 @@ import '@testing-library/jest-dom';
 
 import * as RecipeCard from '../../../components/recipes/RecipeCard';
 
-import { render, screen } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 
 import DisplayRecipes from '../../../components/recipes/DisplayRecipes';
-import { cleanup } from 'next-page-tester';
 
 const firstRecipeData = {
     id: 'recipeId',

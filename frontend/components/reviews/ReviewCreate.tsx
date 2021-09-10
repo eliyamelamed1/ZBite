@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 
+import PropTypes from 'prop-types';
 import Router from 'next/router';
 import { pageRoute } from '../../globals';
 import { reviewCreateAction } from '../../redux/actions/recipeActions';
@@ -47,18 +48,16 @@ const ReviewCreate = ({ recipe }) => {
                     />
                 </div>
                 <div>
-                    <input
-                        type='image'
-                        placeholder='image'
-                        name='image'
-                        value={image}
-                        onChange={(e) => onChange(e)}
-                        required
-                    />
+                    <input type='image' placeholder='image' name='image' value={image} onChange={(e) => onChange(e)} />
                 </div>
                 <button type='submit'>Create review</button>
             </form>
         </div>
     );
 };
+
+ReviewCreate.propTypes = {
+    recipe: PropTypes.string.isRequired,
+};
+
 export default ReviewCreate;

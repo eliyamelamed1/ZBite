@@ -1,10 +1,9 @@
 import '@testing-library/jest-dom/extend-expect';
 
+import { cleanup, render, screen } from '@testing-library/react';
 import { pageRoute, reviewParams, userParams } from '../../../globals';
-import { render, screen } from '@testing-library/react';
 
 import ReviewCard from '../../../components/reviews/ReviewCard';
-import { cleanup } from 'next-page-tester';
 
 describe('ReviewCard', () => {
     describe('requiredProps + optionalProps ', () => {

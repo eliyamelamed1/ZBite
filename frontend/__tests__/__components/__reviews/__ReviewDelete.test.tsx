@@ -2,10 +2,10 @@ import '@testing-library/jest-dom/extend-expect';
 
 import * as RecipeActions from '../../../redux/actions/recipeActions';
 
+import { cleanup, render } from '@testing-library/react';
+
 import { Provider } from 'react-redux';
 import ReviewDelete from '../../../components/reviews/ReviewDelete';
-import { cleanup } from 'next-page-tester';
-import { render } from '@testing-library/react';
 import { screen } from '@testing-library/dom';
 import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';

@@ -16,11 +16,11 @@ const IsReviewAuthor = ({ review }) => {
     );
 
     useEffect(() => {
-        if (loggedUserData != null) {
-            if (review.author == loggedUserData.id) {
-                setIsAuthor(true);
+        try {
+            {
+                review.author === loggedUserData.id ? setIsAuthor(true) : setIsAuthor(false);
             }
-        }
+        } catch {}
     }, [loggedUserData, review.author]);
 
     return <div>{isAuthor ? authorLinks : null}</div>;
