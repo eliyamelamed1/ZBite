@@ -1,40 +1,35 @@
 import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
 
+import * as RecipeActions from '../../../redux/actions/recipeActions';
+
 import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import React from 'react';
 import RecipeCreate from '../../../pages/recipes/RecipeCreate';
 import Router from 'next/router';
+import { TEST_CASE_AUTH } from '../../../redux/types';
 import configureStore from 'redux-mock-store';
 import { pageRoute } from '../../../globals';
-import { recipeCreateAction } from '../../../redux/actions/recipeActions';
+import store from '../../../redux/store';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
-jest.mock('../../../redux/actions/recipeActions', () => ({
-    recipeCreateAction: jest.fn().mockReturnValue(() => true),
-}));
+const recipeCreateActionSpy = jest.spyOn(RecipeActions, 'recipeCreateAction');
 jest.mock('next/router');
 
-const middleware = [thunk];
-const mockStore = configureStore(middleware);
-
 describe('authenticated users', () => {
-    let initialState = { userReducer: { isUserAuthenticated: true } };
-    const store = mockStore(initialState);
     beforeEach(() => {
+        cleanup();
+        jest.clearAllMocks();
+        const initialState = { isUserAuthenticated: true };
+        store.dispatch({ type: TEST_CASE_AUTH, payload: initialState });
         render(
             <Provider store={store}>
                 <RecipeCreate />
             </Provider>
         );
-    });
-
-    afterEach(() => {
-        cleanup();
-        jest.clearAllMocks();
     });
     describe('general', () => {
         test('renders without crashing', () => {});
@@ -127,11 +122,11 @@ describe('authenticated users', () => {
             userEvent.selectOptions(combobox, 'Sour');
             userEvent.click(button);
 
-            const timesActionDispatched = recipeCreateAction.mock.calls.length;
+            const timesActionDispatched = recipeCreateActionSpy.mock.calls.length;
             expect(timesActionDispatched).toBe(1);
-            expect(recipeCreateAction.mock.calls[0][0].title).toBe('new title');
-            expect(recipeCreateAction.mock.calls[0][0].description).toBe('new description');
-            expect(recipeCreateAction.mock.calls[0][0].flavor_type).toBe('Sour');
+            expect(recipeCreateActionSpy.mock.calls[0][0].title).toBe('new title');
+            expect(recipeCreateActionSpy.mock.calls[0][0].description).toBe('new description');
+            expect(recipeCreateActionSpy.mock.calls[0][0].flavor_type).toBe('Sour');
         });
         test('should redirect to home page after recipe is created', () => {
             const titleTextbox = screen.getByPlaceholderText(/title/i);
@@ -148,7 +143,7 @@ describe('authenticated users', () => {
             expect(Router.push.mock.calls[0][0]).toBe(pageRoute.home);
         });
         test('should not redirect after recipe creation fail', () => {
-            recipeCreateAction.mockReturnValueOnce(() => {
+            recipeCreateActionSpy.mockReturnValueOnce(() => {
                 throw new Error();
             });
             const titleTextbox = screen.getByPlaceholderText(/title/i);
@@ -167,18 +162,16 @@ describe('authenticated users', () => {
 });
 
 describe('guest users', () => {
-    let initialState = { userReducer: { isUserAuthenticated: false } };
-    const store = mockStore(initialState);
     beforeEach(() => {
+        cleanup();
+        jest.clearAllMocks();
+        const initialState = { isUserAuthenticated: false };
+        store.dispatch({ type: TEST_CASE_AUTH, payload: initialState });
         render(
             <Provider store={store}>
                 <RecipeCreate />
             </Provider>
         );
-    });
-    afterEach(() => {
-        cleanup();
-        jest.clearAllMocks();
     });
     test('should redirect guest users to home page', () => {
         expect(Router.push.mock.calls.length).toBe(1);

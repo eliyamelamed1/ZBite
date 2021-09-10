@@ -16,7 +16,7 @@ const ReviewCreate = ({ recipe }) => {
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
     const { isUserAuthenticated } = useSelector((state) => state.userReducer);
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
         isUserAuthenticated === false ? Router.push(pageRoute().login) : null;
         try {
