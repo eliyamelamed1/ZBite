@@ -16,10 +16,9 @@ const ReviewCreate = ({ recipe }) => {
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
     const { isUserAuthenticated } = useSelector((state) => state.userReducer);
 
-    isUserAuthenticated === false ? Router.push(pageRoute.login) : null;
-
     const onSubmit = (e) => {
         e.preventDefault();
+        isUserAuthenticated === false ? Router.push(pageRoute().login) : null;
         try {
             dispatch(reviewCreateAction({ recipe, stars, comment, image }));
         } catch (err) {}
