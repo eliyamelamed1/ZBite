@@ -159,7 +159,7 @@ describe('UserSignup - guest user', () => {
         
             expect(await signupAction.mock.calls.length).toBe(1)
             expect(Router.push.mock.calls.length).toBe(1)
-            expect(Router.push.mock.calls[0][0]).toBe(pageRoute.login)
+            expect(Router.push.mock.calls[0][0]).toBe(pageRoute().login)
         });
         test('failed signup should not redirect user', async () => {
             signupAction.mockReturnValueOnce(() => {
@@ -198,7 +198,7 @@ describe('UserSignup - authenticated users', () => {
     });
     test('should redirect authenticated user to home page', async () => {
         expect(Router.push.mock.calls.length).toBe(1);
-        expect(Router.push.mock.calls.[0][0]).toBe(pageRoute.home);
+        expect(Router.push.mock.calls.[0][0]).toBe(pageRoute().home);
     });
 });
 

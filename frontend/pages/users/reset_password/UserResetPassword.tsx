@@ -19,7 +19,7 @@ const UserResetPassword = () => {
         e.preventDefault();
         try {
             dispatch(resetPasswordAction({ email }));
-            Router.push(pageRoute.home);
+            Router.push(pageRoute().home);
         } catch {
             // TODO - add err msg
         }

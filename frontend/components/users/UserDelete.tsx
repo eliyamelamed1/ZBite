@@ -11,7 +11,7 @@ const UserDelete = ({ id }) => {
         e.preventDefault();
         try {
             await dispatch(userDeleteAction({ id }));
-            Router.push(pageRoute.home);
+            Router.push(pageRoute().home);
         } catch {
             // TODO - add err msg
         }

@@ -37,13 +37,13 @@ const UserSignup = () => {
                         re_password,
                     })
                 );
-                Router.push(pageRoute.login);
+                Router.push(pageRoute().login);
             } catch {}
         }
     };
 
     if (isUserAuthenticated) {
-        Router.push(pageRoute.home);
+        Router.push(pageRoute().home);
     }
 
     return (

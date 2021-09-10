@@ -18,13 +18,13 @@ const RecipeCreate = () => {
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
     const { isUserAuthenticated } = useSelector((state) => state.userReducer);
 
-    isUserAuthenticated === false ? Router.push(pageRoute.home) : null;
+    isUserAuthenticated === false ? Router.push(pageRoute().home) : null;
 
     const onSubmit = (e) => {
         e.preventDefault();
         try {
             dispatch(recipeCreateAction({ title, description, flavor_type }));
-            Router.push(pageRoute.home);
+            Router.push(pageRoute().home);
         } catch (err) {
             // console.log(err);
         }
