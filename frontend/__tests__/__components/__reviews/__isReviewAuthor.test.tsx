@@ -40,7 +40,7 @@ describe('isReviewAuthor', () => {
         test('should render without crashing', () => {});
         test('should render reviewDelete', () => {
             expect(ReviewDeleteSpy.mock.calls.length).toBe(1);
-            expect(ReviewDeleteSpy.mock.calls[0][0]).toEqual({ id: review.id });
+            expect(ReviewDeleteSpy.mock.calls[0][0]).toEqual({ reviewId: review.id });
         });
         test('should render reviewCreate', () => {
             expect(ReviewCreateSpy.mock.calls.length).toBe(1);
