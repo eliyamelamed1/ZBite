@@ -6,7 +6,7 @@ import { pageRoute } from '../../globals';
 import { reviewCreateAction } from '../../redux/actions/recipeActions';
 import { useState } from 'react';
 
-const ReviewCreate = ({ recipe }) => {
+const ReviewCreate = ({ recipeId }) => {
     const dispatch = useDispatch();
     const [formData, setFormData] = useState({
         stars: '',
@@ -21,7 +21,7 @@ const ReviewCreate = ({ recipe }) => {
         e.preventDefault();
         isUserAuthenticated === false ? Router.push(pageRoute().login) : null;
         try {
-            dispatch(reviewCreateAction({ recipe, stars, comment, image }));
+            dispatch(reviewCreateAction({ recipeId, stars, comment, image }));
         } catch (err) {}
     };
     return (
@@ -57,7 +57,7 @@ const ReviewCreate = ({ recipe }) => {
 };
 
 ReviewCreate.propTypes = {
-    recipe: PropTypes.string.isRequired,
+    recipeId: PropTypes.string.isRequired,
 };
 
 export default ReviewCreate;

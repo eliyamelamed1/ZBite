@@ -142,7 +142,7 @@ export const loadRecipeDetailsAction =
     };
 
 export const reviewCreateAction =
-    ({ recipe, stars, comment = '', image = '' }) =>
+    ({ recipeId, stars, comment = '', image = '' }) =>
     async (dispatch) => {
         try {
             const config = {
@@ -153,7 +153,7 @@ export const reviewCreateAction =
                 },
             };
             const body = JSON.stringify({
-                recipe,
+                recipe: recipeId,
                 stars,
                 comment,
                 image,
@@ -184,7 +184,7 @@ export const reviewDeleteAction =
     };
 
 export const reviewsInRecipeAction =
-    ({ recipe }) =>
+    ({ recipeId }) =>
     async (dispatch) => {
         try {
             const config = {
@@ -194,7 +194,7 @@ export const reviewsInRecipeAction =
                 },
             };
             const body = JSON.stringify({
-                recipe,
+                recipe: recipeId,
             });
             const res = await axios.post(endpointRoute().reviews.reviews_in_recipe, body, config);
             dispatch({ type: REVIEWS_IN_RECIPE_SUCCESS, payload: res.data });
