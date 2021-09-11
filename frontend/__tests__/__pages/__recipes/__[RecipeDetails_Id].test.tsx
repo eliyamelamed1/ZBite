@@ -36,6 +36,8 @@ const contextParams = {
     },
 };
 
+const listOfReviews = [{ recipe: 'bacon', id: '1', author: 'eliya', stars: '5', comment: 'new comment' }];
+
 jest.mock('axios');
 
 describe('RecipeDetails - getServerSideProps', () => {
@@ -102,9 +104,10 @@ describe('RecipeDetails - recipe of author', () => {
         store.dispatch({ type: TEST_CASE_RECIPE, payload: recipeInitialState });
 
         const serverRecipeData = recipeParams.recipeData;
+        const serverReviewsData = listOfReviews;
         render(
             <Provider store={store}>
-                <RecipeDetails serverRecipeData={serverRecipeData} />
+                <RecipeDetails serverRecipeData={serverRecipeData} serverReviewsData={serverReviewsData} />
             </Provider>
         );
     });
@@ -136,7 +139,7 @@ describe('RecipeDetails - recipe of author', () => {
 
         expect(recipeUpdateTestId).toBeInTheDocument();
     });
-    test('migrateRequestedRecipeData isUserDataMatchReqId === true - should not update recipeData', async () => {
+    test('migrateRequestedRecipeData isUserDataMatchReqId === true - should update recipeData', async () => {
         const initialState = {
             requestedRecipeData: updatedRecipe,
         };
@@ -166,6 +169,28 @@ describe('RecipeDetails - recipe of author', () => {
         expect(updatedTitle).not.toBeInTheDocument();
         expect(updatedDescription).not.toBeInTheDocument();
         expect(updatedFlavor.length).toBe(1);
+    });
+    test('migrateListOfFilteredReviews isReviewsOfThisRecipe === true - should update reviewsData', async () => {
+        const initialState = {
+            listOfFilteredReviews: [
+                { recipe: '5', id: '1', author: 'eliya', stars: 'updated stars', comment: 'updated comment' },
+            ],
+        };
+        await store.dispatch({ type: TEST_CASE_RECIPE, payload: initialState });
+
+        const updatedStars = await screen.findByText(/updated stars/i);
+        expect(updatedStars).toBeInTheDocument();
+    });
+    test('migrateListOfFilteredReviews isReviewsOfThisRecipe === false - should not update reviewsData', async () => {
+        const initialState = {
+            listOfFilteredReviews: [
+                { recipe: 'pizza', id: '1', author: 'eliya', stars: 'updated stars', comment: 'updated comment' },
+            ],
+        };
+        await store.dispatch({ type: TEST_CASE_RECIPE, payload: initialState });
+
+        const updatedStars = await screen.queryByText(/updated stars/i);
+        expect(updatedStars).not.toBeInTheDocument();
     });
 });
 

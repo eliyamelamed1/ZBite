@@ -21,20 +21,17 @@ const RecipeDetails = (props) => {
     useEffect(
         // when updating recipe data (title, description etc..) migrate the changes to the userData
         function migrateRequestedRecipeData() {
-            try {
-                const isRecipeDataMatchReqId = requestedRecipeData?.id === recipeData?.id;
-                isRecipeDataMatchReqId ? setRecipeData(requestedRecipeData) : null;
-            } catch {}
+            const isRecipeDataMatchReqId = requestedRecipeData?.id === recipeData?.id;
+            isRecipeDataMatchReqId ? setRecipeData(requestedRecipeData) : null;
         },
         [requestedRecipeData, recipeData?.id]
     );
 
     useEffect(
+        // when updating reviews data migrate the changes to the reviewsData
         function migrateListOfFilteredReviews() {
-            try {
-                const isReviewsMatchRecipe = listOfFilteredReviews[0]?.id === recipeData?.id;
-                isReviewsMatchRecipe ? setReviewsData(listOfFilteredReviews) : null;
-            } catch {}
+            const isReviewsMatchRecipe = listOfFilteredReviews?.[0]?.recipe === recipeData?.id;
+            isReviewsMatchRecipe ? setReviewsData(listOfFilteredReviews) : null;
         },
         [listOfFilteredReviews, recipeData?.id]
     );

@@ -27,7 +27,7 @@ const ReviewCard = (props) => {
 
 ReviewCard.propTypes = {
     author: PropTypes.string.isRequired,
-    stars: PropTypes.number.isRequired,
+    stars: PropTypes.string.isRequired,
     comment: PropTypes.string,
     image: PropTypes.string,
 };
