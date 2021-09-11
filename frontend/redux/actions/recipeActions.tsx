@@ -160,6 +160,7 @@ export const reviewCreateAction =
             });
             await axios.post(endpointRoute().reviews.create, body, config);
             dispatch({ type: REVIEW_CREATE_SUCCESS });
+            await dispatch(reviewsInRecipeAction({ recipeId }));
         } catch {
             dispatch({ type: REVIEW_CREATE_FAIL });
         }
