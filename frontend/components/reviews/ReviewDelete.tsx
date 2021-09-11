@@ -3,12 +3,12 @@ import React from 'react';
 import { reviewDeleteAction } from '../../redux/actions/recipeActions';
 import { useDispatch } from 'react-redux';
 
-const ReviewDelete = ({ reviewId }) => {
+const ReviewDelete = ({ reviewId, recipeId }) => {
     const dispatch = useDispatch();
     const onSubmit = (e) => {
         e.preventDefault();
         try {
-            dispatch(reviewDeleteAction({ reviewId }));
+            dispatch(reviewDeleteAction({ reviewId, recipeId }));
         } catch {}
     };
 

@@ -167,7 +167,7 @@ export const reviewCreateAction =
     };
 
 export const reviewDeleteAction =
-    ({ reviewId }) =>
+    ({ reviewId, recipeId }) =>
     async (dispatch) => {
         try {
             const config = {
@@ -179,6 +179,7 @@ export const reviewDeleteAction =
             };
             await axios.post(endpointRoute(reviewId).reviews.delete, config);
             dispatch({ type: REVIEW_DELETE_SUCCESS });
+            dispatch(reviewsInRecipeAction({ recipeId }));
         } catch {
             dispatch({ type: REVIEW_DELETE_FAIL });
         }

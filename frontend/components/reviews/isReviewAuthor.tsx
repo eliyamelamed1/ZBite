@@ -10,8 +10,8 @@ const IsReviewAuthor = ({ review }) => {
     const { loggedUserData } = useSelector((state) => state.userReducer);
     const authorLinks = (
         <div>
-            <ReviewDelete reviewId={review.id} />
-            <ReviewCreate recipe={review.recipe} />
+            <ReviewDelete reviewId={review.id} recipeId={review.recipe} />
+            <ReviewCreate recipeId={review.recipe} />
         </div>
     );
 

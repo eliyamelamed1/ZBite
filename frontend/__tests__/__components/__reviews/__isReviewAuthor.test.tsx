@@ -40,11 +40,12 @@ describe('isReviewAuthor', () => {
         test('should render without crashing', () => {});
         test('should render reviewDelete', () => {
             expect(ReviewDeleteSpy.mock.calls.length).toBe(1);
-            expect(ReviewDeleteSpy.mock.calls[0][0]).toEqual({ reviewId: review.id });
+            expect(ReviewDeleteSpy.mock.calls[0][0].reviewId).toEqual(review.id);
+            expect(ReviewDeleteSpy.mock.calls[0][0].recipeId).toEqual(review.recipe);
         });
         test('should render reviewCreate', () => {
             expect(ReviewCreateSpy.mock.calls.length).toBe(1);
-            expect(ReviewCreateSpy.mock.calls[0][0]).toEqual({ recipe: review.recipe });
+            expect(ReviewCreateSpy.mock.calls[0][0].recipeId).toEqual(review.recipe);
         });
     });
     describe('not author', () => {
