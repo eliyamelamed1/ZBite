@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
 
+import * as ReviewCreate from '../../../components/reviews/ReviewCreate';
 import * as recipeActions from '../../../redux/actions/recipeActions';
 
 import { TEST_CASE_AUTH, TEST_CASE_RECIPE } from '../../../redux/types';
@@ -14,6 +15,7 @@ import store from '../../../redux/store';
 
 const loadRecipeDetailsActionSpy = jest.spyOn(recipeActions, 'loadRecipeDetailsAction');
 const reviewsInRecipeActionSpy = jest.spyOn(recipeActions, 'reviewsInRecipeAction');
+const ReviewCreateSpy = jest.spyOn(ReviewCreate, 'default');
 
 const recipeParams = {
     existingRecipeId: '5',
@@ -37,8 +39,6 @@ const contextParams = {
 };
 
 const listOfReviews = [{ recipe: 'bacon', id: '1', author: 'eliya', stars: '5', comment: 'new comment' }];
-
-jest.mock('axios');
 
 describe('RecipeDetails - getServerSideProps', () => {
     beforeEach(() => {
@@ -86,6 +86,7 @@ describe('RecipeDetails - recipe of author', () => {
             author: 'eliya',
             photo_main: '/#',
         },
+        listOfFilteredReviews: null,
     };
 
     let updatedRecipe = {
@@ -97,8 +98,8 @@ describe('RecipeDetails - recipe of author', () => {
         photo_main: '/#',
     };
     beforeEach(async () => {
-        cleanup();
         jest.clearAllMocks();
+        cleanup();
 
         store.dispatch({ type: TEST_CASE_AUTH, payload: userInitialState });
         store.dispatch({ type: TEST_CASE_RECIPE, payload: recipeInitialState });
@@ -139,6 +140,11 @@ describe('RecipeDetails - recipe of author', () => {
 
         expect(recipeUpdateTestId).toBeInTheDocument();
     });
+    test('should render ReviewCreate', () => {
+        expect(ReviewCreateSpy).toHaveBeenCalled();
+        expect(ReviewCreateSpy.mock.calls[0][0].recipeId).toBe(recipeParams.recipeData.id);
+    });
+
     test('migrateRequestedRecipeData isUserDataMatchReqId === true - should update recipeData', async () => {
         const initialState = {
             requestedRecipeData: updatedRecipe,
@@ -199,17 +205,30 @@ describe('RecipeDetails - not the recipe author', () => {
         loggedUserData: { id: 'eilon' },
         isUserAuthenticated: true,
     };
-
+    const recipeInitialState = {
+        requestedRecipeData: {
+            id: '5',
+            title: 'recipeTitle',
+            description: 'recipeDescription',
+            flavor_type: 'Sour',
+            author: 'eliya',
+            photo_main: '/#',
+        },
+        listOfFilteredReviews: null,
+    };
     beforeEach(async () => {
         cleanup();
         jest.clearAllMocks();
 
         store.dispatch({ type: TEST_CASE_AUTH, payload: userInitialState });
+        store.dispatch({ type: TEST_CASE_RECIPE, payload: recipeInitialState });
+
         const serverRecipeData = recipeParams.recipeData;
+        const serverReviewsData = listOfReviews;
 
         render(
             <Provider store={store}>
-                <RecipeDetails serverRecipeData={serverRecipeData} />
+                <RecipeDetails serverRecipeData={serverRecipeData} serverReviewsData={serverReviewsData} />
             </Provider>
         );
     });
@@ -239,5 +258,85 @@ describe('RecipeDetails - not the recipe author', () => {
         const recipeUpdateTestId = screen.queryByTestId('recipeUpdate');
 
         expect(recipeUpdateTestId).not.toBeInTheDocument();
+    });
+    test('should render ReviewCreate', () => {
+        expect(ReviewCreateSpy).toHaveBeenCalled();
+        expect(ReviewCreateSpy.mock.calls[0][0].recipeId).toBe(recipeParams.recipeData.id);
+    });
+    test('migrateListOfFilteredReviews isReviewsOfThisRecipe === true - should update reviewsData', async () => {
+        const initialState = {
+            listOfFilteredReviews: [
+                { recipe: '5', id: '1', author: 'eliya', stars: 'updated stars', comment: 'updated comment' },
+            ],
+        };
+        await store.dispatch({ type: TEST_CASE_RECIPE, payload: initialState });
+
+        const updatedStars = await screen.findByText(/updated stars/i);
+        expect(updatedStars).toBeInTheDocument();
+    });
+    test('migrateListOfFilteredReviews isReviewsOfThisRecipe === false - should not update reviewsData', async () => {
+        const initialState = {
+            listOfFilteredReviews: [
+                { recipe: 'pizza', id: '1', author: 'eliya', stars: 'updated stars', comment: 'updated comment' },
+            ],
+        };
+        await store.dispatch({ type: TEST_CASE_RECIPE, payload: initialState });
+
+        const updatedStars = await screen.queryByText(/updated stars/i);
+        expect(updatedStars).not.toBeInTheDocument();
+    });
+});
+describe('RecipeDetails - guest user', () => {
+    const userInitialState = {
+        isUserAuthenticated: null,
+    };
+    const recipeInitialState = {
+        requestedRecipeData: {
+            id: '5',
+            title: 'recipeTitle',
+            description: 'recipeDescription',
+            flavor_type: 'Sour',
+            author: 'eliya',
+            photo_main: '/#',
+        },
+        listOfFilteredReviews: null,
+    };
+    beforeEach(async () => {
+        cleanup();
+        jest.clearAllMocks();
+
+        store.dispatch({ type: TEST_CASE_AUTH, payload: userInitialState });
+        store.dispatch({ type: TEST_CASE_RECIPE, payload: recipeInitialState });
+
+        const serverRecipeData = recipeParams.recipeData;
+        const serverReviewsData = listOfReviews;
+
+        render(
+            <Provider store={store}>
+                <RecipeDetails serverRecipeData={serverRecipeData} serverReviewsData={serverReviewsData} />
+            </Provider>
+        );
+    });
+
+    test('should render without crashing', () => {});
+    test('should render match own data-testid', () => {
+        const recipeDetailsTestId = screen.getByTestId('recipeDetails');
+        expect(recipeDetailsTestId).toBeInTheDocument();
+    });
+
+    test('should render the recipe details ', () => {
+        const recipeTitle = screen.getByText(/recipeTitle/i);
+        const recipeDescription = screen.getByText(/recipeDescription/i);
+
+        expect(recipeTitle).toBeInTheDocument();
+        expect(recipeDescription).toBeInTheDocument();
+    });
+    test('should not render RecipeUpdate component', () => {
+        const recipeUpdateTestId = screen.queryByTestId('recipeUpdate');
+
+        expect(recipeUpdateTestId).not.toBeInTheDocument();
+    });
+    test('should not render ReviewCreate', () => {
+        expect(ReviewCreateSpy).not.toHaveBeenCalled();
     });
 });

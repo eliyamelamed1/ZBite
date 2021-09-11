@@ -8,6 +8,8 @@ import Head from 'next/head';
 import Image from 'next/image';
 import IsRecipeAuthor from '../../components/recipes/IsRecipeAuthor';
 import Link from 'next/link';
+import ReviewCreate from '../../components/reviews/ReviewCreate';
+import ReviewDelete from '../../components/reviews/ReviewDelete';
 import { loadRecipeDetailsAction } from '../../redux/actions/recipeActions';
 import { reviewsInRecipeAction } from '../../redux/actions/recipeActions';
 import store from '../../redux/store';
@@ -16,6 +18,7 @@ import { useSelector } from 'react-redux';
 const RecipeDetails = (props) => {
     const [recipeData, setRecipeData] = useState(props.serverRecipeData);
     const { requestedRecipeData, listOfFilteredReviews } = useSelector((state) => state.recipeReducer);
+    const { isUserAuthenticated } = useSelector((state) => state.userReducer);
     const [reviewsData, setReviewsData] = useState(props.serverReviewsData);
 
     useEffect(
@@ -58,7 +61,6 @@ const RecipeDetails = (props) => {
     };
 
     const authorLinks = <section>{recipeData ? <IsRecipeAuthor recipe={recipeData} /> : null}</section>;
-
     return (
         <React.Fragment>
             <Head>
@@ -97,6 +99,7 @@ const RecipeDetails = (props) => {
                     )}
                 </section>
                 <h2>reviews</h2>
+                {isUserAuthenticated ? <ReviewCreate recipeId={recipeData.id} /> : null}
                 <section>{reviewsData ? <DisplayReviews reviewsToDisplay={reviewsData} /> : null}</section>
             </main>
         </React.Fragment>
