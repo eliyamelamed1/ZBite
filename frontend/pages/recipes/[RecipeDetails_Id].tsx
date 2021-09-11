@@ -29,12 +29,15 @@ const RecipeDetails = (props) => {
         [requestedRecipeData, recipeData?.id]
     );
 
-    useEffect(() => {
-        try {
-            const isReviewsMatchRecipe = listOfFilteredReviews[0]?.id === recipeData?.id;
-            isReviewsMatchRecipe ? setReviewsData(listOfFilteredReviews) : null;
-        } catch {}
-    }, [listOfFilteredReviews, recipeData?.id]);
+    useEffect(
+        function migrateListOfFilteredReviews() {
+            try {
+                const isReviewsMatchRecipe = listOfFilteredReviews[0]?.id === recipeData?.id;
+                isReviewsMatchRecipe ? setReviewsData(listOfFilteredReviews) : null;
+            } catch {}
+        },
+        [listOfFilteredReviews, recipeData?.id]
+    );
 
     const displayInteriorImages = () => {
         if (recipeData) {

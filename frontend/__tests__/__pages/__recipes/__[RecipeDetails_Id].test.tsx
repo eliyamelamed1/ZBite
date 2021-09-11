@@ -13,6 +13,7 @@ import { getServerSideProps } from '../../../pages/recipes/[RecipeDetails_Id]';
 import store from '../../../redux/store';
 
 const loadRecipeDetailsActionSpy = jest.spyOn(recipeActions, 'loadRecipeDetailsAction');
+const reviewsInRecipeActionSpy = jest.spyOn(recipeActions, 'reviewsInRecipeAction');
 
 const recipeParams = {
     existingRecipeId: '5',
@@ -42,6 +43,7 @@ describe('RecipeDetails - getServerSideProps', () => {
         cleanup();
         jest.clearAllMocks();
         axios.get.mockReturnValueOnce({ data: recipeParams.recipeData });
+        axios.post.mockReturnValueOnce({ data: 'reviews data' });
     });
     test('should dispatch loadRecipeDetailsAction', async () => {
         await getServerSideProps(contextParams.existingRecipe);
@@ -50,11 +52,19 @@ describe('RecipeDetails - getServerSideProps', () => {
         expect(timesActionDispatched).toBe(1);
         expect(loadRecipeDetailsActionSpy.mock.calls[0][0].id).toBe(recipeParams.existingRecipeId);
     });
-    test('getStaticProps - should return matching props', async () => {
+    test('should dispatch reviewsInRecipeAction', async () => {
+        await getServerSideProps(contextParams.existingRecipe);
+        const timesActionDispatched = reviewsInRecipeActionSpy.mock.calls.length;
+
+        expect(timesActionDispatched).toBe(1);
+        expect(reviewsInRecipeActionSpy.mock.calls[0][0].recipeId).toBe(recipeParams.existingRecipeId);
+    });
+    test('should return matching props', async () => {
         const props = (await getServerSideProps(contextParams.existingRecipe)).props;
         expect(props.serverRecipeData).toEqual(recipeParams.recipeData);
+        expect(props.serverReviewsData).toEqual('reviews data');
     });
-    test('getStaticProps - if recipe doesnt exist return not found', async () => {
+    test('if recipe doesnt exist return not found', async () => {
         const notFound = (await getServerSideProps(contextParams.nonExistingRecipe)).notFound;
         expect(notFound).toEqual(true);
     });
