@@ -12,7 +12,6 @@ const DisplayReviews = ({ reviewsToDisplay }) => {
                 reviewsOnPage.push(
                     <ReviewCard
                         author={review.author}
-                        recipe={review.recipe}
                         stars={review.stars}
                         comment={review.comment}
                         image={review.image}

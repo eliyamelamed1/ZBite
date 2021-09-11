@@ -7,14 +7,12 @@ import DisplayReviews from '../../../components/reviews/DisplayReviews';
 const reviewCardSpy = jest.spyOn(ReviewCard, 'default');
 const firstReviewData = {
     author: 'firstAuthorId',
-    recipe: 'recipe',
     stars: 'stars',
     comment: 'comment',
     image: '/image',
 };
 const secondReviewData = {
     author: 'secondAuthorId',
-    recipe: 'recipe',
     stars: 'stars2',
     comment: 'comment2',
     image: '/image2',

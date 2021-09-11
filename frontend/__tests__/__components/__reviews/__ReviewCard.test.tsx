@@ -12,7 +12,6 @@ describe('ReviewCard', () => {
             render(
                 <ReviewCard
                     author={reviewParams.author}
-                    recipe={reviewParams.recipe}
                     stars={reviewParams.stars}
                     comment={reviewParams.comment}
                     image={reviewParams.image}
@@ -26,13 +25,11 @@ describe('ReviewCard', () => {
         });
         test('should render review details', () => {
             const author = screen.getByText(reviewParams.author);
-            const recipe = screen.getByText(reviewParams.recipe);
             const stars = screen.getByText(reviewParams.stars);
             const comment = screen.getByText(reviewParams.comment);
             const image = screen.getByRole('img', { name: 'Review Image' });
 
             expect(author).toBeInTheDocument();
-            expect(recipe).toBeInTheDocument();
             expect(stars).toBeInTheDocument();
             expect(comment).toBeInTheDocument();
             expect(image).toBeInTheDocument();
@@ -47,7 +44,7 @@ describe('ReviewCard', () => {
     describe('only requiredProps', () => {
         beforeEach(() => {
             cleanup();
-            render(<ReviewCard author={reviewParams.author} recipe={reviewParams.recipe} stars={reviewParams.stars} />);
+            render(<ReviewCard author={reviewParams.author} stars={reviewParams.stars} />);
         });
         test('should render without crashing', () => {});
         test('should match data test id', () => {
@@ -56,13 +53,11 @@ describe('ReviewCard', () => {
         });
         test('should render review details', () => {
             const author = screen.getByText(reviewParams.author);
-            const recipe = screen.getByText(reviewParams.recipe);
             const stars = screen.getByText(reviewParams.stars);
             const comment = screen.queryByText(reviewParams.comment);
             const image = screen.queryByRole('img', { name: 'Review Image' });
 
             expect(author).toBeInTheDocument();
-            expect(recipe).toBeInTheDocument();
             expect(stars).toBeInTheDocument();
             expect(comment).not.toBeInTheDocument();
             expect(image).not.toBeInTheDocument();

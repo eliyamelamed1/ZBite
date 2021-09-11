@@ -10,7 +10,6 @@ const ReviewCard = (props) => {
             <Link href={pageRoute(props.author).profile} passHref>
                 {props.author}
             </Link>
-            <p>{props.recipe}</p>
             <p>{props.stars}</p>
             {props.comment ? <p>{props.comment}</p> : null}
             {props.image ? <Image src={props.image} alt='Review Image' height={100} width={100} /> : null}
@@ -28,8 +27,7 @@ const ReviewCard = (props) => {
 
 ReviewCard.propTypes = {
     author: PropTypes.string.isRequired,
-    recipe: PropTypes.string.isRequired,
-    stars: PropTypes.string.isRequired,
+    stars: PropTypes.number.isRequired,
     comment: PropTypes.string,
     image: PropTypes.string,
 };

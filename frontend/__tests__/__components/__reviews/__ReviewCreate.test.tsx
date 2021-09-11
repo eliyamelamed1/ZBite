@@ -25,7 +25,7 @@ describe('ReviewCreate', () => {
             store.dispatch({ type: TEST_CASE_AUTH, payload: initialState });
             render(
                 <Provider store={store}>
-                    <ReviewCreate recipe={recipeId} />
+                    <ReviewCreate recipeId={recipeId} />
                 </Provider>
             );
         });
@@ -114,7 +114,7 @@ describe('ReviewCreate', () => {
             store.dispatch({ type: TEST_CASE_AUTH, payload: initialState });
             render(
                 <Provider store={store}>
-                    <ReviewCreate recipe={recipeId} />
+                    <ReviewCreate recipeId={recipeId} />
                 </Provider>
             );
         });
