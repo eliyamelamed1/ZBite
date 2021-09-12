@@ -11,16 +11,13 @@ const IsReviewAuthor = ({ review }) => {
     const authorLinks = (
         <div>
             <ReviewDelete reviewId={review.id} recipeId={review.recipe} />
-            <ReviewCreate recipeId={review.recipe} />
         </div>
     );
 
     useEffect(() => {
-        try {
-            {
-                review.author === loggedUserData.id ? setIsAuthor(true) : setIsAuthor(false);
-            }
-        } catch {}
+        {
+            review?.author === loggedUserData?.id ? setIsAuthor(true) : setIsAuthor(false);
+        }
     }, [loggedUserData, review.author]);
 
     return <div>{isAuthor ? authorLinks : null}</div>;

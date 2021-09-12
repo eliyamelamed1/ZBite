@@ -60,4 +60,5 @@ export const reviewParams = {
     stars: 'starsCount',
     comment: 'commentText',
     image: '/image',
+    id: 'reviewId',
 };

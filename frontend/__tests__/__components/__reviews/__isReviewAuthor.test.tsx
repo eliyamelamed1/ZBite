@@ -5,7 +5,7 @@ import * as ReviewDelete from '../../../components/reviews/ReviewDelete';
 
 import { cleanup, render, screen } from '@testing-library/react';
 
-import IsReviewAuthor from '../../../components/reviews/IsReviewAuthor';
+import IsReviewAuthor from '../../../components/reviews/isReviewAuthor';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { TEST_CASE_AUTH } from '../../../redux/types';
@@ -43,10 +43,6 @@ describe('isReviewAuthor', () => {
             expect(ReviewDeleteSpy.mock.calls[0][0].reviewId).toEqual(review.id);
             expect(ReviewDeleteSpy.mock.calls[0][0].recipeId).toEqual(review.recipe);
         });
-        test('should render reviewCreate', () => {
-            expect(ReviewCreateSpy.mock.calls.length).toBe(1);
-            expect(ReviewCreateSpy.mock.calls[0][0].recipeId).toEqual(review.recipe);
-        });
     });
     describe('not author', () => {
         const review = {
@@ -73,9 +69,6 @@ describe('isReviewAuthor', () => {
         test('should render without crashing', () => {});
         test('should render reviewDelete', () => {
             expect(ReviewDeleteSpy.mock.calls.length).toBe(0);
-        });
-        test('should render reviewCreate', () => {
-            expect(ReviewCreateSpy.mock.calls.length).toBe(0);
         });
     });
 });
