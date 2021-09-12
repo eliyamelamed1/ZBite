@@ -177,7 +177,7 @@ export const reviewDeleteAction =
                     Authorization: `Token ${localStorage.getItem('auth_token')}`,
                 },
             };
-            await axios.post(endpointRoute(reviewId).reviews.delete, config);
+            await axios.delete(endpointRoute(reviewId).reviews.delete, config);
             dispatch({ type: REVIEW_DELETE_SUCCESS });
             dispatch(reviewsInRecipeAction({ recipeId }));
         } catch {
