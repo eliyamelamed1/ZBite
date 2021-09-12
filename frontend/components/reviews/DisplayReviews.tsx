@@ -13,6 +13,7 @@ const DisplayReviews = ({ reviewsToDisplay }) => {
                     <ReviewCard
                         author={review.author}
                         recipe={review.recipe}
+                        id={review.id}
                         stars={review.stars}
                         comment={review.comment}
                         image={review.image}

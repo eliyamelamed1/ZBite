@@ -73,7 +73,7 @@ describe('UserResetPassword - email input', () => {
         expect(timesActionDispatched).toBe(1);
         expect(resetPasswordAction.mock.calls[0][0].email).toEqual(emailValue);
         expect(Router.push.mock.calls.length).toBe(1);
-        expect(Router.push.mock.calls[0][0]).toBe(pageRoute.home);
+        expect(Router.push.mock.calls[0][0]).toBe(pageRoute().home);
     });
     test('completing the reset password form should dispatch resetPasswordAction fail and not redirect', async () => {
         resetPasswordAction.mockReturnValueOnce(() => {

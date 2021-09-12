@@ -14,7 +14,7 @@ const RecipeDelete = ({ id }) => {
         e.preventDefault();
         try {
             dispatch(recipeDeleteAction({ id }));
-            Router.push(pageRoute.home);
+            Router.push(pageRoute().home);
         } catch {
             // TODO - add err msg
         }

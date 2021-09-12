@@ -78,7 +78,7 @@ describe('Authenticated users', () => {
 
             expect(timesActionDispatched).toBe(1);
             expect(Router.push.mock.calls.length).toBe(1);
-            expect(Router.push.mock.calls[0][0]).toBe(pageRoute.home);
+            expect(Router.push.mock.calls[0][0]).toBe(pageRoute().home);
         });
     });
 });
@@ -100,7 +100,7 @@ describe('Guest users', () => {
     });
     test('should redirect guest users to home page', () => {
         expect(Router.push.mock.calls.length).toBe(1)
-        expect(Router.push.mock.calls.[0][0]).toBe(pageRoute.home)
+        expect(Router.push.mock.calls.[0][0]).toBe(pageRoute().home)
     })
     
 });

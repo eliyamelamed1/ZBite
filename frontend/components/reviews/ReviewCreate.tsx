@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 
+import PropTypes from 'prop-types';
 import Router from 'next/router';
 import { pageRoute } from '../../globals';
-import { reviewCreateAction } from '../../redux/actions/reviewsActions';
+import { reviewCreateAction } from '../../redux/actions/recipeActions';
 import { useState } from 'react';
 
-const ReviewCreate = ({ recipe }) => {
+const ReviewCreate = ({ recipeId }) => {
     const dispatch = useDispatch();
     const [formData, setFormData] = useState({
         stars: '',
@@ -16,12 +17,11 @@ const ReviewCreate = ({ recipe }) => {
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
     const { isUserAuthenticated } = useSelector((state) => state.userReducer);
 
-    isUserAuthenticated === false ? Router.push(pageRoute.login) : null;
-
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
+        isUserAuthenticated === false ? Router.push(pageRoute().login) : null;
         try {
-            dispatch(reviewCreateAction({ recipe, stars, comment, image }));
+            dispatch(reviewCreateAction({ recipeId, stars, comment, image }));
         } catch (err) {}
     };
     return (
@@ -48,18 +48,16 @@ const ReviewCreate = ({ recipe }) => {
                     />
                 </div>
                 <div>
-                    <input
-                        type='image'
-                        placeholder='image'
-                        name='image'
-                        value={image}
-                        onChange={(e) => onChange(e)}
-                        required
-                    />
+                    <input type='image' placeholder='image' name='image' value={image} onChange={(e) => onChange(e)} />
                 </div>
                 <button type='submit'>Create review</button>
             </form>
         </div>
     );
 };
+
+ReviewCreate.propTypes = {
+    recipeId: PropTypes.string.isRequired,
+};
+
 export default ReviewCreate;

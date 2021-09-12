@@ -3,28 +3,40 @@
 import React, { useEffect, useState } from 'react';
 
 import Custom404 from '../404';
+import DisplayReviews from '../../components/reviews/DisplayReviews';
 import Head from 'next/head';
 import Image from 'next/image';
 import IsRecipeAuthor from '../../components/recipes/IsRecipeAuthor';
 import Link from 'next/link';
+import ReviewCreate from '../../components/reviews/ReviewCreate';
+import ReviewDelete from '../../components/reviews/ReviewDelete';
 import { loadRecipeDetailsAction } from '../../redux/actions/recipeActions';
+import { reviewsInRecipeAction } from '../../redux/actions/recipeActions';
 import store from '../../redux/store';
 import { useSelector } from 'react-redux';
 
 const RecipeDetails = (props) => {
     const [recipeData, setRecipeData] = useState(props.serverRecipeData);
-    const { requestedRecipeData } = useSelector((state) => state.recipeReducer);
+    const { requestedRecipeData, listOfFilteredReviews } = useSelector((state) => state.recipeReducer);
+    const { isUserAuthenticated } = useSelector((state) => state.userReducer);
+    const [reviewsData, setReviewsData] = useState(props.serverReviewsData);
 
     useEffect(
         // when updating recipe data (title, description etc..) migrate the changes to the userData
         function migrateRequestedRecipeData() {
-            // TODO - TEST THIS STATEMENT
             const isRecipeDataMatchReqId = requestedRecipeData?.id === recipeData?.id;
-            if (isRecipeDataMatchReqId) {
-                setRecipeData(requestedRecipeData);
-            }
+            isRecipeDataMatchReqId ? setRecipeData(requestedRecipeData) : null;
         },
         [requestedRecipeData, recipeData?.id]
+    );
+
+    useEffect(
+        // when updating reviews data migrate the changes to the reviewsData
+        function migrateListOfFilteredReviews() {
+            const isReviewsMatchRecipe = listOfFilteredReviews?.[0]?.recipe === recipeData?.id;
+            isReviewsMatchRecipe ? setReviewsData(listOfFilteredReviews) : null;
+        },
+        [listOfFilteredReviews, recipeData?.id]
     );
 
     const displayInteriorImages = () => {
@@ -49,7 +61,6 @@ const RecipeDetails = (props) => {
     };
 
     const authorLinks = <section>{recipeData ? <IsRecipeAuthor recipe={recipeData} /> : null}</section>;
-
     return (
         <React.Fragment>
             <Head>
@@ -87,6 +98,9 @@ const RecipeDetails = (props) => {
                         <Custom404 />
                     )}
                 </section>
+                <h2>reviews</h2>
+                {isUserAuthenticated ? <ReviewCreate recipeId={recipeData.id} /> : null}
+                <section>{reviewsData ? <DisplayReviews reviewsToDisplay={reviewsData} /> : null}</section>
             </main>
         </React.Fragment>
     );
@@ -96,11 +110,12 @@ export async function getServerSideProps(context) {
     const id = context.params.RecipeDetails_Id;
     await store.dispatch(loadRecipeDetailsAction({ id }));
     const serverRecipeData = store.getState().recipeReducer.requestedRecipeData;
-    // dispatch reviewsInRecipeAction
     const isRequestedRecipeIdExist = serverRecipeData?.id === id;
 
     if (isRequestedRecipeIdExist) {
-        return { props: { serverRecipeData } };
+        await store.dispatch(reviewsInRecipeAction({ recipeId: id }));
+        const serverReviewsData = store.getState().recipeReducer.listOfFilteredReviews;
+        return { props: { serverRecipeData, serverReviewsData } };
     } else {
         return { notFound: true };
     }

@@ -94,7 +94,7 @@ describe('form submit', () => {
         expect(resetPasswordConfirmAction.mock.calls[0][0].uid).toBe(dynamicUrlParams.uid);
         expect(resetPasswordConfirmAction.mock.calls[0][0].token).toBe(dynamicUrlParams.token);
         expect(Router.push.mock.calls.length).toBe(1);
-        expect(Router.push.mock.calls[0][0]).toBe(pageRoute.home);
+        expect(Router.push.mock.calls[0][0]).toBe(pageRoute().home);
     });
     test('failed form completion should call resetPasswordConfirmAction and should not redirect ', async () => {
         resetPasswordConfirmAction.mockReturnValueOnce(() => {

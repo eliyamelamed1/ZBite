@@ -17,9 +17,9 @@ export const endpointRoute = (id = String) => ({
         details: `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}/`,
     },
     reviews: {
-        create: `${process.env.NEXT_PUBLIC_API_URL}/api/reviews/create`,
+        create: `${process.env.NEXT_PUBLIC_API_URL}/api/reviews/create/`,
         delete: `${process.env.NEXT_PUBLIC_API_URL}/api/reviews/delete/${id}/`,
-        reviews_in_recipe: `${process.env.NEXT_PUBLIC_API_URL}/api/reviews/reviews_in_recipe`,
+        reviews_in_recipe: `${process.env.NEXT_PUBLIC_API_URL}/api/reviews/reviews_in_recipe/`,
     },
 });
 export const pageRoute = (id = String) => ({
@@ -43,19 +43,15 @@ export const userParams = {
         following: [],
         followers: [],
     },
+    otherUser2: {
+        id: 'otherUser2',
+        email: 'otherUser2@gmail.com',
+        name: 'otherUser2',
+        following: [],
+        followers: [],
+    },
 
     nonExistingUser: {},
-};
-export const ssrContextParams = {
-    loggedUser: {
-        params: { UserDetails_Id: userParams.loggedUser.id },
-    },
-    otherUser: {
-        params: { UserDetails_Id: userParams.otherUser.id },
-    },
-    nonExistingUser: {
-        params: { UserDetails_Id: userParams.nonExistingUser.id },
-    },
 };
 
 export const reviewParams = {
@@ -64,4 +60,5 @@ export const reviewParams = {
     stars: 'starsCount',
     comment: 'commentText',
     image: '/image',
+    id: 'reviewId',
 };
