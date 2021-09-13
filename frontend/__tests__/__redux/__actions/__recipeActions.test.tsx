@@ -7,6 +7,9 @@ import {
     recipeDeleteAction,
     recipeSearchAction,
     recipeUpdateAction,
+    reviewCreateAction,
+    reviewDeleteAction,
+    reviewsInRecipeAction,
 } from '../../../redux/actions/recipeActions';
 
 import axios from 'axios';
@@ -26,6 +29,10 @@ const parameters = {
     description: 'description',
     id: 'id',
     flavor_type: 'flavor_type',
+    stars: 'stars',
+    comment: 'comment',
+    image: 'image',
+    reviewId: 'reviewId',
 };
 
 const config = {
@@ -100,11 +107,46 @@ describe('axios request should match url endpoint, and parameters', () => {
     test('loadRecipeDetailsAction', () => {
         const { id } = parameters;
         const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}/`;
-
         store.dispatch(loadRecipeDetailsAction({ id }));
 
         expect(axios.get.mock.calls.length).toBe(1);
         expect(axios.get.mock.calls[0][0]).toStrictEqual(endpointUrl);
         expect(axios.get.mock.calls[0][1]).toStrictEqual(config);
+    });
+    test('reviewCreateAction', () => {
+        const { id, stars, comment, image } = parameters;
+        const endpointUrl = endpointRoute().reviews.create;
+        const body = JSON.stringify({ recipe: id, stars, comment, image });
+
+        store.dispatch(reviewCreateAction({ recipeId: id, stars, comment, image }));
+
+        expect(axios.post.mock.calls.length).toBe(1);
+        expect(axios.post.mock.calls[0][0]).toBe(endpointUrl);
+        expect(axios.post.mock.calls[0][1]).toBe(body);
+        expect(axios.post.mock.calls[0][2]).toStrictEqual(configWithAuthToken);
+        // test dispatch reviewsInRecipeAction({recipeId})
+    });
+    test('reviewDeleteAction', () => {
+        const { id, reviewId } = parameters;
+        const endpointUrl = endpointRoute(reviewId).reviews.delete;
+
+        store.dispatch(reviewDeleteAction({ reviewId, recipeId: id }));
+
+        expect(axios.delete.mock.calls.length).toBe(1);
+        expect(axios.delete.mock.calls[0][0]).toBe(endpointUrl);
+        expect(axios.delete.mock.calls[0][1]).toStrictEqual(configWithAuthToken);
+        // test dispatch reviewsInRecipeAction({recipeId})
+    });
+    test('reviewsInRecipeAction', () => {
+        const { id } = parameters;
+        const endpointUrl = endpointRoute().reviews.reviews_in_recipe;
+        const body = JSON.stringify({ recipe: id });
+
+        store.dispatch(reviewsInRecipeAction({ recipeId: id }));
+
+        expect(axios.post.mock.calls.length).toBe(1);
+        expect(axios.post.mock.calls[0][0]).toBe(endpointUrl);
+        expect(axios.post.mock.calls[0][1]).toStrictEqual(body);
+        expect(axios.post.mock.calls[0][2]).toStrictEqual(config);
     });
 });
