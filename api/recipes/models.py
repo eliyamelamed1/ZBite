@@ -60,10 +60,6 @@ class Recipe(models.Model):
         return reverse('recipes:top_rated')
 
     @classmethod
-    def get_save_favorite_recipe_url(cls):
-        return reverse('recipes:favorites')
-
-    @classmethod
     def get_recipes_of_followed_accounts(cls, request):
         user = request.user
         user = UserAccount.objects.all().get(id=user.id)

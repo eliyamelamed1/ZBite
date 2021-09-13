@@ -25,10 +25,10 @@ class SaveRecipe(APIView):
             user_already_saved_recipe = recipe.saves.all().get(id__exact=user.id)
             if user_already_saved_recipe:
                 recipe.saves.remove(user)
-                user.favorites.remove(recipe)
+                user.wishlist.remove(recipe)
         except:
             recipe.saves.add(user)
-            user.favorites.add(recipe)
+            user.wishlist.add(recipe)
 
 
         return Response()
