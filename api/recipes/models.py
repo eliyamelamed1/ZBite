@@ -25,15 +25,15 @@ class Recipe(models.Model):
     photo_main = models.ImageField(upload_to='media/', blank=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    likes = models.ManyToManyField(get_user_model(), default=None, blank=True)
+    saves = models.ManyToManyField(get_user_model(), default=None, blank=True)
     stars = models.TextField(blank=True)
 
 
     def __str__(self):
         return self.title
     
-    def get_all_likes(self):
-        return self.likes.all().count()
+    def get_all_saves(self):
+        return self.saves.all().count()
 
     def get_absolute_url(self):
         """Return absolute URL to the Recipe Detail page."""

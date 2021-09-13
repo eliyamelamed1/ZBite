@@ -4,15 +4,15 @@ from rest_framework.views import APIView
 
 from recipes.models import Recipe
 
-from .serializers import LikeSerializer
+from .serializers import SaveSerializer
 
 
-class LikeRecipe(APIView):
+class SaveRecipe(APIView):
     permission_classes = (permissions.IsAuthenticated,)
-    serializer_class = LikeSerializer
+    serializer_class = SaveSerializer
 
     def perform_create(self, serializer):
-        '''set the logged user as as like author'''
+        '''set the logged user as as save author'''
         serializer.save(author=self.request.user)  
 
     def post(self, request, format=None):
@@ -22,12 +22,12 @@ class LikeRecipe(APIView):
         recipe = recipes_queryset.get(id__exact=input_recipe_id)
         
         try:
-            user_already_liked_recipe = recipe.likes.all().get(id__exact=user.id)
-            if user_already_liked_recipe:
-                recipe.likes.remove(user)
+            user_already_saved_recipe = recipe.saves.all().get(id__exact=user.id)
+            if user_already_saved_recipe:
+                recipe.saves.remove(user)
                 user.favorites.remove(recipe)
         except:
-            recipe.likes.add(user)
+            recipe.saves.add(user)
             user.favorites.add(recipe)
 
 
