@@ -36,7 +36,7 @@ urlpatterns = [
     # features
     path('api/recipes/', include('recipes.urls', namespace='recipes')),
     # path('api/comments/', include('comments.urls', namespace='comments')), 
-    path('api/likes/', include('likes.urls', namespace='likes')), 
+    path('api/saves/', include('saves.urls', namespace='saves')), 
     path('api/followers/', include('followers.urls', namespace='followers')), 
     path('api/reviews/', include('reviews.urls', namespace='reviews')),
 

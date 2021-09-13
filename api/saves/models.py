@@ -8,7 +8,7 @@ from django.urls import reverse
 from recipes.models import Recipe
 
 
-class Like(models.Model):
+class Save(models.Model):
     author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     id = models.UUIDField(
@@ -23,4 +23,4 @@ class Like(models.Model):
     
     @classmethod
     def get_create_url(cls):
-        return reverse('likes:like')
+        return reverse('saves:save')

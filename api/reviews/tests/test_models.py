@@ -1,10 +1,9 @@
 import pytest
 from django.urls import reverse
 
-from factories import ReviewFactory, RecipeFactory, UserFactory
-from reviews.models import Review
-
+from factories import RecipeFactory, ReviewFactory, UserFactory
 from recipes.models import Recipe
+from reviews.models import Review
 
 pytestmark = pytest.mark.django_db
 review_create_url = Review.get_create_url()

@@ -1,6 +1,6 @@
-from accounts.models import UserAccount
 import pytest
 
+from accounts.models import UserAccount
 from factories import UserFactory
 from followers.models import Follower
 

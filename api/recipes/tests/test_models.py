@@ -32,28 +32,25 @@ def test_get_recipes_of_accounts_followed_url():
 def test_get_top_rated_recipes_url():
     assert Recipe.get_top_rated_recipes_url() == reverse('recipes:top_rated')
 
-def test_get_save_favorite_recipe_url():
-    assert Recipe.get_save_favorite_recipe_url() == reverse('recipes:favorites')
-
-def test_get_all_likes(api_client):
+def test_get_all_saves(api_client):
     new_recipe = RecipeFactory()
     new_user = new_recipe.author
     api_client.force_authenticate(new_user)
-    like_url = reverse('likes:like')
+    save_url = reverse('saves:save')
     data = {
         'recipe': new_recipe.id
     }
-    api_client.post(like_url, data)
+    api_client.post(save_url, data)
     api_client.logout()
 
     new_user = UserFactory()
     api_client.force_authenticate(new_user)
-    like_url = reverse('likes:like')
+    save_url = reverse('saves:save')
     data = {
         'recipe': new_recipe.id
     }
-    api_client.post(like_url, data)
+    api_client.post(save_url, data)
 
 
-    assert new_recipe.get_all_likes() == 2
-    assert new_recipe.get_all_likes() == new_recipe.likes.all().count()
+    assert new_recipe.get_all_saves() == 2
+    assert new_recipe.get_all_saves() == new_recipe.saves.all().count()

@@ -1,6 +1,7 @@
 from django.urls import path
 
-from .views import TopRatedAccounts, UserDetailView, UserListView, LoggedUserDetailView
+from .views import (LoggedUserDetailView, TopRatedAccounts, UserDetailView,
+                    UserListView)
 
 app_name = 'accounts'
 urlpatterns = [

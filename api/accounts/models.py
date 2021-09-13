@@ -45,7 +45,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     followers = models.ManyToManyField('self', default=None, blank=True, related_name='followers_list', symmetrical=False)
     following = models.ManyToManyField('self', default=None, blank=True, related_name='following_list', symmetrical=False)
-    favorites = models.ManyToManyField('recipes.Recipe', default=None, blank=True, related_name='favorites', symmetrical=False)  
+    wishlist = models.ManyToManyField('recipes.Recipe', default=None, blank=True, related_name='wishlist', symmetrical=False)  
     stars = models.TextField(blank=True)
 
     objects = UserAccountManager()
