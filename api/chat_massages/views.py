@@ -11,12 +11,10 @@ from chat_groups.models import ChatGroup
 from chat_massages.models import ChatMassage
 from permissions import IsAuthorOrAccessDenied
 
-from .serializers import (
-    ChatMassageCreateSerializer,
-    ChatMassageDetailsSerializer,
-    ChatMassagesRoomSerializer,
-    ChatMassageUpdateSerializer
-)
+from .serializers import (ChatMassageCreateSerializer,
+                          ChatMassageDetailsSerializer,
+                          ChatMassagesRoomSerializer,
+                          ChatMassageUpdateSerializer)
 
 
 class ChatMassageDetails(RetrieveDestroyAPIView):

@@ -8,9 +8,8 @@ from chat_groups.models import ChatGroup
 from chat_massages.models import ChatMassage
 # from comments.models import Comment
 from likes.models import Like
-from reviews.models import Review
-
 from recipes.models import Recipe
+from reviews.models import Review
 
 
 class UserFactory(factory.django.DjangoModelFactory):

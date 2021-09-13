@@ -4,7 +4,8 @@ from django.urls.base import reverse
 from rest_framework.test import APIClient
 
 from accounts.models import UserAccount
-from factories import (ChatDuoFactory, ChatGroupFactory, ChatMassageFactory, RecipeFactory, UserFactory)
+from factories import (ChatDuoFactory, ChatGroupFactory, ChatMassageFactory,
+                       RecipeFactory, UserFactory)
 from recipes.models import Recipe
 
 

@@ -1,14 +1,13 @@
 # TODO add tests for MIN and MAX values of stars 
 # TODO test perform_create
 
-from django.core.exceptions import ValidationError
 import pytest
+from django.core.exceptions import ValidationError
 
 from accounts.models import UserAccount
-from factories import ReviewFactory, RecipeFactory, UserFactory
-from reviews.models import Review
-
+from factories import RecipeFactory, ReviewFactory, UserFactory
 from recipes.models import Recipe
+from reviews.models import Review
 
 pytestmark = pytest.mark.django_db
 

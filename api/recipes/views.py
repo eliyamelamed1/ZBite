@@ -1,13 +1,15 @@
-from accounts.serializers import FavoriteRecipeSerializer
 from rest_framework import permissions
-from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import (CreateAPIView, ListAPIView,
+                                     RetrieveUpdateDestroyAPIView)
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from accounts.serializers import FavoriteRecipeSerializer
 from permissions import IsAuthorOrReadOnly
 
 from .models import Recipe
-from .serializers import RecipeCreateSerializer, RecipeSearchSerializer, RecipeSerializer
+from .serializers import (RecipeCreateSerializer, RecipeSearchSerializer,
+                          RecipeSerializer)
 
 
 class RecipeList(ListAPIView):

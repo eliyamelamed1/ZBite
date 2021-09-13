@@ -1,5 +1,5 @@
-from django.http import response
 import pytest
+from django.http import response
 from django.urls import resolve, reverse
 
 from accounts.models import UserAccount
