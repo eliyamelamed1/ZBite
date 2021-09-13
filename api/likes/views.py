@@ -24,11 +24,11 @@ class LikeRecipe(APIView):
         try:
             user_already_liked_recipe = recipe.likes.all().get(id__exact=user.id)
             if user_already_liked_recipe:
-                recipe.likes.remove(user.id)
-                user.favorites.remove(recipe.id)
+                recipe.likes.remove(user)
+                user.favorites.remove(recipe)
         except:
-            recipe.likes.add(user.id)
-            user.favorites.add(recipe.id)
+            recipe.likes.add(user)
+            user.favorites.add(recipe)
 
 
         return Response()
