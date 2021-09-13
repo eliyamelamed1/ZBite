@@ -1,8 +1,7 @@
 import pytest
 from django.urls import resolve, reverse
 
-from factories import RecipeFactory, UserFactory
-from recipes.models import Recipe
+from factories import RecipeFactory
 
 pytestmark = pytest.mark.django_db
 
@@ -58,12 +57,3 @@ class TestTopRatedRecipesUrl:
     def test_top_rated_recipes_url_resolve(self):
         url = f'/api/recipes/top_rated/'
         assert resolve(url).view_name == 'recipes:top_rated'
-
-class TestSaveFavoriteRecipeUrl:
-    def test_save_favorites_recipe_reverse(self):
-        url = reverse('recipes:favorites')
-        assert url == f'/api/recipes/favorites/'
-
-    def test_save_favorites_recipe_resolve(self):
-        url = f'/api/recipes/favorites/'
-        assert resolve(url).view_name == 'recipes:favorites'
