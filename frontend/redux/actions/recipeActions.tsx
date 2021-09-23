@@ -35,7 +35,7 @@ export const saveUnSaveAction =
                     Authorization: `Token ${localStorage.getItem('auth_token')}`,
                 },
             };
-            const body = JSON.stringify({ recipeId });
+            const body = JSON.stringify({ recipe: recipeId });
             await axios.post(endpointRoute().recipes.save, body, config);
             await dispatch(loadRecipeDetailsAction({ id: recipeId }));
             await dispatch({ type: SAVE_UNSAVE_ACTION_SUCCESS });

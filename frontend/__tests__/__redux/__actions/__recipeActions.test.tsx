@@ -153,7 +153,7 @@ describe('axios request should match url endpoint, and parameters', () => {
     test('saveUnSaveAction', () => {
         const recipeId = parameters.id;
         const endpointUrl = endpointRoute().recipes.save;
-        const body = JSON.stringify({ recipeId });
+        const body = JSON.stringify({ recipe: recipeId });
 
         store.dispatch(saveUnSaveAction({ recipeId }));
 
