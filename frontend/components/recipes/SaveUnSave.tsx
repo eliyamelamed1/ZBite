@@ -10,6 +10,7 @@ const SaveUnSave = ({ recipeId }) => {
     const { requestedRecipeData } = useSelector((state) => state.recipeReducer);
 
     useEffect(() => {
+        console.log(requestedRecipeData?.saves);
         try {
             const isRecipeAlreadySaved = requestedRecipeData?.saves.includes(loggedUserData?.id);
             if (isRecipeAlreadySaved) {
