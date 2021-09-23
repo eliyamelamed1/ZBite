@@ -69,11 +69,11 @@ describe('FollowUnFollow - isUserAlreadyFollowed false', () => {
         expect(followUnFollowActionSpy.mock.calls[0][0].user_to_follow).toBe(userToFollow);
     });
     test('clicking the "follow" button should change the text to: "unfollow" ', async () => {
-        let followButton = await screen.findByRole('button', { name: 'follow' });
+        const followButton = await screen.findByRole('button', { name: 'follow' });
         waitForElementToBeRemoved(followButton);
         userEvent.click(followButton);
 
-        let unFollowButton = await screen.findByRole('button', { name: 'unfollow' });
+        const unFollowButton = await screen.findByRole('button', { name: 'unfollow' });
         expect(unFollowButton).toBeInTheDocument();
     });
 });
