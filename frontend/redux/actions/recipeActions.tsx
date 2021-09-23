@@ -23,6 +23,7 @@ import {
 
 import axios from 'axios';
 import { endpointRoute } from '../../globals';
+import { loadLoggedUserDataAction } from './userActions';
 
 export const saveUnSaveAction =
     ({ recipeId }) =>
@@ -38,6 +39,7 @@ export const saveUnSaveAction =
             const body = JSON.stringify({ recipe: recipeId });
             await axios.post(endpointRoute().recipes.save, body, config);
             await dispatch(loadRecipeDetailsAction({ id: recipeId }));
+            await dispatch(loadLoggedUserDataAction());
             await dispatch({ type: SAVE_UNSAVE_ACTION_SUCCESS });
         } catch {
             dispatch({ type: SAVE_UNSAVE_ACTION_FAIL });

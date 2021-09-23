@@ -13,110 +13,103 @@ import userEvent from '@testing-library/user-event';
 
 const saveUnSaveActionSpy = jest.spyOn(recipeActions, 'saveUnSaveAction');
 
-const recipeToSave = 'recipeToSave';
-
-describe('SaveUnSave', () => {
-    const userInitialState = {
-        loggedUserData: { id: 'loggedUserId' },
-    };
+const recipeData = {
+    id: 'id',
+};
+describe('isRecipeAlreadySaved === false', () => {
     beforeEach(() => {
+        const userInitialState = {
+            loggedUserData: { id: 'loggedUserId', wishlist: [] },
+        };
+
         store.dispatch({ type: TEST_CASE_AUTH, payload: userInitialState });
+
+        const loggedUserData = {
+            id: 'loggedUserId',
+            wishlist: [recipeData.id],
+        };
+        axios.post.mockReturnValueOnce(() => {});
+        axios.get.mockReturnValueOnce({ data: null }); // loadRequestedRecipeDataAction()
+        axios.get.mockReturnValueOnce({ data: loggedUserData }); // loadLoggedUserDataAction()
+
+        render(
+            <Provider store={store}>
+                <SaveUnSave recipeId={recipeData.id} />
+            </Provider>
+        );
     });
-    describe('isRecipeAlreadySaved === false', () => {
-        beforeEach(() => {
-            const recipeData = {
-                id: 'id',
-                saves: ['loggedUserId'],
-            };
-            axios.post.mockReturnValueOnce(() => {});
-            axios.get.mockReturnValueOnce({ data: recipeData });
-
-            const recipeInitialState = {
-                requestedRecipeData: {
-                    id: 'id',
-                    saves: [],
-                },
-            };
-
-            store.dispatch({ type: TEST_CASE_RECIPE, payload: recipeInitialState });
-            render(
-                <Provider store={store}>
-                    <SaveUnSave recipeId={recipeToSave} />
-                </Provider>
-            );
-        });
-        afterEach(() => {
-            cleanup();
-            jest.clearAllMocks();
-        });
-        test('should render without crashing', () => {});
-        test('should render save button', () => {
-            const saveButton = screen.getByRole('button');
-            expect(saveButton).toBeInTheDocument();
-        });
-        test('follow button should dispatch followUnFollowAction', () => {
-            const saveButton = screen.getByRole('button');
-            userEvent.click(saveButton);
-
-            const timesActionHaveDispatched = saveUnSaveActionSpy.mock.calls.length;
-            expect(timesActionHaveDispatched).toBe(1);
-            expect(saveUnSaveActionSpy.mock.calls[0][0].recipeId).toBe(recipeToSave);
-        });
-        test('saving recipe successfully should switch button text to unsave', async () => {
-            const saveButton = await screen.findByRole('button', { name: 'save' });
-            userEvent.click(saveButton);
-
-            const unSaveButton = await screen.findByRole('button', { name: 'unsave' });
-            expect(unSaveButton).toBeInTheDocument();
-        });
-        test.todo('saving recipe failure should not change button text');
+    afterEach(() => {
+        cleanup();
+        jest.clearAllMocks();
     });
-
-    describe('isRecipeAlreadySaved === true', () => {
-        beforeEach(() => {
-            const recipeData = {
-                id: 'id',
-                saves: [],
-            };
-            axios.post.mockReturnValueOnce(() => {});
-            axios.get.mockReturnValueOnce({ data: recipeData });
-
-            const recipeInitialState = {
-                requestedRecipeData: {
-                    id: 'id',
-                    saves: ['loggedUserId'],
-                },
-            };
-            store.dispatch({ type: TEST_CASE_RECIPE, payload: recipeInitialState });
-            render(
-                <Provider store={store}>
-                    <SaveUnSave recipeId={recipeToSave} />
-                </Provider>
-            );
-        });
-        afterEach(() => {
-            cleanup();
-            jest.clearAllMocks();
-        });
-        test('should render without crashing', () => {});
-        test('should render save button', () => {
-            const saveButton = screen.getByRole('button');
-            expect(saveButton).toBeInTheDocument();
-        });
-        test('follow button should dispatch followUnFollowAction', () => {
-            const saveButton = screen.getByRole('button');
-            userEvent.click(saveButton);
-            const timesActionHaveDispatched = saveUnSaveActionSpy.mock.calls.length;
-            expect(timesActionHaveDispatched).toBe(1);
-            expect(saveUnSaveActionSpy.mock.calls[0][0].recipeId).toBe(recipeToSave);
-        });
-        // test('unSaving recipe successfully should switch button text to save', async () => {
-        //     const unSaveButton = await screen.findByRole('button', { name: 'unsave' });
-        //     userEvent.click(unSaveButton);
-
-        //     const saveButton = await screen.findByRole('button', { name: 'save' });
-        //     expect(saveButton).toBeInTheDocument();
-        // });
-        test.todo('saving recipe failure should not change button text');
+    test('should render without crashing', () => {});
+    test('should render save button', () => {
+        const saveButton = screen.getByRole('button');
+        expect(saveButton).toBeInTheDocument();
     });
+    test('save button should dispatch saveUnSaveAction', () => {
+        const saveButton = screen.getByRole('button');
+        userEvent.click(saveButton);
+
+        const timesActionHaveDispatched = saveUnSaveActionSpy.mock.calls.length;
+        expect(timesActionHaveDispatched).toBe(1);
+        expect(saveUnSaveActionSpy.mock.calls[0][0].recipeId).toBe('id');
+    });
+    test('saving recipe successfully should switch button text to unsave', async () => {
+        const saveButton = screen.getByRole('button', { name: 'save' });
+        userEvent.click(saveButton);
+
+        const unSaveButton = await screen.findByRole('button', { name: 'unsave' });
+        expect(unSaveButton).toBeInTheDocument();
+    });
+    test.todo('saving recipe failure should not change button text');
+});
+
+describe('isRecipeAlreadySaved === true', () => {
+    beforeEach(() => {
+        const userInitialState = {
+            loggedUserData: { id: 'loggedUserId', wishlist: [recipeData.id] },
+        };
+
+        store.dispatch({ type: TEST_CASE_AUTH, payload: userInitialState });
+
+        const loggedUserData = {
+            id: 'loggedUserId',
+            wishlist: [],
+        };
+        axios.post.mockReturnValueOnce(() => {});
+        axios.get.mockReturnValueOnce({ data: null }); // loadRequestedRecipeDataAction()
+        axios.get.mockReturnValueOnce({ data: loggedUserData }); // loadLoggedUserDataAction()
+
+        render(
+            <Provider store={store}>
+                <SaveUnSave recipeId={recipeData.id} />
+            </Provider>
+        );
+    });
+    afterEach(() => {
+        cleanup();
+        jest.clearAllMocks();
+    });
+    test('should render without crashing', () => {});
+    test('should render unsave button', () => {
+        const unSaveButton = screen.getByRole('button', { name: 'unsave' });
+        expect(unSaveButton).toBeInTheDocument();
+    });
+    test('follow button should dispatch saveUnSaveAction', () => {
+        const unSaveButton = screen.getByRole('button', { name: 'unsave' });
+        userEvent.click(unSaveButton);
+
+        const timesActionHaveDispatched = saveUnSaveActionSpy.mock.calls.length;
+        expect(timesActionHaveDispatched).toBe(1);
+        expect(saveUnSaveActionSpy.mock.calls[0][0].recipeId).toBe('id');
+    });
+    // test('unSaving recipe successfully should switch button text to save', async () => {
+    // const unSaveButton = screen.getByRole('button', { name: 'unsave' });
+    // userEvent.click(unSaveButton);
+
+    // const saveButton = await screen.findByRole('button', { name: 'save' });
+    //     expect(saveButton).toBeInTheDocument();
+    // });
+    test.todo('saving recipe failure should not change button text');
 });

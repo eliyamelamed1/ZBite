@@ -7,19 +7,18 @@ const SaveUnSave = ({ recipeId }) => {
     const dispatch = useDispatch();
     const [button, setButton] = useState('save');
     const { loggedUserData } = useSelector((state) => state.userReducer);
-    const { requestedRecipeData } = useSelector((state) => state.recipeReducer);
 
-    useEffect(() => {
-        console.log(requestedRecipeData?.saves);
-        try {
-            const isRecipeAlreadySaved = requestedRecipeData?.saves.includes(loggedUserData?.id);
+    useEffect(
+        function toggleButtonText() {
+            const isRecipeAlreadySaved = loggedUserData?.wishlist?.includes(recipeId);
             if (isRecipeAlreadySaved) {
                 setButton('unsave');
             } else {
                 setButton('save');
             }
-        } catch {}
-    }, [dispatch, loggedUserData, recipeId, requestedRecipeData]);
+        },
+        [dispatch, loggedUserData, recipeId]
+    );
 
     const onSubmit = (e) => {
         e.preventDefault();
