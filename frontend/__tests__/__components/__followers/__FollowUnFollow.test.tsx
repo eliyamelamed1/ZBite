@@ -1,5 +1,3 @@
-// TODO - ADD TESTS FOR GUEST USER
-
 import '@testing-library/jest-dom/extend-expect';
 
 import * as userActions from '../../../redux/actions/userActions';
@@ -15,7 +13,6 @@ import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
 
 const followUnFollowActionSpy = jest.spyOn(userActions, 'followUnFollowAction');
-jest.mock('axios');
 
 const userToFollow = 'userToFollow';
 

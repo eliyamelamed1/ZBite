@@ -13,6 +13,8 @@ import {
     REVIEW_CREATE_SUCCESS,
     REVIEW_DELETE_FAIL,
     REVIEW_DELETE_SUCCESS,
+    SAVE_UNSAVE_ACTION_FAIL,
+    SAVE_UNSAVE_ACTION_SUCCESS,
     SEARCH_RECIPE_FAIL,
     SEARCH_RECIPE_SUCCESS,
     UPDATE_RECIPE_FAIL,
@@ -21,6 +23,26 @@ import {
 
 import axios from 'axios';
 import { endpointRoute } from '../../globals';
+
+export const saveUnSaveAction =
+    ({ recipeId }) =>
+    async (dispatch) => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                    Authorization: `Token ${localStorage.getItem('auth_token')}`,
+                },
+            };
+            const body = JSON.stringify({ recipeId });
+            await axios.post(endpointRoute().recipes.save, body, config);
+            await dispatch(loadRecipeDetailsAction({ id: recipeId }));
+            await dispatch({ type: SAVE_UNSAVE_ACTION_SUCCESS });
+        } catch {
+            dispatch({ type: SAVE_UNSAVE_ACTION_FAIL });
+        }
+    };
 
 export const recipeDeleteAction =
     ({ id }) =>
@@ -33,7 +55,6 @@ export const recipeDeleteAction =
                     Authorization: `Token ${localStorage.getItem('auth_token')}`,
                 },
             };
-
             await axios.delete(endpointRoute(id).recipes.details, config);
             dispatch({ type: DELETE_RECIPE_SUCCESS });
         } catch {
@@ -76,7 +97,6 @@ export const recipeUpdateAction =
                 Authorization: `Token ${localStorage.getItem('auth_token')}`,
             },
         };
-
         try {
             const body = JSON.stringify({
                 title,

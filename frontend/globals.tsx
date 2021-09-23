@@ -15,6 +15,7 @@ export const endpointRoute = (id = String) => ({
         list: `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/list/`,
         search: `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/search/`,
         details: `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}/`,
+        save: `${process.env.NEXT_PUBLIC_API_URL}/api/saves/save/`,
     },
     reviews: {
         create: `${process.env.NEXT_PUBLIC_API_URL}/api/reviews/create/`,
