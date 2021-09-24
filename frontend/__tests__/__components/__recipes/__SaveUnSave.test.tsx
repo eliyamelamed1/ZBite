@@ -2,11 +2,11 @@ import '@testing-library/jest-dom/extend-expect';
 
 import * as recipeActions from '../../../redux/actions/recipeActions';
 
-import { TEST_CASE_AUTH, TEST_CASE_RECIPE } from '../../../redux/types';
-import { cleanup, render, screen, waitForElementToBeRemoved } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
-import SaveUnSave from '../../../components/recipes/saveUnSave';
+import SaveUnSave from '../../../components/recipes/SaveUnSave';
+import { TEST_CASE_AUTH } from '../../../redux/types';
 import axios from 'axios';
 import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
@@ -16,21 +16,21 @@ const saveUnSaveActionSpy = jest.spyOn(recipeActions, 'saveUnSaveAction');
 const recipeData = {
     id: 'id',
 };
-describe('isRecipeAlreadySaved === false', () => {
+describe('recipe not saved', () => {
+    const userInitialState = {
+        loggedUserData: { id: 'loggedUserId', wishlist: [] },
+    };
+
+    const loggedUserData = {
+        id: 'loggedUserId',
+        wishlist: [recipeData.id],
+    };
     beforeEach(() => {
-        const userInitialState = {
-            loggedUserData: { id: 'loggedUserId', wishlist: [] },
-        };
-
-        store.dispatch({ type: TEST_CASE_AUTH, payload: userInitialState });
-
-        const loggedUserData = {
-            id: 'loggedUserId',
-            wishlist: [recipeData.id],
-        };
         axios.post.mockReturnValueOnce(() => {});
         axios.get.mockReturnValueOnce({ data: null }); // loadRequestedRecipeDataAction()
         axios.get.mockReturnValueOnce({ data: loggedUserData }); // loadLoggedUserDataAction()
+
+        store.dispatch({ type: TEST_CASE_AUTH, payload: userInitialState });
 
         render(
             <Provider store={store}>
@@ -65,22 +65,20 @@ describe('isRecipeAlreadySaved === false', () => {
     test.todo('saving recipe failure should not change button text');
 });
 
-describe('isRecipeAlreadySaved === true', () => {
+describe('recipe is already saved', () => {
+    const loggedUserData = {
+        id: 'loggedUserId',
+        wishlist: [],
+    };
+    const userInitialState = {
+        loggedUserData: { id: 'loggedUserId', wishlist: [recipeData.id] },
+    };
     beforeEach(() => {
-        const userInitialState = {
-            loggedUserData: { id: 'loggedUserId', wishlist: [recipeData.id] },
-        };
-
-        store.dispatch({ type: TEST_CASE_AUTH, payload: userInitialState });
-
-        const loggedUserData = {
-            id: 'loggedUserId',
-            wishlist: [],
-        };
         axios.post.mockReturnValueOnce(() => {});
         axios.get.mockReturnValueOnce({ data: null }); // loadRequestedRecipeDataAction()
         axios.get.mockReturnValueOnce({ data: loggedUserData }); // loadLoggedUserDataAction()
 
+        store.dispatch({ type: TEST_CASE_AUTH, payload: userInitialState });
         render(
             <Provider store={store}>
                 <SaveUnSave recipeId={recipeData.id} />
@@ -105,10 +103,10 @@ describe('isRecipeAlreadySaved === true', () => {
         expect(saveUnSaveActionSpy.mock.calls[0][0].recipeId).toBe('id');
     });
     // test('unSaving recipe successfully should switch button text to save', async () => {
-    // const unSaveButton = screen.getByRole('button', { name: 'unsave' });
-    // userEvent.click(unSaveButton);
+    //     const unSaveButton = screen.getByRole('button', { name: 'unsave' });
+    //     userEvent.click(unSaveButton);
 
-    // const saveButton = await screen.findByRole('button', { name: 'save' });
+    //     const saveButton = await screen.findByRole('button', { name: 'save' });
     //     expect(saveButton).toBeInTheDocument();
     // });
     test.todo('saving recipe failure should not change button text');

@@ -24,21 +24,20 @@ describe('FollowUnFollow - isUserAlreadyFollowed false', () => {
         following: [userToFollow],
         followers: [],
     };
-
+    const loggedUserData = {
+        id: 'id',
+        name: 'name',
+        email: 'email',
+        following: [],
+        followers: [],
+    };
+    const initialState = {
+        isUserAuthenticated: true,
+        loggedUserData: loggedUserData,
+    };
     beforeEach(() => {
         axios.get.mockReturnValueOnce({ data });
         axios.post.mockReturnValueOnce(() => {});
-        const loggedUserData = {
-            id: 'id',
-            name: 'name',
-            email: 'email',
-            following: [],
-            followers: [],
-        };
-        const initialState = {
-            isUserAuthenticated: true,
-            loggedUserData: loggedUserData,
-        };
         store.dispatch({ type: TEST_CASE_AUTH, payload: initialState });
         render(
             <Provider store={store}>
@@ -70,7 +69,6 @@ describe('FollowUnFollow - isUserAlreadyFollowed false', () => {
     });
     test('clicking the "follow" button should change the text to: "unfollow" ', async () => {
         const followButton = await screen.findByRole('button', { name: 'follow' });
-        waitForElementToBeRemoved(followButton);
         userEvent.click(followButton);
 
         const unFollowButton = await screen.findByRole('button', { name: 'unfollow' });
@@ -86,21 +84,21 @@ describe('FollowUnFollow - isUserAlreadyFollowed true', () => {
         following: [],
         followers: [],
     };
+    const loggedUserData = {
+        id: 'id',
+        name: 'name',
+        email: 'email',
+        following: [userToFollow],
+        followers: [],
+    };
+    const initialState = {
+        isUserAuthenticated: true,
+        loggedUserData: loggedUserData,
+    };
 
     beforeEach(() => {
         axios.get.mockReturnValueOnce({ data });
         axios.post.mockReturnValueOnce(() => {});
-        const loggedUserData = {
-            id: 'id',
-            name: 'name',
-            email: 'email',
-            following: [userToFollow],
-            followers: [],
-        };
-        const initialState = {
-            isUserAuthenticated: true,
-            loggedUserData: loggedUserData,
-        };
         store.dispatch({ type: TEST_CASE_AUTH, payload: initialState });
         render(
             <Provider store={store}>
@@ -132,11 +130,10 @@ describe('FollowUnFollow - isUserAlreadyFollowed true', () => {
         expect(followUnFollowActionSpy.mock.calls[0][0].user_to_follow).toBe(userToFollow);
     });
     test('clicking the "unfollow" button should change the text to: "follow" ', async () => {
-        let unFollowButton = await screen.findByRole('button', { name: 'unfollow' });
-        waitForElementToBeRemoved(unFollowButton);
+        const unFollowButton = await screen.findByRole('button', { name: 'unfollow' });
         userEvent.click(unFollowButton);
 
-        let followButton = await screen.findByRole('button', { name: 'follow' });
+        const followButton = await screen.findByRole('button', { name: 'follow' });
         expect(followButton).toBeInTheDocument();
     });
 });
