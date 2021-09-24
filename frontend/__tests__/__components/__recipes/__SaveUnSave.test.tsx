@@ -27,8 +27,7 @@ describe('recipe not saved', () => {
     };
     beforeEach(() => {
         axios.post.mockReturnValueOnce(() => {});
-        axios.get.mockReturnValueOnce({ data: null }); // loadRequestedRecipeDataAction()
-        axios.get.mockReturnValueOnce({ data: loggedUserData }); // loadLoggedUserDataAction()
+        axios.get.mockReturnValue({ data: loggedUserData }); // loadLoggedUserDataAction()
 
         store.dispatch({ type: TEST_CASE_AUTH, payload: userInitialState });
 
@@ -62,7 +61,16 @@ describe('recipe not saved', () => {
         const unSaveButton = await screen.findByRole('button', { name: 'unsave' });
         expect(unSaveButton).toBeInTheDocument();
     });
-    test.todo('saving recipe failure should not change button text');
+    test('saving recipe failure should not change button text', async () => {
+        saveUnSaveActionSpy.mockReturnValueOnce(() => {
+            throw new Error();
+        });
+        const saveButton = screen.getByRole('button', { name: 'save' });
+        userEvent.click(saveButton);
+
+        const unSaveButton = await screen.queryByRole('button', { name: 'unsave' });
+        expect(unSaveButton).not.toBeInTheDocument();
+    });
 });
 
 describe('recipe is already saved', () => {
@@ -75,8 +83,7 @@ describe('recipe is already saved', () => {
     };
     beforeEach(() => {
         axios.post.mockReturnValueOnce(() => {});
-        axios.get.mockReturnValueOnce({ data: null }); // loadRequestedRecipeDataAction()
-        axios.get.mockReturnValueOnce({ data: loggedUserData }); // loadLoggedUserDataAction()
+        axios.get.mockReturnValue({ data: loggedUserData }); // loadLoggedUserDataAction()
 
         store.dispatch({ type: TEST_CASE_AUTH, payload: userInitialState });
         render(
@@ -102,12 +109,21 @@ describe('recipe is already saved', () => {
         expect(timesActionHaveDispatched).toBe(1);
         expect(saveUnSaveActionSpy.mock.calls[0][0].recipeId).toBe('id');
     });
-    // test('unSaving recipe successfully should switch button text to save', async () => {
-    //     const unSaveButton = screen.getByRole('button', { name: 'unsave' });
-    //     userEvent.click(unSaveButton);
+    test('unSaving recipe successfully should switch button text to save', async () => {
+        const unSaveButton = screen.getByRole('button', { name: 'unsave' });
+        userEvent.click(unSaveButton);
 
-    //     const saveButton = await screen.findByRole('button', { name: 'save' });
-    //     expect(saveButton).toBeInTheDocument();
-    // });
-    test.todo('saving recipe failure should not change button text');
+        const saveButton = await screen.findByRole('button', { name: 'save' });
+        expect(saveButton).toBeInTheDocument();
+    });
+    test('saving recipe failure should not change button text', async () => {
+        saveUnSaveActionSpy.mockReturnValue(() => {
+            throw new Error();
+        });
+        const unSaveButton = screen.getByRole('button', { name: 'unsave' });
+        userEvent.click(unSaveButton);
+
+        const saveButton = await screen.queryByRole('button', { name: 'save' });
+        expect(saveButton).not.toBeInTheDocument();
+    });
 });
