@@ -84,6 +84,7 @@ describe('RecipeDetails - recipe of author', () => {
             description: 'recipeDescription',
             flavor_type: 'Sour',
             author: 'eliya',
+            saves: [],
             photo_main: '/#',
         },
         listOfFilteredReviews: null,
@@ -95,6 +96,7 @@ describe('RecipeDetails - recipe of author', () => {
         description: 'updatedRecipeDescription',
         flavor_type: 'Sweet',
         author: 'eliya',
+        saves: ['someUser'],
         photo_main: '/#',
     };
     beforeEach(async () => {
@@ -144,8 +146,8 @@ describe('RecipeDetails - recipe of author', () => {
         expect(ReviewCreateSpy).toHaveBeenCalled();
         expect(ReviewCreateSpy.mock.calls[0][0].recipeId).toBe(recipeParams.recipeData.id);
     });
-
-    test('migrateRequestedRecipeData isUserDataMatchReqId === true - should update recipeData', async () => {
+    test('should display updated recipeData', async () => {
+        // migrateRequestedRecipeData isUserDataMatchReqId === true
         const initialState = {
             requestedRecipeData: updatedRecipe,
         };
@@ -153,13 +155,15 @@ describe('RecipeDetails - recipe of author', () => {
         const updatedTitle = await screen.findByText(updatedRecipe.title);
         const updatedDescription = await screen.findByText(updatedRecipe.description);
         const updatedFlavor = await screen.findAllByText(updatedRecipe.flavor_type);
+        const updatedSaves = await screen.findByText(/saves: 1/);
 
         expect(updatedTitle).toBeInTheDocument();
         expect(updatedDescription).toBeInTheDocument();
         expect(updatedFlavor.length).toBe(2);
         expect(updatedFlavor[1]).toBeInTheDocument();
+        expect(updatedSaves).toBeInTheDocument();
     });
-    test('migrateRequestedRecipeData => isUserDataMatchReqId === false - should not update recipeData', async () => {
+    test('should not display updated recipe data of other recipe', async () => {
         updatedRecipe = {
             ...updatedRecipe,
             id: 'differentRecipeId',
@@ -176,7 +180,8 @@ describe('RecipeDetails - recipe of author', () => {
         expect(updatedDescription).not.toBeInTheDocument();
         expect(updatedFlavor.length).toBe(1);
     });
-    test('migrateListOfFilteredReviews isReviewsOfThisRecipe === true - should update reviewsData', async () => {
+    test('should display updated reviewsData', async () => {
+        // migrateListOfFilteredReviews isReviewsOfThisRecipe === true -
         const initialState = {
             listOfFilteredReviews: [
                 { recipe: '5', id: '1', author: 'eliya', stars: 'updated stars', comment: 'updated comment' },
@@ -187,7 +192,8 @@ describe('RecipeDetails - recipe of author', () => {
         const updatedStars = await screen.findByText(/updated stars/i);
         expect(updatedStars).toBeInTheDocument();
     });
-    test('migrateListOfFilteredReviews isReviewsOfThisRecipe === false - should not update reviewsData', async () => {
+    test('should not display updated review data of other recipe', async () => {
+        // migrateListOfFilteredReviews isReviewsOfThisRecipe === false
         const initialState = {
             listOfFilteredReviews: [
                 { recipe: 'pizza', id: '1', author: 'eliya', stars: 'updated stars', comment: 'updated comment' },
@@ -212,6 +218,7 @@ describe('RecipeDetails - not the recipe author', () => {
             description: 'recipeDescription',
             flavor_type: 'Sour',
             author: 'eliya',
+            saves: [],
             photo_main: '/#',
         },
         listOfFilteredReviews: null,
@@ -263,7 +270,8 @@ describe('RecipeDetails - not the recipe author', () => {
         expect(ReviewCreateSpy).toHaveBeenCalled();
         expect(ReviewCreateSpy.mock.calls[0][0].recipeId).toBe(recipeParams.recipeData.id);
     });
-    test('migrateListOfFilteredReviews isReviewsOfThisRecipe === true - should update reviewsData', async () => {
+    test('should display updated reviewsData', async () => {
+        // migrateListOfFilteredReviews isReviewsOfThisRecipe === true
         const initialState = {
             listOfFilteredReviews: [
                 { recipe: '5', id: '1', author: 'eliya', stars: 'updated stars', comment: 'updated comment' },
@@ -274,7 +282,8 @@ describe('RecipeDetails - not the recipe author', () => {
         const updatedStars = await screen.findByText(/updated stars/i);
         expect(updatedStars).toBeInTheDocument();
     });
-    test('migrateListOfFilteredReviews isReviewsOfThisRecipe === false - should not update reviewsData', async () => {
+    test('should no display updated reviewsData of other recipe', async () => {
+        // migrateListOfFilteredReviews isReviewsOfThisRecipe === false
         const initialState = {
             listOfFilteredReviews: [
                 { recipe: 'pizza', id: '1', author: 'eliya', stars: 'updated stars', comment: 'updated comment' },
