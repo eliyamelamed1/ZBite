@@ -77,6 +77,7 @@ const RecipeDetails = (props) => {
                                     recipe Author: <p>{recipeData.author}</p>
                                 </div>
                             </Link>
+                            <p>saves: {recipeData.saves.length}</p>
                             <div>
                                 recipe title: <h1>{recipeData.title}</h1>
                             </div>
