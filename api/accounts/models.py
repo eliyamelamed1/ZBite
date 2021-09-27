@@ -29,8 +29,6 @@ class UserAccountManager(BaseUserManager):
 
         return user
     
-    
-
 
 # TODO - learn about PermissionsMixin
 class UserAccount(AbstractBaseUser, PermissionsMixin):
@@ -63,3 +61,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     @classmethod
     def get_top_rated_accounts_url(cls):
         return reverse('accounts:top')
+
+    @classmethod
+    def get_wishlist_url(cls):
+        return reverse('accounts:wishlist')
