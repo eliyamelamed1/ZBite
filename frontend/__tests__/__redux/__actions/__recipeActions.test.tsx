@@ -10,7 +10,7 @@ import {
     reviewCreateAction,
     reviewDeleteAction,
     reviewsInRecipeAction,
-    saveUnSaveAction,
+    saveRecipeAction,
 } from '../../../redux/actions/recipeActions';
 
 import axios from 'axios';
@@ -150,12 +150,12 @@ describe('axios request should match url endpoint, and parameters', () => {
         expect(axios.post.mock.calls[0][1]).toStrictEqual(body);
         expect(axios.post.mock.calls[0][2]).toStrictEqual(config);
     });
-    test('saveUnSaveAction', () => {
+    test('saveRecipeAction', () => {
         const recipeId = parameters.id;
         const endpointUrl = endpointRoute().recipes.save;
         const body = JSON.stringify({ recipe: recipeId });
 
-        store.dispatch(saveUnSaveAction({ recipeId }));
+        store.dispatch(saveRecipeAction({ recipeId }));
 
         expect(axios.post.mock.calls.length).toBe(1);
         expect(axios.post.mock.calls[0][0]).toBe(endpointUrl);

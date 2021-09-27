@@ -5,13 +5,13 @@ import * as recipeActions from '../../../redux/actions/recipeActions';
 import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
-import SaveUnSave from '../../../components/recipes/SaveUnSave';
+import SaveRecipe from '../../../components/recipes/SaveRecipe';
 import { TEST_CASE_AUTH } from '../../../redux/types';
 import axios from 'axios';
 import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
 
-const saveUnSaveActionSpy = jest.spyOn(recipeActions, 'saveUnSaveAction');
+const saveRecipeActionSpy = jest.spyOn(recipeActions, 'saveRecipeAction');
 
 const recipeData = {
     id: 'id',
@@ -33,7 +33,7 @@ describe('recipe not saved', () => {
 
         render(
             <Provider store={store}>
-                <SaveUnSave recipeId={recipeData.id} />
+                <SaveRecipe recipeId={recipeData.id} />
             </Provider>
         );
     });
@@ -46,13 +46,13 @@ describe('recipe not saved', () => {
         const saveButton = screen.getByRole('button');
         expect(saveButton).toBeInTheDocument();
     });
-    test('save button should dispatch saveUnSaveAction', () => {
+    test('save button should dispatch saveRecipeAction', () => {
         const saveButton = screen.getByRole('button');
         userEvent.click(saveButton);
 
-        const timesActionHaveDispatched = saveUnSaveActionSpy.mock.calls.length;
+        const timesActionHaveDispatched = saveRecipeActionSpy.mock.calls.length;
         expect(timesActionHaveDispatched).toBe(1);
-        expect(saveUnSaveActionSpy.mock.calls[0][0].recipeId).toBe('id');
+        expect(saveRecipeActionSpy.mock.calls[0][0].recipeId).toBe('id');
     });
     test('saving recipe successfully should switch button text to unsave', async () => {
         const saveButton = screen.getByRole('button', { name: 'save' });
@@ -62,7 +62,7 @@ describe('recipe not saved', () => {
         expect(unSaveButton).toBeInTheDocument();
     });
     test('saving recipe failure should not change button text', async () => {
-        saveUnSaveActionSpy.mockReturnValueOnce(() => {
+        saveRecipeActionSpy.mockReturnValueOnce(() => {
             throw new Error();
         });
         const saveButton = screen.getByRole('button', { name: 'save' });
@@ -88,7 +88,7 @@ describe('recipe is already saved', () => {
         store.dispatch({ type: TEST_CASE_AUTH, payload: userInitialState });
         render(
             <Provider store={store}>
-                <SaveUnSave recipeId={recipeData.id} />
+                <SaveRecipe recipeId={recipeData.id} />
             </Provider>
         );
     });
@@ -101,13 +101,13 @@ describe('recipe is already saved', () => {
         const unSaveButton = screen.getByRole('button', { name: 'unsave' });
         expect(unSaveButton).toBeInTheDocument();
     });
-    test('follow button should dispatch saveUnSaveAction', () => {
+    test('follow button should dispatch saveRecipeAction', () => {
         const unSaveButton = screen.getByRole('button', { name: 'unsave' });
         userEvent.click(unSaveButton);
 
-        const timesActionHaveDispatched = saveUnSaveActionSpy.mock.calls.length;
+        const timesActionHaveDispatched = saveRecipeActionSpy.mock.calls.length;
         expect(timesActionHaveDispatched).toBe(1);
-        expect(saveUnSaveActionSpy.mock.calls[0][0].recipeId).toBe('id');
+        expect(saveRecipeActionSpy.mock.calls[0][0].recipeId).toBe('id');
     });
     test('unSaving recipe successfully should switch button text to save', async () => {
         const unSaveButton = screen.getByRole('button', { name: 'unsave' });
@@ -117,7 +117,7 @@ describe('recipe is already saved', () => {
         expect(saveButton).toBeInTheDocument();
     });
     test('saving recipe failure should not change button text', async () => {
-        saveUnSaveActionSpy.mockReturnValue(() => {
+        saveRecipeActionSpy.mockReturnValue(() => {
             throw new Error();
         });
         const unSaveButton = screen.getByRole('button', { name: 'unsave' });

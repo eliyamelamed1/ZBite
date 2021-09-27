@@ -4,7 +4,7 @@ import * as userActions from '../../../redux/actions/userActions';
 
 import { cleanup, render, screen, waitForElementToBeRemoved } from '@testing-library/react';
 
-import FollowUnFollow from '../../../components/followers/FollowUnFollow';
+import FollowUser from '../../../components/followers/FollowUser';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { TEST_CASE_AUTH } from '../../../redux/types';
@@ -12,11 +12,11 @@ import axios from 'axios';
 import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
 
-const followUnFollowActionSpy = jest.spyOn(userActions, 'followUnFollowAction');
+const followUserActionSpy = jest.spyOn(userActions, 'followUserAction');
 
 const userToFollow = 'userToFollow';
 
-describe('FollowUnFollow - isUserAlreadyFollowed false', () => {
+describe('FollowUser - isUserAlreadyFollowed false', () => {
     const data = {
         id: 'id',
         name: 'name',
@@ -41,7 +41,7 @@ describe('FollowUnFollow - isUserAlreadyFollowed false', () => {
         store.dispatch({ type: TEST_CASE_AUTH, payload: initialState });
         render(
             <Provider store={store}>
-                <FollowUnFollow userToFollow={userToFollow} />
+                <FollowUser userToFollow={userToFollow} />
             </Provider>
         );
     });
@@ -52,20 +52,20 @@ describe('FollowUnFollow - isUserAlreadyFollowed false', () => {
     });
     test('should render without crashing ', () => {});
     test('should match own data-testid ', () => {
-        const followUnFollow = screen.getByTestId('followUnFollow');
-        expect(followUnFollow).toBeInTheDocument();
+        const followUser = screen.getByTestId('followUser');
+        expect(followUser).toBeInTheDocument();
     });
     test('should render follow button', () => {
         const followButton = screen.getByRole('button', { name: 'follow' });
         expect(followButton).toBeInTheDocument();
     });
-    test('follow button should dispatch followUnFollowAction ', async () => {
+    test('follow button should dispatch followUserAction ', async () => {
         const followButton = screen.getByRole('button', { name: 'follow' });
 
         userEvent.click(followButton);
-        const timesActionHaveDispatched = followUnFollowActionSpy.mock.calls.length;
+        const timesActionHaveDispatched = followUserActionSpy.mock.calls.length;
         expect(timesActionHaveDispatched).toBe(1);
-        expect(followUnFollowActionSpy.mock.calls[0][0].user_to_follow).toBe(userToFollow);
+        expect(followUserActionSpy.mock.calls[0][0].user_to_follow).toBe(userToFollow);
     });
     test('clicking the "follow" button should change the text to: "unfollow" ', async () => {
         const followButton = await screen.findByRole('button', { name: 'follow' });
@@ -76,7 +76,7 @@ describe('FollowUnFollow - isUserAlreadyFollowed false', () => {
     });
 });
 
-describe('FollowUnFollow - isUserAlreadyFollowed true', () => {
+describe('FollowUser - isUserAlreadyFollowed true', () => {
     const data = {
         id: 'id',
         name: 'name',
@@ -102,7 +102,7 @@ describe('FollowUnFollow - isUserAlreadyFollowed true', () => {
         store.dispatch({ type: TEST_CASE_AUTH, payload: initialState });
         render(
             <Provider store={store}>
-                <FollowUnFollow userToFollow={userToFollow} />
+                <FollowUser userToFollow={userToFollow} />
             </Provider>
         );
     });
@@ -113,21 +113,21 @@ describe('FollowUnFollow - isUserAlreadyFollowed true', () => {
     });
     test('should render without crashing ', () => {});
     test('should match own data-testid ', () => {
-        const followUnFollow = screen.getByTestId('followUnFollow');
-        expect(followUnFollow).toBeInTheDocument();
+        const followUser = screen.getByTestId('followUser');
+        expect(followUser).toBeInTheDocument();
     });
     test('should render follow button', async () => {
         const unFollowButton = await screen.findByRole('button', { name: 'unfollow' });
         expect(unFollowButton).toBeInTheDocument();
     });
-    test('follow button should dispatch followUnFollowAction ', async () => {
+    test('follow button should dispatch followUserAction ', async () => {
         const unFollowButton = await screen.findByRole('button', { name: 'unfollow' });
 
         userEvent.click(unFollowButton);
 
-        const timesActionHaveDispatched = followUnFollowActionSpy.mock.calls.length;
+        const timesActionHaveDispatched = followUserActionSpy.mock.calls.length;
         expect(timesActionHaveDispatched).toBe(1);
-        expect(followUnFollowActionSpy.mock.calls[0][0].user_to_follow).toBe(userToFollow);
+        expect(followUserActionSpy.mock.calls[0][0].user_to_follow).toBe(userToFollow);
     });
     test('clicking the "unfollow" button should change the text to: "follow" ', async () => {
         const unFollowButton = await screen.findByRole('button', { name: 'unfollow' });

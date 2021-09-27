@@ -25,7 +25,7 @@ import axios from 'axios';
 import { endpointRoute } from '../../globals';
 import { loadLoggedUserDataAction } from './userActions';
 
-export const saveUnSaveAction =
+export const saveRecipeAction =
     ({ recipeId }) =>
     async (dispatch) => {
         try {

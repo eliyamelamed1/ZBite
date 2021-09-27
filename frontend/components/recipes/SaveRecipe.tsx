@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { saveUnSaveAction } from '../../redux/actions/recipeActions';
+import { saveRecipeAction } from '../../redux/actions/recipeActions';
 
-const SaveUnSave = ({ recipeId }) => {
+const SaveRecipe = ({ recipeId }) => {
     const dispatch = useDispatch();
     const [button, setButton] = useState('save');
     const { loggedUserData } = useSelector((state) => state.userReducer);
@@ -23,7 +23,7 @@ const SaveUnSave = ({ recipeId }) => {
     const onSubmit = (e) => {
         e.preventDefault();
         try {
-            dispatch(saveUnSaveAction({ recipeId }));
+            dispatch(saveRecipeAction({ recipeId }));
         } catch {}
     };
     const authLinks = (
@@ -33,4 +33,4 @@ const SaveUnSave = ({ recipeId }) => {
     );
     return <div>{authLinks}</div>;
 };
-export default SaveUnSave;
+export default SaveRecipe;

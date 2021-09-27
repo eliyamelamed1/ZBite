@@ -1,6 +1,6 @@
 export const endpointRoute = (id = String) => ({
     users: {
-        followUnFollow: `${process.env.NEXT_PUBLIC_API_URL}/api/followers/follow/`,
+        followUser: `${process.env.NEXT_PUBLIC_API_URL}/api/followers/follow/`,
         list: `${process.env.NEXT_PUBLIC_API_URL}/api/accounts/list/`,
         loggedUserData: `${process.env.NEXT_PUBLIC_API_URL}/api/accounts/logged_user/`,
         login: `${process.env.NEXT_PUBLIC_API_URL}/api/djoser/token/login/`,
