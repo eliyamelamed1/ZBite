@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import FollowUnFollow from '../../components/followers/FollowUnFollow';
+import FollowUser from '../../components/followers/FollowUser';
 import Head from 'next/head';
 import UserDelete from '../../components/users/UserDelete';
 import UserUpdate from '../../components/users/UserUpdate';
@@ -76,7 +76,7 @@ const UserDetails = (props) => {
                     <p>following: {userData?.following?.length}</p>
                     <p>followers: {userData?.followers?.length}</p>
                 </div>
-                <div>{isMyProfile ? <div>{myProfileLinks}</div> : <FollowUnFollow userToFollow={userData?.id} />}</div>
+                <div>{isMyProfile ? <div>{myProfileLinks}</div> : <FollowUser userToFollow={userData?.id} />}</div>
             </main>
         </React.Fragment>
     );

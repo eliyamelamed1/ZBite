@@ -9,7 +9,7 @@ import Image from 'next/image';
 import IsRecipeAuthor from '../../components/recipes/IsRecipeAuthor';
 import Link from 'next/link';
 import ReviewCreate from '../../components/reviews/ReviewCreate';
-import ReviewDelete from '../../components/reviews/ReviewDelete';
+import SaveRecipe from '../../components/recipes/SaveRecipe';
 import { loadRecipeDetailsAction } from '../../redux/actions/recipeActions';
 import { reviewsInRecipeAction } from '../../redux/actions/recipeActions';
 import store from '../../redux/store';
@@ -77,6 +77,7 @@ const RecipeDetails = (props) => {
                                     recipe Author: <p>{recipeData.author}</p>
                                 </div>
                             </Link>
+                            <p>saves: {recipeData.saves?.length}</p>
                             <div>
                                 recipe title: <h1>{recipeData.title}</h1>
                             </div>
@@ -99,7 +100,8 @@ const RecipeDetails = (props) => {
                     )}
                 </section>
                 <h2>reviews</h2>
-                {isUserAuthenticated ? <ReviewCreate recipeId={recipeData.id} /> : null}
+                <section>{isUserAuthenticated ? <ReviewCreate recipeId={recipeData.id} /> : null}</section>
+                <section>{isUserAuthenticated ? <SaveRecipe recipeId={recipeData.id} /> : null}</section>
                 <section>{reviewsData ? <DisplayReviews reviewsToDisplay={reviewsData} /> : null}</section>
             </main>
         </React.Fragment>

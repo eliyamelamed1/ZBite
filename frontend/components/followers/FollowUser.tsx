@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { followUnFollowAction } from '../../redux/actions/userActions';
+import { followUserAction } from '../../redux/actions/userActions';
 
-const FollowUnFollow = ({ userToFollow }) => {
+const FollowUser = ({ userToFollow }) => {
     const dispatch = useDispatch();
     const [button, setButton] = useState('follow');
     const { loggedUserData, isUserAuthenticated } = useSelector((state) => state.userReducer);
@@ -20,7 +20,7 @@ const FollowUnFollow = ({ userToFollow }) => {
     const onSubmit = (e) => {
         e.preventDefault();
         try {
-            dispatch(followUnFollowAction({ user_to_follow: userToFollow }));
+            dispatch(followUserAction({ user_to_follow: userToFollow }));
         } catch {}
     };
 
@@ -29,8 +29,8 @@ const FollowUnFollow = ({ userToFollow }) => {
             <button>{button}</button>
         </form>
     );
-    return <div data-testid='followUnFollow'>{isUserAuthenticated ? <div>{authLinks}</div> : null}</div>;
+    return <div data-testid='followUser'>{isUserAuthenticated ? <div>{authLinks}</div> : null}</div>;
     // raise error when isUserAuthenticated is true on the client because he is null at the server and true !== null
 };
 
-export default FollowUnFollow;
+export default FollowUser;

@@ -108,9 +108,9 @@ describe('UserDetails - loggedUser visit his own profile', () => {
         expect(userDeleteTestId).toBeInTheDocument();
     });
     test('should not render follow/unfollow component', () => {
-        const followUnFollow = screen.queryByTestId('followUnFollow');
+        const followUser = screen.queryByTestId('followUser');
 
-        expect(followUnFollow).not.toBeInTheDocument();
+        expect(followUser).not.toBeInTheDocument();
     });
     test('migrateLoggedUserData => isUserDataMatchReqId === true => should update user data', async () => {
         const initialState = {
@@ -198,9 +198,9 @@ describe('UserDetails - loggedUser visiting other account profile', () => {
         expect(userDeleteTestId).not.toBeInTheDocument();
     });
     test('should render follow/unfollow component', () => {
-        const followUnFollow = screen.getByTestId('followUnFollow');
+        const followUser = screen.getByTestId('followUser');
 
-        expect(followUnFollow).toBeInTheDocument();
+        expect(followUser).toBeInTheDocument();
     });
     test('migrateRequestedUserData => isUserDataMatchReqId === true => should update userData', async () => {
         const updatedUserData = {

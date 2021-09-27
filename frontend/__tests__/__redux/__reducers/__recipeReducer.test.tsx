@@ -3,6 +3,29 @@
 
 import '@testing-library/jest-dom/extend-expect';
 
+import {
+    CREATE_RECIPE_FAIL,
+    CREATE_RECIPE_SUCCESS,
+    DELETE_RECIPE_FAIL,
+    DELETE_RECIPE_SUCCESS,
+    GET_RECIPE_DETAILS_FAIL,
+    GET_RECIPE_DETAILS_SUCCESS,
+    GET_RECIPE_LIST_FAIL,
+    GET_RECIPE_LIST_SUCCESS,
+    REVIEWS_IN_RECIPE_FAIL,
+    REVIEWS_IN_RECIPE_SUCCESS,
+    REVIEW_CREATE_FAIL,
+    REVIEW_CREATE_SUCCESS,
+    REVIEW_DELETE_FAIL,
+    REVIEW_DELETE_SUCCESS,
+    SAVE_UNSAVE_ACTION_FAIL,
+    SAVE_UNSAVE_ACTION_SUCCESS,
+    SEARCH_RECIPE_FAIL,
+    SEARCH_RECIPE_SUCCESS,
+    UPDATE_RECIPE_FAIL,
+    UPDATE_RECIPE_SUCCESS,
+} from '../../../redux/types';
+
 import { cleanup } from '@testing-library/react';
 import store from '../../../redux/store';
 
@@ -29,7 +52,7 @@ describe('recipeReducers - cases that modify the state', () => {
     });
 
     test('case SEARCH_RECIPE_SUCCESS', () => {
-        store.dispatch({ type: 'SEARCH_RECIPE_SUCCESS', payload: updatedState.listOfSearchedRecipes });
+        store.dispatch({ type: SEARCH_RECIPE_SUCCESS, payload: updatedState.listOfSearchedRecipes });
         const storeState = store.getState();
 
         expect(storeState.recipeReducer.listOfRecipes).toBeNull();
@@ -38,7 +61,7 @@ describe('recipeReducers - cases that modify the state', () => {
         expect(storeState.recipeReducer.listOfFilteredReviews).toBeNull();
     });
     test('case GET_RECIPE_DETAILS_SUCCESS', () => {
-        store.dispatch({ type: 'GET_RECIPE_DETAILS_SUCCESS', payload: updatedState.requestedRecipeData });
+        store.dispatch({ type: GET_RECIPE_DETAILS_SUCCESS, payload: updatedState.requestedRecipeData });
         const storeState = store.getState();
 
         expect(storeState.recipeReducer.listOfRecipes).toBeNull();
@@ -47,7 +70,7 @@ describe('recipeReducers - cases that modify the state', () => {
         expect(storeState.recipeReducer.listOfFilteredReviews).toBeNull();
     });
     test('case UPDATE_RECIPE_SUCCESS', () => {
-        store.dispatch({ type: 'UPDATE_RECIPE_SUCCESS', payload: updatedState.requestedRecipeData });
+        store.dispatch({ type: UPDATE_RECIPE_SUCCESS, payload: updatedState.requestedRecipeData });
         const storeState = store.getState();
 
         expect(storeState.recipeReducer.listOfRecipes).toBeNull();
@@ -56,7 +79,7 @@ describe('recipeReducers - cases that modify the state', () => {
         expect(storeState.recipeReducer.listOfFilteredReviews).toBeNull();
     });
     test('case REVIEWS_IN_RECIPE_SUCCESS', () => {
-        store.dispatch({ type: 'REVIEWS_IN_RECIPE_SUCCESS', payload: updatedState.listOfFilteredReviews });
+        store.dispatch({ type: REVIEWS_IN_RECIPE_SUCCESS, payload: updatedState.listOfFilteredReviews });
         const storeState = store.getState();
 
         expect(storeState.recipeReducer.listOfRecipes).toBeNull();
@@ -65,7 +88,7 @@ describe('recipeReducers - cases that modify the state', () => {
         expect(storeState.recipeReducer.listOfFilteredReviews).toStrictEqual(updatedState.listOfFilteredReviews);
     });
     test('case GET_RECIPE_LIST_SUCCESS', () => {
-        store.dispatch({ type: 'GET_RECIPE_LIST_SUCCESS', payload: updatedState.listOfRecipes });
+        store.dispatch({ type: GET_RECIPE_LIST_SUCCESS, payload: updatedState.listOfRecipes });
         const storeState = store.getState();
 
         expect(storeState.recipeReducer.listOfRecipes).toStrictEqual(updatedState.listOfRecipes);
@@ -94,44 +117,50 @@ describe('recipeReducers - cases that return ...state => state should not be mod
         expect(storeState.recipeReducer).toEqual(initialState);
     });
     test('case DELETE_RECIPE_SUCCESS ', () => {
-        store.dispatch({ type: 'DELETE_RECIPE_SUCCESS', payload: updatedState });
+        store.dispatch({ type: DELETE_RECIPE_SUCCESS, payload: updatedState });
     });
 
     test('case DELETE_RECIPE_FAIL ', () => {
-        store.dispatch({ type: 'DELETE_RECIPE_FAIL', payload: updatedState });
+        store.dispatch({ type: DELETE_RECIPE_FAIL, payload: updatedState });
     });
     test('case CREATE_RECIPE_SUCCESS ', () => {
-        store.dispatch({ type: 'CREATE_RECIPE_SUCCESS', payload: updatedState });
+        store.dispatch({ type: CREATE_RECIPE_SUCCESS, payload: updatedState });
     });
     test('case CREATE_RECIPE_FAIL ', () => {
-        store.dispatch({ type: 'CREATE_RECIPE_FAIL', payload: updatedState });
+        store.dispatch({ type: CREATE_RECIPE_FAIL, payload: updatedState });
     });
     test('case UPDATE_RECIPE_FAIL ', () => {
-        store.dispatch({ type: 'UPDATE_RECIPE_FAIL', payload: updatedState });
+        store.dispatch({ type: UPDATE_RECIPE_FAIL, payload: updatedState });
     });
     test('case GET_RECIPE_DETAILS_FAIL ', () => {
-        store.dispatch({ type: 'GET_RECIPE_DETAILS_FAIL', payload: updatedState });
+        store.dispatch({ type: GET_RECIPE_DETAILS_FAIL, payload: updatedState });
     });
     test('case GET_RECIPE_LIST_FAIL ', () => {
-        store.dispatch({ type: 'GET_RECIPE_LIST_FAIL', payload: updatedState });
+        store.dispatch({ type: GET_RECIPE_LIST_FAIL, payload: updatedState });
     });
     test('case SEARCH_RECIPE_FAIL ', () => {
-        store.dispatch({ type: 'SEARCH_RECIPE_FAIL', payload: updatedState });
+        store.dispatch({ type: SEARCH_RECIPE_FAIL, payload: updatedState });
     });
     test('case REVIEW_CREATE_SUCCESS ', () => {
-        store.dispatch({ type: 'REVIEW_CREATE_SUCCESS', payload: updatedState });
+        store.dispatch({ type: REVIEW_CREATE_SUCCESS, payload: updatedState });
     });
     test('case REVIEW_CREATE_FAIL ', () => {
-        store.dispatch({ type: 'REVIEW_CREATE_FAIL', payload: updatedState });
+        store.dispatch({ type: REVIEW_CREATE_FAIL, payload: updatedState });
     });
     test('case REVIEW_DELETE_SUCCESS ', () => {
-        store.dispatch({ type: 'REVIEW_DELETE_SUCCESS', payload: updatedState });
+        store.dispatch({ type: REVIEW_DELETE_SUCCESS, payload: updatedState });
     });
     test('case REVIEW_DELETE_FAIL ', () => {
-        store.dispatch({ type: 'REVIEW_DELETE_FAIL', payload: updatedState });
+        store.dispatch({ type: REVIEW_DELETE_FAIL, payload: updatedState });
     });
     test('case REVIEWS_IN_RECIPE_FAIL ', () => {
-        store.dispatch({ type: 'REVIEWS_IN_RECIPE_FAIL', payload: updatedState });
+        store.dispatch({ type: REVIEWS_IN_RECIPE_FAIL, payload: updatedState });
+    });
+    test('case SAVE_UNSAVE_ACTION_FAIL ', () => {
+        store.dispatch({ type: SAVE_UNSAVE_ACTION_FAIL, payload: updatedState });
+    });
+    test('case REVIEWS_IN_RECIPE_FAIL ', () => {
+        store.dispatch({ type: SAVE_UNSAVE_ACTION_SUCCESS, payload: updatedState });
     });
     test('case - default', () => {
         store.dispatch({ type: 'default', payload: updatedState });

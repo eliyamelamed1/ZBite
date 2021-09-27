@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 
 import {
-    followUnFollowAction,
+    followUserAction,
     loadLoggedUserDataAction,
     loadUserDetailsAction,
     loadUserListAction,
@@ -61,13 +61,13 @@ describe('axios request should match url endpoint, and parameters', () => {
             axios.patch.mockReturnValue({ data: true });
             axios.post.mockReturnValue({ data: true });
         });
-        test('followUnFollowAction', async () => {
+        test('followUserAction', async () => {
             const user_to_follow = 'userToFollow';
             const body = JSON.stringify({ user_to_follow });
-            await store.dispatch(followUnFollowAction({ user_to_follow }));
+            await store.dispatch(followUserAction({ user_to_follow }));
 
             expect(axios.post.mock.calls.length).toBe(1);
-            expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute().users.followUnFollow);
+            expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute().users.followUser);
             expect(axios.post.mock.calls[0][1]).toStrictEqual(body);
             expect(axios.post.mock.calls[0][2]).toStrictEqual(configWithAuthToken);
             expect(store.getActions()).toEqual([

@@ -11,8 +11,6 @@ class TestListUrl:
 
     def test_list_resolve(self):
         assert resolve('/api/accounts/list/').view_name == 'accounts:list'
-
-
 class TestDetailUrl:
     def test_detail_reverse(self):
         new_user = UserFactory()
@@ -23,7 +21,6 @@ class TestDetailUrl:
         new_user = UserFactory()
         url = f'/api/accounts/{new_user.id}/'
         assert resolve(url).view_name == 'accounts:detail'
-
 class TestTopRatedAccountsUrl:
     def test_top_rated_accounts_url_reverse(self):
         url = reverse('accounts:top')
@@ -41,3 +38,11 @@ class TestLoggedUserDetailViewUrl:
         url = f'/api/accounts/logged_user/'
         assert resolve(url).view_name == 'accounts:logged_user'
 
+class TestUserWishlist:
+    def test_logged_user_wishlist_url_reverse(self):
+        url = reverse('accounts:wishlist')
+        assert url == f'/api/accounts/wishlist/'
+        
+    def test_logged_user_wishlist_url_resolve(self):
+        url = f'/api/accounts/wishlist/'
+        assert resolve(url).view_name == 'accounts:wishlist'

@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from .models import UserAccount
 from .permissions import IsAuthorOrReadOnly
 from .serializers import UserSerializer
-
+from recipes.serializers import RecipeSerializer
 
 class UserListView(generics.ListCreateAPIView):
     permission_classes = (permissions.AllowAny, )
@@ -30,6 +30,7 @@ class LoggedUserDetailView(APIView):
             return Response(serializer.data)
         except:
             return HttpResponse('Unauthorized', status=401)
+
 class TopRatedAccounts(APIView):
     '''display the top rated accounts'''
     serializer_class = UserSerializer
@@ -42,3 +43,16 @@ class TopRatedAccounts(APIView):
 
         return Response(serializer.data)
 
+class UserWishlist(APIView):
+    '''display the user saved recipes'''
+    serializer_class = UserSerializer
+
+    def get(self, request):
+        try:
+            logged_user = UserAccount.objects.get(id=request.user.id) 
+            queryset = logged_user.wishlist.all()
+            serializer = RecipeSerializer(queryset, many=True)
+
+            return Response(serializer.data)
+        except:
+            return HttpResponse('Unauthorized', status=401)

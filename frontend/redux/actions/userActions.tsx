@@ -34,7 +34,7 @@ export const secondTestAction = () => {
     console.log('second action have been dispatched');
 };
 
-export const followUnFollowAction =
+export const followUserAction =
     ({ user_to_follow }) =>
     async (dispatch) => {
         try {
@@ -46,7 +46,7 @@ export const followUnFollowAction =
                 },
             };
             const body = JSON.stringify({ user_to_follow });
-            await axios.post(endpointRoute().users.followUnFollow, body, config);
+            await axios.post(endpointRoute().users.followUser, body, config);
             await dispatch(loadUserDetailsAction({ id: user_to_follow }));
             await dispatch(loadLoggedUserDataAction());
             await dispatch({ type: FOLLOW_UNFOLLOW_USER_SUCCESS });

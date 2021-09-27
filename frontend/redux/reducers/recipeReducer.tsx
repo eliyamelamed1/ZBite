@@ -13,6 +13,8 @@ import {
     REVIEW_CREATE_SUCCESS,
     REVIEW_DELETE_FAIL,
     REVIEW_DELETE_SUCCESS,
+    SAVE_UNSAVE_ACTION_FAIL,
+    SAVE_UNSAVE_ACTION_SUCCESS,
     SEARCH_RECIPE_FAIL,
     SEARCH_RECIPE_SUCCESS,
     TEST_CASE_RECIPE,
@@ -61,6 +63,8 @@ export default function recipeReducer(state = initialState, action) {
         case GET_RECIPE_DETAILS_FAIL:
         case GET_RECIPE_LIST_FAIL:
         case SEARCH_RECIPE_FAIL:
+        case SAVE_UNSAVE_ACTION_FAIL:
+        case SAVE_UNSAVE_ACTION_SUCCESS:
             return { ...state };
         default:
             return state;
