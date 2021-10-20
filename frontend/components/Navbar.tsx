@@ -83,7 +83,6 @@ const Navbar = () => {
             </ul>
         </nav>
     );
-
     const authenitcationLinks = (
         <section>
             {isUserAuthenticated ? (
@@ -102,14 +101,20 @@ const Navbar = () => {
     return (
         <div data-testid='navbar'>
             <header>
-                <i>{NavIcon.src && <Image src={NavIcon} alt='nav icon' height={100} width={100} />}</i>
+                <i className='logo-icon'>
+                    {NavIcon.src && <Image src={NavIcon} alt='logo icon' height={100} width={100} />}
+                </i>
                 <div className='search-box'>
                     <input type='text' className='search-txt' placeholder='Search' />
                     <a className='search-btn' href='/'>
-                        {SearchIcon.src && <Image src={SearchIcon} alt='search icon' height={100} width={100} />}
+                        <i className='search-icon'>
+                            {SearchIcon.src && <Image src={SearchIcon} alt='search icon' height={100} width={100} />}
+                        </i>
                     </a>
                 </div>
-                <i>{NavIcon.src && <Image src={NavIcon} alt='nav icon' height={100} width={100} />}</i>
+                <i className='nav-icon'>
+                    {NavIcon.src && <Image src={NavIcon} alt='nav icon' height={100} width={100} />}
+                </i>
                 {authenitcationLinks}
             </header>
             {NavbarLinks}

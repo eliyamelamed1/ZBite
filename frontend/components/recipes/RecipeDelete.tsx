@@ -9,7 +9,6 @@ import { useDispatch } from 'react-redux';
 
 const RecipeDelete = ({ id }) => {
     const dispatch = useDispatch();
-
     const onSubmit = (e) => {
         e.preventDefault();
         try {
