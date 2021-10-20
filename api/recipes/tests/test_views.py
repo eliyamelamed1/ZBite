@@ -31,6 +31,7 @@ class TestRecipeListView:
             recipe_list_page_render = api_client.get(recipe_list_url)
 
             assert recipe_list_page_render.status_code == 200
+            
 class TestRecipeCreateView:
     class TestAuthenticatedUsers:
         def test_recipe_create_page_render(self, api_client):

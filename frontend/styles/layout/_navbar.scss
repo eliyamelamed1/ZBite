@@ -48,16 +48,16 @@ header {
     padding: 0 5%;
     justify-content: space-between;
 
-    // .nav-icon {
-    //     width: 17px;
-    // }
+    .nav-icon {
+        width: 17px;
+    }
 
-    // .logo-icon {
-    //     width: 17px;
-    // }
+    .logo-icon {
+        width: 17px;
+    }
 
     .logout-btn {
-        display: none;
+        // display: none;
     }
 
     .search-icon {
@@ -68,7 +68,7 @@ header {
         background: white;
         border-radius: 0.5rem;
         display: flex;
-        padding: 0 5% 0 4%;
+        padding: 0 5% 0 5%;
         justify-content: space-between;
         align-items: center;
         width: 50%;
