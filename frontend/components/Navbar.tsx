@@ -40,7 +40,7 @@ const Navbar = () => {
                 <li>
                     <Link href={`${pageRoute().home}`}>
                         <a>
-                            <i> {HomeIcon.src && <Image src={HomeIcon} alt='as' height={50} width={60} />}</i>
+                            {HomeIcon.src && <Image src={HomeIcon} alt='as' height={50} width={60} />}
                             <p>Home</p>
                         </a>
                     </Link>
@@ -48,15 +48,15 @@ const Navbar = () => {
                 <li>
                     <Link href='/'>
                         <a>
-                            <i> {SavedIcon.src && <Image src={SavedIcon} alt='as' height={50} width={60} />}</i>
+                            {SavedIcon.src && <Image src={SavedIcon} alt='as' height={50} width={60} />}
                             <p>Saved</p>
                         </a>
                     </Link>
                 </li>
                 <li>
                     <Link href='/'>
-                        <a>
-                            <i> {PlusIcon.src && <Image src={PlusIcon} alt='as' height={50} width={60} />}</i>
+                        <a className='add__recipe'>
+                            {PlusIcon.src && <Image src={PlusIcon} alt='as' height={50} width={60} />}
                             <p>Create</p>
                         </a>
                     </Link>
@@ -64,9 +64,8 @@ const Navbar = () => {
                 <li>
                     <Link href='/'>
                         <a>
-                            <i>
-                                {LeaderboardIcon.src && <Image src={LeaderboardIcon} alt='as' height={50} width={60} />}
-                            </i>
+                            {LeaderboardIcon.src && <Image src={LeaderboardIcon} alt='as' height={50} width={60} />}
+
                             <p>Leaderboard</p>
                         </a>
                     </Link>
@@ -74,7 +73,7 @@ const Navbar = () => {
                 <li>
                     <Link href={profileUrl}>
                         <a>
-                            <i>{ProfileIcon.src && <Image src={ProfileIcon} alt='as' height={50} width={60} />}</i>
+                            {ProfileIcon.src && <Image src={ProfileIcon} alt='as' height={50} width={60} />}
                             <p>Profile</p>
                         </a>
                     </Link>
@@ -89,7 +88,7 @@ const Navbar = () => {
                 <li>
                     <Link href={`${pageRoute().home}`}>
                         <a>
-                            <i> {HomeIcon.src && <Image src={HomeIcon} alt='as' height={50} width={60} />}</i>
+                            {HomeIcon.src && <Image src={HomeIcon} alt='as' height={50} width={60} />}
                             <p>Home</p>
                         </a>
                     </Link>
@@ -97,9 +96,8 @@ const Navbar = () => {
                 <li>
                     <Link href='/'>
                         <a>
-                            <i>
-                                {LeaderboardIcon.src && <Image src={LeaderboardIcon} alt='as' height={50} width={60} />}
-                            </i>
+                            {LeaderboardIcon.src && <Image src={LeaderboardIcon} alt='as' height={50} width={60} />}
+
                             <p>Leaderboard</p>
                         </a>
                     </Link>
