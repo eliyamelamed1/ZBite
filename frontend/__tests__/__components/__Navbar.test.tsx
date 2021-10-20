@@ -16,91 +16,87 @@ jest.mock('../../redux/actions/userActions', () => ({ logoutAction: jest.fn() })
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 
-describe('NavBar - authenticated users', () => {
-    const initialState = {
-        userReducer: { isUserAuthenticated: true, loggedUserData: { email: 'testemail@gmail.com', id: 'userId' } },
-    };
-    const store = mockStore(initialState);
-    beforeEach(() => {
-        render(
-            <Provider store={store}>
-                <Navbar />
-            </Provider>
-        );
-    });
-    afterEach(() => {
-        cleanup();
-    });
-    test('renders without crashing', () => {});
-    test('contain global link (home)', () => {
-        const homeLink = screen.getByText(/home/i);
-        expect(homeLink).toBeInTheDocument();
-    });
-    test('should contain authLinks', () => {
-        const authLinks = screen.getByTestId('authLinks');
-        expect(authLinks).toBeInTheDocument();
-    });
-    test('authLinks should contain valid profile link', () => {
-        const profileLink = screen.getByRole('link', { name: /profile/i });
-        const userId = store.getState().userReducer.loggedUserData.id;
-        expect(profileLink).toBeInTheDocument();
-        expect(profileLink.href).toEqual(`http://localhost/users/${userId}`);
-    });
-    test('should not contain guestLinks', () => {
-        const guestLinks = screen.queryByTestId('guestLinks');
-        expect(guestLinks).toBeNull();
-    });
-    test('logout button should appear on authLinks', async () => {
-        const logoutButton = await screen.findByRole('button', { name: /logout/i });
-        expect(logoutButton).toBeInTheDocument();
-    });
-    test('logout button should dispatch logoutAction', async () => {
-        const logoutButton = screen.getByRole('button', { name: /logout/i });
-        userEvent.click(logoutButton);
+describe('asda', () => {
+    describe('NavBar - authenticated users', () => {
+        const initialState = {
+            userReducer: { isUserAuthenticated: true, loggedUserData: { email: 'testemail@gmail.com', id: 'userId' } },
+        };
+        const store = mockStore(initialState);
+        beforeEach(() => {
+            cleanup();
+            render(
+                <Provider store={store}>
+                    <Navbar />
+                </Provider>
+            );
+        });
+        test('renders without crashing', () => {});
+        test('should display NavbarLinks', () => {
+            const NavbarLinks = screen.getByTestId('NavbarLinks');
+            expect(NavbarLinks).toBeInTheDocument();
+        });
+        test('should display home button', () => {
+            const homeLink = screen.getByText(/home/i);
+            expect(homeLink).toBeInTheDocument();
+        });
+        test('NavbarLinks should contain valid profile link', () => {
+            const profileLink = screen.getByRole('link', { name: /profile/i });
+            const userId = store.getState().userReducer.loggedUserData.id;
+            expect(profileLink).toBeInTheDocument();
+            expect(profileLink.href).toEqual(`http://localhost/users/${userId}`);
+        });
+        test('logout button should appear', async () => {
+            const logoutButton = await screen.findByRole('button', { name: /logout/i });
+            expect(logoutButton).toBeInTheDocument();
+        });
+        test('logout button should dispatch logoutAction', async () => {
+            const logoutButton = screen.getByRole('button', { name: /logout/i });
+            userEvent.click(logoutButton);
 
-        const timesActionDispatched = await logoutAction.mock.calls.length;
-        expect(timesActionDispatched).toBe(1);
-    });
-});
-
-describe('NavBar - guest users', () => {
-    const initialState = {
-        userReducer: { isUserAuthenticated: false },
-    };
-    const store = mockStore(initialState);
-    beforeEach(() => {
-        render(
-            <Provider store={store}>
-                <Navbar />
-            </Provider>
-        );
-    });
-    test('renders without crashing', () => {});
-    test('contain link home)', () => {
-        const homeLink = screen.getByRole('link', { name: /home/i });
-        expect(homeLink).toBeInTheDocument();
-        expect(homeLink.href).toBe('http://localhost' + pageRoute().home);
-    });
-    test('contain guest links', () => {
-        expect(screen.getByTestId('guestLinks')).toBeInTheDocument();
-    });
-    test('authLinks contains singup and login links', () => {
-        const signupLink = screen.getByRole('link', { name: /sign up/i });
-        const loginLink = screen.getByRole('link', { name: /login/i });
-
-        expect(signupLink).toBeInTheDocument();
-        expect(loginLink).toBeInTheDocument();
-    });
-    test('should not contain authLinks', () => {
-        const authLinks = screen.queryByTestId('authLinks');
-        expect(authLinks).toBeNull();
+            const timesActionDispatched = await logoutAction.mock.calls.length;
+            expect(timesActionDispatched).toBe(1);
+        });
     });
 
-    test('signup and login links match their url', () => {
-        const signupLink = screen.getByRole('link', { name: /sign up/i });
-        const loginLink = screen.getByRole('link', { name: /login/i });
+    describe('NavBar - guest users', () => {
+        const initialState = {
+            userReducer: { isUserAuthenticated: false },
+        };
+        const store = mockStore(initialState);
+        beforeEach(() => {
+            render(
+                <Provider store={store}>
+                    <Navbar />
+                </Provider>
+            );
+        });
+        test('should render without crashing', () => {});
+        test('should display NavbarLinks', () => {
+            const NavbarLinks = screen.getByTestId('NavbarLinks');
+            expect(NavbarLinks).toBeInTheDocument();
+        });
+        test('should display home button', () => {
+            const homeLink = screen.getByText(/home/i);
+            expect(homeLink).toBeInTheDocument();
+        });
+        test('profile button should redirect to login page', () => {
+            const profileLink = screen.getByRole('link', { name: /profile/i });
+            expect(profileLink).toBeInTheDocument();
+            expect(profileLink.href).toEqual(`http://localhost/users/UserLogin`);
+        });
+        test('page should display singup and login links', () => {
+            const signupLink = screen.getByRole('link', { name: /sign up/i });
+            const loginLink = screen.getByRole('link', { name: /login/i });
 
-        expect(signupLink.href).toBe('http://localhost/users/UserSignup');
-        expect(loginLink.href).toBe('http://localhost/users/UserLogin');
+            expect(signupLink).toBeInTheDocument();
+            expect(loginLink).toBeInTheDocument();
+        });
+        test('signup and login links match their url', () => {
+            const signupLink = screen.getByRole('link', { name: /sign up/i });
+            const loginLink = screen.getByRole('link', { name: /login/i });
+
+            expect(signupLink.href).toBe('http://localhost/users/UserSignup');
+            expect(loginLink.href).toBe('http://localhost/users/UserLogin');
+        });
     });
 });

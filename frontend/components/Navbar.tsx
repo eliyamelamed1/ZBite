@@ -5,9 +5,11 @@ import HomeIcon from '../styles/icons/home.svg';
 import Image from 'next/image';
 import LeaderboardIcon from '../styles/icons/leaderboard.svg';
 import Link from 'next/link';
+import NavIcon from '../styles/icons/navBurger.svg';
 import PlusIcon from '../styles/icons/plus.svg';
 import ProfileIcon from '../styles/icons/profile.svg';
 import SavedIcon from '../styles/icons/heart.svg';
+import SearchIcon from '../styles/icons/search.svg';
 import { logoutAction } from '../redux/actions/userActions';
 import { pageRoute } from '../globals';
 
@@ -24,7 +26,7 @@ const Navbar = () => {
         setloggedUserData(updatedloggedUserData);
     }, [dispatch, updatedIsUserAuthenticated, updatedloggedUserData]);
 
-    const profileUrl = '/users/' + loggedUserData?.id;
+    const profileUrl = loggedUserData ? '/users/' + loggedUserData?.id : '/users/UserLogin/';
 
     const logoutHandler = () => {
         try {
@@ -34,8 +36,8 @@ const Navbar = () => {
         }
     };
 
-    const authNavbar = (
-        <nav data-testid='authLinks'>
+    const NavbarLinks = (
+        <nav data-testid='NavbarLinks'>
             <ul>
                 <li>
                     <Link href={`${pageRoute().home}`}>
@@ -82,30 +84,6 @@ const Navbar = () => {
         </nav>
     );
 
-    const guestNavbar = (
-        <nav data-testid='guestLinks'>
-            <ul>
-                <li>
-                    <Link href={`${pageRoute().home}`}>
-                        <a>
-                            {HomeIcon.src && <Image src={HomeIcon} alt='as' height={50} width={60} />}
-                            <p>Home</p>
-                        </a>
-                    </Link>
-                </li>
-                <li>
-                    <Link href='/'>
-                        <a>
-                            {LeaderboardIcon.src && <Image src={LeaderboardIcon} alt='as' height={50} width={60} />}
-
-                            <p>Leaderboard</p>
-                        </a>
-                    </Link>
-                </li>
-            </ul>
-        </nav>
-    );
-
     const authenitcationLinks = (
         <section>
             {isUserAuthenticated ? (
@@ -120,13 +98,20 @@ const Navbar = () => {
     );
 
     return (
-        <section data-testid='navbar'>
+        <div data-testid='navbar'>
             <header>
-                <input type='text' />
+                <i>{NavIcon.src && <Image src={NavIcon} alt='nav icon' height={100} width={100} />}</i>
+                <div className='search-box'>
+                    <input type='text' className='search-txt' placeholder='Search' />
+                    <a className='search-btn' href='/'>
+                        {SearchIcon.src && <Image src={SearchIcon} alt='search icon' height={100} width={100} />}
+                    </a>
+                </div>
+                <i>{NavIcon.src && <Image src={NavIcon} alt='nav icon' height={100} width={100} />}</i>
                 {authenitcationLinks}
             </header>
-            {isUserAuthenticated ? authNavbar : guestNavbar}
-        </section>
+            {NavbarLinks}
+        </div>
     );
 };
 
