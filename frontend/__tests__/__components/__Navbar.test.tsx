@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import configureStore from 'redux-mock-store';
 import { logoutAction } from '../../redux/actions/userActions';
+import { pageRoute } from '../../globals';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
@@ -38,11 +39,6 @@ describe('NavBar - authenticated users', () => {
     test('should contain authLinks', () => {
         const authLinks = screen.getByTestId('authLinks');
         expect(authLinks).toBeInTheDocument();
-    });
-    test('authLinks should contain logged user email,profile', () => {
-        const loggedEmail = screen.getByText(/testemail@gmail.com/);
-
-        expect(loggedEmail).toBeInTheDocument();
     });
     test('authLinks should contain valid profile link', () => {
         const profileLink = screen.getByRole('link', { name: /profile/i });
@@ -81,9 +77,9 @@ describe('NavBar - guest users', () => {
     });
     test('renders without crashing', () => {});
     test('contain global link (home)', () => {
-        const homeLink = screen.getByText(/home/i);
+        const homeLink = screen.getByText('Home');
         expect(homeLink).toBeInTheDocument();
-        expect(homeLink.href).toBe('http://localhost/');
+        expect(homeLink.href).toBe('http://localhost' + pageRoute().home);
     });
     test('contain guest links', () => {
         expect(screen.getByTestId('guestLinks')).toBeInTheDocument();

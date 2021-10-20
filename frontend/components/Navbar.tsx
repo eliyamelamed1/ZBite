@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import HomeIcon from '../styles/icons/home.svg';
+import Image from 'next/image';
+import LeaderboardIcon from '../styles/icons/leaderboard.svg';
 import Link from 'next/link';
+import PlusIcon from '../styles/icons/plus.svg';
+import ProfileIcon from '../styles/icons/profile.svg';
+import SavedIcon from '../styles/icons/heart.svg';
 import { logoutAction } from '../redux/actions/userActions';
+import { pageRoute } from '../globals';
 
 const Navbar = () => {
     const dispatch = useDispatch();
@@ -17,7 +24,7 @@ const Navbar = () => {
         setloggedUserData(updatedloggedUserData);
     }, [dispatch, updatedIsUserAuthenticated, updatedloggedUserData]);
 
-    const profileUrl = loggedUserData ? '/users/' + loggedUserData.id : null;
+    const profileUrl = '/users/' + loggedUserData?.id;
 
     const logoutHandler = () => {
         try {
@@ -26,58 +33,102 @@ const Navbar = () => {
             // TODO - add err msg
         }
     };
-    const authLinks = (
-        <section data-testid='authLinks'>
-            {loggedUserData ? (
-                <div>
-                    <div>you are currently logged in as {loggedUserData.email}</div>
-                    <div>
-                        <Link href={profileUrl}>profile</Link>
-                        <br />
-                        <Link href='/chats'>chats</Link>
-                    </div>
-                </div>
-            ) : null}
-            {isUserAuthenticated ? (
+
+    const authNavbar = (
+        <nav data-testid='authLinks'>
+            <ul>
                 <li>
-                    <button onClick={logoutHandler}>Logout</button>
+                    <Link href={`${pageRoute().home}`}>
+                        <a>
+                            <i> {HomeIcon.src && <Image src={HomeIcon} alt='as' height={50} width={60} />}</i>
+                            <p>Home</p>
+                        </a>
+                    </Link>
                 </li>
-            ) : null}
+                <li>
+                    <Link href='/'>
+                        <a>
+                            <i> {SavedIcon.src && <Image src={SavedIcon} alt='as' height={50} width={60} />}</i>
+                            <p>Saved</p>
+                        </a>
+                    </Link>
+                </li>
+                <li>
+                    <Link href='/'>
+                        <a>
+                            <i> {PlusIcon.src && <Image src={PlusIcon} alt='as' height={50} width={60} />}</i>
+                            <p>Create</p>
+                        </a>
+                    </Link>
+                </li>
+                <li>
+                    <Link href='/'>
+                        <a>
+                            <i>
+                                {LeaderboardIcon.src && <Image src={LeaderboardIcon} alt='as' height={50} width={60} />}
+                            </i>
+                            <p>Leaderboard</p>
+                        </a>
+                    </Link>
+                </li>
+                <li>
+                    <Link href={profileUrl}>
+                        <a>
+                            <i>{ProfileIcon.src && <Image src={ProfileIcon} alt='as' height={50} width={60} />}</i>
+                            <p>Profile</p>
+                        </a>
+                    </Link>
+                </li>
+            </ul>
+        </nav>
+    );
+
+    const guestNavbar = (
+        <nav data-testid='guestLinks'>
+            <ul>
+                <li>
+                    <Link href={`${pageRoute().home}`}>
+                        <a>
+                            <i> {HomeIcon.src && <Image src={HomeIcon} alt='as' height={50} width={60} />}</i>
+                            <p>Home</p>
+                        </a>
+                    </Link>
+                </li>
+                <li>
+                    <Link href='/'>
+                        <a>
+                            <i>
+                                {LeaderboardIcon.src && <Image src={LeaderboardIcon} alt='as' height={50} width={60} />}
+                            </i>
+                            <p>Leaderboard</p>
+                        </a>
+                    </Link>
+                </li>
+            </ul>
+        </nav>
+    );
+
+    const authenitcationLinks = (
+        <section>
+            {isUserAuthenticated ? (
+                <button onClick={logoutHandler}>Logout</button>
+            ) : (
+                <ul>
+                    <Link href='/users/UserLogin'>Login</Link>
+                    <Link href='/users/UserSignup'>Sign Up</Link>
+                </ul>
+            )}
         </section>
     );
 
-    const guestLinks = (
-        <div data-testid='guestLinks'>
-            <Link href='/users/UserLogin'>Login</Link>
-            <br />
-            <Link href='/users/UserSignup'>Sign Up</Link>
-        </div>
-    );
-
-    const mutualLinks = (
-        <div>
-            <li>
-                <br />
-                <Link href='/users/UserList'>user list</Link>
-                <br />
-                <Link href='/recipes/RecipeList'>recipe list</Link>
-            </li>
-        </div>
-    );
     return (
-        <nav data-testid='navbar'>
-            <Link href='/'>Auth System</Link>
-            <div>
-                <ul>
-                    <li>
-                        <Link href='/'>Home</Link>
-                    </li>
-                    <div>{isUserAuthenticated ? authLinks : guestLinks}</div>
-                    <br />
-                    <div>{mutualLinks}</div>
-                </ul>
-            </div>
-        </nav>
+        <section data-testid='navbar'>
+            <header>
+                <input type='text' />
+                {authenitcationLinks}
+            </header>
+            {isUserAuthenticated ? authNavbar : guestNavbar}
+        </section>
     );
 };
 

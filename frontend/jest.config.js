@@ -3,6 +3,7 @@ module.exports = {
     testPathIgnorePatterns: ['/node_modules/', '/.next/'],
     transform: {
         '^.+\\.(js|jsx|ts|tsx)$': '<rootDir>/node_modules/babel-jest',
+        '^.+\\.svg$': '<rootDir>/svgTransform.ts',
     },
     transformIgnorePatterns: ['/node_modules/', '^.+\\.module\\.(css|sass|scss)$'],
     moduleNameMapper: {
