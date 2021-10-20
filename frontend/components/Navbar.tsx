@@ -87,7 +87,9 @@ const Navbar = () => {
     const authenitcationLinks = (
         <section>
             {isUserAuthenticated ? (
-                <button onClick={logoutHandler}>Logout</button>
+                <button onClick={logoutHandler} className='logout-btn'>
+                    Logout
+                </button>
             ) : (
                 <ul>
                     <Link href='/users/UserLogin'>Login</Link>
