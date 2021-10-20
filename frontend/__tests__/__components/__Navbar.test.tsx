@@ -76,8 +76,8 @@ describe('NavBar - guest users', () => {
         );
     });
     test('renders without crashing', () => {});
-    test('contain global link (home)', () => {
-        const homeLink = screen.getByText('Home');
+    test('contain link home)', () => {
+        const homeLink = screen.getByRole('link', { name: /home/i });
         expect(homeLink).toBeInTheDocument();
         expect(homeLink.href).toBe('http://localhost' + pageRoute().home);
     });

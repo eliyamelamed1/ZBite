@@ -6,7 +6,7 @@ nav {
     align-items: center;
 
     ul {
-        padding: 1rem 2.2rem;
+        padding: 0.8rem 2.2rem;
         position: fixed;
         height: vh;
         bottom: 0%;
@@ -21,6 +21,9 @@ nav {
     img {
         width: 2.2rem;
     }
+    img:nth-of-type(3) {
+        width: 4rem;
+    }
 
     p {
         font-weight: 400;
@@ -31,4 +34,7 @@ nav {
         flex-direction: column;
         align-items: center;
     }
+}
+
+header {
 }
