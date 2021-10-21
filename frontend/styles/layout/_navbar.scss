@@ -7,7 +7,7 @@ nav {
 
     ul {
         position: fixed;
-        height: 8vh;
+        padding: 1% 0;
         bottom: 0%;
         width: 100vw;
         display: flex;
@@ -42,43 +42,36 @@ nav {
 
 header {
     background-color: $primary-color;
-    height: 4.1rem;
     display: flex;
     align-items: center;
-    padding: 0 5%;
+    padding: 0.4% 10%;
     justify-content: space-between;
-
-    .nav-icon {
-        width: 17px;
-    }
-
-    .logo-icon {
-        width: 17px;
-    }
 
     .logout-btn {
         // display: none;
     }
 
-    .search-icon {
-        width: 1.7rem;
+    .logo-icon {
+        margin: 0.3rem 0;
+        width: clamp(2rem, 2.5vw, 5rem);
     }
 
     .search-box {
         background: white;
         border-radius: 0.5rem;
         display: flex;
-        padding: 0 5% 0 5%;
+        padding: 0.2% 0;
         justify-content: space-between;
         align-items: center;
         width: 50%;
-        height: 45%;
+        max-width: 15rem;
     }
 
     .search-btn {
         color: gray;
         position: relative;
-        width: 0.8rem;
+        width: 2rem;
+        padding-right: 1rem;
     }
 
     .search-txt {
@@ -90,5 +83,6 @@ header {
         color: black;
         font-size: 0.8rem;
         width: inherit;
+        padding-left: 1rem;
     }
 }
