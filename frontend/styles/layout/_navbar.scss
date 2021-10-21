@@ -1,5 +1,4 @@
 @import '../abstracts/variables';
-
 nav {
     display: flex;
     justify-content: center;
@@ -44,16 +43,17 @@ header {
     background-color: $primary-color;
     display: flex;
     align-items: center;
-    padding: 0.4% 10%;
-    justify-content: space-between;
+    padding: 0 2%;
+    justify-content: space-around;
 
     .logout-btn {
-        // display: none;
+        color: white;
+        font-weight: $fw-bold;
     }
 
     .logo-icon {
         margin: 0.3rem 0;
-        width: clamp(2rem, 2.5vw, 5rem);
+        width: clamp(2rem, 2vw, 5rem);
     }
 
     .search-box {
@@ -63,8 +63,7 @@ header {
         padding: 0.2% 0;
         justify-content: space-between;
         align-items: center;
-        width: 50%;
-        max-width: 15rem;
+        width: MIN(50%, 15rem);
     }
 
     .search-btn {

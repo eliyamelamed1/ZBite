@@ -6,10 +6,12 @@ import Image from 'next/image';
 import LeaderboardIcon from '../styles/icons/leaderboard.svg';
 import Link from 'next/link';
 import LogoIcon from '../styles/icons/logo.svg';
+import NavBurgerIcon from '../styles/icons/navBurger.svg';
 import PlusIcon from '../styles/icons/plus.svg';
 import ProfileIcon from '../styles/icons/profile.svg';
 import SavedIcon from '../styles/icons/heart.svg';
 import SearchIcon from '../styles/icons/search.svg';
+import SideNav from './ui/SideNav';
 import { logoutAction } from '../redux/actions/userActions';
 import { pageRoute } from '../globals';
 
@@ -106,9 +108,9 @@ const Navbar = () => {
                 </i>
                 <div className='search-box'>
                     <input type='text' className='search-txt' placeholder='Search' />
-                    <a className='search-btn' href='/'>
+                    <button className='search-btn'>
                         <i>{SearchIcon.src && <Image src={SearchIcon} alt='search icon' height={100} width={100} />}</i>
-                    </a>
+                    </button>
                 </div>
                 {authenitcationLinks}
             </header>
