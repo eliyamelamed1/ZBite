@@ -50,6 +50,20 @@ header {
         color: white;
         font-weight: $fw-bold;
     }
+    ul {
+        display: flex;
+        justify-content: space-between;
+        width: 110%;
+        .signup-btn {
+            color: white;
+            font-weight: $fw-bold;
+        }
+
+        .login-btn {
+            color: white;
+            font-weight: $fw-bold;
+        }
+    }
 
     .logo-icon {
         margin: 0.3rem 0;

@@ -88,13 +88,20 @@ const Navbar = () => {
     const authenitcationLinks = (
         <section>
             {isUserAuthenticated ? (
-                <button onClick={logoutHandler} className='logout-btn'>
-                    Logout
-                </button>
+                <ul>
+                    <button onClick={logoutHandler} className='logout-btn'>
+                        Logout
+                    </button>
+                </ul>
             ) : (
                 <ul>
-                    <Link href='/users/UserLogin'>Login</Link>
-                    <Link href='/users/UserSignup'>Sign Up</Link>
+                    <li className='login-btn'>
+                        <Link href='/users/UserLogin'>Login</Link>
+                    </li>
+                    <br />
+                    <li className='signup-btn'>
+                        <Link href='/users/UserSignup'>Sign Up</Link>
+                    </li>
                 </ul>
             )}
         </section>
