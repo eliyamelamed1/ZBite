@@ -40,45 +40,55 @@ const Navbar = () => {
 
     const NavbarLinks = (
         <nav data-testid='NavbarLinks'>
-            <ul>
+            <ul className='nav__list'>
                 <li>
                     <Link href={`${pageRoute().home}`}>
-                        <a>
-                            {HomeIcon.src && <Image src={HomeIcon} alt='as' height={50} width={60} />}
-                            <p>Home</p>
+                        <a className='nav__link'>
+                            <i className='nav__link__icon'>
+                                {HomeIcon.src && <Image src={HomeIcon} alt='as' height={50} width={60} />}
+                            </i>
+                            <p className='nav__link__text'>Home</p>
                         </a>
                     </Link>
                 </li>
                 <li>
                     <Link href='/'>
                         <a>
-                            {SavedIcon.src && <Image src={SavedIcon} alt='as' height={50} width={60} />}
-                            <p>Saved</p>
+                            <i className='nav__link__icon'>
+                                {SavedIcon.src && <Image src={SavedIcon} alt='as' height={50} width={60} />}
+                            </i>
+                            <p className='nav__link__text'>Saved</p>
                         </a>
                     </Link>
                 </li>
                 <li>
                     <Link href='/'>
-                        <a className='add__recipe'>
-                            {PlusIcon.src && <Image src={PlusIcon} alt='as' height={50} width={60} />}
-                            <p>Create</p>
+                        <a className='nav__link nav__link-create-recipe'>
+                            <i className='nav__link__icon'>
+                                {PlusIcon.src && <Image src={PlusIcon} alt='as' height={50} width={60} />}
+                            </i>
+                            <p className='nav__link__text '>Create </p>
                         </a>
                     </Link>
                 </li>
                 <li>
                     <Link href='/'>
                         <a>
-                            {LeaderboardIcon.src && <Image src={LeaderboardIcon} alt='as' height={50} width={60} />}
+                            <i className='nav__link__icon'>
+                                {LeaderboardIcon.src && <Image src={LeaderboardIcon} alt='as' height={50} width={60} />}
+                            </i>
 
-                            <p>Leaderboard</p>
+                            <p className='nav__link__text'>Leaderboard</p>
                         </a>
                     </Link>
                 </li>
                 <li>
                     <Link href={profileUrl}>
                         <a>
-                            {ProfileIcon.src && <Image src={ProfileIcon} alt='as' height={50} width={60} />}
-                            <p>Profile</p>
+                            <i className='nav__link__icon'>
+                                {ProfileIcon.src && <Image src={ProfileIcon} alt='as' height={50} width={60} />}
+                            </i>
+                            <p className='nav__link__text'>Profile</p>
                         </a>
                     </Link>
                 </li>
@@ -108,7 +118,7 @@ const Navbar = () => {
     );
 
     return (
-        <div data-testid='navbar'>
+        <div data-testid='navbar' className='navbar'>
             <header>
                 <i className='logo-icon'>
                     {LogoIcon.src && <Image src={LogoIcon} alt='logo icon' height={100} width={100} />}

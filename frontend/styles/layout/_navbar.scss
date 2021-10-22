@@ -1,22 +1,20 @@
 @import '../abstracts/variables';
-nav {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+@import '../breakpoints.scss';
 
-    ul {
+nav {
+    .nav__list {
+        display: flex;
         position: fixed;
         padding: 1% 0;
         bottom: 0%;
         width: 100vw;
-        display: flex;
         align-items: center;
         justify-content: space-evenly;
         border-radius: 0.8rem 0.8rem 0 0;
         box-shadow: 0 0.01rem 0.1rem #b2b2b2;
     }
 
-    a {
+    .nav__link {
         opacity: 75%;
         display: flex;
     }
@@ -26,15 +24,15 @@ nav {
         position: relative;
     }
 
+    .nav__link__icon img {
+        width: 1.9rem;
+    }
+
     .add__recipe img {
         width: 3.5rem;
     }
 
-    img {
-        width: 1.9rem;
-    }
-
-    p {
+    .nav__link__text {
         font-size: 0;
     }
 }
@@ -43,25 +41,24 @@ header {
     background-color: $primary-color;
     display: flex;
     align-items: center;
-    padding: 0 2%;
+    padding: 0.5% 2%;
     justify-content: space-around;
 
-    .logout-btn {
-        color: white;
-        font-weight: $fw-bold;
-    }
     ul {
         display: flex;
-        justify-content: space-between;
-        width: 110%;
-        .signup-btn {
+        flex-direction: column;
+        justify-content: space-around;
+        margin: 5% 0;
+
+        .logout-btn {
             color: white;
             font-weight: $fw-bold;
         }
-
+        .signup-btn,
         .login-btn {
             color: white;
             font-weight: $fw-bold;
+            margin-block: 4%;
         }
     }
 
@@ -77,13 +74,13 @@ header {
         padding: 0.2% 0;
         justify-content: space-between;
         align-items: center;
-        width: MIN(50%, 15rem);
+        width: MIN(50%, 11rem); // use clamp #3
     }
 
     .search-btn {
         color: gray;
         position: relative;
-        width: 2rem;
+        width: 2rem; // use clamp #1
         padding-right: 1rem;
     }
 
@@ -94,8 +91,34 @@ header {
         float: left;
         margin: 5px;
         color: black;
-        font-size: 0.8rem;
+        font-size: 0.8rem; // use clamp && create $fs-small,fs-medium,fs-large #2
         width: inherit;
         padding-left: 1rem;
+    }
+}
+
+@include media('>=tablet') {
+    nav {
+        .nav__list {
+            display: flex;
+            position: fixed;
+            bottom: unset;
+            top: 0%;
+            box-shadow: unset;
+            justify-content: space-evenly;
+            width: 40%;
+        }
+
+        .nav__link__icon {
+            display: none;
+        }
+        .nav__link__text {
+            font-size: 1rem;
+            color: black;
+            font-weight: 600;
+        }
+        .nav__link-create-recipe {
+            display: none;
+        }
     }
 }
