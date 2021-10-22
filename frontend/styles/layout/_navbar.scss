@@ -3,15 +3,6 @@
 
 $header-height: clamp(4rem, 15.5vw, 4.5rem);
 
-// PHONE
-//  TODO - add 100% opacity to create recipe icon
-
-// TABLET
-// TODO - change navbar text to white
-// TODO - place nav before header
-// TODO - hide icon logo from header
-// TODO - amplify the width of the search box
-
 header {
     background-color: $primary-color;
     display: flex;
