@@ -1,11 +1,22 @@
 @import '../abstracts/variables';
 @import '../breakpoints.scss';
 
+$header-height: clamp(4rem, 15.5vw, 4.5rem);
+
+// PHONE
+//  TODO - add 100% opacity to create recipe icon
+
+// TABLET
+// TODO - change navbar text to white
+// TODO - place nav before header
+// TODO - hide icon logo from header
+// TODO - amplify the width of the search box
+
 nav {
     .nav__list {
         display: flex;
         position: fixed;
-        padding: 1% 0;
+        padding: 1.2% 0;
         bottom: 0%;
         width: 100vw;
         align-items: center;
@@ -15,21 +26,15 @@ nav {
     }
 
     .nav__link {
-        opacity: 75%;
         display: flex;
     }
 
-    .add__recipe {
-        opacity: 100%;
-        position: relative;
-    }
-
     .nav__link__icon img {
-        width: 1.9rem;
+        width: 1.7rem;
     }
 
-    .add__recipe img {
-        width: 3.5rem;
+    .nav__link__icon.create-recipe img {
+        width: 2.8rem;
     }
 
     .nav__link__text {
@@ -41,7 +46,7 @@ header {
     background-color: $primary-color;
     display: flex;
     align-items: center;
-    padding: 0.5% 2%;
+    height: $header-height;
     justify-content: space-around;
 
     ul {
@@ -75,51 +80,64 @@ header {
         justify-content: space-between;
         align-items: center;
         width: MIN(50%, 11rem); // use clamp #3
-    }
 
-    .search-btn {
-        color: gray;
-        position: relative;
-        width: 2rem; // use clamp #1
-        padding-right: 1rem;
-    }
+        .search-btn {
+            color: gray;
+            position: relative;
+            width: 2rem; // use clamp #1
+            padding-right: 1rem;
+        }
 
-    .search-txt {
-        border: none;
-        background: none;
-        position: relative;
-        float: left;
-        margin: 5px;
-        color: black;
-        font-size: 0.8rem; // use clamp && create $fs-small,fs-medium,fs-large #2
-        width: inherit;
-        padding-left: 1rem;
+        .search-txt {
+            border: none;
+            background: none;
+            position: relative;
+            float: left;
+            margin: 5px;
+            color: black;
+            font-size: 0.8rem; // use clamp && create $fs-small,fs-medium,fs-large #2
+            width: inherit;
+            padding-left: 1rem;
+        }
     }
 }
 
 @include media('>=tablet') {
-    nav {
-        .nav__list {
-            display: flex;
-            position: fixed;
-            bottom: unset;
-            top: 0%;
-            box-shadow: unset;
-            align-items: center;
-            justify-content: space-evenly;
-            width: 40%;
-        }
+    .nav__container {
+        display: flex;
 
-        .nav__link__icon {
-            display: none;
+        nav {
+            height: $header-height;
+            width: 50%;
+            order: 1;
+            .nav__list {
+                height: $header-height;
+                background-color: $primary-color;
+                border-radius: unset;
+                bottom: unset;
+                position: fixed;
+                width: inherit;
+                box-shadow: none;
+            }
+
+            .nav__link__icon {
+                display: none;
+            }
+            .nav__link__text {
+                font-size: 1rem;
+                color: black;
+                font-weight: 600;
+            }
+            .nav__link-create-recipe {
+                display: none;
+            }
         }
-        .nav__link__text {
-            font-size: 1rem;
-            color: black;
-            font-weight: 600;
-        }
-        .nav__link-create-recipe {
-            display: none;
+        header {
+            width: 50%;
+            order: 2;
+            .logo-icon {
+                display: none;
+            }
         }
     }
 }

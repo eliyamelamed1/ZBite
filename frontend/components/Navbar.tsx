@@ -39,7 +39,7 @@ const Navbar = () => {
     };
 
     const NavbarLinks = (
-        <nav data-testid='NavbarLinks'>
+        <nav>
             <ul className='nav__list'>
                 <li>
                     <Link href={`${pageRoute().home}`}>
@@ -53,7 +53,7 @@ const Navbar = () => {
                 </li>
                 <li>
                     <Link href='/'>
-                        <a>
+                        <a className='nav__link'>
                             <i className='nav__link__icon'>
                                 {SavedIcon.src && <Image src={SavedIcon} alt='as' height={50} width={60} />}
                             </i>
@@ -63,8 +63,8 @@ const Navbar = () => {
                 </li>
                 <li>
                     <Link href='/'>
-                        <a className='nav__link nav__link-create-recipe'>
-                            <i className='nav__link__icon'>
+                        <a className='nav__link create-recipe'>
+                            <i className='nav__link__icon create-recipe'>
                                 {PlusIcon.src && <Image src={PlusIcon} alt='as' height={50} width={60} />}
                             </i>
                             <p className='nav__link__text '>Create </p>
@@ -118,7 +118,7 @@ const Navbar = () => {
     );
 
     return (
-        <div data-testid='navbar' className='navbar'>
+        <div data-testid='navbar' className='nav__container'>
             <header>
                 <i className='logo-icon'>
                     {LogoIcon.src && <Image src={LogoIcon} alt='logo icon' height={100} width={100} />}
