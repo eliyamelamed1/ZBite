@@ -45,12 +45,12 @@ header {
         padding: 0.2% 0;
         justify-content: space-between;
         align-items: center;
-        width: MIN(50%, 11rem); // use clamp #3
+        width: 50%;
 
         .search-btn {
             color: gray;
             position: relative;
-            width: 2rem; // use clamp #1
+            width: 2rem;
             padding-right: 1rem;
         }
 
@@ -61,7 +61,7 @@ header {
             float: left;
             margin: 5px;
             color: black;
-            font-size: 0.8rem; // use clamp && create $fs-small,fs-medium,fs-large #2
+            font-size: 0.8rem;
             width: inherit;
             padding-left: 1rem;
         }
@@ -102,18 +102,29 @@ nav {
         display: flex;
         justify-content: center;
         background-color: $primary-color;
-
         header {
-            width: 30%;
+            width: MIN(40%, 50rem);
             order: 2;
+            justify-content: space-evenly;
 
+            .auth__links-list {
+                flex-direction: row;
+                justify-content: space-between;
+                margin: 5% 0;
+                color: white;
+                font-weight: $fw-bold;
+                width: 120%;
+            }
+            .search-box {
+                width: 60%;
+            }
             .logo-icon {
                 display: none;
             }
         }
         nav {
             height: $header-height;
-            width: 50%;
+            width: MIN(50%, 30rem);
             order: 1;
             .nav__list {
                 height: inherit;
@@ -122,6 +133,7 @@ nav {
                 position: fixed;
                 width: inherit;
                 box-shadow: none;
+                justify-content: space-between;
             }
 
             .nav__link-icon {
