@@ -39,7 +39,7 @@ const Navbar = () => {
     };
 
     const NavbarLinks = (
-        <nav>
+        <nav data-testid='NavbarLinks'>
             <ul className='nav__list'>
                 <li>
                     <Link href={`${pageRoute().home}`}>
