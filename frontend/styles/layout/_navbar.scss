@@ -1,7 +1,7 @@
 @import '../abstracts/variables';
 @import '../breakpoints.scss';
 
-$header-height: clamp(4rem, 15.5vw, 4.5rem);
+$header-height: clamp(4rem, 15.5vh, 4.5rem);
 
 header {
     background-color: $primary-color;
