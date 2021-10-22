@@ -67,7 +67,7 @@ const Navbar = () => {
                             <i className='nav__link-icon create-recipe'>
                                 {PlusIcon.src && <Image src={PlusIcon} alt='as' height={50} width={60} />}
                             </i>
-                            <p className='nav__link-text '>Create </p>
+                            <p className='nav__link-text create-recipe'>Create Recipe</p>
                         </a>
                     </Link>
                 </li>

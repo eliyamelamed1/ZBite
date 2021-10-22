@@ -22,10 +22,6 @@ header {
         color: white;
         font-weight: $fw-bold;
         width: inherit;
-        .signup-btn,
-        .login-btn {
-            font-size: 1rem;
-        }
     }
 
     .logo-icon {
@@ -102,25 +98,30 @@ nav {
             order: 2;
             justify-content: space-evenly;
 
+            .auth__links {
+                width: 6rem;
+                margin-right: unset;
+            }
+
             .auth__links-list {
                 flex-direction: row;
                 justify-content: space-between;
                 margin: 5% 0;
                 color: white;
                 font-weight: $fw-bold;
-                width: 120%;
+                font-size: 0.8rem;
             }
             .search-box {
-                width: 50%;
+                width: 60%;
             }
             .logo-icon {
                 display: none;
             }
         }
         nav {
-            height: $header-height;
-            width: MIN(50%, 30rem);
             order: 1;
+            height: $header-height;
+            width: MIN(52%, 30rem);
             .nav__list {
                 height: inherit;
                 border-radius: unset;
@@ -136,8 +137,8 @@ nav {
             }
             .nav__link-text {
                 color: white;
-                font-size: 1rem;
-                font-weight: 600;
+                font-size: 0.9rem;
+                font-weight: 700;
             }
             .nav__link-create-recipe {
                 display: none;
