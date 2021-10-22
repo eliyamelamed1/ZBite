@@ -44,51 +44,51 @@ const Navbar = () => {
                 <li>
                     <Link href={`${pageRoute().home}`}>
                         <a className='nav__link'>
-                            <i className='nav__link__icon'>
+                            <i className='nav__link-icon'>
                                 {HomeIcon.src && <Image src={HomeIcon} alt='as' height={50} width={60} />}
                             </i>
-                            <p className='nav__link__text'>Home</p>
+                            <p className='nav__link-text'>Home</p>
                         </a>
                     </Link>
                 </li>
                 <li>
                     <Link href='/'>
                         <a className='nav__link'>
-                            <i className='nav__link__icon'>
+                            <i className='nav__link-icon'>
                                 {SavedIcon.src && <Image src={SavedIcon} alt='as' height={50} width={60} />}
                             </i>
-                            <p className='nav__link__text'>Saved</p>
+                            <p className='nav__link-text'>Saved</p>
                         </a>
                     </Link>
                 </li>
                 <li>
                     <Link href='/'>
                         <a className='nav__link create-recipe'>
-                            <i className='nav__link__icon create-recipe'>
+                            <i className='nav__link-icon create-recipe'>
                                 {PlusIcon.src && <Image src={PlusIcon} alt='as' height={50} width={60} />}
                             </i>
-                            <p className='nav__link__text '>Create </p>
+                            <p className='nav__link-text '>Create </p>
                         </a>
                     </Link>
                 </li>
                 <li>
                     <Link href='/'>
                         <a>
-                            <i className='nav__link__icon'>
+                            <i className='nav__link-icon'>
                                 {LeaderboardIcon.src && <Image src={LeaderboardIcon} alt='as' height={50} width={60} />}
                             </i>
 
-                            <p className='nav__link__text'>Leaderboard</p>
+                            <p className='nav__link-text'>Leaderboard</p>
                         </a>
                     </Link>
                 </li>
                 <li>
                     <Link href={profileUrl}>
                         <a>
-                            <i className='nav__link__icon'>
+                            <i className='nav__link-icon'>
                                 {ProfileIcon.src && <Image src={ProfileIcon} alt='as' height={50} width={60} />}
                             </i>
-                            <p className='nav__link__text'>Profile</p>
+                            <p className='nav__link-text'>Profile</p>
                         </a>
                     </Link>
                 </li>
@@ -98,13 +98,13 @@ const Navbar = () => {
     const authenitcationLinks = (
         <section>
             {isUserAuthenticated ? (
-                <ul>
+                <ul className='auth__links-list'>
                     <button onClick={logoutHandler} className='logout-btn'>
                         Logout
                     </button>
                 </ul>
             ) : (
-                <ul>
+                <ul className='auth__links-list'>
                     <li className='login-btn'>
                         <Link href='/users/UserLogin'>Login</Link>
                     </li>
@@ -118,7 +118,7 @@ const Navbar = () => {
     );
 
     return (
-        <div data-testid='navbar' className='nav__container'>
+        <div data-testid='navbar' className='container'>
             <header>
                 <i className='logo-icon'>
                     {LogoIcon.src && <Image src={LogoIcon} alt='logo icon' height={100} width={100} />}

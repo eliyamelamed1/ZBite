@@ -12,36 +12,6 @@ $header-height: clamp(4rem, 15.5vw, 4.5rem);
 // TODO - hide icon logo from header
 // TODO - amplify the width of the search box
 
-nav {
-    .nav__list {
-        display: flex;
-        position: fixed;
-        padding: 1.2% 0;
-        bottom: 0%;
-        width: 100vw;
-        align-items: center;
-        justify-content: space-evenly;
-        border-radius: 0.8rem 0.8rem 0 0;
-        box-shadow: 0 0.01rem 0.1rem #b2b2b2;
-    }
-
-    .nav__link {
-        display: flex;
-    }
-
-    .nav__link__icon img {
-        width: 1.7rem;
-    }
-
-    .nav__link__icon.create-recipe img {
-        width: 2.8rem;
-    }
-
-    .nav__link__text {
-        font-size: 0;
-    }
-}
-
 header {
     background-color: $primary-color;
     display: flex;
@@ -49,20 +19,16 @@ header {
     height: $header-height;
     justify-content: space-around;
 
-    ul {
+    .auth__links-list {
         display: flex;
         flex-direction: column;
         justify-content: space-around;
         margin: 5% 0;
+        color: white;
+        font-weight: $fw-bold;
 
-        .logout-btn {
-            color: white;
-            font-weight: $fw-bold;
-        }
         .signup-btn,
         .login-btn {
-            color: white;
-            font-weight: $fw-bold;
             margin-block: 4%;
         }
     }
@@ -101,18 +67,56 @@ header {
         }
     }
 }
+nav {
+    .nav__list {
+        display: flex;
+        position: fixed;
+        padding: 1.2% 0;
+        bottom: 0%;
+        width: 100vw;
+        align-items: center;
+        justify-content: space-evenly;
+        border-radius: 0.8rem 0.8rem 0 0;
+        box-shadow: 0 0.01rem 0.1rem #b2b2b2;
+    }
+
+    .nav__link {
+        display: flex;
+    }
+
+    .nav__link-icon img {
+        width: 1.7rem;
+    }
+
+    .nav__link-icon.create-recipe img {
+        width: 2.8rem;
+    }
+
+    .nav__link-text {
+        font-size: 0;
+    }
+}
 
 @include media('>=tablet') {
-    .nav__container {
+    .container {
         display: flex;
+        justify-content: center;
+        background-color: $primary-color;
 
+        header {
+            width: 30%;
+            order: 2;
+
+            .logo-icon {
+                display: none;
+            }
+        }
         nav {
             height: $header-height;
             width: 50%;
             order: 1;
             .nav__list {
-                height: $header-height;
-                background-color: $primary-color;
+                height: inherit;
                 border-radius: unset;
                 bottom: unset;
                 position: fixed;
@@ -120,22 +124,15 @@ header {
                 box-shadow: none;
             }
 
-            .nav__link__icon {
+            .nav__link-icon {
                 display: none;
             }
-            .nav__link__text {
+            .nav__link-text {
+                color: white;
                 font-size: 1rem;
-                color: black;
                 font-weight: 600;
             }
             .nav__link-create-recipe {
-                display: none;
-            }
-        }
-        header {
-            width: 50%;
-            order: 2;
-            .logo-icon {
                 display: none;
             }
         }
