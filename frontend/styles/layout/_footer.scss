@@ -1,0 +1,27 @@
+@import '../abstracts/variables';
+
+footer {
+    display: none;
+}
+
+@include media('>=tablet') {
+    footer {
+        display: unset;
+        display: flex;
+        position: fixed;
+        bottom: 0%;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        background-color: $primary-color;
+
+        ul {
+            margin: 0.5rem 0;
+            display: flex;
+        }
+
+        img {
+            width: 3rem;
+        }
+    }
+}
