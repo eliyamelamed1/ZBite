@@ -1,31 +1,35 @@
 @import '../abstracts/variables';
 @import '../breakpoints.scss';
 
-$header-height: clamp(4rem, 15.5vh, 4.5rem);
+// TODO - adjust tablet mode search box to 50% and pc to 70%
 
+$header-height: clamp(3rem, 15.5vh, 3.5rem);
 header {
     background-color: $primary-color;
     display: flex;
     align-items: center;
     height: $header-height;
-    justify-content: space-around;
+    justify-content: center;
+
+    .auth__links {
+        width: 7rem;
+        margin-right: 5%;
+    }
 
     .auth__links-list {
         display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        margin: 5% 0;
+        justify-content: space-between;
         color: white;
         font-weight: $fw-bold;
-
+        width: inherit;
         .signup-btn,
         .login-btn {
-            margin-block: 4%;
+            font-size: 1rem;
         }
     }
 
     .logo-icon {
-        margin: 0.3rem 0;
+        margin-left: 5%;
         width: clamp(2rem, 2vw, 5rem);
     }
 
@@ -34,6 +38,7 @@ header {
         border-radius: 0.5rem;
         display: flex;
         padding: 0.2% 0;
+        margin-inline: 5%;
         justify-content: space-between;
         align-items: center;
         width: 50%;
@@ -41,8 +46,8 @@ header {
         .search-btn {
             color: gray;
             position: relative;
-            width: 2rem;
-            padding-right: 1rem;
+            width: 1rem;
+            margin-right: 1rem;
         }
 
         .search-txt {
@@ -50,11 +55,10 @@ header {
             background: none;
             position: relative;
             float: left;
-            margin: 5px;
+            margin: 0.3rem;
             color: black;
-            font-size: 0.8rem;
             width: inherit;
-            padding-left: 1rem;
+            padding-left: 0.8rem;
         }
     }
 }
@@ -107,7 +111,7 @@ nav {
                 width: 120%;
             }
             .search-box {
-                width: 60%;
+                width: 50%;
             }
             .logo-icon {
                 display: none;

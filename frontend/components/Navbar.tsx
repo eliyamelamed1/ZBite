@@ -96,7 +96,7 @@ const Navbar = () => {
         </nav>
     );
     const authenitcationLinks = (
-        <section>
+        <section className='auth__links'>
             {isUserAuthenticated ? (
                 <ul className='auth__links-list'>
                     <button onClick={logoutHandler} className='logout-btn'>
