@@ -61,7 +61,7 @@ const Navbar = () => {
                         </a>
                     </Link>
                 </li>
-                <li>
+                <li className='nav__item create-recipe'>
                     <Link href='/'>
                         <a className='nav__link create-recipe'>
                             <i className='nav__link-icon create-recipe'>

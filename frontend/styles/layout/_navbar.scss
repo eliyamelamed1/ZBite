@@ -89,10 +89,14 @@ nav {
 }
 
 @include media('>=tablet') {
+    $header-height: clamp(3rem, 15.5vh, 4.5rem);
+
     .container {
         display: flex;
         justify-content: center;
         background-color: $primary-color;
+        align-items: center;
+
         header {
             width: MIN(40%, 50rem);
             order: 2;
@@ -121,7 +125,7 @@ nav {
         nav {
             order: 1;
             height: $header-height;
-            width: MIN(52%, 30rem);
+            width: MIN(40%, 30rem);
             .nav__list {
                 height: inherit;
                 border-radius: unset;
@@ -132,14 +136,19 @@ nav {
                 justify-content: space-between;
             }
 
+            .nav__item.create-recipe {
+                display: none;
+            }
+
             .nav__link-icon {
                 display: none;
             }
             .nav__link-text {
                 color: white;
-                font-size: clamp(0.9rem, 1.9vw, 1.1rem);
+                font-size: clamp(1rem, 1.9vw, 1.4rem);
                 font-weight: 700;
             }
+
             .nav__link-create-recipe {
                 display: none;
             }
