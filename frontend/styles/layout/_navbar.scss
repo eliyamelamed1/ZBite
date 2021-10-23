@@ -109,10 +109,10 @@ nav {
                 margin: 5% 0;
                 color: white;
                 font-weight: $fw-bold;
-                font-size: clamp(0.7rem, 1.6vw, 1rem);
+                font-size: clamp(0.7rem, 1.6vw, 0.9rem);
             }
             .search-box {
-                width: 60%;
+                width: 75%;
             }
             .logo-icon {
                 display: none;
