@@ -98,16 +98,20 @@ const Navbar = () => {
     const authenitcationLinks = (
         <section className={classes.auth__links}>
             {isUserAuthenticated ? (
-                <ul className={classes.auth__links__list}>
-                    <button onClick={logoutHandler}>Logout</button>
+                <ul className={`${classes.auth__links__list} ${classes.auth__links__list__authenticated}`}>
+                    <li>
+                        <button onClick={logoutHandler} className={classes.logout_btn}>
+                            Logout
+                        </button>
+                    </li>
                 </ul>
             ) : (
-                <ul className={classes.auth__links__list}>
-                    <li>
+                <ul className={`${classes.auth__links__list} ${classes.auth__links__list__guest}`}>
+                    <li className={classes.login_btn}>
                         <Link href='/users/UserLogin'>Login</Link>
                     </li>
                     <br />
-                    <li>
+                    <li className={classes.signup_btn}>
                         <Link href='/users/UserSignup'>Sign Up</Link>
                     </li>
                 </ul>

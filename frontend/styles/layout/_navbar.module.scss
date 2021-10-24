@@ -11,18 +11,25 @@ $header-height: clamp(3rem, 15.5vh, 3.5rem);
     align-items: center;
     height: $header-height;
     justify-content: center;
-
-    .auth__links {
-        width: 7rem;
-        margin-right: 5%;
-    }
+    padding-inline: 5%;
 
     .auth__links__list {
+        display: flex;
         display: flex;
         justify-content: space-between;
         color: white;
         font-weight: $fw-bold;
-        width: inherit;
+    }
+    .auth__links__list__guest {
+        width: 7rem;
+    }
+    .auth__links__list__authenticated {
+        width: fit-content;
+    }
+
+    button {
+        color: white;
+        font-weight: $fw-bold;
     }
 
     .logo__icon {
