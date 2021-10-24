@@ -1,4 +1,5 @@
-import '../../dist/css/main.css';
+// import '../../dist/css/main.css';
+import '../styles/main.scss';
 
 import type { AppProps } from 'next/app';
 import Layout from '../components/Layout';

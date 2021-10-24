@@ -117,6 +117,13 @@ nav {
             }
             .search-box {
                 width: 75%;
+                padding-block: 0.8%;
+                .search-btn {
+                    width: clamp(1rem, 10%, 1.4rem);
+                }
+                .search-txt {
+                    width: inherit;
+                }
             }
             .logo-icon {
                 display: none;
@@ -126,6 +133,7 @@ nav {
             order: 1;
             height: $header-height;
             width: MIN(40%, 30rem);
+
             .nav__list {
                 height: inherit;
                 border-radius: unset;

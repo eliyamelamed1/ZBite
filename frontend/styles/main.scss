@@ -2,7 +2,12 @@
 @import 'layout/navbar';
 @import 'base/_fonts';
 @import 'layout/footer';
+@import 'pages/home';
+
 ul {
+    list-style-type: none;
+}
+li {
     list-style-type: none;
 }
 

@@ -1,0 +1,33 @@
+@import '../abstracts/variables';
+
+.home-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .recipe_checkbox-filters {
+        margin-block: 5%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .subscribed-for-you {
+        margin-block: 5%;
+        display: flex;
+        justify-content: space-between;
+        width: 42%;
+        align-items: center;
+        button {
+            font-weight: 600;
+            padding: 0.8rem;
+            border-radius: 150px;
+        }
+
+        button.active {
+            background-color: $primary-color;
+            color: white;
+        }
+    }
+}
