@@ -4,7 +4,7 @@
 // TODO - adjust tablet mode search box to 50% and pc to 70%
 
 $header-height: clamp(3rem, 15.5vh, 3.5rem);
-header {
+.header {
     background-color: $primary-color;
     display: flex;
     align-items: center;
@@ -16,7 +16,7 @@ header {
         margin-right: 5%;
     }
 
-    .auth__links-list {
+    .auth__links__list {
         display: flex;
         justify-content: space-between;
         color: white;
@@ -24,12 +24,12 @@ header {
         width: inherit;
     }
 
-    .logo-icon {
+    .logo__icon {
         margin-left: 5%;
         width: clamp(2rem, 2vw, 5rem);
     }
 
-    .search-box {
+    .search__box {
         background: white;
         border-radius: 0.5rem;
         display: flex;
@@ -39,14 +39,14 @@ header {
         align-items: center;
         width: 50%;
 
-        .search-btn {
+        .search__btn {
             color: gray;
             position: relative;
             width: 1rem;
             margin-right: 1rem;
         }
 
-        .search-txt {
+        .search__txt {
             border: none;
             background: none;
             position: relative;
@@ -58,7 +58,7 @@ header {
         }
     }
 }
-nav {
+.nav {
     .nav__list {
         display: flex;
         position: fixed;
@@ -75,15 +75,15 @@ nav {
         display: flex;
     }
 
-    .nav__link-icon img {
+    .nav__link__icon img {
         width: 1.7rem;
     }
 
-    .nav__link-icon.create-recipe img {
+    .nav__link__icon.create__recipe img {
         width: 2.8rem;
     }
 
-    .nav__link-text {
+    .nav__link__text {
         font-size: 0;
     }
 }
@@ -97,7 +97,7 @@ nav {
         background-color: $primary-color;
         align-items: center;
 
-        header {
+        .header {
             width: MIN(40%, 50rem);
             order: 2;
             justify-content: space-evenly;
@@ -125,11 +125,11 @@ nav {
                     width: inherit;
                 }
             }
-            .logo-icon {
+            .logo__icon {
                 display: none;
             }
         }
-        nav {
+        .nav {
             order: 1;
             height: $header-height;
             width: MIN(40%, 30rem);
@@ -144,20 +144,20 @@ nav {
                 justify-content: space-between;
             }
 
-            .nav__item.create-recipe {
+            .nav__item.create__recipe {
                 display: none;
             }
 
-            .nav__link-icon {
+            .nav__link__icon {
                 display: none;
             }
-            .nav__link-text {
+            .nav__link__text {
                 color: white;
                 font-size: clamp(1rem, 1.9vw, 1.3rem);
                 font-weight: 700;
             }
 
-            .nav__link-create-recipe {
+            .nav__link-create__recipe {
                 display: none;
             }
         }
