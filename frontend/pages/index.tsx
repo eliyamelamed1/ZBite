@@ -17,24 +17,6 @@ const HomePage = () => {
 
     return (
         <div className={classes.container}>
-            <ul className={classes.recipe_checkbox}>
-                <li>
-                    <input type='checkbox' id='gluten-free' />
-                    <label htmlFor='gluten-free'>gluten free</label>
-                </li>
-                <li>
-                    <input type='checkbox' id='vegan' />
-                    <label htmlFor='vegan'>vegan</label>
-                </li>
-                <li>
-                    <input type='checkbox' id='vegetarian' />
-                    <label htmlFor='vegetarian'>vegetarian</label>
-                </li>
-                <li>
-                    <input type='checkbox' id='dietetic' />
-                    <label htmlFor='dietetic'>dietetic</label>
-                </li>
-            </ul>
             <ul className={classes.recipe_filter} ref={buttonsRef} onClick={onClick}>
                 <button className={classes.active} name='subscribed'>
                     Subscribed
