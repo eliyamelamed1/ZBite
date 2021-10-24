@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "",
-    "sources": [
-        "../../frontend/styles/breakpoints.scss"
-    ],
-    "names": [],
-    "file": "breakpoints.css"
-}
