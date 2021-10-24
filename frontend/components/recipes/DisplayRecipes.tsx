@@ -19,6 +19,7 @@ const DisplayRecipes = ({ recipesToDisplay }) => {
                         id={recipe.id}
                         author={recipe.author}
                         // saves={recipe.saves.length}
+                        // stars={recipe.stars || 'not rated'}
                     />
                 )
             );
