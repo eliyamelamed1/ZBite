@@ -1,19 +1,19 @@
 @import '../abstracts/variables';
 
-.home-page {
+.container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
-    .recipe_checkbox-filters {
+    .recipe_checkbox {
         margin-block: 5%;
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
 
-    .subscribed-for-you {
+    .recipe_filter {
         margin-block: 5%;
         display: flex;
         justify-content: space-between;

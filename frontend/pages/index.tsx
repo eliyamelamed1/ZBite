@@ -1,21 +1,23 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
+
+import classes from '../styles/pages/home.module.scss';
 
 const HomePage = () => {
     const buttonsRef = useRef() as any;
     const onClick = (e) => {
         if (e.target.name === 'subscribed') {
-            buttonsRef.current.children[0].className = 'active';
+            buttonsRef.current.children[0].className = classes.active;
             buttonsRef.current.children[1].className = '';
         }
         if (e.target.name === 'for you') {
             buttonsRef.current.children[0].className = '';
-            buttonsRef.current.children[1].className = 'active';
+            buttonsRef.current.children[1].className = classes.active;
         }
     };
 
     return (
-        <div className='home-page'>
-            <ul className='recipe_checkbox-filters'>
+        <div className={classes.container}>
+            <ul className={classes.recipe_checkbox}>
                 <li>
                     <input type='checkbox' id='gluten-free' />
                     <label htmlFor='gluten-free'>gluten free</label>
@@ -33,8 +35,8 @@ const HomePage = () => {
                     <label htmlFor='dietetic'>dietetic</label>
                 </li>
             </ul>
-            <ul className='subscribed-for-you' ref={buttonsRef} onClick={onClick}>
-                <button className='active' name='subscribed'>
+            <ul className={classes.recipe_filter} ref={buttonsRef} onClick={onClick}>
+                <button className={classes.active} name='subscribed'>
                     Subscribed
                 </button>
                 <button name='for you'>For You</button>
