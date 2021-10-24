@@ -4,6 +4,7 @@
 // TODO - adjust tablet mode search box to 50% and pc to 70%
 
 $header-height: clamp(3rem, 15.5vh, 3.5rem);
+
 .header {
     background-color: $primary-color;
     display: flex;
@@ -60,6 +61,7 @@ $header-height: clamp(3rem, 15.5vh, 3.5rem);
 }
 .nav {
     .nav__list {
+        background-color: white;
         display: flex;
         position: fixed;
         padding: 1.2% 0;
@@ -80,7 +82,7 @@ $header-height: clamp(3rem, 15.5vh, 3.5rem);
     }
 
     .nav__link__icon.create__recipe img {
-        width: 2.8rem;
+        width: 3rem;
     }
 
     .nav__link__text {
@@ -135,6 +137,7 @@ $header-height: clamp(3rem, 15.5vh, 3.5rem);
             width: MIN(40%, 30rem);
 
             .nav__list {
+                background-color: unset;
                 height: inherit;
                 border-radius: unset;
                 bottom: unset;

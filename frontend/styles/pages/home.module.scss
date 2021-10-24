@@ -6,19 +6,31 @@
     justify-content: center;
     align-items: center;
 
-    .recipe_checkbox {
-        margin-block: 5%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+    // .recipe_checkbox {
+    //     display: flex;
+    //     flex-wrap: wrap;
+    //     justify-content: center;
+    //     align-items: center;
+    //     border: 1px solid black;
+    //     width: fit-content;
+    //     li {
+    //         width: min-content;
+    //         flex: 50%;
+    //         color: gray;
+    //     }
+    //     input {
+    //         margin-right: 3%;
+    //     }
+    // }
 
     .recipe_filter {
-        margin-block: 5%;
+        margin-block: 1.2rem;
         display: flex;
         justify-content: space-between;
-        width: 42%;
         align-items: center;
+        width: 11rem;
+        align-items: center;
+
         button {
             font-weight: 600;
             padding: 0.8rem;

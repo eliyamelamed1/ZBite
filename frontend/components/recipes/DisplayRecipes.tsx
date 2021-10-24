@@ -10,7 +10,6 @@ const DisplayRecipes = ({ recipesToDisplay }) => {
         if (recipesToDisplay) {
             const recipesOnPage = [];
             const result = [];
-
             recipesToDisplay.map((recipe) =>
                 recipesOnPage.push(
                     <RecipeCard
@@ -19,6 +18,7 @@ const DisplayRecipes = ({ recipesToDisplay }) => {
                         photo_main={recipe.photo_main}
                         id={recipe.id}
                         author={recipe.author}
+                        // saves={recipe.saves.length}
                     />
                 )
             );
