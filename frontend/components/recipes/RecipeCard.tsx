@@ -62,7 +62,7 @@ const RecipeCard = (props) => {
             </section>
             <section className={styles.detail_container_2}>
                 {/* <h3>Title: {props.title}</h3> */}
-                <h3>The best pizza ever made in the whole usa</h3>
+                <h4>Pizza Pepperoni</h4>
             </section>
             <section className={styles.detail_container_3}>
                 <li>

@@ -50,7 +50,6 @@
                 font-weight: 600;
             }
             .saves_icon {
-                // border: 1px solid black;
                 i {
                     img {
                         width: 1.7rem;
@@ -60,9 +59,13 @@
         }
     }
     .detail_container_2 {
-        margin-block: 2%;
-        display: flex;
+        justify-content: center;
+        margin-block: 2.5%;
+        flex-direction: column;
         width: 16rem;
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-line-clamp: 2;
     }
     .detail_container_3 {
         display: flex;
