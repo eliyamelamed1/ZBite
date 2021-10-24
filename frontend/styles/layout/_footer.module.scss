@@ -1,11 +1,12 @@
 @import '../abstracts/variables';
+@import '../breakpoints.scss';
 
-footer {
+.footer {
     display: none;
 }
 
 @include media('>=tablet') {
-    footer {
+    .footer {
         display: unset;
         display: flex;
         position: fixed;
