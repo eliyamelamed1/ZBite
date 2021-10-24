@@ -28,10 +28,13 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        width: 11rem;
+        width: fit-content;
+
         align-items: center;
 
         button {
+            width: fit-content;
+
             font-weight: 600;
             padding: 0.8rem;
             border-radius: 150px;
