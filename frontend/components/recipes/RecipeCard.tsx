@@ -22,8 +22,8 @@ const RecipeCard = (props) => {
                 <ul className={styles.author_and_rating}>
                     <li>
                         <Link href={`/users/${props.author}/`} passHref>
-                            {/* <p>Author: {props.author}</p> */}
-                            <p>eliya melamed</p>
+                            <p>author: {props.author}</p>
+                            {/* <p>eliya melamed</p> */}
                         </Link>
                     </li>
                     <li className={styles.rating}>

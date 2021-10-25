@@ -8,7 +8,7 @@
         "start": "next start",
         "lint": "next lint",
         "test": "jest --env=jsdom",
-        "test-watch": "jest --env=jsdom --watch"
+        "watch": "jest --env=jsdom --watch"
     },
     "dependencies": {
         "identity-obj-proxy": "^3.0.0",
