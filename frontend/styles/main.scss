@@ -8,6 +8,11 @@ li {
     list-style-type: none;
 }
 
+html {
+    padding-bottom: 50px;
+    z-index: 1;
+}
+
 html,
 a {
     color: inherit;

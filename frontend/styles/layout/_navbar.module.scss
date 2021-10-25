@@ -6,6 +6,7 @@
 $header-height: clamp(3rem, 15.5vh, 3.5rem);
 
 .header {
+    z-index: 1000;
     background-color: $primary-color;
     display: flex;
     align-items: center;
@@ -67,6 +68,7 @@ $header-height: clamp(3rem, 15.5vh, 3.5rem);
 }
 .nav {
     .nav__list {
+        z-index: 1000;
         background-color: white;
         display: flex;
         position: fixed;
@@ -143,12 +145,12 @@ $header-height: clamp(3rem, 15.5vh, 3.5rem);
             width: MIN(40%, 30rem);
 
             .nav__list {
+                position: unset;
                 background-color: unset;
                 height: inherit;
                 border-radius: unset;
                 bottom: unset;
-                position: fixed;
-                width: inherit;
+                width: 100%;
                 box-shadow: none;
                 justify-content: space-between;
             }
