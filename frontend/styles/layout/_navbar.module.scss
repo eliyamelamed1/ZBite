@@ -9,6 +9,8 @@ $header-height: clamp(3rem, 15.5vh, 3.5rem);
     z-index: 1000;
     background-color: $primary-color;
     display: flex;
+    position: fixed;
+    width: 100%;
     align-items: center;
     height: $header-height;
     justify-content: center;
@@ -112,6 +114,8 @@ $header-height: clamp(3rem, 15.5vh, 3.5rem);
             width: MIN(40%, 50rem);
             order: 2;
             justify-content: space-evenly;
+            position: unset;
+            width: unset;
 
             .auth__links {
                 width: clamp(7rem, 14vw, 8rem);
