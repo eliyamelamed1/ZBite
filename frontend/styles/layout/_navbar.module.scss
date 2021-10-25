@@ -105,7 +105,9 @@ $header-height: clamp(3rem, 15.5vh, 3.5rem);
         justify-content: center;
         background-color: $primary-color;
         align-items: center;
-
+        position: fixed;
+        width: 100%;
+        z-index: 1000;
         .header {
             width: MIN(40%, 50rem);
             order: 2;
