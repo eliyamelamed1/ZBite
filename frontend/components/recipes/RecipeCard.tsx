@@ -22,7 +22,7 @@ const RecipeCard = (props) => {
                 <ul className={styles.author_and_rating}>
                     <li>
                         <Link href={`/users/${props.author}/`} passHref>
-                            <p>author: {props.author}</p>
+                            <p>{props.author}</p>
                             {/* <p>eliya melamed</p> */}
                         </Link>
                     </li>
@@ -61,8 +61,7 @@ const RecipeCard = (props) => {
                 </ul>
             </section>
             <section className={styles.detail_container_2}>
-                {/* <h3>Title: {props.title}</h3> */}
-                <h4>Pizza Pepperoni</h4>
+                <h3>{props.title}</h3>
             </section>
             <section className={styles.detail_container_3}>
                 <li>
