@@ -1,10 +1,14 @@
 .card_container {
+    box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.25);
+    border-radius: 26px 0px 15px 15px;
+    // background-color: green;
+
     margin: auto;
-    margin-top: 5%;
+    margin-block: 2.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: fit-content;
+    width: 270px;
 
     .detail_container_1 {
         flex-direction: row;
@@ -13,9 +17,11 @@
         width: 100%;
 
         .profile_pic {
-            width: 20%;
+            width: 16%;
         }
         .author_and_rating {
+            position: relative;
+            bottom: 2.5px;
             margin-left: 2%;
             width: 55%;
             display: flex;
@@ -39,6 +45,9 @@
             }
         }
         .saves_count_and_icon {
+            position: relative;
+            bottom: 8px;
+            left: 4.7px;
             display: flex;
             align-items: center;
             justify-content: flex-end;
@@ -50,6 +59,8 @@
                 font-weight: 600;
             }
             .saves_icon {
+                // position: relative;
+                // left: 4px;
                 i {
                     img {
                         width: 1.7rem;
@@ -68,14 +79,14 @@
         -webkit-line-clamp: 2;
     }
     .detail_container_3 {
-        display: flex;
-        justify-content: center;
+        position: relative;
+        top: 5px;
         li {
             img {
-                border-radius: 15px;
-                object-position: 0% 0%;
-                height: 9rem;
-                width: 17rem;
+                border-bottom-left-radius: 15px;
+                border-bottom-right-radius: 15px;
+                height: 8rem;
+                width: clamp(270px, 70vw, 320px);
                 object-fit: cover;
             }
         }

@@ -11,6 +11,8 @@ const RecipeList = (props) => {
     return (
         <main data-testid='recipeList'>
             {listOfRecipes ? <DisplayRecipes recipesToDisplay={listOfRecipes} /> : null}
+            {listOfRecipes ? <DisplayRecipes recipesToDisplay={listOfRecipes} /> : null}
+            {listOfRecipes ? <DisplayRecipes recipesToDisplay={listOfRecipes} /> : null}
         </main>
     );
 };
