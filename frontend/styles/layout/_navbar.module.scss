@@ -103,20 +103,23 @@ $header-height: clamp(3rem, 15.5vh, 3.5rem);
     $header-height: clamp(3rem, 15.5vh, 4rem);
 
     .container {
+        border: 1px solid green;
         display: flex;
         justify-content: center;
         background-color: $primary-color;
         align-items: center;
         position: fixed;
         width: 100%;
+        // padding-inline: 5%;
         z-index: 1000;
+
         .header {
             width: MIN(40%, 50rem);
             order: 2;
-            justify-content: space-evenly;
+            justify-content: space-between;
             position: unset;
-            width: unset;
 
+            // border: 1px solid green;
             .auth__links {
                 width: clamp(7rem, 14vw, 8rem);
                 margin-right: unset;
@@ -131,7 +134,7 @@ $header-height: clamp(3rem, 15.5vh, 3.5rem);
                 font-size: clamp(0.7rem, 1.6vw, 0.9rem);
             }
             .search-box {
-                width: 75%;
+                width: 100%;
                 padding-block: 0.8%;
                 .search-btn {
                     width: clamp(1rem, 10%, 1.4rem);
