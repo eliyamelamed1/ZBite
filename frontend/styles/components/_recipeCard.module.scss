@@ -6,7 +6,7 @@
     flex-direction: column;
     align-items: center;
     width: 270px;
-    margin-inline: 2rem;
+    margin: 2rem;
 
     .detail_container_1 {
         flex-direction: row;
@@ -73,7 +73,7 @@
     }
     .detail_container_2 {
         justify-content: center;
-        margin-block: 2.5%;
+        margin: 2.5% 0;
         flex-direction: column;
         width: 16rem;
         display: -webkit-box;

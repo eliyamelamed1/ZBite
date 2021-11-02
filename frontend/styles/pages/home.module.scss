@@ -7,25 +7,8 @@
     justify-content: center;
     align-items: center;
 
-    // .recipe_checkbox {
-    //     display: flex;
-    //     flex-wrap: wrap;
-    //     justify-content: center;
-    //     align-items: center;
-    //     border: 1px solid black;
-    //     width: fit-content;
-    //     li {
-    //         width: min-content;
-    //         flex: 50%;
-    //         color: gray;
-    //     }
-    //     input {
-    //         margin-right: 3%;
-    //     }
-    // }
-
     .recipe_filter {
-        margin-block: 2.2rem;
+        margin: 2.2rem 0;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -35,7 +18,6 @@
 
         button {
             width: fit-content;
-
             font-weight: 600;
             padding: 0.8rem;
             border-radius: 150px;
