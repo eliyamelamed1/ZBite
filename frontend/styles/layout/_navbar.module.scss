@@ -14,7 +14,8 @@ $header-height: clamp(3rem, 15.5vh, 3.5rem);
     align-items: center;
     height: $header-height;
     justify-content: center;
-    padding: 0 0.5rem;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
 
     .auth__links__list {
         display: flex;
@@ -43,8 +44,10 @@ $header-height: clamp(3rem, 15.5vh, 3.5rem);
         background: white;
         border-radius: 0.5rem;
         display: flex;
-        padding: 0.2% 0;
-        margin: 0 5%;
+        padding-top: 0.2%;
+        padding-bottom: 0.2%;
+        margin-right: 5%;
+        margin-left: 5%;
         justify-content: space-between;
         align-items: center;
         width: 50%;
@@ -73,7 +76,8 @@ $header-height: clamp(3rem, 15.5vh, 3.5rem);
         background-color: white;
         display: flex;
         position: fixed;
-        padding: 1.2% 0;
+        padding-top: 1.2%;
+        padding-bottom: 1.2%;
         bottom: 0%;
         width: 100vw;
         align-items: center;
@@ -87,7 +91,7 @@ $header-height: clamp(3rem, 15.5vh, 3.5rem);
     }
 
     .nav__link__icon img {
-        opacity: 70%;
+        opacity: 60%;
         width: 1.7rem;
     }
 
@@ -128,14 +132,16 @@ $header-height: clamp(3rem, 15.5vh, 3.5rem);
             .auth__links-list {
                 flex-direction: row;
                 justify-content: space-evenly;
-                margin: 5% 0;
+                margin-top: 5%;
+                margin-bottom: 5%;
                 color: white;
                 font-weight: $fw-bold;
                 font-size: clamp(0.7rem, 1.6vw, 0.9rem);
             }
             .search-box {
                 width: 100%;
-                padding: 0.8% 0;
+                padding-bottom: 0.8%;
+                padding-top: 0.8%;
                 .search-btn {
                     width: clamp(1rem, 10%, 1.4rem);
                 }
