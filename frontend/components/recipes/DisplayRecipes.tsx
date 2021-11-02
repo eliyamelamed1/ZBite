@@ -28,7 +28,7 @@ const DisplayRecipes = ({ recipesToDisplay }) => {
             for (let i = 0; i < recipesToDisplay.length; i += 1) {
                 result.push(
                     <div key={i}>
-                        <div>{recipesOnPage[i] ? recipesOnPage[i] : null}</div>
+                        <div>{recipesOnPage[i] && recipesOnPage[i]}</div>
                     </div>
                 );
             }

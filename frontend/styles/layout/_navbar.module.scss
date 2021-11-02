@@ -122,8 +122,6 @@ $header-height: clamp(3rem, 15.5vh, 3.5rem);
             order: 2;
             justify-content: space-between;
             position: unset;
-
-            // border: 1px solid green;
             .auth__links {
                 width: clamp(7rem, 14vw, 8rem);
                 margin-right: unset;
@@ -138,16 +136,8 @@ $header-height: clamp(3rem, 15.5vh, 3.5rem);
                 font-weight: $fw-bold;
                 font-size: clamp(0.7rem, 1.6vw, 0.9rem);
             }
-            .search-box {
-                width: 100%;
-                padding-bottom: 0.8%;
-                padding-top: 0.8%;
-                .search-btn {
-                    width: clamp(1rem, 10%, 1.4rem);
-                }
-                .search-txt {
-                    width: inherit;
-                }
+            .search__box {
+                width: 75%;
             }
             .logo__icon {
                 display: none;
