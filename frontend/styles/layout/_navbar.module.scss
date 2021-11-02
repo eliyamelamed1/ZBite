@@ -105,7 +105,6 @@ $header-height: clamp(3rem, 15.5vh, 3.5rem);
     $header-height: clamp(3rem, 15.5vh, 4rem);
 
     .container {
-        border: 1px solid green;
         display: flex;
         justify-content: center;
         background-color: $primary-color;
