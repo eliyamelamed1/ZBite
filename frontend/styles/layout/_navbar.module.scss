@@ -3,7 +3,7 @@
 
 // TODO - adjust tablet mode search box to 50% and pc to 70%
 
-$header-height: clamp(3rem, 15.5vh, 3.5rem);
+$header-height: clamp(48px, 15.5vh, 56px);
 
 .header {
     z-index: 1000;
@@ -14,8 +14,8 @@ $header-height: clamp(3rem, 15.5vh, 3.5rem);
     align-items: center;
     height: $header-height;
     justify-content: center;
-    padding-right: 0.5rem;
-    padding-left: 0.5rem;
+    padding-right: 8px;
+    padding-left: 8px;
 
     .auth__links__list {
         display: flex;
@@ -25,7 +25,7 @@ $header-height: clamp(3rem, 15.5vh, 3.5rem);
         font-weight: $fw-bold;
     }
     .auth__links__list__guest {
-        width: 7rem;
+        width: 112px;
     }
     .auth__links__list__authenticated {
         width: fit-content;
@@ -37,12 +37,12 @@ $header-height: clamp(3rem, 15.5vh, 3.5rem);
     }
 
     .logo__icon {
-        width: clamp(2rem, 2vw, 5rem);
+        width: clamp(32px, 2vw, 80px);
     }
 
     .search__box {
         background: white;
-        border-radius: 0.5rem;
+        border-radius: 8px;
         display: flex;
         padding-top: 0.2%;
         padding-bottom: 0.2%;
@@ -54,8 +54,8 @@ $header-height: clamp(3rem, 15.5vh, 3.5rem);
 
         .search__btn {
             position: relative;
-            width: 1rem;
-            margin-right: 1rem;
+            width: 16px;
+            margin-right: 16px;
         }
 
         .search__txt {
@@ -63,10 +63,10 @@ $header-height: clamp(3rem, 15.5vh, 3.5rem);
             background: none;
             position: relative;
             float: left;
-            margin: 0.3rem;
+            margin: 4.8px;
             color: black;
             width: inherit;
-            padding-left: 0.8rem;
+            padding-left: 12.8px;
         }
     }
 }
@@ -82,8 +82,8 @@ $header-height: clamp(3rem, 15.5vh, 3.5rem);
         width: 100vw;
         align-items: center;
         justify-content: space-evenly;
-        border-radius: 0.8rem 0.8rem 0 0;
-        box-shadow: 0 0.01rem 0.1rem #b2b2b2;
+        border-radius: 12.8px 12.8px 0 0;
+        box-shadow: 0 0.16px 1.6px #b2b2b2;
     }
 
     .nav__link {
@@ -92,12 +92,12 @@ $header-height: clamp(3rem, 15.5vh, 3.5rem);
 
     .nav__link__icon img {
         opacity: 60%;
-        width: 1.7rem;
+        width: 27.2px;
     }
 
     .nav__link__icon.create__recipe img {
         opacity: 100%;
-        width: 3rem;
+        width: 48px;
     }
 
     .nav__link__text {
@@ -106,7 +106,7 @@ $header-height: clamp(3rem, 15.5vh, 3.5rem);
 }
 
 @include media('>=tablet') {
-    $header-height: clamp(3rem, 15.5vh, 4rem);
+    $header-height: clamp(48px, 15.5vh, 64px);
 
     .container {
         display: flex;
@@ -118,12 +118,12 @@ $header-height: clamp(3rem, 15.5vh, 3.5rem);
         z-index: 1000;
 
         .header {
-            width: MIN(40%, 50rem);
+            width: MIN(40%, 800px);
             order: 2;
             justify-content: space-between;
             position: unset;
             .auth__links {
-                width: clamp(7rem, 14vw, 8rem);
+                width: clamp(112px, 14vw, 128px);
                 margin-right: unset;
             }
 
@@ -134,7 +134,7 @@ $header-height: clamp(3rem, 15.5vh, 3.5rem);
                 margin-bottom: 5%;
                 color: white;
                 font-weight: $fw-bold;
-                font-size: clamp(0.7rem, 1.6vw, 0.9rem);
+                font-size: clamp(0.112px, 1.6vw, 14.4px);
             }
             .search__box {
                 width: 75%;
@@ -146,7 +146,7 @@ $header-height: clamp(3rem, 15.5vh, 3.5rem);
         .nav {
             order: 1;
             height: $header-height;
-            width: MIN(40%, 30rem);
+            width: MIN(40%, 480px);
 
             .nav__list {
                 position: unset;
@@ -168,7 +168,7 @@ $header-height: clamp(3rem, 15.5vh, 3.5rem);
             }
             .nav__link__text {
                 color: white;
-                font-size: clamp(1rem, 1.9vw, 1.3rem);
+                font-size: clamp(16px, 1.9vw, 20.8px);
                 font-weight: 700;
             }
 
