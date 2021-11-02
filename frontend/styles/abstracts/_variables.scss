@@ -1,3 +1,5 @@
+@import '../breakpoints.scss';
+
 $primary-color: #ff5349;
 $background-color: white;
 
@@ -5,3 +7,8 @@ $background-color: white;
 $fw-regular: 500;
 $fw-semi-bold: 600;
 $fw-bold: 700;
+
+$header-height: clamp(48px, 15.5vh, 56px);
+@include media('>=tablet') {
+    $header-height: clamp(48px, 15.5vh, 64px);
+}

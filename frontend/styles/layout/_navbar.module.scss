@@ -3,112 +3,110 @@
 
 // TODO - adjust tablet mode search box to 50% and pc to 70%
 
-$header-height: clamp(48px, 15.5vh, 56px);
-
-.header {
-    z-index: 1000;
-    background-color: $primary-color;
-    display: flex;
-    position: fixed;
-    width: 100%;
-    align-items: center;
-    height: $header-height;
-    justify-content: center;
-    padding-right: 8px;
-    padding-left: 8px;
-
-    .auth__links__list {
-        display: flex;
-        display: flex;
-        justify-content: space-between;
-        color: white;
-        font-weight: $fw-bold;
-    }
-    .auth__links__list__guest {
-        width: 112px;
-    }
-    .auth__links__list__authenticated {
-        width: fit-content;
-    }
-
-    button {
-        color: white;
-        font-weight: $fw-bold;
-    }
-
-    .logo__icon {
-        width: clamp(32px, 2vw, 80px);
-    }
-
-    .search__box {
-        background: white;
-        border-radius: 8px;
-        display: flex;
-        padding-top: 0.2%;
-        padding-bottom: 0.2%;
-        margin-right: 5%;
-        margin-left: 5%;
-        justify-content: space-between;
-        align-items: center;
-        width: 50%;
-
-        .search__btn {
-            position: relative;
-            width: 16px;
-            margin-right: 16px;
-        }
-
-        .search__txt {
-            border: none;
-            background: none;
-            position: relative;
-            float: left;
-            margin: 4.8px;
-            color: black;
-            width: inherit;
-            padding-left: 12.8px;
-        }
-    }
-}
-.nav {
-    .nav__list {
+.container {
+    .header {
         z-index: 1000;
-        background-color: white;
+        background-color: $primary-color;
         display: flex;
         position: fixed;
-        padding-top: 1.2%;
-        padding-bottom: 1.2%;
-        bottom: 0%;
-        width: 100vw;
+        width: 100%;
         align-items: center;
-        justify-content: space-evenly;
-        border-radius: 12.8px 12.8px 0 0;
-        box-shadow: 0 0.16px 1.6px #b2b2b2;
-    }
+        height: $header-height;
+        justify-content: center;
+        padding-right: 8px;
+        padding-left: 8px;
 
-    .nav__link {
-        display: flex;
-    }
+        .auth__links__list {
+            display: flex;
+            display: flex;
+            justify-content: space-evenly;
+            color: white;
+            font-size: 1.3rem;
+        }
+        .auth__links__list__guest {
+            width: 112px;
+        }
+        .auth__links__list__authenticated {
+            width: fit-content;
+        }
 
-    .nav__link__icon img {
-        opacity: 60%;
-        width: 27.2px;
-    }
+        button {
+            color: white;
+        }
 
-    .nav__link__icon.create__recipe img {
-        opacity: 100%;
-        width: 48px;
-    }
+        .logo__icon {
+            width: clamp(32px, 2vw, 80px);
+        }
 
-    .nav__link__text {
-        font-size: 0;
+        .search__box {
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            padding-top: 0.2%;
+            padding-bottom: 0.2%;
+            margin-right: 5%;
+            margin-left: 5%;
+            justify-content: space-between;
+            align-items: center;
+            width: 50%;
+
+            .search__btn {
+                position: relative;
+                width: 16px;
+                margin-right: 16px;
+            }
+
+            .search__txt {
+                border: none;
+                background: none;
+                position: relative;
+                float: left;
+                margin: 4.8px;
+                color: black;
+                width: inherit;
+                padding-left: 12.8px;
+            }
+        }
+    }
+    .nav {
+        .nav__list {
+            z-index: 1000;
+            background-color: white;
+            display: flex;
+            position: fixed;
+            padding-top: 1.2%;
+            padding-bottom: 1.2%;
+            bottom: 0%;
+            width: 100vw;
+            align-items: center;
+            justify-content: space-evenly;
+            border-radius: 12.8px 12.8px 0 0;
+            box-shadow: 0 0.16px 1.6px #b2b2b2;
+        }
+
+        .nav__link {
+            display: flex;
+        }
+
+        .nav__link__icon img {
+            opacity: 60%;
+            width: 27.2px;
+        }
+
+        .nav__link__icon.create__recipe img {
+            opacity: 100%;
+            width: 48px;
+        }
+
+        .nav__link__text {
+            font-size: 0;
+        }
     }
 }
 
 @include media('>=tablet') {
-    $header-height: clamp(48px, 15.5vh, 64px);
-
     .container {
+        padding: unset;
         display: flex;
         justify-content: center;
         background-color: $primary-color;
@@ -127,14 +125,14 @@ $header-height: clamp(48px, 15.5vh, 56px);
                 margin-right: unset;
             }
 
-            .auth__links-list {
+            .auth__links__list {
                 flex-direction: row;
-                justify-content: space-evenly;
+                justify-content: space-between;
                 margin-top: 5%;
                 margin-bottom: 5%;
                 color: white;
                 font-weight: $fw-bold;
-                font-size: clamp(0.112px, 1.6vw, 14.4px);
+                font-size: 1.5rem;
             }
             .search__box {
                 width: 75%;

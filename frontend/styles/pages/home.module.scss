@@ -1,14 +1,13 @@
 @import '../abstracts/variables';
 
 .container {
-    padding-top: 50px;
+    padding-top: 25px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
     .recipe_filter {
-        margin-top: 35.2px;
         display: flex;
         justify-content: space-between;
         align-items: center;

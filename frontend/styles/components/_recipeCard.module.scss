@@ -9,6 +9,7 @@
     margin: 32px;
 
     .detail_container_1 {
+        font-size: 1.5rem;
         flex-direction: row;
         display: flex;
         justify-content: space-around;
@@ -53,12 +54,10 @@
             .saves_count {
                 margin-bottom: 8px;
                 margin-right: 4.8px;
-                font-size: 16px;
+                font-size: 1.6rem;
                 font-weight: 600;
             }
             .saves_icon {
-                // position: relative;
-                // left: 4px;
                 i {
                     img {
                         width: 27.2px;
@@ -76,6 +75,7 @@
         justify-content: center;
         overflow: hidden;
         white-space: nowrap;
+        font-size: 1.5rem;
     }
     .detail_container_3 {
         position: relative;

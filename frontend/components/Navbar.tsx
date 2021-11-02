@@ -6,14 +6,13 @@ import Image from 'next/image';
 import LeaderboardIcon from '../styles/icons/leaderboard.svg';
 import Link from 'next/link';
 import LogoIcon from '../styles/icons/logo.svg';
-import NavBurgerIcon from '../styles/icons/navBurger.svg';
 import PlusIcon from '../styles/icons/plus.svg';
 import ProfileIcon from '../styles/icons/profile.svg';
 import SavedIcon from '../styles/icons/heart.svg';
 import SearchIcon from '../styles/icons/search.svg';
-import classes from '../styles/layout/_navbar.module.scss';
 import { logoutAction } from '../redux/actions/userActions';
 import { pageRoute } from '../globals';
+import styles from '../styles/layout/_navbar.module.scss';
 
 const Navbar = () => {
     const dispatch = useDispatch();
@@ -39,56 +38,56 @@ const Navbar = () => {
     };
 
     const NavbarLinks = (
-        <nav data-testid='NavbarLinks' className={classes.nav}>
-            <ul className={classes.nav__list}>
+        <nav data-testid='NavbarLinks' className={styles.nav}>
+            <ul className={styles.nav__list}>
                 <li>
                     <Link href={`${pageRoute().home}`}>
-                        <a className={classes.nav__link}>
-                            <i className={classes.nav__link__icon}>
+                        <a className={styles.nav__link}>
+                            <i className={styles.nav__link__icon}>
                                 {HomeIcon.src && <Image src={HomeIcon} alt='as' height={50} width={60} />}
                             </i>
-                            <p className={classes.nav__link__text}>Home</p>
+                            <p className={styles.nav__link__text}>Home</p>
                         </a>
                     </Link>
                 </li>
                 <li>
                     <Link href='/'>
-                        <a className={classes.nav__link}>
-                            <i className={classes.nav__link__icon}>
+                        <a className={styles.nav__link}>
+                            <i className={styles.nav__link__icon}>
                                 {SavedIcon.src && <Image src={SavedIcon} alt='as' height={50} width={60} />}
                             </i>
-                            <p className={classes.nav__link__text}>Saved</p>
+                            <p className={styles.nav__link__text}>Saved</p>
                         </a>
                     </Link>
                 </li>
-                <li className={`${classes.nav__item} ${classes.create__recipe}`}>
+                <li className={`${styles.nav__item} ${styles.create__recipe}`}>
                     <Link href='/'>
-                        <a className={`${classes.nav__link} ${classes.create__recipe}`}>
-                            <i className={`${classes.nav__link__icon} ${classes.create__recipe}`}>
+                        <a className={`${styles.nav__link} ${styles.create__recipe}`}>
+                            <i className={`${styles.nav__link__icon} ${styles.create__recipe}`}>
                                 {PlusIcon.src && <Image src={PlusIcon} alt='as' height={50} width={60} />}
                             </i>
-                            <p className={`${classes.nav__link__text} ${classes.create__recipe}`}>Create Recipe</p>
+                            <p className={`${styles.nav__link__text} ${styles.create__recipe}`}>Create Recipe</p>
                         </a>
                     </Link>
                 </li>
                 <li>
                     <Link href='/'>
                         <a>
-                            <i className={classes.nav__link__icon}>
+                            <i className={styles.nav__link__icon}>
                                 {LeaderboardIcon.src && <Image src={LeaderboardIcon} alt='as' height={50} width={60} />}
                             </i>
 
-                            <p className={classes.nav__link__text}>Leaderboard</p>
+                            <p className={styles.nav__link__text}>Leaderboard</p>
                         </a>
                     </Link>
                 </li>
                 <li>
                     <Link href={profileUrl}>
                         <a>
-                            <i className={classes.nav__link__icon}>
+                            <i className={styles.nav__link__icon}>
                                 {ProfileIcon.src && <Image src={ProfileIcon} alt='as' height={50} width={60} />}
                             </i>
-                            <p className={classes.nav__link__text}>Profile</p>
+                            <p className={styles.nav__link__text}>Profile</p>
                         </a>
                     </Link>
                 </li>
@@ -96,22 +95,22 @@ const Navbar = () => {
         </nav>
     );
     const authenitcationLinks = (
-        <section className={classes.auth__links}>
+        <section className={styles.auth__links}>
             {isUserAuthenticated ? (
-                <ul className={`${classes.auth__links__list} ${classes.auth__links__list__authenticated}`}>
+                <ul className={`${styles.auth__links__list} ${styles.auth__links__list__authenticated}`}>
                     <li>
-                        <button onClick={logoutHandler} className={classes.logout_btn}>
+                        <button onClick={logoutHandler} className={styles.logout_btn}>
                             Logout
                         </button>
                     </li>
                 </ul>
             ) : (
-                <ul className={`${classes.auth__links__list} ${classes.auth__links__list__guest}`}>
-                    <li className={classes.login_btn}>
+                <ul className={`${styles.auth__links__list} ${styles.auth__links__list__guest}`}>
+                    <li className={styles.login_btn}>
                         <Link href='/users/UserLogin'>Login</Link>
                     </li>
                     <br />
-                    <li className={classes.signup_btn}>
+                    <li className={styles.signup_btn}>
                         <Link href='/users/UserSignup'>Sign Up</Link>
                     </li>
                 </ul>
@@ -120,14 +119,14 @@ const Navbar = () => {
     );
 
     return (
-        <div data-testid='navbar' className={classes.container}>
-            <header className={classes.header}>
-                <i className={classes.logo__icon}>
+        <div data-testid='navbar' className={styles.container}>
+            <header className={styles.header}>
+                <i className={styles.logo__icon}>
                     {LogoIcon.src && <Image src={LogoIcon} alt='logo icon' height={100} width={100} />}
                 </i>
-                <div className={classes.search__box}>
-                    <input type='text' className={classes.search__txt} placeholder='Search' />
-                    <button className={classes.search__btn}>
+                <div className={styles.search__box}>
+                    <input type='text' className={styles.search__txt} placeholder='Search' />
+                    <button className={styles.search__btn}>
                         <i>{SearchIcon.src && <Image src={SearchIcon} alt='search icon' height={100} width={100} />}</i>
                     </button>
                 </div>
