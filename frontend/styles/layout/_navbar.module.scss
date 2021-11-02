@@ -87,10 +87,12 @@ $header-height: clamp(3rem, 15.5vh, 3.5rem);
     }
 
     .nav__link__icon img {
+        opacity: 70%;
         width: 1.7rem;
     }
 
     .nav__link__icon.create__recipe img {
+        opacity: 100%;
         width: 3rem;
     }
 
