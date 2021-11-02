@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import PizzaPhoto from '../../styles/icons/pizza.jpg';
+import PizzaPhoto from '../../styles/icons/pizza.svg';
 import ProfileIcon from '../../styles/icons/profile._pic.svg';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -68,7 +68,9 @@ const RecipeCard = (props) => {
                     <Link href={`/recipes/${props.id}/`}>
                         <a>
                             <i>
-                                <Image src={PizzaPhoto} alt='Recipe Image' height={100} width={100} />
+                                {PizzaPhoto.src && (
+                                    <Image src={PizzaPhoto.src} alt='Recipe Image' height={100} width={100} />
+                                )}
                             </i>
                         </a>
                     </Link>
