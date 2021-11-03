@@ -67,10 +67,16 @@ const RecipeCard = (props) => {
                     <Link href={`/recipes/${props.id}/`}>
                         <a>
                             <i>
-                                {/* {props.photo_main && (
-                                    <Image src={props.photo_main} alt='Recipe Image' height={100} width={100} />
-                                )} */}
-                                <img src={props.photo_main} alt='Recipe Image' height={100} width={100} />
+                                {props.photo_main && (
+                                    <Image
+                                        loader={() => props.photo_main}
+                                        unoptimized={true}
+                                        src={props.photo_main}
+                                        alt='Recipe Image'
+                                        height={100}
+                                        width={100}
+                                    />
+                                )}
                             </i>
                         </a>
                     </Link>
