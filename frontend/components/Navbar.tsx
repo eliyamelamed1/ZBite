@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactEventHandler, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import HomeIcon from '../styles/icons/home.svg';
@@ -13,10 +13,10 @@ import SearchIcon from '../styles/icons/search.svg';
 import { logoutAction } from '../redux/actions/userActions';
 import { pageRoute } from '../globals';
 import styles from '../styles/layout/_navbar.module.scss';
+import { useRouter } from 'next/router';
 
 const Navbar = () => {
     const dispatch = useDispatch();
-
     const updatedIsUserAuthenticated = useSelector((state) => state.userReducer.isUserAuthenticated);
     const updatedloggedUserData = useSelector((state) => state.userReducer.loggedUserData);
 
@@ -37,63 +37,70 @@ const Navbar = () => {
         }
     };
 
-    const NavbarLinks = (
-        <nav data-testid='NavbarLinks' className={styles.nav}>
-            <ul className={styles.nav__list}>
-                <li>
-                    <Link href={`${pageRoute().home}`}>
-                        <a className={styles.nav__link}>
-                            <i className={styles.nav__link__icon}>
-                                {HomeIcon.src && <Image src={HomeIcon} alt='as' height={50} width={60} />}
-                            </i>
-                            <p className={styles.nav__link__text}>Home</p>
-                        </a>
-                    </Link>
-                </li>
-                <li>
-                    <Link href='/'>
-                        <a className={styles.nav__link}>
-                            <i className={styles.nav__link__icon}>
-                                {SavedIcon.src && <Image src={SavedIcon} alt='as' height={50} width={60} />}
-                            </i>
-                            <p className={styles.nav__link__text}>Saved</p>
-                        </a>
-                    </Link>
-                </li>
-                <li className={`${styles.nav__item} ${styles.create__recipe}`}>
-                    <Link href='/'>
-                        <a className={`${styles.nav__link} ${styles.create__recipe}`}>
-                            <i className={`${styles.nav__link__icon} ${styles.create__recipe}`}>
-                                {PlusIcon.src && <Image src={PlusIcon} alt='as' height={50} width={60} />}
-                            </i>
-                            <p className={`${styles.nav__link__text} ${styles.create__recipe}`}>Create Recipe</p>
-                        </a>
-                    </Link>
-                </li>
-                <li>
-                    <Link href='/'>
-                        <a>
-                            <i className={styles.nav__link__icon}>
-                                {LeaderboardIcon.src && <Image src={LeaderboardIcon} alt='as' height={50} width={60} />}
-                            </i>
+    const NavbarLinks = () => {
+        const router = useRouter();
+        const { pathname } = router;
+        return (
+            <nav data-testid='NavbarLinks' className={styles.nav}>
+                <ul className={styles.nav__list}>
+                    <button name='home'>
+                        <Link href={`${pageRoute().home}`}>
+                            <a className={styles.nav__link}>
+                                <i className={`${styles.nav__link__icon} ${pathname === '/' && styles.active}`}>
+                                    {HomeIcon.src && <Image src={HomeIcon} alt='as' height={50} width={60} />}
+                                </i>
+                                <p className={styles.nav__link__text}>Home</p>
+                            </a>
+                        </Link>
+                    </button>
+                    <button name='saved'>
+                        <Link href='/'>
+                            <a className={styles.nav__link}>
+                                <i className={styles.nav__link__icon}>
+                                    {SavedIcon.src && <Image src={SavedIcon} alt='as' height={50} width={60} />}
+                                </i>
+                                <p className={styles.nav__link__text}>Saved</p>
+                            </a>
+                        </Link>
+                    </button>
+                    <button name='create recipe' className={`${styles.nav__item} ${styles.create__recipe}`}>
+                        <Link href='/'>
+                            <a className={`${styles.nav__link} ${styles.create__recipe}`}>
+                                <i className={`${styles.nav__link__icon} ${styles.create__recipe}`}>
+                                    {PlusIcon.src && <Image src={PlusIcon} alt='as' height={50} width={60} />}
+                                </i>
+                                <p className={`${styles.nav__link__text} ${styles.create__recipe}`}>Create Recipe</p>
+                            </a>
+                        </Link>
+                    </button>
+                    <button name='leaderboard'>
+                        <Link href='/'>
+                            <a>
+                                <i className={styles.nav__link__icon}>
+                                    {LeaderboardIcon.src && (
+                                        <Image src={LeaderboardIcon} alt='as' height={50} width={60} />
+                                    )}
+                                </i>
 
-                            <p className={styles.nav__link__text}>Leaderboard</p>
-                        </a>
-                    </Link>
-                </li>
-                <li>
-                    <Link href={profileUrl}>
-                        <a>
-                            <i className={styles.nav__link__icon}>
-                                {ProfileIcon.src && <Image src={ProfileIcon} alt='as' height={50} width={60} />}
-                            </i>
-                            <p className={styles.nav__link__text}>Profile</p>
-                        </a>
-                    </Link>
-                </li>
-            </ul>
-        </nav>
-    );
+                                <p className={styles.nav__link__text}>Leaderboard</p>
+                            </a>
+                        </Link>
+                    </button>
+                    <button name='profile'>
+                        <Link href={profileUrl}>
+                            <a>
+                                <i className={styles.nav__link__icon}>
+                                    {ProfileIcon.src && <Image src={ProfileIcon} alt='as' height={50} width={60} />}
+                                </i>
+                                <p className={styles.nav__link__text}>Profile</p>
+                            </a>
+                        </Link>
+                    </button>
+                </ul>
+            </nav>
+        );
+    };
+
     const authenitcationLinks = (
         <section className={styles.auth__links}>
             {isUserAuthenticated ? (
@@ -132,7 +139,7 @@ const Navbar = () => {
                 </div>
                 {authenitcationLinks}
             </header>
-            {NavbarLinks}
+            {NavbarLinks()}
         </div>
     );
 };

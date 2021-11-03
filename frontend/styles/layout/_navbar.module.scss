@@ -84,18 +84,19 @@
             box-shadow: 0 0.16px 1.6px #b2b2b2;
         }
 
-        .nav__link {
-            display: flex;
-        }
-
         .nav__link__icon img {
             opacity: 60%;
-            width: 27.2px;
+            width: 30px;
         }
 
         .nav__link__icon.create__recipe img {
+            width: 35px;
+        }
+
+        .nav__link__icon.active img {
             opacity: 100%;
             width: 48px;
+            filter: invert(53%) sepia(48%) saturate(5453%) hue-rotate(332deg) brightness(99%) contrast(103%);
         }
 
         .nav__link__text {
