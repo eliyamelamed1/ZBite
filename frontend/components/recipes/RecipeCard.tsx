@@ -10,6 +10,9 @@ import StarIcon from '../../styles/icons/star.svg';
 import styles from '../../styles/components/_recipeCard.module.scss';
 
 const RecipeCard = (props) => {
+    const nextLoader = ({ src, width, quality }) => {
+        return `${src}?w=${width}?q=${quality || 100}`;
+    };
     return (
         <div data-testid='recipeCard' className={styles.card_container}>
             <section className={styles.detail_container_1}>
@@ -69,7 +72,7 @@ const RecipeCard = (props) => {
                             <i>
                                 {props.photo_main && (
                                     <Image
-                                        loader={() => props.photo_main}
+                                        loader={nextLoader}
                                         src={props.photo_main}
                                         alt='Recipe Image'
                                         height={100}
@@ -84,8 +87,6 @@ const RecipeCard = (props) => {
         </div>
     );
 };
-{
-}
 
 RecipeCard.propTypes = {
     title: PropTypes.string.isRequired,
