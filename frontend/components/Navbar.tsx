@@ -39,21 +39,25 @@ const Navbar = () => {
 
     const NavbarLinks = () => {
         const router = useRouter();
-        const { pathname } = router;
+        const { pathname, asPath } = router;
         return (
             <nav data-testid='NavbarLinks' className={styles.nav}>
                 <ul className={styles.nav__list}>
-                    <button name='home'>
+                    <li>
                         <Link href={`${pageRoute().home}`}>
                             <a className={styles.nav__link}>
-                                <i className={`${styles.nav__link__icon} ${pathname === '/' && styles.active}`}>
+                                <i
+                                    className={`${styles.nav__link__icon} ${
+                                        pathname === pageRoute().home && styles.active
+                                    }`}
+                                >
                                     {HomeIcon.src && <Image src={HomeIcon} alt='as' height={50} width={60} />}
                                 </i>
                                 <p className={styles.nav__link__text}>Home</p>
                             </a>
                         </Link>
-                    </button>
-                    <button name='saved'>
+                    </li>
+                    <li>
                         <Link href='/'>
                             <a className={styles.nav__link}>
                                 <i className={styles.nav__link__icon}>
@@ -62,8 +66,8 @@ const Navbar = () => {
                                 <p className={styles.nav__link__text}>Saved</p>
                             </a>
                         </Link>
-                    </button>
-                    <button name='create recipe' className={`${styles.nav__item} ${styles.create__recipe}`}>
+                    </li>
+                    <li className={`${styles.nav__item} ${styles.create__recipe}`}>
                         <Link href='/'>
                             <a className={`${styles.nav__link} ${styles.create__recipe}`}>
                                 <i className={`${styles.nav__link__icon} ${styles.create__recipe}`}>
@@ -72,8 +76,8 @@ const Navbar = () => {
                                 <p className={`${styles.nav__link__text} ${styles.create__recipe}`}>Create Recipe</p>
                             </a>
                         </Link>
-                    </button>
-                    <button name='leaderboard'>
+                    </li>
+                    <li>
                         <Link href='/'>
                             <a>
                                 <i className={styles.nav__link__icon}>
@@ -85,17 +89,17 @@ const Navbar = () => {
                                 <p className={styles.nav__link__text}>Leaderboard</p>
                             </a>
                         </Link>
-                    </button>
-                    <button name='profile'>
+                    </li>
+                    <li>
                         <Link href={profileUrl}>
                             <a>
-                                <i className={styles.nav__link__icon}>
+                                <i className={`${styles.nav__link__icon} ${asPath === profileUrl && styles.active}`}>
                                     {ProfileIcon.src && <Image src={ProfileIcon} alt='as' height={50} width={60} />}
                                 </i>
                                 <p className={styles.nav__link__text}>Profile</p>
                             </a>
                         </Link>
-                    </button>
+                    </li>
                 </ul>
             </nav>
         );
