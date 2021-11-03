@@ -70,7 +70,6 @@ const RecipeCard = (props) => {
                                 {props.photo_main && (
                                     <Image
                                         loader={() => props.photo_main}
-                                        unoptimized={true}
                                         src={props.photo_main}
                                         alt='Recipe Image'
                                         height={100}

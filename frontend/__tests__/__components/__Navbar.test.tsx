@@ -13,6 +13,14 @@ import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
 jest.mock('../../redux/actions/userActions', () => ({ logoutAction: jest.fn() }));
+jest.mock('next/router', () => ({
+    push: jest.fn(),
+    useRouter: jest.fn(() => ({
+        pathName: 'pathName',
+        asPath: 'asPath',
+    })),
+}));
+
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 

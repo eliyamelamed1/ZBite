@@ -7,6 +7,14 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import store from '../../redux/store';
 
+jest.mock('next/router', () => ({
+    push: jest.fn(),
+    useRouter: jest.fn(() => ({
+        pathName: 'pathName',
+        asPath: 'asPath',
+    })),
+}));
+
 beforeEach(() => {
     render(
         <Provider store={store}>
