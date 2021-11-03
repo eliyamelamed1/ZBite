@@ -58,9 +58,13 @@ const Navbar = () => {
                         </Link>
                     </li>
                     <li>
-                        <Link href='/'>
+                        <Link href={pageRoute().savedRecipes}>
                             <a className={styles.nav__link}>
-                                <i className={styles.nav__link__icon}>
+                                <i
+                                    className={`${styles.nav__link__icon} ${
+                                        pathname === pageRoute().savedRecipes && styles.active
+                                    }`}
+                                >
                                     {SavedIcon.src && <Image src={SavedIcon} alt='as' height={50} width={60} />}
                                 </i>
                                 <p className={styles.nav__link__text}>Saved</p>
@@ -68,9 +72,13 @@ const Navbar = () => {
                         </Link>
                     </li>
                     <li className={`${styles.nav__item} ${styles.create__recipe}`}>
-                        <Link href='/'>
+                        <Link href={pageRoute().createRecipe}>
                             <a className={`${styles.nav__link} ${styles.create__recipe}`}>
-                                <i className={`${styles.nav__link__icon} ${styles.create__recipe}`}>
+                                <i
+                                    className={`${styles.nav__link__icon} ${styles.create__recipe} ${
+                                        pathname === pageRoute().createRecipe && styles.active
+                                    }`}
+                                >
                                     {PlusIcon.src && <Image src={PlusIcon} alt='as' height={50} width={60} />}
                                 </i>
                                 <p className={`${styles.nav__link__text} ${styles.create__recipe}`}>Create Recipe</p>
@@ -78,9 +86,13 @@ const Navbar = () => {
                         </Link>
                     </li>
                     <li>
-                        <Link href='/'>
+                        <Link href={pageRoute().leaderboard}>
                             <a>
-                                <i className={styles.nav__link__icon}>
+                                <i
+                                    className={`${styles.nav__link__icon} ${
+                                        pathname === pageRoute().leaderboard && styles.active
+                                    }`}
+                                >
                                     {LeaderboardIcon.src && (
                                         <Image src={LeaderboardIcon} alt='as' height={50} width={60} />
                                     )}

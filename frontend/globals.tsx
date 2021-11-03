@@ -27,6 +27,9 @@ export const pageRoute = (id = String) => ({
     home: '/',
     login: '/users/UserLogin',
     profile: `/users/${id}`,
+    leaderboard: '/users/leaderboard',
+    savedRecipes: '/recipes/saved',
+    createRecipe: '/recipes/RecipeCreate',
 });
 
 export const userParams = {
