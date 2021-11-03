@@ -53,7 +53,13 @@ const Navbar = () => {
                                 >
                                     {HomeIcon.src && <Image src={HomeIcon} alt='as' height={50} width={60} />}
                                 </i>
-                                <p className={styles.nav__link__text}>Home</p>
+                                <p
+                                    className={`${styles.nav__link__text} ${
+                                        pathname === pageRoute().home && styles.active
+                                    }`}
+                                >
+                                    Home
+                                </p>
                             </a>
                         </Link>
                     </li>
@@ -67,7 +73,13 @@ const Navbar = () => {
                                 >
                                     {SavedIcon.src && <Image src={SavedIcon} alt='as' height={50} width={60} />}
                                 </i>
-                                <p className={styles.nav__link__text}>Saved</p>
+                                <p
+                                    className={`${styles.nav__link__text} ${
+                                        pathname === pageRoute().savedRecipes && styles.active
+                                    }`}
+                                >
+                                    Saved
+                                </p>
                             </a>
                         </Link>
                     </li>
@@ -98,7 +110,13 @@ const Navbar = () => {
                                     )}
                                 </i>
 
-                                <p className={styles.nav__link__text}>Leaderboard</p>
+                                <p
+                                    className={`${styles.nav__link__text} ${
+                                        pathname === pageRoute().leaderboard && styles.active
+                                    }`}
+                                >
+                                    Leaderboard
+                                </p>
                             </a>
                         </Link>
                     </li>
@@ -108,7 +126,9 @@ const Navbar = () => {
                                 <i className={`${styles.nav__link__icon} ${asPath === profileUrl && styles.active}`}>
                                     {ProfileIcon.src && <Image src={ProfileIcon} alt='as' height={50} width={60} />}
                                 </i>
-                                <p className={styles.nav__link__text}>Profile</p>
+                                <p className={`${styles.nav__link__text} ${asPath === profileUrl && styles.active}`}>
+                                    Profile
+                                </p>
                             </a>
                         </Link>
                     </li>
