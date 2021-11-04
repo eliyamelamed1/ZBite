@@ -1,14 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {
-    loadFollowedRecipesAction,
-    loadRecipeListAction,
-    loadTrendingRecipesAction,
-} from '../redux/actions/recipeActions';
+import { loadFollowedRecipesAction, loadTrendingRecipesAction } from '../redux/actions/recipeActions';
 import { useDispatch, useSelector } from 'react-redux';
 
 import DisplayRecipes from '../components/recipes/DisplayRecipes';
-import classes from '../styles/pages/home.module.scss';
 import store from '../redux/store';
+import styles from '../styles/pages/home.module.scss';
 
 const HomePage = (props) => {
     const dispatch = useDispatch();
@@ -16,12 +12,12 @@ const HomePage = (props) => {
     const buttonsRef = useRef() as any;
     const onClick = (e) => {
         if (e.target.name === 'trending') {
-            buttonsRef.current.children[0].className = classes.active;
+            buttonsRef.current.children[0].className = styles.active;
             buttonsRef.current.children[1].className = '';
         }
         if (e.target.name === 'Following') {
             buttonsRef.current.children[0].className = '';
-            buttonsRef.current.children[1].className = classes.active;
+            buttonsRef.current.children[1].className = styles.active;
         }
     };
     const { listOfTrendingRecipes } = props;
@@ -36,16 +32,16 @@ const HomePage = (props) => {
     }, [typeOfRecipes, dispatch]);
 
     return (
-        <div className={classes.container}>
-            <ul className={classes.recipe_filter} ref={buttonsRef} onClick={onClick}>
-                <button className={classes.active} name='trending' onClick={() => setTypeOfRecipes('Trending')}>
+        <div className={styles.container}>
+            <ul className={styles.recipe_filter} ref={buttonsRef} onClick={onClick}>
+                <button className={styles.active} name='trending' onClick={() => setTypeOfRecipes('Trending')}>
                     Trending
                 </button>
                 <button name='Following' onClick={() => setTypeOfRecipes('Following')}>
                     Following
                 </button>
             </ul>
-            <ul className={classes.recipes_container}>
+            <ul className={styles.recipes_container}>
                 {typeOfRecipes === 'Trending' && <DisplayRecipes recipesToDisplay={listOfTrendingRecipes} />}
                 {typeOfRecipes === 'Following' && <DisplayRecipes recipesToDisplay={listOfFollowedRecipes} />}
             </ul>
