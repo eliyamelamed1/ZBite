@@ -117,6 +117,7 @@ export const recipeUpdateAction =
     };
 
 export const loadTrendingRecipesAction = () => async (dispatch) => {
+    // NEW TODO TEST ACTION
     const config = {
         headers: {
             'Content-Type': 'application/json',
@@ -131,6 +132,7 @@ export const loadTrendingRecipesAction = () => async (dispatch) => {
     }
 };
 export const loadFollowedRecipesAction = () => async (dispatch) => {
+    // NEW TODO TEST ACTION
     const config = {
         headers: {
             'Content-Type': 'application/json',

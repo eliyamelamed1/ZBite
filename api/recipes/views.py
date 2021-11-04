@@ -46,26 +46,20 @@ class RecipeSearch(APIView):
 
         return Response(serializer.data)
     
-class RecipesOfAccountsFollowed(APIView):
+class RecipesOfAccountsFollowed(ListAPIView):
     '''display the recipes of followed users'''
-    permission_classes = (permissions.IsAuthenticated, )
     serializer_class = RecipeSerializer
+    permission_classes = (permissions.IsAuthenticated, )
 
-    def get(self, request):
-        all_recipes = Recipe.get_recipes_of_followed_accounts(request)
+    def get_queryset(self):
+        all_recipes = Recipe.get_recipes_of_followed_accounts(self.request)
         queryset = all_recipes.order_by('-created_at')
-        serializer = RecipeSerializer(queryset, many=True)
-        
-        return Response(serializer.data)
 
-class TopRatedRecipes(APIView):
+        return queryset
+    
+
+class TopRatedRecipes(ListAPIView):
     '''display the top rated recipes'''
     serializer_class = RecipeSerializer
+    queryset = Recipe.objects.order_by('-stars')[:10]
 
-    def get(self, request):
-        recipes = Recipe.objects.all()
-
-        queryset = recipes.order_by('-stars')[:10]
-        serializer = RecipeSerializer(queryset, many=True)
-
-        return Response(serializer.data)
