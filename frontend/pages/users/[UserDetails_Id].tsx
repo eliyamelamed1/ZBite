@@ -73,9 +73,9 @@ const UserDetails = (props) => {
             </Head>
             <section data-testid='userDetails' className={styles.section_container}>
                 <i className={styles.profile_pic}>
-                    <Image src={ProfileIcon} width={100} height={100} alt='profile pic' />
+                    {ProfileIcon.src && <Image src={ProfileIcon.src} width={100} height={100} alt='profile pic' />}
                 </i>
-                <span className={styles.name}>{userData?.name} levi</span>
+                <span className={styles.name}>{userData?.name}</span>
                 <ul className={styles.score_container}>
                     <i className={styles.score_icon}>
                         {ScoreIcon.src && <Image src={ScoreIcon.src} width={100} height={100} alt='score icon' />}
@@ -94,7 +94,9 @@ const UserDetails = (props) => {
 
                     <li className={styles.following_item}>
                         <span className={styles.following_number}>{userData?.following?.length}</span>
-                        <span className={styles.following_text}>Following</span>
+                        <span data-testid='following count' className={styles.following_text}>
+                            Following
+                        </span>
                     </li>
                 </ul>
                 <div className={styles.follow_button_container}>
@@ -106,6 +108,7 @@ const UserDetails = (props) => {
                 </ul>
             </section>
             <div>{isMyProfile && <div>{myProfileLinks}</div>}</div>
+            <p>{userData?.email}</p>
         </div>
     );
 };
