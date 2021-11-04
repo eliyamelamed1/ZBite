@@ -1,8 +1,10 @@
 import '@testing-library/jest-dom/extend-expect';
 
 import {
+    loadFollowedRecipesAction,
     loadRecipeDetailsAction,
     loadRecipeListAction,
+    loadTrendingRecipesAction,
     recipeCreateAction,
     recipeDeleteAction,
     recipeSearchAction,
@@ -94,6 +96,20 @@ describe('axios request should match url endpoint, and parameters', () => {
         expect(axios.get.mock.calls.length).toBe(1);
         expect(axios.get.mock.calls[0][0]).toStrictEqual(endpointRoute().recipes.list);
         expect(axios.get.mock.calls[0][1]).toStrictEqual(config);
+    });
+    test('loadTrendingRecipesAction', () => {
+        store.dispatch(loadTrendingRecipesAction());
+
+        expect(axios.get.mock.calls.length).toBe(1);
+        expect(axios.get.mock.calls[0][0]).toStrictEqual(endpointRoute().recipes.trending);
+        expect(axios.get.mock.calls[0][1]).toStrictEqual(config);
+    });
+    test('loadFollowedRecipesAction', () => {
+        store.dispatch(loadFollowedRecipesAction());
+
+        expect(axios.get.mock.calls.length).toBe(1);
+        expect(axios.get.mock.calls[0][0]).toStrictEqual(endpointRoute().recipes.followed);
+        expect(axios.get.mock.calls[0][1]).toStrictEqual(configWithAuthToken);
     });
     test('recipeSearchAction', () => {
         const { flavor_type } = parameters;

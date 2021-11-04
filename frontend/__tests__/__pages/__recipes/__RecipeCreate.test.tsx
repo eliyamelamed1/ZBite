@@ -10,10 +10,8 @@ import React from 'react';
 import RecipeCreate from '../../../pages/recipes/RecipeCreate';
 import Router from 'next/router';
 import { TEST_CASE_AUTH } from '../../../redux/types';
-import configureStore from 'redux-mock-store';
 import { pageRoute } from '../../../globals';
 import store from '../../../redux/store';
-import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
 const recipeCreateActionSpy = jest.spyOn(RecipeActions, 'recipeCreateAction');

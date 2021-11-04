@@ -3,6 +3,8 @@ import { loadFollowedRecipesAction, loadTrendingRecipesAction } from '../redux/a
 import { useDispatch, useSelector } from 'react-redux';
 
 import DisplayRecipes from '../components/recipes/DisplayRecipes';
+import Router from 'next/router';
+import { pageRoute } from '../globals';
 import store from '../redux/store';
 import styles from '../styles/pages/home.module.scss';
 
@@ -21,7 +23,10 @@ const HomePage = (props) => {
         }
     };
     const { listOfTrendingRecipes } = props;
-    const listOfFollowedRecipes = useSelector((state) => state.recipeReducer.listOfFollowedRecipes);
+    const { listOfFollowedRecipes } = useSelector((state) => state.recipeReducer);
+    const { isUserAuthenticated } = useSelector((state) => state.userReducer);
+
+    if (typeOfRecipes === 'Following' && isUserAuthenticated === false) Router.push(pageRoute().login);
 
     useEffect(() => {
         if (typeOfRecipes === 'Following') {

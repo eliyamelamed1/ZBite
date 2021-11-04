@@ -8,10 +8,14 @@ import {
     CREATE_RECIPE_SUCCESS,
     DELETE_RECIPE_FAIL,
     DELETE_RECIPE_SUCCESS,
+    GET_FOLLOWED_RECIPE_LIST_FAIL,
+    GET_FOLLOWED_RECIPE_LIST_SUCCESS,
     GET_RECIPE_DETAILS_FAIL,
     GET_RECIPE_DETAILS_SUCCESS,
     GET_RECIPE_LIST_FAIL,
     GET_RECIPE_LIST_SUCCESS,
+    GET_TRENDING_RECIPE_LIST_FAIL,
+    GET_TRENDING_RECIPE_LIST_SUCCESS,
     REVIEWS_IN_RECIPE_FAIL,
     REVIEWS_IN_RECIPE_SUCCESS,
     REVIEW_CREATE_FAIL,
@@ -34,6 +38,8 @@ const updatedState = {
     listOfSearchedRecipes: 'updatedState',
     requestedRecipeData: 'updatedState',
     listOfFilteredReviews: 'updatedState',
+    listOfTrendingRecipes: 'updatedState',
+    listOfFollowedRecipes: 'updatedState',
 };
 
 describe('recipeReducers - cases that modify the state', () => {
@@ -46,6 +52,8 @@ describe('recipeReducers - cases that modify the state', () => {
             listOfSearchedRecipes: null,
             requestedRecipeData: null,
             listOfFilteredReviews: null,
+            listOfTrendingRecipes: null,
+            listOfFollowedRecipes: null,
         };
         store.dispatch({ type: 'TEST_CASE_RECIPE', payload: initialState });
         return initialState;
@@ -95,6 +103,28 @@ describe('recipeReducers - cases that modify the state', () => {
         expect(storeState.recipeReducer.listOfSearchedRecipes).toBeNull();
         expect(storeState.recipeReducer.requestedRecipeData).toBeNull();
         expect(storeState.recipeReducer.listOfFilteredReviews).toBeNull();
+    });
+    test('case GET_TRENDING_RECIPE_LIST_SUCCESS', () => {
+        store.dispatch({ type: GET_TRENDING_RECIPE_LIST_SUCCESS, payload: updatedState.listOfTrendingRecipes });
+        const storeState = store.getState();
+
+        expect(storeState.recipeReducer.listOfRecipes).toBeNull();
+        expect(storeState.recipeReducer.listOfSearchedRecipes).toBeNull();
+        expect(storeState.recipeReducer.requestedRecipeData).toBeNull();
+        expect(storeState.recipeReducer.listOfFilteredReviews).toBeNull();
+        expect(storeState.recipeReducer.listOfFollowedRecipes).toBeNull();
+        expect(storeState.recipeReducer.listOfTrendingRecipes).toStrictEqual(updatedState.listOfTrendingRecipes);
+    });
+    test('case GET_FOLLOWED_RECIPE_LIST_SUCCESS', () => {
+        store.dispatch({ type: GET_FOLLOWED_RECIPE_LIST_SUCCESS, payload: updatedState.listOfFollowedRecipes });
+        const storeState = store.getState();
+
+        expect(storeState.recipeReducer.listOfRecipes).toBeNull();
+        expect(storeState.recipeReducer.listOfSearchedRecipes).toBeNull();
+        expect(storeState.recipeReducer.requestedRecipeData).toBeNull();
+        expect(storeState.recipeReducer.listOfFilteredReviews).toBeNull();
+        expect(storeState.recipeReducer.listOfTrendingRecipes).toBeNull();
+        expect(storeState.recipeReducer.listOfFollowedRecipes).toStrictEqual(updatedState.listOfFollowedRecipes);
     });
 });
 
@@ -159,8 +189,11 @@ describe('recipeReducers - cases that return ...state => state should not be mod
     test('case SAVE_UNSAVE_ACTION_FAIL ', () => {
         store.dispatch({ type: SAVE_UNSAVE_ACTION_FAIL, payload: updatedState });
     });
-    test('case REVIEWS_IN_RECIPE_FAIL ', () => {
-        store.dispatch({ type: SAVE_UNSAVE_ACTION_SUCCESS, payload: updatedState });
+    test('case GET_FOLLOWED_RECIPE_LIST_FAIL ', () => {
+        store.dispatch({ type: GET_FOLLOWED_RECIPE_LIST_FAIL, payload: updatedState });
+    });
+    test('case GET_TRENDING_RECIPE_LIST_FAIL ', () => {
+        store.dispatch({ type: GET_TRENDING_RECIPE_LIST_FAIL, payload: updatedState });
     });
     test('case - default', () => {
         store.dispatch({ type: 'default', payload: updatedState });
