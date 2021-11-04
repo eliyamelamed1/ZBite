@@ -50,11 +50,6 @@ describe('UserList', () => {
     test('renders displayUsers component', () => {
         expect(screen.getByTestId('displayUsers')).toBeInTheDocument();
     });
-    test('getStaticProps - should dispatch loadUserListAction', async () => {
-        const timesActionDispatched = loadUserListAction.mock.calls.length;
-
-        expect(timesActionDispatched).toBe(1);
-    });
     test('getStaticProps - should return matching revalidate', async () => {
         const revalidate = (await getStaticProps()).revalidate;
         expect(revalidate).toBe(10);
@@ -63,7 +58,7 @@ describe('UserList', () => {
         const props = (await getStaticProps()).props;
         expect(props.listOfUsers).toEqual(listOfUsers);
     });
-    test('DisplayUsers.propType.recipesToDisplay should get  listOfRecipes', () => {
+    test('DisplayUsers should be called with  listOfRecipes', () => {
         expect(displayUsersSpy).toHaveBeenCalled();
         expect(displayUsersSpy).toHaveBeenCalledWith({ usersToDisplay: listOfUsers }, {});
     });

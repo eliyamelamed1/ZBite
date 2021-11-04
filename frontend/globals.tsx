@@ -30,7 +30,7 @@ export const pageRoute = (id = String) => ({
     login: '/users/UserLogin',
     profile: `/users/${id}`,
     leaderboard: '/users/leaderboard',
-    savedRecipes: '/recipes/saved',
+    savedRecipes: '/recipes/SavedRecipes',
     createRecipe: '/recipes/RecipeCreate',
 });
 
