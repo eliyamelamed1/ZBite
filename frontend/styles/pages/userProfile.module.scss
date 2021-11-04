@@ -1,0 +1,116 @@
+@import '../abstracts/variables';
+
+.parent_container {
+    padding-top: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.section_container {
+    padding-top: 3rem;
+    padding-bottom: 2rem;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    width: 30rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: fit-content;
+    .name {
+        margin-top: 2rem;
+        font-weight: 700;
+        text-transform: capitalize;
+        font-size: 2rem;
+    }
+
+    .score_container {
+        margin-top: 2rem;
+        background-color: $primary-color;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        border-radius: 150px;
+        width: 16rem;
+        padding-top: 0.4rem;
+        padding-bottom: 0.4rem;
+    }
+
+    .score_icon {
+        position: relative;
+        top: 1px;
+        width: 1.5rem;
+    }
+    .score {
+        color: white;
+        font-weight: 700;
+        font-size: 1.2rem;
+        text-transform: capitalize;
+    }
+
+    .social_container {
+        margin-top: 2rem;
+        display: flex;
+        width: 28rem;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .followers_item,
+    .following_item,
+    .posts_item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        height: 4rem;
+    }
+
+    .followers_number,
+    .following_number,
+    .posts_number {
+        font-size: 1.2rem;
+        font-weight: 700;
+    }
+    .followers_text,
+    .following_text,
+    .posts_text {
+        font-size: 1.2rem;
+        opacity: 70%;
+    }
+
+    .follow_button_container {
+        margin-top: 3rem;
+        border: 2px solid $primary-color;
+        padding: 1rem 4rem;
+        border-radius: 5px;
+    }
+
+    .follow_button {
+        color: $primary-color;
+        text-transform: capitalize;
+        font-weight: 500;
+        font-size: 2rem;
+    }
+
+    .option_list {
+        display: flex;
+        margin-top: 5rem;
+        width: 20rem;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .posts_button,
+    .edit_button {
+        font-size: 1.8rem;
+        padding: 1rem 2.5rem;
+        opacity: 70%;
+    }
+
+    .option_list_active {
+        background-color: $primary-color-opacity;
+        color: $primary-color;
+        opacity: 100%;
+        border-radius: 10px;
+    }
+}

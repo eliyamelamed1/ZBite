@@ -2,10 +2,14 @@ import React, { useEffect, useState } from 'react';
 
 import FollowUser from '../../components/followers/FollowUser';
 import Head from 'next/head';
+import Image from 'next/image';
+import ProfileIcon from '../../styles/icons/profile._pic.svg';
+import ScoreIcon from '../../styles/icons/score-icon.svg';
 import UserDelete from '../../components/users/UserDelete';
 import UserUpdate from '../../components/users/UserUpdate';
 import { loadUserDetailsAction } from '../../redux/actions/userActions';
 import store from '../../redux/store';
+import styles from '../../styles/pages/userProfile.module.scss';
 import { useSelector } from 'react-redux';
 
 const UserDetails = (props) => {
@@ -62,23 +66,47 @@ const UserDetails = (props) => {
         </main>
     );
     return (
-        <React.Fragment>
+        <div className={styles.parent_container}>
             <Head>
                 <title>ZBite - User Details Page </title>
                 <meta name='description' content='recipes detail' />
             </Head>
-            <main data-testid='userDetails'>
-                <div>
-                    <p>user name:</p>
-                    <p>{userData?.name}</p>
-                    <p>user email:</p>
-                    <p>{userData?.email}</p>
-                    <p>following: {userData?.following?.length}</p>
-                    <p>followers: {userData?.followers?.length}</p>
+            <section data-testid='userDetails' className={styles.section_container}>
+                <i className={styles.profile_pic}>
+                    <Image src={ProfileIcon} width={100} height={100} alt='profile pic' />
+                </i>
+                <span className={styles.name}>{userData?.name} levi</span>
+                <ul className={styles.score_container}>
+                    <i className={styles.score_icon}>
+                        {ScoreIcon.src && <Image src={ScoreIcon.src} width={100} height={100} alt='score icon' />}
+                    </i>
+                    <span className={styles.score}>score: 7.6K</span>
+                </ul>
+                <ul className={styles.social_container}>
+                    <li className={styles.followers_item}>
+                        <span className={styles.followers_number}>{userData?.followers?.length}</span>
+                        <span className={styles.followers_text}>Followers</span>
+                    </li>
+                    <li className={styles.posts_item}>
+                        <span className={styles.posts_number}>52</span>
+                        <span className={styles.posts_text}>Posts</span>
+                    </li>
+
+                    <li className={styles.following_item}>
+                        <span className={styles.following_number}>{userData?.following?.length}</span>
+                        <span className={styles.following_text}>Following</span>
+                    </li>
+                </ul>
+                <div className={styles.follow_button_container}>
+                    {isMyProfile || <FollowUser userToFollow={userData?.id} />}
                 </div>
-                <div>{isMyProfile ? <div>{myProfileLinks}</div> : <FollowUser userToFollow={userData?.id} />}</div>
-            </main>
-        </React.Fragment>
+                <ul className={styles.option_list}>
+                    <button className={`${styles.posts_button} ${styles.option_list_active}`}>Posts</button>
+                    <button className={styles.edit_button}>Edit</button>
+                </ul>
+            </section>
+            <div>{isMyProfile && <div>{myProfileLinks}</div>}</div>
+        </div>
     );
 };
 
