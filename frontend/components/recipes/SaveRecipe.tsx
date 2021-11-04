@@ -10,7 +10,7 @@ const SaveRecipe = ({ recipeId }) => {
 
     useEffect(
         function toggleButtonText() {
-            const isRecipeAlreadySaved = loggedUserData?.wishlist?.includes(recipeId);
+            const isRecipeAlreadySaved = loggedUserData?.saved_recipes?.includes(recipeId);
             if (isRecipeAlreadySaved) {
                 setButton('unsave');
             } else {

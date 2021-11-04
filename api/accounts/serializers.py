@@ -16,8 +16,8 @@ class UserSerializer(serializers.ModelSerializer):
         fields = '__all__'
         ref_name = "user_details"
 
-class WishlistSerializer(serializers.ModelSerializer):
+class SavedRecipesSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('wishlist',)
+        fields = ('saved_recipes',)
 

@@ -20,5 +20,5 @@ def test_get_absolute_url():
 def test_get_top_rated_accounts_url():
     assert UserAccount.get_top_rated_accounts_url() == reverse('accounts:top')
 
-def test_get_wishlist_url():
-    assert UserAccount.get_wishlist_url() == reverse('accounts:wishlist')
+def test_get_saved_recipes_url():
+    assert UserAccount.get_saved_recipes_url() == reverse('accounts:saved_recipes')

@@ -43,14 +43,14 @@ class TopRatedAccounts(APIView):
 
         return Response(serializer.data)
 
-class UserWishlist(APIView):
+class UserSavedRecipes(APIView):
     '''display the user saved recipes'''
     serializer_class = UserSerializer
 
     def get(self, request):
         try:
             logged_user = UserAccount.objects.get(id=request.user.id) 
-            queryset = logged_user.wishlist.all()
+            queryset = logged_user.saved_recipes.all()
             serializer = RecipeSerializer(queryset, many=True)
 
             return Response(serializer.data)
