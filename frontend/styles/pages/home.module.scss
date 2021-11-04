@@ -1,0 +1,36 @@
+@import '../abstracts/variables';
+
+.container {
+    padding-top: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .recipe_filter {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: fit-content;
+        align-items: center;
+
+        button {
+            width: fit-content;
+            font-weight: 600;
+            padding: 12.8px;
+            border-radius: 150px;
+        }
+
+        button.active {
+            background-color: $primary-color;
+            color: white;
+        }
+    }
+
+    .recipes_container {
+        display: flex;
+        flex-wrap: wrap;
+        width: MIN(100%, 1600px);
+        justify-content: space-evenly;
+    }
+}

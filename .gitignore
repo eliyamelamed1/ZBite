@@ -33,3 +33,6 @@ __pycache__
 .coverage
 db.sqlite3
 .eslintcache
+
+# local-css
+/dist/

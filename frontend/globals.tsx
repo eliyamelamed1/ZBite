@@ -13,6 +13,8 @@ export const endpointRoute = (id = String) => ({
     recipes: {
         create: `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/create/`,
         list: `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/list/`,
+        trending: `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/top_rated/`,
+        followed: `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/recipes_of_accounts_followed/`,
         search: `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/search/`,
         details: `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}/`,
         save: `${process.env.NEXT_PUBLIC_API_URL}/api/saves/save/`,
@@ -27,6 +29,9 @@ export const pageRoute = (id = String) => ({
     home: '/',
     login: '/users/UserLogin',
     profile: `/users/${id}`,
+    leaderboard: '/users/leaderboard',
+    savedRecipes: '/recipes/saved',
+    createRecipe: '/recipes/RecipeCreate',
 });
 
 export const userParams = {

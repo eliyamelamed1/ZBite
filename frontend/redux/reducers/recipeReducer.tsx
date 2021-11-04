@@ -3,10 +3,14 @@ import {
     CREATE_RECIPE_SUCCESS,
     DELETE_RECIPE_FAIL,
     DELETE_RECIPE_SUCCESS,
+    GET_FOLLOWED_RECIPE_LIST_FAIL,
+    GET_FOLLOWED_RECIPE_LIST_SUCCESS,
     GET_RECIPE_DETAILS_FAIL,
     GET_RECIPE_DETAILS_SUCCESS,
     GET_RECIPE_LIST_FAIL,
     GET_RECIPE_LIST_SUCCESS,
+    GET_TRENDING_RECIPE_LIST_FAIL,
+    GET_TRENDING_RECIPE_LIST_SUCCESS,
     REVIEWS_IN_RECIPE_FAIL,
     REVIEWS_IN_RECIPE_SUCCESS,
     REVIEW_CREATE_FAIL,
@@ -27,6 +31,8 @@ const initialState = {
     listOfSearchedRecipes: null,
     requestedRecipeData: null,
     listOfFilteredReviews: null,
+    listOfTrendingRecipes: null,
+    listOfFollowedRecipes: null,
 };
 
 export default function recipeReducer(state = initialState, action) {
@@ -40,6 +46,8 @@ export default function recipeReducer(state = initialState, action) {
                 listOfSearchedRecipes: payload.listOfSearchedRecipes,
                 requestedRecipeData: payload.requestedRecipeData,
                 listOfFilteredReviews: payload.listOfFilteredReviews,
+                listOfTrendingRecipes: payload.listOfTrendingRecipes,
+                listOfFollowedRecipes: payload.listOfFollowedRecipes,
             };
         case GET_RECIPE_LIST_SUCCESS: //
             return { ...state, listOfRecipes: payload };
@@ -50,6 +58,10 @@ export default function recipeReducer(state = initialState, action) {
             return { ...state, requestedRecipeData: payload };
         case REVIEWS_IN_RECIPE_SUCCESS:
             return { ...state, listOfFilteredReviews: payload };
+        case GET_TRENDING_RECIPE_LIST_SUCCESS:
+            return { ...state, listOfTrendingRecipes: payload };
+        case GET_FOLLOWED_RECIPE_LIST_SUCCESS:
+            return { ...state, listOfFollowedRecipes: payload };
         case REVIEWS_IN_RECIPE_FAIL:
         case REVIEW_DELETE_SUCCESS:
         case REVIEW_DELETE_FAIL:
@@ -62,6 +74,8 @@ export default function recipeReducer(state = initialState, action) {
         case UPDATE_RECIPE_FAIL:
         case GET_RECIPE_DETAILS_FAIL:
         case GET_RECIPE_LIST_FAIL:
+        case GET_FOLLOWED_RECIPE_LIST_FAIL:
+        case GET_TRENDING_RECIPE_LIST_FAIL:
         case SEARCH_RECIPE_FAIL:
         case SAVE_UNSAVE_ACTION_FAIL:
         case SAVE_UNSAVE_ACTION_SUCCESS:

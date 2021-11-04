@@ -216,7 +216,7 @@ describe('UserDetails - loggedUser visiting other account profile', () => {
         };
         store.dispatch({ type: TEST_CASE_AUTH, payload: initialState });
 
-        const updatedFollowingCount = await screen.findByText(/following: 1/i);
+        const updatedFollowingCount = await screen.findByTestId('following count');
         const updatedUserEmail = await screen.findByText(updatedUserData.name);
         const updatedUserName = await screen.findByText(updatedUserData.email);
 

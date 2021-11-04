@@ -10,7 +10,6 @@ const DisplayRecipes = ({ recipesToDisplay }) => {
         if (recipesToDisplay) {
             const recipesOnPage = [];
             const result = [];
-
             recipesToDisplay.map((recipe) =>
                 recipesOnPage.push(
                     <RecipeCard
@@ -19,6 +18,8 @@ const DisplayRecipes = ({ recipesToDisplay }) => {
                         photo_main={recipe.photo_main}
                         id={recipe.id}
                         author={recipe.author}
+                        // saves={recipe.saves.length}
+                        // stars={recipe.stars || 'not rated'}
                     />
                 )
             );
@@ -27,7 +28,7 @@ const DisplayRecipes = ({ recipesToDisplay }) => {
             for (let i = 0; i < recipesToDisplay.length; i += 1) {
                 result.push(
                     <div key={i}>
-                        <div>{recipesOnPage[i] ? recipesOnPage[i] : null}</div>
+                        <div>{recipesOnPage[i] && recipesOnPage[i]}</div>
                     </div>
                 );
             }

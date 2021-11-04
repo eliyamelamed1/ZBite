@@ -1,12 +1,15 @@
+import Footer from './Footer';
 import Navbar from './Navbar';
 import React from 'react';
+import styles from '../styles/layout/__layout.module.scss';
 
 const Layout = ({ children }) => {
     return (
         <div data-testid='layout'>
             <meta name='csrf_token' content='{{ csrf_token }}'></meta>
             <Navbar />
-            {children}
+            <div className={styles.layout}>{children}</div>
+            <Footer />
         </div>
     );
 };

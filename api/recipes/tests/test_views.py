@@ -31,7 +31,7 @@ class TestRecipeListView:
             recipe_list_page_render = api_client.get(recipe_list_url)
 
             assert recipe_list_page_render.status_code == 200
-
+            
 class TestRecipeCreateView:
     class TestAuthenticatedUsers:
         def test_recipe_create_page_render(self, api_client):
@@ -68,7 +68,6 @@ class TestRecipeCreateView:
                 new_recipe = Recipe.objects.get(title=recipe_data.title)
 
                 assert new_recipe.author == first_user
-
 
     class TestGuestUsers:
         def test_recipe_create_page_should_not_render(self, api_client):

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { followUserAction } from '../../redux/actions/userActions';
+import styles from '../../styles/pages/userProfile.module.scss';
 
 const FollowUser = ({ userToFollow }) => {
     const dispatch = useDispatch();
@@ -26,7 +27,7 @@ const FollowUser = ({ userToFollow }) => {
 
     const authLinks = (
         <form onSubmit={(e) => onSubmit(e)}>
-            <button>{button}</button>
+            <button className={styles.follow_button}>{button}</button>
         </form>
     );
     return <div data-testid='followUser'>{isUserAuthenticated ? <div>{authLinks}</div> : null}</div>;
