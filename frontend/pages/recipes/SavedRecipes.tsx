@@ -1,9 +1,29 @@
-import store from '../../redux/store';
+import { useDispatch, useSelector } from 'react-redux';
 
-const SavedRecipes = () => {};
+import DisplayRecipes from '../../components/recipes/DisplayRecipes';
+import { loadSavedRecipesAction } from '../../redux/actions/recipeActions';
+import styles from '../../styles/pages/home.module.scss';
+import { useEffect } from 'react';
 
-export async function getServerSideProps() {
-    // await store.dispatch()
-}
+const SavedRecipes = () => {
+    const dispatch = useDispatch();
+    const { listOfSavedRecipes } = useSelector((state) => state.recipeReducer);
+
+    useEffect(() => {
+        try {
+            dispatch(loadSavedRecipesAction());
+        } catch {}
+    }, [dispatch]);
+
+    return (
+        <section className={styles.container}>
+            {listOfSavedRecipes && (
+                <div className={styles.recipes_container}>
+                    <DisplayRecipes recipesToDisplay={listOfSavedRecipes} />
+                </div>
+            )}
+        </section>
+    );
+};
 
 export default SavedRecipes;

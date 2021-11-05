@@ -9,6 +9,8 @@ import {
     GET_RECIPE_DETAILS_SUCCESS,
     GET_RECIPE_LIST_FAIL,
     GET_RECIPE_LIST_SUCCESS,
+    GET_SAVED_RECIPE_LIST_FAIL,
+    GET_SAVED_RECIPE_LIST_SUCCESS,
     GET_TRENDING_RECIPE_LIST_FAIL,
     GET_TRENDING_RECIPE_LIST_SUCCESS,
     REVIEWS_IN_RECIPE_FAIL,
@@ -48,6 +50,7 @@ export default function recipeReducer(state = initialState, action) {
                 listOfFilteredReviews: payload.listOfFilteredReviews,
                 listOfTrendingRecipes: payload.listOfTrendingRecipes,
                 listOfFollowedRecipes: payload.listOfFollowedRecipes,
+                listOfSavedRecipes: payload.listOfSavedRecipes,
             };
         case GET_RECIPE_LIST_SUCCESS: //
             return { ...state, listOfRecipes: payload };
@@ -62,6 +65,8 @@ export default function recipeReducer(state = initialState, action) {
             return { ...state, listOfTrendingRecipes: payload };
         case GET_FOLLOWED_RECIPE_LIST_SUCCESS:
             return { ...state, listOfFollowedRecipes: payload };
+        case GET_SAVED_RECIPE_LIST_SUCCESS:
+            return { ...state, listOfSavedRecipes: payload };
         case REVIEWS_IN_RECIPE_FAIL:
         case REVIEW_DELETE_SUCCESS:
         case REVIEW_DELETE_FAIL:
@@ -71,6 +76,7 @@ export default function recipeReducer(state = initialState, action) {
         case DELETE_RECIPE_FAIL:
         case CREATE_RECIPE_SUCCESS:
         case CREATE_RECIPE_FAIL:
+        case GET_SAVED_RECIPE_LIST_SUCCESS:
         case UPDATE_RECIPE_FAIL:
         case GET_RECIPE_DETAILS_FAIL:
         case GET_RECIPE_LIST_FAIL:
