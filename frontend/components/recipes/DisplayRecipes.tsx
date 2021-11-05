@@ -17,7 +17,7 @@ const DisplayRecipes = ({ recipesToDisplay }) => {
                         photo_main={recipe.photo_main}
                         id={recipe.id}
                         author={recipe.author}
-                        saves={recipe.saves.length}
+                        saves={recipe.saves?.length || 0}
                         stars={recipe.stars || 'not rated'}
                     />
                 )

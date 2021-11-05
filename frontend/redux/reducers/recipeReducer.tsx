@@ -72,11 +72,11 @@ export default function recipeReducer(state = initialState, action) {
         case REVIEW_DELETE_FAIL:
         case REVIEW_CREATE_SUCCESS:
         case REVIEW_CREATE_FAIL:
-        case DELETE_RECIPE_SUCCESS: //
+        case DELETE_RECIPE_SUCCESS:
         case DELETE_RECIPE_FAIL:
         case CREATE_RECIPE_SUCCESS:
         case CREATE_RECIPE_FAIL:
-        case GET_SAVED_RECIPE_LIST_SUCCESS:
+        case GET_SAVED_RECIPE_LIST_FAIL:
         case UPDATE_RECIPE_FAIL:
         case GET_RECIPE_DETAILS_FAIL:
         case GET_RECIPE_LIST_FAIL:

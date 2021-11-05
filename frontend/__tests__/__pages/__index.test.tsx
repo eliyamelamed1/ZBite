@@ -24,33 +24,37 @@ describe('home page', () => {
     let listOfTrendingRecipes = [
         {
             title: 'trending recipe',
-            flavor_type: 'Sour',
             photo_main: '/recipe image #',
             id: 'trending recipe id',
             author: 'trending recipe author',
+            saves: [],
+            stars: 5.0,
         },
         {
             title: 'trending recipe2',
-            flavor_type: 'Sour',
             photo_main: '/recipe image #',
             id: 'trending recipe id2',
             author: 'trending recipe author',
+            saves: [],
+            stars: 5.0,
         },
     ];
     let listOfFollowedRecipes = [
         {
             title: 'Followed recipe',
-            flavor_type: 'Sour',
             photo_main: '/recipe image #',
             id: 'Followed recipe id',
             author: 'Followed recipe author',
+            saves: [],
+            stars: 5.0,
         },
         {
             title: 'Followed recipe2',
-            flavor_type: 'Sour',
             photo_main: '/recipe image #',
             id: 'Followed recipe id2',
             author: 'Followed recipe author',
+            saves: [],
+            stars: 5.0,
         },
     ];
 
