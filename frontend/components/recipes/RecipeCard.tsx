@@ -47,13 +47,13 @@ const RecipeCard = (props) => {
                             </i>
                         </div>
                         <div className={styles.rating_score}>
-                            <span>(5.0)</span>
+                            <span>{props.stars}</span>
                         </div>
                     </li>
                 </ul>
                 <ul className={styles.saves_count_and_icon}>
                     <li className={styles.saves_count}>
-                        <span>54</span>
+                        <span>{props.saves}</span>
                     </li>
                     <li className={styles.saves_icon}>
                         <i>
@@ -91,10 +91,10 @@ const RecipeCard = (props) => {
 RecipeCard.propTypes = {
     title: PropTypes.string.isRequired,
     photo_main: PropTypes.string,
-    flavor_type: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
-    saves: PropTypes.any,
+    saves: PropTypes.array.isRequired,
+    stars: PropTypes.any,
 };
 
 export default RecipeCard;

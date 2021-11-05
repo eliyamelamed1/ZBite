@@ -18,8 +18,8 @@ const DisplayRecipes = ({ recipesToDisplay }) => {
                         photo_main={recipe.photo_main}
                         id={recipe.id}
                         author={recipe.author}
-                        // saves={recipe.saves.length}
-                        // stars={recipe.stars || 'not rated'}
+                        saves={recipe.saves.length}
+                        stars={recipe.stars || 'not rated'}
                     />
                 )
             );
