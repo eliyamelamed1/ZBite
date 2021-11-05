@@ -14,12 +14,11 @@ const DisplayRecipes = ({ recipesToDisplay }) => {
                 recipesOnPage.push(
                     <RecipeCard
                         title={recipe.title}
-                        flavor_type={recipe.flavor_type}
                         photo_main={recipe.photo_main}
                         id={recipe.id}
                         author={recipe.author}
-                        // saves={recipe.saves.length}
-                        // stars={recipe.stars || 'not rated'}
+                        saves={recipe.saves?.length || 0}
+                        stars={recipe.stars || 'not rated'}
                     />
                 )
             );

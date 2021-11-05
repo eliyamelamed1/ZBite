@@ -43,7 +43,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     followers = models.ManyToManyField('self', default=None, blank=True, related_name='followers_list', symmetrical=False)
     following = models.ManyToManyField('self', default=None, blank=True, related_name='following_list', symmetrical=False)
-    wishlist = models.ManyToManyField('recipes.Recipe', default=None, blank=True, related_name='wishlist', symmetrical=False)  
+    saved_recipes = models.ManyToManyField('recipes.Recipe', default=None, blank=True, related_name='saved_recipes', symmetrical=False)  
     stars = models.TextField(blank=True)
 
     objects = UserAccountManager()
@@ -63,5 +63,5 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
         return reverse('accounts:top')
 
     @classmethod
-    def get_wishlist_url(cls):
-        return reverse('accounts:wishlist')
+    def get_saved_recipes_url(cls):
+        return reverse('accounts:saved_recipes')

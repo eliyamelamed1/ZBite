@@ -4,7 +4,7 @@ from rest_framework.generics import (CreateAPIView, ListAPIView,
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from accounts.serializers import WishlistSerializer
+from accounts.serializers import SavedRecipesSerializer
 from permissions import IsAuthorOrReadOnly
 
 from .models import Recipe

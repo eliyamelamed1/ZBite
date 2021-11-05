@@ -9,6 +9,8 @@ import {
     GET_RECIPE_DETAILS_SUCCESS,
     GET_RECIPE_LIST_FAIL,
     GET_RECIPE_LIST_SUCCESS,
+    GET_SAVED_RECIPE_LIST_FAIL,
+    GET_SAVED_RECIPE_LIST_SUCCESS,
     GET_TRENDING_RECIPE_LIST_FAIL,
     GET_TRENDING_RECIPE_LIST_SUCCESS,
     REVIEWS_IN_RECIPE_FAIL,
@@ -117,7 +119,6 @@ export const recipeUpdateAction =
     };
 
 export const loadTrendingRecipesAction = () => async (dispatch) => {
-    // NEW TODO TEST ACTION
     const config = {
         headers: {
             'Content-Type': 'application/json',
@@ -132,7 +133,6 @@ export const loadTrendingRecipesAction = () => async (dispatch) => {
     }
 };
 export const loadFollowedRecipesAction = () => async (dispatch) => {
-    // NEW TODO TEST ACTION
     const config = {
         headers: {
             'Content-Type': 'application/json',
@@ -145,6 +145,21 @@ export const loadFollowedRecipesAction = () => async (dispatch) => {
         dispatch({ type: GET_FOLLOWED_RECIPE_LIST_SUCCESS, payload: res.data });
     } catch {
         dispatch({ type: GET_FOLLOWED_RECIPE_LIST_FAIL });
+    }
+};
+export const loadSavedRecipesAction = () => async (dispatch) => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+            Authorization: `Token ${localStorage.getItem('auth_token')}`,
+        },
+    };
+    try {
+        const res = await axios.get(endpointRoute().recipes.saved_recipes, config);
+        dispatch({ type: GET_SAVED_RECIPE_LIST_SUCCESS, payload: res.data });
+    } catch {
+        dispatch({ type: GET_SAVED_RECIPE_LIST_FAIL });
     }
 };
 

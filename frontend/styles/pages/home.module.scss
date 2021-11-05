@@ -26,11 +26,11 @@
             color: white;
         }
     }
+}
 
-    .recipes_container {
-        display: flex;
-        flex-wrap: wrap;
-        width: MIN(100%, 1600px);
-        justify-content: space-evenly;
-    }
+.recipes_container {
+    display: flex;
+    flex-wrap: wrap;
+    width: MIN(100%, 1600px);
+    justify-content: space-evenly;
 }

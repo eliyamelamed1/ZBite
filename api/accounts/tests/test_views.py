@@ -6,7 +6,7 @@ from accounts.models import UserAccount
 from factories import UserFactory, RecipeFactory
 
 top_rated_accounts_url = UserAccount.get_top_rated_accounts_url()
-wishlist_url = UserAccount.get_wishlist_url()
+saved_recipes_url = UserAccount.get_saved_recipes_url()
 
 # ------------------------------------------------ Tests
 pytestmark = pytest.mark.django_db
@@ -221,32 +221,32 @@ class TestTopRatedAccounts:
             for chef in bottom_rated_chefs:
                 assert f'{chef}' not in f'{response.content}'
 
-class TestUserWishlist:
+class TestUserSavedRecipes:
     class TestAuthenticatedUsers:
-        def test_wishlist_page_should_render_successfully(self, api_client):
+        def test_saved_recipes_page_should_render_successfully(self, api_client):
             new_user = UserFactory()
             api_client.force_authenticate(new_user)
-            response = api_client.get(wishlist_url)
+            response = api_client.get(saved_recipes_url)
     
             assert response.status_code == 200
 
-        def test_page_should_display_wishlist(self, api_client):
+        def test_page_should_display_saved_recipes(self, api_client):
             new_user = UserFactory() 
             api_client.force_authenticate(new_user)
             
             for i in range(5):
                 new_recipe = RecipeFactory()
-                new_user.wishlist.add(new_recipe) 
+                new_user.saved_recipes.add(new_recipe) 
                 new_user.save()
             
-            wishlist_queryset = UserAccount.objects.all().get(id=new_user.id).wishlist.all() 
-            response = api_client.get(wishlist_url)
+            saved_recipes_queryset = UserAccount.objects.all().get(id=new_user.id).saved_recipes.all() 
+            response = api_client.get(saved_recipes_url)
 
-            for recipe in wishlist_queryset:
+            for recipe in saved_recipes_queryset:
                 assert f'{recipe}' in f'{response.content}'
 
     class TestGuestUsers:
-        def test_wishlist_page_should_not_render(self, api_client):
-            response = api_client.get(wishlist_url)
+        def test_saved_recipes_page_should_not_render(self, api_client):
+            response = api_client.get(saved_recipes_url)
     
             assert response.status_code == 401

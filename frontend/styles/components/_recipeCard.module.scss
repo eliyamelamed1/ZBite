@@ -57,7 +57,9 @@
                 margin-bottom: 8px;
                 margin-right: 4.8px;
                 font-size: 1.6rem;
-                font-weight: 700;
+                span {
+                    font-weight: 700;
+                }
             }
             .saves_icon {
                 i {

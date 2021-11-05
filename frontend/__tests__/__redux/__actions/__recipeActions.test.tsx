@@ -4,6 +4,7 @@ import {
     loadFollowedRecipesAction,
     loadRecipeDetailsAction,
     loadRecipeListAction,
+    loadSavedRecipesAction,
     loadTrendingRecipesAction,
     recipeCreateAction,
     recipeDeleteAction,
@@ -109,6 +110,13 @@ describe('axios request should match url endpoint, and parameters', () => {
 
         expect(axios.get.mock.calls.length).toBe(1);
         expect(axios.get.mock.calls[0][0]).toStrictEqual(endpointRoute().recipes.followed);
+        expect(axios.get.mock.calls[0][1]).toStrictEqual(configWithAuthToken);
+    });
+    test('loadSavedRecipesAction', () => {
+        store.dispatch(loadSavedRecipesAction());
+
+        expect(axios.get.mock.calls.length).toBe(1);
+        expect(axios.get.mock.calls[0][0]).toStrictEqual(endpointRoute().recipes.saved_recipes);
         expect(axios.get.mock.calls[0][1]).toStrictEqual(configWithAuthToken);
     });
     test('recipeSearchAction', () => {

@@ -18,12 +18,12 @@ const recipeData = {
 };
 describe('recipe not saved', () => {
     const userInitialState = {
-        loggedUserData: { id: 'loggedUserId', wishlist: [] },
+        loggedUserData: { id: 'loggedUserId', saved_recipes: [] },
     };
 
     const loggedUserData = {
         id: 'loggedUserId',
-        wishlist: [recipeData.id],
+        saved_recipes: [recipeData.id],
     };
     beforeEach(() => {
         axios.post.mockReturnValueOnce(() => {});
@@ -76,10 +76,10 @@ describe('recipe not saved', () => {
 describe('recipe is already saved', () => {
     const loggedUserData = {
         id: 'loggedUserId',
-        wishlist: [],
+        saved_recipes: [],
     };
     const userInitialState = {
-        loggedUserData: { id: 'loggedUserId', wishlist: [recipeData.id] },
+        loggedUserData: { id: 'loggedUserId', saved_recipes: [recipeData.id] },
     };
     beforeEach(() => {
         axios.post.mockReturnValueOnce(() => {});

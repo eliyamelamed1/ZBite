@@ -84,7 +84,7 @@ class TestSaveRecipeCreateView:
 
             assert response.status_code and response2.status_code == 200
 
-        def test_liking_2_recipes_should_save_them_as_wishlist_and_increment_their_save_count(self,api_client):
+        def test_liking_2_recipes_should_save_them_as_saved_recipes_and_increment_their_save_count(self,api_client):
             new_user = UserFactory()
             api_client.force_authenticate(new_user)
             new_recipe = RecipeFactory()
@@ -100,8 +100,8 @@ class TestSaveRecipeCreateView:
 
             assert new_recipe.saves.all().count() == 1
             assert new_recipe2.saves.all().count() == 1
-            assert new_user.wishlist.all().count() == 2
-            assert new_recipe and new_recipe2 in new_user.wishlist.all()
+            assert new_user.saved_recipes.all().count() == 2
+            assert new_recipe and new_recipe2 in new_user.saved_recipes.all()
 
         def test_saves_from_different_users_should_stack(self, api_client):
             new_user = UserFactory()
@@ -122,7 +122,7 @@ class TestSaveRecipeCreateView:
 
             assert new_recipe.saves.all().count() == 2
         
-        def test_saves_from_different_users_should_save_recipes_in_each_user_wishlist(self, api_client):
+        def test_saves_from_different_users_should_save_recipes_in_each_user_saved_recipes(self, api_client):
             new_user = UserFactory()
             api_client.force_authenticate(new_user)
             new_recipe = RecipeFactory()
@@ -139,12 +139,12 @@ class TestSaveRecipeCreateView:
             }
             api_client.post(save_url, data)
 
-            assert new_user.wishlist.all().count() == 1
-            assert new_recipe in new_user.wishlist.all()
-            assert new_user2.wishlist.all().count() == 1
-            assert new_recipe in new_user2.wishlist.all()
+            assert new_user.saved_recipes.all().count() == 1
+            assert new_recipe in new_user.saved_recipes.all()
+            assert new_user2.saved_recipes.all().count() == 1
+            assert new_recipe in new_user2.saved_recipes.all()
 
-        def test_saved_recipe_should_be_added_to_user_wishlist_recipes(self,api_client):
+        def test_saved_recipe_should_be_added_to_user_saved_recipes_recipes(self,api_client):
             new_user = UserFactory()
             api_client.force_authenticate(new_user)
             new_recipe = RecipeFactory()
@@ -153,10 +153,10 @@ class TestSaveRecipeCreateView:
             }
             api_client.post(save_url, data)
 
-            assert new_user.wishlist.all().count() == 1 
-            assert new_recipe in new_user.wishlist.all()
+            assert new_user.saved_recipes.all().count() == 1 
+            assert new_recipe in new_user.saved_recipes.all()
 
-        def test_un_liking_recipe_should_remove_it_from_user_wishlist_recipes(self,api_client):
+        def test_un_liking_recipe_should_remove_it_from_user_saved_recipes_recipes(self,api_client):
             new_user = UserFactory()
             api_client.force_authenticate(new_user)
             new_recipe = RecipeFactory()
@@ -167,7 +167,7 @@ class TestSaveRecipeCreateView:
             api_client.post(save_url, data)
 
 
-            assert new_user.wishlist.all().count() == 0
+            assert new_user.saved_recipes.all().count() == 0
 
     class TestGuestUsers:
         def test_save_page_get_request_return_status_code_401(self, api_client):

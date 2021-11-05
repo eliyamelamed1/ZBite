@@ -14,6 +14,8 @@ import {
     GET_RECIPE_DETAILS_SUCCESS,
     GET_RECIPE_LIST_FAIL,
     GET_RECIPE_LIST_SUCCESS,
+    GET_SAVED_RECIPE_LIST_FAIL,
+    GET_SAVED_RECIPE_LIST_SUCCESS,
     GET_TRENDING_RECIPE_LIST_FAIL,
     GET_TRENDING_RECIPE_LIST_SUCCESS,
     REVIEWS_IN_RECIPE_FAIL,
@@ -40,6 +42,7 @@ const updatedState = {
     listOfFilteredReviews: 'updatedState',
     listOfTrendingRecipes: 'updatedState',
     listOfFollowedRecipes: 'updatedState',
+    listOfSavedRecipes: 'updatedState',
 };
 
 describe('recipeReducers - cases that modify the state', () => {
@@ -54,6 +57,7 @@ describe('recipeReducers - cases that modify the state', () => {
             listOfFilteredReviews: null,
             listOfTrendingRecipes: null,
             listOfFollowedRecipes: null,
+            listOfSavedRecipes: null,
         };
         store.dispatch({ type: 'TEST_CASE_RECIPE', payload: initialState });
         return initialState;
@@ -126,6 +130,18 @@ describe('recipeReducers - cases that modify the state', () => {
         expect(storeState.recipeReducer.listOfTrendingRecipes).toBeNull();
         expect(storeState.recipeReducer.listOfFollowedRecipes).toStrictEqual(updatedState.listOfFollowedRecipes);
     });
+    test('case GET_SAVED_RECIPE_LIST_SUCCESS', () => {
+        store.dispatch({ type: GET_SAVED_RECIPE_LIST_SUCCESS, payload: updatedState.listOfSavedRecipes });
+        const storeState = store.getState();
+
+        expect(storeState.recipeReducer.listOfRecipes).toBeNull();
+        expect(storeState.recipeReducer.listOfSearchedRecipes).toBeNull();
+        expect(storeState.recipeReducer.requestedRecipeData).toBeNull();
+        expect(storeState.recipeReducer.listOfFilteredReviews).toBeNull();
+        expect(storeState.recipeReducer.listOfTrendingRecipes).toBeNull();
+        expect(storeState.recipeReducer.listOfFollowedRecipes).toBeNull();
+        expect(storeState.recipeReducer.listOfSavedRecipes).toStrictEqual(updatedState.listOfSavedRecipes);
+    });
 });
 
 describe('recipeReducers - cases that return ...state => state should not be modified', () => {
@@ -133,12 +149,7 @@ describe('recipeReducers - cases that return ...state => state should not be mod
     beforeEach(() => {
         cleanup();
         jest.clearAllMocks();
-        initialState = {
-            listOfRecipes: null,
-            listOfSearchedRecipes: null,
-            requestedRecipeData: null,
-            listOfFilteredReviews: null,
-        };
+        initialState = {};
         store.dispatch({ type: 'TEST_CASE_RECIPE', payload: initialState });
         return initialState;
     });
@@ -149,7 +160,6 @@ describe('recipeReducers - cases that return ...state => state should not be mod
     test('case DELETE_RECIPE_SUCCESS ', () => {
         store.dispatch({ type: DELETE_RECIPE_SUCCESS, payload: updatedState });
     });
-
     test('case DELETE_RECIPE_FAIL ', () => {
         store.dispatch({ type: DELETE_RECIPE_FAIL, payload: updatedState });
     });
@@ -194,6 +204,9 @@ describe('recipeReducers - cases that return ...state => state should not be mod
     });
     test('case GET_TRENDING_RECIPE_LIST_FAIL ', () => {
         store.dispatch({ type: GET_TRENDING_RECIPE_LIST_FAIL, payload: updatedState });
+    });
+    test('case GET_SAVED_RECIPE_LIST_FAIL ', () => {
+        store.dispatch({ type: GET_SAVED_RECIPE_LIST_FAIL, payload: updatedState });
     });
     test('case - default', () => {
         store.dispatch({ type: 'default', payload: updatedState });

@@ -38,11 +38,11 @@ class TestLoggedUserDetailViewUrl:
         url = f'/api/accounts/logged_user/'
         assert resolve(url).view_name == 'accounts:logged_user'
 
-class TestUserWishlist:
-    def test_logged_user_wishlist_url_reverse(self):
-        url = reverse('accounts:wishlist')
-        assert url == f'/api/accounts/wishlist/'
+class TestUserSavedRecipes:
+    def test_logged_user_saved_recipes_url_reverse(self):
+        url = reverse('accounts:saved_recipes')
+        assert url == f'/api/accounts/saved_recipes/'
         
-    def test_logged_user_wishlist_url_resolve(self):
-        url = f'/api/accounts/wishlist/'
-        assert resolve(url).view_name == 'accounts:wishlist'
+    def test_logged_user_saved_recipes_url_resolve(self):
+        url = f'/api/accounts/saved_recipes/'
+        assert resolve(url).view_name == 'accounts:saved_recipes'

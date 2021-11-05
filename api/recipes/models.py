@@ -28,36 +28,15 @@ class Recipe(models.Model):
     saves = models.ManyToManyField(get_user_model(), default=None, blank=True)
     stars = models.TextField(blank=True)
 
+    def get_absolute_url(self):
+        """Return absolute URL to the Recipe Detail page."""
+        return reverse('recipes:detail', kwargs={"pk": self.id})
 
     def __str__(self):
         return self.title
     
     def get_all_saves(self):
         return self.saves.all().count()
-
-    def get_absolute_url(self):
-        """Return absolute URL to the Recipe Detail page."""
-        return reverse('recipes:detail', kwargs={"pk": self.id})
-
-    @classmethod
-    def get_create_url(cls):
-        return reverse('recipes:create')
-    
-    @classmethod
-    def get_search_url(cls):
-        return reverse('recipes:search')
-    
-    @classmethod
-    def get_list_url(cls):
-        return reverse('recipes:list')
-
-    @classmethod
-    def get_recipes_of_accounts_followed_url(cls):
-        return reverse('recipes:recipes_of_accounts_followed')
-        
-    @classmethod
-    def get_top_rated_recipes_url(cls):
-        return reverse('recipes:top_rated')
 
     @classmethod
     def get_recipes_of_followed_accounts(cls, request):
@@ -74,3 +53,25 @@ class Recipe(models.Model):
                 pass
 
         return recipes_of_followed_accounts
+
+    
+    # -----urls
+    @classmethod
+    def get_create_url(cls):
+        return reverse('recipes:create')
+    
+    @classmethod
+    def get_search_url(cls):
+        return reverse('recipes:search')
+    
+    @classmethod
+    def get_list_url(cls):
+        return reverse('recipes:list')
+
+    @classmethod
+    def get_recipes_of_accounts_followed_url(cls):
+        return reverse('recipes:recipes_of_accounts_followed')
+    
+    @classmethod
+    def get_top_rated_recipes_url(cls):
+        return reverse('recipes:top_rated')
