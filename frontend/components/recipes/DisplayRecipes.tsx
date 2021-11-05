@@ -14,7 +14,6 @@ const DisplayRecipes = ({ recipesToDisplay }) => {
                 recipesOnPage.push(
                     <RecipeCard
                         title={recipe.title}
-                        flavor_type={recipe.flavor_type}
                         photo_main={recipe.photo_main}
                         id={recipe.id}
                         author={recipe.author}

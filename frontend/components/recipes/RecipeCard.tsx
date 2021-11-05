@@ -93,7 +93,7 @@ RecipeCard.propTypes = {
     photo_main: PropTypes.string,
     id: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
-    saves: PropTypes.array.isRequired,
+    saves: PropTypes.number.isRequired,
     stars: PropTypes.any,
 };
 
