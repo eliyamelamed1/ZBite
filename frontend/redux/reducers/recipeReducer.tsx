@@ -35,6 +35,7 @@ const initialState = {
     listOfFilteredReviews: null,
     listOfTrendingRecipes: null,
     listOfFollowedRecipes: null,
+    listOfSavedRecipes: null,
 };
 
 export default function recipeReducer(state = initialState, action) {

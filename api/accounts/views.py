@@ -1,17 +1,13 @@
 from django.contrib.auth import get_user_model
 from django.http.response import HttpResponse
 from rest_framework import generics, permissions
-from rest_framework.generics import ListAPIView
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
-from recipes.serializers import RecipeSerializer
 
 from .models import UserAccount
 from .permissions import IsAuthorOrReadOnly
 from .serializers import UserSerializer
-
+from recipes.serializers import RecipeSerializer
 
 class UserListView(generics.ListCreateAPIView):
     permission_classes = (permissions.AllowAny, )
@@ -47,12 +43,16 @@ class TopRatedAccounts(APIView):
 
         return Response(serializer.data)
 
-class UserSavedRecipes(ListAPIView):
+class UserSavedRecipes(APIView):
     '''display the user saved recipes'''
-    serializer_class = RecipeSerializer
-    permission_classes = (permissions.IsAuthenticated, )
+    serializer_class = UserSerializer
 
-    def get_queryset(self):
-        logged_user = UserAccount.objects.get(id=self.request.user.id) 
-        queryset = logged_user.saved_recipes.all()
-        return queryset
+    def get(self, request):
+        try:
+            logged_user = UserAccount.objects.get(id=request.user.id) 
+            queryset = logged_user.saved_recipes.all()
+            serializer = RecipeSerializer(queryset, many=True)
+
+            return Response(serializer.data)
+        except:
+            return HttpResponse('Unauthorized', status=401)
