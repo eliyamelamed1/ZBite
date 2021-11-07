@@ -13,8 +13,10 @@ const SavedRecipes = () => {
     const { isUserAuthenticated } = useSelector((state) => state.userReducer);
 
     useEffect(() => {
-        try {
+        {
             isUserAuthenticated || Router.push(pageRoute().login);
+        }
+        try {
             dispatch(loadSavedRecipesAction());
         } catch {}
     }, [dispatch, isUserAuthenticated]);
