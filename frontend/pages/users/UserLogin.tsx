@@ -33,7 +33,7 @@ const UserLogin = () => {
     return (
         <div data-testid='userLogin'>
             <div className={styles.background_shape}>
-                <h1 className={styles.welcome_title}>Welcome</h1>
+                <h1 className={styles.welcome_title}>Welcome Back</h1>
             </div>
             <section className={styles.content_section}>
                 <h1 className={styles.log_in_to_your_account_title}>Log in to your account</h1>
@@ -61,7 +61,7 @@ const UserLogin = () => {
                         />
                     </div>
                     <div className={styles.forgot_password_container}>
-                        <Link href='/reset_password'>
+                        <Link href={pageRoute().reset_password}>
                             <a className={styles.forgot_password_text}>Forgot password ?</a>
                         </Link>
                     </div>
@@ -71,7 +71,7 @@ const UserLogin = () => {
                 </form>
                 <span className={styles.dont_have_an_account_container}>
                     <span className={styles.dont_have_an_account_text}>Do not have an account?</span>
-                    <Link href='/UserSignup'>
+                    <Link href={pageRoute().signup}>
                         <a className={styles.signup_link}>Sign Up</a>
                     </Link>
                 </span>

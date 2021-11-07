@@ -29,10 +29,12 @@ export const endpointRoute = (id = String) => ({
 export const pageRoute = (id = String) => ({
     home: '/',
     login: '/users/UserLogin',
+    signup: '/users/UserSignup',
     profile: `/users/${id}`,
     leaderboard: '/users/leaderboard',
     savedRecipes: '/recipes/SavedRecipes',
     createRecipe: '/recipes/RecipeCreate',
+    reset_password: '/users/reset_password/UserResetPassword',
 });
 
 export const userParams = {
