@@ -34,17 +34,15 @@ const UserResetPassword = () => {
             <section className={styles.content_section}>
                 <h1 className={styles.reset_your_password_title}>Request Password Reset:</h1>
                 <form onSubmit={(e) => onSubmit(e)} className={styles.reset_password_form}>
-                    <div>
-                        <input
-                            type='email'
-                            placeholder='Email'
-                            name='email'
-                            value={email}
-                            onChange={(e) => onChange(e)}
-                            className={styles.email_input}
-                            required
-                        />
-                    </div>
+                    <input
+                        type='email'
+                        placeholder='Email'
+                        name='email'
+                        value={email}
+                        onChange={(e) => onChange(e)}
+                        className={styles.email_input}
+                        required
+                    />
                     <button type='submit' className={styles.reset_button}>
                         Send Email Reset
                     </button>

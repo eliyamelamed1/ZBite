@@ -38,28 +38,24 @@ const UserLogin = () => {
             <section className={styles.content_section}>
                 <h1 className={styles.log_in_to_your_account_title}>Log in to your account</h1>
                 <form onSubmit={(e) => onSubmit(e)} className={styles.login_form}>
-                    <div>
-                        <input
-                            type='email'
-                            placeholder='Email'
-                            name='email'
-                            value={email}
-                            onChange={(e) => onChange(e)}
-                            className={styles.email_input}
-                            required
-                        />
-                    </div>
-                    <div>
-                        <input
-                            type='password'
-                            placeholder='password'
-                            name='password'
-                            value={password}
-                            onChange={(e) => onChange(e)}
-                            className={styles.password_input}
-                            required
-                        />
-                    </div>
+                    <input
+                        type='email'
+                        placeholder='Email'
+                        name='email'
+                        value={email}
+                        onChange={(e) => onChange(e)}
+                        className={styles.email_input}
+                        required
+                    />
+                    <input
+                        type='password'
+                        placeholder='password'
+                        name='password'
+                        value={password}
+                        onChange={(e) => onChange(e)}
+                        className={styles.password_input}
+                        required
+                    />
                     <div className={styles.forgot_password_container}>
                         <Link href={pageRoute().reset_password}>
                             <a className={styles.forgot_password_text}>Forgot password ?</a>

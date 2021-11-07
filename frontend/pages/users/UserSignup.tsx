@@ -55,52 +55,44 @@ const UserSignup = () => {
             <section className={styles.content_section}>
                 <h1 className={styles.create_account_title}>Create An Account</h1>
                 <form onSubmit={(e) => onSubmit(e)} className={styles.signup_form}>
-                    <div>
-                        <input
-                            type='text'
-                            placeholder='Full Name'
-                            name='name'
-                            value={name}
-                            onChange={(e) => onChange(e)}
-                            className={styles.name_input}
-                            required
-                        />
-                    </div>
-                    <div>
-                        <input
-                            type='email'
-                            placeholder='Email'
-                            name='email'
-                            value={email}
-                            onChange={(e) => onChange(e)}
-                            className={styles.email_input}
-                            required
-                        />
-                    </div>
-                    <div>
-                        <input
-                            type='password'
-                            placeholder='Password'
-                            name='password'
-                            value={password}
-                            onChange={(e) => onChange(e)}
-                            minLength='6'
-                            className={styles.password_input}
-                            required
-                        />
-                    </div>
-                    <div>
-                        <input
-                            type='password'
-                            placeholder='Confirm Password'
-                            name='re_password'
-                            value={re_password}
-                            onChange={(e) => onChange(e)}
-                            minLength='6'
-                            className={styles.password_input}
-                            required
-                        />
-                    </div>
+                    <input
+                        type='text'
+                        placeholder='Full Name'
+                        name='name'
+                        value={name}
+                        onChange={(e) => onChange(e)}
+                        className={styles.name_input}
+                        required
+                    />
+                    <input
+                        type='email'
+                        placeholder='Email'
+                        name='email'
+                        value={email}
+                        onChange={(e) => onChange(e)}
+                        className={styles.email_input}
+                        required
+                    />
+                    <input
+                        type='password'
+                        placeholder='Password'
+                        name='password'
+                        value={password}
+                        onChange={(e) => onChange(e)}
+                        minLength='6'
+                        className={styles.password_input}
+                        required
+                    />
+                    <input
+                        type='password'
+                        placeholder='Confirm Password'
+                        name='re_password'
+                        value={re_password}
+                        onChange={(e) => onChange(e)}
+                        minLength='6'
+                        className={styles.password_input}
+                        required
+                    />
                     <button type='submit' className={styles.signup_button}>
                         Register
                     </button>

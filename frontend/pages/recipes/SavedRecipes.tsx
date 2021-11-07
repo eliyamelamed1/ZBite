@@ -12,13 +12,12 @@ const SavedRecipes = () => {
     const { listOfSavedRecipes } = useSelector((state) => state.recipeReducer);
     const { isUserAuthenticated } = useSelector((state) => state.userReducer);
 
-    isUserAuthenticated || Router.push(pageRoute().login);
-
     useEffect(() => {
         try {
+            isUserAuthenticated || Router.push(pageRoute().login);
             dispatch(loadSavedRecipesAction());
         } catch {}
-    }, [dispatch]);
+    }, [dispatch, isUserAuthenticated]);
 
     return (
         <section className={styles.container}>
@@ -31,5 +30,3 @@ const SavedRecipes = () => {
     );
 };
 export default SavedRecipes;
-
-// test redirect guest users
