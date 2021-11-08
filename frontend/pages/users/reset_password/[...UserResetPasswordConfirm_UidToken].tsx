@@ -3,6 +3,7 @@ import Router, { useRouter } from 'next/router';
 
 import { pageRoute } from '../../../globals';
 import { resetPasswordConfirmAction } from '../../../redux/actions/userActions';
+import styles from '../../../styles/pages/resetPasswordConfirm.module.scss';
 import { useDispatch } from 'react-redux';
 
 const UserResetPasswordConfirm = () => {
@@ -33,8 +34,12 @@ const UserResetPasswordConfirm = () => {
 
     return (
         <div data-testid='userResetPasswordConfirm'>
-            <form onSubmit={(e) => onSubmit(e)}>
-                <div>
+            <div className={styles.background_shape}>
+                <h1 className={styles.welcome_title}>Welcome Back</h1>
+            </div>
+            <section className={styles.content_section}>
+                <h1 className={styles.reset_your_password_title}>Reset Your Password</h1>
+                <form onSubmit={(e) => onSubmit(e)} className={styles.reset_password_form}>
                     <input
                         type='password'
                         placeholder='New password'
@@ -42,10 +47,9 @@ const UserResetPasswordConfirm = () => {
                         value={new_password}
                         onChange={(e) => onChange(e)}
                         minLength='6'
+                        className={styles.password_input}
                         required
                     />
-                </div>
-                <div>
                     <input
                         className='form-control'
                         type='password'
@@ -54,11 +58,14 @@ const UserResetPasswordConfirm = () => {
                         value={re_new_password}
                         onChange={(e) => onChange(e)}
                         minLength='6'
+                        className={styles.password_input}
                         required
                     />
-                </div>
-                <button type='submit'>Reset Password</button>
-            </form>
+                    <button type='submit' className={styles.reset_button}>
+                        Reset Password
+                    </button>
+                </form>
+            </section>
         </div>
     );
 };

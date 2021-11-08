@@ -32,7 +32,7 @@ describe('ReviewCard', () => {
         expect(dataTestId).toBeInTheDocument();
     });
     test('should render review details', () => {
-        const author = screen.getByText(reviewParams.author);
+        const author = screen.getByText(reviewParams.author.name);
         const stars = screen.getByText(reviewParams.stars);
         const comment = screen.getByText(reviewParams.comment);
         const image = screen.getByRole('img', { name: 'Review Image' });
@@ -43,8 +43,8 @@ describe('ReviewCard', () => {
         expect(image).toBeInTheDocument();
     });
     test('should link author to his profile page', () => {
-        const authorProfileUrl = screen.getByRole('link', { name: reviewParams.author });
-        const url = pageRoute(reviewParams.author).profile;
+        const authorProfileUrl = screen.getByRole('link', { name: reviewParams.author.name });
+        const url = pageRoute(reviewParams.author.id).profile;
 
         expect(authorProfileUrl.href).toContain('http://localhost' + url);
     });

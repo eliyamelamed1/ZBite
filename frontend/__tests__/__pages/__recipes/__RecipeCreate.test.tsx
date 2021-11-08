@@ -73,33 +73,6 @@ describe('authenticated users', () => {
         });
     });
 
-    describe('flavor type input', () => {
-        test('should render flavor type input', () => {
-            const combobox = screen.getByRole('combobox');
-            expect(combobox).toBeInTheDocument();
-        });
-        test('should match flavor type attributes', () => {
-            const combobox = screen.getByRole('combobox');
-            expect(combobox.required).toBe(true);
-            expect(combobox.type).toBe('select-one');
-            expect(combobox.name).toBe('flavor_type');
-        });
-        test('flavor type value should change according to input (onchange)', () => {
-            const combobox = screen.getByRole('combobox');
-            userEvent.selectOptions(combobox, 'Sour');
-            expect(combobox.value).toBe('Sour');
-        });
-        test('should have 3 accessible flavor types options', () => {
-            const sourFlavor = screen.getByRole('option', { name: 'Sour' });
-            const sweetFlavor = screen.getByRole('option', { name: 'Sweet' });
-            const saltyFlavor = screen.getByRole('option', { name: 'Salty' });
-
-            expect(sourFlavor).toBeInTheDocument();
-            expect(sweetFlavor).toBeInTheDocument();
-            expect(saltyFlavor).toBeInTheDocument();
-        });
-    });
-
     describe('submit button', () => {
         test('should render submit button', () => {
             const button = screen.getByRole('button', { name: /create recipe/i });
@@ -112,12 +85,10 @@ describe('authenticated users', () => {
         test('clicking the submit button should call dispatch recipeCreateAction', () => {
             const titleTextbox = screen.getByPlaceholderText(/title/i);
             const descriptionTextbox = screen.getByPlaceholderText(/description/i);
-            const combobox = screen.getByRole('combobox');
             const button = screen.getByRole('button', { name: /create recipe/i });
 
             userEvent.type(titleTextbox, 'new title');
             userEvent.type(descriptionTextbox, 'new description');
-            userEvent.selectOptions(combobox, 'Sour');
             userEvent.click(button);
 
             const timesActionDispatched = recipeCreateActionSpy.mock.calls.length;
@@ -129,12 +100,10 @@ describe('authenticated users', () => {
         test('should redirect to home page after recipe is created', () => {
             const titleTextbox = screen.getByPlaceholderText(/title/i);
             const descriptionTextbox = screen.getByPlaceholderText(/description/i);
-            const combobox = screen.getByRole('combobox');
             const button = screen.getByRole('button', { name: /create recipe/i });
 
             userEvent.type(titleTextbox, 'new title');
             userEvent.type(descriptionTextbox, 'new description');
-            userEvent.selectOptions(combobox, 'Sour');
             userEvent.click(button);
 
             expect(Router.push.mock.calls.length).toBe(1);
@@ -146,12 +115,10 @@ describe('authenticated users', () => {
             });
             const titleTextbox = screen.getByPlaceholderText(/title/i);
             const descriptionTextbox = screen.getByPlaceholderText(/description/i);
-            const combobox = screen.getByRole('combobox');
             const button = screen.getByRole('button', { name: /create recipe/i });
 
             userEvent.type(titleTextbox, 'new title');
             userEvent.type(descriptionTextbox, 'new description');
-            userEvent.selectOptions(combobox, 'Sour');
             userEvent.click(button);
 
             expect(Router.push.mock.calls.length).toBe(0);

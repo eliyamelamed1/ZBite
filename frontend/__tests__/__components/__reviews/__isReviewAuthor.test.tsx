@@ -17,7 +17,7 @@ const ReviewCreateSpy = jest.spyOn(ReviewCreate, 'default');
 describe('isReviewAuthor', () => {
     describe('author', () => {
         const review = {
-            author: 'eliya',
+            author: { name: 'eliya', id: 'eliyaId' },
             id: '1',
             recipe: 'recipeId',
             comment: 'yummy',
@@ -25,7 +25,7 @@ describe('isReviewAuthor', () => {
         };
         const initialState = {
             isUserAuthenticated: true,
-            loggedUserData: { id: 'eliya' },
+            loggedUserData: { id: 'eliyaId' },
         };
         beforeEach(() => {
             cleanup();
@@ -46,7 +46,7 @@ describe('isReviewAuthor', () => {
     });
     describe('not author', () => {
         const review = {
-            author: 'eliya',
+            author: { name: 'eliya', id: 'eliyaId' },
             id: '1',
             recipe: 'recipeId',
             comment: 'yummy',
@@ -54,7 +54,7 @@ describe('isReviewAuthor', () => {
         };
         const initialState = {
             isUserAuthenticated: true,
-            loggedUserData: { id: 'aviv' },
+            loggedUserData: { id: 'avivId' },
         };
         beforeEach(() => {
             cleanup();

@@ -8,8 +8,8 @@ import { pageRoute } from '../../globals';
 const ReviewCard = (props) => {
     const reviewProps = (
         <div>
-            <Link href={pageRoute(props.author).profile} passHref>
-                {props.author}
+            <Link href={pageRoute(props?.author?.id).profile} passHref>
+                {props?.author?.name}
             </Link>
             <p>{props.stars}</p>
             {props.comment ? <p>{props.comment}</p> : null}
@@ -27,7 +27,7 @@ const ReviewCard = (props) => {
 };
 
 ReviewCard.propTypes = {
-    author: PropTypes.string.isRequired,
+    author: PropTypes.object.isRequired,
     id: PropTypes.string.isRequired,
     recipe: PropTypes.string.isRequired,
     stars: PropTypes.string.isRequired,

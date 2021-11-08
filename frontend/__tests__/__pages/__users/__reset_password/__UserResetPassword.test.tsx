@@ -53,16 +53,18 @@ describe('UserResetPassword - email input', () => {
         expect(emailTextbox.value).toBe('test@gmail.com');
     });
     test('submit button should render ', () => {
-        const submitButton = screen.getByRole('button', { name: 'Send Password Reset' });
+        const submitButton = screen.getByRole('button', { name: 'Send Email Reset' });
+
         expect(submitButton).toBeInTheDocument();
     });
     test('submit button type should be submit ', () => {
-        const submitButton = screen.getByRole('button', { name: 'Send Password Reset' });
+        const submitButton = screen.getByRole('button', { name: 'Send Email Reset' });
+
         expect(submitButton.type).toBe('submit');
     });
     test('completing the reset password form should dispatch resetPasswordAction successfully and redirect to home button', async () => {
         const emailTextbox = screen.getByPlaceholderText('Email');
-        const submitButton = screen.getByRole('button', { name: 'Send Password Reset' });
+        const submitButton = screen.getByRole('button', { name: 'Send Email Reset' });
         const emailValue = 'test@gmail.com';
 
         userEvent.type(emailTextbox, emailValue);
@@ -81,7 +83,8 @@ describe('UserResetPassword - email input', () => {
         });
 
         const emailTextbox = screen.getByPlaceholderText('Email');
-        const submitButton = screen.getByRole('button', { name: 'Send Password Reset' });
+        const submitButton = screen.getByRole('button', { name: 'Send Email Reset' });
+
         const emailValue = 'test@gmail.com';
 
         userEvent.type(emailTextbox, emailValue);

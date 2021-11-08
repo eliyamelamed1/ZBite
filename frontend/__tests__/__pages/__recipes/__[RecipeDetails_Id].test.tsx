@@ -25,7 +25,7 @@ const recipeParams = {
         title: 'recipeTitle',
         description: 'recipeDescription',
         flavor_type: 'Sour',
-        author: 'eliya',
+        author: { id: 'eliya', name: 'name' },
         photo_main: '/#',
     },
 };
@@ -38,7 +38,9 @@ const contextParams = {
     },
 };
 
-const listOfReviews = [{ recipe: 'bacon', id: '1', author: 'eliya', stars: '5', comment: 'new comment' }];
+const listOfReviews = [
+    { recipe: 'bacon', id: '1', author: { id: 'eliya', name: 'name' }, stars: '5', comment: 'new comment' },
+];
 
 describe('RecipeDetails - getServerSideProps', () => {
     beforeEach(() => {
@@ -83,7 +85,7 @@ describe('RecipeDetails - recipe of author', () => {
             title: 'recipeTitle',
             description: 'recipeDescription',
             flavor_type: 'Sour',
-            author: 'eliya',
+            author: { id: 'eliya', name: 'name' },
             saves: [],
             photo_main: '/#',
         },
@@ -95,7 +97,7 @@ describe('RecipeDetails - recipe of author', () => {
         title: 'updatedRecipeTitle',
         description: 'updatedRecipeDescription',
         flavor_type: 'Sweet',
-        author: 'eliya',
+        author: { id: 'eliya', name: 'name' },
         saves: ['someUser'],
         photo_main: '/#',
     };
@@ -184,7 +186,13 @@ describe('RecipeDetails - recipe of author', () => {
         // migrateListOfFilteredReviews isReviewsOfThisRecipe === true -
         const initialState = {
             listOfFilteredReviews: [
-                { recipe: '5', id: '1', author: 'eliya', stars: 'updated stars', comment: 'updated comment' },
+                {
+                    recipe: '5',
+                    id: '1',
+                    author: { id: 'eliya', name: 'name' },
+                    stars: 'updated stars',
+                    comment: 'updated comment',
+                },
             ],
         };
         await store.dispatch({ type: TEST_CASE_RECIPE, payload: initialState });
@@ -196,7 +204,13 @@ describe('RecipeDetails - recipe of author', () => {
         // migrateListOfFilteredReviews isReviewsOfThisRecipe === false
         const initialState = {
             listOfFilteredReviews: [
-                { recipe: 'pizza', id: '1', author: 'eliya', stars: 'updated stars', comment: 'updated comment' },
+                {
+                    recipe: 'pizza',
+                    id: '1',
+                    author: { id: 'eliya', name: 'name' },
+                    stars: 'updated stars',
+                    comment: 'updated comment',
+                },
             ],
         };
         await store.dispatch({ type: TEST_CASE_RECIPE, payload: initialState });
@@ -217,7 +231,7 @@ describe('RecipeDetails - not the recipe author', () => {
             title: 'recipeTitle',
             description: 'recipeDescription',
             flavor_type: 'Sour',
-            author: 'eliya',
+            author: { id: 'eliya', name: 'name' },
             saves: [],
             photo_main: '/#',
         },
@@ -274,7 +288,13 @@ describe('RecipeDetails - not the recipe author', () => {
         // migrateListOfFilteredReviews isReviewsOfThisRecipe === true
         const initialState = {
             listOfFilteredReviews: [
-                { recipe: '5', id: '1', author: 'eliya', stars: 'updated stars', comment: 'updated comment' },
+                {
+                    recipe: '5',
+                    id: '1',
+                    author: { id: 'eliya', name: 'name' },
+                    stars: 'updated stars',
+                    comment: 'updated comment',
+                },
             ],
         };
         await store.dispatch({ type: TEST_CASE_RECIPE, payload: initialState });
@@ -305,7 +325,7 @@ describe('RecipeDetails - guest user', () => {
             title: 'recipeTitle',
             description: 'recipeDescription',
             flavor_type: 'Sour',
-            author: 'eliya',
+            author: { id: 'eliya', name: 'name' },
             photo_main: '/#',
         },
         listOfFilteredReviews: null,

@@ -72,9 +72,9 @@ const RecipeDetails = (props) => {
                 <section>
                     {recipeData ? (
                         <div>
-                            <Link href={`/users/${recipeData.author}/`} passHref>
+                            <Link href={`/users/${recipeData?.author?.id}/`} passHref>
                                 <div>
-                                    recipe Author: <p>{recipeData.author}</p>
+                                    recipe Author: <p>{recipeData?.author?.name}</p>
                                 </div>
                             </Link>
                             <p>saves: {recipeData.saves?.length}</p>

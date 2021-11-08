@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Router from 'next/router';
 import { loginAction } from '../../redux/actions/userActions';
 import { pageRoute } from '../../globals';
+import styles from '../../styles/pages/login.module.scss';
 
 const UserLogin = () => {
     const dispatch = useDispatch();
@@ -31,37 +32,46 @@ const UserLogin = () => {
 
     return (
         <div data-testid='userLogin'>
-            <h1>Log In</h1>
-            <p>Log into your account</p>
-            <form onSubmit={(e) => onSubmit(e)}>
-                <div>
+            <div className={styles.background_shape}>
+                <h1 className={styles.welcome_title}>Welcome Back</h1>
+            </div>
+            <section className={styles.content_section}>
+                <h1 className={styles.log_in_to_your_account_title}>Log in to your account</h1>
+                <form onSubmit={(e) => onSubmit(e)} className={styles.login_form}>
                     <input
                         type='email'
                         placeholder='Email'
                         name='email'
                         value={email}
                         onChange={(e) => onChange(e)}
+                        className={styles.email_input}
                         required
                     />
-                </div>
-                <div>
                     <input
                         type='password'
                         placeholder='password'
                         name='password'
                         value={password}
                         onChange={(e) => onChange(e)}
+                        className={styles.password_input}
                         required
                     />
-                </div>
-                <button type='submit'>Login</button>
-            </form>
-            <p>
-                Do not have an account? <Link href='/UserSignup'>Sign Up</Link>
-            </p>
-            <p>
-                Forgot your password? <Link href='/reset_password'>Reset your password</Link>
-            </p>
+                    <div className={styles.forgot_password_container}>
+                        <Link href={pageRoute().reset_password}>
+                            <a className={styles.forgot_password_text}>Forgot password ?</a>
+                        </Link>
+                    </div>
+                    <button type='submit' className={styles.login_button}>
+                        Login
+                    </button>
+                </form>
+                <span className={styles.dont_have_an_account_container}>
+                    <span className={styles.dont_have_an_account_text}>Do not have an account?</span>
+                    <Link href={pageRoute().signup}>
+                        <a className={styles.signup_link}>Sign Up</a>
+                    </Link>
+                </span>
+            </section>
         </div>
     );
 };

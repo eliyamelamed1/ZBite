@@ -1,8 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.http.response import HttpResponse
-from rest_framework import generics, permissions
-from rest_framework.generics import ListAPIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework import  permissions
+from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -13,12 +12,12 @@ from .permissions import IsAuthorOrReadOnly
 from .serializers import UserSerializer
 
 
-class UserListView(generics.ListCreateAPIView):
+class UserListView(ListCreateAPIView):
     permission_classes = (permissions.AllowAny, )
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
 
-class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
+class UserDetailView(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthorOrReadOnly, )
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer

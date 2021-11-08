@@ -44,21 +44,21 @@ describe('UserSignup - guest user', () => {
         test('should render Already have an account? linking to the login page', () => {
             const signIn = screen.getByRole('link', { name: /Sign in/i });
             expect(signIn).toBeInTheDocument();
-            expect(signIn.href).toBe('http://localhost/UserLogin');
+            expect(signIn.href).toBe('http://localhost' + pageRoute().login);
         });
     });
     
     describe('UserSignup- name input', () => {
         test('renders name text box', () => {
-            const nameTextbox = screen.getByPlaceholderText('Name*');
+            const nameTextbox = screen.getByPlaceholderText(/full Name/i);
             expect(nameTextbox).toBeInTheDocument();
         });
         test('name input should be required', () => {
-            const nameTextbox = screen.getByPlaceholderText('Name*');
+            const nameTextbox = screen.getByPlaceholderText(/full Name/i);
             expect(nameTextbox.required).toBe(true);
         });
         test('name value should change according to input ', () => {
-            const nameTextbox = screen.getByPlaceholderText('Name*');
+            const nameTextbox = screen.getByPlaceholderText(/full Name/i);
             userEvent.type(nameTextbox, 'testName');
             expect(nameTextbox.value).toBe('testName');
         });
@@ -66,16 +66,16 @@ describe('UserSignup - guest user', () => {
     
     describe('UserSignup- email input', () => {
         test('renders email text box', () => {
-            const emailTextbox = screen.getByPlaceholderText('Email*');
+            const emailTextbox = screen.getByPlaceholderText(/email/i);
             expect(emailTextbox).toBeInTheDocument();
             expect(emailTextbox.required).toBe(true);
         });
         test('email input should be required', () => {
-            const emailTextbox = screen.getByPlaceholderText('Email*');
+            const emailTextbox = screen.getByPlaceholderText(/email/i);
             expect(emailTextbox.required).toBe(true);
         });
         test('email value should change according to input ', () => {
-            const emailTextbox = screen.getByPlaceholderText('Email*');
+            const emailTextbox = screen.getByPlaceholderText(/email/i);
             userEvent.type(emailTextbox, 'test@gmail.com');
             expect(emailTextbox.value).toBe('test@gmail.com');
         });
@@ -83,15 +83,15 @@ describe('UserSignup - guest user', () => {
     
     describe('UserSignup- password input', () => {
         test('renders password box', () => {
-            const passwordTextbox = screen.getByPlaceholderText('Password*');
+                                    const passwordTextbox = screen.getByPlaceholderText('Password');
             expect(passwordTextbox).toBeInTheDocument();
         });
         test('password input should be required', () => {
-            const passwordTextbox = screen.getByPlaceholderText('Password*');
+                                                const passwordTextbox = screen.getByPlaceholderText('Password');
             expect(passwordTextbox.required).toBe(true);
         });
         test('password value should change according to input ', () => {
-            const passwordTextbox = screen.getByPlaceholderText('Password*');
+                                                const passwordTextbox = screen.getByPlaceholderText('Password');
             userEvent.type(passwordTextbox, 'test123456');
             expect(passwordTextbox.value).toBe('test123456');
         });
@@ -99,15 +99,19 @@ describe('UserSignup - guest user', () => {
     
     describe('UserSignup- confirm password input', () => {
         test('renders confirm password box', () => {
-            const confirmPasswordTextbox = screen.getByPlaceholderText('Confirm Password*');
+            const confirmPasswordTextbox = screen.getByPlaceholderText('Confirm Password');
+
             expect(confirmPasswordTextbox).toBeInTheDocument();
         });
         test('confirm password input should be required', () => {
-            const confirmPasswordTextbox = screen.getByPlaceholderText('Confirm Password*');
+            const confirmPasswordTextbox = screen.getByPlaceholderText('Confirm Password');
+
+
             expect(confirmPasswordTextbox.required).toBe(true);
         });
         test('confirm password value should change according to input ', () => {
-            const confirmPasswordTextbox = screen.getByPlaceholderText('Confirm Password*');
+            const confirmPasswordTextbox = screen.getByPlaceholderText('Confirm Password');
+
             userEvent.type(confirmPasswordTextbox, 'test123456');
             expect(confirmPasswordTextbox.value).toBe('test123456');
         });
@@ -119,10 +123,12 @@ describe('UserSignup - guest user', () => {
             expect(button).toBeInTheDocument();
         });
         test('signup should dispatch signupAction', async () => {
-            const nameTextbox = screen.getByPlaceholderText('Name*');
-            const emailTextbox = screen.getByPlaceholderText('Email*');
-            const passwordTextbox = screen.getByPlaceholderText('Password*');
-            const confirmTextbox = screen.getByPlaceholderText('Confirm Password*');
+            const nameTextbox = screen.getByPlaceholderText(/full Name/i);
+            const emailTextbox = screen.getByPlaceholderText(/email/i);
+            const passwordTextbox = screen.getByPlaceholderText('Password');
+            const confirmPasswordTextbox = screen.getByPlaceholderText('Confirm Password');
+
+
             const signupButton = screen.getByRole('button', { name: 'Register' });
             
             const nameValue = 'testuser';
@@ -133,7 +139,7 @@ describe('UserSignup - guest user', () => {
             userEvent.type(nameTextbox, nameValue);
             userEvent.type(emailTextbox, emailValue);
             userEvent.type(passwordTextbox, passwordValue);
-            userEvent.type(confirmTextbox, rePasswordValue);
+            userEvent.type(confirmPasswordTextbox, rePasswordValue);
             userEvent.click(signupButton);
             
             const timesActionDispatched = await signupAction.mock.calls.length;
@@ -145,16 +151,16 @@ describe('UserSignup - guest user', () => {
             expect(signupAction.mock.calls[0][0].re_password).toEqual(rePasswordValue);
         });
         test('successful signup should redirect user to login page', async () => {
-            const nameTextbox = screen.getByPlaceholderText('Name*');
-            const emailTextbox = screen.getByPlaceholderText('Email*');
-            const passwordTextbox = screen.getByPlaceholderText('Password*');
-            const confirmTextbox = screen.getByPlaceholderText('Confirm Password*');
+            const nameTextbox = screen.getByPlaceholderText('Full Name');
+            const emailTextbox = screen.getByPlaceholderText('Email');
+            const passwordTextbox = screen.getByPlaceholderText('Password');
+            const confirmPasswordTextbox = screen.getByPlaceholderText('Confirm Password');
             const signupButton = screen.getByRole('button', { name: 'Register' });
         
             userEvent.type(nameTextbox, 'testuser');
             userEvent.type(emailTextbox, 'testuser@gmail.com');
             userEvent.type(passwordTextbox, 'testuser123');
-            userEvent.type(confirmTextbox, 'testuser123');
+            userEvent.type(confirmPasswordTextbox, 'testuser123');
             userEvent.click(signupButton);
         
             expect(await signupAction.mock.calls.length).toBe(1)
@@ -165,16 +171,16 @@ describe('UserSignup - guest user', () => {
             signupAction.mockReturnValueOnce(() => {
                 throw new Error();
             });
-            const nameTextbox = screen.getByPlaceholderText('Name*');
-            const emailTextbox = screen.getByPlaceholderText('Email*');
-            const passwordTextbox = screen.getByPlaceholderText('Password*');
-            const confirmTextbox = screen.getByPlaceholderText('Confirm Password*');
+            const nameTextbox = screen.getByPlaceholderText(/full Name/i);
+            const emailTextbox = screen.getByPlaceholderText(/email/i);
+            const passwordTextbox = screen.getByPlaceholderText('Password');
+            const confirmPasswordTextbox = screen.getByPlaceholderText('Confirm Password');
             const signupButton = screen.getByRole('button', { name: 'Register' });
         
             userEvent.type(nameTextbox, 'testuser');
             userEvent.type(emailTextbox, 'testuser@gmail.com');
             userEvent.type(passwordTextbox, 'testuser123');
-            userEvent.type(confirmTextbox, 'testuser123');
+            userEvent.type(confirmPasswordTextbox, 'testuser123');
             userEvent.click(signupButton);
 
             expect(await signupAction.mock.calls.length).toBe(1)
