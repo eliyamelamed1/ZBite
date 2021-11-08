@@ -11,10 +11,11 @@ beforeEach(() => {
     render(
         <RecipeCard
             title='recipeTitle'
-            flavor_type='Sour'
             id='recipeId'
             author='recipeAuthor'
             photo_main='/recipeImage'
+            saves={523}
+            stars='4.0'
         />
     );
 });
@@ -24,7 +25,8 @@ describe('RecipeCard', () => {
     test('RecipeCard renders recipe details', () => {
         expect(screen.getByText(/recipeTitle/)).toBeInTheDocument();
         expect(screen.getByText(/recipeAuthor/)).toBeInTheDocument();
-        // expect(screen.getByText(/Flavor: Sour/)).toBeInTheDocument();
+        expect(screen.getByText(/523/)).toBeInTheDocument();
+        expect(screen.getByText(/4.0/)).toBeInTheDocument();
         // const image = screen.getByAltText('');
         // TODO - test image.src is equal to the value passed
         // expect(image.src).toBe('http://localhost/recipeImage');
