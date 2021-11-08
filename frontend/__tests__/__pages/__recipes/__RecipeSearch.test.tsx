@@ -18,14 +18,14 @@ const data = {
     flavor_type: 'Sour',
     photo_main: '/recipe image #',
     id: 'recipeId',
-    author: 'recipe author',
+    author: { name: 'authorName', id: 'recipe author' },
 };
 const data2 = {
     title: 'recipe title2',
     flavor_type: 'Sour',
     photo_main: '/recipe image #2',
     id: 'recipeId2',
-    author: 'recipe author2',
+    author: { name: 'authorName2', id: 'recipe author2' },
 };
 let initialState = {
     recipeReducer: { listOfSearchedRecipes: [data, data2] },

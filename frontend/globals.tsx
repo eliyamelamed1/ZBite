@@ -64,7 +64,7 @@ export const userParams = {
 };
 
 export const reviewParams = {
-    author: 'authorId',
+    author: { name: 'authorName', id: 'authorId' },
     recipe: 'recipeId',
     stars: 'starsCount',
     comment: 'commentText',

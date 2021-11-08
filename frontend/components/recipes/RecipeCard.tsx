@@ -23,8 +23,8 @@ const RecipeCard = (props) => {
                 </i>
                 <ul className={styles.author_and_rating}>
                     <li>
-                        <Link href={`/users/${props.author}/`} passHref>
-                            <p>{props.author}</p>
+                        <Link href={`/users/${props?.author?.id}/`} passHref>
+                            <p>{props?.author?.name}</p>
                             {/* <p>eliya melamed</p> */}
                         </Link>
                     </li>
@@ -92,7 +92,7 @@ RecipeCard.propTypes = {
     title: PropTypes.string.isRequired,
     photo_main: PropTypes.string,
     id: PropTypes.string.isRequired,
-    author: PropTypes.string.isRequired,
+    author: PropTypes.object.isRequired,
     saves: PropTypes.number.isRequired,
     stars: PropTypes.any,
 };

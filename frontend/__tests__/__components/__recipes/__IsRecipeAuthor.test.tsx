@@ -21,7 +21,7 @@ describe('IsRecipeAuthor - author', () => {
             title: 'recipeTitle',
             flavor_type: 'Sour',
             id: 'recipeId',
-            author: '1',
+            author: { id: '1', name: 'authorName' },
             photo_main: 'recipeImage',
         };
         render(
@@ -53,7 +53,7 @@ describe('IsRecipeAuthor - not author', () => {
             title: 'recipeTitle',
             flavor_type: 'Sour',
             id: 'recipeId',
-            author: '1',
+            author: { id: '1', name: 'authorName' },
             photo_main: 'recipeImage',
         };
         render(

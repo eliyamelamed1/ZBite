@@ -6,13 +6,17 @@ import { cleanup, render, screen } from '@testing-library/react';
 import React from 'react';
 import RecipeCard from '../../../components/recipes/RecipeCard';
 
+const authorData = {
+    name: 'recipeAuthor',
+    id: 'recipeId',
+};
 beforeEach(() => {
     cleanup();
     render(
         <RecipeCard
             title='recipeTitle'
             id='recipeId'
-            author='recipeAuthor'
+            author={authorData}
             photo_main='/recipeImage'
             saves={523}
             stars='4.0'

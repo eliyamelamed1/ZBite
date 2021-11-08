@@ -1,12 +1,13 @@
 from django.db.models import fields
 from rest_framework import serializers
-
+from accounts.serializers import AuthorFieldSerializer
 from recipes.models import Recipe
 
 from .models import Review
 
 
 class ReviewDetailSerializer(serializers.ModelSerializer):
+    author = AuthorFieldSerializer()
     class Meta:
         model = Review
         fields = '__all__'

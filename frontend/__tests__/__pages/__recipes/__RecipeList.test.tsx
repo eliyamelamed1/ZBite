@@ -19,14 +19,14 @@ const listOfRecipes = [
         flavor_type: 'Sour',
         photo_main: '/recipe image #',
         id: 'first recipe id',
-        author: 'first recipe author',
+        author: { name: 'first recipe author', id: 'firstId' },
     },
     {
         title: 'second recipe title',
         flavor_type: 'Sweet',
         photo_main: '/recipe image #2',
         id: 'second recipe id',
-        author: 'second recipe author',
+        author: { name: 'second recipe author', id: 'secondId' },
     },
 ];
 

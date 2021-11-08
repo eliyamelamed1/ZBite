@@ -21,3 +21,7 @@ class SavedRecipesSerializer(serializers.ModelSerializer):
         model = User
         fields = ('saved_recipes',)
 
+class AuthorFieldSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id','name',)

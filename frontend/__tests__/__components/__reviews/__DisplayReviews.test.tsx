@@ -8,7 +8,7 @@ import store from '../../../redux/store';
 
 const reviewCardSpy = jest.spyOn(ReviewCard, 'default');
 const firstReviewData = {
-    author: 'firstAuthorId',
+    author: { name: 'firstAuthorName', id: 'firstAuthorId' },
     recipe: 'recipeId',
     id: 'reviewId',
     stars: 'stars',
@@ -16,7 +16,7 @@ const firstReviewData = {
     image: '/image',
 };
 const secondReviewData = {
-    author: 'secondAuthorId',
+    author: { name: 'secondAuthorId', id: 'secondAuthorName' },
     recipe: 'recipeId2',
     id: 'reviewId2',
     stars: 'stars2',

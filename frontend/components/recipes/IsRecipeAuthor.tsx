@@ -24,11 +24,11 @@ const IsRecipeAuthor = ({ recipe }) => {
 
     useEffect(() => {
         if (loggedUserData != null) {
-            if (recipe.author == loggedUserData.id) {
+            if (recipe?.author?.id == loggedUserData.id) {
                 setIsAuthor(true);
             }
         }
-    }, [loggedUserData, recipe.author]);
+    }, [loggedUserData, recipe.author.id]);
     return <div data-testid='isRecipeAuthor'>{isAuthor ? authorLinks : guestLinks}</div>;
 };
 
