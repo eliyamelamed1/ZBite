@@ -11,6 +11,7 @@ import uploadImageIcon from '../../styles/icons/upload_image.png';
 
 const RecipeCreate = () => {
     const dispatch = useDispatch();
+
     const [data, setData] = useState({
         recipe_image: '',
         title: '',
@@ -19,24 +20,20 @@ const RecipeCreate = () => {
         cook_time: '',
         serving: '',
         ingredients: '',
-        steps: '',
+        instructions: '',
     });
-
-    const { title, description, flavor_type, cook_time, serving, recipe_image, steps, ingredients } = data;
+    const { title, description, flavor_type, cook_time, serving, recipe_image, instructions, ingredients } = data;
 
     const { isUserAuthenticated } = useSelector((state) => state.userReducer);
-
     isUserAuthenticated === false ? Router.push(pageRoute().home) : null;
 
-    const onChange = (e) => setData({ ...data, [e.target.name]: e.target.value });
+    const onChangeText = (e) => setData((prevState) => ({ ...data, [e.target.name]: e.target.value }));
     const onChangeImage = (e) => {
-        e.preventDefault();
-        const { files } = e.target;
-        const imageSrc = URL.createObjectURL(files[0]);
-        setData((prevState) => ({ ...prevState, recipe_image: imageSrc }));
+        try {
+            const imageSrc = URL.createObjectURL(e.target.files[0]);
+            setData((prevState) => ({ ...prevState, [e.target.name]: imageSrc }));
+        } catch {}
     };
-    console.log(recipe_image);
-
     const onSubmit = (e) => {
         e.preventDefault();
         try {
@@ -60,19 +57,20 @@ const RecipeCreate = () => {
             />
             <label htmlFor='recipe_image' className={styles.image_label}>
                 {recipe_image ? (
-                    // <Image src={recipe_image} width={100} height={100} alt='recipe photo' />
                     <img src={recipe_image} />
                 ) : (
-                    <Image src={uploadImageIcon} width={100} height={100} alt='recipe photo' />
+                    <div className={styles.image_label}>
+                        <Image src={uploadImageIcon} width={100} height={100} alt='recipe photo' />
+                        <span className={styles.image_text}>Add recipe image</span>
+                    </div>
                 )}
-                <span className={styles.image_text}>Add recipe image</span>
             </label>
             <input
                 type='text'
                 placeholder='title'
                 name='title'
                 value={title}
-                onChange={(e) => onChange(e)}
+                onChange={onChangeText}
                 className={styles.title_input}
                 required
             />
@@ -81,7 +79,7 @@ const RecipeCreate = () => {
                 placeholder='description'
                 name='description'
                 value={description}
-                onChange={(e) => onChange(e)}
+                onChange={onChangeText}
                 className={styles.description_input}
                 required
             />
@@ -92,7 +90,7 @@ const RecipeCreate = () => {
                     placeholder='1hr 30min'
                     name='cook_time'
                     value={cook_time}
-                    onChange={(e) => onChange(e)}
+                    onChange={onChangeText}
                     className={styles.cook_time_input}
                     required
                 />
@@ -104,7 +102,7 @@ const RecipeCreate = () => {
                     placeholder='2 people'
                     name='serving'
                     value={serving}
-                    onChange={(e) => onChange(e)}
+                    onChange={onChangeText}
                     className={styles.serving_input}
                     required
                 />
@@ -121,7 +119,7 @@ const RecipeCreate = () => {
                     placeholder='250g flour'
                     name='ingredients'
                     value={ingredients}
-                    onChange={(e) => onChange(e)}
+                    onChange={onChangeText}
                     className={styles.ingredient_input}
                     required
                 />
@@ -129,35 +127,21 @@ const RecipeCreate = () => {
                     {deleteIcon.src && <Image src={deleteIcon.src} alt='delete icon' width={50} height={60} />}
                 </button>
             </li>
-            <li>
-                <input
-                    id='ingredient_image'
-                    type='file'
-                    placeholder='image'
-                    name='image'
-                    onChange={(e) => onChange(e)}
-                    className={styles.image_input}
-                />
-                <label htmlFor='ingredient_image' className={styles.image_label}>
-                    <Image src={uploadImageIcon} width={100} height={100} alt='recipe photo' />
-                    <span className={styles.image_text}>Add image</span>
-                </label>
-            </li>
             <button className={styles.add_ingredient}>+ Ingredient</button>
         </section>
     );
 
-    const stepSection = () => (
-        <section className={styles.steps_section}>
-            <h1 className={styles.steps_title}>Steps</h1>
-            <li className={styles.steps_input_container}>
+    const instructionSection = () => (
+        <section className={styles.instructions_section}>
+            <h1 className={styles.instructions_title}>Instructions</h1>
+            <li className={styles.instructions_input_container}>
                 <input
                     type='text'
                     placeholder='Cut the meat'
-                    name='steps'
-                    value={steps}
-                    onChange={(e) => onChange(e)}
-                    className={styles.step_input}
+                    name='instructions'
+                    value={instructions}
+                    onChange={onChangeText}
+                    className={styles.instruction_input}
                     required
                 />
                 <i className={styles.delete_button}>
@@ -166,19 +150,19 @@ const RecipeCreate = () => {
             </li>
             <li>
                 <input
-                    id='step_image'
+                    id='instruction_image'
                     type='file'
                     placeholder='image'
                     name='image'
-                    onChange={(e) => onChange(e)}
+                    onChange={onChangeText}
                     className={styles.image_input}
                 />
-                <label htmlFor='step_image' className={styles.image_label}>
+                <label htmlFor='instruction_image' className={styles.image_label}>
                     <Image src={uploadImageIcon} width={100} height={100} alt='recipe photo' />
                     <span className={styles.image_text}>Add image</span>
                 </label>
             </li>
-            <button className={styles.add_step}>+ Step</button>
+            <button className={styles.add_instruction}>+ instruction</button>
         </section>
     );
 
@@ -187,9 +171,9 @@ const RecipeCreate = () => {
             <form onSubmit={(e) => onSubmit(e)} className={styles.form}>
                 {generalSection()}
                 <hr className={styles.section_separator} />
-                {ingredientSection()}
+                {instructionSection()}
                 <hr className={styles.section_separator} />
-                {stepSection()}
+                {ingredientSection()}
                 <hr className={styles.section_separator} />
                 <button type='submit' className={styles.create_button}>
                     Create Recipe

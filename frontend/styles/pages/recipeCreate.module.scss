@@ -70,7 +70,7 @@
     }
 }
 
-.steps_section,
+.instructions_section,
 .ingredients_section {
     display: flex;
     flex-direction: column;
@@ -78,12 +78,12 @@
     justify-content: space-between;
 
     .ingredient_title,
-    .steps_title {
+    .instructions_title {
         font-size: 3rem;
         margin-bottom: 2rem;
     }
 
-    .steps_input_container,
+    .instructions_input_container,
     .ingredients_input_container {
         width: 24rem;
         display: flex;
@@ -92,7 +92,7 @@
         margin-bottom: 1rem;
     }
 
-    .step_input,
+    .instruction_input,
     .ingredient_input {
         @include text_input;
         width: 20rem;
@@ -104,7 +104,7 @@
         }
     }
 
-    .add_step,
+    .add_instruction,
     .add_ingredient {
         margin-top: 1rem;
         font-size: 1.5rem;
