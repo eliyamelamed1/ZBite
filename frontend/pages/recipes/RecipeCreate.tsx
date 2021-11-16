@@ -19,10 +19,9 @@ const RecipeCreate = () => {
         flavor_type: 'Sour',
         cook_time: '',
         serving: '',
-        ingredients: '',
-        instructions: '',
+        ingredients: [],
     });
-    const { title, description, flavor_type, cook_time, serving, recipe_image, instructions, ingredients } = data;
+    const { title, description, flavor_type, cook_time, serving, recipe_image, ingredients } = data;
 
     const { isUserAuthenticated } = useSelector((state) => state.userReducer);
     isUserAuthenticated === false ? Router.push(pageRoute().home) : null;
@@ -43,7 +42,6 @@ const RecipeCreate = () => {
             // console.log(err);
         }
     };
-
     const generalSection = () => (
         <section className={styles.general_section}>
             <input
@@ -109,28 +107,6 @@ const RecipeCreate = () => {
             </div>
         </section>
     );
-
-    const ingredientSection = () => (
-        <section className={styles.ingredients_section}>
-            <h1 className={styles.ingredient_title}>Ingredients</h1>
-            <li className={styles.ingredients_input_container}>
-                <input
-                    type='text'
-                    placeholder='250g flour'
-                    name='ingredients'
-                    value={ingredients}
-                    onChange={onChangeText}
-                    className={styles.ingredient_input}
-                    required
-                />
-                <button className={styles.delete_button}>
-                    {deleteIcon.src && <Image src={deleteIcon.src} alt='delete icon' width={50} height={60} />}
-                </button>
-            </li>
-            <button className={styles.add_ingredient}>+ Ingredient</button>
-        </section>
-    );
-
     const instructionSection = () => (
         <section className={styles.instructions_section}>
             <h1 className={styles.instructions_title}>Instructions</h1>
@@ -139,7 +115,7 @@ const RecipeCreate = () => {
                     type='text'
                     placeholder='Cut the meat'
                     name='instructions'
-                    value={instructions}
+                    // value={instructions}
                     onChange={onChangeText}
                     className={styles.instruction_input}
                     required
@@ -162,8 +138,94 @@ const RecipeCreate = () => {
                     <span className={styles.image_text}>Add image</span>
                 </label>
             </li>
-            <button className={styles.add_instruction}>+ instruction</button>
+            <button className={styles.add_instruction} type='button'>
+                + instruction
+            </button>
         </section>
+    );
+    const ingredientSection = () => (
+        <section className={styles.ingredients_section}>
+            <h1 className={styles.ingredient_title}>Ingredients</h1>
+            <li className={styles.ingredients_input_container}>
+                <input
+                    type='text'
+                    placeholder='250g flour'
+                    name='ingredients'
+                    value={ingredients}
+                    onChange={onChangeText}
+                    className={styles.ingredient_input}
+                    required
+                />
+                <button className={styles.delete_button}>
+                    {deleteIcon.src && <Image src={deleteIcon.src} alt='delete icon' width={50} height={60} />}
+                </button>
+            </li>
+            <button className={styles.add_ingredient}>+ Ingredient</button>
+        </section>
+    );
+
+    // new code
+    function handleSubmit(e) {
+        e.preventDefault();
+
+        const newTodo = {
+            id: new Date().getTime(),
+            text: todo,
+            completed: false,
+        };
+        setTodos([...todos].concat(newTodo));
+        setTodo('');
+    }
+
+    function deleteTodo(id) {
+        let updatedTodos = [...todos].filter((todo) => todo.id !== id);
+        setTodos(updatedTodos);
+    }
+
+    function submitEdits(id) {
+        const updatedTodos = [...todos].map((todo) => {
+            if (todo.id === id) {
+                todo.text = editingText;
+            }
+            return todo;
+        });
+        setTodos(updatedTodos);
+        setTodoEditing(null);
+    }
+
+    const [todos, setTodos] = React.useState([]);
+    const [todo, setTodo] = React.useState('');
+    const [todoEditing, setTodoEditing] = React.useState(null);
+    const [editingText, setEditingText] = React.useState('');
+
+    const newCodeSection = () => (
+        <div id='todo-list'>
+            <h1>Todo List</h1>
+            <form onSubmit={handleSubmit}>
+                <input type='text' onChange={(e) => setTodo(e.target.value)} value={todo} />
+                <button type='submit'>Add Todo</button>
+            </form>
+            {todos.map((todo) => (
+                <div key={todo.id} className='todo'>
+                    <div className='todo-text'>
+                        {todo.id === todoEditing ? (
+                            <input type='text' onChange={(e) => setEditingText(e.target.value)} />
+                        ) : (
+                            <div>{todo.text}</div>
+                        )}
+                    </div>
+                    <div className='todo-actions'>
+                        {todo.id === todoEditing ? (
+                            <button onClick={() => submitEdits(todo.id)}>Submit Edits</button>
+                        ) : (
+                            <button onClick={() => setTodoEditing(todo.id)}>Edit</button>
+                        )}
+
+                        <button onClick={() => deleteTodo(todo.id)}>Delete</button>
+                    </div>
+                </div>
+            ))}
+        </div>
     );
 
     return (
@@ -179,6 +241,7 @@ const RecipeCreate = () => {
                     Create Recipe
                 </button>
             </form>
+            {newCodeSection()}
         </div>
     );
 };
