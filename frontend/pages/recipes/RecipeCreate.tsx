@@ -13,7 +13,6 @@ import uploadImageIcon from '../../styles/icons/upload_image.png';
 
 const RecipeCreate = () => {
     const dispatch = useDispatch();
-
     const [data, setData] = useState({
         recipe_image: '',
         title: '',
@@ -22,13 +21,33 @@ const RecipeCreate = () => {
         cook_time: '',
         serving: '',
         instructionList: [],
+        ingredientList: [],
+
         instruction: '',
+        ingredient: '',
+        modifiedText: '',
+        inputId: '',
     });
-    const { title, description, flavor_type, cook_time, serving, recipe_image, instructionList, instruction } = data;
+    const {
+        title,
+        description,
+        flavor_type,
+        cook_time,
+        serving,
+        recipe_image,
+        instructionList,
+        ingredientList,
+
+        instruction,
+        ingredient,
+        modifiedText,
+        inputId,
+    } = data;
 
     const { isUserAuthenticated } = useSelector((state) => state.userReducer);
     isUserAuthenticated === false ? Router.push(pageRoute().home) : null;
 
+    // ------------Functions------------
     const onChangeText = (e) => setData((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
     const onChangeImage = (e) => {
         try {
@@ -45,7 +64,69 @@ const RecipeCreate = () => {
             // console.log(err);
         }
     };
+    const addInputContainer = (value) => {
+        if (value === 'instruction') {
+            if (instruction === '') return;
 
+            const newInstruction = {
+                id: new Date().getTime(),
+                text: instruction,
+            };
+            const newInstructionList = instructionList.concat(newInstruction);
+
+            setData((prevState) => ({ ...prevState, instructionList: newInstructionList, instruction: '' }));
+        }
+        if (value === 'ingredient') {
+            if (ingredient === '') return;
+
+            const newIngredient = {
+                id: new Date().getTime(),
+                text: ingredient,
+            };
+            const newIngredientList = ingredientList.concat(newIngredient);
+
+            setData((prevState) => ({ ...prevState, ingredientList: newIngredientList, ingredient: '' }));
+        }
+    };
+
+    const deleteContainer = (id, value) => {
+        if (value === 'instruction') {
+            let updatedInstructionList = [...instructionList].filter((instruction) => instruction.id !== id);
+            setData((prevState) => ({ ...prevState, instructionList: updatedInstructionList }));
+        }
+        if (value === 'ingredient') {
+            let updatedIngredientList = [...ingredientList].filter((ingredient) => ingredient.id !== id);
+            setData((prevState) => ({ ...prevState, ingredientList: updatedIngredientList }));
+        }
+    };
+
+    const handleEdits = (id, value) => {
+        if (modifiedText === '') return;
+        if (value === 'instruction') {
+            const updatedInstructionList = [...instructionList].map((instruction) => {
+                if (instruction.id === id) {
+                    instruction.text = modifiedText;
+                }
+
+                return instruction;
+            });
+
+            setData((prevState) => ({ ...prevState, instructionList: updatedInstructionList, inputId: null }));
+        }
+        if (value === 'ingredient') {
+            const updatedIngredientList = [...ingredientList].map((ingredient) => {
+                if (ingredient.id === id) {
+                    ingredient.text = modifiedText;
+                }
+
+                return ingredient;
+            });
+
+            setData((prevState) => ({ ...prevState, ingredientList: updatedIngredientList, inputId: null }));
+        }
+    };
+
+    // ------------Sections-------------
     const generalSection = () => (
         <section className={styles.general_section}>
             <input
@@ -111,12 +192,9 @@ const RecipeCreate = () => {
             </div>
         </section>
     );
-    // -------new code
-    const [todoEditing, setTodoEditing] = React.useState(null);
-    const [editingText, setEditingText] = React.useState('');
 
     const instructionSection = () => (
-        <section id='instruction-list' className={styles.instructions_section}>
+        <section className={styles.instructions_section}>
             <h1 className={styles.instructions_title}>Instructions</h1>
             <input
                 type='text'
@@ -125,16 +203,17 @@ const RecipeCreate = () => {
                 name='instruction'
                 className={styles.instruction_input}
             />
-            <button onClick={addInputContainer} type='button' className={styles.add_instruction}>
+            <button onClick={() => addInputContainer('instruction')} type='button' className={styles.add_instruction}>
                 + Instruction
             </button>
             {instructionList.map((instruction) => (
                 <section key={instruction.id} className={styles.new_instruction}>
                     <div className={styles.new_instruction}>
-                        {instruction.id === todoEditing ? (
+                        {instruction.id === inputId ? (
                             <input
                                 type='text'
-                                onChange={(e) => setEditingText(e.target.value)}
+                                onChange={onChangeText}
+                                name='modifiedText'
                                 className={styles.instruction_input}
                             />
                         ) : (
@@ -142,9 +221,9 @@ const RecipeCreate = () => {
                         )}
                     </div>
                     <div className={styles.instructions_actions}>
-                        {instruction.id === todoEditing ? (
+                        {instruction.id === inputId ? (
                             <button
-                                onClick={() => handleEdits(instruction.id)}
+                                onClick={() => handleEdits(instruction.id, 'instruction')}
                                 type='button'
                                 className={styles.save_button}
                             >
@@ -154,7 +233,13 @@ const RecipeCreate = () => {
                             </button>
                         ) : (
                             <button
-                                onClick={() => setTodoEditing(instruction.id)}
+                                onClick={() =>
+                                    setData((prevState) => ({
+                                        ...prevState,
+                                        inputId: instruction.id,
+                                        modifiedText: '',
+                                    }))
+                                }
                                 className={styles.edit_button}
                                 type='button'
                             >
@@ -164,7 +249,7 @@ const RecipeCreate = () => {
                             </button>
                         )}
                         <button
-                            onClick={() => deleteContainer(instruction.id)}
+                            onClick={() => deleteContainer(instruction.id, 'instruction')}
                             className={styles.delete_button}
                             type='button'
                         >
@@ -176,44 +261,78 @@ const RecipeCreate = () => {
         </section>
     );
 
-    function addInputContainer(e) {
-        if (instruction == '') return;
-        const newInstruction = {
-            id: new Date().getTime(),
-            text: instruction,
-        };
-        const newInstructionList = instructionList.concat(newInstruction);
+    const ingredientSection = () => (
+        <section id='ingredient-list' className={styles.instructions_section}>
+            <h1 className={styles.instructions_title}>Ingredients</h1>
+            <input
+                type='text'
+                onChange={onChangeText}
+                value={ingredient}
+                name='ingredient'
+                className={styles.instruction_input}
+            />
+            <button onClick={() => addInputContainer('ingredient')} type='button' className={styles.add_instruction}>
+                + Ingredients
+            </button>
+            {ingredientList.map((ingredient) => (
+                <section key={ingredient.id} className={styles.new_instruction}>
+                    <div className={styles.new_instruction}>
+                        {ingredient.id === inputId ? (
+                            <input
+                                type='text'
+                                onChange={onChangeText}
+                                name='modifiedText'
+                                className={styles.instruction_input}
+                            />
+                        ) : (
+                            <div className={styles.instruction_input}>{ingredient.text}</div>
+                        )}
+                    </div>
+                    <div className={styles.instructions_actions}>
+                        {ingredient.id === inputId ? (
+                            <button
+                                onClick={() => handleEdits(ingredient.id, 'ingredient')}
+                                type='button'
+                                className={styles.save_button}
+                            >
+                                {saveInput.src && (
+                                    <Image src={saveInput.src} alt='delete icon' width={50} height={60} />
+                                )}
+                            </button>
+                        ) : (
+                            <button
+                                onClick={() =>
+                                    setData((prevState) => ({ ...prevState, inputId: ingredient.id, modifiedText: '' }))
+                                }
+                                className={styles.edit_button}
+                                type='button'
+                            >
+                                {editInput.src && (
+                                    <Image src={editInput.src} alt='delete icon' width={50} height={60} />
+                                )}
+                            </button>
+                        )}
+                        <button
+                            onClick={() => deleteContainer(ingredient.id, 'ingredient')}
+                            className={styles.delete_button}
+                            type='button'
+                        >
+                            {deleteIcon.src && <Image src={deleteIcon.src} alt='delete icon' width={50} height={60} />}
+                        </button>
+                    </div>
+                </section>
+            ))}
+        </section>
+    );
 
-        setData((prevState) => ({ ...prevState, instructionList: newInstructionList }));
-        setData((prevState) => ({ ...prevState, instruction: '' }));
-    }
-
-    function deleteContainer(id) {
-        let updatedInstructionList = [...instructionList].filter((instruction) => instruction.id !== id);
-
-        setData((prevState) => ({ ...prevState, instructionList: updatedInstructionList }));
-    }
-
-    function handleEdits(id) {
-        if (editingText === '') return;
-
-        const updatedInstructionList = [...instructionList].map((instruction) => {
-            if (instruction.id === id) {
-                instruction.text = editingText;
-            }
-
-            return instruction;
-        });
-
-        setData((prevState) => ({ ...prevState, instructionList: updatedInstructionList }));
-        setTodoEditing(null);
-    }
     return (
         <div data-testid='recipeCreate' className={styles.container}>
             <form onSubmit={(e) => onSubmit(e)} className={styles.form}>
                 {generalSection()}
                 <hr className={styles.section_separator} />
                 {instructionSection()}
+                <hr className={styles.section_separator} />
+                {ingredientSection()}
                 <hr className={styles.section_separator} />
                 <button type='submit' className={styles.create_button}>
                     Create Recipe
