@@ -21,24 +21,25 @@ const RecipeCreate = () => {
         flavor_type: 'Sour',
         cook_time: '',
         serving: '',
-        ingredients: [],
+        instructionList: [],
+        instruction: '',
     });
-    const { title, description, flavor_type, cook_time, serving, recipe_image, ingredients } = data;
+    const { title, description, flavor_type, cook_time, serving, recipe_image, instructionList, instruction } = data;
 
     const { isUserAuthenticated } = useSelector((state) => state.userReducer);
     isUserAuthenticated === false ? Router.push(pageRoute().home) : null;
 
-    const onChangeText = (e) => setData((data) => ({ ...data, [e.target.name]: e.target.value }));
+    const onChangeText = (e) => setData((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
     const onChangeImage = (e) => {
         try {
             const imageSrc = URL.createObjectURL(e.target.files[0]);
             setData((prevState) => ({ ...prevState, [e.target.name]: imageSrc }));
         } catch {}
     };
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
         try {
-            dispatch(recipeCreateAction({ title, description, flavor_type }));
+            await dispatch(recipeCreateAction({ title, description, flavor_type }));
             Router.push(pageRoute().home);
         } catch (err) {
             // console.log(err);
@@ -112,46 +113,50 @@ const RecipeCreate = () => {
     );
 
     // -------new code
-    const [todos, setTodos] = React.useState([]);
     const [todo, setTodo] = React.useState('');
     const [todoEditing, setTodoEditing] = React.useState(null);
     const [editingText, setEditingText] = React.useState('');
 
     const instructionSection = () => (
-        <section id='todo-list' className={styles.instructions_section}>
+        <section id='instruction-list' className={styles.instructions_section}>
             <h1 className={styles.instructions_title}>Instructions</h1>
             <input
                 type='text'
-                onChange={(e) => setTodo(e.target.value)}
-                value={todo}
+                onChange={onChangeText}
+                value={instruction}
+                name='instruction'
                 className={styles.instruction_input}
             />
-            <button onClick={handleSubmit} type='button' className={styles.add_instruction}>
+            <button onClick={handleAddButton} type='button' className={styles.add_instruction}>
                 + Instruction
             </button>
-            {todos.map((todo) => (
-                <section key={todo.id} className={styles.new_instruction}>
+            {instructionList.map((instruction) => (
+                <section key={instruction.id} className={styles.new_instruction}>
                     <div className={styles.new_instruction}>
-                        {todo.id === todoEditing ? (
+                        {instruction.id === todoEditing ? (
                             <input
                                 type='text'
                                 onChange={(e) => setEditingText(e.target.value)}
                                 className={styles.instruction_input}
                             />
                         ) : (
-                            <div className={styles.instruction_input}>{todo.text}</div>
+                            <div className={styles.instruction_input}>{instruction.text}</div>
                         )}
                     </div>
                     <div className={styles.instructions_actions}>
-                        {todo.id === todoEditing ? (
-                            <button onClick={() => submitEdits(todo.id)} type='button' className={styles.save_button}>
+                        {instruction.id === todoEditing ? (
+                            <button
+                                onClick={() => submitEdits(instruction.id)}
+                                type='button'
+                                className={styles.save_button}
+                            >
                                 {saveInput.src && (
                                     <Image src={saveInput.src} alt='delete icon' width={50} height={60} />
                                 )}
                             </button>
                         ) : (
                             <button
-                                onClick={() => setTodoEditing(todo.id)}
+                                onClick={() => setTodoEditing(instruction.id)}
                                 className={styles.edit_button}
                                 type='button'
                             >
@@ -160,7 +165,11 @@ const RecipeCreate = () => {
                                 )}
                             </button>
                         )}
-                        <button onClick={() => deleteTodo(todo.id)} className={styles.delete_button} type='button'>
+                        <button
+                            onClick={() => deleteTodo(instruction.id)}
+                            className={styles.delete_button}
+                            type='button'
+                        >
                             {deleteIcon.src && <Image src={deleteIcon.src} alt='delete icon' width={50} height={60} />}
                         </button>
                     </div>
@@ -169,34 +178,36 @@ const RecipeCreate = () => {
         </section>
     );
 
-    function handleSubmit(e) {
-        if (todo == '') return;
-
-        const newTodo = {
+    function handleAddButton(e) {
+        if (instruction == '') return;
+        const newInstruction = {
             id: new Date().getTime(),
-            text: todo,
-            completed: false,
+            text: instruction,
         };
-        setTodos([...todos].concat(newTodo));
-        setTodo('');
+        const newInstructionList = instructionList.concat(newInstruction);
+
+        setData((prevState) => ({ ...prevState, instructionList: newInstructionList }));
+        setData((prevState) => ({ ...prevState, instruction: '' }));
     }
 
     function deleteTodo(id) {
-        let updatedTodos = [...todos].filter((todo) => todo.id !== id);
-        setTodos(updatedTodos);
+        let updatedInstructionList = [...instructionList].filter((instruction) => instruction.id !== id);
+
+        setData((prevState) => ({ ...prevState, instructionList: updatedInstructionList }));
     }
 
     function submitEdits(id) {
         if (editingText === '') return;
 
-        const updatedTodos = [...todos].map((todo) => {
+        const updatedInstructionList = [...instructionList].map((instruction) => {
             if (todo.id === id) {
                 todo.text = editingText;
             }
 
             return todo;
         });
-        setTodos(updatedTodos);
+
+        setData((prevState) => ({ ...prevState, instructionList: updatedInstructionList }));
         setTodoEditing(null);
     }
 
