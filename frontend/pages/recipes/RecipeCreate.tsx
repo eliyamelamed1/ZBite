@@ -24,6 +24,7 @@ const RecipeCreate = () => {
         ingredientList: [],
 
         instruction: '',
+        instructionImage: '',
         ingredient: '',
         modifiedText: '',
         inputId: '',
@@ -40,6 +41,7 @@ const RecipeCreate = () => {
         ingredientList,
 
         instruction,
+        instructionImage,
         ingredient,
         modifiedText,
         inputId,
@@ -50,10 +52,12 @@ const RecipeCreate = () => {
 
     // ------------Functions------------
     const onChangeText = (e) => setData((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
-    const onChangeImage = (e) => {
+    const onChangeImage = async (e) => {
         try {
-            const imageSrc = URL.createObjectURL(e.target.files[0]);
+            const imageSrc = await URL.createObjectURL(e.target.files[0]);
             setData((prevState) => ({ ...prevState, [e.target.name]: imageSrc }));
+
+            return imageSrc;
         } catch {}
     };
     const onSubmit = async (e) => {
@@ -72,6 +76,7 @@ const RecipeCreate = () => {
             const newInstruction = {
                 id: new Date().getTime(),
                 text: instruction,
+                image: '',
             };
             const newInstructionList = instructionList.concat(newInstruction);
 
@@ -90,7 +95,20 @@ const RecipeCreate = () => {
         }
     };
 
-    const deleteContainer = (id, value) => {
+    const saveInstructionImage = async (e, id) => {
+        // TODO the only id that is send is of the first item in the array
+        const imageSrc = await onChangeImage(e);
+        const updatedInstructionList = await [...instructionList].map((instruction) => {
+            if (instruction.id === id) {
+                instruction.image = imageSrc;
+            }
+            return instruction;
+        });
+
+        setData((prevState) => ({ ...prevState, instructionList: updatedInstructionList }));
+    };
+
+    const deleteInputContainer = (id, value) => {
         if (value === 'instruction') {
             let updatedInstructionList = [...instructionList].filter((instruction) => instruction.id !== id);
             setData((prevState) => ({ ...prevState, instructionList: updatedInstructionList }));
@@ -209,53 +227,78 @@ const RecipeCreate = () => {
             </button>
             {instructionList.map((instruction) => (
                 <section key={instruction.id} className={styles.new_instruction}>
-                    <div className={styles.new_instruction}>
-                        {instruction.id === inputId ? (
-                            <input
-                                type='text'
-                                onChange={onChangeText}
-                                name='modifiedText'
-                                className={styles.instruction_input}
-                            />
-                        ) : (
-                            <div className={styles.instruction_input}>{instruction.text}</div>
-                        )}
+                    <div className={styles.image_container}>
+                        <input
+                            id='instructionImage'
+                            type='file'
+                            placeholder='image'
+                            name='instructionImage'
+                            onChange={(e) => saveInstructionImage(e, instruction.id)}
+                            className={styles.image_input}
+                            accept='image/*'
+                        />
+                        <label htmlFor='instructionImage' className={styles.image_label}>
+                            {instruction.image ? (
+                                <img src={instruction.image} className={styles.uploaded_image} />
+                            ) : (
+                                <div className={styles.image_label}>
+                                    <Image src={uploadImageIcon.src} width={100} height={100} alt='recipe photo' />
+                                    <span className={styles.image_text}>Add Instruction image</span>
+                                </div>
+                            )}
+                        </label>
                     </div>
-                    <div className={styles.instructions_actions}>
-                        {instruction.id === inputId ? (
+                    <div className={styles.instructions_input_container}>
+                        <div className={styles.instruction_text}>
+                            {instruction.id === inputId ? (
+                                <input
+                                    type='text'
+                                    onChange={onChangeText}
+                                    name='modifiedText'
+                                    className={styles.instruction_input}
+                                />
+                            ) : (
+                                <div className={styles.instruction_input}>{instruction.text}</div>
+                            )}
+                        </div>
+                        <div className={styles.instructions_actions}>
+                            {instruction.id === inputId ? (
+                                <button
+                                    onClick={() => handleEdits(instruction.id, 'instruction')}
+                                    type='button'
+                                    className={styles.save_button}
+                                >
+                                    {saveInput.src && (
+                                        <Image src={saveInput.src} alt='delete icon' width={50} height={60} />
+                                    )}
+                                </button>
+                            ) : (
+                                <button
+                                    onClick={() =>
+                                        setData((prevState) => ({
+                                            ...prevState,
+                                            inputId: instruction.id,
+                                            modifiedText: '',
+                                        }))
+                                    }
+                                    className={styles.edit_button}
+                                    type='button'
+                                >
+                                    {editInput.src && (
+                                        <Image src={editInput.src} alt='delete icon' width={50} height={60} />
+                                    )}
+                                </button>
+                            )}
                             <button
-                                onClick={() => handleEdits(instruction.id, 'instruction')}
+                                onClick={() => deleteInputContainer(instruction.id, 'instruction')}
+                                className={styles.delete_button}
                                 type='button'
-                                className={styles.save_button}
                             >
-                                {saveInput.src && (
-                                    <Image src={saveInput.src} alt='delete icon' width={50} height={60} />
+                                {deleteIcon.src && (
+                                    <Image src={deleteIcon.src} alt='delete icon' width={50} height={60} />
                                 )}
                             </button>
-                        ) : (
-                            <button
-                                onClick={() =>
-                                    setData((prevState) => ({
-                                        ...prevState,
-                                        inputId: instruction.id,
-                                        modifiedText: '',
-                                    }))
-                                }
-                                className={styles.edit_button}
-                                type='button'
-                            >
-                                {editInput.src && (
-                                    <Image src={editInput.src} alt='delete icon' width={50} height={60} />
-                                )}
-                            </button>
-                        )}
-                        <button
-                            onClick={() => deleteContainer(instruction.id, 'instruction')}
-                            className={styles.delete_button}
-                            type='button'
-                        >
-                            {deleteIcon.src && <Image src={deleteIcon.src} alt='delete icon' width={50} height={60} />}
-                        </button>
+                        </div>
                     </div>
                 </section>
             ))}
@@ -289,7 +332,7 @@ const RecipeCreate = () => {
                             <div className={styles.instruction_input}>{ingredient.text}</div>
                         )}
                     </div>
-                    <div className={styles.instructions_actions}>
+                    <div className={styles.ingredients_actions}>
                         {ingredient.id === inputId ? (
                             <button
                                 onClick={() => handleEdits(ingredient.id, 'ingredient')}
@@ -314,7 +357,7 @@ const RecipeCreate = () => {
                             </button>
                         )}
                         <button
-                            onClick={() => deleteContainer(ingredient.id, 'ingredient')}
+                            onClick={() => deleteInputContainer(ingredient.id, 'ingredient')}
                             className={styles.delete_button}
                             type='button'
                         >

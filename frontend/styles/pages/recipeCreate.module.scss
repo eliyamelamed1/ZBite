@@ -76,43 +76,66 @@
     align-items: center;
     justify-content: space-between;
 
-    .image_input {
-        display: none;
-    }
-    .image_label {
-        display: flex;
-        flex-direction: column;
-        cursor: pointer;
-        background-size: cover;
-        background-position: center;
-        margin-bottom: 1rem;
-
-        .image_text {
-            text-align: center;
-            position: relative;
-            bottom: 1.75rem;
-            font-size: 1.2rem;
-        }
-        img {
-            width: 15rem;
-            height: 10rem;
-        }
-    }
-
     .instructions_title {
         font-size: 3rem;
+        border: 1px solid black;
+        margin-bottom: 2rem;
+    }
+
+    .new_instruction {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+
+    .image_container {
+        margin-right: 1rem;
+        .image_input {
+            display: none;
+        }
+        .image_label {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            background-size: cover;
+            background-position: center;
+
+            .image_text {
+                text-align: center;
+                position: relative;
+                bottom: 1.75rem;
+                font-size: 1.2rem;
+            }
+
+            img {
+                width: 13rem;
+                height: 10rem;
+            }
+        }
     }
 
     .instructions_input_container {
-        width: 24rem;
         display: flex;
+        width: 28rem;
+        align-items: stretch;
         align-items: center;
-        justify-content: space-between;
-        margin-bottom: 1rem;
+        position: relative;
+        bottom: 0.75rem;
+        .instruction_text {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .instructions_actions {
+            position: relative;
+            width: 8rem;
+            display: flex;
+            justify-content: space-evenly;
+        }
     }
 
     .instruction_input {
-        margin-top: 2rem;
         @include text_input;
         width: 20rem;
     }
@@ -127,20 +150,8 @@
 
     .add_instruction {
         margin-top: 1rem;
+        margin-bottom: 1.5rem;
         font-size: 1.5rem;
-    }
-
-    .new_instruction {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .instructions_actions {
-        position: relative;
-        top: 1rem;
-        width: 10rem;
-        display: flex;
-        justify-content: space-evenly;
     }
 }
 
@@ -150,4 +161,12 @@
     background-color: gray;
     opacity: 60%;
     width: MIN(80%, 40rem);
+}
+
+.ingredients_actions {
+    position: relative;
+    top: 1rem;
+    width: 10rem;
+    display: flex;
+    justify-content: space-evenly;
 }
