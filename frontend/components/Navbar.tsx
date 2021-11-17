@@ -29,7 +29,7 @@ const Navbar = () => {
 
     const profileUrl = loggedUserData ? '/users/' + loggedUserData?.id : '/users/UserLogin/';
 
-    const logoutHandler = () => {
+    const handleLogout = () => {
         try {
             dispatch(logoutAction());
         } catch {
@@ -93,7 +93,13 @@ const Navbar = () => {
                                 >
                                     {PlusIcon.src && <Image src={PlusIcon} alt='as' height={50} width={60} />}
                                 </i>
-                                <p className={`${styles.nav__link__text} ${styles.create__recipe}`}>Create Recipe</p>
+                                <p
+                                    className={`${styles.nav__link__text} ${styles.create__recipe} ${
+                                        pathname === pageRoute().createRecipe && styles.active
+                                    }`}
+                                >
+                                    Create
+                                </p>
                             </a>
                         </Link>
                     </li>
@@ -142,7 +148,7 @@ const Navbar = () => {
             {isUserAuthenticated ? (
                 <ul className={`${styles.auth__links__list} ${styles.auth__links__list__authenticated}`}>
                     <li>
-                        <button onClick={logoutHandler} className={styles.logout_btn}>
+                        <button onClick={handleLogout} className={styles.logout_btn}>
                             Logout
                         </button>
                     </li>
