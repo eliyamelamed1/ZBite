@@ -111,9 +111,7 @@ const RecipeCreate = () => {
             </div>
         </section>
     );
-
     // -------new code
-    const [todo, setTodo] = React.useState('');
     const [todoEditing, setTodoEditing] = React.useState(null);
     const [editingText, setEditingText] = React.useState('');
 
@@ -127,7 +125,7 @@ const RecipeCreate = () => {
                 name='instruction'
                 className={styles.instruction_input}
             />
-            <button onClick={handleAddButton} type='button' className={styles.add_instruction}>
+            <button onClick={addInputContainer} type='button' className={styles.add_instruction}>
                 + Instruction
             </button>
             {instructionList.map((instruction) => (
@@ -146,7 +144,7 @@ const RecipeCreate = () => {
                     <div className={styles.instructions_actions}>
                         {instruction.id === todoEditing ? (
                             <button
-                                onClick={() => submitEdits(instruction.id)}
+                                onClick={() => handleEdits(instruction.id)}
                                 type='button'
                                 className={styles.save_button}
                             >
@@ -166,7 +164,7 @@ const RecipeCreate = () => {
                             </button>
                         )}
                         <button
-                            onClick={() => deleteTodo(instruction.id)}
+                            onClick={() => deleteContainer(instruction.id)}
                             className={styles.delete_button}
                             type='button'
                         >
@@ -178,7 +176,7 @@ const RecipeCreate = () => {
         </section>
     );
 
-    function handleAddButton(e) {
+    function addInputContainer(e) {
         if (instruction == '') return;
         const newInstruction = {
             id: new Date().getTime(),
@@ -190,27 +188,26 @@ const RecipeCreate = () => {
         setData((prevState) => ({ ...prevState, instruction: '' }));
     }
 
-    function deleteTodo(id) {
+    function deleteContainer(id) {
         let updatedInstructionList = [...instructionList].filter((instruction) => instruction.id !== id);
 
         setData((prevState) => ({ ...prevState, instructionList: updatedInstructionList }));
     }
 
-    function submitEdits(id) {
+    function handleEdits(id) {
         if (editingText === '') return;
 
         const updatedInstructionList = [...instructionList].map((instruction) => {
-            if (todo.id === id) {
-                todo.text = editingText;
+            if (instruction.id === id) {
+                instruction.text = editingText;
             }
 
-            return todo;
+            return instruction;
         });
 
         setData((prevState) => ({ ...prevState, instructionList: updatedInstructionList }));
         setTodoEditing(null);
     }
-
     return (
         <div data-testid='recipeCreate' className={styles.container}>
             <form onSubmit={(e) => onSubmit(e)} className={styles.form}>
