@@ -8,7 +8,7 @@ import React from 'react';
 import SavedIcon from '../../styles/icons/saved.svg';
 import StarIcon from '../../styles/icons/star.svg';
 import styles from '../../styles/components/_recipeCard.module.scss';
-import uploadImageIcon from '../../styles/icons/upload_image.png';
+import uploadImageIcon from '../../styles/icons/upload_image.svg';
 
 const RecipeCard = (props) => {
     const nextLoader = ({ src, width, quality }) => {
@@ -26,7 +26,6 @@ const RecipeCard = (props) => {
                     <li>
                         <Link href={`/users/${props?.author?.id}/`} passHref>
                             <p>{props?.author?.name}</p>
-                            {/* <p>eliya melamed</p> */}
                         </Link>
                     </li>
                     <li className={styles.rating}>
@@ -82,7 +81,7 @@ const RecipeCard = (props) => {
                                 ) : (
                                     <Image
                                         loader={nextLoader}
-                                        src={uploadImageIcon}
+                                        src={uploadImageIcon.src}
                                         alt='Recipe Image'
                                         height={100}
                                         width={100}

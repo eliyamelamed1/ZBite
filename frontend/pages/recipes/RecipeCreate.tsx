@@ -9,7 +9,7 @@ import { pageRoute } from '../../globals';
 import { recipeCreateAction } from '../../redux/actions/recipeActions';
 import saveInput from '../../styles/icons/save_changes.svg';
 import styles from '../../styles/pages/recipeCreate.module.scss';
-import uploadImageIcon from '../../styles/icons/upload_image.png';
+import uploadImageIcon from '../../styles/icons/upload_image.svg';
 
 const RecipeCreate = () => {
     const dispatch = useDispatch();
@@ -28,6 +28,7 @@ const RecipeCreate = () => {
         modifiedText: '',
         inputId: '',
     });
+
     const {
         title,
         description,
@@ -143,7 +144,7 @@ const RecipeCreate = () => {
                     <img src={recipe_image} />
                 ) : (
                     <div className={styles.image_label}>
-                        <Image src={uploadImageIcon} width={100} height={100} alt='recipe photo' />
+                        <Image src={uploadImageIcon.src} width={100} height={100} alt='recipe photo' />
                         <span className={styles.image_text}>Add recipe image</span>
                     </div>
                 )}
