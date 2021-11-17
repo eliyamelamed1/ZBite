@@ -70,45 +70,11 @@
     }
 }
 
-.instructions_section,
-.ingredients_section {
+.instructions_section {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-
-    .ingredient_title,
-    .instructions_title {
-        font-size: 3rem;
-        margin-bottom: 2rem;
-    }
-
-    .instructions_input_container,
-    .ingredients_input_container {
-        width: 24rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 1rem;
-    }
-
-    .instruction_input,
-    .ingredient_input {
-        @include text_input;
-        width: 20rem;
-    }
-
-    .delete_button {
-        & img {
-            width: 2rem;
-        }
-    }
-
-    .add_instruction,
-    .add_ingredient {
-        margin-top: 1rem;
-        font-size: 1.5rem;
-    }
 
     .image_input {
         display: none;
@@ -131,6 +97,50 @@
             width: 15rem;
             height: 10rem;
         }
+    }
+
+    .instructions_title {
+        font-size: 3rem;
+    }
+
+    .instructions_input_container {
+        width: 24rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+    }
+
+    .instruction_input {
+        margin-top: 2rem;
+        @include text_input;
+        width: 20rem;
+    }
+
+    .save_button,
+    .edit_button,
+    .delete_button {
+        & img {
+            width: 2rem;
+        }
+    }
+
+    .add_instruction {
+        margin-top: 1rem;
+        font-size: 1.5rem;
+    }
+
+    .new_instruction {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .instructions_actions {
+        position: relative;
+        top: 1rem;
+        width: 10rem;
+        display: flex;
+        justify-content: space-evenly;
     }
 }
 
