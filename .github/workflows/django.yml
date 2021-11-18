@@ -7,20 +7,19 @@ jobs:
     build:
         runs-on: windows-latest
         strategy:
-            strategy:
-                max-parallel: 4
-                matrix:
-                    python-version: [3.8]
-                database-name:
-                - postgres
-                database-password:
-                - postgres
-                database-user:
-                - postgres
-                database-host:
-                - 127.0.0.1
-                database-port:
-                - 5432
+            max-parallel: 4
+            matrix:
+                python-version: [3.8]
+            database-name:
+            - postgres
+            database-password:
+            - postgres
+            database-user:
+            - postgres
+            database-host:
+            - 127.0.0.1
+            database-port:
+            - 5432
         defaults:
             run:
                 working-directory: ./api
