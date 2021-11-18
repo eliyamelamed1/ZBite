@@ -73,6 +73,145 @@ describe('authenticated users', () => {
         });
     });
 
+    describe('cook time input', () => {
+        test('render cook time textbox', () => {
+            const textbox = screen.getByPlaceholderText(/1hr 30min/i);
+            expect(textbox).toBeInTheDocument();
+        });
+        test('cook time attributes', () => {
+            const textbox = screen.getByPlaceholderText(/1hr 30min/i);
+            expect(textbox.required).toBe(false);
+            expect(textbox.type).toBe('text');
+            expect(textbox.name).toBe('cookTime');
+        });
+        test('cook time value change according to input (onchange)', () => {
+            const textbox = screen.getByPlaceholderText(/1hr 30min/i);
+            userEvent.type(textbox, '2hr 30min');
+            expect(textbox.value).toBe('2hr 30min');
+        });
+    });
+
+    describe('serving input', () => {
+        test('render serving textbox', () => {
+            const textbox = screen.getByPlaceholderText(/2 people/i);
+            expect(textbox).toBeInTheDocument();
+        });
+        test('serving attributes', () => {
+            const textbox = screen.getByPlaceholderText(/2 people/i);
+            expect(textbox.required).toBe(false);
+            expect(textbox.type).toBe('text');
+            expect(textbox.name).toBe('serving');
+        });
+        test('serving value change according to input (onchange)', () => {
+            const textbox = screen.getByPlaceholderText(/2 people/i);
+            userEvent.type(textbox, '5 people');
+            expect(textbox.value).toBe('5 people');
+        });
+    });
+    describe('instructions input', () => {
+        test('render instructions title', () => {
+            const title = screen.getByText('Instructions');
+            expect(title).toBeInTheDocument();
+        });
+        test('render instructions textbox', () => {
+            const textbox = screen.getByPlaceholderText(/add onions to the mixture/i);
+            expect(textbox).toBeInTheDocument();
+        });
+        test('instructions attributes', () => {
+            const textbox = screen.getByPlaceholderText(/add onions to the mixture/i);
+            expect(textbox.required).toBe(false);
+            expect(textbox.type).toBe('text');
+            expect(textbox.name).toBe('instruction');
+        });
+        test('instructions value change according to input (onchange)', () => {
+            const textbox = screen.getByPlaceholderText(/add onions to the mixture/i);
+            userEvent.type(textbox, 'add rotten tomatoes');
+            expect(textbox.value).toBe('add rotten tomatoes');
+        });
+
+        describe('add instruction button', () => {
+            test('render add instructions button', () => {
+                const button = screen.getByPlaceholderText(/add instruction/i);
+                expect(button).toBeInTheDocument();
+            });
+            test('button should not save the instruction if its empty', () => {
+                const button = screen.getByPlaceholderText(/add instruction/i);
+                userEvent.click(button);
+                const savedInstruction = screen.queryByPlaceholderText('savedInstruction');
+                expect(savedInstruction).not.toBeInTheDocument();
+            });
+
+            test('button should save the instructions and display it if its contains text', async () => {
+                const textbox = screen.getByPlaceholderText(/add onions to the mixture/i);
+                const button = screen.getByPlaceholderText(/add instruction/i);
+
+                userEvent.type(textbox, '1. add rotten tomatoes');
+                userEvent.click(button);
+
+                userEvent.type(textbox, '2. add rotten cucumbers');
+                userEvent.click(button);
+
+                const firstSavedInstruction = await screen.findByText('1. add rotten tomatoes');
+                const secondSavedInstruction = await screen.findByText('2. add rotten cucumbers');
+                expect(firstSavedInstruction).toBeInTheDocument();
+                expect(secondSavedInstruction).toBeInTheDocument();
+            });
+            test('clicking the delete button should remove the chosen instruction', async () => {
+                // setup
+                const textbox = screen.getByPlaceholderText(/add onions to the mixture/i);
+                const button = screen.getByPlaceholderText(/add instruction/i);
+
+                userEvent.type(textbox, '1. add rotten tomatoes');
+                userEvent.click(button);
+
+                userEvent.type(textbox, '2. add rotten cucumbers');
+                userEvent.click(button);
+
+                const firstSavedInstruction = await screen.findByText('1. add rotten tomatoes');
+                const secondSavedInstruction = await screen.findByText('2. add rotten cucumbers');
+
+                // test
+                const deleteButtons = await screen.findAllByPlaceholderText('delete');
+                const [firstDeleteButton] = deleteButtons;
+                userEvent.click(firstDeleteButton);
+
+                expect(firstSavedInstruction).not.toBeInTheDocument();
+                expect(secondSavedInstruction).toBeInTheDocument();
+            });
+            test('editing and saving saved instruction should work', async () => {
+                // setup
+                const textbox = screen.getByPlaceholderText(/add onions to the mixture/i);
+                const button = screen.getByPlaceholderText(/add instruction/i);
+
+                userEvent.type(textbox, '1. add rotten tomatoes');
+                userEvent.click(button);
+
+                userEvent.type(textbox, '2. add rotten cucumbers');
+                userEvent.click(button);
+
+                const firstSavedInstruction = await screen.findByText('1. add rotten tomatoes');
+                const secondSavedInstruction = await screen.findByText('2. add rotten cucumbers');
+
+                // test
+                const editButtons = await screen.findAllByPlaceholderText('edit');
+                const [firstEditButton] = editButtons;
+
+                userEvent.click(firstEditButton);
+                const editInstructionTextbox = await screen.findByPlaceholderText('modify the instruction');
+
+                userEvent.type(editInstructionTextbox, 'updated instruction');
+
+                const saveButton = await screen.findByPlaceholderText('save');
+                userEvent.click(saveButton);
+                const updatedFirstInstruction = await screen.findByText('updated instruction');
+
+                expect(firstSavedInstruction).not.toBeInTheDocument();
+                expect(updatedFirstInstruction).toBeInTheDocument();
+                expect(secondSavedInstruction).toBeInTheDocument();
+            });
+        });
+    });
+
     describe('submit button', () => {
         test('should render submit button', () => {
             const button = screen.getByRole('button', { name: /create recipe/i });

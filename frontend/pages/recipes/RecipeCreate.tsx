@@ -18,7 +18,7 @@ const RecipeCreate = () => {
         title: '',
         description: '',
         flavor_type: 'Sour',
-        cook_time: '',
+        cookTime: '',
         serving: '',
         instructionList: [],
         ingredientList: [],
@@ -33,7 +33,7 @@ const RecipeCreate = () => {
         title,
         description,
         flavor_type,
-        cook_time,
+        cookTime,
         serving,
         recipe_image,
         instructionList,
@@ -49,7 +49,7 @@ const RecipeCreate = () => {
     isUserAuthenticated === false ? Router.push(pageRoute().home) : null;
 
     // ------------Functions------------
-    const onChangeText = (e) => setData((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
+    const onChangeText = (e) => setData({ ...data, [e.target.name]: e.target.value });
     const onChangeImage = async (e) => {
         try {
             const imageSrc = await URL.createObjectURL(e.target.files[0]);
@@ -60,8 +60,9 @@ const RecipeCreate = () => {
     };
     const onSubmit = async (e) => {
         e.preventDefault();
+        // TODO redirect only on dispatch success
         try {
-            await dispatch(recipeCreateAction({ title, description, flavor_type }));
+            dispatch(recipeCreateAction({ title, description, flavor_type }));
             Router.push(pageRoute().home);
         } catch (err) {
             // console.log(err);
@@ -94,7 +95,6 @@ const RecipeCreate = () => {
     };
 
     const saveInstructionImage = async (e, id) => {
-        console.log(id);
         // TODO the only id that is send is of the first item in the array
         const imageSrc = await onChangeImage(e);
         const updatedInstructionList = await [...instructionList].map((instruction) => {
@@ -161,14 +161,16 @@ const RecipeCreate = () => {
                     <img src={recipe_image} />
                 ) : (
                     <div className={styles.image_label}>
-                        <Image src={uploadImageIcon.src} width={100} height={100} alt='recipe photo' />
+                        {uploadImageIcon.src && (
+                            <Image src={uploadImageIcon.src} width={100} height={100} alt='recipe photo' />
+                        )}
                         <span className={styles.image_text}>Add recipe image</span>
                     </div>
                 )}
             </label>
             <input
                 type='text'
-                placeholder='title'
+                placeholder='Title'
                 name='title'
                 value={title}
                 onChange={onChangeText}
@@ -177,7 +179,7 @@ const RecipeCreate = () => {
             />
             <input
                 type='text'
-                placeholder='description'
+                placeholder='Description'
                 name='description'
                 value={description}
                 onChange={onChangeText}
@@ -189,11 +191,10 @@ const RecipeCreate = () => {
                 <input
                     type='text'
                     placeholder='1hr 30min'
-                    name='cook_time'
-                    value={cook_time}
+                    name='cookTime'
+                    value={cookTime}
                     onChange={onChangeText}
                     className={styles.cook_time_input}
-                    required
                 />
             </div>
             <div className={styles.serving_container}>
@@ -205,7 +206,6 @@ const RecipeCreate = () => {
                     value={serving}
                     onChange={onChangeText}
                     className={styles.serving_input}
-                    required
                 />
             </div>
         </section>
@@ -216,12 +216,18 @@ const RecipeCreate = () => {
             <h1 className={styles.instructions_title}>Instructions</h1>
             <input
                 type='text'
+                placeholder='add onions to the mixture'
                 onChange={onChangeText}
                 value={instruction}
                 name='instruction'
                 className={styles.text_input}
             />
-            <button onClick={() => addInputContainer('instruction')} type='button' className={styles.add_instruction}>
+            <button
+                onClick={() => addInputContainer('instruction')}
+                type='button'
+                className={styles.add_instruction}
+                placeholder='add instruction'
+            >
                 + Instruction
             </button>
             {instructionList.map((instruction) => (
@@ -240,7 +246,9 @@ const RecipeCreate = () => {
                             {instruction.image ? (
                                 <img src={instruction.image} className={styles.uploaded_image} />
                             ) : (
-                                <Image src={uploadImageIcon.src} width={100} height={100} alt='recipe photo' />
+                                uploadImageIcon.src && (
+                                    <Image src={uploadImageIcon.src} width={100} height={100} alt='recipe photo' />
+                                )
                             )}
                         </label>
                     </div>
@@ -252,6 +260,7 @@ const RecipeCreate = () => {
                                     onChange={onChangeText}
                                     name='modifiedText'
                                     className={styles.text_input}
+                                    placeholder='modify the instruction'
                                 />
                             ) : (
                                 <div className={styles.text_input}>{instruction.text}</div>
@@ -263,6 +272,7 @@ const RecipeCreate = () => {
                                     onClick={() => handleEdits(instruction.id, 'instruction')}
                                     type='button'
                                     className={styles.save_button}
+                                    placeholder='save'
                                 >
                                     {saveInput.src && (
                                         <Image src={saveInput.src} alt='delete icon' width={50} height={60} />
@@ -279,6 +289,7 @@ const RecipeCreate = () => {
                                     }
                                     className={styles.edit_button}
                                     type='button'
+                                    placeholder='edit'
                                 >
                                     {editInput.src && (
                                         <Image src={editInput.src} alt='delete icon' width={50} height={60} />
@@ -289,6 +300,7 @@ const RecipeCreate = () => {
                                 onClick={() => deleteInputContainer(instruction.id, 'instruction')}
                                 className={styles.delete_button}
                                 type='button'
+                                placeholder='delete'
                             >
                                 {deleteIcon.src && (
                                     <Image src={deleteIcon.src} alt='delete icon' width={50} height={60} />
@@ -306,6 +318,7 @@ const RecipeCreate = () => {
             <h1 className={styles.ingredients_title}>Ingredients</h1>
             <input
                 type='text'
+                placeholder='2 onions'
                 onChange={onChangeText}
                 value={ingredient}
                 name='ingredient'
