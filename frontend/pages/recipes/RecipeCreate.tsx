@@ -14,6 +14,7 @@ import uploadImageIcon from '../../styles/icons/upload_image.svg';
 const RecipeCreate = () => {
     const dispatch = useDispatch();
     const [data, setData] = useState({
+        // recipe fields
         recipe_image: '',
         title: '',
         description: '',
@@ -23,6 +24,7 @@ const RecipeCreate = () => {
         instructionList: [],
         ingredientList: [],
 
+        // utils fields
         instruction: '',
         ingredient: '',
         modifiedText: '',
