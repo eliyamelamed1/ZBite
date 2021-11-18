@@ -24,7 +24,7 @@ const RecipeCreate = () => {
         instructionList: [],
         ingredientList: [],
 
-        // utils fields
+        // functionality fields
         instruction: '',
         ingredient: '',
         modifiedText: '',

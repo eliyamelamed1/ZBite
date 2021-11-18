@@ -1,5 +1,5 @@
 TodoList:
-[API]
+[API].
 config:
 _ Set up email settings
 _ set up postgreSQL database
