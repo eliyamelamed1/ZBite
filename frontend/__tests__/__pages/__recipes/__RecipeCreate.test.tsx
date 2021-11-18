@@ -195,16 +195,15 @@ describe('authenticated users', () => {
                 // test
                 const editButtons = await screen.findAllByPlaceholderText('edit');
                 const [firstEditButton] = editButtons;
-
                 userEvent.click(firstEditButton);
-                const editInstructionTextbox = await screen.findByPlaceholderText('modify the instruction');
 
+                const editInstructionTextbox = await screen.findByPlaceholderText('modify the instruction');
                 userEvent.type(editInstructionTextbox, 'updated instruction');
 
                 const saveButton = await screen.findByPlaceholderText('save');
                 userEvent.click(saveButton);
-                const updatedFirstInstruction = await screen.findByText('updated instruction');
 
+                const updatedFirstInstruction = await screen.findByText('updated instruction');
                 expect(firstSavedInstruction).not.toBeInTheDocument();
                 expect(updatedFirstInstruction).toBeInTheDocument();
                 expect(secondSavedInstruction).toBeInTheDocument();
