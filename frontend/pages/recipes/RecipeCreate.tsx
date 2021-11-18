@@ -228,14 +228,15 @@ const RecipeCreate = () => {
                 <section key={instruction.id} className={styles.new_instruction_container}>
                     <div className={styles.image_input_container}>
                         <input
-                            id='instructionImage'
+                            id={instruction.id}
                             type='file'
                             placeholder='image'
                             className={styles.image_input}
                             accept='image/png, image/jpg, image/jpeg, image/svg'
                             onChange={(e) => saveInstructionImage(e, instruction.id)}
                         />
-                        <label htmlFor='instructionImage' className={styles.image_label}>
+
+                        <label htmlFor={instruction.id} className={styles.image_label}>
                             {instruction.image ? (
                                 <img src={instruction.image} className={styles.uploaded_image} />
                             ) : (
