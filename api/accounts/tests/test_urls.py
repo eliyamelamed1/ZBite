@@ -2,7 +2,6 @@ import pytest
 from django.urls import resolve, reverse
 
 from factories import UserFactory
-
 pytestmark = pytest.mark.django_db
 
 class TestListUrl:

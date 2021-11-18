@@ -1,11 +1,12 @@
+import psycopg2
 import pytest
-from django.http import HttpResponse
-from django.urls.base import reverse
+from django.conf import settings
+from django.db import connections
+from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from rest_framework.test import APIClient
 
 from accounts.models import UserAccount
-from factories import (ChatDuoFactory, ChatGroupFactory, ChatMassageFactory,
-                       RecipeFactory, UserFactory)
+from factories import ChatGroupFactory, ChatMassageFactory, UserFactory
 from recipes.models import Recipe
 
 
@@ -102,3 +103,11 @@ def chat_massage_create():
 
     return chat_massage
 
+
+@pytest.fixture(scope='session')
+def django_db_setup():
+    settings.DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.postgres',
+        'HOST': 'localhost',
+        'NAME': 'postgres',
+}

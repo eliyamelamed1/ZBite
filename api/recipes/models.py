@@ -18,15 +18,21 @@ class Recipe(models.Model):
         default=uuid.uuid4,
         editable=False,
     )
-    author = models.ForeignKey(get_user_model() , on_delete=models.CASCADE, null=True, related_name='author') # TODO - change author to profile
+    author = models.ForeignKey(get_user_model() , on_delete=models.CASCADE, null=True, related_name='author') 
+    photo_main = models.ImageField(upload_to='media/', blank=True)
     title = models.CharField(max_length=150)
     description = models.TextField(blank=True)
-    flavor_type = models.CharField(max_length=50, choices=FlavorType.choices)
-    photo_main = models.ImageField(upload_to='media/', blank=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    serving = models.TextField(blank=True)
+    cook_time = models.TextField(blank=True)
     saves = models.ManyToManyField(get_user_model(), default=None, blank=True)
     stars = models.TextField(blank=True)
+    # instructionList = JSONField()
+    # ingredientList = JSONField()
+
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    flavor_type = models.CharField(max_length=50, choices=FlavorType.choices)
 
     def get_absolute_url(self):
         """Return absolute URL to the Recipe Detail page."""

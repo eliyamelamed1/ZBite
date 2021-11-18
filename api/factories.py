@@ -11,7 +11,6 @@ from saves.models import Save
 from recipes.models import Recipe
 from reviews.models import Review
 
-
 class UserFactory(factory.django.DjangoModelFactory):
     name = factory.fuzzy.FuzzyText()
     email = factory.Sequence(lambda n: 'person{}@example.com'.format(n))
