@@ -1,0 +1,7 @@
+[run]
+source = /ZBite
+omit = ../*migrations*
+
+
+[html]
+directory = html_coverage_report
