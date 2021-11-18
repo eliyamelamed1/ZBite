@@ -16,6 +16,7 @@
         @include button;
     }
 }
+
 .general_section {
     display: flex;
     flex-direction: column;
@@ -78,18 +79,23 @@
 
     .instructions_title {
         font-size: 3rem;
-        border: 1px solid black;
         margin-bottom: 2rem;
     }
 
-    .new_instruction {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 1rem;
+    .add_instruction {
+        margin-top: 1rem;
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
     }
 
-    .image_container {
+    .new_instruction_container {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        margin-bottom: 2rem;
+    }
+
+    .image_input_container {
         margin-right: 1rem;
         .image_input {
             display: none;
@@ -98,46 +104,39 @@
             display: flex;
             flex-direction: column;
             cursor: pointer;
-            background-size: cover;
-            background-position: center;
-
-            .image_text {
-                text-align: center;
-                position: relative;
-                bottom: 1.75rem;
-                font-size: 1.2rem;
-            }
+            padding: 0;
+            margin: 0;
 
             img {
-                width: 13rem;
-                height: 10rem;
+                width: 10rem;
+                height: 8rem;
+                background-position: center;
+                background-size: cover;
             }
         }
     }
 
-    .instructions_input_container {
+    .input_and_actions_container {
         display: flex;
         width: 28rem;
         align-items: stretch;
         align-items: center;
         position: relative;
-        bottom: 0.75rem;
-        .instruction_text {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .instructions_actions {
-            position: relative;
-            width: 8rem;
-            display: flex;
-            justify-content: space-evenly;
-        }
     }
-
-    .instruction_input {
+    .input_container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .text_input {
         @include text_input;
         width: 20rem;
+    }
+    .actions_container {
+        position: relative;
+        width: 8rem;
+        display: flex;
+        justify-content: space-evenly;
     }
 
     .save_button,
@@ -146,12 +145,6 @@
         & img {
             width: 2rem;
         }
-    }
-
-    .add_instruction {
-        margin-top: 1rem;
-        margin-bottom: 1.5rem;
-        font-size: 1.5rem;
     }
 }
 

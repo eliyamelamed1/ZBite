@@ -220,48 +220,45 @@ const RecipeCreate = () => {
                 onChange={onChangeText}
                 value={instruction}
                 name='instruction'
-                className={styles.instruction_input}
+                className={styles.text_input}
             />
             <button onClick={() => addInputContainer('instruction')} type='button' className={styles.add_instruction}>
                 + Instruction
             </button>
             {instructionList.map((instruction) => (
-                <section key={instruction.id} className={styles.new_instruction}>
-                    <div className={styles.image_container}>
+                <section key={instruction.id} className={styles.new_instruction_container}>
+                    <div className={styles.image_input_container}>
                         <input
                             id='instructionImage'
                             type='file'
                             placeholder='image'
                             name='instructionImage'
-                            onChange={(e) => saveInstructionImage(e, instruction.id)}
                             className={styles.image_input}
-                            accept='image/*'
+                            accept='image/png, image/jpg, image/jpeg, image/svg'
+                            onChange={(e) => saveInstructionImage(e, instruction.id)}
                         />
                         <label htmlFor='instructionImage' className={styles.image_label}>
                             {instruction.image ? (
                                 <img src={instruction.image} className={styles.uploaded_image} />
                             ) : (
-                                <div className={styles.image_label}>
-                                    <Image src={uploadImageIcon.src} width={100} height={100} alt='recipe photo' />
-                                    <span className={styles.image_text}>Add Instruction image</span>
-                                </div>
+                                <Image src={uploadImageIcon.src} width={100} height={100} alt='recipe photo' />
                             )}
                         </label>
                     </div>
-                    <div className={styles.instructions_input_container}>
-                        <div className={styles.instruction_text}>
+                    <div className={styles.input_and_actions_container}>
+                        <div className={styles.input_container}>
                             {instruction.id === inputId ? (
                                 <input
                                     type='text'
                                     onChange={onChangeText}
                                     name='modifiedText'
-                                    className={styles.instruction_input}
+                                    className={styles.text_input}
                                 />
                             ) : (
-                                <div className={styles.instruction_input}>{instruction.text}</div>
+                                <div className={styles.text_input}>{instruction.text}</div>
                             )}
                         </div>
-                        <div className={styles.instructions_actions}>
+                        <div className={styles.actions_container}>
                             {instruction.id === inputId ? (
                                 <button
                                     onClick={() => handleEdits(instruction.id, 'instruction')}
