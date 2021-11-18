@@ -24,7 +24,6 @@ const RecipeCreate = () => {
         ingredientList: [],
 
         instruction: '',
-        instructionImage: '',
         ingredient: '',
         modifiedText: '',
         inputId: '',
@@ -41,7 +40,6 @@ const RecipeCreate = () => {
         ingredientList,
 
         instruction,
-        instructionImage,
         ingredient,
         modifiedText,
         inputId,
@@ -96,6 +94,7 @@ const RecipeCreate = () => {
     };
 
     const saveInstructionImage = async (e, id) => {
+        console.log(id);
         // TODO the only id that is send is of the first item in the array
         const imageSrc = await onChangeImage(e);
         const updatedInstructionList = await [...instructionList].map((instruction) => {
@@ -232,7 +231,6 @@ const RecipeCreate = () => {
                             id='instructionImage'
                             type='file'
                             placeholder='image'
-                            name='instructionImage'
                             className={styles.image_input}
                             accept='image/png, image/jpg, image/jpeg, image/svg'
                             onChange={(e) => saveInstructionImage(e, instruction.id)}
@@ -303,33 +301,36 @@ const RecipeCreate = () => {
     );
 
     const ingredientSection = () => (
-        <section id='ingredient-list' className={styles.instructions_section}>
-            <h1 className={styles.instructions_title}>Ingredients</h1>
+        <section className={styles.ingredients_section}>
+            <h1 className={styles.ingredients_title}>Ingredients</h1>
             <input
                 type='text'
                 onChange={onChangeText}
                 value={ingredient}
                 name='ingredient'
-                className={styles.instruction_input}
+                className={styles.text_input}
             />
-            <button onClick={() => addInputContainer('ingredient')} type='button' className={styles.add_instruction}>
+            <button onClick={() => addInputContainer('ingredient')} type='button' className={styles.add_ingredient}>
                 + Ingredients
             </button>
             {ingredientList.map((ingredient) => (
-                <section key={ingredient.id} className={styles.new_instruction}>
-                    <div className={styles.new_instruction}>
+                <section
+                    key={ingredient.id}
+                    className={`${styles.new_ingredient_container} ${styles.input_and_actions_container} `}
+                >
+                    <div className={styles.input_container}>
                         {ingredient.id === inputId ? (
                             <input
                                 type='text'
                                 onChange={onChangeText}
                                 name='modifiedText'
-                                className={styles.instruction_input}
+                                className={styles.text_input}
                             />
                         ) : (
-                            <div className={styles.instruction_input}>{ingredient.text}</div>
+                            <div className={styles.text_input}>{ingredient.text}</div>
                         )}
                     </div>
-                    <div className={styles.ingredients_actions}>
+                    <div className={styles.actions_container}>
                         {ingredient.id === inputId ? (
                             <button
                                 onClick={() => handleEdits(ingredient.id, 'ingredient')}
