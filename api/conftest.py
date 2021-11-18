@@ -104,10 +104,10 @@ def chat_massage_create():
     return chat_massage
 
 # enable testing for postgres db
-# @pytest.fixture(scope='session')
-# def django_db_setup():
-#     settings.DATABASES['default'] = {
-#         'ENGINE': 'django.db.backends.postgres',
-#         'HOST': 'localhost',
-#         'NAME': 'postgres',
-# }
+@pytest.fixture(scope='session')
+def django_db_setup():
+    settings.DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': 'localhost',
+        'NAME': 'postgres',
+}
