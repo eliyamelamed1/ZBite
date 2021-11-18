@@ -236,13 +236,11 @@ const RecipeCreate = () => {
                         <input
                             id={instruction.id}
                             type='file'
-                            placeholder='image'
                             className={styles.image_input}
                             accept='image/png, image/jpg, image/jpeg, image/svg'
                             onChange={(e) => saveInstructionImage(e, instruction.id)}
                         />
-
-                        <label htmlFor={instruction.id} className={styles.image_label}>
+                        <label htmlFor={instruction.id} className={styles.image_label} data-testid='upload_image'>
                             {instruction.image ? (
                                 <img src={instruction.image} className={styles.uploaded_image} />
                             ) : (
@@ -272,7 +270,7 @@ const RecipeCreate = () => {
                                     onClick={() => handleEdits(instruction.id, 'instruction')}
                                     type='button'
                                     className={styles.save_button}
-                                    placeholder='save'
+                                    placeholder='save instruction'
                                 >
                                     {saveInput.src && (
                                         <Image src={saveInput.src} alt='delete icon' width={50} height={60} />
@@ -289,7 +287,7 @@ const RecipeCreate = () => {
                                     }
                                     className={styles.edit_button}
                                     type='button'
-                                    placeholder='edit'
+                                    placeholder='edit instruction'
                                 >
                                     {editInput.src && (
                                         <Image src={editInput.src} alt='delete icon' width={50} height={60} />
@@ -300,7 +298,7 @@ const RecipeCreate = () => {
                                 onClick={() => deleteInputContainer(instruction.id, 'instruction')}
                                 className={styles.delete_button}
                                 type='button'
-                                placeholder='delete'
+                                placeholder='delete instruction'
                             >
                                 {deleteIcon.src && (
                                     <Image src={deleteIcon.src} alt='delete icon' width={50} height={60} />
@@ -324,7 +322,12 @@ const RecipeCreate = () => {
                 name='ingredient'
                 className={styles.text_input}
             />
-            <button onClick={() => addInputContainer('ingredient')} type='button' className={styles.add_ingredient}>
+            <button
+                onClick={() => addInputContainer('ingredient')}
+                type='button'
+                className={styles.add_ingredient}
+                placeholder='add ingredient'
+            >
                 + Ingredients
             </button>
             {ingredientList.map((ingredient) => (
@@ -338,6 +341,7 @@ const RecipeCreate = () => {
                                 type='text'
                                 onChange={onChangeText}
                                 name='modifiedText'
+                                placeholder='modify the ingredient'
                                 className={styles.text_input}
                             />
                         ) : (
@@ -348,6 +352,7 @@ const RecipeCreate = () => {
                         {ingredient.id === inputId ? (
                             <button
                                 onClick={() => handleEdits(ingredient.id, 'ingredient')}
+                                placeholder='save ingredient'
                                 type='button'
                                 className={styles.save_button}
                             >
@@ -362,6 +367,7 @@ const RecipeCreate = () => {
                                 }
                                 className={styles.edit_button}
                                 type='button'
+                                placeholder='edit ingredient'
                             >
                                 {editInput.src && (
                                     <Image src={editInput.src} alt='delete icon' width={50} height={60} />
@@ -372,6 +378,7 @@ const RecipeCreate = () => {
                             onClick={() => deleteInputContainer(ingredient.id, 'ingredient')}
                             className={styles.delete_button}
                             type='button'
+                            placeholder='delete ingredient'
                         >
                             {deleteIcon.src && <Image src={deleteIcon.src} alt='delete icon' width={50} height={60} />}
                         </button>

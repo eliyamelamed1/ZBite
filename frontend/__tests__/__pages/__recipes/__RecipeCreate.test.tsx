@@ -10,7 +10,9 @@ import React from 'react';
 import RecipeCreate from '../../../pages/recipes/RecipeCreate';
 import Router from 'next/router';
 import { TEST_CASE_AUTH } from '../../../redux/types';
+import firstImage from '../../../styles/icons/heart.svg';
 import { pageRoute } from '../../../globals';
+import secondImage from '../../../styles/icons/home.svg';
 import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
 
@@ -108,25 +110,27 @@ describe('authenticated users', () => {
             expect(textbox.value).toBe('5 people');
         });
     });
-    describe('instructions input', () => {
+    describe('instruction section', () => {
         test('render instructions title', () => {
             const title = screen.getByText('Instructions');
             expect(title).toBeInTheDocument();
         });
-        test('render instructions textbox', () => {
-            const textbox = screen.getByPlaceholderText(/add onions to the mixture/i);
-            expect(textbox).toBeInTheDocument();
-        });
-        test('instructions attributes', () => {
-            const textbox = screen.getByPlaceholderText(/add onions to the mixture/i);
-            expect(textbox.required).toBe(false);
-            expect(textbox.type).toBe('text');
-            expect(textbox.name).toBe('instruction');
-        });
-        test('instructions value change according to input (onchange)', () => {
-            const textbox = screen.getByPlaceholderText(/add onions to the mixture/i);
-            userEvent.type(textbox, 'add rotten tomatoes');
-            expect(textbox.value).toBe('add rotten tomatoes');
+        describe('instruction input', () => {
+            test('render instructions textbox', () => {
+                const textbox = screen.getByPlaceholderText(/add onions to the mixture/i);
+                expect(textbox).toBeInTheDocument();
+            });
+            test('instructions attributes', () => {
+                const textbox = screen.getByPlaceholderText(/add onions to the mixture/i);
+                expect(textbox.required).toBe(false);
+                expect(textbox.type).toBe('text');
+                expect(textbox.name).toBe('instruction');
+            });
+            test('instructions value change according to input (onchange)', () => {
+                const textbox = screen.getByPlaceholderText(/add onions to the mixture/i);
+                userEvent.type(textbox, 'add rotten tomatoes');
+                expect(textbox.value).toBe('add rotten tomatoes');
+            });
         });
 
         describe('add instruction button', () => {
@@ -156,6 +160,8 @@ describe('authenticated users', () => {
                 expect(firstSavedInstruction).toBeInTheDocument();
                 expect(secondSavedInstruction).toBeInTheDocument();
             });
+        });
+        describe('new instruction actions', () => {
             test('clicking the delete button should remove the chosen instruction', async () => {
                 // setup
                 const textbox = screen.getByPlaceholderText(/add onions to the mixture/i);
@@ -171,7 +177,7 @@ describe('authenticated users', () => {
                 const secondSavedInstruction = await screen.findByText('2. add rotten cucumbers');
 
                 // test
-                const deleteButtons = await screen.findAllByPlaceholderText('delete');
+                const deleteButtons = await screen.findAllByPlaceholderText('delete instruction');
                 const [firstDeleteButton] = deleteButtons;
                 userEvent.click(firstDeleteButton);
 
@@ -193,14 +199,14 @@ describe('authenticated users', () => {
                 const secondSavedInstruction = await screen.findByText('2. add rotten cucumbers');
 
                 // test
-                const editButtons = await screen.findAllByPlaceholderText('edit');
+                const editButtons = await screen.findAllByPlaceholderText('edit instruction');
                 const [firstEditButton] = editButtons;
                 userEvent.click(firstEditButton);
 
                 const editInstructionTextbox = await screen.findByPlaceholderText('modify the instruction');
                 userEvent.type(editInstructionTextbox, 'updated instruction');
 
-                const saveButton = await screen.findByPlaceholderText('save');
+                const saveButton = await screen.findByPlaceholderText('save instruction');
                 userEvent.click(saveButton);
 
                 const updatedFirstInstruction = await screen.findByText('updated instruction');
@@ -208,6 +214,114 @@ describe('authenticated users', () => {
                 expect(updatedFirstInstruction).toBeInTheDocument();
                 expect(secondSavedInstruction).toBeInTheDocument();
             });
+            test.todo('test uploading images to instructions');
+        });
+    });
+    describe('ingredient section', () => {
+        test('render ingredients title', () => {
+            const title = screen.getByText('Ingredients');
+            expect(title).toBeInTheDocument();
+        });
+        describe('ingredients input', () => {
+            test('render ingredients textbox', () => {
+                const textbox = screen.getByPlaceholderText(/2 onions/i);
+                expect(textbox).toBeInTheDocument();
+            });
+            test('ingredients attributes', () => {
+                const textbox = screen.getByPlaceholderText(/2 onions/i);
+                expect(textbox.required).toBe(false);
+                expect(textbox.type).toBe('text');
+                expect(textbox.name).toBe('ingredient');
+            });
+            test('ingredients value change according to input (onchange)', () => {
+                const textbox = screen.getByPlaceholderText(/2 onions/i);
+                userEvent.type(textbox, '2 cucumbers');
+                expect(textbox.value).toBe('2 cucumbers');
+            });
+        });
+
+        describe('add ingredient button', () => {
+            test('render add ingredients button', () => {
+                const button = screen.getByPlaceholderText(/add ingredient/i);
+                expect(button).toBeInTheDocument();
+            });
+            test('button should not save the ingredients if its empty', () => {
+                const button = screen.getByPlaceholderText(/add ingredient/i);
+                userEvent.click(button);
+                const savedIngredient = screen.queryByPlaceholderText('savedIngredient');
+                expect(savedIngredient).not.toBeInTheDocument();
+            });
+
+            test('button should save the ingredients and display it if its contains text', async () => {
+                const textbox = screen.getByPlaceholderText(/2 onions/i);
+                const button = screen.getByPlaceholderText(/add ingredient/i);
+
+                userEvent.type(textbox, '1. 2 cucumbers');
+                userEvent.click(button);
+
+                userEvent.type(textbox, '2. 3 lemons');
+                userEvent.click(button);
+
+                const firstSavedIngredient = await screen.findByText('1. 2 cucumbers');
+                const secondSavedIngredient = await screen.findByText('2. 3 lemons');
+                expect(firstSavedIngredient).toBeInTheDocument();
+                expect(secondSavedIngredient).toBeInTheDocument();
+            });
+        });
+        describe('new ingredient actions', () => {
+            test('clicking the delete button should remove the chosen ingredients', async () => {
+                // setup
+                const textbox = screen.getByPlaceholderText(/2 onions/i);
+                const button = screen.getByPlaceholderText(/add ingredient/i);
+
+                userEvent.type(textbox, '1. 2 cucumbers');
+                userEvent.click(button);
+
+                userEvent.type(textbox, '2. 3 lemons');
+                userEvent.click(button);
+
+                const firstSavedIngredient = await screen.findByText('1. 2 cucumbers');
+                const secondSavedIngredient = await screen.findByText('2. 3 lemons');
+
+                // test
+                const deleteButtons = await screen.findAllByPlaceholderText('delete ingredient');
+                const [firstDeleteButton] = deleteButtons;
+                userEvent.click(firstDeleteButton);
+
+                expect(firstSavedIngredient).not.toBeInTheDocument();
+                expect(secondSavedIngredient).toBeInTheDocument();
+            });
+            test('editing and saving saved ingredients should work', async () => {
+                // setup
+                const textbox = screen.getByPlaceholderText(/2 onions/i);
+                const button = screen.getByPlaceholderText(/add ingredient/i);
+
+                userEvent.type(textbox, '1. 2 cucumbers');
+                userEvent.click(button);
+
+                userEvent.type(textbox, '2. 3 lemons');
+                userEvent.click(button);
+
+                const firstSavedIngredient = await screen.findByText('1. 2 cucumbers');
+                const secondSavedIngredient = await screen.findByText('2. 3 lemons');
+
+                // test
+                const editButtons = await screen.findAllByPlaceholderText('edit ingredient');
+                const [firstEditButton] = editButtons;
+                userEvent.click(firstEditButton);
+
+                const editIngredientTextbox = await screen.findByPlaceholderText('modify the ingredient');
+                userEvent.type(editIngredientTextbox, 'updated ingredient');
+
+                const saveButton = await screen.findByPlaceholderText('save ingredient');
+                userEvent.click(saveButton);
+
+                const updatedFirstIngredient = await screen.findByText('updated ingredient');
+                expect(firstSavedIngredient).not.toBeInTheDocument();
+                expect(updatedFirstIngredient).toBeInTheDocument();
+                expect(secondSavedIngredient).toBeInTheDocument();
+            });
+            test.todo('test uploading images to ingredients');
         });
     });
 
