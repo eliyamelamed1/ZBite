@@ -46,6 +46,28 @@ const RecipeCreate = () => {
     const { isUserAuthenticated } = useSelector((state) => state.userReducer);
     isUserAuthenticated === false ? Router.push(pageRoute().home) : null;
     // ------------Functions------------
+
+    function encodeImageFileAsURL() {
+        var filesSelected = document.getElementById('inputFileToLoad').files;
+        if (filesSelected.length > 0) {
+            var fileToLoad = filesSelected[0];
+
+            var fileReader = new FileReader();
+
+            fileReader.onload = function (fileLoadedEvent) {
+                var srcData = fileLoadedEvent.target.result; // <--- data: base64
+
+                var newImage = document.createElement('img');
+                newImage.src = srcData;
+
+                document.getElementById('imgTest').innerHTML = newImage.outerHTML;
+                console.log('Converted Base64 version is ' + document.getElementById('imgTest').innerHTML);
+                const a = document.getElementById('imgTest').innerHTML;
+                setData((prevState) => ({ ...prevState, photoMain: a }));
+            };
+            fileReader.readAsDataURL(fileToLoad);
+        }
+    }
     const onChangeText = (e) => setData({ ...data, [e.target.name]: e.target.value });
     const onChangeImage = async (e) => {
         try {
@@ -388,6 +410,8 @@ const RecipeCreate = () => {
     return (
         <div data-testid='recipeCreate' className={styles.container}>
             <form onSubmit={(e) => onSubmit(e)} className={styles.form}>
+                <input id='inputFileToLoad' type='file' onChange={encodeImageFileAsURL} />
+                <div id='imgTest'></div>
                 {generalSection()}
                 <hr className={styles.section_separator} />
                 {instructionSection()}
