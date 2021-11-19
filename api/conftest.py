@@ -63,32 +63,6 @@ def logout(api_client):
     return logout
 
 # ---------------------------------------- Recipes
-
-# TODO check for better fixture name
-@pytest.fixture
-def search_recipe_response(api_client):
-    search_recipe_url = '/api/recipes/search/'
-    data = {
-        'flavor_type': 'Sour',
-    }
-
-    response = api_client.post(search_recipe_url, data)
-
-    return response
-
-# @pytest.fixture
-# def search_comment_response(api_client):
-#     new_recipe = RecipeFactory()
-#     comments_in_recipe_url = '/api/comments/comments_in_recipe/'
-
-#     data = {
-#         'recipe': {new_recipe.id},
-#     }
-
-#     response = api_client.post(comments_in_recipe_url, data)
-
-#     return response
-
 @pytest.fixture
 def chat_massage_create():
     user = UserFactory()

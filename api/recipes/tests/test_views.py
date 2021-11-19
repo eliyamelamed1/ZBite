@@ -11,7 +11,6 @@ from recipes.models import Recipe
 pytestmark = pytest.mark.django_db
 recipe_list_url = Recipe.get_list_url()
 create_recipe_url = Recipe.get_create_url()
-search_recipe_url = Recipe.get_search_url()
 
 recipes_of_accounts_followed_url = Recipe.get_recipes_of_accounts_followed_url()
 top_rated_recipes_url = Recipe.get_top_rated_recipes_url()
@@ -41,18 +40,33 @@ class TestRecipeCreateView:
 
             assert create_recipe_page_render.status_code == 405 # 405 = method not allowed - get isnt allowed only post
 
-        def test_recipe_create_post_request(self, api_client):
+        def test_recipe_create_post_request_required_fields(self, api_client):
             new_user = UserFactory()
             api_client.force_authenticate(new_user)
             recipe_data = RecipeFactory.build()
             data = {
                 'title': {recipe_data.title},
                 'description': {recipe_data.description},
-                'flavor_type': {recipe_data.flavor_type}, 
             }
             response = api_client.post(create_recipe_url, data)
 
             assert response.status_code == 201
+        
+        # def test_recipe_create_post_request_all_fields(self, api_client):
+        #     new_user = UserFactory()
+        #     api_client.force_authenticate(new_user)
+        #     recipe_data = RecipeFactory.build()
+        #     data = {
+        #         'title': {recipe_data.title},
+        #         'description': {recipe_data.description},
+        #         'serving': '5 people', 
+        #         'cook_time': '15min', 
+        #         'instructions': {"asd": 5}, 
+        #         'ingredients': {"asd": 5}, 
+        #     }
+        #     response = api_client.post(create_recipe_url, data, format='json')
+
+        #     assert response.status_code == 201
         
         def test_recipe_author_is_current_logged_in_user(self, api_client):
                 ''' testing the method perform_create '''
@@ -62,7 +76,6 @@ class TestRecipeCreateView:
                 data = {
                     'title': {recipe_data.title},
                     'description': {recipe_data.description},
-                    'flavor_type': {recipe_data.flavor_type}, 
                 }
                 api_client.post(create_recipe_url, data)
                 new_recipe = Recipe.objects.get(title=recipe_data.title)
@@ -82,65 +95,10 @@ class TestRecipeCreateView:
                 'author': {new_user.id},
                 'title': {recipe_data.title},
                 'description': {recipe_data.description},
-                'flavor_type': {recipe_data.flavor_type}, 
             }
             response = api_client.post(create_recipe_url, data)            
 
             assert response.status_code == 401
-
-class TestRecipeSearch:
-    class TestAuthenticatedUsers:
-        def test_get_request_returns_status_code_405(self, api_client):
-            new_user = UserAccount()
-            api_client.force_authenticate(new_user)
-            response = api_client.get(search_recipe_url)
-
-            assert response.status_code == 405 # 405 = method not allowed - get isnt allowed only post
-
-        def test_post_request_returns_status_code_200(self, api_client):
-            new_user = UserAccount()
-            api_client.force_authenticate(new_user)
-            data = {
-                'flavor_type': 'Sour',
-            }
-            response = api_client.post(search_recipe_url, data)
-
-            assert response.status_code == 200
-            
-        def test_post_request_returns_recipes_filtered_by_flavor_type(self, api_client):
-            new_user = UserAccount()
-            api_client.force_authenticate(new_user)
-            new_recipe = RecipeFactory()
-            data = {
-                'flavor_type': {new_recipe.flavor_type}
-            }
-            response = api_client.post(search_recipe_url, data)
-
-            assert f'{new_recipe.id}' in f'{response.content}'
-
-
-    class TestGuestUsers:
-        def test_get_request_returns_status_code_405(self, api_client):
-            response = api_client.get(search_recipe_url)
-
-            assert response.status_code == 405 # 405 = method not allowed - get isnt allowed only post
-
-        def test_post_request_returns_status_code_200(self, api_client):
-            data = {
-                'flavor_type': 'Sour',
-            }
-            response = api_client.post(search_recipe_url, data)
-
-            assert response.status_code == 200
-            
-        def test_post_request_returns_recipes_filtered_by_flavor_type(self, api_client):
-            new_recipe = RecipeFactory()
-            data = {
-                'flavor_type': {new_recipe.flavor_type}
-            }
-            response = api_client.post(search_recipe_url, data)
-
-            assert f'{new_recipe.id}' in f'{response.content}'
 
 class TestRecipeDetailsView:
         class TestAuthenticatedUsers:
@@ -249,7 +207,6 @@ class TestRecipesOfAccountsFollowedView:
                 data = {
                     'title': {recipe_data.title},
                     'description': {recipe_data.description},
-                    'flavor_type': {recipe_data.flavor_type}, 
                 }
                 api_client.post(create_recipe_url, data)
             
@@ -286,7 +243,6 @@ class TestTopRatedRecipes:
                 data = {
                     'title': {recipe_data.title},
                     'description': {recipe_data.description},
-                    'flavor_type': {recipe_data.flavor_type}, 
                 }
                 api_client.post(create_recipe_url, data)
                 new_recipe = Recipe.objects.all().get(title=recipe_data.title)
@@ -301,7 +257,6 @@ class TestTopRatedRecipes:
                 data = {
                     'title': {recipe_data.title},
                     'description': {recipe_data.description},
-                    'flavor_type': {recipe_data.flavor_type}, 
                 }
                 api_client.post(create_recipe_url, data)
                 new_recipe = Recipe.objects.all().get(title=recipe_data.title)
@@ -334,7 +289,6 @@ class TestTopRatedRecipes:
                 data = {
                     'title': {recipe_data.title},
                     'description': {recipe_data.description},
-                    'flavor_type': {recipe_data.flavor_type}, 
                 }
                 api_client.post(create_recipe_url, data)
                 new_recipe = Recipe.objects.all().get(title=recipe_data.title)
@@ -349,7 +303,6 @@ class TestTopRatedRecipes:
                 data = {
                     'title': {recipe_data.title},
                     'description': {recipe_data.description},
-                    'flavor_type': {recipe_data.flavor_type}, 
                 }
                 api_client.post(create_recipe_url, data)
                 new_recipe = Recipe.objects.all().get(title=recipe_data.title)

@@ -30,7 +30,6 @@ const RecipeCreate = () => {
         modifiedText: '',
         inputId: '',
     });
-
     const {
         title,
         description,
@@ -46,7 +45,6 @@ const RecipeCreate = () => {
         modifiedText,
         inputId,
     } = data;
-
     const { isUserAuthenticated } = useSelector((state) => state.userReducer);
     isUserAuthenticated === false ? Router.push(pageRoute().home) : null;
 

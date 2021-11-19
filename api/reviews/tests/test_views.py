@@ -242,7 +242,6 @@ class TestRatingCreateView:
             data = {
                 'title': {second_recipe.title},
                 'description': {second_recipe.description},
-                'flavor_type': {second_recipe.flavor_type}, 
             }
             api_client.post(create_recipe_url, data)
             second_recipe = Recipe.objects.all().get(title=second_recipe.title)
@@ -297,7 +296,6 @@ class TestRatingCreateView:
             data = {
                 'title': {second_recipe.title},
                 'description': {second_recipe.description},
-                'flavor_type': {second_recipe.flavor_type}, 
             }
             api_client.post(create_recipe_url, data)
 

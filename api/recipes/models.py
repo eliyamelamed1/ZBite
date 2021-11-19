@@ -9,11 +9,6 @@ from accounts.models import UserAccount
 
 
 class Recipe(models.Model):
-    class FlavorType(models.TextChoices):
-        SOUR = 'Sour'
-        SWEET = 'Sweet'
-        SALTY = 'Salty'
-
     id = models.UUIDField( 
         primary_key=True,
         default=uuid.uuid4,
@@ -32,7 +27,6 @@ class Recipe(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    flavor_type = models.CharField(max_length=50, choices=FlavorType.choices)
 
     def get_absolute_url(self):
         """Return absolute URL to the Recipe Detail page."""
@@ -67,10 +61,6 @@ class Recipe(models.Model):
         return reverse('recipes:create')
     
     @classmethod
-    def get_search_url(cls):
-        return reverse('recipes:search')
-    
-    @classmethod
     def get_list_url(cls):
         return reverse('recipes:list')
 
@@ -81,3 +71,4 @@ class Recipe(models.Model):
     @classmethod
     def get_top_rated_recipes_url(cls):
         return reverse('recipes:top_rated')
+

@@ -23,9 +23,6 @@ class RecipeFactory(factory.django.DjangoModelFactory):
     author = factory.SubFactory(UserFactory)
     title = factory.fuzzy.FuzzyText() 
     description= factory.fuzzy.FuzzyText()
-    flavor_type = factory.fuzzy.FuzzyChoice(
-        [x[0] for x in Recipe.FlavorType.choices] 
-    )
 
     class Meta:
         model = Recipe

@@ -8,8 +8,7 @@ from accounts.serializers import SavedRecipesSerializer
 from permissions import IsAuthorOrReadOnly
 
 from .models import Recipe
-from .serializers import (RecipeCreateSerializer, RecipeSearchSerializer,
-                          RecipeSerializer)
+from .serializers import (RecipeCreateSerializer, RecipeSerializer)
 
 
 class RecipeList(ListAPIView):
@@ -30,21 +29,7 @@ class RecipeCreate(CreateAPIView):
         '''save the the current logged in user as the author of the recipe'''
         serializer.save(author=self.request.user)
     
-class RecipeSearch(APIView):
-    permission_classes = (permissions.AllowAny, )
-    serializer_class = RecipeSearchSerializer
 
-    # TODO learn again
-    def post(self, request, format=None):
-        queryset = Recipe.objects.order_by('-updated_at')
-        data = request.data
-
-        flavor_type = data['flavor_type']
-        queryset = queryset.filter(flavor_type__iexact=flavor_type)
-
-        serializer = RecipeSerializer(queryset, many=True) 
-
-        return Response(serializer.data)
     
 class RecipesOfAccountsFollowed(ListAPIView):
     '''display the recipes of followed users'''

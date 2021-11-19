@@ -33,14 +33,6 @@ class TestDetailUrl:
         assert resolve(url).view_name == 'recipes:detail'
 
 
-class TestSearchUrl:
-    def test_search_url_reverse(self):
-        url = reverse('recipes:search')
-        assert url == f'/api/recipes/search/'
-
-    def test_search_url_resolve(self):
-        url = f'/api/recipes/search/'
-        assert resolve(url).view_name == 'recipes:search'
 class TestFollowedUsersRecipesUrl:
     def test_followed_account_recipes_reverse(self):
         url = reverse('recipes:recipes_of_accounts_followed')

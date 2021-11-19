@@ -23,9 +23,6 @@ def test_get_list_url():
 def test_get_create_url():
     assert Recipe.get_create_url() == reverse('recipes:create')
 
-def test_get_search_url():
-    assert Recipe.get_search_url() == reverse('recipes:search')
-
 def test_get_recipes_of_accounts_followed_url():
     assert Recipe.get_recipes_of_accounts_followed_url() == reverse('recipes:recipes_of_accounts_followed')
 
