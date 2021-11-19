@@ -28,7 +28,7 @@ class Recipe(models.Model):
     stars = models.TextField(blank=True)
     # instructionList = JSONField()
     # ingredientList = JSONField()
-# .
+
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
