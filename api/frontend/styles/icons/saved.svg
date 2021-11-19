@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="22" height="30" viewBox="0 0 22 30">
-  <defs>
-    <pattern id="pattern" preserveAspectRatio="none" width="100%" height="100%" viewBox="0 0 17 23">
-      <image width="17" height="23" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAXCAYAAADtNKTnAAAABHNCSVQICAgIfAhkiAAAAVVJREFUOE/llK9LA2Ech+8QFGZYsA1hYDFpsIlYVtQwQS2CgkVcUWz6BwhDEA0DYWO4tBk1D1Y0aBGjYDApWGzbRIPo8xl38HJ7d7vT6AsP9/L98dy979697vfKwpLjOCcwAnHHBw1FF0mLyXDcbrNekjaBxB8k75K8/XIp/nub/0zywsI3IQc6CrbRd0/m6arDEOhMRJa8UtmABzg0upaZz8E0TBhx65ekKJAobDyTHPUKrJJtkqchhkly15AMkyi3B0cW0SyxK3D7LUf5G5ixSPYD+6SSnr/OFsmyJxng+eXNx3g+BeQdie1ffEHhAWRBwlvIQwaOA5K2JJ8EBy2fHjkkyRrV1cgd3YUFSRTWJtYgHUOmfdJSK75EvbqYzmA1guiOmnV4VK0p8Xt3mBRCRMrtmnmbRPkpOIdxo7jJfAMugy/oJVGdzkcJFuEedCXoaugaP7yOa1dckDhzAAAAAElFTkSuQmCC"/>
-    </pattern>
-  </defs>
-  <rect id="bookmark_copy_3" data-name="bookmark copy 3" width="22" height="30" fill="url(#pattern)"/>
-</svg>

@@ -1,1 +1,0 @@
-exports.push = jest.fn();
