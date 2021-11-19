@@ -1,0 +1,182 @@
+@import '../abstracts/variables';
+@import '../breakpoints.scss';
+
+// TODO - adjust tablet mode search box to 50% and pc to 70%
+
+.container {
+    .header {
+        z-index: 1000;
+        background-color: $primary-color;
+        display: flex;
+        position: fixed;
+        width: 100%;
+        align-items: center;
+        height: $header-height;
+        justify-content: center;
+        padding-right: 8px;
+        padding-left: 8px;
+
+        .auth__links__list {
+            display: flex;
+            display: flex;
+            justify-content: space-evenly;
+            color: white;
+            font-size: 1.3rem;
+        }
+        .auth__links__list__guest {
+            width: 112px;
+        }
+        .auth__links__list__authenticated {
+            width: fit-content;
+        }
+
+        button {
+            color: white;
+        }
+
+        .logo__icon {
+            width: clamp(32px, 2vw, 80px);
+        }
+
+        .search__box {
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            padding-top: 0.2%;
+            padding-bottom: 0.2%;
+            margin-right: 5%;
+            margin-left: 5%;
+            justify-content: space-between;
+            align-items: center;
+            width: 50%;
+
+            .search__btn {
+                position: relative;
+                width: 16px;
+                margin-right: 16px;
+            }
+
+            .search__txt {
+                border: none;
+                background: none;
+                position: relative;
+                float: left;
+                margin: 4.8px;
+                color: black;
+                width: inherit;
+                padding-left: 12.8px;
+            }
+        }
+    }
+    .nav {
+        .nav__list {
+            z-index: 1000;
+            background-color: white;
+            display: flex;
+            position: fixed;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            bottom: 0%;
+            width: 100vw;
+            align-items: center;
+            justify-content: space-evenly;
+            border-radius: 12.8px 12.8px 0 0;
+            box-shadow: 0 0.16px 1.6px #b2b2b2;
+        }
+
+        .nav__link__icon img {
+            opacity: 60%;
+            width: 30px;
+        }
+
+        .nav__link__icon.create__recipe img {
+            width: 35px;
+        }
+
+        .nav__link__icon.create__recipe.active img {
+            width: 38px;
+        }
+
+        .active img {
+            opacity: 100%;
+            width: 35px;
+            filter: invert(53%) sepia(48%) saturate(5453%) hue-rotate(332deg) brightness(99%) contrast(103%);
+        }
+
+        .nav__link__text {
+            font-size: 0;
+        }
+    }
+}
+
+@include media('>=tablet') {
+    .container {
+        padding: unset;
+        display: flex;
+        justify-content: center;
+        background-color: $primary-color;
+        align-items: center;
+        position: fixed;
+        width: 100%;
+        z-index: 1000;
+
+        .header {
+            width: MIN(40%, 800px);
+            order: 2;
+            justify-content: space-between;
+            position: unset;
+            .auth__links {
+                width: clamp(112px, 14vw, 128px);
+                margin-right: unset;
+            }
+
+            .auth__links__list {
+                flex-direction: row;
+                justify-content: space-between;
+                margin-top: 5%;
+                margin-bottom: 5%;
+                color: white;
+                font-weight: $fw-semi-bold;
+                font-size: 1.5rem;
+            }
+            .search__box {
+                width: 75%;
+                padding: 0.5%;
+            }
+            .logo__icon {
+                display: none;
+            }
+        }
+        .nav {
+            order: 1;
+            height: $header-height;
+            width: MIN(40%, 480px);
+
+            .nav__list {
+                position: unset;
+                background-color: unset;
+                height: inherit;
+                border-radius: unset;
+                bottom: unset;
+                width: 100%;
+                box-shadow: none;
+                justify-content: space-between;
+            }
+
+            .active {
+                border-bottom: 1px solid white;
+            }
+            .nav__link__icon {
+                display: none;
+            }
+            .nav__link__text {
+                color: white;
+                font-size: clamp(16px, 1.9vw, 20.8px);
+            }
+
+            .nav__link-create__recipe {
+                display: none;
+            }
+        }
+    }
+}

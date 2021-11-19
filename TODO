@@ -1,0 +1,31 @@
+TodoList:
+[API].
+config:
+_ Set up email settings
+_ set up postgreSQL database
+recipes
+_ display recipe author a username and not user.id
+_ add tests for delete and update recipe
+_ set the author to be the only one that can make changes in the recipe
+_ set recipe author to be the name of the connected user
+bug_fix:
+
+[Front-End]
+add_features:
+_ connect recipes app to front-end - card, RecipeList, RecipeSearchForm
+_ add alert component
+
+[API+Front_End]
+profile
+_ add profile app
+contact
+_ add contact_me page
+pagination
+_ add pagination
+authentication
+_ switch to jwt => update the API + Front_End + tests \* front end reset password doesnt work - give csrf error
+
+TODO ON THIS BRANCH:
+Add tests and refactor all the recipe front end functionality
+Create recipe form [front-end]
+.
