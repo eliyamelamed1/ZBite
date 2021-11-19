@@ -8,7 +8,6 @@ import {
     loadTrendingRecipesAction,
     recipeCreateAction,
     recipeDeleteAction,
-    recipeSearchAction,
     recipeUpdateAction,
     reviewCreateAction,
     reviewDeleteAction,
@@ -32,7 +31,6 @@ const parameters = {
     title: 'title',
     description: 'description',
     id: 'id',
-    flavor_type: 'flavor_type',
     stars: 'stars',
     comment: 'comment',
     image: 'image',
@@ -69,10 +67,10 @@ describe('axios request should match url endpoint, and parameters', () => {
         expect(axios.delete.mock.calls[0][1]).toStrictEqual(configWithAuthToken);
     });
     test('recipeCreateAction', () => {
-        const { title, description, flavor_type } = parameters;
-        const body = JSON.stringify({ title, description, flavor_type });
+        const { title, description } = parameters;
+        const body = JSON.stringify({ title, description });
 
-        store.dispatch(recipeCreateAction({ title, description, flavor_type }));
+        store.dispatch(recipeCreateAction({ title, description, }));
 
         expect(axios.post.mock.calls.length).toBe(1);
         expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute().recipes.create);
@@ -80,11 +78,11 @@ describe('axios request should match url endpoint, and parameters', () => {
         expect(axios.post.mock.calls[0][2]).toStrictEqual(configWithAuthToken);
     });
     test('recipeUpdateAction', () => {
-        const { id, title, description, flavor_type } = parameters;
+        const { id, title, description, } = parameters;
         const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}/`;
-        const body = JSON.stringify({ title, description, flavor_type });
+        const body = JSON.stringify({ title, description, });
 
-        store.dispatch(recipeUpdateAction({ id, title, description, flavor_type }));
+        store.dispatch(recipeUpdateAction({ id, title, description, }));
 
         expect(axios.patch.mock.calls.length).toBe(1);
         expect(axios.patch.mock.calls[0][0]).toStrictEqual(endpointUrl);
@@ -119,16 +117,7 @@ describe('axios request should match url endpoint, and parameters', () => {
         expect(axios.get.mock.calls[0][0]).toStrictEqual(endpointRoute().recipes.saved_recipes);
         expect(axios.get.mock.calls[0][1]).toStrictEqual(configWithAuthToken);
     });
-    test('recipeSearchAction', () => {
-        const { flavor_type } = parameters;
 
-        store.dispatch(recipeSearchAction({ flavor_type }));
-
-        expect(axios.post.mock.calls.length).toBe(1);
-        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute().recipes.search);
-        expect(axios.post.mock.calls[0][1]).toStrictEqual({ flavor_type });
-        expect(axios.post.mock.calls[0][2]).toStrictEqual(config);
-    });
     test('loadRecipeDetailsAction', () => {
         const { id } = parameters;
         const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}/`;

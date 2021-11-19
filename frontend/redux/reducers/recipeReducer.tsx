@@ -21,8 +21,7 @@ import {
     REVIEW_DELETE_SUCCESS,
     SAVE_UNSAVE_ACTION_FAIL,
     SAVE_UNSAVE_ACTION_SUCCESS,
-    SEARCH_RECIPE_FAIL,
-    SEARCH_RECIPE_SUCCESS,
+
     TEST_CASE_RECIPE,
     UPDATE_RECIPE_FAIL,
     UPDATE_RECIPE_SUCCESS,
@@ -55,8 +54,6 @@ export default function recipeReducer(state = initialState, action) {
             };
         case GET_RECIPE_LIST_SUCCESS: //
             return { ...state, listOfRecipes: payload };
-        case SEARCH_RECIPE_SUCCESS:
-            return { ...state, listOfSearchedRecipes: payload };
         case UPDATE_RECIPE_SUCCESS: //
         case GET_RECIPE_DETAILS_SUCCESS: //
             return { ...state, requestedRecipeData: payload };
@@ -83,7 +80,6 @@ export default function recipeReducer(state = initialState, action) {
         case GET_RECIPE_LIST_FAIL:
         case GET_FOLLOWED_RECIPE_LIST_FAIL:
         case GET_TRENDING_RECIPE_LIST_FAIL:
-        case SEARCH_RECIPE_FAIL:
         case SAVE_UNSAVE_ACTION_FAIL:
         case SAVE_UNSAVE_ACTION_SUCCESS:
             return { ...state };

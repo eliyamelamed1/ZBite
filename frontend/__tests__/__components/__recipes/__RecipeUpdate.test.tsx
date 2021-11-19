@@ -75,33 +75,6 @@ describe('description input', () => {
     });
 });
 
-describe('flavor type input', () => {
-    test('should render flavor type input', () => {
-        const combobox = screen.getByRole('combobox');
-        expect(combobox).toBeInTheDocument();
-    });
-    test('should match flavor type attributes', () => {
-        const combobox = screen.getByRole('combobox');
-        expect(combobox.required).toBe(true);
-        expect(combobox.type).toBe('select-one');
-        expect(combobox.name).toBe('flavor_type');
-    });
-    test('flavor type value should change according to input (onchange)', () => {
-        const combobox = screen.getByRole('combobox');
-        userEvent.selectOptions(combobox, 'Sour');
-        expect(combobox.value).toBe('Sour');
-    });
-    test('should have 3 accessible flavor types options', () => {
-        const sourFlavor = screen.getByRole('option', { name: 'Sour' });
-        const sweetFlavor = screen.getByRole('option', { name: 'Sweet' });
-        const saltyFlavor = screen.getByRole('option', { name: 'Salty' });
-
-        expect(sourFlavor).toBeInTheDocument();
-        expect(sweetFlavor).toBeInTheDocument();
-        expect(saltyFlavor).toBeInTheDocument();
-    });
-});
-
 describe('RecipeUpdate - update button', () => {
     test('should render update button', () => {
         const updateButton = screen.getByRole('button', { name: /update/i });
@@ -112,23 +85,19 @@ describe('RecipeUpdate - update button', () => {
         expect(updateButton.type).toBe('submit');
     });
     test('update button should dispatch recipeUpdateAction ', () => {
-        const flavorCombobox = screen.getByRole('combobox');
         const titleTextbox = screen.getByPlaceholderText(/title/i);
         const descriptionTextbox = screen.getByPlaceholderText(/description/i);
         const updateButton = screen.getByRole('button', { name: /update/i });
         const updatedTitle = 'updatedTitle';
         const updatedDescription = 'updatedDescription';
-        const updatedFlavor = 'Sour';
 
         userEvent.type(titleTextbox, updatedTitle);
         userEvent.type(descriptionTextbox, updatedDescription);
-        userEvent.selectOptions(flavorCombobox, updatedFlavor);
         userEvent.click(updateButton);
         const timesActionDispatched = recipeUpdateAction.mock.calls.length;
 
         expect(timesActionDispatched).toBe(1);
         expect(recipeUpdateAction.mock.calls[0][0].title).toBe(updatedTitle);
         expect(recipeUpdateAction.mock.calls[0][0].description).toBe(updatedDescription);
-        expect(recipeUpdateAction.mock.calls[0][0].flavor_type).toBe(updatedFlavor);
     });
 });

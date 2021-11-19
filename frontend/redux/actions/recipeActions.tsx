@@ -21,8 +21,7 @@ import {
     REVIEW_DELETE_SUCCESS,
     SAVE_UNSAVE_ACTION_FAIL,
     SAVE_UNSAVE_ACTION_SUCCESS,
-    SEARCH_RECIPE_FAIL,
-    SEARCH_RECIPE_SUCCESS,
+
     UPDATE_RECIPE_FAIL,
     UPDATE_RECIPE_SUCCESS,
 } from '../types';
@@ -71,7 +70,7 @@ export const recipeDeleteAction =
     };
 
 export const recipeCreateAction =
-    ({ title, description, flavor_type }) =>
+    ({ title, description,  }) =>
     async (dispatch) => {
         try {
             const config = {
@@ -85,7 +84,6 @@ export const recipeCreateAction =
             const body = JSON.stringify({
                 title,
                 description,
-                flavor_type,
             });
             await axios.post(endpointRoute().recipes.create, body, config);
             dispatch({ type: CREATE_RECIPE_SUCCESS });
@@ -95,7 +93,7 @@ export const recipeCreateAction =
     };
 
 export const recipeUpdateAction =
-    ({ id, title, description, flavor_type }) =>
+    ({ id, title, description,  }) =>
     async (dispatch) => {
         const config = {
             headers: {
@@ -109,7 +107,6 @@ export const recipeUpdateAction =
             const body = JSON.stringify({
                 title,
                 description,
-                flavor_type,
             });
             const res = await axios.patch(endpointRoute(id).recipes.details, body, config);
             dispatch({ type: UPDATE_RECIPE_SUCCESS, payload: res.data });
@@ -177,24 +174,6 @@ export const loadRecipeListAction = () => async (dispatch) => {
         dispatch({ type: GET_RECIPE_LIST_FAIL });
     }
 };
-
-export const recipeSearchAction =
-    ({ flavor_type }) =>
-    async (dispatch) => {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
-        };
-
-        try {
-            const res = await axios.post(endpointRoute().recipes.search, { flavor_type }, config);
-            dispatch({ type: SEARCH_RECIPE_SUCCESS, payload: res.data });
-        } catch {
-            dispatch({ type: SEARCH_RECIPE_FAIL });
-        }
-    };
 
 export const loadRecipeDetailsAction =
     ({ id }) =>

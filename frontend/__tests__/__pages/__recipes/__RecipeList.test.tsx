@@ -16,14 +16,12 @@ const displayRecipesSpy = jest.spyOn(DisplayRecipes, 'default');
 const listOfRecipes = [
     {
         title: 'first recipe title',
-        flavor_type: 'Sour',
         photo_main: '/recipe image #',
         id: 'first recipe id',
         author: { name: 'first recipe author', id: 'firstId' },
     },
     {
         title: 'second recipe title',
-        flavor_type: 'Sweet',
         photo_main: '/recipe image #2',
         id: 'second recipe id',
         author: { name: 'second recipe author', id: 'secondId' },

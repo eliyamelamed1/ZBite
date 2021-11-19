@@ -24,7 +24,6 @@ const recipeParams = {
         id: '5',
         title: 'recipeTitle',
         description: 'recipeDescription',
-        flavor_type: 'Sour',
         author: { id: 'eliya', name: 'name' },
         photo_main: '/#',
     },
@@ -84,7 +83,6 @@ describe('RecipeDetails - recipe of author', () => {
             id: '5',
             title: 'recipeTitle',
             description: 'recipeDescription',
-            flavor_type: 'Sour',
             author: { id: 'eliya', name: 'name' },
             saves: [],
             photo_main: '/#',
@@ -96,7 +94,6 @@ describe('RecipeDetails - recipe of author', () => {
         id: '5',
         title: 'updatedRecipeTitle',
         description: 'updatedRecipeDescription',
-        flavor_type: 'Sweet',
         author: { id: 'eliya', name: 'name' },
         saves: ['someUser'],
         photo_main: '/#',
@@ -156,13 +153,10 @@ describe('RecipeDetails - recipe of author', () => {
         await store.dispatch({ type: TEST_CASE_RECIPE, payload: initialState });
         const updatedTitle = await screen.findByText(updatedRecipe.title);
         const updatedDescription = await screen.findByText(updatedRecipe.description);
-        const updatedFlavor = await screen.findAllByText(updatedRecipe.flavor_type);
         const updatedSaves = await screen.findByText(/saves: 1/);
 
         expect(updatedTitle).toBeInTheDocument();
         expect(updatedDescription).toBeInTheDocument();
-        expect(updatedFlavor.length).toBe(2);
-        expect(updatedFlavor[1]).toBeInTheDocument();
         expect(updatedSaves).toBeInTheDocument();
     });
     test('should not display updated recipe data of other recipe', async () => {
@@ -176,11 +170,9 @@ describe('RecipeDetails - recipe of author', () => {
         await store.dispatch({ type: TEST_CASE_RECIPE, payload: initialState });
         const updatedTitle = await screen.queryByText(updatedRecipe.title);
         const updatedDescription = await screen.queryByText(updatedRecipe.description);
-        const updatedFlavor = await screen.queryAllByText(updatedRecipe.flavor_type);
 
         expect(updatedTitle).not.toBeInTheDocument();
         expect(updatedDescription).not.toBeInTheDocument();
-        expect(updatedFlavor.length).toBe(1);
     });
     test('should display updated reviewsData', async () => {
         // migrateListOfFilteredReviews isReviewsOfThisRecipe === true -
@@ -230,7 +222,6 @@ describe('RecipeDetails - not the recipe author', () => {
             id: '5',
             title: 'recipeTitle',
             description: 'recipeDescription',
-            flavor_type: 'Sour',
             author: { id: 'eliya', name: 'name' },
             saves: [],
             photo_main: '/#',
@@ -324,7 +315,6 @@ describe('RecipeDetails - guest user', () => {
             id: '5',
             title: 'recipeTitle',
             description: 'recipeDescription',
-            flavor_type: 'Sour',
             author: { id: 'eliya', name: 'name' },
             photo_main: '/#',
         },

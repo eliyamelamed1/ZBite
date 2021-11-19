@@ -18,7 +18,6 @@ const RecipeCreate = () => {
         recipe_image: '',
         title: '',
         description: '',
-        flavor_type: 'Sour',
         cookTime: '',
         serving: '',
         instructionList: [],
@@ -33,7 +32,6 @@ const RecipeCreate = () => {
     const {
         title,
         description,
-        flavor_type,
         cookTime,
         serving,
         recipe_image,
@@ -62,7 +60,7 @@ const RecipeCreate = () => {
         e.preventDefault();
         // TODO redirect only on dispatch success
         try {
-            dispatch(recipeCreateAction({ title, description, flavor_type }));
+            dispatch(recipeCreateAction({ title, description,  }));
             Router.push(pageRoute().home);
         } catch (err) {
             // console.log(err);

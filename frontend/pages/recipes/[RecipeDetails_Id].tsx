@@ -86,7 +86,6 @@ const RecipeDetails = (props) => {
                             <ul>
                                 <li>
                                     <div>
-                                        Flavor Type:<p>{recipeData.flavor_type}</p>
                                         recipe description: <p>{recipeData.description}</p>
                                         {displayInteriorImages()}
                                     </div>

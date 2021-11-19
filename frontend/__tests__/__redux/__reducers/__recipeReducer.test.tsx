@@ -26,8 +26,6 @@ import {
     REVIEW_DELETE_SUCCESS,
     SAVE_UNSAVE_ACTION_FAIL,
     SAVE_UNSAVE_ACTION_SUCCESS,
-    SEARCH_RECIPE_FAIL,
-    SEARCH_RECIPE_SUCCESS,
     UPDATE_RECIPE_FAIL,
     UPDATE_RECIPE_SUCCESS,
 } from '../../../redux/types';
@@ -63,15 +61,7 @@ describe('recipeReducers - cases that modify the state', () => {
         return initialState;
     });
 
-    test('case SEARCH_RECIPE_SUCCESS', () => {
-        store.dispatch({ type: SEARCH_RECIPE_SUCCESS, payload: updatedState.listOfSearchedRecipes });
-        const storeState = store.getState();
 
-        expect(storeState.recipeReducer.listOfRecipes).toBeNull();
-        expect(storeState.recipeReducer.listOfSearchedRecipes).toStrictEqual(updatedState.listOfSearchedRecipes);
-        expect(storeState.recipeReducer.requestedRecipeData).toBeNull();
-        expect(storeState.recipeReducer.listOfFilteredReviews).toBeNull();
-    });
     test('case GET_RECIPE_DETAILS_SUCCESS', () => {
         store.dispatch({ type: GET_RECIPE_DETAILS_SUCCESS, payload: updatedState.requestedRecipeData });
         const storeState = store.getState();
@@ -177,9 +167,6 @@ describe('recipeReducers - cases that return ...state => state should not be mod
     });
     test('case GET_RECIPE_LIST_FAIL ', () => {
         store.dispatch({ type: GET_RECIPE_LIST_FAIL, payload: updatedState });
-    });
-    test('case SEARCH_RECIPE_FAIL ', () => {
-        store.dispatch({ type: SEARCH_RECIPE_FAIL, payload: updatedState });
     });
     test('case REVIEW_CREATE_SUCCESS ', () => {
         store.dispatch({ type: REVIEW_CREATE_SUCCESS, payload: updatedState });

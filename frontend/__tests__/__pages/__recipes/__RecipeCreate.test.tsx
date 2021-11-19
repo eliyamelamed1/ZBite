@@ -347,7 +347,6 @@ describe('authenticated users', () => {
             expect(timesActionDispatched).toBe(1);
             expect(recipeCreateActionSpy.mock.calls[0][0].title).toBe('new title');
             expect(recipeCreateActionSpy.mock.calls[0][0].description).toBe('new description');
-            expect(recipeCreateActionSpy.mock.calls[0][0].flavor_type).toBe('Sour');
         });
         test('should redirect to home page after recipe is created', () => {
             const titleTextbox = screen.getByPlaceholderText(/title/i);
