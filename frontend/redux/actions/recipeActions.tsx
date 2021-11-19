@@ -21,7 +21,6 @@ import {
     REVIEW_DELETE_SUCCESS,
     SAVE_UNSAVE_ACTION_FAIL,
     SAVE_UNSAVE_ACTION_SUCCESS,
-
     UPDATE_RECIPE_FAIL,
     UPDATE_RECIPE_SUCCESS,
 } from '../types';
@@ -70,7 +69,7 @@ export const recipeDeleteAction =
     };
 
 export const recipeCreateAction =
-    ({ title, description}) =>
+    ({ photoMain, title, description }) =>
     async (dispatch) => {
         try {
             const config = {
@@ -82,8 +81,9 @@ export const recipeCreateAction =
             };
 
             const body = JSON.stringify({
-            title,
-            description,  
+                photo_main: photoMain,
+                title,
+                description,
             });
             await axios.post(endpointRoute().recipes.create, body, config);
             dispatch({ type: CREATE_RECIPE_SUCCESS });
@@ -93,7 +93,7 @@ export const recipeCreateAction =
     };
 
 export const recipeUpdateAction =
-    ({ id, title, description,  }) =>
+    ({ id, title, description }) =>
     async (dispatch) => {
         const config = {
             headers: {

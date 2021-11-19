@@ -45,7 +45,6 @@ const RecipeCreate = () => {
     } = data;
     const { isUserAuthenticated } = useSelector((state) => state.userReducer);
     isUserAuthenticated === false ? Router.push(pageRoute().home) : null;
-
     // ------------Functions------------
     const onChangeText = (e) => setData({ ...data, [e.target.name]: e.target.value });
     const onChangeImage = async (e) => {
@@ -60,7 +59,7 @@ const RecipeCreate = () => {
         e.preventDefault();
         // TODO redirect only on dispatch success
         try {
-            dispatch(recipeCreateAction({ title, description }));
+            dispatch(recipeCreateAction({ photoMain, title, description }));
             Router.push(pageRoute().home);
         } catch (err) {
             // console.log(err);
