@@ -12,17 +12,16 @@ const RecipeUpdate = ({ id }) => {
     const [formData, setFormData] = useState({
         title: '',
         description: '',
-        flavor_type: 'Sour',
     });
 
-    const { title, description, flavor_type } = formData;
+    const { title, description, } = formData;
 
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
     const onSubmit = async (e) => {
         e.preventDefault();
         try {
-            dispatch(recipeUpdateAction({ id, title, description, flavor_type }));
+            dispatch(recipeUpdateAction({ id, title, description,  }));
         } catch (e) {
             // TODO - add err msg
         }
@@ -50,14 +49,6 @@ const RecipeUpdate = ({ id }) => {
                         onChange={(e) => onChange(e)}
                         required
                     />
-                </div>
-                <div>
-                    <label htmlFor='flavor_type'>Choose Flavor</label>
-                    <select name='flavor_type' onChange={(e) => onChange(e)} value={flavor_type} required>
-                        <option>Sour</option>
-                        <option>Sweet</option>
-                        <option>Salty</option>
-                    </select>
                 </div>
                 <button type='submit'>update</button>
             </form>

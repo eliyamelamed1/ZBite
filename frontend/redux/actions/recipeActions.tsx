@@ -70,7 +70,7 @@ export const recipeDeleteAction =
     };
 
 export const recipeCreateAction =
-    ({ title, description,  }) =>
+    ({ title, description}) =>
     async (dispatch) => {
         try {
             const config = {
@@ -82,8 +82,8 @@ export const recipeCreateAction =
             };
 
             const body = JSON.stringify({
-                title,
-                description,
+            title,
+            description,  
             });
             await axios.post(endpointRoute().recipes.create, body, config);
             dispatch({ type: CREATE_RECIPE_SUCCESS });

@@ -15,7 +15,7 @@ const RecipeCreate = () => {
     const dispatch = useDispatch();
     const [data, setData] = useState({
         // recipe fields
-        recipe_image: '',
+        photoMain: '',
         title: '',
         description: '',
         cookTime: '',
@@ -30,11 +30,11 @@ const RecipeCreate = () => {
         inputId: '',
     });
     const {
+        photoMain,
         title,
         description,
         cookTime,
         serving,
-        recipe_image,
         instructionList,
         ingredientList,
 
@@ -60,7 +60,7 @@ const RecipeCreate = () => {
         e.preventDefault();
         // TODO redirect only on dispatch success
         try {
-            dispatch(recipeCreateAction({ title, description,  }));
+            dispatch(recipeCreateAction({ title, description }));
             Router.push(pageRoute().home);
         } catch (err) {
             // console.log(err);
@@ -146,17 +146,17 @@ const RecipeCreate = () => {
     const generalSection = () => (
         <section className={styles.general_section}>
             <input
-                id='recipe_image'
+                id='photoMain'
                 type='file'
                 placeholder='image'
-                name='recipe_image'
+                name='photoMain'
                 onChange={onChangeImage}
                 className={styles.image_input}
                 accept='image/*'
             />
-            <label htmlFor='recipe_image' className={styles.image_label}>
-                {recipe_image ? (
-                    <img src={recipe_image} />
+            <label htmlFor='photoMain' className={styles.image_label}>
+                {photoMain ? (
+                    <img src={photoMain} />
                 ) : (
                     <div className={styles.image_label}>
                         {uploadImageIcon.src && (
