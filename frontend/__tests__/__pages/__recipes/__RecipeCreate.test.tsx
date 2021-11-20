@@ -10,9 +10,7 @@ import React from 'react';
 import RecipeCreate from '../../../pages/recipes/RecipeCreate';
 import Router from 'next/router';
 import { TEST_CASE_AUTH } from '../../../redux/types';
-import firstImage from '../../../styles/icons/heart.svg';
 import { pageRoute } from '../../../globals';
-import secondImage from '../../../styles/icons/home.svg';
 import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
 

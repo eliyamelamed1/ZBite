@@ -80,12 +80,13 @@ export const recipeCreateAction =
                 },
             };
 
-            const body = JSON.stringify({
-                photo_main: photoMain,
-                title,
-                description,
-            });
-            await axios.post(endpointRoute().recipes.create, body, config);
+            const formData = new FormData();
+
+            formData.append('photo_main', photoMain);
+            formData.append('title', title);
+            formData.append('description', description);
+
+            await axios.post(endpointRoute().recipes.create, formData, config);
             dispatch({ type: CREATE_RECIPE_SUCCESS });
         } catch {
             dispatch({ type: CREATE_RECIPE_FAIL });

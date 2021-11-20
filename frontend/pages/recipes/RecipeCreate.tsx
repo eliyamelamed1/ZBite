@@ -16,6 +16,7 @@ const RecipeCreate = () => {
     const [data, setData] = useState({
         // recipe fields
         photoMain: '',
+        photoMainBlob: '',
         title: '',
         description: '',
         cookTime: '',
@@ -31,6 +32,7 @@ const RecipeCreate = () => {
     });
     const {
         photoMain,
+        photoMainBlob,
         title,
         description,
         cookTime,
@@ -47,36 +49,16 @@ const RecipeCreate = () => {
     isUserAuthenticated === false ? Router.push(pageRoute().home) : null;
     // ------------Functions------------
 
-    function encodeImageFileAsURL() {
-        var filesSelected = document.getElementById('inputFileToLoad').files;
-        if (filesSelected.length > 0) {
-            var fileToLoad = filesSelected[0];
-
-            var fileReader = new FileReader();
-
-            fileReader.onload = function (fileLoadedEvent) {
-                var srcData = fileLoadedEvent.target.result; // <--- data: base64
-
-                var newImage = document.createElement('img');
-                newImage.src = srcData;
-
-                document.getElementById('imgTest').innerHTML = newImage.outerHTML;
-                console.log('Converted Base64 version is ' + document.getElementById('imgTest').innerHTML);
-                const a = document.getElementById('imgTest').innerHTML;
-                setData((prevState) => ({ ...prevState, photoMain: a }));
-            };
-            fileReader.readAsDataURL(fileToLoad);
-        }
-    }
     const onChangeText = (e) => setData({ ...data, [e.target.name]: e.target.value });
     const onChangeImage = async (e) => {
         try {
+            setData((prevState) => ({ ...prevState, photoMain: e.target.files[0] }));
             const imageSrc = await URL.createObjectURL(e.target.files[0]);
             setData((prevState) => ({ ...prevState, [e.target.name]: imageSrc }));
-
             return imageSrc;
         } catch {}
     };
+
     const onSubmit = async (e) => {
         e.preventDefault();
         // TODO redirect only on dispatch success
@@ -167,17 +149,17 @@ const RecipeCreate = () => {
     const generalSection = () => (
         <section className={styles.general_section}>
             <input
-                id='photoMain'
+                id='photoMainBlob'
                 type='file'
                 placeholder='image'
-                name='photoMain'
+                name='photoMainBlob'
                 onChange={onChangeImage}
                 className={styles.image_input}
                 accept='image/*'
             />
-            <label htmlFor='photoMain' className={styles.image_label}>
-                {photoMain ? (
-                    <img src={photoMain} />
+            <label htmlFor='photoMainBlob' className={styles.image_label}>
+                {photoMainBlob ? (
+                    <img src={photoMainBlob} />
                 ) : (
                     <div className={styles.image_label}>
                         {uploadImageIcon.src && (
@@ -410,8 +392,6 @@ const RecipeCreate = () => {
     return (
         <div data-testid='recipeCreate' className={styles.container}>
             <form onSubmit={(e) => onSubmit(e)} className={styles.form}>
-                <input id='inputFileToLoad' type='file' onChange={encodeImageFileAsURL} />
-                <div id='imgTest'></div>
                 {generalSection()}
                 <hr className={styles.section_separator} />
                 {instructionSection()}
