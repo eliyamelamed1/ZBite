@@ -5,7 +5,6 @@ from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
 from django.db import models
 from django.urls import reverse
 
-
 class UserAccountManager(BaseUserManager):
 
     def create_superuser(self, email, name, password):
@@ -37,6 +36,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
         default=uuid.uuid4,
         editable=False
     )
+    photo = models.ImageField(upload_to='media/', blank=True)
     email = models.EmailField(max_length=255, unique=True)
     name = models.CharField(max_length=255, unique=True)
     is_active = models.BooleanField(default=True)

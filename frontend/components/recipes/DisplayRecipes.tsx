@@ -37,7 +37,7 @@ const DisplayRecipes = ({ recipesToDisplay }) => {
             return null;
         }
     };
-    return <div data-testid='displayRecipes'>{getRecipes()}</div>;
+    return <>{getRecipes()}</>;
 };
 
 DisplayRecipes.propTypes = {
