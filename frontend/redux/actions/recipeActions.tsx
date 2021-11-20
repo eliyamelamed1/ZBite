@@ -47,6 +47,7 @@ export const saveRecipeAction =
             await dispatch({ type: SAVE_UNSAVE_ACTION_SUCCESS });
         } catch {
             dispatch({ type: SAVE_UNSAVE_ACTION_FAIL });
+            throw new Error('save/unsave failed');
         }
     };
 
@@ -65,6 +66,7 @@ export const recipeDeleteAction =
             dispatch({ type: DELETE_RECIPE_SUCCESS });
         } catch {
             dispatch({ type: DELETE_RECIPE_FAIL });
+            throw new Error('deleting recipe failed');
         }
     };
 
@@ -92,6 +94,7 @@ export const recipeCreateAction =
             dispatch({ type: CREATE_RECIPE_SUCCESS });
         } catch {
             dispatch({ type: CREATE_RECIPE_FAIL });
+            throw new Error('creating recipe failed');
         }
     };
 
@@ -115,6 +118,7 @@ export const recipeUpdateAction =
             dispatch({ type: UPDATE_RECIPE_SUCCESS, payload: res.data });
         } catch {
             dispatch({ type: UPDATE_RECIPE_FAIL });
+            throw new Error('updating recipe failed');
         }
     };
 
@@ -145,6 +149,7 @@ export const loadFollowedRecipesAction = () => async (dispatch) => {
         dispatch({ type: GET_FOLLOWED_RECIPE_LIST_SUCCESS, payload: res.data });
     } catch {
         dispatch({ type: GET_FOLLOWED_RECIPE_LIST_FAIL });
+        throw new Error('loading followed recipe list failed');
     }
 };
 export const loadSavedRecipesAction = () => async (dispatch) => {
@@ -160,6 +165,7 @@ export const loadSavedRecipesAction = () => async (dispatch) => {
         dispatch({ type: GET_SAVED_RECIPE_LIST_SUCCESS, payload: res.data });
     } catch {
         dispatch({ type: GET_SAVED_RECIPE_LIST_FAIL });
+        throw new Error('loading saved recipe list failed');
     }
 };
 
@@ -175,6 +181,7 @@ export const loadRecipeListAction = () => async (dispatch) => {
         dispatch({ type: GET_RECIPE_LIST_SUCCESS, payload: res.data });
     } catch {
         dispatch({ type: GET_RECIPE_LIST_FAIL });
+        throw new Error('loading recipe list failed');
     }
 };
 
@@ -193,6 +200,7 @@ export const loadRecipeDetailsAction =
             dispatch({ type: GET_RECIPE_DETAILS_SUCCESS, payload: res.data });
         } catch {
             dispatch({ type: GET_RECIPE_DETAILS_FAIL });
+            throw new Error('loading recipe details failed');
         }
     };
 
@@ -218,6 +226,7 @@ export const reviewCreateAction =
             await dispatch(reviewsInRecipeAction({ recipeId }));
         } catch {
             dispatch({ type: REVIEW_CREATE_FAIL });
+            throw new Error('creating review failed');
         }
     };
 
@@ -237,6 +246,7 @@ export const reviewDeleteAction =
             dispatch(reviewsInRecipeAction({ recipeId }));
         } catch {
             dispatch({ type: REVIEW_DELETE_FAIL });
+            throw new Error('deleting review failed');
         }
     };
 
@@ -257,5 +267,6 @@ export const reviewsInRecipeAction =
             dispatch({ type: REVIEWS_IN_RECIPE_SUCCESS, payload: res.data });
         } catch {
             dispatch({ type: REVIEWS_IN_RECIPE_FAIL });
+            throw new Error('loading reviews in recipe failed');
         }
     };
