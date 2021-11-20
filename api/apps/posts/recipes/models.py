@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 from apps.users.accounts.models import UserAccount
+from django.contrib.postgres.fields import ArrayField
 
 
 class Recipe(models.Model):

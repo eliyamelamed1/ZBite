@@ -65,6 +65,7 @@
                 i {
                     img {
                         width: 27.2px;
+                        object-fit: cover;
                     }
                 }
             }
@@ -90,6 +91,7 @@
                 border-bottom-right-radius: 15px;
                 height: 112px;
                 width: 270px;
+                object-fit: cover;
             }
         }
     }
