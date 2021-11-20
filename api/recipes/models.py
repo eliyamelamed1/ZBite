@@ -3,7 +3,7 @@ import uuid
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
-from django.db.models import JSONField
+from django.contrib.postgres.fields import ArrayField
 
 from accounts.models import UserAccount
 from django.core.validators import FileExtensionValidator
@@ -23,8 +23,6 @@ class Recipe(models.Model):
     cook_time = models.TextField(blank=True)
     saves = models.ManyToManyField(get_user_model(), default=None, blank=True)
     stars = models.TextField(blank=True)
-    instructions = JSONField(blank=True, null=True)
-    ingredients = JSONField(blank=True, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
