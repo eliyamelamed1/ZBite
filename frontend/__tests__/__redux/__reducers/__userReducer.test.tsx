@@ -121,12 +121,7 @@ describe('userReducer - cases that return ...state', () => {
     let initialState;
     beforeEach(() => {
         cleanup();
-        initialState = {
-            auth_token: null,
-            isUserAuthenticated: null,
-            loggedUserData: null,
-            requestedUserData: null,
-        };
+        initialState = {};
         store.dispatch({ type: 'TEST_CASE_AUTH', payload: initialState });
         return initialState;
     });
