@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.db.models import JSONField
 
 from accounts.models import UserAccount
+from django.core.validators import FileExtensionValidator
 
 
 class Recipe(models.Model):
