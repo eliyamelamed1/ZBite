@@ -33,9 +33,11 @@ const parameters = {
     id: 'id',
     stars: 'stars',
     comment: 'comment',
-    photo_main: 'photo_main',
+    photoMain: 'photoMain',
     image: 'image',
     reviewId: 'reviewId',
+    cookTime: 'cookTime',
+    serving: 'serving',
 };
 
 const config = {
@@ -68,15 +70,20 @@ describe('axios request should match url endpoint, and parameters', () => {
         expect(axios.delete.mock.calls[0][1]).toStrictEqual(configWithAuthToken);
     });
     test('recipeCreateAction', () => {
-        const { photo_main, title, description } = parameters;
-        const body = { photo_main, title, description };
+        const { photoMain, title, description, cookTime, serving } = parameters;
+        store.dispatch(recipeCreateAction({ photoMain, title, description, cookTime, serving }));
 
-        store.dispatch(recipeCreateAction({ photo_main, title, description }));
+        const formData = axios.post.mock.calls[0][1];
 
         expect(axios.post.mock.calls.length).toBe(1);
         expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute().recipes.create);
-        // TODO find a way to access formData values
-        // expect(axios.post.mock.calls[0][1]).toStrictEqual(body);
+
+        expect(formData.get('photo_main')).toStrictEqual(photoMain);
+        expect(formData.get('title')).toStrictEqual(title);
+        expect(formData.get('description')).toStrictEqual(description);
+        expect(formData.get('cook_time')).toStrictEqual(cookTime);
+        expect(formData.get('serving')).toStrictEqual(serving);
+
         expect(axios.post.mock.calls[0][2]).toStrictEqual(configWithAuthToken);
     });
     test('recipeUpdateAction', () => {
