@@ -63,7 +63,7 @@ const RecipeCreate = () => {
         e.preventDefault();
         // TODO redirect only on dispatch success
         try {
-            dispatch(recipeCreateAction({ photoMain, title, description }));
+            dispatch(recipeCreateAction({ photoMain, title, description, cookTime, serving, serving }));
             Router.push(pageRoute().home);
         } catch (err) {
             // console.log(err);
