@@ -2,13 +2,13 @@
 import factory
 import factory.fuzzy
 
-from accounts.models import UserAccount
-from chat_duos.models import ChatDuo
-from chat_groups.models import ChatGroup
-from chat_massages.models import ChatMassage
-from saves.models import Save
-from recipes.models import Recipe
-from reviews.models import Review
+from apps.users.accounts.models import UserAccount
+from apps.chats.chat_duos.models import ChatDuo
+from apps.chats.chat_groups.models import ChatGroup
+from apps.chats.chat_massages.models import ChatMassage
+from apps.posts.saves.models import Save
+from apps.posts.recipes.models import Recipe
+from apps.posts.reviews.models import Review
 
 class UserFactory(factory.django.DjangoModelFactory):
     name = factory.fuzzy.FuzzyText()

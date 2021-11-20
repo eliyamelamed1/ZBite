@@ -31,18 +31,20 @@ urlpatterns = [
     # auth
     path('api/djoser/', include('djoser.urls')),
     path('api/djoser/', include('djoser.urls.authtoken')),
-    path('api/accounts/', include('accounts.urls', namespace='accounts')), 
 
-    # features
-    path('api/recipes/', include('recipes.urls', namespace='recipes')),
-    path('api/saves/', include('saves.urls', namespace='saves')), 
-    path('api/followers/', include('followers.urls', namespace='followers')), 
-    path('api/reviews/', include('reviews.urls', namespace='reviews')),
+    # Users
+    path('api/accounts/', include('apps.users.accounts.urls', namespace='accounts')), 
+    path('api/followers/', include('apps.users.followers.urls', namespace='followers')), 
 
-    # chat
-    path('api/chat_groups/', include('chat_groups.urls', namespace='chat_groups')),
-    path('api/chat_massages/', include('chat_massages.urls', namespace='chat_massages')),
-    path('api/chat_duos/', include('chat_duos.urls', namespace='chat_duos')),
+    # Posts
+    path('api/recipes/', include('apps.posts.recipes.urls', namespace='recipes')),
+    path('api/saves/', include('apps.posts.saves.urls', namespace='saves')), 
+    path('api/reviews/', include('apps.posts.reviews.urls', namespace='reviews')),
+
+    # Chats
+    path('api/chat_groups/', include('apps.chats.chat_groups.urls', namespace='chat_groups')),
+    path('api/chat_massages/', include('apps.chats.chat_massages.urls', namespace='chat_massages')),
+    path('api/chat_duos/', include('apps.chats.chat_duos.urls', namespace='chat_duos')),
 
     path('swagger/', schema_view.with_ui( 'swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui( 'redoc', cache_timeout=0), name='schema-redoc'),

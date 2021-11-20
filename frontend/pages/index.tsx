@@ -47,8 +47,12 @@ const HomePage = (props) => {
                 </button>
             </ul>
             <ul className={styles.recipes_container}>
-                {typeOfRecipes === 'Trending' && <DisplayRecipes recipesToDisplay={listOfTrendingRecipes} />}
-                {typeOfRecipes === 'Following' && <DisplayRecipes recipesToDisplay={listOfFollowedRecipes} />}
+                {typeOfRecipes === 'Trending' && listOfTrendingRecipes && (
+                    <DisplayRecipes recipesToDisplay={listOfTrendingRecipes} />
+                )}
+                {typeOfRecipes === 'Following' && listOfFollowedRecipes && (
+                    <DisplayRecipes recipesToDisplay={listOfFollowedRecipes} />
+                )}
             </ul>
         </div>
     );

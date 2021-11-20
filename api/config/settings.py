@@ -35,15 +35,20 @@ INSTALLED_APPS = [
     'django_extensions',
     'drf_yasg',
 
-    #local
-    'accounts',
-    'recipes',
-    'saves',
-    'followers',
-    'reviews',
-    'chat_groups',
-    'chat_duos',
-    'chat_massages',
+    # Local apps
+        # Users
+        'apps.users.accounts',
+        'apps.users.followers',
+
+        # Posts
+        'apps.posts.recipes',
+        'apps.posts.saves',
+        'apps.posts.reviews',
+
+        # Chats
+        'apps.chats.chat_groups',
+        'apps.chats.chat_duos',
+        'apps.chats.chat_massages',
 ]
 
 MIDDLEWARE = [
@@ -174,9 +179,9 @@ DJOSER = {
     'ACTIVATION_URL': 'activate/{uid}/{token}',
 
     'SERIALIZERS': {
-        'user_create': 'accounts.serializers.UserCreateSerializer',
-        'user': 'accounts.serializers.UserCreateSerializer',
-        'user_delete': 'accounts.serializers.UserDeleteSerializer',
+        'user_create': 'apps.users.accounts.serializers.UserCreateSerializer',
+        'user': 'apps.users.accounts.serializers.UserCreateSerializer',
+        'user_delete': 'apps.users.accounts.serializers.UserDeleteSerializer',
     },
 }
 

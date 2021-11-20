@@ -5,9 +5,9 @@ from django.db import connections
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from rest_framework.test import APIClient
 
-from accounts.models import UserAccount
+from apps.users.accounts.models import UserAccount
 from factories import ChatGroupFactory, ChatMassageFactory, UserFactory
-from recipes.models import Recipe
+from apps.posts.recipes.models import Recipe
 
 
 # ---------------------------------------- Set Up
