@@ -120,7 +120,12 @@ describe('recipeReducers - cases that return ...state => state should not be mod
     beforeEach(() => {
         cleanup();
         jest.clearAllMocks();
-        initialState = {};
+        initialState = {
+            auth_token: null,
+            isUserAuthenticated: null,
+            loggedUserData: null,
+            requestedUserData: null,
+        };
         store.dispatch({ type: 'TEST_CASE_RECIPE', payload: initialState });
         return initialState;
     });
