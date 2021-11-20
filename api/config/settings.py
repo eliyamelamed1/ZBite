@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     #local
     'accounts',
     'recipes',
-    # 'comments',
     'saves',
     'followers',
     'reviews',

@@ -35,13 +35,7 @@ class IsAuthorOrAccessDenied(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         # Write permissions are only allowed to the author of a post
         return obj.author == request.user
-class RecipeAuthorCanDeleteComments(permissions.BasePermission):
 
-    def has_object_permission(self, request, view,  Comment):
-        if request.method in permissions.SAFE_METHODS: 
-            return True
-        
-        return Comment.recipe.author == request.user
 class IsMembersOrAccessDenied(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):

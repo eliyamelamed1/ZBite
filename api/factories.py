@@ -6,7 +6,6 @@ from accounts.models import UserAccount
 from chat_duos.models import ChatDuo
 from chat_groups.models import ChatGroup
 from chat_massages.models import ChatMassage
-# from comments.models import Comment
 from saves.models import Save
 from recipes.models import Recipe
 from reviews.models import Review
@@ -26,13 +25,6 @@ class RecipeFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = Recipe
-# class CommentFactory(factory.django.DjangoModelFactory):
-#     recipe = factory.SubFactory(RecipeFactory)
-#     author = factory.SubFactory(UserFactory)
-#     title = factory.fuzzy.FuzzyText()
-
-#     class Meta:
-#         model = Comment
 
 class SaveFactory(factory.django.DjangoModelFactory):
     recipe = factory.SubFactory(RecipeFactory)
