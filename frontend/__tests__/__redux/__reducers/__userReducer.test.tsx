@@ -7,7 +7,6 @@ const updatedState = {
     auth_token: 'updatedState',
     isUserAuthenticated: 'updatedState',
     loggedUserData: 'updatedState',
-    listOfUsers: 'updatedState',
     requestedUserData: 'updatedState',
 };
 
@@ -19,7 +18,6 @@ describe('userReducer - cases that modify the state ', () => {
             auth_token: null,
             isUserAuthenticated: null,
             loggedUserData: null,
-            listOfUsers: null,
             requestedUserData: null,
         };
         store.dispatch({ type: 'TEST_CASE_AUTH', payload: initialState });
@@ -33,20 +31,9 @@ describe('userReducer - cases that modify the state ', () => {
         expect(storeState.userReducer.isUserAuthenticated).toBeNull();
         expect(storeState.userReducer.auth_token).toBeNull();
         expect(storeState.userReducer.loggedUserData).toBeNull();
-        expect(storeState.userReducer.listOfUsers).toBeNull();
         expect(storeState.userReducer.requestedUserData).toStrictEqual(updatedState);
     });
 
-    test('case GET_USER_LIST_SUCCESS', () => {
-        store.dispatch({ type: 'GET_USER_LIST_SUCCESS', payload: updatedState });
-        const storeState = store.getState();
-
-        expect(storeState.userReducer.isUserAuthenticated).toBeNull();
-        expect(storeState.userReducer.auth_token).toBeNull();
-        expect(storeState.userReducer.loggedUserData).toBeNull();
-        expect(storeState.userReducer.listOfUsers).toStrictEqual(updatedState);
-        expect(storeState.userReducer.requestedUserData).toBeNull();
-    });
     test('case DELETE_USER_SUCCESS', () => {
         initialState['loggedUserData'] = { email: 'testEmail', name: 'testName', id: 'testId' };
         initialState['auth_token'] = 'testToken';
@@ -58,7 +45,6 @@ describe('userReducer - cases that modify the state ', () => {
         expect(initialState.userReducer.auth_token).toBeNull();
         expect(initialState.userReducer.isUserAuthenticated).toBe(false);
         expect(initialState.userReducer.loggedUserData).toBeNull();
-        expect(initialState.userReducer.listOfUsers).toBeNull();
         expect(initialState.userReducer.requestedUserData).toBeNull();
     });
 
@@ -69,7 +55,6 @@ describe('userReducer - cases that modify the state ', () => {
         expect(storeState.userReducer.isUserAuthenticated).toBeNull();
         expect(storeState.userReducer.auth_token).toBeNull();
         expect(storeState.userReducer.loggedUserData).toStrictEqual(updatedState);
-        expect(storeState.userReducer.listOfUsers).toBeNull();
         expect(storeState.userReducer.requestedUserData).toBeNull();
     });
 
@@ -79,7 +64,6 @@ describe('userReducer - cases that modify the state ', () => {
         expect(storeState.userReducer.isUserAuthenticated).toBe(true);
         expect(storeState.userReducer.auth_token).toBe(updatedState.auth_token);
         expect(storeState.userReducer.loggedUserData).toBeNull();
-        expect(storeState.userReducer.listOfUsers).toBeNull();
         expect(storeState.userReducer.requestedUserData).toBeNull();
     });
     test('case GET_LOGGED_USER_DETAILS_SUCCESS', () => {
@@ -89,7 +73,6 @@ describe('userReducer - cases that modify the state ', () => {
         expect(storeState.userReducer.auth_token).toBeNull();
         expect(storeState.userReducer.isUserAuthenticated).toBeNull();
         expect(storeState.userReducer.loggedUserData).toStrictEqual(updatedState);
-        expect(storeState.userReducer.listOfUsers).toBeNull();
         expect(storeState.userReducer.requestedUserData).toBeNull();
     });
     test('case SIGNUP_SUCCESS', () => {
@@ -98,7 +81,6 @@ describe('userReducer - cases that modify the state ', () => {
         expect(storeState.userReducer.auth_token).toBeNull();
         expect(storeState.userReducer.isUserAuthenticated).toBe(false);
         expect(storeState.userReducer.loggedUserData).toBeNull();
-        expect(storeState.userReducer.listOfUsers).toBeNull();
         expect(storeState.userReducer.requestedUserData).toBeNull();
     });
     test('case GET_LOGGED_USER_DETAILS_FAIL', () => {
@@ -107,7 +89,6 @@ describe('userReducer - cases that modify the state ', () => {
         expect(storeState.userReducer.auth_token).toBeNull();
         expect(storeState.userReducer.isUserAuthenticated).toBeNull();
         expect(storeState.userReducer.loggedUserData).toBeNull();
-        expect(storeState.userReducer.listOfUsers).toBeNull();
         expect(storeState.userReducer.requestedUserData).toBeNull();
     });
     test('case SIGNUP_FAIL', () => {
@@ -116,7 +97,6 @@ describe('userReducer - cases that modify the state ', () => {
         expect(storeState.userReducer.auth_token).toBeNull();
         expect(storeState.userReducer.isUserAuthenticated).toBe(false);
         expect(storeState.userReducer.loggedUserData).toBeNull();
-        expect(storeState.userReducer.listOfUsers).toBeNull();
         expect(storeState.userReducer.requestedUserData).toBeNull();
     });
     test('case LOGIN_FAIL', () => {
@@ -125,7 +105,6 @@ describe('userReducer - cases that modify the state ', () => {
         expect(storeState.userReducer.auth_token).toBeNull();
         expect(storeState.userReducer.isUserAuthenticated).toBe(false);
         expect(storeState.userReducer.loggedUserData).toBeNull();
-        expect(storeState.userReducer.listOfUsers).toBeNull();
         expect(storeState.userReducer.requestedUserData).toBeNull();
     });
     test('case LOGOUT', () => {
@@ -134,7 +113,6 @@ describe('userReducer - cases that modify the state ', () => {
         expect(storeState.userReducer.auth_token).toBeNull();
         expect(storeState.userReducer.isUserAuthenticated).toBe(false);
         expect(storeState.userReducer.loggedUserData).toBeNull();
-        expect(storeState.userReducer.listOfUsers).toBeNull();
         expect(storeState.userReducer.requestedUserData).toBeNull();
     });
 });
@@ -147,7 +125,6 @@ describe('userReducer - cases that return ...state', () => {
             auth_token: null,
             isUserAuthenticated: null,
             loggedUserData: null,
-            listOfUsers: null,
             requestedUserData: null,
         };
         store.dispatch({ type: 'TEST_CASE_AUTH', payload: initialState });
@@ -160,9 +137,6 @@ describe('userReducer - cases that return ...state', () => {
 
     test('case GET_USER_DETAILS_FAIL', () => {
         store.dispatch({ type: 'GET_USER_DETAILS_FAIL', payload: updatedState });
-    });
-    test('case GET_USER_LIST_FAIL', () => {
-        store.dispatch({ type: 'GET_USER_LIST_FAIL', payload: updatedState });
     });
     test('case UPDATE_USER_FAIL ', () => {
         store.dispatch({ type: 'UPDATE_USER_FAIL', payload: updatedState });

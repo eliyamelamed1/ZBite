@@ -9,8 +9,6 @@ import {
     GET_LOGGED_USER_DETAILS_SUCCESS,
     GET_USER_DETAILS_FAIL,
     GET_USER_DETAILS_SUCCESS,
-    GET_USER_LIST_FAIL,
-    GET_USER_LIST_SUCCESS,
     LOGIN_FAIL,
     LOGIN_SUCCESS,
     LOGOUT,
@@ -73,22 +71,6 @@ export const loadUserDetailsAction =
             throw new Error('loading user details failed');
         }
     };
-
-export const loadUserListAction = () => async (dispatch) => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-        },
-    };
-    try {
-        const res = await axios.get(endpointRoute().users.list, config);
-        dispatch({ type: GET_USER_LIST_SUCCESS, payload: res.data });
-    } catch {
-        dispatch({ type: GET_USER_LIST_FAIL });
-        throw new Error('updating user failed');
-    }
-};
 
 export const userUpdateAction =
     ({ id, email, name }) =>

@@ -7,8 +7,6 @@ import {
     GET_FOLLOWED_RECIPE_LIST_SUCCESS,
     GET_RECIPE_DETAILS_FAIL,
     GET_RECIPE_DETAILS_SUCCESS,
-    GET_RECIPE_LIST_FAIL,
-    GET_RECIPE_LIST_SUCCESS,
     GET_SAVED_RECIPE_LIST_FAIL,
     GET_SAVED_RECIPE_LIST_SUCCESS,
     GET_TRENDING_RECIPE_LIST_FAIL,
@@ -166,22 +164,6 @@ export const loadSavedRecipesAction = () => async (dispatch) => {
     } catch {
         dispatch({ type: GET_SAVED_RECIPE_LIST_FAIL });
         throw new Error('loading saved recipe list failed');
-    }
-};
-
-export const loadRecipeListAction = () => async (dispatch) => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-        },
-    };
-    try {
-        const res = await axios.get(endpointRoute().recipes.list, config);
-        dispatch({ type: GET_RECIPE_LIST_SUCCESS, payload: res.data });
-    } catch {
-        dispatch({ type: GET_RECIPE_LIST_FAIL });
-        throw new Error('loading recipe list failed');
     }
 };
 

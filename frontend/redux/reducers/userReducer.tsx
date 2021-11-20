@@ -7,8 +7,6 @@ import {
     GET_LOGGED_USER_DETAILS_SUCCESS,
     GET_USER_DETAILS_FAIL,
     GET_USER_DETAILS_SUCCESS,
-    GET_USER_LIST_FAIL,
-    GET_USER_LIST_SUCCESS,
     LOGIN_FAIL,
     LOGIN_SUCCESS,
     LOGOUT,
@@ -23,7 +21,6 @@ const initialState = {
     auth_token: process.browser ? localStorage.getItem('auth_token') : null,
     isUserAuthenticated: process.browser ? !!localStorage.getItem('auth_token') : null,
     loggedUserData: process.browser ? JSON.parse(localStorage.getItem('loggedUserData')) : null,
-    listOfUsers: null,
     requestedUserData: null,
 };
 
@@ -37,18 +34,12 @@ export default function userReducer(state = initialState, action) {
                 auth_token: payload.auth_token,
                 isUserAuthenticated: payload.isUserAuthenticated,
                 loggedUserData: payload.loggedUserData,
-                listOfUsers: payload.listOfUsers,
                 requestedUserData: payload.requestedUserData,
             };
         case GET_USER_DETAILS_SUCCESS:
             return {
                 ...state,
                 requestedUserData: payload,
-            };
-        case GET_USER_LIST_SUCCESS:
-            return {
-                ...state,
-                listOfUsers: payload,
             };
         case UPDATE_USER_SUCCESS:
             localStorage.setItem('loggedUserData', JSON.stringify(payload));
@@ -94,7 +85,6 @@ export default function userReducer(state = initialState, action) {
             };
         case FOLLOW_UNFOLLOW_USER_FAIL:
         case GET_USER_DETAILS_FAIL:
-        case GET_USER_LIST_FAIL:
         case UPDATE_USER_FAIL:
         case DELETE_USER_FAIL:
         case FOLLOW_UNFOLLOW_USER_SUCCESS:

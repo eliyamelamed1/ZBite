@@ -7,8 +7,6 @@ import {
     GET_FOLLOWED_RECIPE_LIST_SUCCESS,
     GET_RECIPE_DETAILS_FAIL,
     GET_RECIPE_DETAILS_SUCCESS,
-    GET_RECIPE_LIST_FAIL,
-    GET_RECIPE_LIST_SUCCESS,
     GET_SAVED_RECIPE_LIST_FAIL,
     GET_SAVED_RECIPE_LIST_SUCCESS,
     GET_TRENDING_RECIPE_LIST_FAIL,
@@ -21,14 +19,12 @@ import {
     REVIEW_DELETE_SUCCESS,
     SAVE_UNSAVE_ACTION_FAIL,
     SAVE_UNSAVE_ACTION_SUCCESS,
-
     TEST_CASE_RECIPE,
     UPDATE_RECIPE_FAIL,
     UPDATE_RECIPE_SUCCESS,
 } from '../types';
 
 const initialState = {
-    listOfRecipes: null,
     listOfSearchedRecipes: null,
     requestedRecipeData: null,
     listOfFilteredReviews: null,
@@ -44,7 +40,6 @@ export default function recipeReducer(state = initialState, action) {
         case TEST_CASE_RECIPE:
             return {
                 ...state,
-                listOfRecipes: payload.listOfRecipes,
                 listOfSearchedRecipes: payload.listOfSearchedRecipes,
                 requestedRecipeData: payload.requestedRecipeData,
                 listOfFilteredReviews: payload.listOfFilteredReviews,
@@ -52,8 +47,6 @@ export default function recipeReducer(state = initialState, action) {
                 listOfFollowedRecipes: payload.listOfFollowedRecipes,
                 listOfSavedRecipes: payload.listOfSavedRecipes,
             };
-        case GET_RECIPE_LIST_SUCCESS: //
-            return { ...state, listOfRecipes: payload };
         case UPDATE_RECIPE_SUCCESS: //
         case GET_RECIPE_DETAILS_SUCCESS: //
             return { ...state, requestedRecipeData: payload };
@@ -77,7 +70,6 @@ export default function recipeReducer(state = initialState, action) {
         case GET_SAVED_RECIPE_LIST_FAIL:
         case UPDATE_RECIPE_FAIL:
         case GET_RECIPE_DETAILS_FAIL:
-        case GET_RECIPE_LIST_FAIL:
         case GET_FOLLOWED_RECIPE_LIST_FAIL:
         case GET_TRENDING_RECIPE_LIST_FAIL:
         case SAVE_UNSAVE_ACTION_FAIL:
