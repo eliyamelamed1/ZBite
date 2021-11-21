@@ -45,9 +45,4 @@ describe('DisplayRecipes', () => {
         expect(recipeCardSpy.mock.calls[0][0]).toEqual(firstRecipeData);
         expect(recipeCardSpy.mock.calls[1][0]).toEqual(secondRecipeData);
     });
-
-    test('component data-testid should match displayUsers', () => {
-        const displayRecipes = screen.getByTestId('displayRecipes');
-        expect(displayRecipes).toBeInTheDocument();
-    });
 });
