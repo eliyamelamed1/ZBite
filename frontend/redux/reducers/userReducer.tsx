@@ -7,6 +7,8 @@ import {
     GET_LOGGED_USER_DETAILS_SUCCESS,
     GET_USER_DETAILS_FAIL,
     GET_USER_DETAILS_SUCCESS,
+    LOAD_LEADERBOARD_FAIL,
+    LOAD_LEADERBOARD_SUCCESS,
     LOGIN_FAIL,
     LOGIN_SUCCESS,
     LOGOUT,
@@ -22,6 +24,7 @@ const initialState = {
     isUserAuthenticated: process.browser ? !!localStorage.getItem('auth_token') : null,
     loggedUserData: process.browser ? JSON.parse(localStorage.getItem('loggedUserData')) : null,
     requestedUserData: null,
+    listOfLeaderboardUsers: null,
 };
 
 export default function userReducer(state = initialState, action) {
@@ -35,6 +38,7 @@ export default function userReducer(state = initialState, action) {
                 isUserAuthenticated: payload.isUserAuthenticated,
                 loggedUserData: payload.loggedUserData,
                 requestedUserData: payload.requestedUserData,
+                listOfLeaderboardUsers: payload.listOfLeaderboardUsers,
             };
         case GET_USER_DETAILS_SUCCESS:
             return {
@@ -71,6 +75,11 @@ export default function userReducer(state = initialState, action) {
                 ...state,
                 loggedUserData: null,
             };
+        case LOAD_LEADERBOARD_SUCCESS:
+            return {
+                ...state,
+                listOfLeaderboardUsers: payload,
+            };
         case DELETE_USER_SUCCESS:
         case SIGNUP_FAIL:
         case LOGIN_FAIL:
@@ -88,6 +97,7 @@ export default function userReducer(state = initialState, action) {
         case UPDATE_USER_FAIL:
         case DELETE_USER_FAIL:
         case FOLLOW_UNFOLLOW_USER_SUCCESS:
+        case LOAD_LEADERBOARD_FAIL:
             return {
                 ...state,
             };

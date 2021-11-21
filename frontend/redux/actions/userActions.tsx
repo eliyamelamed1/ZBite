@@ -9,6 +9,8 @@ import {
     GET_LOGGED_USER_DETAILS_SUCCESS,
     GET_USER_DETAILS_FAIL,
     GET_USER_DETAILS_SUCCESS,
+    LOAD_LEADERBOARD_FAIL,
+    LOAD_LEADERBOARD_SUCCESS,
     LOGIN_FAIL,
     LOGIN_SUCCESS,
     LOGOUT,
@@ -50,7 +52,6 @@ export const followUserAction =
             await dispatch({ type: FOLLOW_UNFOLLOW_USER_SUCCESS });
         } catch {
             dispatch({ type: FOLLOW_UNFOLLOW_USER_FAIL });
-            throw new Error('follow/unfollow failed failed');
         }
     };
 
@@ -68,7 +69,6 @@ export const loadUserDetailsAction =
             dispatch({ type: GET_USER_DETAILS_SUCCESS, payload: res.data });
         } catch {
             dispatch({ type: GET_USER_DETAILS_FAIL });
-            throw new Error('loading user details failed');
         }
     };
 
@@ -92,7 +92,6 @@ export const userUpdateAction =
             dispatch({ type: UPDATE_USER_SUCCESS, payload: res.data });
         } catch {
             dispatch({ type: UPDATE_USER_FAIL });
-            throw new Error('updating user failed');
         }
     };
 
@@ -113,7 +112,6 @@ export const userDeleteAction =
             dispatch(logoutAction());
         } catch {
             dispatch({ type: DELETE_USER_FAIL });
-            throw new Error('deleting user failed');
         }
     };
 
@@ -131,7 +129,6 @@ export const loadLoggedUserDataAction = () => async (dispatch) => {
         dispatch({ type: GET_LOGGED_USER_DETAILS_SUCCESS, payload: res.data });
     } catch (err) {
         dispatch({ type: GET_LOGGED_USER_DETAILS_FAIL });
-        throw new Error('loading logged user details failed');
     }
 };
 
@@ -153,7 +150,6 @@ export const loginAction =
             await dispatch(loadLoggedUserDataAction());
         } catch (err) {
             dispatch({ type: LOGIN_FAIL });
-            throw new Error('login failed');
         }
     };
 export const signupAction =
@@ -179,7 +175,6 @@ export const signupAction =
             dispatch({ type: SIGNUP_SUCCESS, payload: res.data });
         } catch (err) {
             dispatch({ type: SIGNUP_FAIL });
-            throw new Error('signup failed');
         }
     };
 
@@ -202,7 +197,6 @@ export const userActivateAction =
             dispatch({ type: ACTIVATION_SUCCESS, payload: res.data });
         } catch (err) {
             dispatch({ type: ACTIVATION_FAIL });
-            throw new Error('activation failed');
         }
     };
 
@@ -224,7 +218,6 @@ export const resetPasswordAction =
             dispatch({ type: RESET_PASSWORD_SUCCESS, payload: res.data });
         } catch (err) {
             dispatch({ type: RESET_PASSWORD_FAIL });
-            throw new Error('reset password failed');
         }
     };
 
@@ -248,10 +241,24 @@ export const resetPasswordConfirmAction =
             dispatch({ type: RESET_PASSWORD_CONFIRM_SUCCESS, payload: res.data });
         } catch (err) {
             dispatch({ type: RESET_PASSWORD_CONFIRM_FAIL });
-            throw new Error('reset password confirmation failed');
         }
     };
 
 export const logoutAction = () => async (dispatch) => {
     dispatch({ type: LOGOUT });
+};
+
+export const loadLeaderboardAction = () => async (dispatch) => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+        },
+    };
+    try {
+        const res = await axios.get(endpointRoute().users.leaderboard, config);
+        dispatch({ type: LOAD_LEADERBOARD_SUCCESS, payload: res.data });
+    } catch {
+        dispatch({ type: LOAD_LEADERBOARD_FAIL });
+    }
 };

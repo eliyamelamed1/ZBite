@@ -9,6 +9,7 @@ export const endpointRoute = (id = String) => ({
         resetPassword: `${process.env.NEXT_PUBLIC_API_URL}/api/djoser/users/reset_password/`,
         resetPasswordConfirm: `${process.env.NEXT_PUBLIC_API_URL}/api/djoser/users/reset_password_confirm/`,
         details: `${process.env.NEXT_PUBLIC_API_URL}/api/accounts/${id}/`,
+        leaderboard: `${process.env.NEXT_PUBLIC_API_URL}/api/accounts/top/`,
     },
     recipes: {
         create: `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/create/`,
@@ -31,7 +32,7 @@ export const pageRoute = (id = String) => ({
     login: '/users/UserLogin',
     signup: '/users/UserSignup',
     profile: `/users/${id}`,
-    leaderboard: '/users/leaderboard',
+    leaderboard: '/users/Leaderboard',
     savedRecipes: '/recipes/SavedRecipes',
     createRecipe: '/recipes/RecipeCreate',
     reset_password: '/users/reset_password/UserResetPassword',
