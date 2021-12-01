@@ -1,10 +1,13 @@
 import uuid
+from dis import Instruction
 
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
+
+from apps.posts.instructions.models import Instruction
+from apps.posts.ingredients.models import Ingredient
 from apps.users.accounts.models import UserAccount
-from django.contrib.postgres.fields import ArrayField
 
 
 class Recipe(models.Model):
@@ -21,6 +24,9 @@ class Recipe(models.Model):
     cook_time = models.TextField(blank=True)
     saves = models.ManyToManyField(get_user_model(), default=None, blank=True)
     stars = models.TextField(blank=True)
+    instructions = models.ManyToManyField(Instruction, default=None, blank=True)
+    ingredients = models.ManyToManyField(Ingredient, default=None, blank=True)
+
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -68,4 +74,3 @@ class Recipe(models.Model):
     @classmethod
     def get_top_rated_recipes_url(cls):
         return reverse('recipes:top_rated')
-
