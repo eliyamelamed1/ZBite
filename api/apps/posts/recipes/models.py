@@ -24,8 +24,8 @@ class Recipe(models.Model):
     cook_time = models.TextField(blank=True)
     saves = models.ManyToManyField(get_user_model(), default=None, blank=True)
     stars = models.TextField(blank=True)
-    instructions = models.ManyToManyField(Instruction, default=None, blank=True)
-    ingredients = models.ManyToManyField(Ingredient, default=None, blank=True)
+    instructions = models.ManyToManyField(Instruction, default=None, blank=True, related_name='recipe_instructions_field', symmetrical=False)
+    ingredients = models.ManyToManyField(Ingredient, default=None, blank=True, related_name='recipe_ingredients_field', symmetrical=False)
 
 
     created_at = models.DateTimeField(auto_now_add=True)
