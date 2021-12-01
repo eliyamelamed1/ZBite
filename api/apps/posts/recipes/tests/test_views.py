@@ -1,6 +1,4 @@
 import pytest
-from django.http import response
-from django.urls import resolve, reverse
 
 from apps.users.accounts.models import UserAccount
 from factories import RecipeFactory, UserFactory

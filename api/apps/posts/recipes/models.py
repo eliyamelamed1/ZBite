@@ -22,10 +22,10 @@ class Recipe(models.Model):
     description = models.TextField(blank=True)
     serving = models.TextField(blank=True)
     cook_time = models.TextField(blank=True)
-    saves = models.ManyToManyField(get_user_model(), default=None, blank=True)
     stars = models.TextField(blank=True)
-    instructions = models.ManyToManyField(Instruction, default=None, blank=True, related_name='recipe_instructions_field', symmetrical=False)
-    ingredients = models.ManyToManyField(Ingredient, default=None, blank=True, related_name='recipe_ingredients_field', symmetrical=False)
+    saves = models.ManyToManyField(get_user_model(), default=None, blank=True)
+    instructions = models.OneToOneField(Instruction, on_delete=models.CASCADE, blank=True, null=True, related_name='recipe_instructions_field')
+    ingredients = models.OneToOneField(Ingredient, on_delete=models.CASCADE, blank=True, null=True, related_name='recipe_ingredients_field')
 
 
     created_at = models.DateTimeField(auto_now_add=True)

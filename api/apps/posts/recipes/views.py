@@ -20,6 +20,7 @@ class RecipeDetail(RetrieveUpdateDestroyAPIView):
     queryset = Recipe.objects.order_by('-updated_at')
     serializer_class = RecipeSerializer
 
+
 class RecipeCreate(CreateAPIView):
     permission_classes = (permissions.IsAuthenticated, )
     queryset = Recipe.objects.all()
@@ -28,8 +29,6 @@ class RecipeCreate(CreateAPIView):
     def perform_create(self, serializer):
         '''save the the current logged in user as the author of the recipe'''
         serializer.save(author=self.request.user)
-    
-
     
 class RecipesOfAccountsFollowed(ListAPIView):
     '''display the recipes of followed users'''
