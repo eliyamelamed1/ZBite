@@ -38,7 +38,7 @@ class IngredientCreate(CreateAPIView):
         if recipe.author == self.request.user:
             Recipe.ingredients = obj
 
-class IngredientCreate(UpdateAPIView):
+class IngredientUpdate(UpdateAPIView):
     permission_classes = (permissions.IsAuthenticated, )
     serializer_class = IngredientSerializer
     queryset = Ingredient.objects.all()
