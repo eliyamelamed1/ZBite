@@ -15,17 +15,18 @@ class IngredientCreate(CreateAPIView):
     def create(self, request, format=None):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-
         recipes_queryset = Recipe.objects.all()
         input_recipe_id = self.request.data['recipe']
         recipe = recipes_queryset.get(id__exact=input_recipe_id)
         user = self.request.user
 
         if recipe.author != user: return HttpResponse(status=403)
-        if recipe.ingredients != None: return HttpResponse(status=403)
+        
+        ingredients_already_created = Ingredient.objects.filter(recipe=input_recipe_id)
+        if ingredients_already_created: return HttpResponse(status=403)
 
         self.perform_create(serializer)
-
+        
         return HttpResponse(status=201)
 
     def perform_create(self, serializer):
@@ -43,25 +44,24 @@ class IngredientUpdate(UpdateAPIView):
     serializer_class = IngredientSerializer
     queryset = Ingredient.objects.all()
 
-    # def update(self, request, format=None):
-    #     serializer = self.get_serializer(data=request.data)
-    #     serializer.is_valid(raise_exception=True)
+    def update(self, request, format=None):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
 
-    #     recipes_queryset = Recipe.objects.all()
-    #     input_recipe_id = self.request.data['recipe']
-    #     recipe = recipes_queryset.get(id__exact=input_recipe_id)
-    #     user = self.request.user
+        recipes_queryset = Recipe.objects.all()
+        input_recipe_id = self.request.data['recipe']
+        recipe = recipes_queryset.get(id__exact=input_recipe_id)
+        user = self.request.user
 
-    #     if recipe.author != user: return HttpResponse(status=403)
-    #     if recipe.ingredients != None: return HttpResponse(status=403)
+        if recipe.author != user: return HttpResponse(status=403)
+        if recipe.ingredients != None: return HttpResponse(status=403)
 
-    #     self.perform_create(serializer)
+        self.perform_create(serializer)
 
-    #     return HttpResponse(status=201)
+        return HttpResponse(status=201)
 
-    def perform_create(self, serializer):
-        '''save the the current logged in user as the author'''
-        obj = serializer.save(author=self.request.user)
+    def perform_update(self, serializer):
+        obj = serializer.save()
         recipes_queryset = Recipe.objects.all()
         input_recipe_id = self.request.data['recipe']
         recipe = recipes_queryset.get(id__exact=input_recipe_id)
