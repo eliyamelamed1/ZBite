@@ -32,24 +32,30 @@ class TestIngredientCreateView:
 
 
             assert response.status_code == 201
+            assert len(Ingredient.objects.all()) == 1
+            assert Ingredient.objects.all()[0].author == recipe_data.author
             assert Ingredient.objects.all()[0].recipe == recipe_data
             assert Ingredient.objects.all()[0].text == text
             assert Recipe.objects.all()[0].ingredients.text == text 
 
-        # def test_adding_ingredients_not_allowed_if_not_recipe_author(self, api_client):
-        #     new_user = UserFactory()
-        #     recipe_data = RecipeFactory()
-        #     api_client.force_authenticate(new_user)
-        #     text = ['1','2','5']
+        def test_adding_ingredients_not_allowed_if_not_recipe_author(self, api_client):
+            new_user = UserFactory()
+            recipe_data = RecipeFactory()
+            api_client.force_authenticate(new_user)
+            text = ['1','2','5']
 
-        #     data = {
-        #         'recipe': recipe_data.id,
-        #         'text': text
-        #     }
-        #     response = api_client.post(create_ingredient_url, data)
+            data = {
+                'recipe': recipe_data.id,
+                'text': text
+            }
+            response = api_client.post(create_ingredient_url, data)
 
-        #     assert response.status_code == 201
-        #     assert Ingredient.objects.all()[0].recipe == recipe_data
-        #     assert Ingredient.objects.all()[0].text == text
-        #     assert Recipe.objects.all()[0].ingredients.text == text 
+            assert response.status_code == 403
+            assert len(Ingredient.objects.all()) == 0
 
+
+    class TestGuestUsers:
+        def test_ingredient_create_page_should_not_render(self, api_client):
+            create_ingredient_page_render = api_client.get(create_ingredient_url)
+
+            assert create_ingredient_page_render.status_code == 401

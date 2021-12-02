@@ -18,7 +18,7 @@
 from django.http import request
 from rest_framework import permissions
 
-from apps.users.accounts.models import UserAccount
+from apps.posts.recipes.models import Recipe
 
 
 class IsAuthorOrReadOnly(permissions.BasePermission):
@@ -36,14 +36,14 @@ class IsAuthorOrAccessDenied(permissions.BasePermission):
         # Write permissions are only allowed to the author of a post
         return obj.author == request.user
 
-class IsRecipeAuthorOrIngredientCreationDenied(permissions.BasePermission):
-
-    def has_object_permission(self, request, view, obj):
-        return obj.recipe == request.user
-
 class IsMembersOrAccessDenied(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
 
         return request.user in obj.members.all()
 
+class IsRecipeAuthorOrIngredientCreationDenied(permissions.BasePermission):
+
+    def has_object_permission(self, request, view, obj):
+        # Write permissions are only allowed to the author of a post
+        return obj.recipe.author == request.user
