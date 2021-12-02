@@ -22,6 +22,8 @@ class IngredientCreate(CreateAPIView):
         user = self.request.user
 
         if recipe.author != user: return HttpResponse(status=403)
+        if recipe.ingredients != None: return HttpResponse(status=403)
+
         self.perform_create(serializer)
 
         return HttpResponse(status=201)
