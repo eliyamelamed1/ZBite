@@ -51,6 +51,6 @@ class IngredientUpdate(RetrieveUpdateDestroyAPIView):
         Recipe.ingredients = obj
 
     def perform_destroy(self, serializer):
-        obj = serializer.save()
-        
-        Recipe.ingredients = obj
+        serializer.delete()
+
+        Recipe.ingredients = None
