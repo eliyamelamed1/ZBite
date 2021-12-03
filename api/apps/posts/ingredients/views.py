@@ -6,15 +6,15 @@ from rest_framework.generics import (CreateAPIView,
                                      UpdateAPIView)
 
 from apps.posts.ingredients.models import Ingredient
-from apps.posts.ingredients.serializers import (IngredientSerializer,
-                                                IngredientDetailsSerializer)
+from apps.posts.ingredients.serializers import (IngredientCreateSerializer,
+                                                IngredientUpdateSerializer)
 from apps.posts.recipes.models import Recipe
 from permissions import IsRecipeAuthorOrIngredientModifyDenied
 
 
 class IngredientCreate(CreateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
-    serializer_class = IngredientSerializer
+    serializer_class = IngredientCreateSerializer
     queryset = Ingredient.objects.all()
 
     def create(self, request, format=None):
@@ -41,7 +41,7 @@ class IngredientCreate(CreateAPIView):
 
 class IngredientDetails(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsRecipeAuthorOrIngredientModifyDenied,)
-    serializer_class = IngredientDetailsSerializer
+    serializer_class = IngredientUpdateSerializer
     queryset = Ingredient.objects.all()
 
     def perform_update(self, serializer):

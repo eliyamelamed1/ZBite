@@ -6,12 +6,12 @@ from .models import Ingredient
 from django.http import HttpResponse
 
 
-class IngredientSerializer(serializers.ModelSerializer):
+class IngredientCreateSerializer(serializers.ModelSerializer):
     text = serializers.ListField()
     class Meta:
         model = Ingredient
         fields = ('recipe','text',)
-class IngredientDetailsSerializer(serializers.ModelSerializer):
+class IngredientUpdateSerializer(serializers.ModelSerializer):
     text = serializers.ListField()
     class Meta:
         model = Ingredient
