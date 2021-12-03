@@ -12,14 +12,12 @@ class TestListUrl:
     def test_list_resolve(self):
         assert resolve('/api/recipes/list/').view_name == 'recipes:list'
 
-
 class TestCreateUrl:
     def test_create_reverse(self):
         assert reverse('recipes:create') == '/api/recipes/create/'
 
     def test_create_resolve(self):
         assert resolve('/api/recipes/create/').view_name == 'recipes:create'
-
 
 class TestDetailUrl:
     def test_detail_reverse(self):
@@ -31,7 +29,6 @@ class TestDetailUrl:
         new_recipe = RecipeFactory()
         url = f'/api/recipes/{new_recipe.id}/'
         assert resolve(url).view_name == 'recipes:detail'
-
 
 class TestFollowedUsersRecipesUrl:
     def test_followed_account_recipes_reverse(self):
