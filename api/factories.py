@@ -1,4 +1,5 @@
 # TODO - add tests for factories
+from apps.posts.ingredients.models import Ingredient
 import factory
 import factory.fuzzy
 

@@ -36,14 +36,16 @@ class IsAuthorOrAccessDenied(permissions.BasePermission):
         # Write permissions are only allowed to the author of a post
         return obj.author == request.user
 
+# Chats
 class IsMembersOrAccessDenied(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
 
         return request.user in obj.members.all()
 
-class IsRecipeAuthorOrIngredientCreationDenied(permissions.BasePermission):
 
+# Ingredients
+class IsRecipeAuthorOrIngredientModifyDenied(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
-        # Write permissions are only allowed to the author of a post
         return obj.recipe.author == request.user
+

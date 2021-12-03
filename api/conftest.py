@@ -1,14 +1,15 @@
+from django.urls.base import reverse
 import psycopg2
+from factories import RecipeFactory
 import pytest
 from django.conf import settings
 from django.db import connections
-from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from rest_framework.test import APIClient
 
-from apps.users.accounts.models import UserAccount
 from factories import ChatGroupFactory, ChatMassageFactory, UserFactory
-from apps.posts.recipes.models import Recipe
 
+create_ingredient_url = reverse('ingredients:create')
+logout_url = '/api/djoser/token/login/'
 
 # ---------------------------------------- Set Up
 @pytest.fixture
@@ -56,13 +57,11 @@ def signup_and_login(api_client, signup):
 
 @pytest.fixture
 def logout(api_client):
-    logout_url = '/api/djoser/token/login/'
     logout = api_client.post(logout_url)
 
 
     return logout
 
-# ---------------------------------------- Recipes
 @pytest.fixture
 def chat_massage_create():
     user = UserFactory()
@@ -76,6 +75,19 @@ def chat_massage_create():
     chat_massage.save()
 
     return chat_massage
+
+@pytest.fixture
+def create_ingredient(api_client ,signup_and_login):
+    recipe_data = RecipeFactory()
+    api_client.force_authenticate(recipe_data.author)
+    text = ['1','2','5']
+    data = {
+        'recipe': recipe_data.id,
+        'text': text
+    }
+    api_client.post(create_ingredient_url, data)
+    api_client.post(logout_url)
+    
 
 # enable testing for postgres db
 @pytest.fixture(scope='session')
