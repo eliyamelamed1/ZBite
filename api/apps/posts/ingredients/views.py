@@ -41,7 +41,7 @@ class IngredientCreate(CreateAPIView):
         Recipe.ingredients = obj
 
 class IngredientUpdate(RetrieveUpdateDestroyAPIView):
-    permission_classes = (permissions.IsAuthenticated, IsRecipeAuthorOrIngredientModifyDenied,)
+    permission_classes = (IsRecipeAuthorOrIngredientModifyDenied,)
     serializer_class = IngredientUpdateSerializer
     queryset = Ingredient.objects.all()
 
