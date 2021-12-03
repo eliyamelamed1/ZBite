@@ -17,7 +17,7 @@ class TestIngredientCreateView:
             api_client.force_authenticate(new_user)
             create_ingredient_page_render = api_client.get(create_ingredient_url)
 
-            assert create_ingredient_page_render.status_code == 405 # 405 = method not allowed - get isnt allowed only post
+            assert create_ingredient_page_render.status_code == 405
 
         def test_adding_ingredients_allowed_to_recipe_author(self, api_client):
             recipe_data = RecipeFactory()
@@ -117,7 +117,7 @@ class TestIngredientCreateView:
 class TestIngredientDetailView:
     class TestAuthenticatedUsers:
         def test_ingredient_detail_page_render(self, api_client, create_ingredient):
-            ingredients_data = Ingredient.objects.all()[0]
+            ingredients_data = create_ingredient
             update_ingredient_page_render = api_client.get(ingredients_data.get_absolute_url())
 
             assert update_ingredient_page_render.status_code == 200
@@ -257,20 +257,19 @@ class TestIngredientDetailView:
         #     assert len(Ingredient.objects.all()) == 1
 
     class TestGuestUsers:
-        def test_ingredient_detail_page_should_not_render(self, api_client, create_ingredient):
-            ingredient_data = Ingredient.objects.all()[0]
+        def test_ingredient_detail_page_should_not_render(self, api_client, create_ingredient, logout):
+            ingredient_data = create_ingredient
             response = api_client.get(ingredient_data.get_absolute_url())
 
-            assert response.status_code == 200
+            assert response.status_code == 401
 
-        def test_updating_ingredients_forbidden(self, api_client, create_ingredient):
-            ingredient_data = Ingredient.objects.all()[0]
-
+        def test_updating_ingredients_forbidden(self, api_client, create_ingredient, logout):
+            ingredient_data = create_ingredient
             updated_text = ['1','2','6']
             data = {
                 'recipe': ingredient_data.recipe.id,
                 'text': updated_text
             }
-            response = api_client.patch(ingredient_data.get_absolute_url(), data)
+            response = api_client.put(ingredient_data.get_absolute_url(), data)
 
             assert response.status_code == 401

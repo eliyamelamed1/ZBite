@@ -16,8 +16,3 @@ class IngredientUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ingredient
         fields = ('text',)
-
-class IngredientDetailSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Ingredient
-        fields = '__all__'

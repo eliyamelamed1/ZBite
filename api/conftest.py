@@ -1,5 +1,6 @@
 from django.urls.base import reverse
 import psycopg2
+from apps.posts.ingredients.models import Ingredient
 from factories import RecipeFactory
 import pytest
 from django.conf import settings
@@ -57,10 +58,7 @@ def signup_and_login(api_client, signup):
 
 @pytest.fixture
 def logout(api_client):
-    logout = api_client.post(logout_url)
-
-
-    return logout
+    api_client.logout()
 
 @pytest.fixture
 def chat_massage_create():
@@ -86,8 +84,8 @@ def create_ingredient(api_client ,signup_and_login):
         'text': text
     }
     api_client.post(create_ingredient_url, data)
-    api_client.post(logout_url)
     
+    return Ingredient.objects.get(recipe=recipe_data.id)
 
 # enable testing for postgres db
 @pytest.fixture(scope='session')

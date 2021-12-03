@@ -1,7 +1,9 @@
 from django.http import HttpResponse
 from rest_framework import permissions
 from rest_framework.exceptions import PermissionDenied
-from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import (CreateAPIView,
+                                     RetrieveUpdateDestroyAPIView,
+                                     UpdateAPIView)
 
 from apps.posts.ingredients.models import Ingredient
 from apps.posts.ingredients.serializers import (IngredientSerializer,
@@ -40,7 +42,7 @@ class IngredientCreate(CreateAPIView):
 
 class IngredientUpdate(RetrieveUpdateDestroyAPIView):
     permission_classes = (permissions.IsAuthenticated, IsRecipeAuthorOrIngredientModifyDenied,)
-    serializer_class = IngredientSerializer
+    serializer_class = IngredientUpdateSerializer
     queryset = Ingredient.objects.all()
 
     def perform_update(self, serializer):
