@@ -234,18 +234,18 @@ class TestIngredientDetailView:
             assert Ingredient.objects.all()[0].text == text
             assert Recipe.objects.all()[0].ingredients.text == text 
 
-        # def test_deleting_ingredients_allowed_to_recipe_author(self, api_client, create_ingredient):
-        #     ingredients_data = Ingredient.objects.all()[0]
-        #     api_client.force_authenticate(ingredients_data.recipe.author)
-        #     data = {
-        #         'recipe': ingredients_data.recipe.id,
-        #         'text': [1]
-        #     }
-        #     response = api_client.delete(ingredients_data.get_absolute_url(), data)
+        def test_deleting_ingredients_allowed_to_recipe_author(self, api_client, create_ingredient):
+            ingredients_data = create_ingredient
+            api_client.force_authenticate(ingredients_data.recipe.author)
+            data = {
+                'recipe': ingredients_data.recipe.id,
+                'text': [1]
+            }
+            response = api_client.delete(ingredients_data.get_absolute_url(), data)
 
-        #     assert response.status_code == 204
-        #     assert len(Ingredient.objects.all()) == 0
-        #     assert ingredients_data.recipe.ingredients.text == 0
+            assert response.status_code == 204
+            assert len(Ingredient.objects.all()) == 0
+            assert ingredients_data.recipe.ingredients.text == 0
 
         # def test_deleting_ingredients_forbidden_if_not_recipe_author(self, api_client, create_ingredient):
         #     new_user = RecipeFactory()
