@@ -18,7 +18,7 @@ class Ingredient(models.Model):
 
     def get_absolute_url(self):
         """Return absolute URL to the Ingredient Detail page."""
-        return reverse('ingredients:detail', kwargs={"pk": self.id})
+        return reverse('ingredients:details', kwargs={"pk": self.id})
 
     def __str__(self):
         return str(self.text)

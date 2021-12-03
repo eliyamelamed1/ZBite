@@ -1,8 +1,8 @@
 from django.urls import path
-from .views import IngredientCreate, IngredientUpdate
+from .views import IngredientCreate, IngredientDetails
 
 app_name = "ingredients"
 urlpatterns = [
     path('create/', IngredientCreate.as_view(), name='create'),
-    path('<uuid:pk>/', IngredientUpdate.as_view(), name='detail'),
+    path('<uuid:pk>/', IngredientDetails.as_view(), name='details'),
 ]

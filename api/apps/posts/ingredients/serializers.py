@@ -11,7 +11,7 @@ class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ingredient
         fields = ('recipe','text',)
-class IngredientUpdateSerializer(serializers.ModelSerializer):
+class IngredientDetailsSerializer(serializers.ModelSerializer):
     text = serializers.ListField()
     class Meta:
         model = Ingredient

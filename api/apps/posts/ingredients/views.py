@@ -7,7 +7,7 @@ from rest_framework.generics import (CreateAPIView,
 
 from apps.posts.ingredients.models import Ingredient
 from apps.posts.ingredients.serializers import (IngredientSerializer,
-                                                IngredientUpdateSerializer)
+                                                IngredientDetailsSerializer)
 from apps.posts.recipes.models import Recipe
 from permissions import IsRecipeAuthorOrIngredientModifyDenied
 
@@ -40,9 +40,9 @@ class IngredientCreate(CreateAPIView):
 
         Recipe.ingredients = obj
 
-class IngredientUpdate(RetrieveUpdateDestroyAPIView):
+class IngredientDetails(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsRecipeAuthorOrIngredientModifyDenied,)
-    serializer_class = IngredientUpdateSerializer
+    serializer_class = IngredientDetailsSerializer
     queryset = Ingredient.objects.all()
 
     def perform_update(self, serializer):
