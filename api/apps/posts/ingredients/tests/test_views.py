@@ -19,14 +19,14 @@ class TestIngredientCreateView:
 
             assert create_ingredient_page_render.status_code == 405
 
-        def test_adding_ingredients_allowed_to_recipe_author(self, api_client):
+        def test_creating_ingredient_list_allowed_to_recipe_author(self, api_client):
             recipe_data = RecipeFactory()
             api_client.force_authenticate(recipe_data.author)
             text = ['1','2','5']
 
             data = {
                 'recipe': recipe_data.id,
-                'text': text
+                'text': text,
             }
             response = api_client.post(create_ingredient_url, data)
 
@@ -38,7 +38,7 @@ class TestIngredientCreateView:
             assert Ingredient.objects.all()[0].text == text
             assert Recipe.objects.all()[0].ingredients.text == text 
 
-        def test_adding_ingredients_not_allowed_if_not_recipe_author(self, api_client):
+        def test_creating_ingredient_list_not_allowed_if_not_recipe_author(self, api_client):
             new_user = UserFactory()
             recipe_data = RecipeFactory()
             api_client.force_authenticate(new_user)

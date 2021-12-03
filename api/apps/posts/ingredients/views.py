@@ -22,14 +22,13 @@ class IngredientCreate(CreateAPIView):
         serializer.is_valid(raise_exception=True)
         recipes_queryset = Recipe.objects.all()
         input_recipe_id = self.request.data['recipe']
+
         recipe = recipes_queryset.get(id__exact=input_recipe_id)
         user = self.request.user
 
-        if recipe.author != user: raise PermissionDenied(detail='You are no the author')
+        is_recipe_author = recipe.author == user
+        if not is_recipe_author: raise PermissionDenied(detail='You are no the author')
         
-        ingredients_already_created = Ingredient.objects.filter(recipe=input_recipe_id)
-        if ingredients_already_created: raise PermissionDenied(detail='Ingredient already related to input')
-
         self.perform_create(serializer)
 
         return HttpResponse(status=201)
