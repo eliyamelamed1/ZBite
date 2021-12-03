@@ -120,7 +120,7 @@ class TestIngredientDetailView:
             ingredients_data = Ingredient.objects.all()[0]
             update_ingredient_page_render = api_client.get(ingredients_data.get_absolute_url())
 
-            assert update_ingredient_page_render.status_code == 405
+            assert update_ingredient_page_render.status_code == 200
 
         def test_updating_ingredients_allowed_to_recipe_author(self, api_client):
             recipe_data = RecipeFactory()
@@ -257,9 +257,20 @@ class TestIngredientDetailView:
         #     assert len(Ingredient.objects.all()) == 1
 
     class TestGuestUsers:
-        def test_ingredient_update_page_should_not_render(self, api_client, create_ingredient):
+        def test_ingredient_detail_page_should_not_render(self, api_client, create_ingredient):
             ingredient_data = Ingredient.objects.all()[0]
-            response = api_client.patch(ingredient_data.get_absolute_url())
+            response = api_client.get(ingredient_data.get_absolute_url())
 
             assert response.status_code == 200
 
+        def test_updating_ingredients_forbidden(self, api_client, create_ingredient):
+            ingredient_data = Ingredient.objects.all()[0]
+
+            updated_text = ['1','2','6']
+            data = {
+                'recipe': ingredient_data.recipe.id,
+                'text': updated_text
+            }
+            response = api_client.patch(ingredient_data.get_absolute_url(), data)
+
+            assert response.status_code == 401
