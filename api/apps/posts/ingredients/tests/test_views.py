@@ -107,7 +107,7 @@ class TestIngredientCreateView:
             }
             response2 = api_client.post(create_ingredient_url, data)
 
-            assert response2.status_code == 403
+            assert response2.status_code == 400
     class TestGuestUsers:
         def test_ingredient_create_page_should_not_render(self, api_client):
             create_ingredient_page_render = api_client.get(create_ingredient_url)

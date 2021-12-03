@@ -13,7 +13,7 @@ class Ingredient(models.Model):
         editable=False
     )
     author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-    recipe = models.ForeignKey('recipes.Recipe', on_delete=models.CASCADE)
+    recipe = models.OneToOneField('recipes.Recipe', on_delete=models.CASCADE)
     text = ArrayField(models.CharField(max_length=100, blank=True),size=15,)
 
     def get_absolute_url(self):
