@@ -7,13 +7,14 @@ from django.http import HttpResponse
 
 
 class InstructionCreateSerializer(serializers.ModelSerializer):
-    text = serializers.ListField()
+    text_list = serializers.ListField()
+    image_list = serializers.ListField()
     class Meta:
         model = Instruction
-        fields = ('recipe','text', 'image')
+        fields = ('recipe','text_list', 'image_list')
 
 class InstructionUpdateSerializer(serializers.ModelSerializer):
     text = serializers.ListField()
     class Meta:
         model = Instruction
-        fields = ('text', 'image')
+        fields = ('text', 'image_list')

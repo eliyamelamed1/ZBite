@@ -1,8 +1,6 @@
 import pytest
 from django.urls import resolve, reverse
 
-from factories import RecipeFactory
-
 pytestmark = pytest.mark.django_db
 
 class TestCreateView:
@@ -15,12 +13,12 @@ class TestCreateView:
 class TestDetailsView:
     def test_reverse(self, create_ingredient):
         new_ingredient = create_ingredient
-        url = reverse('ingredients:details', kwargs={"pk": new_ingredient.id})
+        url = reverse('ingredients:detail', kwargs={"pk": new_ingredient.id})
 
         assert url == f'/api/ingredients/{new_ingredient.id}/'
 
     def test_resolve(self, create_ingredient):
         new_ingredient = create_ingredient
         url = f'/api/ingredients/{new_ingredient.id}/'
-        assert resolve(url).view_name == 'ingredients:details'
+        assert resolve(url).view_name == 'ingredients:detail'
 

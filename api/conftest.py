@@ -11,7 +11,7 @@ from factories import (ChatGroupFactory, ChatMassageFactory, RecipeFactory,
                        UserFactory)
 
 create_ingredient_url = reverse('ingredients:create')
-# create_instruction_url = reverse('instructions:create')
+create_instruction_url = reverse('instructions:create')
 logout_url = '/api/djoser/token/login/'
 
 # ---------------------------------------- Set Up
@@ -77,7 +77,7 @@ def chat_massage_create():
     return chat_massage
 
 @pytest.fixture
-def create_ingredient(api_client ,signup_and_login):
+def create_ingredient(api_client):
     recipe_data = RecipeFactory()
     api_client.force_authenticate(recipe_data.author)
     text = ['1','2','5']
@@ -89,18 +89,12 @@ def create_ingredient(api_client ,signup_and_login):
     
     return Ingredient.objects.get(recipe=recipe_data.id)
 
-# @pytest.fixture
-# def create_instruction(api_client ,signup_and_login):
-#     recipe_data = RecipeFactory()
-#     api_client.force_authenticate(recipe_data.author)
-#     text = ['1','2','5']
-#     data = {
-#         'recipe': recipe_data.id,
-#         'text': text
-#     }
-#     api_client.post(create_instruction_url, data)
-    
-#     return Instruction.objects.get(recipe=recipe_data.id)
+@pytest.fixture
+def create_instruction():
+    recipe_data = RecipeFactory()
+    new_instruction = Instruction.objects.create(author=recipe_data.author, recipe=recipe_data, text_list=[1,2], image_list=None)
+
+    return new_instruction
 
 # enable testing for postgres db
 @pytest.fixture(scope='session')

@@ -255,7 +255,7 @@ class TestIngredientDetailView:
 
             assert response.status_code == 403
             assert len(Ingredient.objects.all()) == 1
-            assert ingredients_data.recipe.ingredients != None
+            assert ingredients_data.recipe.ingredients == ingredients_data
 
 
     class TestGuestUsers:
