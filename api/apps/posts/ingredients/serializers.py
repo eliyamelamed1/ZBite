@@ -7,12 +7,12 @@ from django.http import HttpResponse
 
 
 class IngredientCreateSerializer(serializers.ModelSerializer):
-    text = serializers.ListField()
+    text_list = serializers.ListField()
     class Meta:
         model = Ingredient
-        fields = ('recipe','text',)
+        fields = ('recipe','text_list',)
 class IngredientUpdateSerializer(serializers.ModelSerializer):
-    text = serializers.ListField()
+    text_list = serializers.ListField()
     class Meta:
         model = Ingredient
-        fields = ('text',)
+        fields = ('text_list',)

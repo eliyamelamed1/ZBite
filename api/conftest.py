@@ -80,10 +80,10 @@ def chat_massage_create():
 def create_ingredient(api_client):
     recipe_data = RecipeFactory()
     api_client.force_authenticate(recipe_data.author)
-    text = ['1','2','5']
+    text_list = ['1','2','5']
     data = {
         'recipe': recipe_data.id,
-        'text': text
+        'text_list': text_list
     }
     api_client.post(create_ingredient_url, data)
     
