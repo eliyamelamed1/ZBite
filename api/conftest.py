@@ -90,11 +90,26 @@ def create_ingredient(api_client):
     return Ingredient.objects.get(recipe=recipe_data.id)
 
 @pytest.fixture
-def create_instruction():
+def create_instruction(api_client):
     recipe_data = RecipeFactory()
-    new_instruction = Instruction.objects.create(author=recipe_data.author, recipe=recipe_data, text_list=[1,2], image_list=None)
+    api_client.force_authenticate(recipe_data.author)
+    text_list = ['1','2','5']
+    data = {
+        'recipe': recipe_data.id,
+        'text_list': text_list
+    }
+    api_client.post(create_instruction_url, data)
+    new_instruction = Instruction.objects.get(recipe=recipe_data.id)
+    api_client.logout()
 
     return new_instruction
+
+# @pytest.fixture
+# def create_instruction():
+#     recipe_data = RecipeFactory()
+#     new_instruction = Instruction.objects.create(author=recipe_data.author, recipe=recipe_data, text_list=[1,2])
+
+#     return new_instruction
 
 # enable testing for postgres db
 @pytest.fixture(scope='session')

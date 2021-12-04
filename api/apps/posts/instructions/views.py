@@ -1,4 +1,5 @@
 from django.http.response import HttpResponse
+from permissions import IsRecipeAuthorOrIngredientModifyDenied
 from rest_framework import permissions
 from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.exceptions import PermissionDenied
@@ -29,9 +30,16 @@ class InstructionCreate(CreateAPIView):
         self.perform_create(serializer)
 
         return HttpResponse(status=201)
+    
+    def perform_create(self, serializer):
+        '''save the the current logged in user as the author'''
+        obj = serializer.save(author=self.request.user)
 
-class IngredientDetails(RetrieveUpdateDestroyAPIView):
-    permission_classes = (permissions.IsAuthenticated,)
+        Recipe.instructions = obj
+
+
+class InstructionDetails(RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsRecipeAuthorOrIngredientModifyDenied,)
     serializer_class = InstructionUpdateSerializer
     queryset = Instruction.objects.all()
 
