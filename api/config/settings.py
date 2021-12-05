@@ -44,8 +44,6 @@ INSTALLED_APPS = [
         'apps.posts.recipes',
         'apps.posts.saves',
         'apps.posts.reviews',
-        'apps.posts.instructions',
-        'apps.posts.ingredients',
 
         # Chats
         'apps.chats.chat_groups',

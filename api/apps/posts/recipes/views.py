@@ -4,7 +4,6 @@ from rest_framework.generics import (CreateAPIView, ListAPIView,
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.users.accounts.serializers import SavedRecipesSerializer
 from permissions import IsAuthorOrReadOnly
 
 from .models import Recipe
@@ -29,7 +28,7 @@ class RecipeCreate(CreateAPIView):
     def perform_create(self, serializer):
         '''save the the current logged in user as the author of the recipe'''
         serializer.save(author=self.request.user)
-    
+
 class RecipesOfAccountsFollowed(ListAPIView):
     '''display the recipes of followed users'''
     serializer_class = RecipeSerializer

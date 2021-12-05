@@ -5,9 +5,8 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 
-from apps.posts.instructions.models import Instruction
-from apps.posts.ingredients.models import Ingredient
 from apps.users.accounts.models import UserAccount
+from django.contrib.postgres.fields import ArrayField
 
 
 class Recipe(models.Model):
@@ -24,8 +23,9 @@ class Recipe(models.Model):
     cook_time = models.TextField(blank=True)
     stars = models.TextField(blank=True)
     saves = models.ManyToManyField(get_user_model(), default=None, blank=True)
-    instructions = models.OneToOneField(Instruction, on_delete=models.CASCADE, blank=True, null=True, related_name='recipe_instructions_field')
-    ingredients = models.OneToOneField(Ingredient, on_delete=models.CASCADE, blank=True, null=True, related_name='recipe_ingredients_field')
+    instructions_text_list = ArrayField(models.CharField(max_length=100, blank=True,null=True),default=list, blank=True ,null=True,size=15,)
+    ingredients_text_list = ArrayField(models.CharField(max_length=100, blank=True,null=True),default=list,blank=True ,null=True, size=15,)
+    instructions_image_list = ArrayField(models.ImageField(upload_to='media/',blank=True, null=True),default=list,  blank=True ,null=True, size=15,)
 
 
     created_at = models.DateTimeField(auto_now_add=True)

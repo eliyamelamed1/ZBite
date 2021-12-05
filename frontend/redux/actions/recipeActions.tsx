@@ -11,14 +11,6 @@ import {
     GET_SAVED_RECIPE_LIST_SUCCESS,
     GET_TRENDING_RECIPE_LIST_FAIL,
     GET_TRENDING_RECIPE_LIST_SUCCESS,
-    INGREDIENT_CREATE_FAIL,
-    INGREDIENT_CREATE_SUCCESS,
-    INGREDIENT_UPDATE_FAIL,
-    INGREDIENT_UPDATE_SUCCESS,
-    INSTRUCTION_CREATE_FAIL,
-    INSTRUCTION_CREATE_SUCCESS,
-    INSTRUCTION_UPDATE_FAIL,
-    INSTRUCTION_UPDATE_SUCCESS,
     REVIEWS_IN_RECIPE_FAIL,
     REVIEWS_IN_RECIPE_SUCCESS,
     REVIEW_CREATE_FAIL,
@@ -253,82 +245,5 @@ export const saveRecipeAction =
             await dispatch({ type: SAVE_UNSAVE_ACTION_SUCCESS });
         } catch {
             dispatch({ type: SAVE_UNSAVE_ACTION_FAIL });
-        }
-    };
-
-// ingredients
-export const ingredientCreateAction =
-    ({ recipeId, textList }) =>
-    async (dispatch) => {
-        try {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                    Authorization: `Token ${localStorage.getItem('auth_token')}`,
-                },
-            };
-            const body = JSON.stringify({ recipe: recipeId, text_list: textList });
-            await axios.post(endpointRoute().ingredients.create, body, config);
-            await dispatch({ type: INGREDIENT_CREATE_SUCCESS });
-        } catch {
-            dispatch({ type: INGREDIENT_CREATE_FAIL });
-        }
-    };
-
-export const ingredientUpdateAction =
-    ({ recipeId, textList }) =>
-    async (dispatch) => {
-        try {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                    Authorization: `Token ${localStorage.getItem('auth_token')}`,
-                },
-            };
-            const body = JSON.stringify({ recipe: recipeId, text_list: textList });
-            await axios.patch(endpointRoute().ingredients.detail, body, config);
-            await dispatch({ type: INGREDIENT_UPDATE_SUCCESS });
-        } catch {
-            dispatch({ type: INGREDIENT_UPDATE_FAIL });
-        }
-    };
-
-// instructions
-export const instructionCreateAction =
-    ({ recipeId, textList, imageList = [''] }) =>
-    async (dispatch) => {
-        try {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                    Authorization: `Token ${localStorage.getItem('auth_token')}`,
-                },
-            };
-            const body = JSON.stringify({ recipe: recipeId, text_list: textList, image_list: imageList });
-            await axios.post(endpointRoute().instructions.create, body, config);
-            await dispatch({ type: INSTRUCTION_CREATE_SUCCESS });
-        } catch {
-            dispatch({ type: INSTRUCTION_CREATE_FAIL });
-        }
-    };
-export const instructionUpdateAction =
-    ({ recipeId, textList, imageList = '' }) =>
-    async (dispatch) => {
-        try {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                    Authorization: `Token ${localStorage.getItem('auth_token')}`,
-                },
-            };
-            const body = JSON.stringify({ recipe: recipeId, text_list: textList, image_list: imageList });
-            await axios.patch(endpointRoute().instructions.detail, body, config);
-            await dispatch({ type: INSTRUCTION_UPDATE_SUCCESS });
-        } catch {
-            dispatch({ type: INSTRUCTION_UPDATE_FAIL });
         }
     };

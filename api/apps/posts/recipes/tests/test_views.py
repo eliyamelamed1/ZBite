@@ -45,26 +45,13 @@ class TestRecipeCreateView:
             data = {
                 'title': {recipe_data.title},
                 'description': {recipe_data.description},
+                'ingredients_text_list': [None],
+                'instructions_text_list': [None],
+                'instructions_image_list': [None],
             }
             response = api_client.post(create_recipe_url, data)
 
             assert response.status_code == 201
-
-        # def test_recipe_create_post_request_all_fields(self, api_client):
-        #     new_user = UserFactory()
-        #     api_client.force_authenticate(new_user)
-        #     recipe_data = RecipeFactory.build()
-        #     data = {
-        #         'title': {recipe_data.title},
-        #         'description': {recipe_data.description},
-        #         'serving': '5 people', 
-        #         'cook_time': '15min', 
-        #         'instructions': {"asd": 5}, 
-        #         'ingredients': {"asd": 5}, 
-        #     }
-        #     response = api_client.post(create_recipe_url, data, format='json')
-
-        #     assert response.status_code == 201
         
         def test_recipe_author_is_current_logged_in_user(self, api_client):
                 ''' testing the method perform_create '''
@@ -74,6 +61,9 @@ class TestRecipeCreateView:
                 data = {
                     'title': {recipe_data.title},
                     'description': {recipe_data.description},
+                    'ingredients_text_list': [None],
+                    'instructions_text_list': [None],
+                    'instructions_image_list': [None],
                 }
                 api_client.post(create_recipe_url, data)
                 new_recipe = Recipe.objects.get(title=recipe_data.title)
@@ -144,7 +134,11 @@ class TestUpdateRecipeView:
             new_recipe = RecipeFactory()
             api_client.force_authenticate(new_recipe.author)
             data = {
-                'title': 'updated title'
+                'title': 'updated title',
+                'description':'updated_description',
+                'ingredients_text_list': ['updated_ingredients_text_list'],
+                'instructions_text_list': ['updated_instructions_text_list'],
+                'instructions_image_list': ['updated_instructions_image_list'],
             }
             response = api_client.patch(new_recipe.get_absolute_url(), data)
 
@@ -155,7 +149,11 @@ class TestUpdateRecipeView:
             random_user = UserFactory()
             api_client.force_authenticate(random_user)
             data = {
-                'title': 'updated title'
+                'title': 'updated title',
+                'description':'updated_description',
+                'ingredients_text_list': ['updated_ingredients_text_list'],
+                'instructions_text_list': ['updated_instructions_text_list'],
+                'instructions_image_list': ['updated_instructions_image_list'],
             }
             response = api_client.patch(new_recipe.get_absolute_url(), data)
 
@@ -241,6 +239,9 @@ class TestTopRatedRecipes:
                 data = {
                     'title': {recipe_data.title},
                     'description': {recipe_data.description},
+                    'ingredients_text_list': [None],
+                    'instructions_text_list': [None],
+                    'instructions_image_list': [None],
                 }
                 api_client.post(create_recipe_url, data)
                 new_recipe = Recipe.objects.all().get(title=recipe_data.title)
@@ -255,6 +256,9 @@ class TestTopRatedRecipes:
                 data = {
                     'title': {recipe_data.title},
                     'description': {recipe_data.description},
+                    'ingredients_text_list': [None],
+                    'instructions_text_list': [None],
+                    'instructions_image_list': [None],
                 }
                 api_client.post(create_recipe_url, data)
                 new_recipe = Recipe.objects.all().get(title=recipe_data.title)
@@ -287,6 +291,9 @@ class TestTopRatedRecipes:
                 data = {
                     'title': {recipe_data.title},
                     'description': {recipe_data.description},
+                    'ingredients_text_list': [None],
+                    'instructions_text_list': [None],
+                    'instructions_image_list': [None],
                 }
                 api_client.post(create_recipe_url, data)
                 new_recipe = Recipe.objects.all().get(title=recipe_data.title)
@@ -301,6 +308,9 @@ class TestTopRatedRecipes:
                 data = {
                     'title': {recipe_data.title},
                     'description': {recipe_data.description},
+                    'ingredients_text_list': [None],
+                    'instructions_text_list': [None],
+                    'instructions_image_list': [None],
                 }
                 api_client.post(create_recipe_url, data)
                 new_recipe = Recipe.objects.all().get(title=recipe_data.title)

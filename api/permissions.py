@@ -43,9 +43,3 @@ class IsMembersOrAccessDenied(permissions.BasePermission):
 
         return request.user in obj.members.all()
 
-
-# Ingredients
-class IsRecipeAuthorOrIngredientModifyDenied(permissions.BasePermission):
-    def has_object_permission(self, request, view, obj):
-        return obj.recipe.author == request.user
-

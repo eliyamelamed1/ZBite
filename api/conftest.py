@@ -1,18 +1,11 @@
-import io
 import psycopg2
 import pytest
 from django.conf import settings
-from django.db import connections
-from django.urls.base import reverse
 from rest_framework.test import APIClient
 
-from apps.posts.ingredients.models import Ingredient
-from apps.posts.instructions.models import Instruction
 from factories import (ChatGroupFactory, ChatMassageFactory, RecipeFactory,
                        UserFactory)
 
-create_ingredient_url = reverse('ingredients:create')
-create_instruction_url = reverse('instructions:create')
 logout_url = '/api/djoser/token/login/'
 
 # ---------------------------------------- Set Up
@@ -77,40 +70,8 @@ def chat_massage_create():
 
     return chat_massage
 
-@pytest.fixture
-def create_ingredient(api_client):
-    recipe_data = RecipeFactory()
-    api_client.force_authenticate(recipe_data.author)
-    text_list = [f'{recipe_data.title}']
-    data = {
-        'recipe': recipe_data.id,
-        'text_list': text_list
-    }
-    api_client.post(create_ingredient_url, data)
-    api_client.logout()
-    
-    return Ingredient.objects.get(recipe=recipe_data.id)
-
-@pytest.fixture
-def create_instruction(api_client):
-    recipe_data = RecipeFactory()
-    api_client.force_authenticate(recipe_data.author)
-    text_list = [f'{recipe_data.title}',]
-    image_list = [f'{recipe_data.description}',]
-    data = {
-        'recipe': recipe_data.id,
-        'text_list': text_list,
-        'image_list': image_list
-    }
-    api_client.post(create_instruction_url, data)
-    new_instruction = Instruction.objects.get(recipe=recipe_data.id)
-    api_client.logout()
-
-    return new_instruction
 
 # enable testing for postgres db
-
-@pytest.mark.django_db
 @pytest.fixture(scope='session')
 def django_db_setup():
     settings.DATABASES['default'] 

@@ -40,8 +40,6 @@ urlpatterns = [
     path('api/recipes/', include('apps.posts.recipes.urls', namespace='recipes')),
     path('api/saves/', include('apps.posts.saves.urls', namespace='saves')), 
     path('api/reviews/', include('apps.posts.reviews.urls', namespace='reviews')),
-    path('api/ingredients/', include('apps.posts.ingredients.urls', namespace='ingredients')),
-    path('api/instructions/', include('apps.posts.instructions.urls', namespace='instructions')),
 
     # Chats
     path('api/chat_groups/', include('apps.chats.chat_groups.urls', namespace='chat_groups')),
