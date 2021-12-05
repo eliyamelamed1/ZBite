@@ -13,7 +13,8 @@ const addInputContainer = ({
         const newInstruction = {
             id: new Date().getTime(),
             text: instruction,
-            image: '',
+            imageBlob: null,
+            imageFile: null,
         };
         const newInstructionList = instructionList.concat(newInstruction);
 

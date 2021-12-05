@@ -48,27 +48,35 @@ const RecipeCreate = () => {
         modifiedText,
         inputId,
     } = data;
+
     const { isUserAuthenticated } = useSelector((state) => state.userReducer);
     isUserAuthenticated === false ? Router.push(pageRoute().home) : null;
     // ------------Functions------------
-
     const onChangeText = (e) => setData({ ...data, [e.target.name]: e.target.value });
     const onChangeImage = async (e) => {
         try {
+            const imageFile = e.target.files[0];
             setData((prevState) => ({ ...prevState, photoMain: e.target.files[0] }));
-            const imageSrc = await URL.createObjectURL(e.target.files[0]);
-            setData((prevState) => ({ ...prevState, [e.target.name]: imageSrc }));
-            return imageSrc;
+            const imageBlob = await URL.createObjectURL(e.target.files[0]);
+            setData((prevState) => ({ ...prevState, [e.target.name]: imageBlob }));
+            return { imageBlob, imageFile };
         } catch {}
     };
+    console.log(instructionList);
 
     const onSubmit = async (e) => {
         e.preventDefault();
         // TODO redirect only on dispatch success
         const createRecipe = async () => {
             const recipeId = await dispatch(recipeCreateAction({ photoMain, title, description, cookTime, serving }));
-            await dispatch(ingredientCreateAction({ recipeId, textList: ingredientList }));
-            await dispatch(instructionCreateAction({ recipeId, textList: instructionList }));
+            const ingredientTextList = await ingredientList.map((ingredient) => ingredient.text);
+            const instructionTextList = await instructionList.map((instruction) => instruction.text);
+            const instructionImageList = await instructionList.map((instruction) => instruction.imageFile);
+
+            await dispatch(ingredientCreateAction({ recipeId, textList: ingredientTextList }));
+            await dispatch(
+                instructionCreateAction({ recipeId, textList: instructionTextList, imageList: instructionImageList })
+            );
         };
         try {
             await createRecipe();
@@ -79,10 +87,11 @@ const RecipeCreate = () => {
     };
 
     const saveInstructionImage = async (e, id) => {
-        const imageSrc = await onChangeImage(e);
+        const { imageBlob, imageFile } = await onChangeImage(e);
         const updatedInstructionList = await [...instructionList].map((instruction) => {
             if (instruction.id === id) {
-                instruction.image = imageSrc;
+                instruction.imageBlob = imageBlob;
+                instruction.imageFile = imageFile;
             }
             return instruction;
         });
@@ -187,8 +196,8 @@ const RecipeCreate = () => {
                             onChange={(e) => saveInstructionImage(e, instruction.id)}
                         />
                         <label htmlFor={instruction.id} className={styles.image_label} data-testid='upload_image'>
-                            {instruction.image ? (
-                                <img src={instruction.image} className={styles.uploaded_image} />
+                            {instruction.imageBlob ? (
+                                <img src={instruction.imageBlob} className={styles.uploaded_image} />
                             ) : (
                                 uploadImageIcon.src && (
                                     <Image src={uploadImageIcon.src} width={100} height={100} alt='recipe photo' />

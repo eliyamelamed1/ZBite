@@ -20,6 +20,7 @@ const RecipeDetails = (props) => {
     const { requestedRecipeData, listOfFilteredReviews } = useSelector((state) => state.recipeReducer);
     const { isUserAuthenticated } = useSelector((state) => state.userReducer);
     const [reviewsData, setReviewsData] = useState(props.serverReviewsData);
+
     useEffect(
         // when updating recipe data (title, description etc..) migrate the changes to the userData
         function migrateRequestedRecipeData() {
