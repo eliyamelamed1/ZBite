@@ -1,13 +1,13 @@
 from django.http.response import HttpResponse
-from permissions import IsRecipeAuthorOrIngredientModifyDenied
 from rest_framework import permissions
-from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.exceptions import PermissionDenied
+from rest_framework.generics import (CreateAPIView, RetrieveUpdateAPIView,)
 
-from apps.posts.instructions.serializers import InstructionUpdateSerializer
 from apps.posts.instructions.models import Instruction
-from apps.posts.instructions.serializers import InstructionCreateSerializer
+from apps.posts.instructions.serializers import (InstructionCreateSerializer,
+                                                 InstructionUpdateSerializer)
 from apps.posts.recipes.models import Recipe
+from permissions import IsRecipeAuthorOrIngredientModifyDenied
 
 
 class InstructionCreate(CreateAPIView):
@@ -35,10 +35,13 @@ class InstructionCreate(CreateAPIView):
         '''save the the current logged in user as the author'''
         obj = serializer.save(author=self.request.user)
 
-        Recipe.instructions = obj
+        input_recipe_id = self.request.data['recipe']
+        recipe = Recipe.objects.get(id__exact=input_recipe_id)
+        recipe.instructions = obj
+        recipe.save()
 
 
-class InstructionDetails(RetrieveUpdateDestroyAPIView):
+class InstructionDetails(RetrieveUpdateAPIView):
     permission_classes = (IsRecipeAuthorOrIngredientModifyDenied,)
     serializer_class = InstructionUpdateSerializer
     queryset = Instruction.objects.all()
@@ -46,8 +49,7 @@ class InstructionDetails(RetrieveUpdateDestroyAPIView):
     def perform_update(self, serializer):
         obj = serializer.save()
 
-        Recipe.instructions = obj
-
-    def perform_destroy(self, serializer):
-        serializer.delete()
-        Recipe.instructions = None
+        input_recipe_id = self.request.data['recipe']
+        recipe = Recipe.objects.get(id__exact=input_recipe_id)
+        recipe.instructions = obj
+        recipe.save()

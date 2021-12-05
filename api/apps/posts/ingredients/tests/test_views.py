@@ -234,26 +234,6 @@ class TestIngredientDetailView:
             assert Ingredient.objects.all()[0].text_list == text_list
             assert Recipe.objects.all()[0].ingredients.text_list == text_list 
 
-        def test_deleting_ingredients_allowed_to_recipe_author(self, api_client, create_ingredient):
-            ingredients_data = create_ingredient
-            api_client.force_authenticate(ingredients_data.recipe.author)
-            response = api_client.delete(ingredients_data.get_absolute_url())
-
-            assert response.status_code == 204
-            assert len(Ingredient.objects.all()) == 0
-            assert ingredients_data.recipe.ingredients == None
-
-        def test_deleting_ingredients_forbidden_if_not_recipe_author(self, api_client, create_ingredient):
-            ingredients_data = create_ingredient
-            new_user = UserFactory()
-            api_client.force_authenticate(new_user)
-            response = api_client.delete(ingredients_data.get_absolute_url())
-
-            assert response.status_code == 403
-            assert len(Ingredient.objects.all()) == 1
-            assert ingredients_data.recipe.ingredients == ingredients_data
-
-
     class TestGuestUsers:
         def test_ingredient_detail_page_should_not_render(self, api_client, create_ingredient, logout):
             ingredient_data = create_ingredient

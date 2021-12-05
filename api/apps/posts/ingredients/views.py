@@ -1,9 +1,7 @@
 from django.http import HttpResponse
 from rest_framework import permissions
 from rest_framework.exceptions import PermissionDenied
-from rest_framework.generics import (CreateAPIView,
-                                     RetrieveUpdateDestroyAPIView,
-                                     UpdateAPIView)
+from rest_framework.generics import (CreateAPIView, RetrieveUpdateAPIView,)
 
 from apps.posts.ingredients.models import Ingredient
 from apps.posts.ingredients.serializers import (IngredientCreateSerializer,
@@ -20,10 +18,9 @@ class IngredientCreate(CreateAPIView):
     def create(self, request, format=None):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        recipes_queryset = Recipe.objects.all()
         input_recipe_id = self.request.data['recipe']
 
-        recipe = recipes_queryset.get(id__exact=input_recipe_id)
+        recipe = Recipe.objects.get(id__exact=input_recipe_id)
         user = self.request.user
 
         is_recipe_author = recipe.author == user
@@ -37,9 +34,12 @@ class IngredientCreate(CreateAPIView):
         '''save the the current logged in user as the author'''
         obj = serializer.save(author=self.request.user)
 
-        Recipe.ingredients = obj
+        input_recipe_id = self.request.data['recipe']
+        recipe = Recipe.objects.get(id__exact=input_recipe_id)
+        recipe.ingredients = obj
+        recipe.save()
 
-class IngredientDetails(RetrieveUpdateDestroyAPIView):
+class IngredientDetails(RetrieveUpdateAPIView):
     permission_classes = (IsRecipeAuthorOrIngredientModifyDenied,)
     serializer_class = IngredientUpdateSerializer
     queryset = Ingredient.objects.all()
@@ -47,9 +47,7 @@ class IngredientDetails(RetrieveUpdateDestroyAPIView):
     def perform_update(self, serializer):
         obj = serializer.save()
 
-        Recipe.ingredients = obj
-
-    def perform_destroy(self, serializer):
-        serializer.delete()
-
-        Recipe.ingredients = None
+        input_recipe_id = self.request.data['recipe']
+        recipe = Recipe.objects.get(id__exact=input_recipe_id)
+        recipe.ingredients = obj
+        recipe.save()

@@ -13,14 +13,10 @@ import {
     GET_TRENDING_RECIPE_LIST_SUCCESS,
     INGREDIENT_CREATE_FAIL,
     INGREDIENT_CREATE_SUCCESS,
-    INGREDIENT_DELETE_FAIL,
-    INGREDIENT_DELETE_SUCCESS,
     INGREDIENT_UPDATE_FAIL,
     INGREDIENT_UPDATE_SUCCESS,
     INSTRUCTION_CREATE_FAIL,
     INSTRUCTION_CREATE_SUCCESS,
-    INSTRUCTION_DELETE_FAIL,
-    INSTRUCTION_DELETE_SUCCESS,
     INSTRUCTION_UPDATE_FAIL,
     INSTRUCTION_UPDATE_SUCCESS,
     REVIEWS_IN_RECIPE_FAIL,
@@ -299,22 +295,6 @@ export const ingredientUpdateAction =
         }
     };
 
-export const ingredientDeleteAction = () => async (dispatch) => {
-    try {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-                Authorization: `Token ${localStorage.getItem('auth_token')}`,
-            },
-        };
-        await axios.delete(endpointRoute().ingredients.detail, config);
-        await dispatch({ type: INGREDIENT_DELETE_SUCCESS });
-    } catch {
-        dispatch({ type: INGREDIENT_DELETE_FAIL });
-    }
-};
-
 // instructions
 export const instructionCreateAction =
     ({ recipeId, textList, imageList = [''] }) =>
@@ -352,18 +332,3 @@ export const instructionUpdateAction =
             dispatch({ type: INSTRUCTION_UPDATE_FAIL });
         }
     };
-export const instructionDeleteAction = () => async (dispatch) => {
-    try {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-                Authorization: `Token ${localStorage.getItem('auth_token')}`,
-            },
-        };
-        await axios.delete(endpointRoute().instructions.detail, config);
-        await dispatch({ type: INSTRUCTION_DELETE_SUCCESS });
-    } catch {
-        dispatch({ type: INSTRUCTION_DELETE_FAIL });
-    }
-};
