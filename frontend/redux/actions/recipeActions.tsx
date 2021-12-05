@@ -53,8 +53,8 @@ export const recipeCreateAction =
         description,
         cookTime,
         serving,
-        instructionsTextList = '',
         ingredientsTextList = '',
+        instructionsTextList = '',
         instructionsImageList = '',
     }) =>
     async (dispatch) => {

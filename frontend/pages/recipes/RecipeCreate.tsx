@@ -67,7 +67,21 @@ const RecipeCreate = () => {
         e.preventDefault();
         // TODO redirect only on dispatch success
         const createRecipe = async () => {
-            await dispatch(recipeCreateAction({ photoMain, title, description, cookTime, serving }));
+            const ingredientsTextList = ingredientList.map((ingredient) => ingredient.text);
+            const instructionsTextList = instructionList.map((instruction) => instruction.text);
+            const instructionsImageList = instructionList.map((instruction) => instruction.imageFile);
+            await dispatch(
+                recipeCreateAction({
+                    photoMain,
+                    title,
+                    description,
+                    cookTime,
+                    serving,
+                    ingredientsTextList,
+                    instructionsTextList,
+                    instructionsImageList,
+                })
+            );
         };
         try {
             await createRecipe();
