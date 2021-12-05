@@ -26,6 +26,14 @@ export const endpointRoute = (id = String) => ({
         delete: `${process.env.NEXT_PUBLIC_API_URL}/api/reviews/delete/${id}/`,
         reviews_in_recipe: `${process.env.NEXT_PUBLIC_API_URL}/api/reviews/reviews_in_recipe/`,
     },
+    ingredients: {
+        create: `${process.env.NEXT_PUBLIC_API_URL}/api/ingredients/create/`,
+        detail: `${process.env.NEXT_PUBLIC_API_URL}/api/ingredients/${id}/`,
+    },
+    instructions: {
+        create: `${process.env.NEXT_PUBLIC_API_URL}/api/instructions/create/`,
+        detail: `${process.env.NEXT_PUBLIC_API_URL}/api/instructions/${id}/`,
+    },
 });
 export const pageRoute = (id = String) => ({
     home: '/',
