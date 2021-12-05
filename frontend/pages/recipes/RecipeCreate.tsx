@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
+import { ingredientCreateAction, instructionCreateAction, recipeCreateAction } from '../../redux/actions/recipeActions';
 import { useDispatch, useSelector } from 'react-redux';
 
+import EditInputContainer from '../../components/utils/ModifyInputContainer';
 import Image from 'next/image';
 import Router from 'next/router';
+import addInputContainer from '../../components/utils/AddInputContainer';
 import deleteIcon from '../../styles/icons/delete-input-icon.svg';
+import deleteInputContainer from '../../components/utils/DeleteInputContainer';
 import editInput from '../../styles/icons/edit_input.svg';
 import { pageRoute } from '../../globals';
-import { recipeCreateAction } from '../../redux/actions/recipeActions';
 import saveInput from '../../styles/icons/save_changes.svg';
 import styles from '../../styles/pages/recipeCreate.module.scss';
 import uploadImageIcon from '../../styles/icons/upload_image.svg';
@@ -62,41 +65,20 @@ const RecipeCreate = () => {
     const onSubmit = async (e) => {
         e.preventDefault();
         // TODO redirect only on dispatch success
+        const createRecipe = async () => {
+            const recipeId = await dispatch(recipeCreateAction({ photoMain, title, description, cookTime, serving }));
+            await dispatch(ingredientCreateAction({ recipeId, textList: ingredientList }));
+            await dispatch(instructionCreateAction({ recipeId, textList: instructionList }));
+        };
         try {
-            dispatch(recipeCreateAction({ photoMain, title, description, cookTime, serving, serving }));
+            await createRecipe();
             Router.push(pageRoute().home);
         } catch (err) {
             // console.log(err);
         }
     };
-    const addInputContainer = (value) => {
-        if (value === 'instruction') {
-            if (instruction === '') return;
-
-            const newInstruction = {
-                id: new Date().getTime(),
-                text: instruction,
-                image: '',
-            };
-            const newInstructionList = instructionList.concat(newInstruction);
-
-            setData((prevState) => ({ ...prevState, instructionList: newInstructionList, instruction: '' }));
-        }
-        if (value === 'ingredient') {
-            if (ingredient === '') return;
-
-            const newIngredient = {
-                id: new Date().getTime(),
-                text: ingredient,
-            };
-            const newIngredientList = ingredientList.concat(newIngredient);
-
-            setData((prevState) => ({ ...prevState, ingredientList: newIngredientList, ingredient: '' }));
-        }
-    };
 
     const saveInstructionImage = async (e, id) => {
-        // TODO the only id that is send is of the first item in the array
         const imageSrc = await onChangeImage(e);
         const updatedInstructionList = await [...instructionList].map((instruction) => {
             if (instruction.id === id) {
@@ -106,43 +88,6 @@ const RecipeCreate = () => {
         });
 
         setData((prevState) => ({ ...prevState, instructionList: updatedInstructionList }));
-    };
-
-    const deleteInputContainer = (id, value) => {
-        if (value === 'instruction') {
-            let updatedInstructionList = [...instructionList].filter((instruction) => instruction.id !== id);
-            setData((prevState) => ({ ...prevState, instructionList: updatedInstructionList }));
-        }
-        if (value === 'ingredient') {
-            let updatedIngredientList = [...ingredientList].filter((ingredient) => ingredient.id !== id);
-            setData((prevState) => ({ ...prevState, ingredientList: updatedIngredientList }));
-        }
-    };
-
-    const handleEdits = (id, value) => {
-        if (modifiedText === '') return;
-        if (value === 'instruction') {
-            const updatedInstructionList = [...instructionList].map((instruction) => {
-                if (instruction.id === id) {
-                    instruction.text = modifiedText;
-                }
-
-                return instruction;
-            });
-
-            setData((prevState) => ({ ...prevState, instructionList: updatedInstructionList, inputId: null }));
-        }
-        if (value === 'ingredient') {
-            const updatedIngredientList = [...ingredientList].map((ingredient) => {
-                if (ingredient.id === id) {
-                    ingredient.text = modifiedText;
-                }
-
-                return ingredient;
-            });
-
-            setData((prevState) => ({ ...prevState, ingredientList: updatedIngredientList, inputId: null }));
-        }
     };
 
     // ------------Sections-------------
@@ -224,7 +169,7 @@ const RecipeCreate = () => {
                 className={styles.text_input}
             />
             <button
-                onClick={() => addInputContainer('instruction')}
+                onClick={() => addInputContainer({ value: 'instruction', setData, instruction, instructionList })}
                 type='button'
                 className={styles.add_instruction}
                 placeholder='add instruction'
@@ -268,7 +213,15 @@ const RecipeCreate = () => {
                         <div className={styles.actions_container}>
                             {instruction.id === inputId ? (
                                 <button
-                                    onClick={() => handleEdits(instruction.id, 'instruction')}
+                                    onClick={() =>
+                                        EditInputContainer({
+                                            id: instruction.id,
+                                            value: 'instruction',
+                                            setData,
+                                            modifiedText,
+                                            instructionList,
+                                        })
+                                    }
                                     type='button'
                                     className={styles.save_button}
                                     placeholder='save instruction'
@@ -296,7 +249,14 @@ const RecipeCreate = () => {
                                 </button>
                             )}
                             <button
-                                onClick={() => deleteInputContainer(instruction.id, 'instruction')}
+                                onClick={() =>
+                                    deleteInputContainer({
+                                        id: instruction.id,
+                                        value: 'instruction',
+                                        instructionList,
+                                        setData,
+                                    })
+                                }
                                 className={styles.delete_button}
                                 type='button'
                                 placeholder='delete instruction'
@@ -324,7 +284,7 @@ const RecipeCreate = () => {
                 className={styles.text_input}
             />
             <button
-                onClick={() => addInputContainer('ingredient')}
+                onClick={() => addInputContainer({ value: 'ingredient', setData, ingredient, ingredientList })}
                 type='button'
                 className={styles.add_ingredient}
                 placeholder='add ingredient'
@@ -352,7 +312,15 @@ const RecipeCreate = () => {
                     <div className={styles.actions_container}>
                         {ingredient.id === inputId ? (
                             <button
-                                onClick={() => handleEdits(ingredient.id, 'ingredient')}
+                                onClick={() =>
+                                    EditInputContainer({
+                                        id: ingredient.id,
+                                        value: 'ingredient',
+                                        modifiedText,
+                                        setData,
+                                        ingredientList,
+                                    })
+                                }
                                 placeholder='save ingredient'
                                 type='button'
                                 className={styles.save_button}
@@ -376,7 +344,14 @@ const RecipeCreate = () => {
                             </button>
                         )}
                         <button
-                            onClick={() => deleteInputContainer(ingredient.id, 'ingredient')}
+                            onClick={() =>
+                                deleteInputContainer({
+                                    id: ingredient.id,
+                                    value: 'ingredient',
+                                    ingredientList,
+                                    setData,
+                                })
+                            }
                             className={styles.delete_button}
                             type='button'
                             placeholder='delete ingredient'

@@ -78,8 +78,11 @@ export const recipeCreateAction =
             formData.append('cook_time', cookTime);
             formData.append('serving', serving);
 
-            await axios.post(endpointRoute().recipes.create, formData, config);
+            const { data } = await axios.post(endpointRoute().recipes.create, formData, config);
             dispatch({ type: CREATE_RECIPE_SUCCESS });
+
+            const recipeId = data.id;
+            return recipeId;
         } catch {
             dispatch({ type: CREATE_RECIPE_FAIL });
         }
@@ -314,7 +317,7 @@ export const ingredientDeleteAction = () => async (dispatch) => {
 
 // instructions
 export const instructionCreateAction =
-    ({ recipeId, textList, imageList = '' }) =>
+    ({ recipeId, textList, imageList = [''] }) =>
     async (dispatch) => {
         try {
             const config = {
