@@ -81,7 +81,7 @@ def chat_massage_create():
 def create_ingredient(api_client):
     recipe_data = RecipeFactory()
     api_client.force_authenticate(recipe_data.author)
-    text_list = ['1','2','5']
+    text_list = [f'{recipe_data.title}']
     data = {
         'recipe': recipe_data.id,
         'text_list': text_list
@@ -106,7 +106,6 @@ def create_instruction(api_client):
     api_client.logout()
 
     return new_instruction
-
 
 # enable testing for postgres db
 @pytest.fixture(scope='session')

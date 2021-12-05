@@ -241,10 +241,7 @@ class TestInstructionDetailView:
         def test_deleting_instructions_allowed_to_recipe_author(self, api_client, create_instruction):
             instructions_data = create_instruction
             api_client.force_authenticate(instructions_data.recipe.author)
-            data = {
-                'recipe': instructions_data.recipe.id,
-            }
-            response = api_client.delete(instructions_data.get_absolute_url(), data)
+            response = api_client.delete(instructions_data.get_absolute_url())
 
             assert response.status_code == 204
             assert len(Instruction.objects.all()) == 0
