@@ -47,7 +47,16 @@ export const recipeDeleteAction =
     };
 
 export const recipeCreateAction =
-    ({ photoMain, title, description, cookTime, serving }) =>
+    ({
+        photoMain,
+        title,
+        description,
+        cookTime,
+        serving,
+        instructionsTextList = '',
+        ingredientsTextList = '',
+        instructionsImageList = '',
+    }) =>
     async (dispatch) => {
         try {
             const config = {
@@ -65,6 +74,9 @@ export const recipeCreateAction =
             formData.append('description', description);
             formData.append('cook_time', cookTime);
             formData.append('serving', serving);
+            formData.append('instructions_text_list', instructionsTextList);
+            formData.append('ingredients_text_list', ingredientsTextList);
+            formData.append('instructions_image_list', instructionsImageList);
 
             const { data } = await axios.post(endpointRoute().recipes.create, formData, config);
             dispatch({ type: CREATE_RECIPE_SUCCESS });

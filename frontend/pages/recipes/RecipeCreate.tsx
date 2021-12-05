@@ -62,27 +62,12 @@ const RecipeCreate = () => {
             return { imageBlob, imageFile };
         } catch {}
     };
-    const instructionImageList = instructionList.map((instruction) => instruction.imageFile);
 
     const onSubmit = async (e) => {
         e.preventDefault();
         // TODO redirect only on dispatch success
         const createRecipe = async () => {
-            const recipeId = await dispatch(recipeCreateAction({ photoMain, title, description, cookTime, serving }));
-            const ingredientTextList = await ingredientList.map((ingredient) => ingredient.text);
-            const instructionTextList = await instructionList.map((instruction) => instruction.text);
-            const instructionImageList = await instructionList.map((instruction) => instruction.imageFile);
-
-            instructionTextList && (await dispatch(ingredientCreateAction({ recipeId, textList: ingredientTextList })));
-
-            instructionTextList.length >= 0 &&
-                (await dispatch(
-                    instructionCreateAction({
-                        recipeId,
-                        textList: instructionTextList,
-                        imageList: instructionImageList,
-                    })
-                ));
+            await dispatch(recipeCreateAction({ photoMain, title, description, cookTime, serving }));
         };
         try {
             await createRecipe();

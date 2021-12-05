@@ -45,9 +45,9 @@ class TestRecipeCreateView:
             data = {
                 'title': {recipe_data.title},
                 'description': {recipe_data.description},
-                'ingredients_text_list': [None],
-                'instructions_text_list': [None],
-                'instructions_image_list': [None],
+                'ingredients_text_list': '',
+                'instructions_text_list': '',
+                'instructions_image_list': '',
             }
             response = api_client.post(create_recipe_url, data)
 
@@ -61,9 +61,9 @@ class TestRecipeCreateView:
                 data = {
                     'title': {recipe_data.title},
                     'description': {recipe_data.description},
-                    'ingredients_text_list': [None],
-                    'instructions_text_list': [None],
-                    'instructions_image_list': [None],
+                    'ingredients_text_list': '',
+                    'instructions_text_list': '',
+                    'instructions_image_list': '',
                 }
                 api_client.post(create_recipe_url, data)
                 new_recipe = Recipe.objects.get(title=recipe_data.title)
@@ -239,9 +239,9 @@ class TestTopRatedRecipes:
                 data = {
                     'title': {recipe_data.title},
                     'description': {recipe_data.description},
-                    'ingredients_text_list': [None],
-                    'instructions_text_list': [None],
-                    'instructions_image_list': [None],
+                    'ingredients_text_list': '',
+                    'instructions_text_list': '',
+                    'instructions_image_list': '',
                 }
                 api_client.post(create_recipe_url, data)
                 new_recipe = Recipe.objects.all().get(title=recipe_data.title)
@@ -256,9 +256,9 @@ class TestTopRatedRecipes:
                 data = {
                     'title': {recipe_data.title},
                     'description': {recipe_data.description},
-                    'ingredients_text_list': [None],
-                    'instructions_text_list': [None],
-                    'instructions_image_list': [None],
+                    'ingredients_text_list': '',
+                    'instructions_text_list': '',
+                    'instructions_image_list': '',
                 }
                 api_client.post(create_recipe_url, data)
                 new_recipe = Recipe.objects.all().get(title=recipe_data.title)
@@ -291,9 +291,9 @@ class TestTopRatedRecipes:
                 data = {
                     'title': {recipe_data.title},
                     'description': {recipe_data.description},
-                    'ingredients_text_list': [None],
-                    'instructions_text_list': [None],
-                    'instructions_image_list': [None],
+                    'ingredients_text_list': '',
+                    'instructions_text_list': '',
+                    'instructions_image_list': '',
                 }
                 api_client.post(create_recipe_url, data)
                 new_recipe = Recipe.objects.all().get(title=recipe_data.title)
@@ -308,9 +308,9 @@ class TestTopRatedRecipes:
                 data = {
                     'title': {recipe_data.title},
                     'description': {recipe_data.description},
-                    'ingredients_text_list': [None],
-                    'instructions_text_list': [None],
-                    'instructions_image_list': [None],
+                    'ingredients_text_list': '',
+                    'instructions_text_list': '',
+                    'instructions_image_list': '',
                 }
                 api_client.post(create_recipe_url, data)
                 new_recipe = Recipe.objects.all().get(title=recipe_data.title)

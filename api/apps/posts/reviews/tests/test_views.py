@@ -242,9 +242,9 @@ class TestRatingCreateView:
             data = {
                 'title': {second_recipe.title},
                 'description': {second_recipe.description},
-                'ingredients_text_list': [None],
-                'instructions_text_list': [None],
-                'instructions_image_list': [None],
+                'ingredients_text_list': '',
+                'instructions_text_list': '',
+                'instructions_image_list': '',
             }
             api_client.post(create_recipe_url, data)
             second_recipe = Recipe.objects.all().get(title=second_recipe.title)
@@ -299,9 +299,9 @@ class TestRatingCreateView:
             data = {
                 'title': {second_recipe.title},
                 'description': {second_recipe.description},
-                'ingredients_text_list': [None],
-                'instructions_text_list': [None],
-                'instructions_image_list': [None],
+                'ingredients_text_list': '',
+                'instructions_text_list': '',
+                'instructions_image_list': '',
             }
             api_client.post(create_recipe_url, data)
 

@@ -60,9 +60,9 @@ def test_get_account_stars_score(api_client):
     data = {
         'title': {first_recipe.title},
         'description': {first_recipe.description},
-        'ingredients_text_list': [None],
-        'instructions_text_list': [None],
-        'instructions_image_list': [None],
+        'ingredients_text_list': '',
+        'instructions_text_list': '',
+        'instructions_image_list': '',
     }
     api_client.post(create_recipe_url, data)  
 
@@ -70,9 +70,9 @@ def test_get_account_stars_score(api_client):
     data = {
         'title': {second_recipe.title},
         'description': {second_recipe.description},
-        'ingredients_text_list': [None],
-        'instructions_text_list': [None],
-        'instructions_image_list': [None],
+        'ingredients_text_list': '',
+        'instructions_text_list': '',
+        'instructions_image_list': '',
     }
     api_client.post(create_recipe_url, data)  
 
