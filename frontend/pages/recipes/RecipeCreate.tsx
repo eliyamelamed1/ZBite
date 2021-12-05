@@ -62,7 +62,7 @@ const RecipeCreate = () => {
             return { imageBlob, imageFile };
         } catch {}
     };
-    console.log(instructionList);
+    const instructionImageList = instructionList.map((instruction) => instruction.imageFile);
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -73,10 +73,16 @@ const RecipeCreate = () => {
             const instructionTextList = await instructionList.map((instruction) => instruction.text);
             const instructionImageList = await instructionList.map((instruction) => instruction.imageFile);
 
-            await dispatch(ingredientCreateAction({ recipeId, textList: ingredientTextList }));
-            await dispatch(
-                instructionCreateAction({ recipeId, textList: instructionTextList, imageList: instructionImageList })
-            );
+            instructionTextList && (await dispatch(ingredientCreateAction({ recipeId, textList: ingredientTextList })));
+
+            instructionTextList.length >= 0 &&
+                (await dispatch(
+                    instructionCreateAction({
+                        recipeId,
+                        textList: instructionTextList,
+                        imageList: instructionImageList,
+                    })
+                ));
         };
         try {
             await createRecipe();
