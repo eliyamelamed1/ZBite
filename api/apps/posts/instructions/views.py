@@ -50,5 +50,4 @@ class InstructionDetails(RetrieveUpdateDestroyAPIView):
 
     def perform_destroy(self, serializer):
         serializer.delete()
-
         Recipe.instructions = None

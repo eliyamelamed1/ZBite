@@ -7,12 +7,14 @@ from .models import Instruction
 
 class InstructionCreateSerializer(serializers.ModelSerializer):
     text_list = serializers.ListField()
+    image_list = serializers.ListField()
     class Meta:
         model = Instruction
-        fields = ('recipe','text_list',)
+        fields = ('recipe','text_list','image_list',)
 
 class InstructionUpdateSerializer(serializers.ModelSerializer):
     text_list = serializers.ListField()
+    image_list = serializers.ListField()
     class Meta:
         model = Instruction
-        fields = ('text_list',)
+        fields = ('text_list', 'image_list',)

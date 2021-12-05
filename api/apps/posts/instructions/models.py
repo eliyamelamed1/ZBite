@@ -15,7 +15,7 @@ class Instruction(models.Model):
     author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     recipe = models.OneToOneField('recipes.Recipe', on_delete=models.CASCADE)
     text_list = ArrayField(models.CharField(max_length=100, blank=True),size=15,)
-    # image_list = ArrayField(models.ImageField(upload_to='media/', blank=True),blank=True, null=True,size=15,)
+    image_list = ArrayField(models.ImageField(upload_to='media/', null=True), blank=True ,null=True, size=15,)
 
     def get_absolute_url(self):
         """Return absolute URL to the Instruction Detail page."""
