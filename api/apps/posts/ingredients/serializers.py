@@ -16,3 +16,10 @@ class IngredientUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ingredient
         fields = ('text_list',)
+
+
+class IngredientFieldSerializer(serializers.ModelSerializer):
+    text_list = serializers.ListField()
+    class Meta:
+        model = Ingredient
+        fields = ('text_list',)

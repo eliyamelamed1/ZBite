@@ -18,3 +18,11 @@ class InstructionUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Instruction
         fields = ('text_list', 'image_list',)
+
+
+class InstructionFieldSerializer(serializers.ModelSerializer):
+    text_list = serializers.ListField()
+    image_list = serializers.ListField()
+    class Meta:
+        model = Instruction
+        fields = ('text_list', 'image_list',)
