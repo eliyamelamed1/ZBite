@@ -86,7 +86,7 @@ class TestInstructionCreateView:
             assert Instruction.objects.all()[0].recipe == recipe_data
             assert Instruction.objects.all()[0].text_list == text_list
             assert Instruction.objects.all()[0].image_list == image_list
-            assert Recipe.objects.all()[0].instructions.text_list == text_list2 
+            assert Recipe.objects.all()[0].instructions.text_list == text_list 
 
             assert response2.status_code == 201
             assert Instruction.objects.all()[1].author == recipe_data2.author
@@ -237,26 +237,6 @@ class TestInstructionDetailView:
             assert Instruction.objects.all()[0].image_list == updated_image2
             assert Recipe.objects.all()[0].instructions.text_list == updated_text2 
             assert Recipe.objects.all()[0].instructions.image_list == updated_image2 
-
-        def test_deleting_instructions_allowed_to_recipe_author(self, api_client, create_instruction):
-            instructions_data = create_instruction
-            api_client.force_authenticate(instructions_data.recipe.author)
-            response = api_client.delete(instructions_data.get_absolute_url())
-
-            assert response.status_code == 204
-            assert len(Instruction.objects.all()) == 0
-            assert instructions_data.recipe.instructions == None
-
-        def test_deleting_instructions_forbidden_if_not_recipe_author(self, api_client, create_instruction):
-            instructions_data = create_instruction
-            new_user = UserFactory()
-            api_client.force_authenticate(new_user)
-            response = api_client.delete(instructions_data.get_absolute_url())
-
-            assert response.status_code == 403
-            assert len(Instruction.objects.all()) == 1
-            assert instructions_data.recipe.instructions == instructions_data
-
 
     class TestGuestUsers:
         def test_instruction_detail_page_should_not_render(self, api_client, create_instruction, logout):

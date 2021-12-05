@@ -81,7 +81,7 @@ class TestIngredientCreateView:
             assert Ingredient.objects.all()[0].author == recipe_data.author
             assert Ingredient.objects.all()[0].recipe == recipe_data
             assert Ingredient.objects.all()[0].text_list == text_list
-            assert Recipe.objects.all()[0].ingredients.text_list == text2 
+            assert Recipe.objects.all()[0].ingredients.text_list == text_list 
 
             assert response2.status_code == 201
             assert Ingredient.objects.all()[1].author == recipe_data2.author
