@@ -87,6 +87,7 @@ def create_ingredient(api_client):
         'text_list': text_list
     }
     api_client.post(create_ingredient_url, data)
+    api_client.logout()
     
     return Ingredient.objects.get(recipe=recipe_data.id)
 
@@ -108,6 +109,9 @@ def create_instruction(api_client):
     return new_instruction
 
 # enable testing for postgres db
+
+@pytest.mark.django_db
 @pytest.fixture(scope='session')
 def django_db_setup():
     settings.DATABASES['default'] 
+

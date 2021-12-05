@@ -49,7 +49,7 @@ class TestRecipeCreateView:
             response = api_client.post(create_recipe_url, data)
 
             assert response.status_code == 201
-        
+
         # def test_recipe_create_post_request_all_fields(self, api_client):
         #     new_user = UserFactory()
         #     api_client.force_authenticate(new_user)

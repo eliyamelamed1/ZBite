@@ -208,34 +208,24 @@ class TestIngredientDetailView:
             assert Ingredient.objects.all()[0].text_list == updated_text
             assert Recipe.objects.all()[0].ingredients.text_list == updated_text 
 
-        def test_updating_ingredients_forbidden_if_not_recipe_author(self, api_client):
-            recipe_data = RecipeFactory()
-            api_client.force_authenticate(recipe_data.author)
-            text_list = ['1','2','5']
-            data = {
-                'recipe': recipe_data.id,
-                'text_list': text_list
-            }
-            api_client.post(create_ingredient_url, data)
+        def test_updating_ingredients_forbidden_if_not_recipe_author(self, api_client, create_ingredient):
+            new_ingredient = create_ingredient
 
-            ingredients_data = Ingredient.objects.all()[0]
             new_user = UserFactory()
             api_client.force_authenticate(new_user)
             updated_text = ['1','2','7']
             data = {
-                'recipe': recipe_data.id,
+                'recipe': new_ingredient.recipe.id,
                 'text_list': updated_text
             }
-            response = api_client.patch(ingredients_data.get_absolute_url(), data)
+            response = api_client.patch(new_ingredient.get_absolute_url(), data)
 
             assert response.status_code == 403
-            assert Ingredient.objects.all()[0].author == recipe_data.author
-            assert Ingredient.objects.all()[0].recipe == recipe_data
-            assert Ingredient.objects.all()[0].text_list == text_list
-            assert Recipe.objects.all()[0].ingredients.text_list == text_list 
+            assert new_ingredient.text_list != updated_text
+            assert new_ingredient.recipe.ingredients.text_list == new_ingredient.text_list 
 
     class TestGuestUsers:
-        def test_ingredient_detail_page_should_not_render(self, api_client, create_ingredient, logout):
+        def test_ingredient_detail_page_should_not_render(self, api_client, create_ingredient):
             ingredient_data = create_ingredient
             response = api_client.get(ingredient_data.get_absolute_url())
 
