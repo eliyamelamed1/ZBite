@@ -242,6 +242,8 @@ class TestRatingCreateView:
             data = {
                 'title': {second_recipe.title},
                 'description': {second_recipe.description},
+                'serving': 'four people',
+                'cook_time': '2 hours',
                 'ingredients_text_list': '',
                 'instructions_text_list': '',
                 'instructions_image_list': '',
@@ -299,6 +301,8 @@ class TestRatingCreateView:
             data = {
                 'title': {second_recipe.title},
                 'description': {second_recipe.description},
+                'serving': 'four people',
+                'cook_time': '2 hours',
                 'ingredients_text_list': '',
                 'instructions_text_list': '',
                 'instructions_image_list': '',

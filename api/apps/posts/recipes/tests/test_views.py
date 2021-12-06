@@ -45,6 +45,8 @@ class TestRecipeCreateView:
             data = {
                 'title': {recipe_data.title},
                 'description': {recipe_data.description},
+                'serving': 'four people',
+                'cook_time': '2 hours',
                 'ingredients_text_list': '',
                 'instructions_text_list': '',
                 'instructions_image_list': '',
@@ -61,6 +63,8 @@ class TestRecipeCreateView:
                 data = {
                     'title': {recipe_data.title},
                     'description': {recipe_data.description},
+                    'serving': 'four people',
+                    'cook_time': '2 hours',
                     'ingredients_text_list': '',
                     'instructions_text_list': '',
                     'instructions_image_list': '',
@@ -82,7 +86,11 @@ class TestRecipeCreateView:
             data = {
                 'author': {new_user.id},
                 'title': {recipe_data.title},
-                'description': {recipe_data.description},
+                'serving': 'four people',
+                'cook_time': '2 hours',
+                'ingredients_text_list': '',
+                'instructions_text_list': '',
+                'instructions_image_list': '',
             }
             response = api_client.post(create_recipe_url, data)            
 
@@ -136,6 +144,8 @@ class TestUpdateRecipeView:
             data = {
                 'title': 'updated title',
                 'description':'updated_description',
+                'serving': 'four people',
+                'cook_time': '2 hours',
                 'ingredients_text_list': ['updated_ingredients_text_list'],
                 'instructions_text_list': ['updated_instructions_text_list'],
                 'instructions_image_list': ['updated_instructions_image_list'],
@@ -151,6 +161,8 @@ class TestUpdateRecipeView:
             data = {
                 'title': 'updated title',
                 'description':'updated_description',
+                'serving': 'four people',
+                'cook_time': '2 hours',
                 'ingredients_text_list': ['updated_ingredients_text_list'],
                 'instructions_text_list': ['updated_instructions_text_list'],
                 'instructions_image_list': ['updated_instructions_image_list'],
@@ -239,6 +251,8 @@ class TestTopRatedRecipes:
                 data = {
                     'title': {recipe_data.title},
                     'description': {recipe_data.description},
+                    'serving': 'four people',
+                    'cook_time': '2 hours',
                     'ingredients_text_list': '',
                     'instructions_text_list': '',
                     'instructions_image_list': '',
@@ -256,6 +270,8 @@ class TestTopRatedRecipes:
                 data = {
                     'title': {recipe_data.title},
                     'description': {recipe_data.description},
+                    'serving': 'four people',
+                    'cook_time': '2 hours',
                     'ingredients_text_list': '',
                     'instructions_text_list': '',
                     'instructions_image_list': '',
@@ -291,6 +307,8 @@ class TestTopRatedRecipes:
                 data = {
                     'title': {recipe_data.title},
                     'description': {recipe_data.description},
+                    'serving': 'four people',
+                    'cook_time': '2 hours',
                     'ingredients_text_list': '',
                     'instructions_text_list': '',
                     'instructions_image_list': '',
@@ -308,6 +326,8 @@ class TestTopRatedRecipes:
                 data = {
                     'title': {recipe_data.title},
                     'description': {recipe_data.description},
+                    'serving': 'four people',
+                    'cook_time': '2 hours',
                     'ingredients_text_list': '',
                     'instructions_text_list': '',
                     'instructions_image_list': '',

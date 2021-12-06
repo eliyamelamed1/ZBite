@@ -60,6 +60,8 @@ def test_get_account_stars_score(api_client):
     data = {
         'title': {first_recipe.title},
         'description': {first_recipe.description},
+        'serving': 'four people',
+        'cook_time': '2 hours',
         'ingredients_text_list': '',
         'instructions_text_list': '',
         'instructions_image_list': '',
@@ -70,6 +72,8 @@ def test_get_account_stars_score(api_client):
     data = {
         'title': {second_recipe.title},
         'description': {second_recipe.description},
+        'serving': 'four people',
+        'cook_time': '2 hours',
         'ingredients_text_list': '',
         'instructions_text_list': '',
         'instructions_image_list': '',

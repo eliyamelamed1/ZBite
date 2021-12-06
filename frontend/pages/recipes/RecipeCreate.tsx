@@ -144,7 +144,6 @@ const RecipeCreate = () => {
                 value={description}
                 onChange={onChangeText}
                 className={styles.description_input}
-                required
             />
             <div className={styles.cook_time_container}>
                 <span className={styles.cook_time_text}>Cook time</span>
