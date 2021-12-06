@@ -62,7 +62,7 @@ describe('authenticated users', () => {
         });
         test('description attributes', () => {
             const textbox = screen.getByPlaceholderText(/description/i);
-            expect(textbox.required).toBe(true);
+            expect(textbox.required).toBe(false);
             expect(textbox.type).toBe('text');
             expect(textbox.name).toBe('description');
         });
@@ -80,7 +80,7 @@ describe('authenticated users', () => {
         });
         test('cook time attributes', () => {
             const textbox = screen.getByPlaceholderText(/1hr 30min/i);
-            expect(textbox.required).toBe(false);
+            expect(textbox.required).toBe(true);
             expect(textbox.type).toBe('text');
             expect(textbox.name).toBe('cookTime');
         });
@@ -98,7 +98,7 @@ describe('authenticated users', () => {
         });
         test('serving attributes', () => {
             const textbox = screen.getByPlaceholderText(/2 people/i);
-            expect(textbox.required).toBe(false);
+            expect(textbox.required).toBe(true);
             expect(textbox.type).toBe('text');
             expect(textbox.name).toBe('serving');
         });
@@ -346,17 +346,20 @@ describe('authenticated users', () => {
             expect(recipeCreateActionSpy.mock.calls[0][0].title).toBe('new title');
             expect(recipeCreateActionSpy.mock.calls[0][0].description).toBe('new description');
         });
-        test('should redirect to home page after recipe is created', () => {
+        test('should redirect to home page after recipe is created', async () => {
             const titleTextbox = screen.getByPlaceholderText(/title/i);
-            const descriptionTextbox = screen.getByPlaceholderText(/description/i);
+            const servingTextbox = screen.getByPlaceholderText(/1hr 30min/i);
+            const cookTimeTextbox = screen.getByPlaceholderText(/2 people/i);
+
             const button = screen.getByRole('button', { name: /create recipe/i });
 
             userEvent.type(titleTextbox, 'new title');
-            userEvent.type(descriptionTextbox, 'new description');
+            userEvent.type(servingTextbox, 'new serving');
+            userEvent.type(cookTimeTextbox, 'new cook time');
             userEvent.click(button);
 
-            expect(Router.push.mock.calls.length).toBe(1);
-            expect(Router.push.mock.calls[0][0]).toBe(pageRoute().home);
+            expect(await Router.push.mock.calls.length).toBe(1);
+            expect(await Router.push.mock.calls[0][0]).toBe(pageRoute().home);
         });
         test('should not redirect after recipe creation fail', () => {
             recipeCreateActionSpy.mockReturnValueOnce(() => {

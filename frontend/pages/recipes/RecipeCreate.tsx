@@ -65,12 +65,12 @@ const RecipeCreate = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        // TODO redirect only on dispatch success
-        const createRecipe = async () => {
+        try {
             const ingredientsTextList = ingredientList.map((ingredient) => ingredient.text);
             const instructionsTextList = instructionList.map((instruction) => instruction.text);
             const instructionsImageList = instructionList.map((instruction) => instruction.imageFile);
-            await dispatch(
+
+            dispatch(
                 recipeCreateAction({
                     photoMain,
                     title,
@@ -82,9 +82,6 @@ const RecipeCreate = () => {
                     instructionsImageList,
                 })
             );
-        };
-        try {
-            await createRecipe();
             Router.push(pageRoute().home);
         } catch (err) {
             // console.log(err);
