@@ -11,49 +11,49 @@ const Leaderboard = (props) => {
         <ul className={styles.firstContainer}>
             <div className={styles.first_place}>
                 <li>
-                    <section className={styles.firstSection}>
+                    <section className={styles.image_and_name_section}>
                         {profileIcon.src && (
                             <Image src={profileIcon.src} height={100} width={100} alt='profile picture' />
                         )}
                         <span className={styles.full_name}>Full Name</span>
                     </section>
-                    <section className={styles.secondSection}>
+                    <section className={styles.score_section}>
                         {scoreIcon.src && <Image src={scoreIcon.src} height={100} width={100} alt='profile picture' />}
                         <span className={styles.score_text}>Score: 2.0K</span>
                     </section>
                 </li>
-                <span className={styles.ranking}>1</span>
+                <span className={styles.ranking_placement}>1</span>
             </div>
             <div className={styles.second_place}>
                 <li>
-                    <section className={styles.firstSection}>
+                    <section className={styles.image_and_name_section}>
                         {profileIcon.src && (
                             <Image src={profileIcon.src} height={100} width={100} alt='profile picture' />
                         )}
                         <span className={styles.full_name}>Full Name</span>
                     </section>
-                    <section className={styles.secondSection}>
+                    <section className={styles.score_section}>
                         {scoreIcon.src && <Image src={scoreIcon.src} height={100} width={100} alt='profile picture' />}
                         <span className={styles.score_text}>Score: 2.0K</span>
                     </section>
                 </li>
-                <span className={styles.ranking}>2</span>
+                <span className={styles.ranking_placement}>2</span>
             </div>
 
             <div className={styles.third_place}>
                 <li>
-                    <section className={styles.firstSection}>
+                    <section className={styles.image_and_name_section}>
                         {profileIcon.src && (
                             <Image src={profileIcon.src} height={100} width={100} alt='profile picture' />
                         )}
                         <span className={styles.full_name}>Full Name</span>
                     </section>
-                    <section className={styles.secondSection}>
+                    <section className={styles.score_section}>
                         {scoreIcon.src && <Image src={scoreIcon.src} height={100} width={100} alt='profile picture' />}
                         <span className={styles.score_text}>Score: 2.0K</span>
                     </section>
                 </li>
-                <span className={styles.ranking}>3</span>
+                <span className={styles.ranking_placement}>3</span>
             </div>
         </ul>
     );
@@ -61,78 +61,78 @@ const Leaderboard = (props) => {
     const secondContainer = (
         <ul className={styles.secondContainer}>
             <li>
-                <section className={styles.firstSection}>
-                    <span className={styles.ranking}>04</span>
+                <section className={styles.image_name_and_placement_section}>
+                    <span className={styles.ranking_placement}>04</span>
                     {profileIcon.src && <Image src={profileIcon.src} height={100} width={100} alt='profile picture' />}
                     <span className={styles.full_name}>Full Name</span>
                 </section>
-                <section className={styles.secondSection}>
+                <section className={styles.score_section}>
                     {scoreIcon.src && <Image src={scoreIcon.src} height={100} width={100} alt='profile picture' />}
                     <span className={styles.score_text}>Score: 2.0K</span>
                 </section>
             </li>
             <li>
-                <section className={styles.firstSection}>
-                    <span className={styles.ranking}>04</span>
+                <section className={styles.image_name_and_placement_section}>
+                    <span className={styles.ranking_placement}>04</span>
                     {profileIcon.src && <Image src={profileIcon.src} height={100} width={100} alt='profile picture' />}
                     <span className={styles.full_name}>Full Name</span>
                 </section>
-                <section className={styles.secondSection}>
+                <section className={styles.score_section}>
                     {scoreIcon.src && <Image src={scoreIcon.src} height={100} width={100} alt='profile picture' />}
                     <span className={styles.score_text}>Score: 2.0K</span>
                 </section>
             </li>
             <li>
-                <section className={styles.firstSection}>
-                    <span className={styles.ranking}>04</span>
+                <section className={styles.image_name_and_placement_section}>
+                    <span className={styles.ranking_placement}>04</span>
                     {profileIcon.src && <Image src={profileIcon.src} height={100} width={100} alt='profile picture' />}
                     <span className={styles.full_name}>Full Name</span>
                 </section>
-                <section className={styles.secondSection}>
+                <section className={styles.score_section}>
                     {scoreIcon.src && <Image src={scoreIcon.src} height={100} width={100} alt='profile picture' />}
                     <span className={styles.score_text}>Score: 2.0K</span>
                 </section>
             </li>
             <li>
-                <section className={styles.firstSection}>
-                    <span className={styles.ranking}>04</span>
+                <section className={styles.image_name_and_placement_section}>
+                    <span className={styles.ranking_placement}>04</span>
                     {profileIcon.src && <Image src={profileIcon.src} height={100} width={100} alt='profile picture' />}
                     <span className={styles.full_name}>Full Name</span>
                 </section>
-                <section className={styles.secondSection}>
+                <section className={styles.score_section}>
                     {scoreIcon.src && <Image src={scoreIcon.src} height={100} width={100} alt='profile picture' />}
                     <span className={styles.score_text}>Score: 2.0K</span>
                 </section>
             </li>
             <li>
-                <section className={styles.firstSection}>
-                    <span className={styles.ranking}>04</span>
+                <section className={styles.image_name_and_placement_section}>
+                    <span className={styles.ranking_placement}>04</span>
                     {profileIcon.src && <Image src={profileIcon.src} height={100} width={100} alt='profile picture' />}
                     <span className={styles.full_name}>Full Name</span>
                 </section>
-                <section className={styles.secondSection}>
+                <section className={styles.score_section}>
                     {scoreIcon.src && <Image src={scoreIcon.src} height={100} width={100} alt='profile picture' />}
                     <span className={styles.score_text}>Score: 2.0K</span>
                 </section>
             </li>
             <li>
-                <section className={styles.firstSection}>
-                    <span className={styles.ranking}>04</span>
+                <section className={styles.image_name_and_placement_section}>
+                    <span className={styles.ranking_placement}>04</span>
                     {profileIcon.src && <Image src={profileIcon.src} height={100} width={100} alt='profile picture' />}
                     <span className={styles.full_name}>Full Name</span>
                 </section>
-                <section className={styles.secondSection}>
+                <section className={styles.score_section}>
                     {scoreIcon.src && <Image src={scoreIcon.src} height={100} width={100} alt='profile picture' />}
                     <span className={styles.score_text}>Score: 2.0K</span>
                 </section>
             </li>
             <li>
-                <section className={styles.firstSection}>
-                    <span className={styles.ranking}>04</span>
+                <section className={styles.image_name_and_placement_section}>
+                    <span className={styles.ranking_placement}>04</span>
                     {profileIcon.src && <Image src={profileIcon.src} height={100} width={100} alt='profile picture' />}
                     <span className={styles.full_name}>Full Name</span>
                 </section>
-                <section className={styles.secondSection}>
+                <section className={styles.score_section}>
                     {scoreIcon.src && <Image src={scoreIcon.src} height={100} width={100} alt='profile picture' />}
                     <span className={styles.score_text}>Score: 2.0K</span>
                 </section>

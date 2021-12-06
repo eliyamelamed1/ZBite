@@ -20,28 +20,6 @@
     justify-content: space-between;
     align-items: center;
     text-align: center;
-
-    .ranking {
-        font-size: 2.5rem;
-        font-weight: 700;
-        color: $primary-color;
-        text-align: center;
-        position: relative;
-        top: 0.5rem;
-    }
-    li {
-        @include media('<=phone') {
-            width: 12rem;
-        }
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0.75rem;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-        border-radius: 8px 8px 8px 8px;
-    }
     .first_place {
         position: relative;
         top: 0rem;
@@ -56,8 +34,28 @@
         position: relative;
         top: 4rem;
     }
-
-    .firstSection {
+    li {
+        @include media('<=phone') {
+            width: 12rem;
+        }
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+        border-radius: 8px 8px 8px 8px;
+    }
+    .ranking_placement {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: $primary-color;
+        text-align: center;
+        position: relative;
+        top: 0.5rem;
+    }
+    .image_and_name_section {
         margin-top: 0.5rem;
         display: flex;
         flex-direction: column;
@@ -79,7 +77,7 @@
             font-weight: 600;
         }
     }
-    .secondSection {
+    .score_section {
         display: flex;
         align-items: center;
         margin: 0.5rem 0.5rem;
@@ -112,16 +110,16 @@
         border-radius: 8px 8px 8px 8px;
     }
 
-    .firstSection,
-    .secondSection {
+    .image_name_and_placement_section,
+    .score_section {
         display: flex;
         align-items: center;
     }
 
-    .firstSection {
+    .image_name_and_placement_section {
         margin-left: 1rem;
         width: 60%;
-        .ranking {
+        .ranking_placement {
             margin-right: 1rem;
             color: $primary-color;
             font-weight: 600;
@@ -140,7 +138,7 @@
             margin-left: 1rem;
         }
     }
-    .secondSection {
+    .score_section {
         text-align: right;
         margin-right: 1rem;
         justify-content: flex-end;
