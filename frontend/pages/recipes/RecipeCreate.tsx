@@ -14,11 +14,27 @@ import saveInput from '../../styles/icons/save_changes.svg';
 import styles from '../../styles/pages/recipeCreate.module.scss';
 import uploadImageIcon from '../../styles/icons/upload_image.svg';
 
+interface DataTypes {
+    photoMain: null | File;
+    photoMainBlob: string;
+    title: string;
+    description: string;
+    cookTime: string;
+    serving: string;
+    instructionList: any[];
+    ingredientList: any[];
+
+    instruction: string;
+    ingredient: string;
+    modifiedText: string;
+    inputId: string;
+}
+
 const RecipeCreate = () => {
     const dispatch = useDispatch();
-    const [data, setData] = useState({
+    const [data, setData] = useState<DataTypes>({
         // recipe fields
-        photoMain: '',
+        photoMain: null,
         photoMainBlob: '',
         title: '',
         description: '',
@@ -56,7 +72,7 @@ const RecipeCreate = () => {
     const onChangeImage = async (e) => {
         try {
             const imageFile = e.target.files[0];
-            setData((prevState) => ({ ...prevState, photoMain: e.target.files[0] }));
+            setData((prevState) => ({ ...prevState, photoMain: e.target.files[0] as File }));
             const imageBlob = await URL.createObjectURL(e.target.files[0]);
             setData((prevState) => ({ ...prevState, [e.target.name]: imageBlob }));
             return { imageBlob, imageFile };
@@ -65,24 +81,26 @@ const RecipeCreate = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
+        console.log('1');
+
         try {
             const ingredientsTextList = ingredientList.map((ingredient) => ingredient.text);
             const instructionsTextList = instructionList.map((instruction) => instruction.text);
             const instructionsImageList = instructionList.map((instruction) => instruction.imageFile);
 
-            dispatch(
+            await dispatch(
                 recipeCreateAction({
                     photoMain,
                     title,
                     description,
-                    cookTime,
                     serving,
+                    cookTime,
                     ingredientsTextList,
                     instructionsTextList,
                     instructionsImageList,
                 })
             );
-            Router.push(pageRoute().home);
+            await Router.push(pageRoute().home);
         } catch (err) {
             // console.log(err);
         }

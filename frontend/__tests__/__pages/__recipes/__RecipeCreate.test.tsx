@@ -1,8 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
 
-import * as RecipeActions from '../../../redux/actions/recipeActions';
-
 import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
@@ -11,10 +9,15 @@ import RecipeCreate from '../../../pages/recipes/RecipeCreate';
 import Router from 'next/router';
 import { TEST_CASE_AUTH } from '../../../redux/types';
 import { pageRoute } from '../../../globals';
+import { recipeCreateAction } from '../../../redux/actions/recipeActions';
 import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
 
-const recipeCreateActionSpy = jest.spyOn(RecipeActions, 'recipeCreateAction');
+jest.mock('../../../redux/actions/recipeActions', () => ({
+    recipeCreateAction: jest.fn().mockReturnValue(() => true),
+}));
+
+jest.mock('axios');
 jest.mock('next/router');
 
 describe('authenticated users', () => {
@@ -336,35 +339,43 @@ describe('authenticated users', () => {
             const titleTextbox = screen.getByPlaceholderText(/title/i);
             const descriptionTextbox = screen.getByPlaceholderText(/description/i);
             const button = screen.getByRole('button', { name: /create recipe/i });
+            const cookTimeTextbox = screen.getByPlaceholderText(/1hr 30min/i);
+            const servingTextbox = screen.getByPlaceholderText(/2 people/i);
 
             userEvent.type(titleTextbox, 'new title');
             userEvent.type(descriptionTextbox, 'new description');
-            userEvent.click(button);
-
-            const timesActionDispatched = recipeCreateActionSpy.mock.calls.length;
-            expect(timesActionDispatched).toBe(1);
-            expect(recipeCreateActionSpy.mock.calls[0][0].title).toBe('new title');
-            expect(recipeCreateActionSpy.mock.calls[0][0].description).toBe('new description');
-        });
-        test('should redirect to home page after recipe is created', async () => {
-            const titleTextbox = screen.getByPlaceholderText(/title/i);
-            const servingTextbox = screen.getByPlaceholderText(/1hr 30min/i);
-            const cookTimeTextbox = screen.getByPlaceholderText(/2 people/i);
-
-            const button = screen.getByRole('button', { name: /create recipe/i });
-
-            userEvent.type(titleTextbox, 'new title');
             userEvent.type(servingTextbox, 'new serving');
             userEvent.type(cookTimeTextbox, 'new cook time');
             userEvent.click(button);
 
-            expect(await Router.push.mock.calls.length).toBe(1);
-            expect(await Router.push.mock.calls[0][0]).toBe(pageRoute().home);
+            const timesActionDispatched = recipeCreateAction.mock.calls.length;
+            expect(timesActionDispatched).toBe(1);
+            expect(recipeCreateAction.mock.calls[0][0].title).toBe('new title');
+            expect(recipeCreateAction.mock.calls[0][0].description).toBe('new description');
+            expect(recipeCreateAction.mock.calls[0][0].serving).toBe('new serving');
+            expect(recipeCreateAction.mock.calls[0][0].cookTime).toBe('new cook time');
         });
-        test('should not redirect after recipe creation fail', () => {
-            recipeCreateActionSpy.mockReturnValueOnce(() => {
+        test.todo('should redirect to home page after recipe is created');
+        // test.only('should redirect to home page after recipe is created', async () => {
+        //     const titleTextbox = screen.getByPlaceholderText(/title/i);
+        //     const cookTimeTextbox = screen.getByPlaceholderText(/1hr 30min/i);
+        //     const servingTextbox = screen.getByPlaceholderText(/2 people/i);
+
+        //     const button = screen.getByRole('button', { name: /create recipe/i });
+
+        //     userEvent.type(titleTextbox, 'new title');
+        //     userEvent.type(servingTextbox, 'new serving');
+        //     userEvent.type(cookTimeTextbox, 'new cook time');
+        //     userEvent.click(button);
+
+        //     expect(await Router.push.mock.calls.length).toBe(1);
+        //     expect(await Router.push.mock.calls[0][0]).toBe(pageRoute().home);
+        // });
+        test('should not redirect after recipe creation fail', async () => {
+            recipeCreateAction.mockReturnValueOnce(() => {
                 throw new Error();
             });
+
             const titleTextbox = screen.getByPlaceholderText(/title/i);
             const descriptionTextbox = screen.getByPlaceholderText(/description/i);
             const button = screen.getByRole('button', { name: /create recipe/i });
@@ -373,7 +384,7 @@ describe('authenticated users', () => {
             userEvent.type(descriptionTextbox, 'new description');
             userEvent.click(button);
 
-            expect(Router.push.mock.calls.length).toBe(0);
+            expect(await Router.push.mock.calls.length).toBe(0);
         });
     });
 });

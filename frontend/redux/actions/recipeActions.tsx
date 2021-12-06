@@ -53,9 +53,18 @@ export const recipeCreateAction =
         description,
         cookTime,
         serving,
-        ingredientsTextList = '',
-        instructionsTextList = '',
-        instructionsImageList = '',
+        ingredientsTextList,
+        instructionsTextList,
+        instructionsImageList,
+    }: {
+        photoMain: File;
+        title: string;
+        description: string;
+        cookTime: string;
+        serving: string;
+        ingredientsTextList: string[];
+        instructionsTextList: string[];
+        instructionsImageList: File[] | string[];
     }) =>
     async (dispatch) => {
         try {
@@ -66,6 +75,9 @@ export const recipeCreateAction =
                     Authorization: `Token ${localStorage.getItem('auth_token')}`,
                 },
             };
+            ingredientsTextList.length === 0 && (ingredientsTextList = ['']);
+            instructionsTextList.length === 0 && (instructionsTextList = ['']);
+            instructionsImageList.length === 0 && (instructionsImageList = ['']);
 
             const formData = new FormData();
 
@@ -74,16 +86,14 @@ export const recipeCreateAction =
             formData.append('description', description);
             formData.append('cook_time', cookTime);
             formData.append('serving', serving);
-            formData.append('instructions_text_list', instructionsTextList);
-            formData.append('ingredients_text_list', ingredientsTextList);
-            formData.append('instructions_image_list', instructionsImageList);
+            formData.append('instructions_text_list', instructionsTextList as any);
+            formData.append('ingredients_text_list', ingredientsTextList as any);
+            formData.append('instructions_image_list', instructionsImageList as any);
 
-            const { data } = await axios.post(endpointRoute().recipes.create, formData, config);
+            await axios.post(endpointRoute().recipes.create, formData, config);
+
             dispatch({ type: CREATE_RECIPE_SUCCESS });
-
-            const recipeId = data.id;
-            return recipeId;
-        } catch {
+        } catch (err) {
             dispatch({ type: CREATE_RECIPE_FAIL });
         }
     };

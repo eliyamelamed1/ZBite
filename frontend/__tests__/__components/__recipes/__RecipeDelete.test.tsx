@@ -18,9 +18,11 @@ const initialState = {};
 const store = mockStore(initialState);
 
 const recipeId = '1';
+
 jest.mock('../../../redux/actions/recipeActions', () => ({
     recipeDeleteAction: jest.fn().mockReturnValue(() => true),
 }));
+
 jest.mock('next/router');
 
 describe('RecipeDelete', () => {
