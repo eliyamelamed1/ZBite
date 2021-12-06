@@ -8,7 +8,7 @@
     align-items: center;
 }
 
-.firstContainer {
+.threeUsersContainer {
     width: clamp(30rem, 90vw, 60rem);
     @include media('<=phone') {
         display: flex;
@@ -20,24 +20,51 @@
     justify-content: space-between;
     align-items: center;
     text-align: center;
-    .first_place {
+
+    .card {
+        @include media('<=phone') {
+            width: 15rem;
+            flex-direction: row-reverse;
+        }
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: clamp(8rem, 25vw, 15rem);
+    }
+    .ranking_placement {
+        @include media('<=phone') {
+            right: 4rem;
+        }
+        padding: 0;
+        margin: 0;
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: $primary-color;
+        position: relative;
+    }
+
+    div:nth-of-type(1) {
         position: relative;
         top: 0rem;
     }
-    .second_place {
+    div:nth-of-type(2) {
         margin-left: 1rem;
         margin-right: 1rem;
         position: relative;
         top: 2rem;
     }
-    .third_place {
+    div:nth-of-type(3) {
         position: relative;
         top: 4rem;
     }
+
     li {
         @include media('<=phone') {
-            width: 12rem;
+            width: 15rem;
         }
+        height: 17.5rem;
+        width: 100%;
         position: relative;
         display: flex;
         flex-direction: column;
@@ -47,35 +74,25 @@
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
         border-radius: 8px 8px 8px 8px;
     }
-    .ranking_placement {
-        font-size: 2.5rem;
-        font-weight: 700;
-        color: $primary-color;
-        text-align: center;
-        position: relative;
-        top: 0.5rem;
-    }
-    .image_and_name_section {
+
+    .image_section {
         margin-top: 0.5rem;
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-bottom: 1rem;
 
         img {
             border-radius: 3rem;
             width: 6.2rem;
             object-fit: cover;
         }
-
-        .full_name {
-            @include media('<=phone') {
-                font-size: 1.25rem;
-            }
-            margin-top: 1rem;
-            font-size: clamp(1rem, 2vw, 1.5rem);
-            font-weight: 600;
-        }
+    }
+    .full_name {
+        margin-top: 1rem;
+        font-size: clamp(1.25rem, 2vw, 1.5rem);
+        font-weight: 600;
+        width: 100%;
+        overflow: hidden;
     }
     .score_section {
         display: flex;
@@ -89,7 +106,7 @@
     }
 }
 
-.secondContainer {
+.sevenUsersContainer {
     width: clamp(20rem, 85vw, 60rem);
     margin: 0rem 2rem;
     margin-top: 8rem;
@@ -134,8 +151,9 @@
             height: 4rem;
         }
         .full_name {
-            font-size: clamp(1rem, 3vw, 1.5rem);
+            font-size: clamp(1.25rem, 3vw, 1.5rem);
             margin-left: 1rem;
+            font-weight: 600;
         }
     }
     .score_section {
@@ -151,9 +169,10 @@
         }
     }
 }
+
 .score_text {
     margin-left: 0.4rem;
-    font-size: clamp(1rem, 2vw, 1.5rem);
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
     font-weight: 600;
     color: $primary-color;
 }

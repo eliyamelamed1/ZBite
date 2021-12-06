@@ -1,149 +1,83 @@
 import Image from 'next/image';
 import React from 'react';
+import emptyImageIcon from '../../styles/icons/upload_image.svg';
 import { loadLeaderboardAction } from '../../redux/actions/userActions';
-import profileIcon from '../../styles/icons/upload_image.svg';
 import scoreIcon from '../../styles/icons/score-icon.svg';
 import store from '../../redux/store';
 import styles from '../../styles/pages/leaderboard.module.scss';
 
 const Leaderboard = (props) => {
-    const firstContainer = (
-        <ul className={styles.firstContainer}>
-            <div className={styles.first_place}>
-                <li>
-                    <section className={styles.image_and_name_section}>
-                        {profileIcon.src && (
-                            <Image src={profileIcon.src} height={100} width={100} alt='profile picture' />
-                        )}
-                        <span className={styles.full_name}>Full Name</span>
-                    </section>
-                    <section className={styles.score_section}>
-                        {scoreIcon.src && <Image src={scoreIcon.src} height={100} width={100} alt='profile picture' />}
-                        <span className={styles.score_text}>Score: 2.0K</span>
-                    </section>
-                </li>
-                <span className={styles.ranking_placement}>1</span>
-            </div>
-            <div className={styles.second_place}>
-                <li>
-                    <section className={styles.image_and_name_section}>
-                        {profileIcon.src && (
-                            <Image src={profileIcon.src} height={100} width={100} alt='profile picture' />
-                        )}
-                        <span className={styles.full_name}>Full Name</span>
-                    </section>
-                    <section className={styles.score_section}>
-                        {scoreIcon.src && <Image src={scoreIcon.src} height={100} width={100} alt='profile picture' />}
-                        <span className={styles.score_text}>Score: 2.0K</span>
-                    </section>
-                </li>
-                <span className={styles.ranking_placement}>2</span>
-            </div>
+    const { listOfLeaderboardUsers } = props;
+    const topThreeUsers = listOfLeaderboardUsers.slice(0, 3);
+    const lastSevenUsers = listOfLeaderboardUsers.slice(-7);
 
-            <div className={styles.third_place}>
-                <li>
-                    <section className={styles.image_and_name_section}>
-                        {profileIcon.src && (
-                            <Image src={profileIcon.src} height={100} width={100} alt='profile picture' />
-                        )}
-                        <span className={styles.full_name}>Full Name</span>
-                    </section>
-                    <section className={styles.score_section}>
-                        {scoreIcon.src && <Image src={scoreIcon.src} height={100} width={100} alt='profile picture' />}
-                        <span className={styles.score_text}>Score: 2.0K</span>
-                    </section>
-                </li>
-                <span className={styles.ranking_placement}>3</span>
-            </div>
+    console.log(topThreeUsers);
+
+    const threeUsersContainer = (
+        <ul className={styles.threeUsersContainer}>
+            {topThreeUsers.map((user, index) => (
+                <div key={user.id} className={styles.card}>
+                    <li>
+                        <section className={styles.image_section}>
+                            {user?.photo_main?.src ? (
+                                <Image src={user?.photo_main?.src} height={100} width={100} alt='profile picture' />
+                            ) : (
+                                emptyImageIcon.src && (
+                                    <Image src={emptyImageIcon.src} height={100} width={100} alt='profile picture' />
+                                )
+                            )}
+                        </section>
+                        <span className={styles.full_name}>{user?.name}</span>
+                        <section className={styles.score_section}>
+                            {scoreIcon?.src && (
+                                <Image src={scoreIcon?.src} height={100} width={100} alt='profile picture' />
+                            )}
+                            {user?.score ? (
+                                <span className={styles.score_text}>{user?.score}</span>
+                            ) : (
+                                <span className={styles.score_text}>0</span>
+                            )}
+                        </section>
+                    </li>
+                    <span className={styles.ranking_placement}>{index + 1}</span>
+                </div>
+            ))}
         </ul>
     );
+    console.log(lastSevenUsers);
 
-    const secondContainer = (
-        <ul className={styles.secondContainer}>
-            <li>
-                <section className={styles.image_name_and_placement_section}>
-                    <span className={styles.ranking_placement}>04</span>
-                    {profileIcon.src && <Image src={profileIcon.src} height={100} width={100} alt='profile picture' />}
-                    <span className={styles.full_name}>Full Name</span>
-                </section>
-                <section className={styles.score_section}>
-                    {scoreIcon.src && <Image src={scoreIcon.src} height={100} width={100} alt='profile picture' />}
-                    <span className={styles.score_text}>Score: 2.0K</span>
-                </section>
-            </li>
-            <li>
-                <section className={styles.image_name_and_placement_section}>
-                    <span className={styles.ranking_placement}>04</span>
-                    {profileIcon.src && <Image src={profileIcon.src} height={100} width={100} alt='profile picture' />}
-                    <span className={styles.full_name}>Full Name</span>
-                </section>
-                <section className={styles.score_section}>
-                    {scoreIcon.src && <Image src={scoreIcon.src} height={100} width={100} alt='profile picture' />}
-                    <span className={styles.score_text}>Score: 2.0K</span>
-                </section>
-            </li>
-            <li>
-                <section className={styles.image_name_and_placement_section}>
-                    <span className={styles.ranking_placement}>04</span>
-                    {profileIcon.src && <Image src={profileIcon.src} height={100} width={100} alt='profile picture' />}
-                    <span className={styles.full_name}>Full Name</span>
-                </section>
-                <section className={styles.score_section}>
-                    {scoreIcon.src && <Image src={scoreIcon.src} height={100} width={100} alt='profile picture' />}
-                    <span className={styles.score_text}>Score: 2.0K</span>
-                </section>
-            </li>
-            <li>
-                <section className={styles.image_name_and_placement_section}>
-                    <span className={styles.ranking_placement}>04</span>
-                    {profileIcon.src && <Image src={profileIcon.src} height={100} width={100} alt='profile picture' />}
-                    <span className={styles.full_name}>Full Name</span>
-                </section>
-                <section className={styles.score_section}>
-                    {scoreIcon.src && <Image src={scoreIcon.src} height={100} width={100} alt='profile picture' />}
-                    <span className={styles.score_text}>Score: 2.0K</span>
-                </section>
-            </li>
-            <li>
-                <section className={styles.image_name_and_placement_section}>
-                    <span className={styles.ranking_placement}>04</span>
-                    {profileIcon.src && <Image src={profileIcon.src} height={100} width={100} alt='profile picture' />}
-                    <span className={styles.full_name}>Full Name</span>
-                </section>
-                <section className={styles.score_section}>
-                    {scoreIcon.src && <Image src={scoreIcon.src} height={100} width={100} alt='profile picture' />}
-                    <span className={styles.score_text}>Score: 2.0K</span>
-                </section>
-            </li>
-            <li>
-                <section className={styles.image_name_and_placement_section}>
-                    <span className={styles.ranking_placement}>04</span>
-                    {profileIcon.src && <Image src={profileIcon.src} height={100} width={100} alt='profile picture' />}
-                    <span className={styles.full_name}>Full Name</span>
-                </section>
-                <section className={styles.score_section}>
-                    {scoreIcon.src && <Image src={scoreIcon.src} height={100} width={100} alt='profile picture' />}
-                    <span className={styles.score_text}>Score: 2.0K</span>
-                </section>
-            </li>
-            <li>
-                <section className={styles.image_name_and_placement_section}>
-                    <span className={styles.ranking_placement}>04</span>
-                    {profileIcon.src && <Image src={profileIcon.src} height={100} width={100} alt='profile picture' />}
-                    <span className={styles.full_name}>Full Name</span>
-                </section>
-                <section className={styles.score_section}>
-                    {scoreIcon.src && <Image src={scoreIcon.src} height={100} width={100} alt='profile picture' />}
-                    <span className={styles.score_text}>Score: 2.0K</span>
-                </section>
-            </li>
+    const sevenUsersContainer = (
+        <ul className={styles.sevenUsersContainer}>
+            {lastSevenUsers.map((user, index) => (
+                <li key={user?.id}>
+                    <section className={styles.image_name_and_placement_section}>
+                        <span className={styles.ranking_placement}>{index + 3}</span>
+                        {user?.photo_main?.src ? (
+                            <Image src={user?.photo_main?.src} height={100} width={100} alt='profile picture' />
+                        ) : (
+                            emptyImageIcon.src && (
+                                <Image src={emptyImageIcon.src} height={100} width={100} alt='profile picture' />
+                            )
+                        )}
+                        <span className={styles.full_name}>{user?.name}</span>
+                    </section>
+                    <section className={styles.score_section}>
+                        {scoreIcon.src && <Image src={scoreIcon.src} height={100} width={100} alt='profile picture' />}
+                        {user?.score ? (
+                            <span className={styles.score_text}>{user?.score}</span>
+                        ) : (
+                            <span className={styles.score_text}>0</span>
+                        )}
+                    </section>
+                </li>
+            ))}
         </ul>
     );
 
     return (
         <div className={styles.mainContainer}>
-            {firstContainer}
-            {secondContainer}
+            {threeUsersContainer}
+            {sevenUsersContainer}
         </div>
     );
 };
