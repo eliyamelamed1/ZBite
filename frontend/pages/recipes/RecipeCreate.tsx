@@ -155,6 +155,7 @@ const RecipeCreate = () => {
                     value={cookTime}
                     onChange={onChangeText}
                     className={styles.cook_time_input}
+                    required
                 />
             </div>
             <div className={styles.serving_container}>
@@ -166,6 +167,7 @@ const RecipeCreate = () => {
                     value={serving}
                     onChange={onChangeText}
                     className={styles.serving_input}
+                    required
                 />
             </div>
         </section>
