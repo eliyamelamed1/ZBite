@@ -7,7 +7,7 @@ import { pageRoute } from '../../globals';
 import { recipeDeleteAction } from '../../redux/actions/recipeActions';
 import { useDispatch } from 'react-redux';
 
-const RecipeDelete = ({ id }) => {
+const RecipeDelete: React.FC<{ id: string }> = ({ id }) => {
     const dispatch = useDispatch();
     const onSubmit = (e) => {
         e.preventDefault();

@@ -6,7 +6,7 @@ import { pageRoute } from '../../globals';
 import { reviewCreateAction } from '../../redux/actions/recipeActions';
 import { useState } from 'react';
 
-const ReviewCreate = ({ recipeId }) => {
+const ReviewCreate: React.FC<{ recipeId: string }> = ({ recipeId }) => {
     const dispatch = useDispatch();
     const [formData, setFormData] = useState({
         stars: '',

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { followUserAction } from '../../redux/actions/userActions';
 import styles from '../../styles/pages/userProfile.module.scss';
 
-const FollowUser = ({ userToFollow }) => {
+const FollowUser: React.FC<{ userToFollow: string }> = ({ userToFollow }) => {
     const dispatch = useDispatch();
     const [button, setButton] = useState('follow');
     const { loggedUserData, isUserAuthenticated } = useSelector((state) => state.userReducer);

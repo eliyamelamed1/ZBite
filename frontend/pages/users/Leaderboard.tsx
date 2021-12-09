@@ -1,4 +1,3 @@
-import { AnyAction } from 'redux';
 import Image from 'next/image';
 import React from 'react';
 import emptyImageIcon from '../../styles/icons/upload_image.svg';
@@ -7,8 +6,13 @@ import scoreIcon from '../../styles/icons/score-icon.svg';
 import store from '../../redux/store';
 import styles from '../../styles/pages/leaderboard.module.scss';
 
+interface User {
+    photo_main?: { src: string };
+    name: string;
+    score: string;
+}
 interface DataTypes {
-    listOfLeaderboardUsers: object[];
+    listOfLeaderboardUsers: User[];
 }
 
 const Leaderboard: React.FC<DataTypes> = (props) => {

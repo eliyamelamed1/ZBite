@@ -3,7 +3,7 @@ import React from 'react';
 import { reviewDeleteAction } from '../../redux/actions/recipeActions';
 import { useDispatch } from 'react-redux';
 
-const ReviewDelete = ({ reviewId, recipeId }) => {
+const ReviewDelete: React.FC<{ reviewId: string; recipeId: string }> = ({ reviewId, recipeId }) => {
     const dispatch = useDispatch();
     const onSubmit = (e) => {
         e.preventDefault();

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { saveRecipeAction } from '../../redux/actions/recipeActions';
 
-const SaveRecipe = ({ recipeId }) => {
+const SaveRecipe: React.FC<{ recipeId: string }> = ({ recipeId }) => {
     const dispatch = useDispatch();
     const [button, setButton] = useState('save');
     const { loggedUserData } = useSelector((state) => state.userReducer);

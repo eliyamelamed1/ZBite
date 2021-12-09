@@ -5,7 +5,7 @@ import { pageRoute } from '../../globals';
 import { useDispatch } from 'react-redux';
 import { userDeleteAction } from '../../redux/actions/userActions';
 
-const UserDelete = ({ id }) => {
+const UserDelete: React.FC<{ id: string }> = ({ id }) => {
     const dispatch = useDispatch();
     const onSubmit = async (e) => {
         e.preventDefault();

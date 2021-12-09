@@ -10,7 +10,12 @@ import RecipeDelete from './RecipeDelete';
 import RecipeUpdate from './RecipeUpdate';
 import { useSelector } from 'react-redux';
 
-const IsRecipeAuthor = ({ recipe }) => {
+interface Recipe {
+    id: string;
+    author: { id: string };
+}
+
+const IsRecipeAuthor: React.FC<{ recipe: Recipe }> = ({ recipe }) => {
     const [isAuthor, setIsAuthor] = useState(false);
     const { loggedUserData } = useSelector((state) => state.userReducer);
     const guestLinks = <div data-testid='guestLinks'>you are not the recipe author </div>;
@@ -30,10 +35,6 @@ const IsRecipeAuthor = ({ recipe }) => {
         }
     }, [loggedUserData, recipe.author.id]);
     return <div data-testid='isRecipeAuthor'>{isAuthor ? authorLinks : guestLinks}</div>;
-};
-
-IsRecipeAuthor.propTypes = {
-    recipe: PropTypes.object.isRequired,
 };
 
 export default IsRecipeAuthor;

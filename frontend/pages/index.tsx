@@ -8,7 +8,7 @@ import { pageRoute } from '../globals';
 import store from '../redux/store';
 import styles from '../styles/pages/home.module.scss';
 
-const HomePage = (props) => {
+const HomePage: React.FC<{ listOfTrendingRecipes: Object[] }> = (props) => {
     const dispatch = useDispatch();
     const [typeOfRecipes, setTypeOfRecipes] = useState('Trending');
     const buttonsRef = useRef() as any;

@@ -1,13 +1,12 @@
 // TODO - test onSubmit triggers useUpdateAction (fail/success scenarios)
 // TODO - test propTypes
 
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
 
-import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import { userUpdateAction } from '../../redux/actions/userActions';
 
-const UserUpdate = ({ id }) => {
+const UserUpdate: React.FC<{ id: string }> = ({ id }) => {
     const dispatch = useDispatch();
     const [formData, setFormData] = useState({
         name: '',
@@ -54,9 +53,6 @@ const UserUpdate = ({ id }) => {
             </form>
         </div>
     );
-};
-UserUpdate.propTypes = {
-    id: PropTypes.string.isRequired,
 };
 
 export default UserUpdate;

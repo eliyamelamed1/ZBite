@@ -7,21 +7,21 @@ import React, { useState } from 'react';
 import { recipeUpdateAction } from '../../redux/actions/recipeActions';
 import { useDispatch } from 'react-redux';
 
-const RecipeUpdate = ({ id }) => {
+const RecipeUpdate: React.FC<{ id: string }> = ({ id }) => {
     const dispatch = useDispatch();
     const [formData, setFormData] = useState({
         title: '',
         description: '',
     });
 
-    const { title, description, } = formData;
+    const { title, description } = formData;
 
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
     const onSubmit = async (e) => {
         e.preventDefault();
         try {
-            dispatch(recipeUpdateAction({ id, title, description,  }));
+            dispatch(recipeUpdateAction({ id, title, description }));
         } catch (e) {
             // TODO - add err msg
         }

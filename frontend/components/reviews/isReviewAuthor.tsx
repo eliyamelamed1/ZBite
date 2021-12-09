@@ -5,7 +5,12 @@ import ReviewCreate from './ReviewCreate';
 import ReviewDelete from './ReviewDelete';
 import { useSelector } from 'react-redux';
 
-const IsReviewAuthor = ({ review }) => {
+interface Review {
+    author: { id: string };
+    id: string;
+    recipe: string;
+}
+const IsReviewAuthor: React.FC<{ review: Review }> = ({ review }) => {
     const [isAuthor, setIsAuthor] = useState(false);
     const { loggedUserData } = useSelector((state) => state.userReducer);
     const authorLinks = (
@@ -21,10 +26,6 @@ const IsReviewAuthor = ({ review }) => {
     }, [loggedUserData, review.author.id]);
 
     return <div>{isAuthor ? authorLinks : null}</div>;
-};
-
-IsReviewAuthor.propTypes = {
-    review: PropTypes.object.isRequired,
 };
 
 export default IsReviewAuthor;

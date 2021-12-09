@@ -12,9 +12,17 @@ import store from '../../redux/store';
 import styles from '../../styles/pages/userProfile.module.scss';
 import { useSelector } from 'react-redux';
 
-const UserDetails = (props) => {
+interface User {
+    id: string;
+    name: string;
+    email: string;
+    followers: string[];
+    following: string[];
+}
+
+const UserDetails: React.FC<{ serverUserData: User }> = (props) => {
     const [isMyProfile, setIsMyProfile] = useState(false);
-    const [userData, setUserData] = useState(props.serverUserData);
+    const [userData, setUserData] = useState<User>(props.serverUserData);
     const { loggedUserData, requestedUserData } = useSelector((state) => state.userReducer);
 
     useEffect(
