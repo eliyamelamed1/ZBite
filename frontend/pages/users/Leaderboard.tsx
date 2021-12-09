@@ -1,3 +1,4 @@
+import { AnyAction } from 'redux';
 import Image from 'next/image';
 import React from 'react';
 import emptyImageIcon from '../../styles/icons/upload_image.svg';
@@ -6,12 +7,19 @@ import scoreIcon from '../../styles/icons/score-icon.svg';
 import store from '../../redux/store';
 import styles from '../../styles/pages/leaderboard.module.scss';
 
-const Leaderboard = (props) => {
+interface DataTypes {
+    listOfLeaderboardUsers: object[];
+}
+
+const Leaderboard: React.FC<DataTypes> = (props) => {
     const { listOfLeaderboardUsers } = props;
+
+    for (let i = 0; i < 10; i++) {
+        if (listOfLeaderboardUsers[i] === undefined) listOfLeaderboardUsers[i] = null;
+    }
+
     const topThreeUsers = listOfLeaderboardUsers.slice(0, 3);
     const lastSevenUsers = listOfLeaderboardUsers.slice(-7);
-
-    console.log(topThreeUsers);
 
     const threeUsersContainer = (
         <ul className={styles.threeUsersContainer}>
@@ -44,7 +52,6 @@ const Leaderboard = (props) => {
             ))}
         </ul>
     );
-    console.log(lastSevenUsers);
 
     const sevenUsersContainer = (
         <ul className={styles.sevenUsersContainer}>
@@ -82,7 +89,7 @@ const Leaderboard = (props) => {
     );
 };
 export async function getStaticProps() {
-    await store.dispatch(loadLeaderboardAction());
+    await store.dispatch<any>(loadLeaderboardAction());
     const { listOfLeaderboardUsers } = store.getState().userReducer;
 
     return { props: { listOfLeaderboardUsers }, revalidate: 10 };
