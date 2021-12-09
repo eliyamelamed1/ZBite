@@ -24,7 +24,7 @@ const Leaderboard: React.FC<DataTypes> = (props) => {
     const threeUsersContainer = (
         <ul className={styles.threeUsersContainer}>
             {topThreeUsers.map((user, index) => (
-                <div key={user.id} className={styles.card}>
+                <div key={user?.id} className={styles.card}>
                     <li>
                         <section className={styles.image_section}>
                             {user?.photo_main?.src ? (
