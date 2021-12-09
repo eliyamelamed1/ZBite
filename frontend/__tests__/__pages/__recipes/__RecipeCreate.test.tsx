@@ -338,15 +338,27 @@ describe('authenticated users', () => {
         test('clicking the submit button should call dispatch recipeCreateAction', () => {
             const titleTextbox = screen.getByPlaceholderText(/title/i);
             const descriptionTextbox = screen.getByPlaceholderText(/description/i);
-            const button = screen.getByRole('button', { name: /create recipe/i });
             const cookTimeTextbox = screen.getByPlaceholderText(/1hr 30min/i);
             const servingTextbox = screen.getByPlaceholderText(/2 people/i);
+            const instructionTextbox = screen.getByPlaceholderText(/add onions to the mixture/i);
+            const ingredientTextbox = screen.getByPlaceholderText(/2 onions/i);
+            const addIngredientButton = screen.getByPlaceholderText(/add ingredient/i);
+
+            const addInstructionButton = screen.getByPlaceholderText(/add instruction/i);
+            const submitButton = screen.getByRole('button', { name: /create recipe/i });
 
             userEvent.type(titleTextbox, 'new title');
             userEvent.type(descriptionTextbox, 'new description');
             userEvent.type(servingTextbox, 'new serving');
             userEvent.type(cookTimeTextbox, 'new cook time');
-            userEvent.click(button);
+
+            userEvent.type(ingredientTextbox, '1. 2 cucumbers');
+            userEvent.click(addIngredientButton);
+
+            userEvent.type(instructionTextbox, '1. add rotten tomatoes');
+            userEvent.click(addInstructionButton);
+
+            userEvent.click(submitButton);
 
             const timesActionDispatched = recipeCreateAction.mock.calls.length;
             expect(timesActionDispatched).toBe(1);
@@ -354,6 +366,54 @@ describe('authenticated users', () => {
             expect(recipeCreateAction.mock.calls[0][0].description).toBe('new description');
             expect(recipeCreateAction.mock.calls[0][0].serving).toBe('new serving');
             expect(recipeCreateAction.mock.calls[0][0].cookTime).toBe('new cook time');
+            expect(recipeCreateAction.mock.calls[0][0].ingredientsTextList).toEqual(['1. 2 cucumbers']);
+            expect(recipeCreateAction.mock.calls[0][0].instructionsTextList).toEqual(['1. add rotten tomatoes']);
+        });
+        test('submitting recipeCreateForm with empty instructions array is forbidden', () => {
+            const titleTextbox = screen.getByPlaceholderText(/title/i);
+            const descriptionTextbox = screen.getByPlaceholderText(/description/i);
+            const cookTimeTextbox = screen.getByPlaceholderText(/1hr 30min/i);
+            const servingTextbox = screen.getByPlaceholderText(/2 people/i);
+            const instructionTextbox = screen.getByPlaceholderText(/add onions to the mixture/i);
+
+            const addInstructionButton = screen.getByPlaceholderText(/add instruction/i);
+            const submitButton = screen.getByRole('button', { name: /create recipe/i });
+
+            userEvent.type(titleTextbox, 'new title');
+            userEvent.type(descriptionTextbox, 'new description');
+            userEvent.type(servingTextbox, 'new serving');
+            userEvent.type(cookTimeTextbox, 'new cook time');
+
+            userEvent.type(instructionTextbox, '1. add rotten tomatoes');
+            userEvent.click(addInstructionButton);
+
+            userEvent.click(submitButton);
+
+            const timesActionDispatched = recipeCreateAction.mock.calls.length;
+            expect(timesActionDispatched).toBe(0);
+        });
+        test('submitting recipeCreateForm with empty ingredients array is forbidden', () => {
+            const titleTextbox = screen.getByPlaceholderText(/title/i);
+            const descriptionTextbox = screen.getByPlaceholderText(/description/i);
+            const cookTimeTextbox = screen.getByPlaceholderText(/1hr 30min/i);
+            const servingTextbox = screen.getByPlaceholderText(/2 people/i);
+            const ingredientTextbox = screen.getByPlaceholderText(/2 onions/i);
+            const addIngredientButton = screen.getByPlaceholderText(/add ingredient/i);
+
+            const submitButton = screen.getByRole('button', { name: /create recipe/i });
+
+            userEvent.type(titleTextbox, 'new title');
+            userEvent.type(descriptionTextbox, 'new description');
+            userEvent.type(servingTextbox, 'new serving');
+            userEvent.type(cookTimeTextbox, 'new cook time');
+
+            userEvent.type(ingredientTextbox, '1. 2 cucumbers');
+            userEvent.click(addIngredientButton);
+
+            userEvent.click(submitButton);
+
+            const timesActionDispatched = recipeCreateAction.mock.calls.length;
+            expect(timesActionDispatched).toBe(0);
         });
         test.todo('should redirect to home page after recipe is created');
         // test.only('should redirect to home page after recipe is created', async () => {

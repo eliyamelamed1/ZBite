@@ -64,7 +64,7 @@ export const recipeCreateAction =
         serving: string;
         ingredientsTextList: string[];
         instructionsTextList: string[];
-        instructionsImageList: File[] | string[];
+        instructionsImageList: File[];
     }) =>
     async (dispatch) => {
         try {
@@ -75,9 +75,6 @@ export const recipeCreateAction =
                     Authorization: `Token ${localStorage.getItem('auth_token')}`,
                 },
             };
-            ingredientsTextList.length === 0 && (ingredientsTextList = ['']);
-            instructionsTextList.length === 0 && (instructionsTextList = ['']);
-            instructionsImageList.length === 0 && (instructionsImageList = ['']);
 
             const formData = new FormData();
 

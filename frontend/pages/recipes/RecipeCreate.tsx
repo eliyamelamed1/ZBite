@@ -81,12 +81,13 @@ const RecipeCreate = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        console.log('1');
-
         try {
             const ingredientsTextList = ingredientList.map((ingredient) => ingredient.text);
             const instructionsTextList = instructionList.map((instruction) => instruction.text);
             const instructionsImageList = instructionList.map((instruction) => instruction.imageFile);
+
+            if (ingredientsTextList.length === 0 || instructionsTextList.length === 0)
+                return console.log('ingredients / instructions is not allowed to be empty');
 
             await dispatch(
                 recipeCreateAction({
