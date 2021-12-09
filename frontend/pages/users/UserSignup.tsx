@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Link from 'next/link';
+import { RootState } from '../../redux/store';
 import Router from 'next/router';
 import { pageRoute } from '../../globals';
 import { signupAction } from '../../redux/actions/userActions';
@@ -13,7 +14,7 @@ import styles from '../../styles/pages/signup.module.scss';
 
 const UserSignup = () => {
     const dispatch = useDispatch();
-    const isUserAuthenticated = useSelector((state) => state.userReducer.isUserAuthenticated);
+    const isUserAuthenticated = useSelector((state: RootState) => state.userReducer.isUserAuthenticated);
     const [formData, setFormData] = useState({
         name: '',
         email: '',

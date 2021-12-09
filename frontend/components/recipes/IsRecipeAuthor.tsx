@@ -8,6 +8,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import RecipeDelete from './RecipeDelete';
 import RecipeUpdate from './RecipeUpdate';
+import { RootState } from '../../redux/store';
 import { useSelector } from 'react-redux';
 
 interface Recipe {
@@ -17,7 +18,7 @@ interface Recipe {
 
 const IsRecipeAuthor: React.FC<{ recipe: Recipe }> = ({ recipe }) => {
     const [isAuthor, setIsAuthor] = useState(false);
-    const { loggedUserData } = useSelector((state) => state.userReducer);
+    const { loggedUserData } = useSelector((state: RootState) => state.userReducer);
     const guestLinks = <div data-testid='guestLinks'>you are not the recipe author </div>;
 
     const authorLinks = (

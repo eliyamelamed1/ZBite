@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import store, { RootState } from '../../redux/store';
 
 import FollowUser from '../../components/followers/FollowUser';
 import Head from 'next/head';
@@ -8,7 +9,6 @@ import ScoreIcon from '../../styles/icons/score-icon.svg';
 import UserDelete from '../../components/users/UserDelete';
 import UserUpdate from '../../components/users/UserUpdate';
 import { loadUserDetailsAction } from '../../redux/actions/userActions';
-import store from '../../redux/store';
 import styles from '../../styles/pages/userProfile.module.scss';
 import { useSelector } from 'react-redux';
 
@@ -23,7 +23,7 @@ interface User {
 const UserDetails: React.FC<{ serverUserData: User }> = (props) => {
     const [isMyProfile, setIsMyProfile] = useState(false);
     const [userData, setUserData] = useState<User>(props.serverUserData);
-    const { loggedUserData, requestedUserData } = useSelector((state) => state.userReducer);
+    const { loggedUserData, requestedUserData } = useSelector((state: RootState) => state.userReducer);
 
     useEffect(
         // updates userData after visiting userDetailsPage and then navigating to myProfilePage

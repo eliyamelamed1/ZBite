@@ -1,6 +1,7 @@
 // check difference between props.match.params.id && props.id
 
 import React, { useEffect, useState } from 'react';
+import store, { RootState } from '../../redux/store';
 
 import Custom404 from '../404';
 import DisplayReviews from '../../components/reviews/DisplayReviews';
@@ -12,13 +13,12 @@ import ReviewCreate from '../../components/reviews/ReviewCreate';
 import SaveRecipe from '../../components/recipes/SaveRecipe';
 import { loadRecipeDetailsAction } from '../../redux/actions/recipeActions';
 import { reviewsInRecipeAction } from '../../redux/actions/recipeActions';
-import store from '../../redux/store';
 import { useSelector } from 'react-redux';
 
 const RecipeDetails = (props) => {
     const [recipeData, setRecipeData] = useState(props.serverRecipeData);
-    const { requestedRecipeData, listOfFilteredReviews } = useSelector((state) => state.recipeReducer);
-    const { isUserAuthenticated } = useSelector((state) => state.userReducer);
+    const { requestedRecipeData, listOfFilteredReviews } = useSelector((state: RootState) => state.recipeReducer);
+    const { isUserAuthenticated } = useSelector((state: RootState) => state.userReducer);
     const [reviewsData, setReviewsData] = useState(props.serverReviewsData);
 
     useEffect(

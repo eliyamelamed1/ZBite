@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ingredientCreateAction, instructionCreateAction, recipeCreateAction } from '../../redux/actions/recipeActions';
+import store, { RootState } from '../../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 
 import EditInputContainer from '../../components/utils/ModifyInputContainer';
@@ -10,6 +10,7 @@ import deleteIcon from '../../styles/icons/delete-input-icon.svg';
 import deleteInputContainer from '../../components/utils/DeleteInputContainer';
 import editInput from '../../styles/icons/edit_input.svg';
 import { pageRoute } from '../../globals';
+import { recipeCreateAction } from '../../redux/actions/recipeActions';
 import saveInput from '../../styles/icons/save_changes.svg';
 import styles from '../../styles/pages/recipeCreate.module.scss';
 import uploadImageIcon from '../../styles/icons/upload_image.svg';
@@ -65,7 +66,7 @@ const RecipeCreate = () => {
         inputId,
     } = data;
 
-    const { isUserAuthenticated } = useSelector((state) => state.userReducer);
+    const { isUserAuthenticated } = useSelector((state: RootState) => state.userReducer);
     isUserAuthenticated === false ? Router.push(pageRoute().home) : null;
     // ------------Functions------------
     const onChangeText = (e) => setData({ ...data, [e.target.name]: e.target.value });

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { RootState } from '../../redux/store';
 import { saveRecipeAction } from '../../redux/actions/recipeActions';
 
 const SaveRecipe: React.FC<{ recipeId: string }> = ({ recipeId }) => {
     const dispatch = useDispatch();
     const [button, setButton] = useState('save');
-    const { loggedUserData } = useSelector((state) => state.userReducer);
+    const { loggedUserData } = useSelector((state: RootState) => state.userReducer);
 
     useEffect(
         function toggleButtonText() {

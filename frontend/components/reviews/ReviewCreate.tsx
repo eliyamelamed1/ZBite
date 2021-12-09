@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 
 import PropTypes from 'prop-types';
+import { RootState } from '../../redux/store';
 import Router from 'next/router';
 import { pageRoute } from '../../globals';
 import { reviewCreateAction } from '../../redux/actions/recipeActions';
@@ -15,7 +16,7 @@ const ReviewCreate: React.FC<{ recipeId: string }> = ({ recipeId }) => {
     });
     const { stars, comment, image } = formData;
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
-    const { isUserAuthenticated } = useSelector((state) => state.userReducer);
+    const { isUserAuthenticated } = useSelector((state: RootState) => state.userReducer);
 
     const onSubmit = async (e) => {
         e.preventDefault();

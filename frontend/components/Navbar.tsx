@@ -8,6 +8,7 @@ import Link from 'next/link';
 import LogoIcon from '../styles/icons/logo.svg';
 import PlusIcon from '../styles/icons/plus.svg';
 import ProfileIcon from '../styles/icons/profile.svg';
+import { RootState } from '../redux/store';
 import SavedIcon from '../styles/icons/heart.svg';
 import SearchIcon from '../styles/icons/search.svg';
 import { logoutAction } from '../redux/actions/userActions';
@@ -17,8 +18,8 @@ import { useRouter } from 'next/router';
 
 const Navbar = () => {
     const dispatch = useDispatch();
-    const updatedIsUserAuthenticated = useSelector((state) => state.userReducer.isUserAuthenticated);
-    const updatedloggedUserData = useSelector((state) => state.userReducer.loggedUserData);
+    const updatedIsUserAuthenticated = useSelector((state: RootState) => state.userReducer.isUserAuthenticated);
+    const updatedloggedUserData = useSelector((state: RootState) => state.userReducer.loggedUserData);
 
     const [isUserAuthenticated, setIsUserAuthenticated] = useState();
     const [loggedUserData, setloggedUserData] = useState();
