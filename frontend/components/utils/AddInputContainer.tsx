@@ -1,10 +1,20 @@
-const addInputContainer = ({
+interface DataTypes {
+    value: string;
+    setData: (prevState) => {};
+    instruction: string;
+    ingredient: string;
+    instructionList: Object[];
+    ingredientList: Object[];
+}
+
+const addInputContainer: (DataTypes) => void = ({
     value,
     setData,
 
     instruction = '',
-    instructionList = [],
     ingredient = '',
+
+    instructionList = [],
     ingredientList = [],
 }) => {
     if (value === 'instruction') {

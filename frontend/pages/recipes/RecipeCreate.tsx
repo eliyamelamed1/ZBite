@@ -14,7 +14,7 @@ import saveInput from '../../styles/icons/save_changes.svg';
 import styles from '../../styles/pages/recipeCreate.module.scss';
 import uploadImageIcon from '../../styles/icons/upload_image.svg';
 
-interface DataTypes {
+interface StateTypes {
     photoMain: null | File;
     photoMainBlob: string;
     title: string;
@@ -32,7 +32,7 @@ interface DataTypes {
 
 const RecipeCreate = () => {
     const dispatch = useDispatch();
-    const [data, setData] = useState<DataTypes>({
+    const [data, setData] = useState<StateTypes>({
         // recipe fields
         photoMain: null,
         photoMainBlob: '',

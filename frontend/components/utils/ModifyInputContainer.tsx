@@ -1,4 +1,24 @@
-const EditInputContainer = ({ id, value, setData, modifiedText, ingredientList = [], instructionList = [] }) => {
+interface DataTypes {
+    id: string;
+    value: string;
+    modifiedText: string;
+
+    setData: (prevState) => {};
+
+    ingredientList: Object[];
+    instructionList: Object[];
+}
+
+const EditInputContainer: (DataTypes) => void = ({
+    id,
+    value,
+    modifiedText,
+
+    setData,
+
+    ingredientList = [],
+    instructionList = [],
+}) => {
     if (modifiedText === '') return;
     if (value === 'instruction') {
         const updatedInstructionList = [...instructionList].map((instruction) => {

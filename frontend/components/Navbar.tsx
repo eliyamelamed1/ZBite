@@ -22,6 +22,7 @@ const Navbar = () => {
 
     const [isUserAuthenticated, setIsUserAuthenticated] = useState();
     const [loggedUserData, setloggedUserData] = useState();
+
     useEffect(() => {
         setIsUserAuthenticated(updatedIsUserAuthenticated);
         setloggedUserData(updatedloggedUserData);

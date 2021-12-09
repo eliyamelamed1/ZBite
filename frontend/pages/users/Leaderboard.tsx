@@ -13,7 +13,6 @@ interface DataTypes {
 
 const Leaderboard: React.FC<DataTypes> = (props) => {
     const { listOfLeaderboardUsers } = props;
-
     for (let i = 0; i < 10; i++) {
         if (listOfLeaderboardUsers[i] === undefined) listOfLeaderboardUsers[i] = null;
     }
@@ -24,7 +23,7 @@ const Leaderboard: React.FC<DataTypes> = (props) => {
     const threeUsersContainer = (
         <ul className={styles.threeUsersContainer}>
             {topThreeUsers.map((user, index) => (
-                <div key={user?.id} className={styles.card}>
+                <div key={index} className={styles.card}>
                     <li>
                         <section className={styles.image_section}>
                             {user?.photo_main?.src ? (
@@ -56,7 +55,7 @@ const Leaderboard: React.FC<DataTypes> = (props) => {
     const sevenUsersContainer = (
         <ul className={styles.sevenUsersContainer}>
             {lastSevenUsers.map((user, index) => (
-                <li key={user?.id}>
+                <li key={index}>
                     <section className={styles.image_name_and_placement_section}>
                         <span className={styles.ranking_placement}>{index + 3}</span>
                         {user?.photo_main?.src ? (
