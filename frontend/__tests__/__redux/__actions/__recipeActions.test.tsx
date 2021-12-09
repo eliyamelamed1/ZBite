@@ -32,11 +32,14 @@ const parameters = {
     id: 'id',
     stars: 'stars',
     comment: 'comment',
-    photoMain: 'photoMain',
+    photoMain: new File(['photoMain'], 'photoMain.txt'),
     image: 'image',
     reviewId: 'reviewId',
     cookTime: 'cookTime',
     serving: 'serving',
+    ingredientsTextList: ['firstIngredient'],
+    instructionsTextList: ['firstIngredient'],
+    instructionsImageList: [new File(['instructionImage'], 'instructionImage.txt')],
 };
 
 const config = {
@@ -69,8 +72,28 @@ describe('axios request should match url endpoint, and parameters', () => {
         expect(axios.delete.mock.calls[0][1]).toStrictEqual(configWithAuthToken);
     });
     test('recipeCreateAction', () => {
-        const { photoMain, title, description, cookTime, serving } = parameters;
-        store.dispatch(recipeCreateAction({ photoMain, title, description, cookTime, serving }));
+        const {
+            photoMain,
+            title,
+            description,
+            cookTime,
+            serving,
+            ingredientsTextList,
+            instructionsTextList,
+            instructionsImageList,
+        } = parameters;
+        store.dispatch<any>(
+            recipeCreateAction({
+                photoMain,
+                title,
+                description,
+                cookTime,
+                serving,
+                ingredientsTextList,
+                instructionsTextList,
+                instructionsImageList,
+            })
+        );
 
         const formData = axios.post.mock.calls[0][1];
 
