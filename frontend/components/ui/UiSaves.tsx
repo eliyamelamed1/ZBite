@@ -2,7 +2,7 @@ import Image from 'next/image';
 import SavedIcon from '../../styles/icons/saved.svg';
 import styles from '../../styles/ui/UiSaves.module.scss';
 
-const UiSaves = ({ savesCount }) => {
+const UiSaves: React.FC<{ savesCount: string }> = ({ savesCount }) => {
     return (
         <ul className={styles.saves_count_and_icon}>
             <li className={styles.saves_count}>
