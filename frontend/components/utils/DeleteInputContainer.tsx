@@ -1,4 +1,18 @@
-const deleteInputContainer = ({ id, value, setData, instructionList = [], ingredientList = [] }) => {
+interface DataTypes {
+    id: string;
+    value: string;
+    setData: (prevState) => {};
+    instructionList: Object[];
+    ingredientList: Object[];
+}
+
+const deleteInputContainer: (DataTypes) => void = ({
+    id,
+    value,
+    setData,
+    instructionList = [],
+    ingredientList = [],
+}) => {
     if (value === 'instruction') {
         let updatedInstructionList = [...instructionList].filter((instruction) => instruction.id !== id);
         setData((prevState) => ({ ...prevState, instructionList: updatedInstructionList }));
