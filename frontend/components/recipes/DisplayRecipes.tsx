@@ -1,11 +1,23 @@
 // test propTypes
 // test recipes displayed
 
-import PropTypes from 'prop-types';
 import React from 'react';
 import RecipeCard from './RecipeCard';
 
-const DisplayRecipes = ({ recipesToDisplay }) => {
+interface Recipe {
+    title: string;
+    photo_main: string;
+    id: string;
+    author: { name: string; id: string };
+    saves: string[];
+    stars: string;
+}
+
+interface DataTypes {
+    recipesToDisplay: Recipe[];
+}
+
+const DisplayRecipes: React.FC<DataTypes> = ({ recipesToDisplay }) => {
     const getRecipes = () => {
         if (recipesToDisplay) {
             const recipesOnPage = [];
@@ -17,8 +29,8 @@ const DisplayRecipes = ({ recipesToDisplay }) => {
                         photo_main={recipe.photo_main}
                         id={recipe.id}
                         author={recipe.author}
-                        saves={recipe.saves?.length || 0}
-                        stars={recipe.stars || 'not rated'}
+                        saves={recipe.saves}
+                        stars={recipe.stars}
                     />
                 )
             );
@@ -38,10 +50,6 @@ const DisplayRecipes = ({ recipesToDisplay }) => {
         }
     };
     return <>{getRecipes()}</>;
-};
-
-DisplayRecipes.propTypes = {
-    recipesToDisplay: PropTypes.array.isRequired,
 };
 
 export default DisplayRecipes;

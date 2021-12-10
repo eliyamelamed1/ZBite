@@ -11,7 +11,7 @@ const firstRecipeData = {
     author: 'author',
     title: 'title',
     photo_main: '/#',
-    saves: ['eliya'] as any,
+    saves: ['eliya'],
     stars: 5.0,
 };
 
@@ -20,8 +20,8 @@ const secondRecipeData = {
     author: 'author2',
     title: 'title2',
     photo_main: '/#2',
-    saves: [] as any,
-    stars: 0 as any,
+    saves: [],
+    stars: '0',
 };
 
 const recipesToDisplay = [firstRecipeData, secondRecipeData];
@@ -38,10 +38,6 @@ describe('DisplayRecipes', () => {
         expect(recipeCardSpy.mock.calls.length).toBe(2);
     });
     test('should have called recipeCard with the proper recipes data', () => {
-        firstRecipeData.saves = 1;
-        secondRecipeData.saves = 0;
-        secondRecipeData.stars = 'not rated';
-
         expect(recipeCardSpy.mock.calls[0][0]).toEqual(firstRecipeData);
         expect(recipeCardSpy.mock.calls[1][0]).toEqual(secondRecipeData);
     });

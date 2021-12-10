@@ -15,12 +15,12 @@ interface DataTypes {
     title: string;
     photo_main: string;
     id: string;
-    author: object;
-    saves: number;
+    author: { name: string; id: string };
+    saves: string[];
     stars: string;
 }
 
-const RecipeCard = (props) => {
+const RecipeCard: React.FC<DataTypes> = ({ title, photo_main, id, author, saves, stars }) => {
     return (
         <div data-testid='recipeCard' className={styles.card_container}>
             <section className={styles.detail_container_1}>
@@ -31,26 +31,26 @@ const RecipeCard = (props) => {
                 </i>
                 <ul className={styles.author_and_rating_container}>
                     <li>
-                        <Link href={`/users/${props?.author?.id}/`} passHref>
-                            <p>{props?.author?.name}</p>
+                        <Link href={`/users/${author?.id}/`} passHref>
+                            <p>{author?.name}</p>
                         </Link>
                     </li>
-                    <UiStars starsCount={props.stars} />
+                    <UiStars starsCount={stars} />
                 </ul>
-                <UiSaves savesCount={props.saves} />
+                <UiSaves savesCount={saves.length} />
             </section>
             <section className={styles.detail_container_2}>
-                <h3>{props.title}</h3>
+                <h3>{title}</h3>
             </section>
             <section className={styles.detail_container_3}>
                 <li>
-                    <Link href={`/recipes/${props.id}/`}>
+                    <Link href={`/recipes/${id}/`}>
                         <a>
                             <i>
-                                {props.photo_main ? (
+                                {photo_main ? (
                                     <Image
                                         loader={imageLoader}
-                                        src={props.photo_main}
+                                        src={photo_main}
                                         alt='Recipe Image'
                                         height={100}
                                         width={100}

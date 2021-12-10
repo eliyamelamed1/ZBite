@@ -18,7 +18,7 @@ beforeEach(() => {
             id='recipeId'
             author={authorData}
             photo_main='/recipeImage'
-            saves={523}
+            saves={['eliya', 'aviram']}
             stars='4.0'
         />
     );
@@ -29,7 +29,7 @@ describe('RecipeCard', () => {
     test('RecipeCard renders recipe details', () => {
         expect(screen.getByText(/recipeTitle/)).toBeInTheDocument();
         expect(screen.getByText(/recipeAuthor/)).toBeInTheDocument();
-        expect(screen.getByText(/523/)).toBeInTheDocument();
+        expect(screen.getByTestId('savesCount').innerHTML).toBe('2');
         expect(screen.getByText(/4.0/)).toBeInTheDocument();
         // const image = screen.getByAltText('');
         // TODO - test image.src is equal to the value passed
