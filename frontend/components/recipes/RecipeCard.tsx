@@ -11,6 +11,15 @@ import imageLoader from '../utils/imageLoader';
 import styles from '../../styles/components/_recipeCard.module.scss';
 import uploadImageIcon from '../../styles/icons/upload_image.svg';
 
+interface DataTypes {
+    title: string;
+    photo_main: string;
+    id: string;
+    author: object;
+    saves: number;
+    stars: string;
+}
+
 const RecipeCard = (props) => {
     return (
         <div data-testid='recipeCard' className={styles.card_container}>
@@ -62,15 +71,6 @@ const RecipeCard = (props) => {
             </section>
         </div>
     );
-};
-
-RecipeCard.propTypes = {
-    title: PropTypes.string.isRequired,
-    photo_main: PropTypes.string,
-    id: PropTypes.string.isRequired,
-    author: PropTypes.object.isRequired,
-    saves: PropTypes.number.isRequired,
-    stars: PropTypes.any,
 };
 
 export default RecipeCard;

@@ -110,8 +110,6 @@ const RecipeDetails = (props) => {
                         <Custom404 />
                     )}
                 </section>
-
-                <hr></hr>
                 <h2>reviews</h2>
                 <section>{isUserAuthenticated ? <ReviewCreate recipeId={recipeData.id} /> : null}</section>
                 <section>{isUserAuthenticated ? <SaveRecipe recipeId={recipeData.id} /> : null}</section>

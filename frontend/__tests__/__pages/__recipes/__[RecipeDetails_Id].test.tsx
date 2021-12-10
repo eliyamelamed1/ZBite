@@ -153,11 +153,11 @@ describe('RecipeDetails - recipe of author', () => {
         await store.dispatch({ type: TEST_CASE_RECIPE, payload: initialState });
         const updatedTitle = await screen.findByText(updatedRecipe.title);
         const updatedDescription = await screen.findByText(updatedRecipe.description);
-        const updatedSaves = await screen.findByText(/saves: 1/);
+        const updatedSaves = await screen.findByTestId('savesCount');
 
         expect(updatedTitle).toBeInTheDocument();
         expect(updatedDescription).toBeInTheDocument();
-        expect(updatedSaves).toBeInTheDocument();
+        expect(updatedSaves.innerHTML).toBe('1');
     });
     test('should not display updated recipe data of other recipe', async () => {
         updatedRecipe = {
