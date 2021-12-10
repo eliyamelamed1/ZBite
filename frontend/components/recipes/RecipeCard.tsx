@@ -7,14 +7,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import UiSaves from '../ui/UiSaves';
 import UiStars from '../ui/UiStars';
+import imageLoader from '../utils/imageLoader';
 import styles from '../../styles/components/_recipeCard.module.scss';
 import uploadImageIcon from '../../styles/icons/upload_image.svg';
 
 const RecipeCard = (props) => {
-    const nextLoader = ({ src, width, quality }) => {
-        return `${src}?w=${width}?q=${quality || 100}`;
-    };
-
     return (
         <div data-testid='recipeCard' className={styles.card_container}>
             <section className={styles.detail_container_1}>
@@ -43,7 +40,7 @@ const RecipeCard = (props) => {
                             <i>
                                 {props.photo_main ? (
                                     <Image
-                                        loader={nextLoader}
+                                        loader={imageLoader}
                                         src={props.photo_main}
                                         alt='Recipe Image'
                                         height={100}
@@ -51,7 +48,7 @@ const RecipeCard = (props) => {
                                     />
                                 ) : (
                                     <Image
-                                        loader={nextLoader}
+                                        loader={imageLoader}
                                         src={uploadImageIcon.src}
                                         alt='Recipe Image'
                                         height={100}

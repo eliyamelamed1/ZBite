@@ -13,6 +13,7 @@ import ReviewCreate from '../../components/reviews/ReviewCreate';
 import SaveRecipe from '../../components/recipes/SaveRecipe';
 import UiSaves from '../../components/ui/UiSaves';
 import UiStars from '../../components/ui/UiStars';
+import imageLoader from '../../components/utils/imageLoader';
 import { loadRecipeDetailsAction } from '../../redux/actions/recipeActions';
 import { reviewsInRecipeAction } from '../../redux/actions/recipeActions';
 import styles from '../../styles/pages/recipeDetails.module.scss';
@@ -67,15 +68,27 @@ const RecipeDetails = (props) => {
                 <meta name='description' content='recipes detail' />
             </Head>
             <main data-testid='recipeDetails'>
-                {recipeData ? (
-                    <section>
+                <section>
+                    {recipeData ? (
                         <ul>
                             <li className={styles.image_container}>
                                 {recipeData.photo_main ? (
-                                    <Image src={recipeData.photo_main} alt='' height={100} width={100} />
+                                    <Image
+                                        loader={imageLoader}
+                                        src={recipeData.photo_main}
+                                        alt=''
+                                        height={100}
+                                        width={100}
+                                    />
                                 ) : (
                                     uploadImageIcon.src && (
-                                        <Image src={uploadImageIcon.src} width={100} height={100} alt='recipe photo' />
+                                        <Image
+                                            loader={imageLoader}
+                                            src={uploadImageIcon.src}
+                                            width={100}
+                                            height={100}
+                                            alt='recipe photo'
+                                        />
                                     )
                                 )}
                             </li>
@@ -93,10 +106,10 @@ const RecipeDetails = (props) => {
                                 <span>{recipeData.description}</span>
                             </li>
                         </ul>
-                    </section>
-                ) : (
-                    <Custom404 />
-                )}
+                    ) : (
+                        <Custom404 />
+                    )}
+                </section>
 
                 <hr></hr>
                 <h2>reviews</h2>
