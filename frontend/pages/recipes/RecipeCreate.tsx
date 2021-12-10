@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import store, { RootState } from '../../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 
 import EditInputContainer from '../../components/utils/ModifyInputContainer';
 import Image from 'next/image';
+import { RootState } from '../../redux/store';
 import Router from 'next/router';
 import addInputContainer from '../../components/utils/AddInputContainer';
 import deleteIcon from '../../styles/icons/delete-input-icon.svg';

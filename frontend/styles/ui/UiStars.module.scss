@@ -1,0 +1,19 @@
+.rating {
+    background-color: white;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-start;
+    .rating_icons {
+        display: flex;
+        width: 48px;
+    }
+    .rating_score {
+        margin-left: 3%;
+        font-size: 12.8px;
+    }
+}
+
+.active {
+    filter: invert(76%) sepia(20%) saturate(0%) hue-rotate(212deg) brightness(90%) contrast(91%);
+}

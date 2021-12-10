@@ -5,8 +5,8 @@ import Link from 'next/link';
 import ProfileIcon from '../../styles/icons/profile._pic.svg';
 import PropTypes from 'prop-types';
 import React from 'react';
-import SavedIcon from '../../styles/icons/saved.svg';
-import StarIcon from '../../styles/icons/star.svg';
+import UiSaves from '../ui/UiSaves';
+import UiStars from '../ui/UiStars';
 import styles from '../../styles/components/_recipeCard.module.scss';
 import uploadImageIcon from '../../styles/icons/upload_image.svg';
 
@@ -14,6 +14,7 @@ const RecipeCard = (props) => {
     const nextLoader = ({ src, width, quality }) => {
         return `${src}?w=${width}?q=${quality || 100}`;
     };
+
     return (
         <div data-testid='recipeCard' className={styles.card_container}>
             <section className={styles.detail_container_1}>
@@ -22,45 +23,15 @@ const RecipeCard = (props) => {
                         <Image src={ProfileIcon.src} alt='author profile photo' height={100} width={100} />
                     )}
                 </i>
-                <ul className={styles.author_and_rating}>
+                <ul className={styles.author_and_rating_container}>
                     <li>
                         <Link href={`/users/${props?.author?.id}/`} passHref>
                             <p>{props?.author?.name}</p>
                         </Link>
                     </li>
-                    <li className={styles.rating}>
-                        <div className={styles.rating_icons}>
-                            <i>
-                                {StarIcon.src && <Image src={StarIcon.src} alt='star icon' height={100} width={100} />}
-                            </i>
-                            <i>
-                                {StarIcon.src && <Image src={StarIcon.src} alt='star icon' height={100} width={100} />}
-                            </i>
-                            <i>
-                                {StarIcon.src && <Image src={StarIcon.src} alt='star icon' height={100} width={100} />}
-                            </i>
-                            <i>
-                                {StarIcon.src && <Image src={StarIcon.src} alt='star icon' height={100} width={100} />}
-                            </i>
-                            <i>
-                                {StarIcon.src && <Image src={StarIcon.src} alt='star icon' height={100} width={100} />}
-                            </i>
-                        </div>
-                        <div className={styles.rating_score}>
-                            <span>{props.stars}</span>
-                        </div>
-                    </li>
+                    <UiStars starsCount={props.stars} />
                 </ul>
-                <ul className={styles.saves_count_and_icon}>
-                    <li className={styles.saves_count}>
-                        <span>{props.saves}</span>
-                    </li>
-                    <li className={styles.saves_icon}>
-                        <i>
-                            {SavedIcon.src && <Image src={SavedIcon.src} alt='saved icon' height={100} width={100} />}
-                        </i>
-                    </li>
-                </ul>
+                <UiSaves savesCount={props.saves} />
             </section>
             <section className={styles.detail_container_2}>
                 <h3>{props.title}</h3>

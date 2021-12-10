@@ -11,12 +11,32 @@ import IsRecipeAuthor from '../../components/recipes/IsRecipeAuthor';
 import Link from 'next/link';
 import ReviewCreate from '../../components/reviews/ReviewCreate';
 import SaveRecipe from '../../components/recipes/SaveRecipe';
+import UiSaves from '../../components/ui/UiSaves';
+import UiStars from '../../components/ui/UiStars';
 import { loadRecipeDetailsAction } from '../../redux/actions/recipeActions';
 import { reviewsInRecipeAction } from '../../redux/actions/recipeActions';
+import styles from '../../styles/pages/recipeDetails.module.scss';
+import uploadImageIcon from '../../styles/icons/upload_image.svg';
 import { useSelector } from 'react-redux';
 
+interface Recipe {
+    id: string;
+    author: { id: string; [key: string]: any };
+    cook_time: string;
+    description: string;
+    title: string;
+    serving: string;
+    stars: string;
+    photo_main: string;
+    saves: string[];
+    ingredients_text_list: string[];
+    instructions_text_list: string[];
+    instructions_image_list: File[];
+    [key: string]: any;
+}
+
 const RecipeDetails = (props) => {
-    const [recipeData, setRecipeData] = useState(props.serverRecipeData);
+    const [recipeData, setRecipeData] = useState<Recipe>(props.serverRecipeData);
     const { requestedRecipeData, listOfFilteredReviews } = useSelector((state: RootState) => state.recipeReducer);
     const { isUserAuthenticated } = useSelector((state: RootState) => state.userReducer);
     const [reviewsData, setReviewsData] = useState(props.serverReviewsData);
@@ -38,82 +58,65 @@ const RecipeDetails = (props) => {
         },
         [listOfFilteredReviews, recipeData?.id]
     );
-    const displayInteriorImages = () => {
-        if (recipeData) {
-            const images = [];
-
-            images.push(
-                <div key={1}>
-                    <div>
-                        {recipeData.photo_1 ? (
-                            <div>
-                                <Image src={recipeData.photo_1} alt='' height={100} width={100} />
-                            </div>
-                        ) : (
-                            <div>* this recipe has no photos *</div>
-                        )}
-                    </div>
-                </div>
-            );
-            return images;
-        }
-    };
 
     const authorLinks = <section>{recipeData ? <IsRecipeAuthor recipe={recipeData} /> : null}</section>;
     return (
-        <React.Fragment>
+        <div className={styles.main}>
             <Head>
                 {recipeData ? <title>ZBite - recipes |{`${recipeData.title}`}</title> : <title>ZBite - recipes </title>}
                 <meta name='description' content='recipes detail' />
             </Head>
             <main data-testid='recipeDetails'>
-                <section>{authorLinks}</section>
-                <section>
-                    {recipeData ? (
-                        <div>
-                            <Link href={`/users/${recipeData?.author?.id}/`} passHref>
-                                <div>
-                                    recipe Author: <p>{recipeData?.author?.name}</p>
-                                </div>
-                            </Link>
-                            <p>saves: {recipeData.saves?.length}</p>
-                            <div>
-                                recipe title: <h1>{recipeData.title}</h1>
-                            </div>
-                            <Link href='/'>Home</Link>
-                            {recipeData.photo_main ? (
-                                <Image src={recipeData.photo_main} alt='' height={100} width={100} />
-                            ) : null}
-                            <ul>
-                                <li>
+                {recipeData ? (
+                    <section>
+                        <ul>
+                            <li className={styles.image_container}>
+                                {recipeData.photo_main ? (
+                                    <Image src={recipeData.photo_main} alt='' height={100} width={100} />
+                                ) : (
+                                    uploadImageIcon.src && (
+                                        <Image src={uploadImageIcon.src} width={100} height={100} alt='recipe photo' />
+                                    )
+                                )}
+                            </li>
+                            <li className={styles.details_container}>
+                                <Link href={`/users/${recipeData?.author?.id}/`} passHref>
                                     <div>
-                                        recipe description: <p>{recipeData.description}</p>
-                                        {displayInteriorImages()}
+                                        <p>{recipeData?.author?.name}</p>
                                     </div>
-                                </li>
-                            </ul>
-                        </div>
-                    ) : (
-                        <Custom404 />
-                    )}
-                </section>
+                                </Link>
+                                <UiSaves savesCount={recipeData.saves?.length} />
+                                <UiStars starsCount={recipeData.stars} />
+                            </li>
+                            <li>
+                                <h1>{recipeData.title}</h1>
+                                <span>{recipeData.description}</span>
+                            </li>
+                        </ul>
+                    </section>
+                ) : (
+                    <Custom404 />
+                )}
+
+                <hr></hr>
                 <h2>reviews</h2>
                 <section>{isUserAuthenticated ? <ReviewCreate recipeId={recipeData.id} /> : null}</section>
                 <section>{isUserAuthenticated ? <SaveRecipe recipeId={recipeData.id} /> : null}</section>
                 <section>{reviewsData ? <DisplayReviews reviewsToDisplay={reviewsData} /> : null}</section>
+                <section>{authorLinks}</section>
             </main>
-        </React.Fragment>
+        </div>
     );
 };
 
 export async function getServerSideProps(context) {
     const id = context.params.RecipeDetails_Id;
-    await store.dispatch(loadRecipeDetailsAction({ id }));
+    await store.dispatch<any>(loadRecipeDetailsAction({ id }));
     const serverRecipeData = store.getState().recipeReducer.requestedRecipeData;
     const isRequestedRecipeIdExist = serverRecipeData?.id === id;
 
     if (isRequestedRecipeIdExist) {
-        await store.dispatch(reviewsInRecipeAction({ recipeId: id }));
+        await store.dispatch<any>(reviewsInRecipeAction({ recipeId: id }));
         const serverReviewsData = store.getState().recipeReducer.listOfFilteredReviews;
         return { props: { serverRecipeData, serverReviewsData } };
     } else {

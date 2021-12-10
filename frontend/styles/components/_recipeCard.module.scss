@@ -17,57 +17,15 @@
         .profile_pic {
             width: 16%;
         }
-        .author_and_rating {
+        .author_and_rating_container {
             position: relative;
-            bottom: 2.5px;
+            top: 2px;
             margin-left: 2%;
             width: 70%;
             flex-direction: column;
             justify-content: center;
             overflow: hidden;
             white-space: nowrap;
-
-            .rating {
-                background-color: white;
-                display: flex;
-                width: 100%;
-                align-items: center;
-                justify-content: flex-start;
-                .rating_icons {
-                    display: flex;
-                    width: 48px;
-                }
-                .rating_score {
-                    margin-left: 3%;
-                    font-size: 12.8px;
-                }
-            }
-        }
-        .saves_count_and_icon {
-            position: relative;
-            bottom: 8px;
-            left: 4.7px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            width: 25%;
-            font-weight: 700;
-
-            .saves_count {
-                margin-bottom: 8px;
-                margin-right: 4.8px;
-                font-size: 1.6rem;
-                span {
-                    font-weight: 700;
-                }
-            }
-            .saves_icon {
-                i {
-                    img {
-                        width: 27.2px;
-                    }
-                }
-            }
         }
     }
     .detail_container_2 {
