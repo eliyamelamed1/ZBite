@@ -5,10 +5,10 @@ import React from 'react';
 import RecipeCard from './RecipeCard';
 
 interface Recipe {
-    title: string;
-    photo_main: string;
     id: string;
     author: { name: string; id: string };
+    title: string;
+    photo_main: string;
     saves: string[];
     stars: string;
 }

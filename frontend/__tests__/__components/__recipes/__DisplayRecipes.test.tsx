@@ -8,7 +8,7 @@ import DisplayRecipes from '../../../components/recipes/DisplayRecipes';
 
 const firstRecipeData = {
     id: 'recipeId',
-    author: 'author',
+    author: { name: 'author', id: 'id' },
     title: 'title',
     photo_main: '/#',
     saves: ['eliya'],
@@ -17,7 +17,7 @@ const firstRecipeData = {
 
 const secondRecipeData = {
     id: 'recipeId2',
-    author: 'author2',
+    author: { name: 'name2', id: 'id2' },
     title: 'title2',
     photo_main: '/#2',
     saves: [],
