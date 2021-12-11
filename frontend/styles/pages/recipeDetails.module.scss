@@ -1,12 +1,10 @@
 .main {
     margin: 3rem;
-    li {
-        margin-bottom: 1rem;
-    }
 }
 .image_container {
     display: grid;
     height: 13rem;
+    margin-bottom: 0.5rem;
 
     img {
         border-radius: 15px 15px 15px 15px;
@@ -16,5 +14,32 @@
 
 .details_container {
     display: grid;
-    border: 1px solid black;
+    grid-template-columns: 1fr 7.9rem;
+    justify-content: space-between;
+
+    .name_and_profile_image_container {
+        display: grid;
+        align-items: center;
+        grid-template-columns: 5rem 1fr;
+        gap: 1rem;
+        justify-content: space-between;
+    }
+
+    .profile_image_container {
+        justify-content: center;
+        display: flex;
+        align-items: center;
+    }
+
+    .author_name {
+        display: flex;
+        text-transform: capitalize;
+        font-weight: 600;
+    }
+
+    .saves_and_ratings_container {
+        gap: 1rem;
+        display: flex;
+        flex-direction: column;
+    }
 }

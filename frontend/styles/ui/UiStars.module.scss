@@ -1,16 +1,17 @@
 .rating {
     background-color: white;
     display: flex;
-    width: 100%;
     align-items: center;
-    // border: 1px solid black;
+    width: 100%;
 
     .rating_icons {
         display: flex;
         width: 48px;
+        gap: 0.2rem;
     }
+
     .rating_score {
-        margin-bottom: 0.4rem;
+        margin-bottom: 0.3rem;
         margin-left: 0.5rem;
         font-size: 1.2rem;
     }

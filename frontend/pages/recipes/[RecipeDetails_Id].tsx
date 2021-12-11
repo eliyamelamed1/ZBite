@@ -92,14 +92,19 @@ const RecipeDetails = (props) => {
                                     )
                                 )}
                             </li>
+
                             <li className={styles.details_container}>
-                                <Link href={`/users/${recipeData?.author?.id}/`} passHref>
-                                    <div>
-                                        <p>{recipeData?.author?.name}</p>
-                                    </div>
-                                </Link>
-                                <UiSaves savesCount={recipeData.saves?.length} />
-                                <UiStars starsCount={recipeData.stars} />
+                                <div className={styles.name_and_profile_image_container}>
+                                    <i className={styles.profile_image_container}>asd</i>
+                                    <Link href={`/users/${recipeData?.author?.id}/`} passHref>
+                                        <h3 className={styles.author_name}>{recipeData?.author?.name}</h3>
+                                    </Link>
+                                </div>
+
+                                <div className={styles.saves_and_ratings_container}>
+                                    <UiSaves savesCount={recipeData.saves?.length} />
+                                    <UiStars starsCount={recipeData.stars} />
+                                </div>
                             </li>
                             <li>
                                 <h1>{recipeData.title}</h1>
