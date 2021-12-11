@@ -2,16 +2,14 @@
     position: relative;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
     font-weight: 700;
-    left: 4px;
-    // border: 1px solid black;
+    height: max-content;
+    gap: 0.5rem;
 }
 .saves_count {
     position: relative;
     bottom: 0.3rem;
-    right: 0.5rem;
-    font-size: 1.6rem;
+    font-size: 1.3rem;
     span {
         font-weight: 700;
     }
@@ -19,8 +17,10 @@
 
 .saves_icon {
     i {
+        width: 100%;
         img {
-            width: 2.7rem;
+            height: 2rem;
+            width: 2rem;
         }
     }
 }

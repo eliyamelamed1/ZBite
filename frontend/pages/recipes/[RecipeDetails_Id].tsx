@@ -95,15 +95,15 @@ const RecipeDetails = (props) => {
 
                             <li className={styles.details_container}>
                                 <div className={styles.name_and_profile_image_container}>
-                                    <i className={styles.profile_image_container}>asd</i>
+                                    <i className={styles.profile_image_container}>asdd</i>
                                     <Link href={`/users/${recipeData?.author?.id}/`} passHref>
                                         <h3 className={styles.author_name}>{recipeData?.author?.name}</h3>
                                     </Link>
                                 </div>
 
                                 <div className={styles.saves_and_ratings_container}>
-                                    <UiSaves savesCount={recipeData.saves?.length} />
                                     <UiStars starsCount={recipeData.stars} />
+                                    <UiSaves savesCount={recipeData.saves?.length} textToRight={true} />
                                 </div>
                             </li>
                             <li>
