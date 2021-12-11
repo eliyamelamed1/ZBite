@@ -32,7 +32,7 @@ const RecipeCard: React.FC<DataTypes> = ({ title, photo_main, id, author, saves,
                 <ul className={styles.author_and_rating_container}>
                     <li>
                         <Link href={`/users/${author?.id}/`} passHref>
-                            <p>{author?.name}</p>
+                            <span className={styles.author_name}>{author?.name}</span>
                         </Link>
                     </li>
                     <UiStars starsCount={stars} />

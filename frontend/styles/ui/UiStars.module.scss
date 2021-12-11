@@ -3,14 +3,16 @@
     display: flex;
     width: 100%;
     align-items: center;
-    justify-content: flex-start;
+    // border: 1px solid black;
+
     .rating_icons {
         display: flex;
         width: 48px;
     }
     .rating_score {
-        margin-left: 3%;
-        font-size: 12.8px;
+        margin-bottom: 0.4rem;
+        margin-left: 0.5rem;
+        font-size: 1.2rem;
     }
 }
 
