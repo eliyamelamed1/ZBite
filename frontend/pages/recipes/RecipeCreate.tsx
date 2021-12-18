@@ -5,6 +5,7 @@ import EditInputContainer from '../../components/utils/ModifyInputContainer';
 import Image from 'next/image';
 import { RootState } from '../../redux/store';
 import Router from 'next/router';
+import UiSectionSeparator from '../../components/ui/UiSectionSeperator';
 import addInputContainer from '../../components/utils/AddInputContainer';
 import deleteIcon from '../../styles/icons/delete-input-icon.svg';
 import deleteInputContainer from '../../components/utils/DeleteInputContainer';
@@ -400,11 +401,11 @@ const RecipeCreate = () => {
         <div data-testid='recipeCreate' className={styles.container}>
             <form onSubmit={(e) => onSubmit(e)} className={styles.form}>
                 {generalSection()}
-                <hr className={styles.section_separator} />
+                <UiSectionSeparator />
                 {instructionSection()}
-                <hr className={styles.section_separator} />
+                <UiSectionSeparator />
                 {ingredientSection()}
-                <hr className={styles.section_separator} />
+                <UiSectionSeparator />
                 <button type='submit' className={styles.create_button}>
                     Create Recipe
                 </button>

@@ -12,6 +12,7 @@ import Link from 'next/link';
 import ReviewCreate from '../../components/reviews/ReviewCreate';
 import SaveRecipe from '../../components/recipes/SaveRecipe';
 import UiSaves from '../../components/ui/UiSaves';
+import UiSectionSeparator from '../../components/ui/UiSectionSeperator';
 import UiStars from '../../components/ui/UiStars';
 import imageLoader from '../../components/utils/imageLoader';
 import { loadRecipeDetailsAction } from '../../redux/actions/recipeActions';
@@ -70,7 +71,7 @@ const RecipeDetails = (props) => {
             <main data-testid='recipeDetails'>
                 <section>
                     {recipeData ? (
-                        <ul>
+                        <ul className={styles.recipe_data_container}>
                             <li className={styles.image_container}>
                                 {recipeData.photo_main ? (
                                     <Image
@@ -92,7 +93,6 @@ const RecipeDetails = (props) => {
                                     )
                                 )}
                             </li>
-
                             <li className={styles.details_container}>
                                 <div className={styles.name_and_profile_image_container}>
                                     <i className={styles.profile_image_container}>asdd</i>
@@ -106,10 +106,21 @@ const RecipeDetails = (props) => {
                                     <UiSaves savesCount={recipeData.saves?.length} textToRight={true} />
                                 </div>
                             </li>
-                            <li>
-                                <h1>{recipeData.title}</h1>
-                                <span>{recipeData.description}</span>
+                            <UiSectionSeparator />
+                            <li className={styles.title_and_description_container}>
+                                <p className={styles.title}> {recipeData?.title}</p>
+                                <p className={styles.description}>{recipeData.description}</p>
                             </li>
+                            <UiSectionSeparator />
+                            <ul className={styles.ingredients_container}>
+                                <h1 className={styles.ingredients_section_title}>Ingredients</h1>
+                                {recipeData?.ingredients_text_list.map((item, index) => (
+                                    <p className={styles.ingredients_text_item} key={index}>
+                                        {item}
+                                    </p>
+                                ))}
+                            </ul>
+                            <UiSectionSeparator />
                         </ul>
                     ) : (
                         <Custom404 />
