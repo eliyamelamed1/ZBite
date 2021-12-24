@@ -240,6 +240,7 @@ export const reviewsInRecipeAction =
             });
             const res = await axios.post(endpointRoute().reviews.reviews_in_recipe, body, config);
             dispatch({ type: REVIEWS_IN_RECIPE_SUCCESS, payload: res.data });
+            await dispatch(loadRecipeDetailsAction({ id: recipeId }));
         } catch {
             dispatch({ type: REVIEWS_IN_RECIPE_FAIL });
         }
