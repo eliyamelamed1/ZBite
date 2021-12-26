@@ -55,6 +55,7 @@ export default function userReducer(state = initialState, action) {
                 loggedUserData: payload,
             };
         case LOGIN_SUCCESS:
+            Router.push(pageRoute().home);
             localStorage.setItem('auth_token', payload.auth_token);
             return {
                 ...state,

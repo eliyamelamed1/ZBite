@@ -78,6 +78,8 @@ describe('userReducer - cases that modify the state ', () => {
         expect(storeState.userReducer.loggedUserData).toBeNull();
         expect(storeState.userReducer.requestedUserData).toBeNull();
         expect(storeState.userReducer.listOfLeaderboardUsers).toBeNull();
+        expect(Router.push.mock.calls.length).toBe(1);
+        expect(Router.push.mock.calls[0][0]).toBe(pageRoute().home);
     });
     test('case GET_LOGGED_USER_DETAILS_SUCCESS', () => {
         store.dispatch({ type: 'GET_LOGGED_USER_DETAILS_SUCCESS', payload: updatedState });
@@ -127,6 +129,7 @@ describe('userReducer - cases that modify the state ', () => {
         expect(storeState.userReducer.loggedUserData).toBeNull();
         expect(storeState.userReducer.requestedUserData).toBeNull();
         expect(storeState.userReducer.listOfLeaderboardUsers).toBeNull();
+        expect(Router.push.mock.calls.length).toBe(0);
     });
     test('case LOGOUT', () => {
         store.dispatch({ type: 'LOGOUT', payload: updatedState });
