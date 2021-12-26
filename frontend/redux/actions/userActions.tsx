@@ -23,9 +23,10 @@ import {
     UPDATE_USER_FAIL,
     UPDATE_USER_SUCCESS,
 } from '../types';
+import { endpointRoute, pageRoute } from '../../globals';
 
+import Router from 'next/router';
 import axios from 'axios';
-import { endpointRoute } from '../../globals';
 
 export const testAction = () => async (dispatch) => {
     dispatch(secondTestAction());
@@ -173,7 +174,9 @@ export const signupAction =
             const res = await axios.post(endpointRoute().users.signup, body, config);
 
             dispatch({ type: SIGNUP_SUCCESS, payload: res.data });
+            Router.push(pageRoute().login);
         } catch (err) {
+            // handleAxios
             dispatch({ type: SIGNUP_FAIL });
         }
     };

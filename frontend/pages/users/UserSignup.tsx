@@ -30,17 +30,14 @@ const UserSignup = () => {
         e.preventDefault();
 
         if (password === re_password) {
-            try {
-                await dispatch(
-                    signupAction({
-                        name,
-                        email,
-                        password,
-                        re_password,
-                    })
-                );
-                Router.push(pageRoute().login);
-            } catch {}
+            await dispatch(
+                signupAction({
+                    name,
+                    email,
+                    password,
+                    re_password,
+                })
+            );
         }
     };
 
@@ -80,7 +77,7 @@ const UserSignup = () => {
                         name='password'
                         value={password}
                         onChange={(e) => onChange(e)}
-                        minLength='6'
+                        minLength={6}
                         className={styles.password_input}
                         required
                     />
@@ -90,7 +87,7 @@ const UserSignup = () => {
                         name='re_password'
                         value={re_password}
                         onChange={(e) => onChange(e)}
-                        minLength='6'
+                        minLength={6}
                         className={styles.password_input}
                         required
                     />
