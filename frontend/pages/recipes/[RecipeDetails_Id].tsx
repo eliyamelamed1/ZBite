@@ -112,7 +112,7 @@ const RecipeDetails = (props) => {
                             <UiSectionSeparator />
                             <ul className={styles.ingredients_container}>
                                 <h1 className={styles.ingredients_section_title}>Ingredients</h1>
-                                {recipeData?.ingredients_text_list.map((item, index) => (
+                                {recipeData?.ingredients_text_list?.map((item, index) => (
                                     <p className={styles.ingredients_text_item} key={index}>
                                         {item}
                                     </p>

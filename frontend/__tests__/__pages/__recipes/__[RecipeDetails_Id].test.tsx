@@ -26,6 +26,8 @@ const recipeParams = {
         description: 'recipeDescription',
         author: { id: 'eliya', name: 'name' },
         photo_main: '/#',
+        ingredients_text_list: ['tomato'],
+        instructions_text_list: ['buy tomato'],
     },
 };
 const contextParams = {
@@ -86,6 +88,8 @@ describe('RecipeDetails - recipe of author', () => {
             author: { id: 'eliya', name: 'name' },
             saves: [],
             photo_main: '/#',
+            ingredients_text_list: ['onion'],
+            instructions_text_list: ['buy onion'],
         },
         listOfFilteredReviews: null,
     };
@@ -225,6 +229,8 @@ describe('RecipeDetails - not the recipe author', () => {
             author: { id: 'eliya', name: 'name' },
             saves: [],
             photo_main: '/#',
+            ingredients_text_list: ['cucumber'],
+            instructions_text_list: ['buy cucumber'],
         },
         listOfFilteredReviews: null,
     };
@@ -317,6 +323,8 @@ describe('RecipeDetails - guest user', () => {
             description: 'recipeDescription',
             author: { id: 'eliya', name: 'name' },
             photo_main: '/#',
+            ingredients_text_list: ['apple'],
+            instructions_text_list: ['buy apple'],
         },
         listOfFilteredReviews: null,
     };
