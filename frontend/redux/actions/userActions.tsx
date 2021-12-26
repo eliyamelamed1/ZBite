@@ -172,11 +172,8 @@ export const signupAction =
 
         try {
             const res = await axios.post(endpointRoute().users.signup, body, config);
-
             dispatch({ type: SIGNUP_SUCCESS, payload: res.data });
-            Router.push(pageRoute().login);
         } catch (err) {
-            // handleAxios
             dispatch({ type: SIGNUP_FAIL });
         }
     };

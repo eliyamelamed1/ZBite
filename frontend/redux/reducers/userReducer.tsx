@@ -19,6 +19,9 @@ import {
     UPDATE_USER_SUCCESS,
 } from '../types';
 
+import Router from 'next/router';
+import { pageRoute } from '../../globals';
+
 const initialState = {
     auth_token: process.browser ? localStorage.getItem('auth_token') : null,
     isUserAuthenticated: process.browser ? !!localStorage.getItem('auth_token') : null,
@@ -65,6 +68,8 @@ export default function userReducer(state = initialState, action) {
                 loggedUserData: payload,
             };
         case SIGNUP_SUCCESS:
+            Router.push(pageRoute().login);
+
             return {
                 ...state,
                 isUserAuthenticated: false,

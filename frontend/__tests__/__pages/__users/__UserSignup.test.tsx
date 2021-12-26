@@ -150,42 +150,7 @@ describe('UserSignup - guest user', () => {
             expect(signupAction.mock.calls[0][0].password).toEqual(passwordValue);
             expect(signupAction.mock.calls[0][0].re_password).toEqual(rePasswordValue);
         });
-        test('successful signup should redirect user to login page', async () => {
-            const nameTextbox = screen.getByPlaceholderText('Full Name');
-            const emailTextbox = screen.getByPlaceholderText('Email');
-            const passwordTextbox = screen.getByPlaceholderText('Password');
-            const confirmPasswordTextbox = screen.getByPlaceholderText('Confirm Password');
-            const signupButton = screen.getByRole('button', { name: 'Register' });
-        
-            userEvent.type(nameTextbox, 'testuser');
-            userEvent.type(emailTextbox, 'testuser@gmail.com');
-            userEvent.type(passwordTextbox, 'testuser123');
-            userEvent.type(confirmPasswordTextbox, 'testuser123');
-            userEvent.click(signupButton);
-        
-            expect(await signupAction.mock.calls.length).toBe(1)
-            expect(Router.push.mock.calls.length).toBe(1)
-            expect(Router.push.mock.calls[0][0]).toBe(pageRoute().login)
-        });
-        test('failed signup should not redirect user', async () => {
-            signupAction.mockReturnValueOnce(() => {
-                throw new Error();
-            });
-            const nameTextbox = screen.getByPlaceholderText(/full Name/i);
-            const emailTextbox = screen.getByPlaceholderText(/email/i);
-            const passwordTextbox = screen.getByPlaceholderText('Password');
-            const confirmPasswordTextbox = screen.getByPlaceholderText('Confirm Password');
-            const signupButton = screen.getByRole('button', { name: 'Register' });
-        
-            userEvent.type(nameTextbox, 'testuser');
-            userEvent.type(emailTextbox, 'testuser@gmail.com');
-            userEvent.type(passwordTextbox, 'testuser123');
-            userEvent.type(confirmPasswordTextbox, 'testuser123');
-            userEvent.click(signupButton);
 
-            expect(await signupAction.mock.calls.length).toBe(1)
-            expect(Router.push.mock.calls.length).toBe(0)
-        });
     });
 });
 

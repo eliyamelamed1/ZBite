@@ -1,8 +1,13 @@
 import '@testing-library/jest-dom/extend-expect';
 
+import Router from 'next/router';
 import { cleanup } from '@testing-library/react';
+import { pageRoute } from '../../../globals';
 import store from '../../../redux/store';
 
+jest.mock('next/router', () => ({
+    push: jest.fn(),
+}));
 const updatedState = {
     auth_token: 'updatedState',
     isUserAuthenticated: 'updatedState',
@@ -15,6 +20,7 @@ describe('userReducer - cases that modify the state ', () => {
     let initialState;
     beforeEach(() => {
         cleanup();
+        jest.clearAllMocks();
         initialState = {
             auth_token: null,
             isUserAuthenticated: null,
@@ -91,6 +97,8 @@ describe('userReducer - cases that modify the state ', () => {
         expect(storeState.userReducer.loggedUserData).toBeNull();
         expect(storeState.userReducer.requestedUserData).toBeNull();
         expect(storeState.userReducer.listOfLeaderboardUsers).toBeNull();
+        expect(Router.push.mock.calls.length).toBe(1);
+        expect(Router.push.mock.calls[0][0]).toBe(pageRoute().login);
     });
     test('case GET_LOGGED_USER_DETAILS_FAIL', () => {
         store.dispatch({ type: 'GET_LOGGED_USER_DETAILS_FAIL', payload: updatedState });
@@ -109,6 +117,7 @@ describe('userReducer - cases that modify the state ', () => {
         expect(storeState.userReducer.loggedUserData).toBeNull();
         expect(storeState.userReducer.requestedUserData).toBeNull();
         expect(storeState.userReducer.listOfLeaderboardUsers).toBeNull();
+        expect(Router.push.mock.calls.length).toBe(0);
     });
     test('case LOGIN_FAIL', () => {
         store.dispatch({ type: 'LOGIN_FAIL', payload: updatedState });
@@ -143,6 +152,7 @@ describe('userReducer - cases that return ...state', () => {
     let initialState;
     beforeEach(() => {
         cleanup();
+        jest.clearAllMocks();
         initialState = {};
         store.dispatch({ type: 'TEST_CASE_AUTH', payload: initialState });
         return initialState;
