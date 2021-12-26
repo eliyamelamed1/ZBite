@@ -25,7 +25,6 @@ const UserResetPasswordConfirm = () => {
                 const uid = params?.[0];
                 const token = params?.[1];
                 dispatch(resetPasswordConfirmAction({ uid, token, new_password }));
-                Router.push(pageRoute().home);
             }
         } catch {
             // TODO - add err msg

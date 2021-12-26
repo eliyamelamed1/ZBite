@@ -24,6 +24,9 @@ import {
     UPDATE_RECIPE_SUCCESS,
 } from '../types';
 
+import Router from 'next/router';
+import { pageRoute } from '../../globals';
+
 const initialState = {
     listOfSearchedRecipes: null,
     requestedRecipeData: null,
@@ -58,14 +61,18 @@ export default function recipeReducer(state = initialState, action) {
             return { ...state, listOfFollowedRecipes: payload };
         case GET_SAVED_RECIPE_LIST_SUCCESS:
             return { ...state, listOfSavedRecipes: payload };
+        case CREATE_RECIPE_SUCCESS:
+            Router.push(pageRoute().home);
+            return { ...state };
+        case DELETE_RECIPE_SUCCESS:
+            Router.push(pageRoute().home);
+            return { ...state };
         case REVIEWS_IN_RECIPE_FAIL:
         case REVIEW_DELETE_SUCCESS:
         case REVIEW_DELETE_FAIL:
         case REVIEW_CREATE_SUCCESS:
         case REVIEW_CREATE_FAIL:
-        case DELETE_RECIPE_SUCCESS:
         case DELETE_RECIPE_FAIL:
-        case CREATE_RECIPE_SUCCESS:
         case CREATE_RECIPE_FAIL:
         case GET_SAVED_RECIPE_LIST_FAIL:
         case UPDATE_RECIPE_FAIL:

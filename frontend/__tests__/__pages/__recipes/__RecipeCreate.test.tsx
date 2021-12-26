@@ -415,22 +415,7 @@ describe('authenticated users', () => {
             const timesActionDispatched = recipeCreateAction.mock.calls.length;
             expect(timesActionDispatched).toBe(0);
         });
-        test.todo('should redirect to home page after recipe is created');
-        // test.only('should redirect to home page after recipe is created', async () => {
-        //     const titleTextbox = screen.getByPlaceholderText(/title/i);
-        //     const cookTimeTextbox = screen.getByPlaceholderText(/1hr 30min/i);
-        //     const servingTextbox = screen.getByPlaceholderText(/2 people/i);
 
-        //     const button = screen.getByRole('button', { name: /create recipe/i });
-
-        //     userEvent.type(titleTextbox, 'new title');
-        //     userEvent.type(servingTextbox, 'new serving');
-        //     userEvent.type(cookTimeTextbox, 'new cook time');
-        //     userEvent.click(button);
-
-        //     expect(await Router.push.mock.calls.length).toBe(1);
-        //     expect(await Router.push.mock.calls[0][0]).toBe(pageRoute().home);
-        // });
         test('should not redirect after recipe creation fail', async () => {
             recipeCreateAction.mockReturnValueOnce(() => {
                 throw new Error();

@@ -28,7 +28,9 @@ import {
     UPDATE_RECIPE_SUCCESS,
 } from '../../../redux/types';
 
+import Router from 'next/router';
 import { cleanup } from '@testing-library/react';
+import { pageRoute } from '../../../globals';
 import store from '../../../redux/store';
 
 const updatedState = {
@@ -130,15 +132,20 @@ describe('recipeReducers - cases that return ...state => state should not be mod
     });
     test('case DELETE_RECIPE_SUCCESS ', () => {
         store.dispatch({ type: DELETE_RECIPE_SUCCESS, payload: updatedState });
+        expect(Router.push.mock.calls.length).toBe(1);
+        expect(Router.push.mock.calls[0][0]).toBe(pageRoute().home);
     });
     test('case DELETE_RECIPE_FAIL ', () => {
         store.dispatch({ type: DELETE_RECIPE_FAIL, payload: updatedState });
     });
     test('case CREATE_RECIPE_SUCCESS ', () => {
         store.dispatch({ type: CREATE_RECIPE_SUCCESS, payload: updatedState });
+        expect(Router.push.mock.calls.length).toBe(1);
+        expect(Router.push.mock.calls[0][0]).toBe(pageRoute().home);
     });
     test('case CREATE_RECIPE_FAIL ', () => {
         store.dispatch({ type: CREATE_RECIPE_FAIL, payload: updatedState });
+        expect(Router.push.mock.calls.length).toBe(0);
     });
     test('case UPDATE_RECIPE_FAIL ', () => {
         store.dispatch({ type: UPDATE_RECIPE_FAIL, payload: updatedState });

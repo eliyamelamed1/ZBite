@@ -13,7 +13,6 @@ const RecipeDelete: React.FC<{ id: string }> = ({ id }) => {
         e.preventDefault();
         try {
             dispatch(recipeDeleteAction({ id }));
-            Router.push(pageRoute().home);
         } catch {
             // TODO - add err msg
         }

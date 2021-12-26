@@ -11,7 +11,6 @@ const UserDelete: React.FC<{ id: string }> = ({ id }) => {
         e.preventDefault();
         try {
             await dispatch(userDeleteAction({ id }));
-            Router.push(pageRoute().home);
         } catch {
             // TODO - add err msg
         }

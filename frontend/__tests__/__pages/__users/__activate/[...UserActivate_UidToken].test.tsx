@@ -70,16 +70,6 @@ describe('Authenticated users', () => {
             expect(userActivateAction.mock.calls[0][0].uid).toBe(dynamicUrlParams.uid);
             expect(userActivateAction.mock.calls[0][0].token).toBe(dynamicUrlParams.token);
         });
-        test('should redirect to home page when user is activated', () => {
-            const verifyAccountButton = screen.getByRole('button', { name: /verify/i });
-            userEvent.click(verifyAccountButton);
-
-            const timesActionDispatched = userActivateAction.mock.calls.length;
-
-            expect(timesActionDispatched).toBe(1);
-            expect(Router.push.mock.calls.length).toBe(1);
-            expect(Router.push.mock.calls[0][0]).toBe(pageRoute().home);
-        });
     });
 });
 

@@ -20,7 +20,6 @@ const UserActivate = () => {
         const token = UserActivate_UidToken?.[1];
         try {
             dispatch(userActivateAction({ uid, token }));
-            Router.push(pageRoute().home);
         } catch {
             // TODO - add err msg
         }

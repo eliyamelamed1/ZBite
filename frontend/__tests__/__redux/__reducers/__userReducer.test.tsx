@@ -55,8 +55,9 @@ describe('userReducer - cases that modify the state ', () => {
         expect(initialState.userReducer.isUserAuthenticated).toBe(false);
         expect(initialState.userReducer.loggedUserData).toBeNull();
         expect(initialState.userReducer.listOfLeaderboardUsers).toBeNull();
-
         expect(initialState.userReducer.requestedUserData).toBeNull();
+        expect(Router.push.mock.calls.length).toBe(1);
+        expect(Router.push.mock.calls[0][0]).toBe(pageRoute().home);
     });
 
     test('case UPDATE_USER_SUCCESS ', () => {
@@ -182,6 +183,33 @@ describe('userReducer - cases that return ...state', () => {
     });
     test('case LOAD_LEADERBOARD_FAIL', () => {
         store.dispatch({ type: 'LOAD_LEADERBOARD_FAIL', payload: updatedState });
+    });
+    test('case RESET_PASSWORD_SUCCESS', () => {
+        store.dispatch({ type: 'RESET_PASSWORD_SUCCESS', payload: updatedState });
+        expect(Router.push.mock.calls.length).toBe(1);
+        expect(Router.push.mock.calls[0][0]).toBe(pageRoute().home);
+    });
+    test('case RESET_PASSWORD_FAIL', () => {
+        store.dispatch({ type: 'RESET_PASSWORD_FAIL', payload: updatedState });
+        expect(Router.push.mock.calls.length).toBe(0);
+    });
+    test('case ACTIVATION_SUCCESS', () => {
+        store.dispatch({ type: 'ACTIVATION_SUCCESS', payload: updatedState });
+        expect(Router.push.mock.calls.length).toBe(1);
+        expect(Router.push.mock.calls[0][0]).toBe(pageRoute().home);
+    });
+    test('case ACTIVATION_FAIL', () => {
+        store.dispatch({ type: 'ACTIVATION_FAIL', payload: updatedState });
+        expect(Router.push.mock.calls.length).toBe(0);
+    });
+    test('case RESET_PASSWORD_CONFIRM_SUCCESS', () => {
+        store.dispatch({ type: 'RESET_PASSWORD_CONFIRM_SUCCESS', payload: updatedState });
+        expect(Router.push.mock.calls.length).toBe(1);
+        expect(Router.push.mock.calls[0][0]).toBe(pageRoute().home);
+    });
+    test('case RESET_PASSWORD_CONFIRM_FAIL', () => {
+        store.dispatch({ type: 'RESET_PASSWORD_CONFIRM_FAIL', payload: updatedState });
+        expect(Router.push.mock.calls.length).toBe(0);
     });
     test('case default', () => {
         store.dispatch({ type: 'default', payload: updatedState });

@@ -79,7 +79,7 @@ describe('form submit', () => {
         const resetPasswordButton = screen.getByRole('button', { name: 'Reset Password' });
         expect(resetPasswordButton).toBeInTheDocument();
     });
-    test('successful form completion should call resetPasswordConfirmAction and redirect to home page ', async () => {
+    test('successful form completion should call resetPasswordConfirmAction', async () => {
         const newPasswordTextbox = screen.getByPlaceholderText('New password');
         const confirmPasswordTextbox = screen.getByPlaceholderText('Confirm New Password');
         const resetPasswordButton = screen.getByRole('button', { name: 'Reset Password' });
@@ -93,26 +93,5 @@ describe('form submit', () => {
         expect(timesActionDispatched).toBe(1);
         expect(resetPasswordConfirmAction.mock.calls[0][0].uid).toBe(dynamicUrlParams.uid);
         expect(resetPasswordConfirmAction.mock.calls[0][0].token).toBe(dynamicUrlParams.token);
-        expect(Router.push.mock.calls.length).toBe(1);
-        expect(Router.push.mock.calls[0][0]).toBe(pageRoute().home);
-    });
-    test('failed form completion should call resetPasswordConfirmAction and should not redirect ', async () => {
-        resetPasswordConfirmAction.mockReturnValueOnce(() => {
-            throw new Error();
-        });
-        const newPasswordTextbox = screen.getByPlaceholderText('New password');
-        const confirmPasswordTextbox = screen.getByPlaceholderText('Confirm New Password');
-        const resetPasswordButton = screen.getByRole('button', { name: 'Reset Password' });
-        const passwordValue = 'newPassword123';
-
-        userEvent.type(newPasswordTextbox, passwordValue);
-        userEvent.type(confirmPasswordTextbox, passwordValue);
-        userEvent.click(resetPasswordButton);
-        const timesActionDispatched = resetPasswordConfirmAction.mock.calls.length;
-
-        expect(timesActionDispatched).toBe(1);
-        expect(resetPasswordConfirmAction.mock.calls[0][0].uid).toBe(dynamicUrlParams.uid);
-        expect(resetPasswordConfirmAction.mock.calls[0][0].token).toBe(dynamicUrlParams.token);
-        expect(Router.push.mock.calls.length).toBe(0);
     });
 });

@@ -8,7 +8,6 @@ import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import React from 'react';
-import Router from 'next/router';
 import UserResetPassword from '../../../../pages/users/reset_password/UserResetPassword';
 import { pageRoute } from '../../../../globals';
 import { resetPasswordAction } from '../../../../redux/actions/userActions';
@@ -18,7 +17,6 @@ import userEvent from '@testing-library/user-event';
 jest.mock('../../../../redux/actions/userActions', () => ({
     resetPasswordAction: jest.fn().mockReturnValue(() => true),
 }));
-jest.mock('next/router');
 
 beforeEach(() => {
     render(
@@ -62,7 +60,7 @@ describe('UserResetPassword - email input', () => {
 
         expect(submitButton.type).toBe('submit');
     });
-    test('completing the reset password form should dispatch resetPasswordAction successfully and redirect to home button', async () => {
+    test('completing the reset password form should dispatch resetPasswordAction successfully', async () => {
         const emailTextbox = screen.getByPlaceholderText('Email');
         const submitButton = screen.getByRole('button', { name: 'Send Email Reset' });
         const emailValue = 'test@gmail.com';
@@ -73,27 +71,5 @@ describe('UserResetPassword - email input', () => {
         const timesActionDispatched = resetPasswordAction.mock.calls.length;
 
         expect(timesActionDispatched).toBe(1);
-        expect(resetPasswordAction.mock.calls[0][0].email).toEqual(emailValue);
-        expect(Router.push.mock.calls.length).toBe(1);
-        expect(Router.push.mock.calls[0][0]).toBe(pageRoute().home);
-    });
-    test('completing the reset password form should dispatch resetPasswordAction fail and not redirect', async () => {
-        resetPasswordAction.mockReturnValueOnce(() => {
-            throw new Error();
-        });
-
-        const emailTextbox = screen.getByPlaceholderText('Email');
-        const submitButton = screen.getByRole('button', { name: 'Send Email Reset' });
-
-        const emailValue = 'test@gmail.com';
-
-        userEvent.type(emailTextbox, emailValue);
-        userEvent.click(submitButton);
-
-        const timesActionDispatched = resetPasswordAction.mock.calls.length;
-
-        expect(timesActionDispatched).toBe(1);
-        expect(resetPasswordAction.mock.calls[0][0].email).toEqual(emailValue);
-        expect(Router.push.mock.calls.length).toBe(0);
     });
 });

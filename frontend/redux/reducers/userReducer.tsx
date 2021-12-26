@@ -1,4 +1,6 @@
 import {
+    ACTIVATION_FAIL,
+    ACTIVATION_SUCCESS,
     DELETE_USER_FAIL,
     DELETE_USER_SUCCESS,
     FOLLOW_UNFOLLOW_USER_FAIL,
@@ -12,6 +14,10 @@ import {
     LOGIN_FAIL,
     LOGIN_SUCCESS,
     LOGOUT,
+    RESET_PASSWORD_CONFIRM_FAIL,
+    RESET_PASSWORD_CONFIRM_SUCCESS,
+    RESET_PASSWORD_FAIL,
+    RESET_PASSWORD_SUCCESS,
     SIGNUP_FAIL,
     SIGNUP_SUCCESS,
     TEST_CASE_AUTH,
@@ -87,6 +93,15 @@ export default function userReducer(state = initialState, action) {
                 listOfLeaderboardUsers: payload,
             };
         case DELETE_USER_SUCCESS:
+            Router.push(pageRoute().home);
+            localStorage.removeItem('auth_token');
+            localStorage.removeItem('loggedUserData');
+            return {
+                ...state,
+                auth_token: null,
+                isUserAuthenticated: false,
+                loggedUserData: null,
+            };
         case SIGNUP_FAIL:
         case LOGIN_FAIL:
         case LOGOUT:
@@ -98,6 +113,24 @@ export default function userReducer(state = initialState, action) {
                 isUserAuthenticated: false,
                 loggedUserData: null,
             };
+        case RESET_PASSWORD_SUCCESS:
+            Router.push(pageRoute().home);
+            return {
+                ...state,
+            };
+        case RESET_PASSWORD_CONFIRM_SUCCESS:
+            Router.push(pageRoute().home);
+            return {
+                ...state,
+            };
+        case ACTIVATION_SUCCESS:
+            Router.push(pageRoute().home);
+            return {
+                ...state,
+            };
+        case ACTIVATION_FAIL:
+        case RESET_PASSWORD_CONFIRM_FAIL:
+        case RESET_PASSWORD_FAIL:
         case FOLLOW_UNFOLLOW_USER_FAIL:
         case GET_USER_DETAILS_FAIL:
         case UPDATE_USER_FAIL:

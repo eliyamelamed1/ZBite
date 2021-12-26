@@ -91,7 +91,7 @@ const RecipeCreate = () => {
             if (ingredientsTextList.length === 0 || instructionsTextList.length === 0)
                 return console.log('ingredients / instructions is not allowed to be empty');
 
-            await dispatch(
+            dispatch(
                 recipeCreateAction({
                     photoMain,
                     title,
@@ -103,7 +103,6 @@ const RecipeCreate = () => {
                     instructionsImageList,
                 })
             );
-            await Router.push(pageRoute().home);
         } catch (err) {
             // console.log(err);
         }
