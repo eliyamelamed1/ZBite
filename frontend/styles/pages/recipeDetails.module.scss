@@ -24,7 +24,9 @@
     .details_container {
         width: clamp(22rem, 66.6vw, 66rem);
         display: grid;
+        border: 1px solid black;
         grid-template-columns: 1fr 7.9rem 0.4rem;
+        grid-template-rows: 1fr 1fr;
         justify-content: space-between;
 
         .name_and_profile_image_container {
@@ -54,6 +56,15 @@
             flex-direction: column;
             img {
                 width: 1rem;
+            }
+        }
+
+        .parent_buttons_container {
+            grid-row: 2;
+            border: 1px solid green;
+            .buttons_container {
+                gap: 1.62rem;
+                display: flex;
             }
         }
     }

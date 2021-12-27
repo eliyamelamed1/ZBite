@@ -105,6 +105,14 @@ const RecipeDetails = (props) => {
                                     <UiStars starsCount={recipeData.stars} />
                                     <UiSaves savesCount={recipeData.saves?.length} textToRight={true} />
                                 </div>
+                                <div className={styles.parent_buttons_container}>
+                                    {isUserAuthenticated ? (
+                                        <section className={styles.buttons_container}>
+                                            <SaveRecipe recipeId={recipeData.id} />
+                                            <ReviewCreate recipeId={recipeData.id} />
+                                        </section>
+                                    ) : null}
+                                </div>
                             </li>
                             <UiSectionSeparator />
                             <p className={styles.title}> {recipeData?.title}</p>
@@ -124,9 +132,6 @@ const RecipeDetails = (props) => {
                         <Custom404 />
                     )}
                 </section>
-                <h2>reviews</h2>
-                <section>{isUserAuthenticated ? <ReviewCreate recipeId={recipeData.id} /> : null}</section>
-                <section>{isUserAuthenticated ? <SaveRecipe recipeId={recipeData.id} /> : null}</section>
                 <section>{reviewsData ? <DisplayReviews reviewsToDisplay={reviewsData} /> : null}</section>
                 <section>{authorLinks}</section>
             </main>

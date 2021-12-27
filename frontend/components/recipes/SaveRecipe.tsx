@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { RootState } from '../../redux/store';
+import UiButton from '../ui/UiButton';
 import { saveRecipeAction } from '../../redux/actions/recipeActions';
 
 const SaveRecipe: React.FC<{ recipeId: string }> = ({ recipeId }) => {
@@ -29,7 +30,7 @@ const SaveRecipe: React.FC<{ recipeId: string }> = ({ recipeId }) => {
     };
     const authLinks = (
         <form onSubmit={(e) => onSubmit(e)}>
-            <button>{button}</button>
+            <UiButton>{button}</UiButton>
         </form>
     );
     return <div>{authLinks}</div>;

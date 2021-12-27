@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { RootState } from '../../redux/store';
 import Router from 'next/router';
+import UiButton from '../ui/UiButton';
 import { pageRoute } from '../../globals';
 import { reviewCreateAction } from '../../redux/actions/recipeActions';
 import { useState } from 'react';
@@ -25,34 +26,39 @@ const ReviewCreate: React.FC<{ recipeId: string }> = ({ recipeId }) => {
             dispatch(reviewCreateAction({ recipeId, stars, comment, image }));
         } catch (err) {}
     };
+
+    const reviewForm = () => {
+        <form onSubmit={(e) => onSubmit(e)}>
+            <div>
+                <input
+                    type='text'
+                    placeholder='stars'
+                    name='stars'
+                    value={stars}
+                    onChange={(e) => onChange(e)}
+                    required
+                />
+            </div>
+            <div>
+                <input
+                    type='text'
+                    placeholder='comment'
+                    name='comment'
+                    value={comment}
+                    onChange={(e) => onChange(e)}
+                    required
+                />
+            </div>
+            <div>
+                <input type='image' placeholder='image' name='image' value={image} onChange={(e) => onChange(e)} />
+            </div>
+            <button type='submit'>Create review</button>
+        </form>;
+    };
+
     return (
         <div data-testid='reviewCreate'>
-            <form onSubmit={(e) => onSubmit(e)}>
-                <div>
-                    <input
-                        type='text'
-                        placeholder='stars'
-                        name='stars'
-                        value={stars}
-                        onChange={(e) => onChange(e)}
-                        required
-                    />
-                </div>
-                <div>
-                    <input
-                        type='text'
-                        placeholder='comment'
-                        name='comment'
-                        value={comment}
-                        onChange={(e) => onChange(e)}
-                        required
-                    />
-                </div>
-                <div>
-                    <input type='image' placeholder='image' name='image' value={image} onChange={(e) => onChange(e)} />
-                </div>
-                <button type='submit'>Create review</button>
-            </form>
+            <UiButton reverse={true}>rate</UiButton>
         </div>
     );
 };
