@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import PropTypes from 'prop-types';
 import { RootState } from '../../redux/store';
 import Router from 'next/router';
 import UiButton from '../ui/UiButton';
@@ -61,10 +60,6 @@ const ReviewCreate: React.FC<{ recipeId: string }> = ({ recipeId }) => {
             <UiButton reverse={true}>rate</UiButton>
         </div>
     );
-};
-
-ReviewCreate.propTypes = {
-    recipeId: PropTypes.string.isRequired,
 };
 
 export default ReviewCreate;
