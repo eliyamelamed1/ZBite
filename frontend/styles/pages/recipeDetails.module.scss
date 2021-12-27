@@ -29,10 +29,11 @@
         grid-template-columns: 5rem 1fr 8rem;
         grid-template-rows: 1fr 1fr;
         align-items: center;
-        column-gap: 0.5rem;
-        // @include media('>tablet') {
-
-        // }
+        column-gap: 2rem;
+        @include media('>tablet') {
+            grid-template-columns: 5rem 1fr 8rem 22rem;
+            grid-template-rows: 1fr;
+        }
 
         .profile_image_container {
             justify-content: center;
@@ -59,7 +60,11 @@
             display: flex;
             justify-content: center;
             width: clamp(22rem, 66.6vw, 66rem);
-
+            @include media('>tablet') {
+                grid-column: 4;
+                grid-row: 1;
+                width: 100%;
+            }
             .buttons_container {
                 display: flex;
                 gap: 2rem;
@@ -102,49 +107,6 @@
         .ingredients_text_item {
             margin-bottom: 1rem;
             font-size: 1.5rem;
-        }
-    }
-}
-
-@include media('>tablet') {
-    .recipe_data_container {
-        .details_container {
-            text-transform: capitalize;
-            width: clamp(22rem, 66.6vw, 66rem);
-            display: grid;
-            grid-template-columns: 5rem 1fr 8rem 22rem;
-            align-items: center;
-            column-gap: 0.5rem;
-            .author_name {
-                display: grid;
-                align-content: center;
-                font-weight: 600;
-                border: 1px solid black;
-            }
-
-            .saves_and_ratings_container {
-                gap: 0.3rem;
-                display: flex;
-                flex-direction: column;
-                border: 1px solid red;
-
-                img {
-                    width: 1rem;
-                }
-            }
-
-            .parent_buttons_container {
-                border: 1px solid green;
-
-                grid-column: 4;
-                grid-row: 1;
-                width: 100%;
-                align-content: center;
-                .buttons_container {
-                    display: flex;
-                    gap: 2rem;
-                }
-            }
         }
     }
 }
