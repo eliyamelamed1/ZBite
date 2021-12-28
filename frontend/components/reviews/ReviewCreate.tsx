@@ -24,6 +24,7 @@ const ReviewCreate: React.FC<{ recipeId: string }> = ({ recipeId }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!isUserAuthenticated) await Router.push(pageRoute().login);
         setDisplayReviewForm(true);
     };
     const onSubmit = async (e) => {
@@ -35,7 +36,7 @@ const ReviewCreate: React.FC<{ recipeId: string }> = ({ recipeId }) => {
         } catch (err) {}
     };
 
-    const reviewForm = () => (
+    const reviewSection = () => (
         <UiPopUp onSubmit={onSubmit}>
             <i onClick={() => setDisplayReviewForm(false)}>
                 {closeIcon.src && <img src={closeIcon.src} alt='logo icon' height={100} width={100} />}
@@ -53,7 +54,7 @@ const ReviewCreate: React.FC<{ recipeId: string }> = ({ recipeId }) => {
             <form onClick={(e) => handleSubmit(e)}>
                 <UiButton reverse={true}>review</UiButton>
             </form>
-            {displayReviewForm && reviewForm()}
+            {displayReviewForm && reviewSection()}
         </div>
     );
 };

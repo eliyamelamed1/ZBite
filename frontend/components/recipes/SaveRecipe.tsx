@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { RootState } from '../../redux/store';
+import Router from 'next/router';
 import UiButton from '../ui/UiButton';
+import { pageRoute } from '../../globals';
 import { saveRecipeAction } from '../../redux/actions/recipeActions';
 
 const SaveRecipe: React.FC<{ recipeId: string }> = ({ recipeId }) => {
     const dispatch = useDispatch();
     const [button, setButton] = useState('save');
-    const { loggedUserData } = useSelector((state: RootState) => state.userReducer);
+    const { loggedUserData, isUserAuthenticated } = useSelector((state: RootState) => state.userReducer);
 
     useEffect(
         function toggleButtonText() {
@@ -22,15 +24,16 @@ const SaveRecipe: React.FC<{ recipeId: string }> = ({ recipeId }) => {
         [dispatch, loggedUserData, recipeId]
     );
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
+        if (!isUserAuthenticated) await Router.push(pageRoute().login);
         try {
             dispatch(saveRecipeAction({ recipeId }));
         } catch {}
     };
     const authLinks = (
         <form onSubmit={(e) => onSubmit(e)}>
-            <UiButton>{button}</UiButton>
+            <UiButton reverse={false}>{button}</UiButton>
         </form>
     );
     return <div>{authLinks}</div>;

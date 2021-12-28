@@ -115,12 +115,10 @@ const RecipeDetails = (props) => {
                                     <UiSaves savesCount={recipeData.saves?.length} textToRight={true} />
                                 </div>
                                 <div className={styles.parent_buttons_container}>
-                                    {isUserAuthenticated && (
-                                        <section className={styles.buttons_container}>
-                                            <SaveRecipe recipeId={recipeData.id} />
-                                            <ReviewCreate recipeId={recipeData.id} />
-                                        </section>
-                                    )}
+                                    <section className={styles.buttons_container}>
+                                        <SaveRecipe recipeId={recipeData.id} />
+                                        <ReviewCreate recipeId={recipeData.id} />
+                                    </section>
                                 </div>
                             </li>
                             <UiSectionSeparator />
