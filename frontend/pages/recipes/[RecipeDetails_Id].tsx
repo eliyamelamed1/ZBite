@@ -43,13 +43,11 @@ const RecipeDetails = (props) => {
     const { isUserAuthenticated } = useSelector((state: RootState) => state.userReducer);
     const [reviewsData, setReviewsData] = useState(props.serverReviewsData);
 
-    console.log(recipeData);
+    console.log(recipeData.instructions_image_list);
 
     let instructionsCombined = [];
     const mergeInstructionLists = () => {
         if (recipeData.instructions_text_list) {
-            console.log(recipeData.instructions_text_list);
-
             instructionsCombined = recipeData?.instructions_text_list?.map(function (text, index) {
                 const image = recipeData.instructions_image_list?.[index];
                 return [{ text: text, image: image }];
@@ -143,7 +141,6 @@ const RecipeDetails = (props) => {
                                 {mergeInstructionLists()}
                                 {instructionsCombined.map((item, index) => (
                                     <p className={styles.instructions_text_item} key={index}>
-                                        {console.log(item)}
                                         {item.text}
                                     </p>
                                 ))}
