@@ -346,6 +346,7 @@ describe('RecipeDetails - guest user', () => {
     });
 
     test('should render without crashing', () => {});
+
     test('should render match own data-testid', () => {
         const recipeDetailsTestId = screen.getByTestId('recipeDetails');
         expect(recipeDetailsTestId).toBeInTheDocument();
@@ -364,6 +365,6 @@ describe('RecipeDetails - guest user', () => {
         expect(recipeUpdateTestId).not.toBeInTheDocument();
     });
     test('should not render ReviewCreate', () => {
-        expect(ReviewCreateSpy).not.toHaveBeenCalled();
+        expect(ReviewCreateSpy).toHaveBeenCalled();
     });
 });
