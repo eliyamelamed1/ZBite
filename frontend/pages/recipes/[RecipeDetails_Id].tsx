@@ -43,8 +43,6 @@ const RecipeDetails = (props) => {
     const { isUserAuthenticated } = useSelector((state: RootState) => state.userReducer);
     const [reviewsData, setReviewsData] = useState(props.serverReviewsData);
 
-    console.log(recipeData.instructions_image_list);
-
     let instructionsCombined = [];
     const mergeInstructionLists = () => {
         if (recipeData.instructions_text_list) {
