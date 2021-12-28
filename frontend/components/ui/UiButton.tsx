@@ -5,15 +5,15 @@ const UiButton: React.FC<{ children: string; reverse: boolean }> = ({ children, 
     const button = (reverse) => {
         if (reverse)
             return (
-                <div className={styles.buttonContainerReversed}>
-                    <button className={styles.buttonReversed}>{children}</button>
-                </div>
+                <button className={styles.buttonContainerReversed}>
+                    <span className={styles.buttonReversed}>{children}</span>
+                </button>
             );
         else {
             return (
-                <div className={styles.buttonContainer}>
-                    <button className={styles.button}>{children}</button>
-                </div>
+                <button className={styles.buttonContainer}>
+                    <span className={styles.button}>{children}</span>
+                </button>
             );
         }
     };
