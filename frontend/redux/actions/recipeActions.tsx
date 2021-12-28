@@ -83,9 +83,10 @@ export const recipeCreateAction =
             formData.append('description', description);
             formData.append('cook_time', cookTime);
             formData.append('serving', serving);
-            formData.append('instructions_text_list', instructionsTextList as any);
-            formData.append('ingredients_text_list', ingredientsTextList as any);
-            formData.append('instructions_image_list', instructionsImageList as any);
+            ingredientsTextList?.forEach((item) => formData.append('ingredients_text_list', item));
+            instructionsTextList?.forEach((item) => formData.append('instructions_text_list', item));
+            // instructionsImageList?.forEach((item) => formData.append('instructions_image_list', item));
+            formData.append('instructions_image_list', null);
 
             await axios.post(endpointRoute().recipes.create, formData, config);
 

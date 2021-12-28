@@ -43,6 +43,20 @@ const RecipeDetails = (props) => {
     const { isUserAuthenticated } = useSelector((state: RootState) => state.userReducer);
     const [reviewsData, setReviewsData] = useState(props.serverReviewsData);
 
+    console.log(recipeData);
+
+    let instructionsCombined = [];
+    const mergeInstructionLists = () => {
+        if (recipeData.instructions_text_list) {
+            console.log(recipeData.instructions_text_list);
+
+            instructionsCombined = recipeData?.instructions_text_list?.map(function (text, index) {
+                const image = recipeData.instructions_image_list?.[index];
+                return [{ text: text, image: image }];
+            });
+        }
+    };
+
     useEffect(
         // when updating recipe data (title, description etc..) migrate the changes to the userData
         function migrateRequestedRecipeData() {
@@ -65,7 +79,7 @@ const RecipeDetails = (props) => {
     return (
         <div className={styles.main}>
             <Head>
-                {recipeData ? <title>ZBite - recipes |{`${recipeData.title}`}</title> : <title>ZBite - recipes </title>}
+                {recipeData ? <title>ZBite | {`${recipeData.title}`}</title> : <title>ZBite - recipes </title>}
                 <meta name='description' content='recipes detail' />
             </Head>
             <main data-testid='recipeDetails'>
@@ -124,6 +138,17 @@ const RecipeDetails = (props) => {
                                     </p>
                                 ))}
                             </ul>
+                            <ul className={styles.instructions_container}>
+                                <h1 className={styles.instructions_section_title}>Instructions</h1>
+                                {mergeInstructionLists()}
+                                {instructionsCombined.map((item, index) => (
+                                    <p className={styles.instructions_text_item} key={index}>
+                                        {console.log(item)}
+                                        {item.text}
+                                    </p>
+                                ))}
+                            </ul>
+
                             <UiSectionSeparator />
                         </ul>
                     ) : (
