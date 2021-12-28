@@ -11,6 +11,7 @@ import IsRecipeAuthor from '../../components/recipes/IsRecipeAuthor';
 import Link from 'next/link';
 import ReviewCreate from '../../components/reviews/ReviewCreate';
 import SaveRecipe from '../../components/recipes/SaveRecipe';
+import UiButton from '../../components/ui/UiButton';
 import UiSaves from '../../components/ui/UiSaves';
 import UiSectionSeparator from '../../components/ui/UiSectionSeperator';
 import UiStars from '../../components/ui/UiStars';
@@ -114,12 +115,12 @@ const RecipeDetails = (props) => {
                                     <UiSaves savesCount={recipeData.saves?.length} textToRight={true} />
                                 </div>
                                 <div className={styles.parent_buttons_container}>
-                                    {isUserAuthenticated ? (
+                                    {isUserAuthenticated && (
                                         <section className={styles.buttons_container}>
                                             <SaveRecipe recipeId={recipeData.id} />
                                             <ReviewCreate recipeId={recipeData.id} />
                                         </section>
-                                    ) : null}
+                                    )}
                                 </div>
                             </li>
                             <UiSectionSeparator />
