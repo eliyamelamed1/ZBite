@@ -9,7 +9,7 @@ interface DataTypes {
     onChange: any;
     required: boolean;
 }
-const UiInput: React.FC<DataTypes> = ({ type, placeholder, name, value, onChange, required }) => {
+const UiInput: React.FC<DataTypes> = ({ type, placeholder, name, value, onChange, required = false }) => {
     const input = () => {
         if (required)
             return (

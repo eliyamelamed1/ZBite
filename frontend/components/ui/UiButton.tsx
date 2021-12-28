@@ -1,7 +1,12 @@
 import React from 'react';
 import styles from '../../styles/ui/UiButton.module.scss';
 
-const UiButton: React.FC<{ children: string; reverse: boolean }> = ({ children, reverse }) => {
+interface DataTypes {
+    children: string;
+    reverse: boolean;
+}
+
+const UiButton: React.FC<DataTypes> = ({ children, reverse }) => {
     const button = (reverse) => {
         if (reverse)
             return (
