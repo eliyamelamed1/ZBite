@@ -6,7 +6,7 @@ import UiButton from '../ui/UiButton';
 import UiInput from '../ui/UiInput';
 import UiPopUp from '../ui/UiPopUp';
 import closeIcon from '../../styles/icons/x.svg';
-import { pageRoute } from '../../globals';
+import { pageRoute } from '../../enums';
 import { reviewCreateAction } from '../../redux/actions/recipeActions';
 import { useState } from 'react';
 

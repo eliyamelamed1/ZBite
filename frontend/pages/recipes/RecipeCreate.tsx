@@ -10,7 +10,7 @@ import addInputContainer from '../../components/utils/AddInputContainer';
 import deleteIcon from '../../styles/icons/delete-input-icon.svg';
 import deleteInputContainer from '../../components/utils/DeleteInputContainer';
 import editInput from '../../styles/icons/edit_input.svg';
-import { pageRoute } from '../../globals';
+import { pageRoute } from '../../enums';
 import { recipeCreateAction } from '../../redux/actions/recipeActions';
 import saveInput from '../../styles/icons/save_changes.svg';
 import styles from '../../styles/pages/recipeCreate.module.scss';

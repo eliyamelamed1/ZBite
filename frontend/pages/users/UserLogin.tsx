@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { RootState } from '../../redux/store';
 import Router from 'next/router';
 import { loginAction } from '../../redux/actions/userActions';
-import { pageRoute } from '../../globals';
+import { pageRoute } from '../../enums';
 import styles from '../../styles/pages/login.module.scss';
 
 const UserLogin = () => {

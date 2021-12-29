@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import Router from 'next/router';
 import UserResetPasswordConfirm from '../../../../pages/users/reset_password/[...UserResetPasswordConfirm_UidToken]';
-import { pageRoute } from '../../../../globals';
+import { pageRoute } from '../../../../enums';
 import { resetPasswordConfirmAction } from '../../../../redux/actions/userActions';
 import store from '../../../../redux/store';
 import userEvent from '@testing-library/user-event';

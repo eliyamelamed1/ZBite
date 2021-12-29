@@ -30,7 +30,7 @@ import {
 
 import Router from 'next/router';
 import { cleanup } from '@testing-library/react';
-import { pageRoute } from '../../../globals';
+import { pageRoute } from '../../../enums';
 import store from '../../../redux/store';
 
 const updatedState = {

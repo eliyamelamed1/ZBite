@@ -12,7 +12,7 @@ import { RootState } from '../redux/store';
 import SavedIcon from '../styles/icons/heart.svg';
 import SearchIcon from '../styles/icons/search.svg';
 import { logoutAction } from '../redux/actions/userActions';
-import { pageRoute } from '../globals';
+import { pageRoute } from '../enums';
 import styles from '../styles/layout/_navbar.module.scss';
 import { useRouter } from 'next/router';
 

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import Router from 'next/router';
-import { pageRoute } from '../../globals';
+import { pageRoute } from '../../enums';
 import { useDispatch } from 'react-redux';
 import { userDeleteAction } from '../../redux/actions/userActions';
 

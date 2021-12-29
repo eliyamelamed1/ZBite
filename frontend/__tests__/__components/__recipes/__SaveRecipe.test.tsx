@@ -9,7 +9,7 @@ import Router from 'next/router';
 import SaveRecipe from '../../../components/recipes/SaveRecipe';
 import { TEST_CASE_AUTH } from '../../../redux/types';
 import axios from 'axios';
-import { pageRoute } from '../../../globals';
+import { pageRoute } from '../../../enums';
 import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
 

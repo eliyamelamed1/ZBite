@@ -1,23 +1,32 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { loadFollowedRecipesAction, loadTrendingRecipesAction } from '../redux/actions/recipeActions';
+import { pageRoute, typeOfRecipesEnum } from '../enums';
 import store, { RootState } from '../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 
 import DisplayRecipes from '../components/recipes/DisplayRecipes';
 import Router from 'next/router';
-import { pageRoute } from '../globals';
 import styles from '../styles/pages/home.module.scss';
 
-const HomePage: React.FC<{ listOfTrendingRecipes: Object[] }> = (props) => {
+interface Recipe {
+    id: string;
+    author: { name: string; id: string };
+    title: string;
+    photo_main: string;
+    saves: string[];
+    stars: string;
+}
+
+const HomePage: React.FC<{ listOfTrendingRecipes: Recipe[] }> = (props) => {
     const dispatch = useDispatch();
-    const [typeOfRecipes, setTypeOfRecipes] = useState('Trending');
+    const [typeOfRecipes, setTypeOfRecipes] = useState(typeOfRecipesEnum.trending);
     const buttonsRef = useRef() as any;
     const onClick = (e) => {
-        if (e.target.name === 'trending') {
+        if (e.target.name === typeOfRecipesEnum.trending) {
             buttonsRef.current.children[0].className = styles.active;
             buttonsRef.current.children[1].className = '';
         }
-        if (e.target.name === 'Following') {
+        if (e.target.name === typeOfRecipesEnum.following) {
             buttonsRef.current.children[0].className = '';
             buttonsRef.current.children[1].className = styles.active;
         }
@@ -26,10 +35,10 @@ const HomePage: React.FC<{ listOfTrendingRecipes: Object[] }> = (props) => {
     const { listOfFollowedRecipes } = useSelector((state: RootState) => state.recipeReducer);
     const { isUserAuthenticated } = useSelector((state: RootState) => state.userReducer);
 
-    if (typeOfRecipes === 'Following' && isUserAuthenticated === false) Router.push(pageRoute().login);
+    if (typeOfRecipes === typeOfRecipesEnum.following && isUserAuthenticated === false) Router.push(pageRoute().login);
 
     useEffect(() => {
-        if (typeOfRecipes === 'Following') {
+        if (typeOfRecipes === typeOfRecipesEnum.following) {
             try {
                 dispatch(loadFollowedRecipesAction());
             } catch {}
@@ -39,18 +48,25 @@ const HomePage: React.FC<{ listOfTrendingRecipes: Object[] }> = (props) => {
     return (
         <div className={styles.container}>
             <ul className={styles.recipe_filter} ref={buttonsRef} onClick={onClick}>
-                <button className={styles.active} name='trending' onClick={() => setTypeOfRecipes('Trending')}>
+                <button
+                    className={styles.active}
+                    name={typeOfRecipesEnum.trending}
+                    onClick={() => setTypeOfRecipes(typeOfRecipesEnum.trending)}
+                >
                     Trending
                 </button>
-                <button name='Following' onClick={() => setTypeOfRecipes('Following')}>
+                <button
+                    name={typeOfRecipesEnum.following}
+                    onClick={() => setTypeOfRecipes(typeOfRecipesEnum.following)}
+                >
                     Following
                 </button>
             </ul>
             <ul className={styles.recipes_container}>
-                {typeOfRecipes === 'Trending' && listOfTrendingRecipes && (
+                {typeOfRecipes === typeOfRecipesEnum.trending && listOfTrendingRecipes && (
                     <DisplayRecipes recipesToDisplay={listOfTrendingRecipes} />
                 )}
-                {typeOfRecipes === 'Following' && listOfFollowedRecipes && (
+                {typeOfRecipes === typeOfRecipesEnum.following && listOfFollowedRecipes && (
                     <DisplayRecipes recipesToDisplay={listOfFollowedRecipes} />
                 )}
             </ul>

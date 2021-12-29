@@ -7,7 +7,7 @@ import React from 'react';
 import RecipeDelete from '../../../components/recipes/RecipeDelete';
 import Router from 'next/router';
 import configureStore from 'redux-mock-store';
-import { pageRoute } from '../../../globals';
+import { pageRoute } from '../../../enums';
 import { recipeDeleteAction } from '../../../redux/actions/recipeActions';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';

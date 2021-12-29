@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import React from 'react';
 import { RootState } from '../../../redux/store';
-import { pageRoute } from '../../../globals';
+import { pageRoute } from '../../../enums';
 import { userActivateAction } from '../../../redux/actions/userActions';
 
 const UserActivate = () => {

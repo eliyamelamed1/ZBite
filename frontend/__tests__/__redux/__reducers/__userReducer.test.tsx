@@ -2,7 +2,7 @@ import '@testing-library/jest-dom/extend-expect';
 
 import Router from 'next/router';
 import { cleanup } from '@testing-library/react';
-import { pageRoute } from '../../../globals';
+import { pageRoute } from '../../../enums';
 import store from '../../../redux/store';
 
 jest.mock('next/router', () => ({

@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import UserDelete from '../../../components/users/UserDelete';
 import configureStore from 'redux-mock-store';
-import { pageRoute } from '../../../globals';
+import { pageRoute } from '../../../enums';
 import thunk from 'redux-thunk';
 import { userDeleteAction } from '../../../redux/actions/userActions';
 import userEvent from '@testing-library/user-event';

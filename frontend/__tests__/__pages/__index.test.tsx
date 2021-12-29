@@ -9,7 +9,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import React from 'react';
 import Router from 'next/router';
-import { pageRoute } from '../../globals';
+import { pageRoute } from '../../enums';
 import store from '../../redux/store';
 import userEvent from '@testing-library/user-event';
 

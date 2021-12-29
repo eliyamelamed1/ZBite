@@ -23,7 +23,7 @@ import {
     UPDATE_USER_FAIL,
     UPDATE_USER_SUCCESS,
 } from '../types';
-import { endpointRoute, pageRoute } from '../../globals';
+import { endpointRoute, pageRoute } from '../../enums';
 
 import Router from 'next/router';
 import axios from 'axios';

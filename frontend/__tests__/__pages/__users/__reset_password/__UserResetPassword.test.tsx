@@ -9,7 +9,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import React from 'react';
 import UserResetPassword from '../../../../pages/users/reset_password/UserResetPassword';
-import { pageRoute } from '../../../../globals';
+import { pageRoute } from '../../../../enums';
 import { resetPasswordAction } from '../../../../redux/actions/userActions';
 import store from '../../../../redux/store';
 import userEvent from '@testing-library/user-event';

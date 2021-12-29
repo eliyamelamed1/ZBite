@@ -46,6 +46,12 @@ export const pageRoute = (id = String) => ({
     reset_password: '/users/reset_password/UserResetPassword',
 });
 
+export const typeOfRecipesEnum = {
+    trending: 'trending',
+    following: 'following',
+};
+
+// tests
 export const userParams = {
     loggedUser: {
         id: 'loggedUserId',

@@ -11,7 +11,7 @@ import UserDetails_Id from '../../../pages/users/[UserDetails_Id]';
 import axios from 'axios';
 import { getServerSideProps } from '../../../pages/users/[UserDetails_Id]';
 import store from '../../../redux/store';
-import { userParams } from '../../../globals';
+import { userParams } from '../../../enums';
 
 const loadUserDetailsActionSpy = jest.spyOn(userActions, 'loadUserDetailsAction');
 jest.mock('axios');

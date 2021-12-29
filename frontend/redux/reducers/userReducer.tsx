@@ -26,7 +26,7 @@ import {
 } from '../types';
 
 import Router from 'next/router';
-import { pageRoute } from '../../globals';
+import { pageRoute } from '../../enums';
 
 const initialState = {
     auth_token: process.browser ? localStorage.getItem('auth_token') : null,

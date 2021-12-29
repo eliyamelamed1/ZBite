@@ -16,7 +16,7 @@ import {
 
 import axios from 'axios';
 import configureStore from 'redux-mock-store';
-import { endpointRoute } from '../../../globals';
+import { endpointRoute } from '../../../enums';
 import thunk from 'redux-thunk';
 
 const middlewares = [thunk];

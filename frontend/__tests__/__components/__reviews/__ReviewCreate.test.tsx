@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import ReviewCreate from '../../../components/reviews/ReviewCreate';
 import Router from 'next/router';
 import { TEST_CASE_AUTH } from '../../../redux/types';
-import { pageRoute } from '../../../globals';
+import { pageRoute } from '../../../enums';
 import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
 

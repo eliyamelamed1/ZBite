@@ -25,7 +25,7 @@ import {
 } from '../types';
 
 import Router from 'next/router';
-import { pageRoute } from '../../globals';
+import { pageRoute } from '../../enums';
 
 const initialState = {
     listOfSearchedRecipes: null,

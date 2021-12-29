@@ -24,7 +24,7 @@ import {
 } from '../types';
 
 import axios from 'axios';
-import { endpointRoute } from '../../globals';
+import { endpointRoute } from '../../enums';
 import { loadLoggedUserDataAction } from './userActions';
 
 // recipes

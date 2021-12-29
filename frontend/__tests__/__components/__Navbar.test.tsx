@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import configureStore from 'redux-mock-store';
 import { logoutAction } from '../../redux/actions/userActions';
-import { pageRoute } from '../../globals';
+import { pageRoute } from '../../enums';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 

@@ -4,7 +4,7 @@ import DisplayRecipes from '../../components/recipes/DisplayRecipes';
 import { RootState } from '../../redux/store';
 import Router from 'next/router';
 import { loadSavedRecipesAction } from '../../redux/actions/recipeActions';
-import { pageRoute } from '../../globals';
+import { pageRoute } from '../../enums';
 import styles from '../../styles/pages/home.module.scss';
 import { useEffect } from 'react';
 

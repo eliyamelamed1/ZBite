@@ -7,7 +7,7 @@ import React from 'react';
 import Router from 'next/router';
 import UserSignup from '../../../pages/users/UserSignup';
 import configureStore from 'redux-mock-store';
-import { pageRoute } from '../../../globals';
+import { pageRoute } from '../../../enums';
 import { signupAction } from '../../../redux/actions/userActions';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';

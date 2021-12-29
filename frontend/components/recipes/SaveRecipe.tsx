@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import Router from 'next/router';
 import UiButton from '../ui/UiButton';
-import { pageRoute } from '../../globals';
+import { pageRoute } from '../../enums';
 import { saveRecipeAction } from '../../redux/actions/recipeActions';
 
 const SaveRecipe: React.FC<{ recipeId: string }> = ({ recipeId }) => {

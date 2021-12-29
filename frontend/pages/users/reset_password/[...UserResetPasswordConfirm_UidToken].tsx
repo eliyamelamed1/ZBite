@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Router, { useRouter } from 'next/router';
 
-import { pageRoute } from '../../../globals';
+import { pageRoute } from '../../../enums';
 import { resetPasswordConfirmAction } from '../../../redux/actions/userActions';
 import styles from '../../../styles/pages/resetPasswordConfirm.module.scss';
 import { useDispatch } from 'react-redux';
