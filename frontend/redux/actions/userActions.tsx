@@ -48,9 +48,10 @@ export const followUserAction =
             };
             const body = JSON.stringify({ user_to_follow });
             await axios.post(endpointRoute().users.followUser, body, config);
+            toast.success('updated users followed successfully');
+            await dispatch({ type: FOLLOW_UNFOLLOW_USER_SUCCESS });
             await dispatch(loadUserDetailsAction({ id: user_to_follow }));
             await dispatch(loadLoggedUserDataAction());
-            await dispatch({ type: FOLLOW_UNFOLLOW_USER_SUCCESS });
         } catch (err) {
             const object = err.response.data;
             const key = Object.keys(object)[0];
@@ -98,6 +99,7 @@ export const userUpdateAction =
                 name,
             });
             const res = await axios.patch(endpointRoute(id).users.details, body, config);
+            toast.success('user updated successfully');
             dispatch({ type: UPDATE_USER_SUCCESS, payload: res.data });
         } catch (err) {
             const object = err.response.data;
@@ -121,6 +123,7 @@ export const userDeleteAction =
                 },
             };
             const res = await axios.delete(endpointRoute(id).users.details, config);
+            toast.success('user deleted successfully');
             dispatch({ type: DELETE_USER_SUCCESS, payload: res.data });
             dispatch(logoutAction());
         } catch (err) {
@@ -167,7 +170,7 @@ export const loginAction =
 
         try {
             const res = await axios.post(endpointRoute().users.login, body, config);
-            toast.success('registration completed, redirected to login page');
+            toast.success('login completed, redirected to home page');
             await dispatch({ type: LOGIN_SUCCESS, payload: res.data });
             await dispatch(loadLoggedUserDataAction());
         } catch (err) {
@@ -197,6 +200,7 @@ export const signupAction =
 
         try {
             const res = await axios.post(endpointRoute().users.signup, body, config);
+            toast.success('registration completed, redirected to login page');
             dispatch({ type: SIGNUP_SUCCESS, payload: res.data });
         } catch (err) {
             const object = err.response.data;
@@ -222,7 +226,7 @@ export const userActivateAction =
 
         try {
             const res = await axios.post(endpointRoute().users.activate, body, config);
-
+            toast.success('user activated successfully');
             dispatch({ type: ACTIVATION_SUCCESS, payload: res.data });
         } catch (err) {
             const object = err.response.data;
@@ -247,7 +251,7 @@ export const resetPasswordAction =
 
         try {
             const res = await axios.post(endpointRoute().users.resetPassword, body, config);
-
+            toast.success('email sent successfully');
             dispatch({ type: RESET_PASSWORD_SUCCESS, payload: res.data });
         } catch (err) {
             const object = err.response.data;
@@ -275,6 +279,7 @@ export const resetPasswordConfirmAction =
                 new_password,
             });
             const res = await axios.post(endpointRoute().users.resetPasswordConfirm, body, config);
+            toast.success('password reset completed successfully');
             dispatch({ type: RESET_PASSWORD_CONFIRM_SUCCESS, payload: res.data });
         } catch (err) {
             const object = err.response.data;
@@ -286,6 +291,7 @@ export const resetPasswordConfirmAction =
     };
 
 export const logoutAction = () => async (dispatch) => {
+    toast.success('logout successfully');
     dispatch({ type: LOGOUT });
 };
 

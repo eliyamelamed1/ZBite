@@ -41,6 +41,7 @@ export const recipeDeleteAction =
                 },
             };
             await axios.delete(endpointRoute(id).recipes.details, config);
+            toast.success('recipe deleted successfully');
             dispatch({ type: DELETE_RECIPE_SUCCESS });
         } catch {
             dispatch({ type: DELETE_RECIPE_FAIL });
@@ -86,6 +87,7 @@ export const recipeCreateAction =
             instructionsTextList?.forEach((item) => formData.append('instructions_text_list', item));
 
             await axios.post(endpointRoute().recipes.create, formData, config);
+            toast.success('recipe created successfully');
             dispatch({ type: CREATE_RECIPE_SUCCESS });
         } catch (err) {
             const object = err.response.data;
@@ -113,6 +115,7 @@ export const recipeUpdateAction =
                 description,
             });
             const res = await axios.patch(endpointRoute(id).recipes.details, body, config);
+            toast.success('recipe updated successfully');
             dispatch({ type: UPDATE_RECIPE_SUCCESS, payload: res.data });
         } catch (err) {
             const object = err.response.data;
@@ -220,6 +223,7 @@ export const reviewCreateAction =
                 image,
             });
             await axios.post(endpointRoute().reviews.create, body, config);
+            toast.success('review created successfully');
             dispatch({ type: REVIEW_CREATE_SUCCESS });
             await dispatch(reviewsInRecipeAction({ recipeId }));
         } catch (err) {
@@ -243,6 +247,7 @@ export const reviewDeleteAction =
                 },
             };
             await axios.delete(endpointRoute(reviewId).reviews.delete, config);
+            toast.success('review deleted successfully');
             dispatch({ type: REVIEW_DELETE_SUCCESS });
             dispatch(reviewsInRecipeAction({ recipeId }));
         } catch (err) {
@@ -293,9 +298,10 @@ export const saveRecipeAction =
             };
             const body = JSON.stringify({ recipe: recipeId });
             await axios.post(endpointRoute().recipes.save, body, config);
+            toast.success('updated saved recipes successfully');
+            await dispatch({ type: SAVE_UNSAVE_ACTION_SUCCESS });
             await dispatch(loadRecipeDetailsAction({ id: recipeId }));
             await dispatch(loadLoggedUserDataAction());
-            await dispatch({ type: SAVE_UNSAVE_ACTION_SUCCESS });
         } catch (err) {
             const object = err.response.data;
             const key = Object.keys(object)[0];
