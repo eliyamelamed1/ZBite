@@ -2,7 +2,7 @@ import '@testing-library/jest-dom/extend-expect';
 
 import * as RecipeActions from '../../../redux/actions/recipeActions';
 
-import { cleanup, render, screen } from '@testing-library/react';
+import { act, cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import ReviewCreate from '../../../components/reviews/ReviewCreate';
@@ -169,10 +169,11 @@ describe('ReviewCreate', () => {
                 const button = screen.getByRole('button', { name: /review/i });
                 expect(button).toBeInTheDocument();
             });
-            test('clicking the review button should redirect guest user to login page', () => {
-                const button = screen.getByRole('button', { name: /review/i });
-
-                userEvent.click(button);
+            test.only('clicking the review button should redirect guest user to login page', async () => {
+                await act(async () => {
+                    const button = screen.getByRole('button', { name: /review/i });
+                    await userEvent.click(button);
+                });
 
                 expect(Router.push.mock.calls.length).toBe(1);
                 expect(Router.push.mock.calls[0][0]).toBe(pageRoute().login);

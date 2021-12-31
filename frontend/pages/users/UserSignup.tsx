@@ -30,15 +30,16 @@ const UserSignup = () => {
     const onSubmit = (e) => {
         e.preventDefault();
         if (password !== re_password) return toast.error('password do not match');
-
-        dispatch(
-            signupAction({
-                name,
-                email,
-                password,
-                re_password,
-            })
-        );
+        try {
+            dispatch(
+                signupAction({
+                    name,
+                    email,
+                    password,
+                    re_password,
+                })
+            );
+        } catch {}
     };
 
     if (isUserAuthenticated) {
