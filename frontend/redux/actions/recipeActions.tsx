@@ -88,7 +88,7 @@ export const recipeCreateAction =
 
             await axios.post(endpointRoute().recipes.create, formData, config);
             toast.success('recipe created successfully');
-            dispatch({ type: CREATE_RECIPE_SUCCESS });
+            // dispatch({ type: CREATE_RECIPE_SUCCESS });
         } catch (err) {
             const object = err.response.data;
             const key = Object.keys(object)[0];
