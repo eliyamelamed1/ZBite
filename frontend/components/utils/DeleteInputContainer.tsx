@@ -1,7 +1,7 @@
 interface DataTypes {
     id: string;
     value: string;
-    setData: (prevState) => {};
+    setFormData: (prevState) => {};
     instructionList: Object[];
     ingredientList: Object[];
 }
@@ -9,17 +9,17 @@ interface DataTypes {
 const deleteInputContainer: (DataTypes) => void = ({
     id,
     value,
-    setData,
+    setFormData,
     instructionList = [],
     ingredientList = [],
 }) => {
     if (value === 'instruction') {
         let updatedInstructionList = [...instructionList].filter((instruction) => instruction.id !== id);
-        setData((prevState) => ({ ...prevState, instructionList: updatedInstructionList }));
+        setFormData((prevState) => ({ ...prevState, instructionList: updatedInstructionList }));
     }
     if (value === 'ingredient') {
         let updatedIngredientList = [...ingredientList].filter((ingredient) => ingredient.id !== id);
-        setData((prevState) => ({ ...prevState, ingredientList: updatedIngredientList }));
+        setFormData((prevState) => ({ ...prevState, ingredientList: updatedIngredientList }));
     }
 };
 export default deleteInputContainer;

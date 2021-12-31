@@ -1,6 +1,6 @@
 interface DataTypes {
     value: string;
-    setData: (prevState) => {};
+    setFormData: (prevState) => {};
     instruction: string;
     ingredient: string;
     instructionList: Object[];
@@ -9,7 +9,7 @@ interface DataTypes {
 
 const addInputContainer: (DataTypes) => void = ({
     value,
-    setData,
+    setFormData,
 
     instruction = '',
     ingredient = '',
@@ -28,7 +28,7 @@ const addInputContainer: (DataTypes) => void = ({
         };
         const newInstructionList = instructionList.concat(newInstruction);
 
-        setData((prevState) => ({ ...prevState, instructionList: newInstructionList, instruction: '' }));
+        setFormData((prevState) => ({ ...prevState, instructionList: newInstructionList, instruction: '' }));
     }
     if (value === 'ingredient') {
         if (ingredient === '') return;
@@ -39,7 +39,7 @@ const addInputContainer: (DataTypes) => void = ({
         };
         const newIngredientList = ingredientList.concat(newIngredient);
 
-        setData((prevState) => ({ ...prevState, ingredientList: newIngredientList, ingredient: '' }));
+        setFormData((prevState) => ({ ...prevState, ingredientList: newIngredientList, ingredient: '' }));
     }
 };
 

@@ -3,7 +3,7 @@ interface DataTypes {
     value: string;
     modifiedText: string;
 
-    setData: (prevState) => {};
+    setFormData: (prevState) => {};
 
     ingredientList: Object[];
     instructionList: Object[];
@@ -14,7 +14,7 @@ const EditInputContainer: (DataTypes) => void = ({
     value,
     modifiedText,
 
-    setData,
+    setFormData,
 
     ingredientList = [],
     instructionList = [],
@@ -29,7 +29,7 @@ const EditInputContainer: (DataTypes) => void = ({
             return instruction;
         });
 
-        setData((prevState) => ({ ...prevState, instructionList: updatedInstructionList, inputId: null }));
+        setFormData((prevState) => ({ ...prevState, instructionList: updatedInstructionList, inputId: null }));
     }
     if (value === 'ingredient') {
         const updatedIngredientList = [...ingredientList].map((ingredient) => {
@@ -40,7 +40,7 @@ const EditInputContainer: (DataTypes) => void = ({
             return ingredient;
         });
 
-        setData((prevState) => ({ ...prevState, ingredientList: updatedIngredientList, inputId: null }));
+        setFormData((prevState) => ({ ...prevState, ingredientList: updatedIngredientList, inputId: null }));
     }
 };
 

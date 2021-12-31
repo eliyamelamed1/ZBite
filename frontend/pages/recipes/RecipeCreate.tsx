@@ -2,20 +2,19 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import EditInputContainer from '../../components/utils/ModifyInputContainer';
+import GeneralSection from '../../components/forms/recipes/GeneralSection';
 import Image from 'next/image';
+import IngredientSection from '../../components/forms/recipes/IngredientSection';
+import InstructionSection from '../../components/forms/recipes/InstructionSection';
 import { RootState } from '../../redux/store';
 import Router from 'next/router';
 import UiSectionSeparator from '../../components/ui/UiSectionSeperator';
 import addInputContainer from '../../components/utils/AddInputContainer';
-import deleteIcon from '../../styles/icons/delete-input-icon.svg';
 import deleteInputContainer from '../../components/utils/DeleteInputContainer';
-import editInput from '../../styles/icons/edit_input.svg';
 import { pageRoute } from '../../enums';
 import { recipeCreateAction } from '../../redux/actions/recipeActions';
-import saveInput from '../../styles/icons/save_changes.svg';
 import styles from '../../styles/pages/recipeCreate.module.scss';
 import { toast } from 'react-toastify';
-import uploadImageIcon from '../../styles/icons/upload_image.svg';
 
 interface StateTypes {
     photoMain: null | File;
@@ -35,7 +34,7 @@ interface StateTypes {
 
 const RecipeCreate = () => {
     const dispatch = useDispatch();
-    const [data, setData] = useState<StateTypes>({
+    const [formData, setFormData] = useState<StateTypes>({
         // recipe fields
         photoMain: null,
         photoMainBlob: '',
@@ -66,17 +65,17 @@ const RecipeCreate = () => {
         ingredient,
         modifiedText,
         inputId,
-    } = data;
+    } = formData;
 
     const { isUserAuthenticated } = useSelector((state: RootState) => state.userReducer);
     isUserAuthenticated === false ? Router.push(pageRoute().home) : null;
     // ------------Functions------------
-    const onChangeText = (e) => setData({ ...data, [e.target.name]: e.target.value });
+    const onChangeText = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
     const onChangeImage = async (e) => {
         try {
-            setData((prevState) => ({ ...prevState, photoMain: e.target.files[0] as File }));
+            setFormData((prevState) => ({ ...prevState, photoMain: e.target.files[0] as File }));
             const imageBlob = await URL.createObjectURL(e.target.files[0]);
-            setData((prevState) => ({ ...prevState, [e.target.name]: imageBlob }));
+            setFormData((prevState) => ({ ...prevState, [e.target.name]: imageBlob }));
         } catch {}
     };
 
@@ -106,270 +105,15 @@ const RecipeCreate = () => {
     };
 
     // ------------Sections-------------
-    const generalSection = () => (
-        <section className={styles.general_section}>
-            <input
-                id='photoMainBlob'
-                type='file'
-                placeholder='image'
-                name='photoMainBlob'
-                onChange={onChangeImage}
-                className={styles.image_input}
-                accept='image/*'
-            />
-            <label htmlFor='photoMainBlob' className={styles.image_label}>
-                {photoMainBlob ? (
-                    <img src={photoMainBlob} />
-                ) : (
-                    <div className={styles.image_label}>
-                        {uploadImageIcon.src && (
-                            <Image src={uploadImageIcon.src} width={100} height={100} alt='recipe photo' />
-                        )}
-                        <span className={styles.image_text}>Add recipe image</span>
-                    </div>
-                )}
-            </label>
-            <input
-                type='text'
-                placeholder='Title'
-                name='title'
-                value={title}
-                onChange={onChangeText}
-                className={styles.title_input}
-                required
-            />
-            <input
-                type='text'
-                placeholder='Description'
-                name='description'
-                value={description}
-                onChange={onChangeText}
-                className={styles.description_input}
-            />
-            <div className={styles.cook_time_container}>
-                <span className={styles.cook_time_text}>Cook time</span>
-                <input
-                    type='text'
-                    placeholder='1hr 30min'
-                    name='cookTime'
-                    value={cookTime}
-                    onChange={onChangeText}
-                    className={styles.cook_time_input}
-                    required
-                />
-            </div>
-            <div className={styles.serving_container}>
-                <span className={styles.serving_text}>Serves</span>
-                <input
-                    type='text'
-                    placeholder='2 people'
-                    name='serving'
-                    value={serving}
-                    onChange={onChangeText}
-                    className={styles.serving_input}
-                    required
-                />
-            </div>
-        </section>
-    );
-
-    const instructionSection = () => (
-        <section className={styles.instructions_section}>
-            <h1 className={styles.instructions_title}>Instructions</h1>
-            <input
-                type='text'
-                placeholder='add onions to the mixture'
-                onChange={onChangeText}
-                value={instruction}
-                name='instruction'
-                className={styles.text_input}
-            />
-            <button
-                onClick={() => addInputContainer({ value: 'instruction', setData, instruction, instructionList })}
-                type='button'
-                className={styles.add_instruction}
-                placeholder='add instruction'
-            >
-                + Instruction
-            </button>
-            {instructionList.map((instruction) => (
-                <section key={instruction.id} className={styles.new_instruction_container}>
-                    <div className={styles.input_and_actions_container}>
-                        <div className={styles.input_container}>
-                            {instruction.id === inputId ? (
-                                <input
-                                    type='text'
-                                    onChange={onChangeText}
-                                    name='modifiedText'
-                                    className={styles.text_input}
-                                    placeholder='modify the instruction'
-                                />
-                            ) : (
-                                <div className={styles.text_input}>{instruction.text}</div>
-                            )}
-                        </div>
-                        <div className={styles.actions_container}>
-                            {instruction.id === inputId ? (
-                                <button
-                                    onClick={() =>
-                                        EditInputContainer({
-                                            id: instruction.id,
-                                            value: 'instruction',
-                                            setData,
-                                            modifiedText,
-                                            instructionList,
-                                        })
-                                    }
-                                    type='button'
-                                    className={styles.save_button}
-                                    placeholder='save instruction'
-                                >
-                                    {saveInput.src && (
-                                        <Image src={saveInput.src} alt='delete icon' width={50} height={60} />
-                                    )}
-                                </button>
-                            ) : (
-                                <button
-                                    onClick={() =>
-                                        setData((prevState) => ({
-                                            ...prevState,
-                                            inputId: instruction.id,
-                                            modifiedText: '',
-                                        }))
-                                    }
-                                    className={styles.edit_button}
-                                    type='button'
-                                    placeholder='edit instruction'
-                                >
-                                    {editInput.src && (
-                                        <Image src={editInput.src} alt='delete icon' width={50} height={60} />
-                                    )}
-                                </button>
-                            )}
-                            <button
-                                onClick={() =>
-                                    deleteInputContainer({
-                                        id: instruction.id,
-                                        value: 'instruction',
-                                        instructionList,
-                                        setData,
-                                    })
-                                }
-                                className={styles.delete_button}
-                                type='button'
-                                placeholder='delete instruction'
-                            >
-                                {deleteIcon.src && (
-                                    <Image src={deleteIcon.src} alt='delete icon' width={50} height={60} />
-                                )}
-                            </button>
-                        </div>
-                    </div>
-                </section>
-            ))}
-        </section>
-    );
-
-    const ingredientSection = () => (
-        <section className={styles.ingredients_section}>
-            <h1 className={styles.ingredients_title}>Ingredients</h1>
-            <input
-                type='text'
-                placeholder='2 onions'
-                onChange={onChangeText}
-                value={ingredient}
-                name='ingredient'
-                className={styles.text_input}
-            />
-            <button
-                onClick={() => addInputContainer({ value: 'ingredient', setData, ingredient, ingredientList })}
-                type='button'
-                className={styles.add_ingredient}
-                placeholder='add ingredient'
-            >
-                + Ingredients
-            </button>
-            {ingredientList.map((ingredient) => (
-                <section
-                    key={ingredient.id}
-                    className={`${styles.new_ingredient_container} ${styles.input_and_actions_container} `}
-                >
-                    <div className={styles.input_container}>
-                        {ingredient.id === inputId ? (
-                            <input
-                                type='text'
-                                onChange={onChangeText}
-                                name='modifiedText'
-                                placeholder='modify the ingredient'
-                                className={styles.text_input}
-                            />
-                        ) : (
-                            <div className={styles.text_input}>{ingredient.text}</div>
-                        )}
-                    </div>
-                    <div className={styles.actions_container}>
-                        {ingredient.id === inputId ? (
-                            <button
-                                onClick={() =>
-                                    EditInputContainer({
-                                        id: ingredient.id,
-                                        value: 'ingredient',
-                                        modifiedText,
-                                        setData,
-                                        ingredientList,
-                                    })
-                                }
-                                placeholder='save ingredient'
-                                type='button'
-                                className={styles.save_button}
-                            >
-                                {saveInput.src && (
-                                    <Image src={saveInput.src} alt='delete icon' width={50} height={60} />
-                                )}
-                            </button>
-                        ) : (
-                            <button
-                                onClick={() =>
-                                    setData((prevState) => ({ ...prevState, inputId: ingredient.id, modifiedText: '' }))
-                                }
-                                className={styles.edit_button}
-                                type='button'
-                                placeholder='edit ingredient'
-                            >
-                                {editInput.src && (
-                                    <Image src={editInput.src} alt='delete icon' width={50} height={60} />
-                                )}
-                            </button>
-                        )}
-                        <button
-                            onClick={() =>
-                                deleteInputContainer({
-                                    id: ingredient.id,
-                                    value: 'ingredient',
-                                    ingredientList,
-                                    setData,
-                                })
-                            }
-                            className={styles.delete_button}
-                            type='button'
-                            placeholder='delete ingredient'
-                        >
-                            {deleteIcon.src && <Image src={deleteIcon.src} alt='delete icon' width={50} height={60} />}
-                        </button>
-                    </div>
-                </section>
-            ))}
-        </section>
-    );
 
     return (
         <div data-testid='recipeCreate' className={styles.container}>
             <form onSubmit={(e) => onSubmit(e)} className={styles.form}>
-                {generalSection()}
+                {GeneralSection({ onChangeImage, photoMainBlob, onChangeText, title, description, cookTime, serving })}
                 <UiSectionSeparator />
-                {instructionSection()}
+                {InstructionSection({ onChangeText, instruction, setFormData, instructionList, inputId, modifiedText })}
                 <UiSectionSeparator />
-                {ingredientSection()}
+                {IngredientSection({ onChangeText, ingredient, setFormData, ingredientList, inputId, modifiedText })}
                 <UiSectionSeparator />
                 <button type='submit' className={styles.create_button}>
                     Create Recipe
