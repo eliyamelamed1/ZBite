@@ -14,6 +14,7 @@ import { pageRoute } from '../../enums';
 import { recipeCreateAction } from '../../redux/actions/recipeActions';
 import saveInput from '../../styles/icons/save_changes.svg';
 import styles from '../../styles/pages/recipeCreate.module.scss';
+import { toast } from 'react-toastify';
 import uploadImageIcon from '../../styles/icons/upload_image.svg';
 
 interface StateTypes {
@@ -73,7 +74,6 @@ const RecipeCreate = () => {
     const onChangeText = (e) => setData({ ...data, [e.target.name]: e.target.value });
     const onChangeImage = async (e) => {
         try {
-            const imageFile = e.target.files[0];
             setData((prevState) => ({ ...prevState, photoMain: e.target.files[0] as File }));
             const imageBlob = await URL.createObjectURL(e.target.files[0]);
             setData((prevState) => ({ ...prevState, [e.target.name]: imageBlob }));
@@ -85,10 +85,9 @@ const RecipeCreate = () => {
         try {
             const ingredientsTextList = ingredientList.map((ingredient) => ingredient.text);
             const instructionsTextList = instructionList.map((instruction) => instruction.text);
-            const instructionsImageList = instructionList.map((instruction) => instruction.imageFile);
 
             if (ingredientsTextList.length === 0 || instructionsTextList.length === 0)
-                return console.log('ingredients / instructions is not allowed to be empty');
+                return toast.error('ingredients / instructions is not allowed to be empty');
 
             dispatch(
                 recipeCreateAction({
