@@ -99,7 +99,7 @@ export const recipeCreateAction =
     };
 
 export const recipeUpdateAction =
-    ({ id, title, description }) =>
+    ({ id, photoMain, title, description, serving, cookTime, ingredientsTextList, instructionsTextList }) =>
     async (dispatch) => {
         const config = {
             headers: {
