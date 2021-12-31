@@ -55,7 +55,6 @@ export const recipeCreateAction =
         serving,
         ingredientsTextList,
         instructionsTextList,
-        instructionsImageList,
     }: {
         photoMain: File;
         title: string;
@@ -64,7 +63,6 @@ export const recipeCreateAction =
         serving: string;
         ingredientsTextList: string[];
         instructionsTextList: string[];
-        instructionsImageList: File[];
     }) =>
     async (dispatch) => {
         try {
@@ -85,7 +83,6 @@ export const recipeCreateAction =
             formData.append('serving', serving);
             ingredientsTextList?.forEach((item) => formData.append('ingredients_text_list', item));
             instructionsTextList?.forEach((item) => formData.append('instructions_text_list', item));
-            instructionsImageList?.forEach((item) => formData.append('instructions_image_list', item));
 
             await axios.post(endpointRoute().recipes.create, formData, config);
             dispatch({ type: CREATE_RECIPE_SUCCESS });

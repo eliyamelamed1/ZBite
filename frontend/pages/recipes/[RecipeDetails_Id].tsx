@@ -41,18 +41,7 @@ interface Recipe {
 const RecipeDetails = (props) => {
     const [recipeData, setRecipeData] = useState<Recipe>(props.serverRecipeData);
     const { requestedRecipeData, listOfFilteredReviews } = useSelector((state: RootState) => state.recipeReducer);
-    const { isUserAuthenticated } = useSelector((state: RootState) => state.userReducer);
     const [reviewsData, setReviewsData] = useState(props.serverReviewsData);
-
-    let instructionsCombined = [];
-    const mergeInstructionLists = () => {
-        if (recipeData.instructions_text_list) {
-            instructionsCombined = recipeData?.instructions_text_list?.map(function (text, index) {
-                const image = recipeData.instructions_image_list?.[index];
-                return [{ text: text, image: image }];
-            });
-        }
-    };
 
     useEffect(
         // when updating recipe data (title, description etc..) migrate the changes to the userData

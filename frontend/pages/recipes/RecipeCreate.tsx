@@ -77,7 +77,6 @@ const RecipeCreate = () => {
             setData((prevState) => ({ ...prevState, photoMain: e.target.files[0] as File }));
             const imageBlob = await URL.createObjectURL(e.target.files[0]);
             setData((prevState) => ({ ...prevState, [e.target.name]: imageBlob }));
-            return { imageBlob, imageFile };
         } catch {}
     };
 
@@ -100,25 +99,11 @@ const RecipeCreate = () => {
                     cookTime,
                     ingredientsTextList,
                     instructionsTextList,
-                    instructionsImageList,
                 })
             );
         } catch (err) {
             // console.log(err);
         }
-    };
-
-    const saveInstructionImage = async (e, id) => {
-        const { imageBlob, imageFile } = await onChangeImage(e);
-        const updatedInstructionList = await [...instructionList].map((instruction) => {
-            if (instruction.id === id) {
-                instruction.imageBlob = imageBlob;
-                instruction.imageFile = imageFile;
-            }
-            return instruction;
-        });
-
-        setData((prevState) => ({ ...prevState, instructionList: updatedInstructionList }));
     };
 
     // ------------Sections-------------
@@ -210,24 +195,6 @@ const RecipeCreate = () => {
             </button>
             {instructionList.map((instruction) => (
                 <section key={instruction.id} className={styles.new_instruction_container}>
-                    <div className={styles.image_input_container}>
-                        <input
-                            id={instruction.id}
-                            type='file'
-                            className={styles.image_input}
-                            accept='image/png, image/jpg, image/jpeg, image/svg'
-                            onChange={(e) => saveInstructionImage(e, instruction.id)}
-                        />
-                        <label htmlFor={instruction.id} className={styles.image_label} data-testid='upload_image'>
-                            {instruction.imageBlob ? (
-                                <img src={instruction.imageBlob} className={styles.uploaded_image} />
-                            ) : (
-                                uploadImageIcon.src && (
-                                    <Image src={uploadImageIcon.src} width={100} height={100} alt='recipe photo' />
-                                )
-                            )}
-                        </label>
-                    </div>
                     <div className={styles.input_and_actions_container}>
                         <div className={styles.input_container}>
                             {instruction.id === inputId ? (

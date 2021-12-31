@@ -64,7 +64,6 @@ def test_get_account_stars_score(api_client):
         'cook_time': '2 hours',
         'ingredients_text_list': '',
         'instructions_text_list': '',
-        'instructions_image_list': '',
     }
     api_client.post(create_recipe_url, data)  
 
@@ -76,7 +75,6 @@ def test_get_account_stars_score(api_client):
         'cook_time': '2 hours',
         'ingredients_text_list': '',
         'instructions_text_list': '',
-        'instructions_image_list': '',
     }
     api_client.post(create_recipe_url, data)  
 

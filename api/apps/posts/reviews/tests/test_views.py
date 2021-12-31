@@ -246,7 +246,6 @@ class TestRatingCreateView:
                 'cook_time': '2 hours',
                 'ingredients_text_list': '',
                 'instructions_text_list': '',
-                'instructions_image_list': '',
             }
             api_client.post(create_recipe_url, data)
             second_recipe = Recipe.objects.all().get(title=second_recipe.title)
@@ -305,7 +304,6 @@ class TestRatingCreateView:
                 'cook_time': '2 hours',
                 'ingredients_text_list': '',
                 'instructions_text_list': '',
-                'instructions_image_list': '',
             }
             api_client.post(create_recipe_url, data)
 

@@ -23,10 +23,8 @@ class Recipe(models.Model):
     cook_time = models.TextField()
     stars = models.TextField(blank=True)
     saves = models.ManyToManyField(get_user_model(), default=None, blank=True)
-    instructions_text_list = ArrayField(models.CharField(max_length=100, blank=True,null=True),default=list, blank=True ,null=True,size=15,)
-    ingredients_text_list = ArrayField(models.CharField(max_length=100, blank=True,null=True),default=list,blank=True ,null=True, size=15,)
-    instructions_image_list = ArrayField(models.ImageField(upload_to='media/',blank=True, null=True),default=list,  blank=True ,null=True, size=15,)
-
+    instructions_text_list = ArrayField(models.CharField(max_length=100,),default=list, size=15,)
+    ingredients_text_list = ArrayField(models.CharField(max_length=100,),default=list, size=15,)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
