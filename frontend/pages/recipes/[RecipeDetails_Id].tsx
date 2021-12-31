@@ -114,24 +114,24 @@ const RecipeDetails = (props) => {
                             <p className={styles.title}> {recipeData?.title}</p>
                             <p className={styles.description}>{recipeData.description}</p>
                             <UiSectionSeparator />
-                            <ul className={styles.ingredients_container}>
+                            <section></section>
+                            <section className={styles.ingredients_container}>
                                 <h1 className={styles.ingredients_section_title}>Ingredients</h1>
-                                {recipeData?.ingredients_text_list?.map((item, index) => (
+                                {recipeData?.ingredients_text_list?.map((ingredient, index) => (
                                     <p className={styles.ingredients_text_item} key={index}>
-                                        {item}
+                                        {ingredient}
                                     </p>
                                 ))}
-                            </ul>
-                            <ul className={styles.instructions_container}>
-                                <h1 className={styles.instructions_section_title}>Instructions</h1>
-                                {mergeInstructionLists()}
-                                {instructionsCombined.map((item, index) => (
-                                    <p className={styles.instructions_text_item} key={index}>
-                                        {item.text}
+                            </section>
+                            <br />
+                            <section className={styles.ingredients_container}>
+                                <h1 className={styles.ingredients_section_title}>Instructions</h1>
+                                {recipeData?.instructions_text_list?.map((instruction, index) => (
+                                    <p className={styles.ingredients_text_item} key={index}>
+                                        {instruction}
                                     </p>
                                 ))}
-                            </ul>
-
+                            </section>
                             <UiSectionSeparator />
                         </ul>
                     ) : (
