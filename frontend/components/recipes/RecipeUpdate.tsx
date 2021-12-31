@@ -64,7 +64,7 @@ const RecipeUpdate: React.FC<{ id: string }> = ({ id }) => {
         modifiedText,
         inputId,
     } = formData;
-    const [displayRecipeForm, setDisplayRecipeForm] = useState(false);
+    const [displayForm, setDisplayForm] = useState(false);
 
     const onChangeText = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
     const onChangeImage = async (e) => {
@@ -99,26 +99,27 @@ const RecipeUpdate: React.FC<{ id: string }> = ({ id }) => {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setDisplayRecipeForm(true);
+        setDisplayForm(true);
     };
     const recipeUpdateSection = () => (
-        <UiPopUp onSubmit={onSubmit}>
+        <UiPopUp onSubmit={onSubmit} setDisplayForm={setDisplayForm}>
+            <h1>Update Recipe</h1>
             {GeneralSection({ onChangeImage, photoMainBlob, onChangeText, title, description, cookTime, serving })}
             <UiSectionSeparator />
             {InstructionSection({ onChangeText, instruction, setFormData, instructionList, inputId, modifiedText })}
             <UiSectionSeparator />
             {IngredientSection({ onChangeText, ingredient, setFormData, ingredientList, inputId, modifiedText })}
             <UiSectionSeparator />
-            <UiButton reverse={true}>Create Recipe</UiButton>
+            <UiButton reverse={true}>Submit</UiButton>
         </UiPopUp>
     );
 
     return (
         <div data-testid='recipeUpdate'>
             <form onClick={(e) => handleSubmit(e)}>
-                <UiButton reverse={true}>update</UiButton>
+                <UiButton reverse={true}>Update</UiButton>
             </form>
-            {displayRecipeForm && recipeUpdateSection()}
+            {displayForm && recipeUpdateSection()}
         </div>
     );
 };

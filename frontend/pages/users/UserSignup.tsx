@@ -79,6 +79,7 @@ const UserSignup = () => {
                         onChange={(e) => onChange(e)}
                         minLength={6}
                         className={styles.password_input}
+                        required
                     />
                     <input
                         type='password'
@@ -88,6 +89,7 @@ const UserSignup = () => {
                         onChange={(e) => onChange(e)}
                         minLength={6}
                         className={styles.password_input}
+                        required
                     />
                     <button type='submit' className={styles.signup_button}>
                         Register

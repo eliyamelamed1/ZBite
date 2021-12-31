@@ -72,17 +72,9 @@ describe('axios request should match url endpoint, and parameters', () => {
         expect(axios.delete.mock.calls[0][1]).toStrictEqual(configWithAuthToken);
     });
     test('recipeCreateAction', () => {
-        const {
-            photoMain,
-            title,
-            description,
-            cookTime,
-            serving,
-            ingredientsTextList,
-            instructionsTextList,
-            instructionsImageList,
-        } = parameters;
-        store.dispatch<any>(
+        const { photoMain, title, description, cookTime, serving, ingredientsTextList, instructionsTextList } =
+            parameters;
+        store.dispatch(
             recipeCreateAction({
                 photoMain,
                 title,
@@ -91,33 +83,53 @@ describe('axios request should match url endpoint, and parameters', () => {
                 serving,
                 ingredientsTextList,
                 instructionsTextList,
-                instructionsImageList,
             })
         );
-
-        const formData = axios.post.mock.calls[0][1];
 
         expect(axios.post.mock.calls.length).toBe(1);
         expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute().recipes.create);
 
+        const formData = axios.post.mock.calls[0][1];
         expect(formData.get('photo_main')).toStrictEqual(photoMain);
         expect(formData.get('title')).toStrictEqual(title);
         expect(formData.get('description')).toStrictEqual(description);
         expect(formData.get('cook_time')).toStrictEqual(cookTime);
         expect(formData.get('serving')).toStrictEqual(serving);
+        expect(formData.getAll('ingredients_text_list')).toEqual(ingredientsTextList);
+        expect(formData.getAll('instructions_text_list')).toEqual(instructionsTextList);
 
         expect(axios.post.mock.calls[0][2]).toStrictEqual(configWithAuthToken);
     });
     test('recipeUpdateAction', () => {
-        const { id, title, description } = parameters;
+        const { id, photoMain, title, description, cookTime, serving, ingredientsTextList, instructionsTextList } =
+            parameters;
         const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}/`;
-        const body = JSON.stringify({ title, description });
 
-        store.dispatch(recipeUpdateAction({ id, title, description }));
+        store.dispatch(
+            recipeUpdateAction({
+                id,
+                photoMain,
+                title,
+                description,
+                cookTime,
+                serving,
+                ingredientsTextList,
+                instructionsTextList,
+            })
+        );
 
         expect(axios.patch.mock.calls.length).toBe(1);
         expect(axios.patch.mock.calls[0][0]).toStrictEqual(endpointUrl);
-        expect(axios.patch.mock.calls[0][1]).toStrictEqual(body);
+
+        const formData = axios.patch.mock.calls[0][1];
+        expect(formData.get('photo_main')).toStrictEqual(photoMain);
+        expect(formData.get('title')).toStrictEqual(title);
+        expect(formData.get('description')).toStrictEqual(description);
+        expect(formData.get('cook_time')).toStrictEqual(cookTime);
+        expect(formData.get('serving')).toStrictEqual(serving);
+        expect(formData.getAll('ingredients_text_list')).toEqual(ingredientsTextList);
+        expect(formData.getAll('instructions_text_list')).toEqual(instructionsTextList);
+
         expect(axios.patch.mock.calls[0][2]).toStrictEqual(configWithAuthToken);
     });
     test('loadTrendingRecipesAction', () => {

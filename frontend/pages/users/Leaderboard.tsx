@@ -92,7 +92,7 @@ const Leaderboard: React.FC<DataTypes> = (props) => {
     );
 };
 export async function getStaticProps() {
-    await store.dispatch<any>(loadLeaderboardAction());
+    await store.dispatch(loadLeaderboardAction());
     const { listOfLeaderboardUsers } = store.getState().userReducer;
 
     return { props: { listOfLeaderboardUsers }, revalidate: 10 };

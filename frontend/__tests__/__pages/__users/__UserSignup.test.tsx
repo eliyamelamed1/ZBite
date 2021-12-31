@@ -106,7 +106,6 @@ describe('UserSignup - guest user', () => {
         test('confirm password input should be required', () => {
             const confirmPasswordTextbox = screen.getByPlaceholderText('Confirm Password');
 
-
             expect(confirmPasswordTextbox.required).toBe(true);
         });
         test('confirm password value should change according to input ', () => {

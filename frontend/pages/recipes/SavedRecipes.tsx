@@ -16,7 +16,6 @@ const SavedRecipes = () => {
     useEffect(() => {
         if (!isUserAuthenticated) Router.push(pageRoute().login);
         if (isUserAuthenticated) {
-            console.log(isUserAuthenticated);
             dispatch(loadSavedRecipesAction());
         }
     }, [dispatch]);

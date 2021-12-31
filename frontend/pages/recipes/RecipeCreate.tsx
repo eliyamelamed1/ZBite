@@ -118,6 +118,7 @@ const RecipeCreate = () => {
                 <button type='submit' className={styles.create_button}>
                     Create Recipe
                 </button>
+                {/* <UiButton reverse={true}>Update Recipe</UiButton> */}
             </form>
         </div>
     );

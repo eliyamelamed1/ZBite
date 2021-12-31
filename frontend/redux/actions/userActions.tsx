@@ -49,14 +49,16 @@ export const followUserAction =
             const body = JSON.stringify({ user_to_follow });
             await axios.post(endpointRoute().users.followUser, body, config);
             toast.success('updated users followed successfully');
-            await dispatch({ type: FOLLOW_UNFOLLOW_USER_SUCCESS });
             await dispatch(loadUserDetailsAction({ id: user_to_follow }));
             await dispatch(loadLoggedUserDataAction());
+            await dispatch({ type: FOLLOW_UNFOLLOW_USER_SUCCESS });
         } catch (err) {
-            const object = err.response.data;
-            const key = Object.keys(object)[0];
-            const errorMassage = object[key][0];
-            toast.error(errorMassage);
+            const object = err?.response?.data;
+            if (object) {
+                const key = Object.keys(object)[0];
+                const errorMassage = object[key][0];
+                toast.error(errorMassage);
+            }
             dispatch({ type: FOLLOW_UNFOLLOW_USER_FAIL });
         }
     };
@@ -74,10 +76,12 @@ export const loadUserDetailsAction =
             const res = await axios.get(endpointRoute(id).users.details, config);
             dispatch({ type: GET_USER_DETAILS_SUCCESS, payload: res.data });
         } catch (err) {
-            const object = err.response.data;
-            const key = Object.keys(object)[0];
-            const errorMassage = object[key][0];
-            toast.error(errorMassage);
+            const object = err?.response?.data;
+            if (object) {
+                const key = Object.keys(object)[0];
+                const errorMassage = object[key][0];
+                toast.error(errorMassage);
+            }
             dispatch({ type: GET_USER_DETAILS_FAIL });
         }
     };
@@ -102,10 +106,12 @@ export const userUpdateAction =
             toast.success('user updated successfully');
             dispatch({ type: UPDATE_USER_SUCCESS, payload: res.data });
         } catch (err) {
-            const object = err.response.data;
-            const key = Object.keys(object)[0];
-            const errorMassage = object[key][0];
-            toast.error(errorMassage);
+            const object = err?.response?.data;
+            if (object) {
+                const key = Object.keys(object)[0];
+                const errorMassage = object[key][0];
+                toast.error(errorMassage);
+            }
             dispatch({ type: UPDATE_USER_FAIL });
         }
     };
@@ -127,10 +133,12 @@ export const userDeleteAction =
             dispatch({ type: DELETE_USER_SUCCESS, payload: res.data });
             dispatch(logoutAction());
         } catch (err) {
-            const object = err.response.data;
-            const key = Object.keys(object)[0];
-            const errorMassage = object[key][0];
-            toast.error(errorMassage);
+            const object = err?.response?.data;
+            if (object) {
+                const key = Object.keys(object)[0];
+                const errorMassage = object[key][0];
+                toast.error(errorMassage);
+            }
             dispatch({ type: DELETE_USER_FAIL });
         }
     };
@@ -148,7 +156,7 @@ export const loadLoggedUserDataAction = () => async (dispatch) => {
         const res = await axios.get(endpointRoute().users.loggedUserData, config);
         dispatch({ type: GET_LOGGED_USER_DETAILS_SUCCESS, payload: res.data });
     } catch (err) {
-        const object = err.response.data;
+        const object = err?.response?.data;
         const key = Object.keys(object)[0];
         const errorMassage = object[key][0];
         toast.error(errorMassage);
@@ -174,10 +182,12 @@ export const loginAction =
             await dispatch({ type: LOGIN_SUCCESS, payload: res.data });
             await dispatch(loadLoggedUserDataAction());
         } catch (err) {
-            const object = err.response.data;
-            const key = Object.keys(object)[0];
-            const errorMassage = object[key][0];
-            toast.error(errorMassage);
+            const object = err?.response?.data;
+            if (object) {
+                const key = Object.keys(object)[0];
+                const errorMassage = object[key][0];
+                toast.error(errorMassage);
+            }
             dispatch({ type: LOGIN_FAIL });
         }
     };
@@ -203,10 +213,12 @@ export const signupAction =
             toast.success('registration completed, redirected to login page');
             dispatch({ type: SIGNUP_SUCCESS, payload: res.data });
         } catch (err) {
-            const object = err.response.data;
-            const key = Object.keys(object)[0];
-            const errorMassage = object[key][0];
-            toast.error(errorMassage);
+            const object = err?.response?.data;
+            if (object) {
+                const key = Object.keys(object)[0];
+                const errorMassage = object[key][0];
+                toast.error(errorMassage);
+            }
             dispatch({ type: SIGNUP_FAIL });
         }
     };
@@ -229,10 +241,12 @@ export const userActivateAction =
             toast.success('user activated successfully');
             dispatch({ type: ACTIVATION_SUCCESS, payload: res.data });
         } catch (err) {
-            const object = err.response.data;
-            const key = Object.keys(object)[0];
-            const errorMassage = object[key][0];
-            toast.error(errorMassage);
+            const object = err?.response?.data;
+            if (object) {
+                const key = Object.keys(object)[0];
+                const errorMassage = object[key][0];
+                toast.error(errorMassage);
+            }
             dispatch({ type: ACTIVATION_FAIL });
         }
     };
@@ -254,10 +268,12 @@ export const resetPasswordAction =
             toast.success('email sent successfully');
             dispatch({ type: RESET_PASSWORD_SUCCESS, payload: res.data });
         } catch (err) {
-            const object = err.response.data;
-            const key = Object.keys(object)[0];
-            const errorMassage = object[key][0];
-            toast.error(errorMassage);
+            const object = err?.response?.data;
+            if (object) {
+                const key = Object.keys(object)[0];
+                const errorMassage = object[key][0];
+                toast.error(errorMassage);
+            }
             dispatch({ type: RESET_PASSWORD_FAIL });
         }
     };
@@ -282,10 +298,12 @@ export const resetPasswordConfirmAction =
             toast.success('password reset completed successfully');
             dispatch({ type: RESET_PASSWORD_CONFIRM_SUCCESS, payload: res.data });
         } catch (err) {
-            const object = err.response.data;
-            const key = Object.keys(object)[0];
-            const errorMassage = object[key][0];
-            toast.error(errorMassage);
+            const object = err?.response?.data;
+            if (object) {
+                const key = Object.keys(object)[0];
+                const errorMassage = object[key][0];
+                toast.error(errorMassage);
+            }
             dispatch({ type: RESET_PASSWORD_CONFIRM_FAIL });
         }
     };
@@ -306,7 +324,7 @@ export const loadLeaderboardAction = () => async (dispatch) => {
         const res = await axios.get(endpointRoute().users.leaderboard, config);
         dispatch({ type: LOAD_LEADERBOARD_SUCCESS, payload: res.data });
     } catch (err) {
-        const object = err.response.data;
+        const object = err?.response?.data;
         const key = Object.keys(object)[0];
         const errorMassage = object[key][0];
         toast.error(errorMassage);

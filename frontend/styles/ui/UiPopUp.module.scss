@@ -1,5 +1,5 @@
 .form {
-    max-height: 80%;
+    max-height: 80vh;
     padding: 1rem;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
     background-color: whitesmoke;
@@ -13,11 +13,13 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    overflow: auto;
 
     i {
+        z-index: 2;
         position: absolute;
-        left: 92%;
-        top: 3%;
+        right: 92%;
+        top: 2%;
         cursor: pointer;
         img {
             width: 2rem;

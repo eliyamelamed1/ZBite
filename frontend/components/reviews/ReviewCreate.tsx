@@ -5,7 +5,6 @@ import Router from 'next/router';
 import UiButton from '../ui/UiButton';
 import UiInput from '../ui/UiInput';
 import UiPopUp from '../ui/UiPopUp';
-import closeIcon from '../../styles/icons/x.svg';
 import { pageRoute } from '../../enums';
 import { reviewCreateAction } from '../../redux/actions/recipeActions';
 import { useState } from 'react';
@@ -18,34 +17,31 @@ const ReviewCreate: React.FC<{ recipeId: string }> = ({ recipeId }) => {
         image: '',
     });
     const { stars, comment, image } = formData;
-    const [displayReviewForm, setDisplayReviewForm] = useState(false);
+    const [displayForm, setDisplayForm] = useState(false);
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
     const { isUserAuthenticated } = useSelector((state: RootState) => state.userReducer);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!isUserAuthenticated) await Router.push(pageRoute().login);
-        setDisplayReviewForm(true);
+        setDisplayForm(true);
     };
     const onSubmit = async (e) => {
         e.preventDefault();
         isUserAuthenticated === false ? Router.push(pageRoute().login) : null;
         try {
             dispatch(reviewCreateAction({ recipeId, stars, comment, image }));
-            setDisplayReviewForm(false);
+            setDisplayForm(false);
         } catch (err) {}
     };
 
     const reviewSection = () => (
-        <UiPopUp onSubmit={onSubmit}>
-            <i onClick={() => setDisplayReviewForm(false)}>
-                {closeIcon.src && <img src={closeIcon.src} alt='logo icon' height={100} width={100} />}
-            </i>
+        <UiPopUp onSubmit={onSubmit} setDisplayForm={setDisplayForm}>
             <h1>Leave a review</h1>
             <UiInput type='text' placeholder='stars' name='stars' value={stars} onChange={onChange} required />
             <UiInput type='text' placeholder='comment' name='comment' value={comment} onChange={onChange} required />
-            <input type='image' placeholder='image' name='image' value={image} onChange={(e) => onChange(e)} />
-            <UiButton reverse={true}>Create review</UiButton>
+            {/* <input type='image' placeholder='image' name='image' value={image} onChange={(e) => onChange(e)} /> */}
+            <UiButton reverse={true}>submit</UiButton>
         </UiPopUp>
     );
 
@@ -54,7 +50,7 @@ const ReviewCreate: React.FC<{ recipeId: string }> = ({ recipeId }) => {
             <form onClick={(e) => handleSubmit(e)}>
                 <UiButton reverse={true}>review</UiButton>
             </form>
-            {displayReviewForm && reviewSection()}
+            {displayForm && reviewSection()}
         </div>
     );
 };

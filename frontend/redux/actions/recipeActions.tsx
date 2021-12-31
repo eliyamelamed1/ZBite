@@ -90,10 +90,12 @@ export const recipeCreateAction =
             toast.success('recipe created successfully');
             dispatch({ type: CREATE_RECIPE_SUCCESS });
         } catch (err) {
-            const object = err.response.data;
-            const key = Object.keys(object)[0];
-            const errorMassage = object[key][0];
-            toast.error(errorMassage);
+            const object = err?.response?.data;
+            if (object) {
+                const key = Object.keys(object)[0];
+                const errorMassage = object[key][0];
+                toast.error(errorMassage);
+            }
             dispatch({ type: CREATE_RECIPE_FAIL });
         }
     };
@@ -110,18 +112,26 @@ export const recipeUpdateAction =
             },
         };
         try {
-            const body = JSON.stringify({
-                title,
-                description,
-            });
-            const res = await axios.patch(endpointRoute(id).recipes.details, body, config);
+            const formData = new FormData();
+
+            formData.append('photo_main', photoMain);
+            formData.append('title', title);
+            formData.append('description', description);
+            formData.append('cook_time', cookTime);
+            formData.append('serving', serving);
+            ingredientsTextList?.forEach((item) => formData.append('ingredients_text_list', item));
+            instructionsTextList?.forEach((item) => formData.append('instructions_text_list', item));
+            const res = await axios.patch(endpointRoute(id).recipes.details, formData, config);
+
             toast.success('recipe updated successfully');
             dispatch({ type: UPDATE_RECIPE_SUCCESS, payload: res.data });
         } catch (err) {
-            const object = err.response.data;
-            const key = Object.keys(object)[0];
-            const errorMassage = object[key][0];
-            toast.error(errorMassage);
+            const object = err?.response?.data;
+            if (object) {
+                const key = Object.keys(object)[0];
+                const errorMassage = object[key][0];
+                toast.error(errorMassage);
+            }
             dispatch({ type: UPDATE_RECIPE_FAIL });
         }
     };
@@ -137,7 +147,7 @@ export const loadTrendingRecipesAction = () => async (dispatch) => {
         const res = await axios.get(endpointRoute().recipes.trending, config);
         dispatch({ type: GET_TRENDING_RECIPE_LIST_SUCCESS, payload: res.data });
     } catch (err) {
-        const object = err.response.data;
+        const object = err?.response?.data;
         const key = Object.keys(object)[0];
         const errorMassage = object[key][0];
         toast.error(errorMassage);
@@ -156,7 +166,7 @@ export const loadFollowedRecipesAction = () => async (dispatch) => {
         const res = await axios.get(endpointRoute().recipes.followed, config);
         dispatch({ type: GET_FOLLOWED_RECIPE_LIST_SUCCESS, payload: res.data });
     } catch (err) {
-        const object = err.response.data;
+        const object = err?.response?.data;
         const key = Object.keys(object)[0];
         const errorMassage = object[key][0];
         toast.error(errorMassage);
@@ -175,7 +185,7 @@ export const loadSavedRecipesAction = () => async (dispatch) => {
         const res = await axios.get(endpointRoute().recipes.saved_recipes, config);
         dispatch({ type: GET_SAVED_RECIPE_LIST_SUCCESS, payload: res.data });
     } catch (err) {
-        const object = err.response.data;
+        const object = err?.response?.data;
         const key = Object.keys(object)[0];
         const errorMassage = object[key][0];
         toast.error(errorMassage);
@@ -197,10 +207,12 @@ export const loadRecipeDetailsAction =
             const res = await axios.get(endpointRoute(id).recipes.details, config);
             dispatch({ type: GET_RECIPE_DETAILS_SUCCESS, payload: res.data });
         } catch (err) {
-            const object = err.response.data;
-            const key = Object.keys(object)[0];
-            const errorMassage = object[key][0];
-            toast.error(errorMassage);
+            const object = err?.response?.data;
+            if (object) {
+                const key = Object.keys(object)[0];
+                const errorMassage = object[key][0];
+                toast.error(errorMassage);
+            }
             dispatch({ type: GET_RECIPE_DETAILS_FAIL });
         }
     };
@@ -227,10 +239,12 @@ export const reviewCreateAction =
             dispatch({ type: REVIEW_CREATE_SUCCESS });
             await dispatch(reviewsInRecipeAction({ recipeId }));
         } catch (err) {
-            const object = err.response.data;
-            const key = Object.keys(object)[0];
-            const errorMassage = object[key][0];
-            toast.error(errorMassage);
+            const object = err?.response?.data;
+            if (object) {
+                const key = Object.keys(object)[0];
+                const errorMassage = object[key][0];
+                toast.error(errorMassage);
+            }
             dispatch({ type: REVIEW_CREATE_FAIL });
         }
     };
@@ -251,10 +265,12 @@ export const reviewDeleteAction =
             dispatch({ type: REVIEW_DELETE_SUCCESS });
             dispatch(reviewsInRecipeAction({ recipeId }));
         } catch (err) {
-            const object = err.response.data;
-            const key = Object.keys(object)[0];
-            const errorMassage = object[key][0];
-            toast.error(errorMassage);
+            const object = err?.response?.data;
+            if (object) {
+                const key = Object.keys(object)[0];
+                const errorMassage = object[key][0];
+                toast.error(errorMassage);
+            }
             dispatch({ type: REVIEW_DELETE_FAIL });
         }
     };
@@ -276,10 +292,12 @@ export const reviewsInRecipeAction =
             dispatch({ type: REVIEWS_IN_RECIPE_SUCCESS, payload: res.data });
             await dispatch(loadRecipeDetailsAction({ id: recipeId }));
         } catch (err) {
-            const object = err.response.data;
-            const key = Object.keys(object)[0];
-            const errorMassage = object[key][0];
-            toast.error(errorMassage);
+            const object = err?.response?.data;
+            if (object) {
+                const key = Object.keys(object)[0];
+                const errorMassage = object[key][0];
+                toast.error(errorMassage);
+            }
             dispatch({ type: REVIEWS_IN_RECIPE_FAIL });
         }
     };
@@ -303,10 +321,12 @@ export const saveRecipeAction =
             await dispatch(loadRecipeDetailsAction({ id: recipeId }));
             await dispatch(loadLoggedUserDataAction());
         } catch (err) {
-            const object = err.response.data;
-            const key = Object.keys(object)[0];
-            const errorMassage = object[key][0];
-            toast.error(errorMassage);
+            const object = err?.response?.data;
+            if (object) {
+                const key = Object.keys(object)[0];
+                const errorMassage = object[key][0];
+                toast.error(errorMassage);
+            }
             dispatch({ type: SAVE_UNSAVE_ACTION_FAIL });
         }
     };

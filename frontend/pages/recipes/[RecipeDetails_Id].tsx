@@ -156,12 +156,12 @@ const RecipeDetails = (props) => {
 
 export async function getServerSideProps(context) {
     const id = context.params.RecipeDetails_Id;
-    await store.dispatch<any>(loadRecipeDetailsAction({ id }));
+    await store.dispatch(loadRecipeDetailsAction({ id }));
     const serverRecipeData = store.getState().recipeReducer.requestedRecipeData;
     const isRequestedRecipeIdExist = serverRecipeData?.id === id;
 
     if (isRequestedRecipeIdExist) {
-        await store.dispatch<any>(reviewsInRecipeAction({ recipeId: id }));
+        await store.dispatch(reviewsInRecipeAction({ recipeId: id }));
         const serverReviewsData = store.getState().recipeReducer.listOfFilteredReviews;
         return { props: { serverRecipeData, serverReviewsData } };
     } else {

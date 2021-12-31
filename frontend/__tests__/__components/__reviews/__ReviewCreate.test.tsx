@@ -63,7 +63,7 @@ describe('ReviewCreate', () => {
                 });
 
                 test('should not render submit button', () => {
-                    const button = screen.queryByRole('button', { name: /create review/i });
+                    const button = screen.queryByRole('button', { name: /submit/i });
                     expect(button).not.toBeInTheDocument();
                 });
             });
@@ -109,17 +109,17 @@ describe('ReviewCreate', () => {
                 });
                 describe('submit button', () => {
                     test('should render submit button', () => {
-                        const button = screen.getByRole('button', { name: /create review/i });
+                        const button = screen.getByRole('button', { name: /submit/i });
                         expect(button).toBeInTheDocument();
                     });
                     test('button type should be type submit', () => {
-                        const button = screen.getByRole('button', { name: /create review/i });
+                        const button = screen.getByRole('button', { name: /submit/i });
                         expect(button.type).toBe('submit');
                     });
                     test('clicking the submit button should call dispatch reviewCreateActionSpy', () => {
                         const commentTextbox = screen.getByPlaceholderText(/comment/i);
                         const starsTextbox = screen.getByPlaceholderText(/stars/i);
-                        const button = screen.getByRole('button', { name: /create review/i });
+                        const button = screen.getByRole('button', { name: /submit/i });
 
                         userEvent.type(commentTextbox, 'new comment');
                         userEvent.type(starsTextbox, 'new stars');
@@ -133,7 +133,7 @@ describe('ReviewCreate', () => {
                     test('authenticated user should not be redirected upon creating a review', () => {
                         const commentTextbox = screen.getByPlaceholderText(/comment/i);
                         const starsTextbox = screen.getByPlaceholderText(/stars/i);
-                        const button = screen.getByRole('button', { name: /create review/i });
+                        const button = screen.getByRole('button', { name: /submit/i });
 
                         userEvent.type(commentTextbox, 'new comment');
                         userEvent.type(starsTextbox, 'new stars');
