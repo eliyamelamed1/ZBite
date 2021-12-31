@@ -27,6 +27,7 @@ import {
 
 import Router from 'next/router';
 import { pageRoute } from '../../enums';
+import { toast } from 'react-toastify';
 
 const initialState = {
     auth_token: process.browser ? localStorage.getItem('auth_token') : null,
@@ -76,7 +77,6 @@ export default function userReducer(state = initialState, action) {
             };
         case SIGNUP_SUCCESS:
             Router.push(pageRoute().login);
-
             return {
                 ...state,
                 isUserAuthenticated: false,

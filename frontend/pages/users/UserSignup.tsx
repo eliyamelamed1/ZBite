@@ -11,6 +11,7 @@ import Router from 'next/router';
 import { pageRoute } from '../../enums';
 import { signupAction } from '../../redux/actions/userActions';
 import styles from '../../styles/pages/signup.module.scss';
+import { toast } from 'react-toastify';
 
 const UserSignup = () => {
     const dispatch = useDispatch();
@@ -28,17 +29,16 @@ const UserSignup = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
+        if (password !== re_password) return toast.error('password do not match');
 
-        if (password === re_password) {
-            dispatch(
-                signupAction({
-                    name,
-                    email,
-                    password,
-                    re_password,
-                })
-            );
-        }
+        dispatch(
+            signupAction({
+                name,
+                email,
+                password,
+                re_password,
+            })
+        );
     };
 
     if (isUserAuthenticated) {
@@ -79,7 +79,6 @@ const UserSignup = () => {
                         onChange={(e) => onChange(e)}
                         minLength={6}
                         className={styles.password_input}
-                        required
                     />
                     <input
                         type='password'
@@ -89,7 +88,6 @@ const UserSignup = () => {
                         onChange={(e) => onChange(e)}
                         minLength={6}
                         className={styles.password_input}
-                        required
                     />
                     <button type='submit' className={styles.signup_button}>
                         Register
