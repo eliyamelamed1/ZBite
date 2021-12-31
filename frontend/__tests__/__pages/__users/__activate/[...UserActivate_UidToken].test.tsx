@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import UserActivate from '../../../../pages/users/activate/[...UserActivate_UidToken]';
 import configureStore from 'redux-mock-store';
-import { pageRoute } from '../../../../globals';
+import { pageRoute } from '../../../../enums';
 import thunk from 'redux-thunk';
 import { userActivateAction } from '../../../../redux/actions/userActions';
 import userEvent from '@testing-library/user-event';
@@ -69,16 +69,6 @@ describe('Authenticated users', () => {
             expect(timesActionDispatched).toBe(1);
             expect(userActivateAction.mock.calls[0][0].uid).toBe(dynamicUrlParams.uid);
             expect(userActivateAction.mock.calls[0][0].token).toBe(dynamicUrlParams.token);
-        });
-        test('should redirect to home page when user is activated', () => {
-            const verifyAccountButton = screen.getByRole('button', { name: /verify/i });
-            userEvent.click(verifyAccountButton);
-
-            const timesActionDispatched = userActivateAction.mock.calls.length;
-
-            expect(timesActionDispatched).toBe(1);
-            expect(Router.push.mock.calls.length).toBe(1);
-            expect(Router.push.mock.calls[0][0]).toBe(pageRoute().home);
         });
     });
 });

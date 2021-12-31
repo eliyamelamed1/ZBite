@@ -36,3 +36,6 @@ db.sqlite3
 
 # local-css
 /dist/
+
+# media
+*/media/media

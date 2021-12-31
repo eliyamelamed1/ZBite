@@ -3,7 +3,7 @@ import '@testing-library/jest-dom/extend-expect';
 import * as IsReviewAuthor from '../../../components/reviews/isReviewAuthor';
 
 import { cleanup, render, screen } from '@testing-library/react';
-import { pageRoute, reviewParams, userParams } from '../../../globals';
+import { pageRoute, reviewParams, userParams } from '../../../enums';
 
 import { Provider } from 'react-redux';
 import ReviewCard from '../../../components/reviews/ReviewCard';

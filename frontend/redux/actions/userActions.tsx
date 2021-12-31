@@ -9,8 +9,8 @@ import {
     GET_LOGGED_USER_DETAILS_SUCCESS,
     GET_USER_DETAILS_FAIL,
     GET_USER_DETAILS_SUCCESS,
-    GET_USER_LIST_FAIL,
-    GET_USER_LIST_SUCCESS,
+    LOAD_LEADERBOARD_FAIL,
+    LOAD_LEADERBOARD_SUCCESS,
     LOGIN_FAIL,
     LOGIN_SUCCESS,
     LOGOUT,
@@ -23,9 +23,10 @@ import {
     UPDATE_USER_FAIL,
     UPDATE_USER_SUCCESS,
 } from '../types';
+import { endpointRoute, pageRoute } from '../../enums';
 
+import Router from 'next/router';
 import axios from 'axios';
-import { endpointRoute } from '../../globals';
 
 export const testAction = () => async (dispatch) => {
     dispatch(secondTestAction());
@@ -71,21 +72,6 @@ export const loadUserDetailsAction =
             dispatch({ type: GET_USER_DETAILS_FAIL });
         }
     };
-
-export const loadUserListAction = () => async (dispatch) => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-        },
-    };
-    try {
-        const res = await axios.get(endpointRoute().users.list, config);
-        dispatch({ type: GET_USER_LIST_SUCCESS, payload: res.data });
-    } catch {
-        dispatch({ type: GET_USER_LIST_FAIL });
-    }
-};
 
 export const userUpdateAction =
     ({ id, email, name }) =>
@@ -186,7 +172,6 @@ export const signupAction =
 
         try {
             const res = await axios.post(endpointRoute().users.signup, body, config);
-
             dispatch({ type: SIGNUP_SUCCESS, payload: res.data });
         } catch (err) {
             dispatch({ type: SIGNUP_FAIL });
@@ -261,4 +246,19 @@ export const resetPasswordConfirmAction =
 
 export const logoutAction = () => async (dispatch) => {
     dispatch({ type: LOGOUT });
+};
+
+export const loadLeaderboardAction = () => async (dispatch) => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+        },
+    };
+    try {
+        const res = await axios.get(endpointRoute().users.leaderboard, config);
+        dispatch({ type: LOAD_LEADERBOARD_SUCCESS, payload: res.data });
+    } catch {
+        dispatch({ type: LOAD_LEADERBOARD_FAIL });
+    }
 };

@@ -19,7 +19,6 @@ describe('IsRecipeAuthor - author', () => {
         let store = mockStore(initialState);
         const recipe = {
             title: 'recipeTitle',
-            flavor_type: 'Sour',
             id: 'recipeId',
             author: { id: '1', name: 'authorName' },
             photo_main: 'recipeImage',
@@ -51,7 +50,6 @@ describe('IsRecipeAuthor - not author', () => {
         let store = mockStore(initialState);
         const recipe = {
             title: 'recipeTitle',
-            flavor_type: 'Sour',
             id: 'recipeId',
             author: { id: '1', name: 'authorName' },
             photo_main: 'recipeImage',

@@ -1,13 +1,12 @@
+import psycopg2
 import pytest
-from django.http import HttpResponse
-from django.urls.base import reverse
+from django.conf import settings
 from rest_framework.test import APIClient
 
-from accounts.models import UserAccount
-from factories import (ChatDuoFactory, ChatGroupFactory, ChatMassageFactory,
-                       RecipeFactory, UserFactory)
-from recipes.models import Recipe
+from factories import (ChatGroupFactory, ChatMassageFactory, RecipeFactory,
+                       UserFactory)
 
+logout_url = '/api/djoser/token/login/'
 
 # ---------------------------------------- Set Up
 @pytest.fixture
@@ -55,38 +54,7 @@ def signup_and_login(api_client, signup):
 
 @pytest.fixture
 def logout(api_client):
-    logout_url = '/api/djoser/token/login/'
-    logout = api_client.post(logout_url)
-
-
-    return logout
-
-# ---------------------------------------- Recipes
-
-# TODO check for better fixture name
-@pytest.fixture
-def search_recipe_response(api_client):
-    search_recipe_url = '/api/recipes/search/'
-    data = {
-        'flavor_type': 'Sour',
-    }
-
-    response = api_client.post(search_recipe_url, data)
-
-    return response
-
-# @pytest.fixture
-# def search_comment_response(api_client):
-#     new_recipe = RecipeFactory()
-#     comments_in_recipe_url = '/api/comments/comments_in_recipe/'
-
-#     data = {
-#         'recipe': {new_recipe.id},
-#     }
-
-#     response = api_client.post(comments_in_recipe_url, data)
-
-#     return response
+    api_client.logout()
 
 @pytest.fixture
 def chat_massage_create():
@@ -101,4 +69,10 @@ def chat_massage_create():
     chat_massage.save()
 
     return chat_massage
+
+
+# enable testing for postgres db
+# @pytest.fixture(scope='session')
+def django_db_setup():
+    settings.DATABASES['default'] 
 

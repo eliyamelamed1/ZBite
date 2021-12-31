@@ -1,0 +1,29 @@
+@import '../abstracts/variables';
+.saves_count_and_icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    height: max-content;
+    gap: 0.5rem;
+    left: 0.25rem;
+    color: $primary-color;
+}
+.saves_count {
+    position: relative;
+    bottom: 0.3rem;
+    font-size: 1.3rem;
+    span {
+        font-weight: 700;
+    }
+}
+
+.saves_icon {
+    i {
+        width: 100%;
+        img {
+            height: 2rem;
+            width: 2rem;
+        }
+    }
+}

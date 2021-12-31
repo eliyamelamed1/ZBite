@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { RootState } from '../../redux/store';
 import { followUserAction } from '../../redux/actions/userActions';
 import styles from '../../styles/pages/userProfile.module.scss';
 
-const FollowUser = ({ userToFollow }) => {
+const FollowUser: React.FC<{ userToFollow: string }> = ({ userToFollow }) => {
     const dispatch = useDispatch();
     const [button, setButton] = useState('follow');
-    const { loggedUserData, isUserAuthenticated } = useSelector((state) => state.userReducer);
+    const { loggedUserData, isUserAuthenticated } = useSelector((state: RootState) => state.userReducer);
     useEffect(() => {
         try {
             const isUserAlreadyFollowed = loggedUserData?.following.includes(userToFollow);

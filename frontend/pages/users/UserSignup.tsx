@@ -6,14 +6,15 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Link from 'next/link';
+import { RootState } from '../../redux/store';
 import Router from 'next/router';
-import { pageRoute } from '../../globals';
+import { pageRoute } from '../../enums';
 import { signupAction } from '../../redux/actions/userActions';
 import styles from '../../styles/pages/signup.module.scss';
 
 const UserSignup = () => {
     const dispatch = useDispatch();
-    const isUserAuthenticated = useSelector((state) => state.userReducer.isUserAuthenticated);
+    const isUserAuthenticated = useSelector((state: RootState) => state.userReducer.isUserAuthenticated);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -25,21 +26,18 @@ const UserSignup = () => {
 
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    const onSubmit = async (e) => {
+    const onSubmit = (e) => {
         e.preventDefault();
 
         if (password === re_password) {
-            try {
-                await dispatch(
-                    signupAction({
-                        name,
-                        email,
-                        password,
-                        re_password,
-                    })
-                );
-                Router.push(pageRoute().login);
-            } catch {}
+            dispatch(
+                signupAction({
+                    name,
+                    email,
+                    password,
+                    re_password,
+                })
+            );
         }
     };
 
@@ -79,7 +77,7 @@ const UserSignup = () => {
                         name='password'
                         value={password}
                         onChange={(e) => onChange(e)}
-                        minLength='6'
+                        minLength={6}
                         className={styles.password_input}
                         required
                     />
@@ -89,7 +87,7 @@ const UserSignup = () => {
                         name='re_password'
                         value={re_password}
                         onChange={(e) => onChange(e)}
-                        minLength='6'
+                        minLength={6}
                         className={styles.password_input}
                         required
                     />

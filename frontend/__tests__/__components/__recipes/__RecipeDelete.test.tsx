@@ -7,7 +7,7 @@ import React from 'react';
 import RecipeDelete from '../../../components/recipes/RecipeDelete';
 import Router from 'next/router';
 import configureStore from 'redux-mock-store';
-import { pageRoute } from '../../../globals';
+import { pageRoute } from '../../../enums';
 import { recipeDeleteAction } from '../../../redux/actions/recipeActions';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
@@ -18,9 +18,11 @@ const initialState = {};
 const store = mockStore(initialState);
 
 const recipeId = '1';
+
 jest.mock('../../../redux/actions/recipeActions', () => ({
     recipeDeleteAction: jest.fn().mockReturnValue(() => true),
 }));
+
 jest.mock('next/router');
 
 describe('RecipeDelete', () => {
@@ -40,7 +42,7 @@ describe('RecipeDelete', () => {
         const deleteButton = screen.getByRole('button', { name: /delete/i });
         expect(deleteButton).toBeInTheDocument();
     });
-    test('success form submit should call recipeDeleteAction and redirect to home page', () => {
+    test('success form submit should call recipeDeleteAction', () => {
         const deleteButton = screen.getByRole('button', { name: /delete/i });
         userEvent.click(deleteButton);
 
@@ -48,20 +50,5 @@ describe('RecipeDelete', () => {
 
         expect(timesActionDispatched).toBe(1);
         expect(recipeDeleteAction.mock.calls[0][0].id).toBe(recipeId);
-        expect(Router.push.mock.calls.length).toBe(1);
-        expect(Router.push.mock.calls[0][0]).toBe(pageRoute().home);
-    });
-    test('failure form submit should call recipeDeleteAction and not redirect to home page', () => {
-        recipeDeleteAction.mockReturnValueOnce(() => {
-            throw new Error();
-        });
-        const deleteButton = screen.getByRole('button', { name: /delete/i });
-        userEvent.click(deleteButton);
-
-        const timesActionDispatched = recipeDeleteAction.mock.calls.length;
-
-        expect(timesActionDispatched).toBe(1);
-        expect(recipeDeleteAction.mock.calls[0][0].id).toBe(recipeId);
-        expect(Router.push.mock.calls.length).toBe(0);
     });
 });

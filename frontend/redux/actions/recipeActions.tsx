@@ -7,8 +7,6 @@ import {
     GET_FOLLOWED_RECIPE_LIST_SUCCESS,
     GET_RECIPE_DETAILS_FAIL,
     GET_RECIPE_DETAILS_SUCCESS,
-    GET_RECIPE_LIST_FAIL,
-    GET_RECIPE_LIST_SUCCESS,
     GET_SAVED_RECIPE_LIST_FAIL,
     GET_SAVED_RECIPE_LIST_SUCCESS,
     GET_TRENDING_RECIPE_LIST_FAIL,
@@ -21,37 +19,15 @@ import {
     REVIEW_DELETE_SUCCESS,
     SAVE_UNSAVE_ACTION_FAIL,
     SAVE_UNSAVE_ACTION_SUCCESS,
-    SEARCH_RECIPE_FAIL,
-    SEARCH_RECIPE_SUCCESS,
     UPDATE_RECIPE_FAIL,
     UPDATE_RECIPE_SUCCESS,
 } from '../types';
 
 import axios from 'axios';
-import { endpointRoute } from '../../globals';
+import { endpointRoute } from '../../enums';
 import { loadLoggedUserDataAction } from './userActions';
 
-export const saveRecipeAction =
-    ({ recipeId }) =>
-    async (dispatch) => {
-        try {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                    Authorization: `Token ${localStorage.getItem('auth_token')}`,
-                },
-            };
-            const body = JSON.stringify({ recipe: recipeId });
-            await axios.post(endpointRoute().recipes.save, body, config);
-            await dispatch(loadRecipeDetailsAction({ id: recipeId }));
-            await dispatch(loadLoggedUserDataAction());
-            await dispatch({ type: SAVE_UNSAVE_ACTION_SUCCESS });
-        } catch {
-            dispatch({ type: SAVE_UNSAVE_ACTION_FAIL });
-        }
-    };
-
+// recipes
 export const recipeDeleteAction =
     ({ id }) =>
     async (dispatch) => {
@@ -71,7 +47,25 @@ export const recipeDeleteAction =
     };
 
 export const recipeCreateAction =
-    ({ title, description, flavor_type }) =>
+    ({
+        photoMain,
+        title,
+        description,
+        cookTime,
+        serving,
+        ingredientsTextList,
+        instructionsTextList,
+        instructionsImageList,
+    }: {
+        photoMain: File;
+        title: string;
+        description: string;
+        cookTime: string;
+        serving: string;
+        ingredientsTextList: string[];
+        instructionsTextList: string[];
+        instructionsImageList: File[];
+    }) =>
     async (dispatch) => {
         try {
             const config = {
@@ -82,20 +76,26 @@ export const recipeCreateAction =
                 },
             };
 
-            const body = JSON.stringify({
-                title,
-                description,
-                flavor_type,
-            });
-            await axios.post(endpointRoute().recipes.create, body, config);
+            const formData = new FormData();
+
+            formData.append('photo_main', photoMain);
+            formData.append('title', title);
+            formData.append('description', description);
+            formData.append('cook_time', cookTime);
+            formData.append('serving', serving);
+            ingredientsTextList?.forEach((item) => formData.append('ingredients_text_list', item));
+            instructionsTextList?.forEach((item) => formData.append('instructions_text_list', item));
+            instructionsImageList?.forEach((item) => formData.append('instructions_image_list', item));
+
+            await axios.post(endpointRoute().recipes.create, formData, config);
             dispatch({ type: CREATE_RECIPE_SUCCESS });
-        } catch {
+        } catch (err) {
             dispatch({ type: CREATE_RECIPE_FAIL });
         }
     };
 
 export const recipeUpdateAction =
-    ({ id, title, description, flavor_type }) =>
+    ({ id, title, description }) =>
     async (dispatch) => {
         const config = {
             headers: {
@@ -109,7 +109,6 @@ export const recipeUpdateAction =
             const body = JSON.stringify({
                 title,
                 description,
-                flavor_type,
             });
             const res = await axios.patch(endpointRoute(id).recipes.details, body, config);
             dispatch({ type: UPDATE_RECIPE_SUCCESS, payload: res.data });
@@ -162,39 +161,6 @@ export const loadSavedRecipesAction = () => async (dispatch) => {
         dispatch({ type: GET_SAVED_RECIPE_LIST_FAIL });
     }
 };
-
-export const loadRecipeListAction = () => async (dispatch) => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-        },
-    };
-    try {
-        const res = await axios.get(endpointRoute().recipes.list, config);
-        dispatch({ type: GET_RECIPE_LIST_SUCCESS, payload: res.data });
-    } catch {
-        dispatch({ type: GET_RECIPE_LIST_FAIL });
-    }
-};
-
-export const recipeSearchAction =
-    ({ flavor_type }) =>
-    async (dispatch) => {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
-        };
-
-        try {
-            const res = await axios.post(endpointRoute().recipes.search, { flavor_type }, config);
-            dispatch({ type: SEARCH_RECIPE_SUCCESS, payload: res.data });
-        } catch {
-            dispatch({ type: SEARCH_RECIPE_FAIL });
-        }
-    };
 
 export const loadRecipeDetailsAction =
     ({ id }) =>
@@ -273,7 +239,30 @@ export const reviewsInRecipeAction =
             });
             const res = await axios.post(endpointRoute().reviews.reviews_in_recipe, body, config);
             dispatch({ type: REVIEWS_IN_RECIPE_SUCCESS, payload: res.data });
+            await dispatch(loadRecipeDetailsAction({ id: recipeId }));
         } catch {
             dispatch({ type: REVIEWS_IN_RECIPE_FAIL });
+        }
+    };
+
+// saves
+export const saveRecipeAction =
+    ({ recipeId }) =>
+    async (dispatch) => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                    Authorization: `Token ${localStorage.getItem('auth_token')}`,
+                },
+            };
+            const body = JSON.stringify({ recipe: recipeId });
+            await axios.post(endpointRoute().recipes.save, body, config);
+            await dispatch(loadRecipeDetailsAction({ id: recipeId }));
+            await dispatch(loadLoggedUserDataAction());
+            await dispatch({ type: SAVE_UNSAVE_ACTION_SUCCESS });
+        } catch {
+            dispatch({ type: SAVE_UNSAVE_ACTION_FAIL });
         }
     };

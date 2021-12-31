@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import Router from 'next/router';
 import SavedRecipes from '../../../pages/recipes/SavedRecipes';
-import { pageRoute } from '../../../globals';
+import { pageRoute } from '../../../enums';
 import store from '../../../redux/store';
 
 jest.mock('next/router');

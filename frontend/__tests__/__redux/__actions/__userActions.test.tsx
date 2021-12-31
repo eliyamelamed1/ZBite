@@ -4,7 +4,6 @@ import {
     followUserAction,
     loadLoggedUserDataAction,
     loadUserDetailsAction,
-    loadUserListAction,
     loginAction,
     logoutAction,
     resetPasswordAction,
@@ -17,7 +16,7 @@ import {
 
 import axios from 'axios';
 import configureStore from 'redux-mock-store';
-import { endpointRoute } from '../../../globals';
+import { endpointRoute } from '../../../enums';
 import thunk from 'redux-thunk';
 
 const middlewares = [thunk];
@@ -82,13 +81,6 @@ describe('axios request should match url endpoint, and parameters', () => {
             expect(axios.get.mock.calls.length).toBe(1);
             expect(axios.get.mock.calls[0][0]).toStrictEqual(endpointRoute().users.loggedUserData);
             expect(axios.get.mock.calls[0][1]).toStrictEqual(configWithAuthToken);
-        });
-        test('loadUserListAction', () => {
-            store.dispatch(loadUserListAction());
-
-            expect(axios.get.mock.calls.length).toBe(1);
-            expect(axios.get.mock.calls[0][0]).toStrictEqual(endpointRoute().users.list);
-            expect(axios.get.mock.calls[0][1]).toStrictEqual(config);
         });
         test('loadUserDetailsAction', () => {
             const { id } = parameters;

@@ -1,4 +1,6 @@
 import {
+    ACTIVATION_FAIL,
+    ACTIVATION_SUCCESS,
     DELETE_USER_FAIL,
     DELETE_USER_SUCCESS,
     FOLLOW_UNFOLLOW_USER_FAIL,
@@ -7,11 +9,15 @@ import {
     GET_LOGGED_USER_DETAILS_SUCCESS,
     GET_USER_DETAILS_FAIL,
     GET_USER_DETAILS_SUCCESS,
-    GET_USER_LIST_FAIL,
-    GET_USER_LIST_SUCCESS,
+    LOAD_LEADERBOARD_FAIL,
+    LOAD_LEADERBOARD_SUCCESS,
     LOGIN_FAIL,
     LOGIN_SUCCESS,
     LOGOUT,
+    RESET_PASSWORD_CONFIRM_FAIL,
+    RESET_PASSWORD_CONFIRM_SUCCESS,
+    RESET_PASSWORD_FAIL,
+    RESET_PASSWORD_SUCCESS,
     SIGNUP_FAIL,
     SIGNUP_SUCCESS,
     TEST_CASE_AUTH,
@@ -19,12 +25,15 @@ import {
     UPDATE_USER_SUCCESS,
 } from '../types';
 
+import Router from 'next/router';
+import { pageRoute } from '../../enums';
+
 const initialState = {
     auth_token: process.browser ? localStorage.getItem('auth_token') : null,
     isUserAuthenticated: process.browser ? !!localStorage.getItem('auth_token') : null,
     loggedUserData: process.browser ? JSON.parse(localStorage.getItem('loggedUserData')) : null,
-    listOfUsers: null,
     requestedUserData: null,
+    listOfLeaderboardUsers: null,
 };
 
 export default function userReducer(state = initialState, action) {
@@ -37,18 +46,13 @@ export default function userReducer(state = initialState, action) {
                 auth_token: payload.auth_token,
                 isUserAuthenticated: payload.isUserAuthenticated,
                 loggedUserData: payload.loggedUserData,
-                listOfUsers: payload.listOfUsers,
                 requestedUserData: payload.requestedUserData,
+                listOfLeaderboardUsers: payload.listOfLeaderboardUsers,
             };
         case GET_USER_DETAILS_SUCCESS:
             return {
                 ...state,
                 requestedUserData: payload,
-            };
-        case GET_USER_LIST_SUCCESS:
-            return {
-                ...state,
-                listOfUsers: payload,
             };
         case UPDATE_USER_SUCCESS:
             localStorage.setItem('loggedUserData', JSON.stringify(payload));
@@ -57,6 +61,7 @@ export default function userReducer(state = initialState, action) {
                 loggedUserData: payload,
             };
         case LOGIN_SUCCESS:
+            Router.push(pageRoute().home);
             localStorage.setItem('auth_token', payload.auth_token);
             return {
                 ...state,
@@ -70,6 +75,8 @@ export default function userReducer(state = initialState, action) {
                 loggedUserData: payload,
             };
         case SIGNUP_SUCCESS:
+            Router.push(pageRoute().login);
+
             return {
                 ...state,
                 isUserAuthenticated: false,
@@ -80,7 +87,21 @@ export default function userReducer(state = initialState, action) {
                 ...state,
                 loggedUserData: null,
             };
+        case LOAD_LEADERBOARD_SUCCESS:
+            return {
+                ...state,
+                listOfLeaderboardUsers: payload,
+            };
         case DELETE_USER_SUCCESS:
+            Router.push(pageRoute().home);
+            localStorage.removeItem('auth_token');
+            localStorage.removeItem('loggedUserData');
+            return {
+                ...state,
+                auth_token: null,
+                isUserAuthenticated: false,
+                loggedUserData: null,
+            };
         case SIGNUP_FAIL:
         case LOGIN_FAIL:
         case LOGOUT:
@@ -92,12 +113,30 @@ export default function userReducer(state = initialState, action) {
                 isUserAuthenticated: false,
                 loggedUserData: null,
             };
+        case RESET_PASSWORD_SUCCESS:
+            Router.push(pageRoute().home);
+            return {
+                ...state,
+            };
+        case RESET_PASSWORD_CONFIRM_SUCCESS:
+            Router.push(pageRoute().home);
+            return {
+                ...state,
+            };
+        case ACTIVATION_SUCCESS:
+            Router.push(pageRoute().home);
+            return {
+                ...state,
+            };
+        case ACTIVATION_FAIL:
+        case RESET_PASSWORD_CONFIRM_FAIL:
+        case RESET_PASSWORD_FAIL:
         case FOLLOW_UNFOLLOW_USER_FAIL:
         case GET_USER_DETAILS_FAIL:
-        case GET_USER_LIST_FAIL:
         case UPDATE_USER_FAIL:
         case DELETE_USER_FAIL:
         case FOLLOW_UNFOLLOW_USER_SUCCESS:
+        case LOAD_LEADERBOARD_FAIL:
             return {
                 ...state,
             };

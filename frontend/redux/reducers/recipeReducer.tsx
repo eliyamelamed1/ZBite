@@ -7,8 +7,6 @@ import {
     GET_FOLLOWED_RECIPE_LIST_SUCCESS,
     GET_RECIPE_DETAILS_FAIL,
     GET_RECIPE_DETAILS_SUCCESS,
-    GET_RECIPE_LIST_FAIL,
-    GET_RECIPE_LIST_SUCCESS,
     GET_SAVED_RECIPE_LIST_FAIL,
     GET_SAVED_RECIPE_LIST_SUCCESS,
     GET_TRENDING_RECIPE_LIST_FAIL,
@@ -21,15 +19,15 @@ import {
     REVIEW_DELETE_SUCCESS,
     SAVE_UNSAVE_ACTION_FAIL,
     SAVE_UNSAVE_ACTION_SUCCESS,
-    SEARCH_RECIPE_FAIL,
-    SEARCH_RECIPE_SUCCESS,
     TEST_CASE_RECIPE,
     UPDATE_RECIPE_FAIL,
     UPDATE_RECIPE_SUCCESS,
 } from '../types';
 
+import Router from 'next/router';
+import { pageRoute } from '../../enums';
+
 const initialState = {
-    listOfRecipes: null,
     listOfSearchedRecipes: null,
     requestedRecipeData: null,
     listOfFilteredReviews: null,
@@ -45,7 +43,6 @@ export default function recipeReducer(state = initialState, action) {
         case TEST_CASE_RECIPE:
             return {
                 ...state,
-                listOfRecipes: payload.listOfRecipes,
                 listOfSearchedRecipes: payload.listOfSearchedRecipes,
                 requestedRecipeData: payload.requestedRecipeData,
                 listOfFilteredReviews: payload.listOfFilteredReviews,
@@ -53,10 +50,6 @@ export default function recipeReducer(state = initialState, action) {
                 listOfFollowedRecipes: payload.listOfFollowedRecipes,
                 listOfSavedRecipes: payload.listOfSavedRecipes,
             };
-        case GET_RECIPE_LIST_SUCCESS: //
-            return { ...state, listOfRecipes: payload };
-        case SEARCH_RECIPE_SUCCESS:
-            return { ...state, listOfSearchedRecipes: payload };
         case UPDATE_RECIPE_SUCCESS: //
         case GET_RECIPE_DETAILS_SUCCESS: //
             return { ...state, requestedRecipeData: payload };
@@ -68,22 +61,24 @@ export default function recipeReducer(state = initialState, action) {
             return { ...state, listOfFollowedRecipes: payload };
         case GET_SAVED_RECIPE_LIST_SUCCESS:
             return { ...state, listOfSavedRecipes: payload };
+        case CREATE_RECIPE_SUCCESS:
+            Router.push(pageRoute().home);
+            return { ...state };
+        case DELETE_RECIPE_SUCCESS:
+            Router.push(pageRoute().home);
+            return { ...state };
         case REVIEWS_IN_RECIPE_FAIL:
         case REVIEW_DELETE_SUCCESS:
         case REVIEW_DELETE_FAIL:
         case REVIEW_CREATE_SUCCESS:
         case REVIEW_CREATE_FAIL:
-        case DELETE_RECIPE_SUCCESS:
         case DELETE_RECIPE_FAIL:
-        case CREATE_RECIPE_SUCCESS:
         case CREATE_RECIPE_FAIL:
         case GET_SAVED_RECIPE_LIST_FAIL:
         case UPDATE_RECIPE_FAIL:
         case GET_RECIPE_DETAILS_FAIL:
-        case GET_RECIPE_LIST_FAIL:
         case GET_FOLLOWED_RECIPE_LIST_FAIL:
         case GET_TRENDING_RECIPE_LIST_FAIL:
-        case SEARCH_RECIPE_FAIL:
         case SAVE_UNSAVE_ACTION_FAIL:
         case SAVE_UNSAVE_ACTION_SUCCESS:
             return { ...state };

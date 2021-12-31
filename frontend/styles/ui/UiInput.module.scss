@@ -1,0 +1,5 @@
+@import '../abstracts/mixin';
+
+.input {
+    @include text_input;
+}

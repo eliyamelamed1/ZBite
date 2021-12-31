@@ -3,17 +3,16 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import Router from 'next/router';
-import { pageRoute } from '../../globals';
+import { pageRoute } from '../../enums';
 import { recipeDeleteAction } from '../../redux/actions/recipeActions';
 import { useDispatch } from 'react-redux';
 
-const RecipeDelete = ({ id }) => {
+const RecipeDelete: React.FC<{ id: string }> = ({ id }) => {
     const dispatch = useDispatch();
     const onSubmit = (e) => {
         e.preventDefault();
         try {
             dispatch(recipeDeleteAction({ id }));
-            Router.push(pageRoute().home);
         } catch {
             // TODO - add err msg
         }

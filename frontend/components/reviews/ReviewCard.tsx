@@ -3,7 +3,7 @@ import IsReviewAuthor from './isReviewAuthor';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { pageRoute } from '../../globals';
+import { pageRoute } from '../../enums';
 
 const ReviewCard = (props) => {
     const reviewProps = (

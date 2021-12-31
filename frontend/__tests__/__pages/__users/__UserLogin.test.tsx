@@ -7,11 +7,9 @@ import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import React from 'react';
-import Router from 'next/router';
 import UserLogin from '../../../pages/users/UserLogin';
 import configureStore from 'redux-mock-store';
 import { loginAction } from '../../../redux/actions/userActions';
-import { pageRoute } from '../../../globals';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
@@ -20,7 +18,7 @@ const mockStore = configureStore(middlewares);
 let initialState = { userReducer: {} };
 const store = mockStore(initialState);
 jest.mock('../../../redux/actions/userActions', () => ({ loginAction: jest.fn().mockImplementation(() => true) }));
-jest.mock('next/router');
+
 describe('UserLogin - guest', () => {
     beforeEach(() => {
         render(
@@ -91,25 +89,5 @@ describe('UserLogin - guest', () => {
         expect(timesActionDispatched).toBe(1);
         expect(loginAction.mock.calls[0][0].email).toEqual(emailValue);
         expect(loginAction.mock.calls[0][0].password).toEqual(passwordValue);
-    });
-});
-
-// TODO - imporve this tests by checking the redirection url (should be home page)
-describe('UserLogin - authenticated user', () => {
-    let initialState = { userReducer: { isUserAuthenticated: true } };
-    const store = mockStore(initialState);
-    beforeEach(() => {
-        render(
-            <Provider store={store}>
-                <UserLogin />
-            </Provider>
-        );
-    });
-    afterEach(() => {
-        cleanup();
-    });
-    test('should redirect authenticated user to home page', async () => {
-        expect(Router.push.mock.calls.length).toBe(1);
-        expect(Router.push.mock.calls[0][0]).toBe(pageRoute().home);
     });
 });

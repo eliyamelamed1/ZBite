@@ -3,12 +3,10 @@ import '@testing-library/jest-dom/extend-expect';
 import {
     loadFollowedRecipesAction,
     loadRecipeDetailsAction,
-    loadRecipeListAction,
     loadSavedRecipesAction,
     loadTrendingRecipesAction,
     recipeCreateAction,
     recipeDeleteAction,
-    recipeSearchAction,
     recipeUpdateAction,
     reviewCreateAction,
     reviewDeleteAction,
@@ -18,7 +16,7 @@ import {
 
 import axios from 'axios';
 import configureStore from 'redux-mock-store';
-import { endpointRoute } from '../../../globals';
+import { endpointRoute } from '../../../enums';
 import thunk from 'redux-thunk';
 
 const middlewares = [thunk];
@@ -32,11 +30,16 @@ const parameters = {
     title: 'title',
     description: 'description',
     id: 'id',
-    flavor_type: 'flavor_type',
     stars: 'stars',
     comment: 'comment',
+    photoMain: new File(['photoMain'], 'photoMain.txt'),
     image: 'image',
     reviewId: 'reviewId',
+    cookTime: 'cookTime',
+    serving: 'serving',
+    ingredientsTextList: ['firstIngredient'],
+    instructionsTextList: ['firstIngredient'],
+    instructionsImageList: [new File(['instructionImage'], 'instructionImage.txt')],
 };
 
 const config = {
@@ -69,34 +72,53 @@ describe('axios request should match url endpoint, and parameters', () => {
         expect(axios.delete.mock.calls[0][1]).toStrictEqual(configWithAuthToken);
     });
     test('recipeCreateAction', () => {
-        const { title, description, flavor_type } = parameters;
-        const body = JSON.stringify({ title, description, flavor_type });
+        const {
+            photoMain,
+            title,
+            description,
+            cookTime,
+            serving,
+            ingredientsTextList,
+            instructionsTextList,
+            instructionsImageList,
+        } = parameters;
+        store.dispatch<any>(
+            recipeCreateAction({
+                photoMain,
+                title,
+                description,
+                cookTime,
+                serving,
+                ingredientsTextList,
+                instructionsTextList,
+                instructionsImageList,
+            })
+        );
 
-        store.dispatch(recipeCreateAction({ title, description, flavor_type }));
+        const formData = axios.post.mock.calls[0][1];
 
         expect(axios.post.mock.calls.length).toBe(1);
         expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute().recipes.create);
-        expect(axios.post.mock.calls[0][1]).toStrictEqual(body);
+
+        expect(formData.get('photo_main')).toStrictEqual(photoMain);
+        expect(formData.get('title')).toStrictEqual(title);
+        expect(formData.get('description')).toStrictEqual(description);
+        expect(formData.get('cook_time')).toStrictEqual(cookTime);
+        expect(formData.get('serving')).toStrictEqual(serving);
+
         expect(axios.post.mock.calls[0][2]).toStrictEqual(configWithAuthToken);
     });
     test('recipeUpdateAction', () => {
-        const { id, title, description, flavor_type } = parameters;
+        const { id, title, description } = parameters;
         const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}/`;
-        const body = JSON.stringify({ title, description, flavor_type });
+        const body = JSON.stringify({ title, description });
 
-        store.dispatch(recipeUpdateAction({ id, title, description, flavor_type }));
+        store.dispatch(recipeUpdateAction({ id, title, description }));
 
         expect(axios.patch.mock.calls.length).toBe(1);
         expect(axios.patch.mock.calls[0][0]).toStrictEqual(endpointUrl);
         expect(axios.patch.mock.calls[0][1]).toStrictEqual(body);
         expect(axios.patch.mock.calls[0][2]).toStrictEqual(configWithAuthToken);
-    });
-    test('loadRecipeListAction', () => {
-        store.dispatch(loadRecipeListAction());
-
-        expect(axios.get.mock.calls.length).toBe(1);
-        expect(axios.get.mock.calls[0][0]).toStrictEqual(endpointRoute().recipes.list);
-        expect(axios.get.mock.calls[0][1]).toStrictEqual(config);
     });
     test('loadTrendingRecipesAction', () => {
         store.dispatch(loadTrendingRecipesAction());
@@ -119,16 +141,7 @@ describe('axios request should match url endpoint, and parameters', () => {
         expect(axios.get.mock.calls[0][0]).toStrictEqual(endpointRoute().recipes.saved_recipes);
         expect(axios.get.mock.calls[0][1]).toStrictEqual(configWithAuthToken);
     });
-    test('recipeSearchAction', () => {
-        const { flavor_type } = parameters;
 
-        store.dispatch(recipeSearchAction({ flavor_type }));
-
-        expect(axios.post.mock.calls.length).toBe(1);
-        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute().recipes.search);
-        expect(axios.post.mock.calls[0][1]).toStrictEqual({ flavor_type });
-        expect(axios.post.mock.calls[0][2]).toStrictEqual(config);
-    });
     test('loadRecipeDetailsAction', () => {
         const { id } = parameters;
         const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}/`;
