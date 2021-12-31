@@ -112,7 +112,16 @@ const RecipeDetails = (props) => {
                             </li>
                             <UiSectionSeparator />
                             <p className={styles.title}> {recipeData?.title}</p>
-                            <p className={styles.description}>{recipeData.description}</p>
+                            <p className={styles.description}>{recipeData?.description}</p>
+                            <div className={styles.cook_time_and_serving_container}>
+                                <p className={styles.cook_time}>
+                                    cook time:
+                                    <span> {recipeData?.cook_time}</span>
+                                </p>
+                                <p className={styles.serving}>
+                                    serving: <span> {recipeData?.serving}</span>
+                                </p>
+                            </div>
                             <UiSectionSeparator />
                             <section></section>
                             <section className={styles.ingredients_container}>
