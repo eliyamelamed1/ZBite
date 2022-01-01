@@ -169,7 +169,7 @@ describe('ReviewCreate', () => {
                 const button = screen.getByRole('button', { name: /review/i });
                 expect(button).toBeInTheDocument();
             });
-            test.only('clicking the review button should redirect guest user to login page', async () => {
+            test('clicking the review button should redirect guest user to login page', async () => {
                 await act(async () => {
                     const button = screen.getByRole('button', { name: /review/i });
                     await userEvent.click(button);

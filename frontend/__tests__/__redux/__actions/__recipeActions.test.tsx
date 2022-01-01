@@ -15,6 +15,7 @@ import {
 } from '../../../redux/actions/recipeActions';
 
 import axios from 'axios';
+import { cleanup } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 import { endpointRoute } from '../../../enums';
 import thunk from 'redux-thunk';
@@ -25,6 +26,8 @@ let initialState = {};
 const store = mockStore(initialState);
 
 localStorage.setItem('auth_token', 'tokenValue');
+
+jest.mock('axios');
 
 const parameters = {
     title: 'title',
@@ -58,7 +61,8 @@ const configWithAuthToken = {
 };
 
 describe('axios request should match url endpoint, and parameters', () => {
-    afterEach(() => {
+    beforeEach(() => {
+        cleanup();
         jest.clearAllMocks();
     });
     test('recipeDeleteAction', () => {

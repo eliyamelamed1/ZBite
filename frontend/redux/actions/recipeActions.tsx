@@ -43,7 +43,13 @@ export const recipeDeleteAction =
             await axios.delete(endpointRoute(id).recipes.details, config);
             toast.success('recipe deleted successfully');
             dispatch({ type: DELETE_RECIPE_SUCCESS });
-        } catch {
+        } catch (err) {
+            const object = err?.response?.data;
+            if (object) {
+                const key = Object.keys(object)[0];
+                const errorMassage = object[key][0];
+                toast.error(errorMassage);
+            }
             dispatch({ type: DELETE_RECIPE_FAIL });
         }
     };
@@ -148,9 +154,11 @@ export const loadTrendingRecipesAction = () => async (dispatch) => {
         dispatch({ type: GET_TRENDING_RECIPE_LIST_SUCCESS, payload: res.data });
     } catch (err) {
         const object = err?.response?.data;
-        const key = Object.keys(object)[0];
-        const errorMassage = object[key][0];
-        toast.error(errorMassage);
+        if (object) {
+            const key = Object.keys(object)[0];
+            const errorMassage = object[key][0];
+            toast.error(errorMassage);
+        }
         dispatch({ type: GET_TRENDING_RECIPE_LIST_FAIL });
     }
 };
@@ -167,9 +175,11 @@ export const loadFollowedRecipesAction = () => async (dispatch) => {
         dispatch({ type: GET_FOLLOWED_RECIPE_LIST_SUCCESS, payload: res.data });
     } catch (err) {
         const object = err?.response?.data;
-        const key = Object.keys(object)[0];
-        const errorMassage = object[key][0];
-        toast.error(errorMassage);
+        if (object) {
+            const key = Object.keys(object)[0];
+            const errorMassage = object[key][0];
+            toast.error(errorMassage);
+        }
         dispatch({ type: GET_FOLLOWED_RECIPE_LIST_FAIL });
     }
 };
@@ -186,9 +196,11 @@ export const loadSavedRecipesAction = () => async (dispatch) => {
         dispatch({ type: GET_SAVED_RECIPE_LIST_SUCCESS, payload: res.data });
     } catch (err) {
         const object = err?.response?.data;
-        const key = Object.keys(object)[0];
-        const errorMassage = object[key][0];
-        toast.error(errorMassage);
+        if (object) {
+            const key = Object.keys(object)[0];
+            const errorMassage = object[key][0];
+            toast.error(errorMassage);
+        }
         dispatch({ type: GET_SAVED_RECIPE_LIST_FAIL });
     }
 };

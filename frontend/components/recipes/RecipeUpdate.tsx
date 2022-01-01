@@ -4,9 +4,9 @@
 
 import React, { useState } from 'react';
 
-import GeneralSection from '../forms/recipes/GeneralSection';
-import IngredientSection from '../forms/recipes/IngredientSection';
-import InstructionSection from '../forms/recipes/InstructionSection';
+import GeneralForm from '../../forms/recipes/GeneralForm';
+import IngredientForm from '../../forms/recipes/IngredientForm';
+import InstructionForm from '../../forms/recipes/InstructionForm';
 import UiButton from '../ui/UiButton';
 import UiPopUp from '../ui/UiPopUp';
 import UiSectionSeparator from '../ui/UiSectionSeperator';
@@ -104,11 +104,11 @@ const RecipeUpdate: React.FC<{ id: string }> = ({ id }) => {
     const recipeUpdateSection = () => (
         <UiPopUp onSubmit={onSubmit} setDisplayForm={setDisplayForm}>
             <h1>Update Recipe</h1>
-            {GeneralSection({ onChangeImage, photoMainBlob, onChangeText, title, description, cookTime, serving })}
+            {GeneralForm({ onChangeImage, photoMainBlob, onChangeText, title, description, cookTime, serving })}
             <UiSectionSeparator />
-            {InstructionSection({ onChangeText, instruction, setFormData, instructionList, inputId, modifiedText })}
+            {InstructionForm({ onChangeText, instruction, setFormData, instructionList, inputId, modifiedText })}
             <UiSectionSeparator />
-            {IngredientSection({ onChangeText, ingredient, setFormData, ingredientList, inputId, modifiedText })}
+            {IngredientForm({ onChangeText, ingredient, setFormData, ingredientList, inputId, modifiedText })}
             <UiSectionSeparator />
             <UiButton reverse={true}>Submit</UiButton>
         </UiPopUp>

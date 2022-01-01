@@ -1,14 +1,14 @@
-import EditInputContainer from '../../../components/utils/ModifyInputContainer';
+import EditInputContainer from '../../components/utils/ModifyInputContainer';
 import Image from 'next/image';
 import React from 'react';
-import addInputContainer from '../../../components/utils/AddInputContainer';
-import deleteIcon from '../../../styles/icons/delete-input-icon.svg';
-import deleteInputContainer from '../../../components/utils/DeleteInputContainer';
-import editInput from '../../../styles/icons/edit_input.svg';
-import saveInput from '../../../styles/icons/save_changes.svg';
-import styles from '../../../styles/pages/recipeCreate.module.scss';
+import addInputContainer from '../../components/utils/AddInputContainer';
+import deleteIcon from '../../styles/icons/delete-input-icon.svg';
+import deleteInputContainer from '../../components/utils/DeleteInputContainer';
+import editInput from '../../styles/icons/edit_input.svg';
+import saveInput from '../../styles/icons/save_changes.svg';
+import styles from '../../styles/pages/recipeCreate.module.scss';
 
-const IngredientSection = ({ onChangeText, ingredient, setFormData, ingredientList, inputId, modifiedText }) => (
+const IngredientForm = ({ onChangeText, ingredient, setFormData, ingredientList, inputId, modifiedText }) => (
     <section className={styles.ingredients_section}>
         <h1 className={styles.ingredients_title}>Ingredients</h1>
         <input
@@ -99,4 +99,4 @@ const IngredientSection = ({ onChangeText, ingredient, setFormData, ingredientLi
         ))}
     </section>
 );
-export default IngredientSection;
+export default IngredientForm;

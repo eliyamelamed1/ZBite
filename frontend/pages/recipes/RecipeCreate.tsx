@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import EditInputContainer from '../../components/utils/ModifyInputContainer';
-import GeneralSection from '../../components/forms/recipes/GeneralSection';
-import Image from 'next/image';
-import IngredientSection from '../../components/forms/recipes/IngredientSection';
-import InstructionSection from '../../components/forms/recipes/InstructionSection';
+import GeneralForm from '../../forms/recipes/GeneralForm';
+import IngredientForm from '../../forms/recipes/IngredientForm';
+import InstructionForm from '../../forms/recipes/InstructionForm';
 import { RootState } from '../../redux/store';
 import Router from 'next/router';
 import UiSectionSeparator from '../../components/ui/UiSectionSeperator';
-import addInputContainer from '../../components/utils/AddInputContainer';
-import deleteInputContainer from '../../components/utils/DeleteInputContainer';
 import { pageRoute } from '../../enums';
 import { recipeCreateAction } from '../../redux/actions/recipeActions';
 import styles from '../../styles/pages/recipeCreate.module.scss';
@@ -109,11 +105,11 @@ const RecipeCreate = () => {
     return (
         <div data-testid='recipeCreate' className={styles.container}>
             <form onSubmit={(e) => onSubmit(e)} className={styles.form}>
-                {GeneralSection({ onChangeImage, photoMainBlob, onChangeText, title, description, cookTime, serving })}
+                {GeneralForm({ onChangeImage, photoMainBlob, onChangeText, title, description, cookTime, serving })}
                 <UiSectionSeparator />
-                {InstructionSection({ onChangeText, instruction, setFormData, instructionList, inputId, modifiedText })}
+                {InstructionForm({ onChangeText, instruction, setFormData, instructionList, inputId, modifiedText })}
                 <UiSectionSeparator />
-                {IngredientSection({ onChangeText, ingredient, setFormData, ingredientList, inputId, modifiedText })}
+                {IngredientForm({ onChangeText, ingredient, setFormData, ingredientList, inputId, modifiedText })}
                 <UiSectionSeparator />
                 <button type='submit' className={styles.create_button}>
                     Create Recipe
