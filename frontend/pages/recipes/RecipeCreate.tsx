@@ -107,9 +107,9 @@ const RecipeCreate = () => {
             <form onSubmit={(e) => onSubmit(e)} className={styles.form}>
                 {GeneralForm({ onChangeImage, photoMainBlob, onChangeText, title, description, cookTime, serving })}
                 <UiSectionSeparator />
-                {InstructionForm({ onChangeText, instruction, setFormData, instructionList, inputId, modifiedText })}
-                <UiSectionSeparator />
                 {IngredientForm({ onChangeText, ingredient, setFormData, ingredientList, inputId, modifiedText })}
+                <UiSectionSeparator />
+                {InstructionForm({ onChangeText, instruction, setFormData, instructionList, inputId, modifiedText })}
                 <UiSectionSeparator />
                 <button type='submit' className={styles.create_button}>
                     Create Recipe

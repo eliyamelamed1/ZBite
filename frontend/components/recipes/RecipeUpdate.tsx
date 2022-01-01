@@ -80,8 +80,8 @@ const RecipeUpdate: React.FC<{ id: string }> = ({ id }) => {
             const ingredientsTextList = ingredientList.map((ingredient) => ingredient.text);
             const instructionsTextList = instructionList.map((instruction) => instruction.text);
 
-            if (ingredientsTextList.length === 0 || instructionsTextList.length === 0)
-                return toast.error('ingredients / instructions is not allowed to be empty');
+            if (ingredientsTextList.length === 0) return toast.error('ingredients is not allowed to be empty');
+            if (instructionsTextList.length === 0) return toast.error('instructions is not allowed to be empty');
 
             dispatch(
                 recipeUpdateAction({
@@ -95,6 +95,7 @@ const RecipeUpdate: React.FC<{ id: string }> = ({ id }) => {
                     instructionsTextList,
                 })
             );
+            setDisplayForm(false);
         } catch {}
     };
     const handleSubmit = async (e) => {
@@ -106,13 +107,14 @@ const RecipeUpdate: React.FC<{ id: string }> = ({ id }) => {
             <h1>Update Recipe</h1>
             {GeneralForm({ onChangeImage, photoMainBlob, onChangeText, title, description, cookTime, serving })}
             <UiSectionSeparator />
-            {InstructionForm({ onChangeText, instruction, setFormData, instructionList, inputId, modifiedText })}
-            <UiSectionSeparator />
             {IngredientForm({ onChangeText, ingredient, setFormData, ingredientList, inputId, modifiedText })}
+            <UiSectionSeparator />
+            {InstructionForm({ onChangeText, instruction, setFormData, instructionList, inputId, modifiedText })}
             <UiSectionSeparator />
             <UiButton reverse={true}>Submit</UiButton>
         </UiPopUp>
     );
+    console.log(displayForm);
 
     return (
         <div data-testid='recipeUpdate'>
