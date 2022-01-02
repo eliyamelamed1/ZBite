@@ -1,4 +1,6 @@
-const mockAxios = jest.genMockFromModule('axios');
+import { AxiosStatic } from 'axios';
+
+const mockAxios = jest.genMockFromModule<AxiosStatic>('axios');
 
 mockAxios.patch = jest.fn();
 mockAxios.delete = jest.fn();
