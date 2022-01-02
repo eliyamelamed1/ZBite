@@ -114,7 +114,6 @@ const RecipeUpdate: React.FC<{ id: string }> = ({ id }) => {
             <UiButton reverse={true}>Submit</UiButton>
         </UiPopUp>
     );
-    console.log(displayForm);
 
     return (
         <div data-testid='recipeUpdate'>

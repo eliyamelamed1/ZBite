@@ -24,6 +24,7 @@ import {
 } from '../types';
 
 import axios from 'axios';
+import axiosInstance from '../../components/utils/axios';
 import { endpointRoute } from '../../enums';
 import { loadLoggedUserDataAction } from './userActions';
 import { toast } from 'react-toastify';
@@ -33,23 +34,10 @@ export const recipeDeleteAction =
     ({ id }) =>
     async (dispatch) => {
         try {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                    Authorization: `Token ${localStorage.getItem('auth_token')}`,
-                },
-            };
-            await axios.delete(endpointRoute(id).recipes.details, config);
+            await axiosInstance.delete(endpointRoute(id).recipes.details);
             toast.success('recipe deleted successfully');
             dispatch({ type: DELETE_RECIPE_SUCCESS });
         } catch (err) {
-            const object = err?.response?.data;
-            if (object) {
-                const key = Object.keys(object)[0];
-                const errorMassage = object[key][0];
-                toast.error(errorMassage);
-            }
             dispatch({ type: DELETE_RECIPE_FAIL });
         }
     };
@@ -74,14 +62,6 @@ export const recipeCreateAction =
     }) =>
     async (dispatch) => {
         try {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                    Authorization: `Token ${localStorage.getItem('auth_token')}`,
-                },
-            };
-
             const formData = new FormData();
 
             formData.append('photo_main', photoMain);
@@ -92,16 +72,10 @@ export const recipeCreateAction =
             ingredientsTextList?.forEach((item) => formData.append('ingredients_text_list', item));
             instructionsTextList?.forEach((item) => formData.append('instructions_text_list', item));
 
-            await axios.post(endpointRoute().recipes.create, formData, config);
+            await axiosInstance.post(endpointRoute().recipes.create, formData);
             toast.success('recipe created successfully');
             dispatch({ type: CREATE_RECIPE_SUCCESS });
         } catch (err) {
-            const object = err?.response?.data;
-            if (object) {
-                const key = Object.keys(object)[0];
-                const errorMassage = object[key][0];
-                toast.error(errorMassage);
-            }
             dispatch({ type: CREATE_RECIPE_FAIL });
         }
     };
@@ -109,14 +83,6 @@ export const recipeCreateAction =
 export const recipeUpdateAction =
     ({ id, photoMain, title, description, serving, cookTime, ingredientsTextList, instructionsTextList }) =>
     async (dispatch) => {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-
-                Authorization: `Token ${localStorage.getItem('auth_token')}`,
-            },
-        };
         try {
             const formData = new FormData();
 
@@ -127,80 +93,36 @@ export const recipeUpdateAction =
             formData.append('serving', serving);
             ingredientsTextList?.forEach((item) => formData.append('ingredients_text_list', item));
             instructionsTextList?.forEach((item) => formData.append('instructions_text_list', item));
-            const res = await axios.patch(endpointRoute(id).recipes.details, formData, config);
+            const res = await axiosInstance.patch(endpointRoute(id).recipes.details, formData);
 
             toast.success('recipe updated successfully');
             dispatch({ type: UPDATE_RECIPE_SUCCESS, payload: res.data });
         } catch (err) {
-            const object = err?.response?.data;
-            if (object) {
-                const key = Object.keys(object)[0];
-                const errorMassage = object[key][0];
-                toast.error(errorMassage);
-            }
             dispatch({ type: UPDATE_RECIPE_FAIL });
         }
     };
 
 export const loadTrendingRecipesAction = () => async (dispatch) => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-        },
-    };
     try {
-        const res = await axios.get(endpointRoute().recipes.trending, config);
+        const res = await axiosInstance.get(endpointRoute().recipes.trending);
         dispatch({ type: GET_TRENDING_RECIPE_LIST_SUCCESS, payload: res.data });
     } catch (err) {
-        const object = err?.response?.data;
-        if (object) {
-            const key = Object.keys(object)[0];
-            const errorMassage = object[key][0];
-            toast.error(errorMassage);
-        }
         dispatch({ type: GET_TRENDING_RECIPE_LIST_FAIL });
     }
 };
 export const loadFollowedRecipesAction = () => async (dispatch) => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-            Authorization: `Token ${localStorage.getItem('auth_token')}`,
-        },
-    };
     try {
-        const res = await axios.get(endpointRoute().recipes.followed, config);
+        const res = await axiosInstance.get(endpointRoute().recipes.followed);
         dispatch({ type: GET_FOLLOWED_RECIPE_LIST_SUCCESS, payload: res.data });
     } catch (err) {
-        const object = err?.response?.data;
-        if (object) {
-            const key = Object.keys(object)[0];
-            const errorMassage = object[key][0];
-            toast.error(errorMassage);
-        }
         dispatch({ type: GET_FOLLOWED_RECIPE_LIST_FAIL });
     }
 };
 export const loadSavedRecipesAction = () => async (dispatch) => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-            Authorization: `Token ${localStorage.getItem('auth_token')}`,
-        },
-    };
     try {
-        const res = await axios.get(endpointRoute().recipes.saved_recipes, config);
+        const res = await axiosInstance.get(endpointRoute().recipes.saved_recipes);
         dispatch({ type: GET_SAVED_RECIPE_LIST_SUCCESS, payload: res.data });
     } catch (err) {
-        const object = err?.response?.data;
-        if (object) {
-            const key = Object.keys(object)[0];
-            const errorMassage = object[key][0];
-            toast.error(errorMassage);
-        }
         dispatch({ type: GET_SAVED_RECIPE_LIST_FAIL });
     }
 };
@@ -208,23 +130,10 @@ export const loadSavedRecipesAction = () => async (dispatch) => {
 export const loadRecipeDetailsAction =
     ({ id }) =>
     async (dispatch) => {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
-        };
-
         try {
-            const res = await axios.get(endpointRoute(id).recipes.details, config);
+            const res = await axiosInstance.get(endpointRoute(id).recipes.details);
             dispatch({ type: GET_RECIPE_DETAILS_SUCCESS, payload: res.data });
         } catch (err) {
-            const object = err?.response?.data;
-            if (object) {
-                const key = Object.keys(object)[0];
-                const errorMassage = object[key][0];
-                toast.error(errorMassage);
-            }
             dispatch({ type: GET_RECIPE_DETAILS_FAIL });
         }
     };
@@ -233,30 +142,17 @@ export const reviewCreateAction =
     ({ recipeId, stars, comment = '', image = '' }) =>
     async (dispatch) => {
         try {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                    Authorization: `Token ${localStorage.getItem('auth_token')}`,
-                },
-            };
             const body = JSON.stringify({
                 recipe: recipeId,
                 stars,
                 comment,
                 image,
             });
-            await axios.post(endpointRoute().reviews.create, body, config);
+            await axiosInstance.post(endpointRoute().reviews.create, body);
             toast.success('review created successfully');
             dispatch({ type: REVIEW_CREATE_SUCCESS });
             await dispatch(reviewsInRecipeAction({ recipeId }));
         } catch (err) {
-            const object = err?.response?.data;
-            if (object) {
-                const key = Object.keys(object)[0];
-                const errorMassage = object[key][0];
-                toast.error(errorMassage);
-            }
             dispatch({ type: REVIEW_CREATE_FAIL });
         }
     };
@@ -265,24 +161,11 @@ export const reviewDeleteAction =
     ({ reviewId, recipeId }) =>
     async (dispatch) => {
         try {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                    Authorization: `Token ${localStorage.getItem('auth_token')}`,
-                },
-            };
-            await axios.delete(endpointRoute(reviewId).reviews.delete, config);
+            await axiosInstance.delete(endpointRoute(reviewId).reviews.delete);
             toast.success('review deleted successfully');
             dispatch({ type: REVIEW_DELETE_SUCCESS });
             dispatch(reviewsInRecipeAction({ recipeId }));
         } catch (err) {
-            const object = err?.response?.data;
-            if (object) {
-                const key = Object.keys(object)[0];
-                const errorMassage = object[key][0];
-                toast.error(errorMassage);
-            }
             dispatch({ type: REVIEW_DELETE_FAIL });
         }
     };
@@ -291,25 +174,13 @@ export const reviewsInRecipeAction =
     ({ recipeId }) =>
     async (dispatch) => {
         try {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                },
-            };
             const body = JSON.stringify({
                 recipe: recipeId,
             });
-            const res = await axios.post(endpointRoute().reviews.reviews_in_recipe, body, config);
+            const res = await axiosInstance.post(endpointRoute().reviews.reviews_in_recipe, body);
             dispatch({ type: REVIEWS_IN_RECIPE_SUCCESS, payload: res.data });
             await dispatch(loadRecipeDetailsAction({ id: recipeId }));
         } catch (err) {
-            const object = err?.response?.data;
-            if (object) {
-                const key = Object.keys(object)[0];
-                const errorMassage = object[key][0];
-                toast.error(errorMassage);
-            }
             dispatch({ type: REVIEWS_IN_RECIPE_FAIL });
         }
     };
@@ -319,26 +190,13 @@ export const saveRecipeAction =
     ({ recipeId }) =>
     async (dispatch) => {
         try {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                    Authorization: `Token ${localStorage.getItem('auth_token')}`,
-                },
-            };
             const body = JSON.stringify({ recipe: recipeId });
-            await axios.post(endpointRoute().recipes.save, body, config);
+            await axiosInstance.post(endpointRoute().recipes.save, body);
             toast.success('updated saved recipes successfully');
             await dispatch({ type: SAVE_UNSAVE_ACTION_SUCCESS });
             await dispatch(loadRecipeDetailsAction({ id: recipeId }));
             await dispatch(loadLoggedUserDataAction());
         } catch (err) {
-            const object = err?.response?.data;
-            if (object) {
-                const key = Object.keys(object)[0];
-                const errorMassage = object[key][0];
-                toast.error(errorMassage);
-            }
             dispatch({ type: SAVE_UNSAVE_ACTION_FAIL });
         }
     };

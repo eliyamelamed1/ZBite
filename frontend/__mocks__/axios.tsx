@@ -1,4 +1,9 @@
-exports.post = jest.fn();
-exports.get = jest.fn();
-exports.patch = jest.fn();
-exports.delete = jest.fn();
+const mockAxios = jest.genMockFromModule('axios');
+
+mockAxios.patch = jest.fn();
+mockAxios.delete = jest.fn();
+mockAxios.post = jest.fn();
+mockAxios.get = jest.fn();
+mockAxios.create = jest.fn(() => mockAxios);
+
+export default mockAxios;

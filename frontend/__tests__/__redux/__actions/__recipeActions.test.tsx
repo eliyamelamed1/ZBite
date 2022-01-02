@@ -18,6 +18,7 @@ import axios from 'axios';
 import { cleanup } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 import { endpointRoute } from '../../../enums';
+import mockAxios from '../../../__mocks__/axios';
 import thunk from 'redux-thunk';
 
 const middlewares = [thunk];
@@ -27,7 +28,7 @@ const store = mockStore(initialState);
 
 localStorage.setItem('auth_token', 'tokenValue');
 
-jest.mock('axios');
+// jest.mock('axios');
 
 const parameters = {
     title: 'title',
@@ -45,21 +46,6 @@ const parameters = {
     instructionsImageList: [new File(['instructionImage'], 'instructionImage.txt')],
 };
 
-const config = {
-    headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-    },
-};
-
-const configWithAuthToken = {
-    headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        Authorization: `Token ${localStorage.getItem('auth_token')}`,
-    },
-};
-
 describe('axios request should match url endpoint, and parameters', () => {
     beforeEach(() => {
         cleanup();
@@ -71,9 +57,8 @@ describe('axios request should match url endpoint, and parameters', () => {
 
         store.dispatch(recipeDeleteAction({ id }));
 
-        expect(axios.delete.mock.calls.length).toBe(1);
-        expect(axios.delete.mock.calls[0][0]).toStrictEqual(endpointUrl);
-        expect(axios.delete.mock.calls[0][1]).toStrictEqual(configWithAuthToken);
+        expect(mockAxios.delete.mock.calls.length).toBe(1);
+        expect(mockAxios.delete.mock.calls[0][0]).toStrictEqual(endpointUrl);
     });
     test('recipeCreateAction', () => {
         const { photoMain, title, description, cookTime, serving, ingredientsTextList, instructionsTextList } =
@@ -90,10 +75,10 @@ describe('axios request should match url endpoint, and parameters', () => {
             })
         );
 
-        expect(axios.post.mock.calls.length).toBe(1);
-        expect(axios.post.mock.calls[0][0]).toStrictEqual(endpointRoute().recipes.create);
+        expect(mockAxios.post.mock.calls.length).toBe(1);
+        expect(mockAxios.post.mock.calls[0][0]).toStrictEqual(endpointRoute().recipes.create);
 
-        const formData = axios.post.mock.calls[0][1];
+        const formData = mockAxios.post.mock.calls[0][1];
         expect(formData.get('photo_main')).toStrictEqual(photoMain);
         expect(formData.get('title')).toStrictEqual(title);
         expect(formData.get('description')).toStrictEqual(description);
@@ -101,8 +86,6 @@ describe('axios request should match url endpoint, and parameters', () => {
         expect(formData.get('serving')).toStrictEqual(serving);
         expect(formData.getAll('ingredients_text_list')).toEqual(ingredientsTextList);
         expect(formData.getAll('instructions_text_list')).toEqual(instructionsTextList);
-
-        expect(axios.post.mock.calls[0][2]).toStrictEqual(configWithAuthToken);
     });
     test('recipeUpdateAction', () => {
         const { id, photoMain, title, description, cookTime, serving, ingredientsTextList, instructionsTextList } =
@@ -122,10 +105,10 @@ describe('axios request should match url endpoint, and parameters', () => {
             })
         );
 
-        expect(axios.patch.mock.calls.length).toBe(1);
-        expect(axios.patch.mock.calls[0][0]).toStrictEqual(endpointUrl);
+        expect(mockAxios.patch.mock.calls.length).toBe(1);
+        expect(mockAxios.patch.mock.calls[0][0]).toStrictEqual(endpointUrl);
 
-        const formData = axios.patch.mock.calls[0][1];
+        const formData = mockAxios.patch.mock.calls[0][1];
         expect(formData.get('photo_main')).toStrictEqual(photoMain);
         expect(formData.get('title')).toStrictEqual(title);
         expect(formData.get('description')).toStrictEqual(description);
@@ -133,29 +116,24 @@ describe('axios request should match url endpoint, and parameters', () => {
         expect(formData.get('serving')).toStrictEqual(serving);
         expect(formData.getAll('ingredients_text_list')).toEqual(ingredientsTextList);
         expect(formData.getAll('instructions_text_list')).toEqual(instructionsTextList);
-
-        expect(axios.patch.mock.calls[0][2]).toStrictEqual(configWithAuthToken);
     });
     test('loadTrendingRecipesAction', () => {
         store.dispatch(loadTrendingRecipesAction());
 
-        expect(axios.get.mock.calls.length).toBe(1);
-        expect(axios.get.mock.calls[0][0]).toStrictEqual(endpointRoute().recipes.trending);
-        expect(axios.get.mock.calls[0][1]).toStrictEqual(config);
+        expect(mockAxios.get.mock.calls.length).toBe(1);
+        expect(mockAxios.get.mock.calls[0][0]).toStrictEqual(endpointRoute().recipes.trending);
     });
     test('loadFollowedRecipesAction', () => {
         store.dispatch(loadFollowedRecipesAction());
 
-        expect(axios.get.mock.calls.length).toBe(1);
-        expect(axios.get.mock.calls[0][0]).toStrictEqual(endpointRoute().recipes.followed);
-        expect(axios.get.mock.calls[0][1]).toStrictEqual(configWithAuthToken);
+        expect(mockAxios.get.mock.calls.length).toBe(1);
+        expect(mockAxios.get.mock.calls[0][0]).toStrictEqual(endpointRoute().recipes.followed);
     });
     test('loadSavedRecipesAction', () => {
         store.dispatch(loadSavedRecipesAction());
 
-        expect(axios.get.mock.calls.length).toBe(1);
-        expect(axios.get.mock.calls[0][0]).toStrictEqual(endpointRoute().recipes.saved_recipes);
-        expect(axios.get.mock.calls[0][1]).toStrictEqual(configWithAuthToken);
+        expect(mockAxios.get.mock.calls.length).toBe(1);
+        expect(mockAxios.get.mock.calls[0][0]).toStrictEqual(endpointRoute().recipes.saved_recipes);
     });
 
     test('loadRecipeDetailsAction', () => {
@@ -163,9 +141,8 @@ describe('axios request should match url endpoint, and parameters', () => {
         const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}/`;
         store.dispatch(loadRecipeDetailsAction({ id }));
 
-        expect(axios.get.mock.calls.length).toBe(1);
-        expect(axios.get.mock.calls[0][0]).toStrictEqual(endpointUrl);
-        expect(axios.get.mock.calls[0][1]).toStrictEqual(config);
+        expect(mockAxios.get.mock.calls.length).toBe(1);
+        expect(mockAxios.get.mock.calls[0][0]).toStrictEqual(endpointUrl);
     });
     test('reviewCreateAction', () => {
         const { id, stars, comment, image } = parameters;
@@ -174,10 +151,9 @@ describe('axios request should match url endpoint, and parameters', () => {
 
         store.dispatch(reviewCreateAction({ recipeId: id, stars, comment, image }));
 
-        expect(axios.post.mock.calls.length).toBe(1);
-        expect(axios.post.mock.calls[0][0]).toBe(endpointUrl);
-        expect(axios.post.mock.calls[0][1]).toBe(body);
-        expect(axios.post.mock.calls[0][2]).toStrictEqual(configWithAuthToken);
+        expect(mockAxios.post.mock.calls.length).toBe(1);
+        expect(mockAxios.post.mock.calls[0][0]).toBe(endpointUrl);
+        expect(mockAxios.post.mock.calls[0][1]).toBe(body);
         // test dispatch reviewsInRecipeAction({recipeId})
     });
     test('reviewDeleteAction', () => {
@@ -186,9 +162,9 @@ describe('axios request should match url endpoint, and parameters', () => {
 
         store.dispatch(reviewDeleteAction({ reviewId, recipeId: id }));
 
-        expect(axios.delete.mock.calls.length).toBe(1);
-        expect(axios.delete.mock.calls[0][0]).toBe(endpointUrl);
-        expect(axios.delete.mock.calls[0][1]).toStrictEqual(configWithAuthToken);
+        expect(mockAxios.delete.mock.calls.length).toBe(1);
+        expect(mockAxios.delete.mock.calls[0][0]).toBe(endpointUrl);
+
         // test dispatch reviewsInRecipeAction({recipeId})
     });
     test('reviewsInRecipeAction', () => {
@@ -198,10 +174,9 @@ describe('axios request should match url endpoint, and parameters', () => {
 
         store.dispatch(reviewsInRecipeAction({ recipeId: id }));
 
-        expect(axios.post.mock.calls.length).toBe(1);
-        expect(axios.post.mock.calls[0][0]).toBe(endpointUrl);
-        expect(axios.post.mock.calls[0][1]).toStrictEqual(body);
-        expect(axios.post.mock.calls[0][2]).toStrictEqual(config);
+        expect(mockAxios.post.mock.calls.length).toBe(1);
+        expect(mockAxios.post.mock.calls[0][0]).toBe(endpointUrl);
+        expect(mockAxios.post.mock.calls[0][1]).toStrictEqual(body);
     });
     test('saveRecipeAction', () => {
         const recipeId = parameters.id;
@@ -210,9 +185,8 @@ describe('axios request should match url endpoint, and parameters', () => {
 
         store.dispatch(saveRecipeAction({ recipeId }));
 
-        expect(axios.post.mock.calls.length).toBe(1);
-        expect(axios.post.mock.calls[0][0]).toBe(endpointUrl);
-        expect(axios.post.mock.calls[0][1]).toBe(body);
-        expect(axios.post.mock.calls[0][2]).toEqual(configWithAuthToken);
+        expect(mockAxios.post.mock.calls.length).toBe(1);
+        expect(mockAxios.post.mock.calls[0][0]).toBe(endpointUrl);
+        expect(mockAxios.post.mock.calls[0][1]).toBe(body);
     });
 });

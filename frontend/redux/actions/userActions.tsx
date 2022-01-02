@@ -24,7 +24,7 @@ import {
     UPDATE_USER_SUCCESS,
 } from '../types';
 
-import axios from 'axios';
+import axiosInstance from '../../components/utils/axios';
 import { endpointRoute } from '../../enums';
 import { toast } from 'react-toastify';
 
@@ -39,26 +39,13 @@ export const followUserAction =
     ({ user_to_follow }) =>
     async (dispatch) => {
         try {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                    Authorization: `Token ${localStorage.getItem('auth_token')}`,
-                },
-            };
             const body = JSON.stringify({ user_to_follow });
-            await axios.post(endpointRoute().users.followUser, body, config);
+            await axiosInstance.post(endpointRoute().users.followUser, body);
             toast.success('updated users followed successfully');
             await dispatch(loadUserDetailsAction({ id: user_to_follow }));
             await dispatch(loadLoggedUserDataAction());
             await dispatch({ type: FOLLOW_UNFOLLOW_USER_SUCCESS });
         } catch (err) {
-            const object = err?.response?.data;
-            if (object) {
-                const key = Object.keys(object)[0];
-                const errorMassage = object[key][0];
-                toast.error(errorMassage);
-            }
             dispatch({ type: FOLLOW_UNFOLLOW_USER_FAIL });
         }
     };
@@ -66,22 +53,10 @@ export const followUserAction =
 export const loadUserDetailsAction =
     ({ id }) =>
     async (dispatch) => {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
-        };
         try {
-            const res = await axios.get(endpointRoute(id).users.details, config);
+            const res = await axiosInstance.get(endpointRoute(id).users.details);
             dispatch({ type: GET_USER_DETAILS_SUCCESS, payload: res.data });
         } catch (err) {
-            const object = err?.response?.data;
-            if (object) {
-                const key = Object.keys(object)[0];
-                const errorMassage = object[key][0];
-                toast.error(errorMassage);
-            }
             dispatch({ type: GET_USER_DETAILS_FAIL });
         }
     };
@@ -90,28 +65,14 @@ export const userUpdateAction =
     ({ id, email, name }) =>
     async (dispatch) => {
         try {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-
-                    Authorization: `Token ${localStorage.getItem('auth_token')}`,
-                },
-            };
             const body = JSON.stringify({
                 email,
                 name,
             });
-            const res = await axios.patch(endpointRoute(id).users.details, body, config);
+            const res = await axiosInstance.patch(endpointRoute(id).users.details, body);
             toast.success('user updated successfully');
             dispatch({ type: UPDATE_USER_SUCCESS, payload: res.data });
         } catch (err) {
-            const object = err?.response?.data;
-            if (object) {
-                const key = Object.keys(object)[0];
-                const errorMassage = object[key][0];
-                toast.error(errorMassage);
-            }
             dispatch({ type: UPDATE_USER_FAIL });
         }
     };
@@ -121,24 +82,11 @@ export const userDeleteAction =
     ({ id }) =>
     async (dispatch) => {
         try {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                    Authorization: `Token ${localStorage.getItem('auth_token')}`,
-                },
-            };
-            const res = await axios.delete(endpointRoute(id).users.details, config);
+            const res = await axiosInstance.delete(endpointRoute(id).users.details);
             toast.success('user deleted successfully');
             dispatch({ type: DELETE_USER_SUCCESS, payload: res.data });
             dispatch(logoutAction());
         } catch (err) {
-            const object = err?.response?.data;
-            if (object) {
-                const key = Object.keys(object)[0];
-                const errorMassage = object[key][0];
-                toast.error(errorMassage);
-            }
             dispatch({ type: DELETE_USER_FAIL });
         }
     };
@@ -146,20 +94,9 @@ export const userDeleteAction =
 // load the the details of the connects user loadLoggedUserDataAction
 export const loadLoggedUserDataAction = () => async (dispatch) => {
     try {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-                Authorization: `Token ${localStorage.getItem('auth_token')}`,
-            },
-        };
-        const res = await axios.get(endpointRoute().users.loggedUserData, config);
+        const res = await axiosInstance.get(endpointRoute().users.loggedUserData);
         dispatch({ type: GET_LOGGED_USER_DETAILS_SUCCESS, payload: res.data });
     } catch (err) {
-        const object = err?.response?.data;
-        const key = Object.keys(object)[0];
-        const errorMassage = object[key][0];
-        toast.error(errorMassage);
         dispatch({ type: GET_LOGGED_USER_DETAILS_FAIL });
     }
 };
@@ -167,40 +104,20 @@ export const loadLoggedUserDataAction = () => async (dispatch) => {
 export const loginAction =
     ({ email, password }) =>
     async (dispatch) => {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
-        };
-
         const body = JSON.stringify({ email, password });
 
         try {
-            const res = await axios.post(endpointRoute().users.login, body, config);
+            const res = await axiosInstance.post(endpointRoute().users.login, body);
             toast.success('login completed, redirected to home page');
             await dispatch({ type: LOGIN_SUCCESS, payload: res.data });
             await dispatch(loadLoggedUserDataAction());
         } catch (err) {
-            const object = err?.response?.data;
-            if (object) {
-                const key = Object.keys(object)[0];
-                const errorMassage = object[key][0];
-                toast.error(errorMassage);
-            }
             dispatch({ type: LOGIN_FAIL });
         }
     };
 export const signupAction =
     ({ name, email, password, re_password }) =>
     async (dispatch) => {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
-        };
-
         const body = JSON.stringify({
             name,
             email,
@@ -209,16 +126,10 @@ export const signupAction =
         });
 
         try {
-            const res = await axios.post(endpointRoute().users.signup, body, config);
+            const res = await axiosInstance.post(endpointRoute().users.signup, body);
             toast.success('registration completed, redirected to login page');
             dispatch({ type: SIGNUP_SUCCESS, payload: res.data });
         } catch (err) {
-            const object = err?.response?.data;
-            if (object) {
-                const key = Object.keys(object)[0];
-                const errorMassage = object[key][0];
-                toast.error(errorMassage);
-            }
             dispatch({ type: SIGNUP_FAIL });
         }
     };
@@ -227,26 +138,13 @@ export const signupAction =
 export const userActivateAction =
     ({ uid, token }) =>
     async (dispatch) => {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
-        };
-
         const body = JSON.stringify({ uid, token });
 
         try {
-            const res = await axios.post(endpointRoute().users.activate, body, config);
+            const res = await axiosInstance.post(endpointRoute().users.activate, body);
             toast.success('user activated successfully');
             dispatch({ type: ACTIVATION_SUCCESS, payload: res.data });
         } catch (err) {
-            const object = err?.response?.data;
-            if (object) {
-                const key = Object.keys(object)[0];
-                const errorMassage = object[key][0];
-                toast.error(errorMassage);
-            }
             dispatch({ type: ACTIVATION_FAIL });
         }
     };
@@ -254,26 +152,13 @@ export const userActivateAction =
 export const resetPasswordAction =
     ({ email }) =>
     async (dispatch) => {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
-        };
-
         const body = JSON.stringify({ email });
 
         try {
-            const res = await axios.post(endpointRoute().users.resetPassword, body, config);
+            const res = await axiosInstance.post(endpointRoute().users.resetPassword, body);
             toast.success('email sent successfully');
             dispatch({ type: RESET_PASSWORD_SUCCESS, payload: res.data });
         } catch (err) {
-            const object = err?.response?.data;
-            if (object) {
-                const key = Object.keys(object)[0];
-                const errorMassage = object[key][0];
-                toast.error(errorMassage);
-            }
             dispatch({ type: RESET_PASSWORD_FAIL });
         }
     };
@@ -282,28 +167,15 @@ export const resetPasswordConfirmAction =
     ({ uid, token, new_password }) =>
     async (dispatch) => {
         try {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                },
-            };
-
             const body = JSON.stringify({
                 uid,
                 token,
                 new_password,
             });
-            const res = await axios.post(endpointRoute().users.resetPasswordConfirm, body, config);
+            const res = await axiosInstance.post(endpointRoute().users.resetPasswordConfirm, body);
             toast.success('password reset completed successfully');
             dispatch({ type: RESET_PASSWORD_CONFIRM_SUCCESS, payload: res.data });
         } catch (err) {
-            const object = err?.response?.data;
-            if (object) {
-                const key = Object.keys(object)[0];
-                const errorMassage = object[key][0];
-                toast.error(errorMassage);
-            }
             dispatch({ type: RESET_PASSWORD_CONFIRM_FAIL });
         }
     };
@@ -314,20 +186,10 @@ export const logoutAction = () => async (dispatch) => {
 };
 
 export const loadLeaderboardAction = () => async (dispatch) => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-        },
-    };
     try {
-        const res = await axios.get(endpointRoute().users.leaderboard, config);
+        const res = await axiosInstance.get(endpointRoute().users.leaderboard);
         dispatch({ type: LOAD_LEADERBOARD_SUCCESS, payload: res.data });
     } catch (err) {
-        const object = err?.response?.data;
-        const key = Object.keys(object)[0];
-        const errorMassage = object[key][0];
-        toast.error(errorMassage);
         dispatch({ type: LOAD_LEADERBOARD_FAIL });
     }
 };
