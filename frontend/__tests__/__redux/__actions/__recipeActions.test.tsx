@@ -28,8 +28,6 @@ const store = mockStore(initialState);
 
 localStorage.setItem('auth_token', 'tokenValue');
 
-// jest.mock('axios');
-
 const parameters = {
     title: 'title',
     description: 'description',
