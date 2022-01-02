@@ -3,6 +3,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import Router from 'next/router';
+import UiButton from '../ui/UiButton';
 import { pageRoute } from '../../enums';
 import { recipeDeleteAction } from '../../redux/actions/recipeActions';
 import { useDispatch } from 'react-redux';
@@ -20,8 +21,8 @@ const RecipeDelete: React.FC<{ id: string }> = ({ id }) => {
 
     return (
         <div data-testid='recipeDelete'>
-            <form onSubmit={(e) => onSubmit(e)}>
-                <button type='submit'>delete Recipe</button>
+            <form onSubmit={onSubmit}>
+                <UiButton reverse={false}>delete Recipe</UiButton>
             </form>
         </div>
     );

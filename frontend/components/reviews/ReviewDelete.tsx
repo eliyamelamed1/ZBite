@@ -14,8 +14,8 @@ const ReviewDelete: React.FC<{ reviewId: string; recipeId: string }> = ({ review
 
     return (
         <div data-testid='reviewDelete'>
-            <form onSubmit={(e) => onSubmit(e)}>
-                <button type='submit'>delete</button>
+            <form onSubmit={onSubmit}>
+                <button type='submit'>delete review</button>
             </form>
         </div>
     );

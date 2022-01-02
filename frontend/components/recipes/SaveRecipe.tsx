@@ -32,7 +32,7 @@ const SaveRecipe: React.FC<{ recipeId: string }> = ({ recipeId }) => {
         } catch {}
     };
     const authLinks = (
-        <form onSubmit={(e) => onSubmit(e)}>
+        <form onSubmit={onSubmit}>
             <UiButton reverse={false}>{button}</UiButton>
         </form>
     );

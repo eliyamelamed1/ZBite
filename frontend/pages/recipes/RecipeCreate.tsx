@@ -104,7 +104,7 @@ const RecipeCreate = () => {
 
     return (
         <div data-testid='recipeCreate' className={styles.container}>
-            <form onSubmit={(e) => onSubmit(e)} className={styles.form}>
+            <form onSubmit={onSubmit} className={styles.form}>
                 {GeneralForm({ onChangeImage, photoMainBlob, onChangeText, title, description, cookTime, serving })}
                 <UiSectionSeparator />
                 {IngredientForm({ onChangeText, ingredient, setFormData, ingredientList, inputId, modifiedText })}

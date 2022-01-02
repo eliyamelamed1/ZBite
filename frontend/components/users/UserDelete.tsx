@@ -18,7 +18,7 @@ const UserDelete: React.FC<{ id: string }> = ({ id }) => {
     // add permissions
     return (
         <main data-testid='userDelete'>
-            <form onSubmit={(e) => onSubmit(e)}>
+            <form onSubmit={onSubmit}>
                 <button type='submit'>delete user</button>
             </form>
         </main>

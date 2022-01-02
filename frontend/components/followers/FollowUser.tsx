@@ -27,7 +27,7 @@ const FollowUser: React.FC<{ userToFollow: string }> = ({ userToFollow }) => {
     };
 
     const authLinks = (
-        <form onSubmit={(e) => onSubmit(e)}>
+        <form onSubmit={onSubmit}>
             <button className={styles.follow_button}>{button}</button>
         </form>
     );

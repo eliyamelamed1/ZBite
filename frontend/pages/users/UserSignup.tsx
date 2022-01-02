@@ -53,7 +53,7 @@ const UserSignup = () => {
             </div>
             <section className={styles.content_section}>
                 <h1 className={styles.create_account_title}>Create An Account</h1>
-                <form onSubmit={(e) => onSubmit(e)} className={styles.signup_form}>
+                <form onSubmit={onSubmit} className={styles.signup_form}>
                     <input
                         type='text'
                         placeholder='Full Name'

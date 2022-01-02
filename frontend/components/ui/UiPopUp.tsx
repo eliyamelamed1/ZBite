@@ -12,7 +12,7 @@ interface DataTypes {
 
 const UiPopUp = ({ onSubmit, children, className = null, setDisplayForm }) => {
     return (
-        <form className={`${styles.form} ${className}`} onSubmit={(e) => onSubmit(e)}>
+        <form className={`${styles.form} ${className}`} onSubmit={onSubmit}>
             <i onClick={() => setDisplayForm(false)}>
                 {closeIcon.src && <Image src={closeIcon.src} alt='logo icon' height={100} width={100} />}
             </i>

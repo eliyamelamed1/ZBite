@@ -27,7 +27,7 @@ const UserUpdate: React.FC<{ id: string }> = ({ id }) => {
 
     return (
         <div data-testid='userUpdate'>
-            <form onSubmit={(e) => onSubmit(e)}>
+            <form onSubmit={onSubmit}>
                 <div>
                     <input
                         type='text'

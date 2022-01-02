@@ -39,7 +39,7 @@ const UserLogin = () => {
             </div>
             <section className={styles.content_section}>
                 <h1 className={styles.log_in_to_your_account_title}>Log in to your account</h1>
-                <form onSubmit={(e) => onSubmit(e)} className={styles.login_form}>
+                <form onSubmit={onSubmit} className={styles.login_form}>
                     <input
                         type='email'
                         placeholder='Email'
