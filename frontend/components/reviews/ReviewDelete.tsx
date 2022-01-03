@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import UiButton from '../ui/UiButton';
 import { reviewDeleteAction } from '../../redux/actions/recipeActions';
+import styles from '../../styles/components/reviewCard.module.scss';
 import { useDispatch } from 'react-redux';
 
 const ReviewDelete: React.FC<{ reviewId: string; recipeId: string }> = ({ reviewId, recipeId }) => {
@@ -13,16 +15,12 @@ const ReviewDelete: React.FC<{ reviewId: string; recipeId: string }> = ({ review
     };
 
     return (
-        <div data-testid='reviewDelete'>
-            <form onSubmit={onSubmit}>
-                <button type='submit'>delete review</button>
+        <>
+            <form onSubmit={onSubmit} className={styles.delete_button}>
+                <UiButton reverse={true}>delete review</UiButton>
             </form>
-        </div>
+        </>
     );
-};
-
-ReviewDelete.propTypes = {
-    reviewId: PropTypes.string.isRequired,
 };
 
 export default ReviewDelete;

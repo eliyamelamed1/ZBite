@@ -35,7 +35,7 @@ export const endpointRoute = (id = String) => ({
         detail: `${process.env.NEXT_PUBLIC_API_URL}/api/instructions/${id}/`,
     },
 });
-export const pageRoute = (id = String) => ({
+export const pageRoute = (id = '') => ({
     home: '/',
     login: '/users/UserLogin',
     signup: '/users/UserSignup',
@@ -79,10 +79,10 @@ export const userParams = {
 };
 
 export const reviewParams = {
-    author: { name: 'authorName', id: 'authorId' },
+    author: { name: 'authorName', id: 'authorId', photo_main: null },
     recipe: 'recipeId',
-    stars: 'starsCount',
+    stars: 5,
     comment: 'commentText',
-    image: '/image',
+    image: null,
     id: 'reviewId',
 };

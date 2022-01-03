@@ -4,7 +4,7 @@ import ReviewCard from './ReviewCard';
 
 interface Review {
     id: string;
-    author: { name: string; id: string; photo_main: File | null };
+    author: { name: string; id: string; photo_main: { src: string } | null };
     comment: string;
     image: File | null;
     stars: string;
@@ -18,7 +18,7 @@ const DisplayReviews = ({ reviewsToDisplay }) => {
             const result = [];
 
             reviewsToDisplay.map((review: Review) => {
-                review.stars = parseInt(review.stars).toFixed(1);
+                review.stars = parseFloat(review.stars).toFixed(1);
 
                 reviewsOnPage.push(
                     <ReviewCard

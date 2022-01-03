@@ -15,9 +15,9 @@ const IsReviewAuthor: React.FC<{ review: Review }> = ({ review }) => {
     const [isAuthor, setIsAuthor] = useState(false);
     const { loggedUserData } = useSelector((state: RootState) => state.userReducer);
     const authorLinks = (
-        <div>
+        <>
             <ReviewDelete reviewId={review.id} recipeId={review.recipe} />
-        </div>
+        </>
     );
 
     useEffect(() => {
@@ -26,7 +26,7 @@ const IsReviewAuthor: React.FC<{ review: Review }> = ({ review }) => {
         }
     }, [loggedUserData, review.author.id]);
 
-    return <div>{isAuthor ? authorLinks : null}</div>;
+    return <>{isAuthor ? authorLinks : null}</>;
 };
 
 export default IsReviewAuthor;

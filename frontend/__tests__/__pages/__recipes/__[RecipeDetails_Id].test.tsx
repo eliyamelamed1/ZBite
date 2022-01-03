@@ -186,14 +186,14 @@ describe('RecipeDetails - recipe of author', () => {
                     recipe: '5',
                     id: '1',
                     author: { id: 'eliya', name: 'name' },
-                    stars: 'updated stars',
+                    stars: '1.2',
                     comment: 'updated comment',
                 },
             ],
         };
         await store.dispatch({ type: TEST_CASE_RECIPE, payload: initialState });
 
-        const updatedStars = await screen.findByText(/updated stars/i);
+        const updatedStars = await screen.findByText(/(1.2)/i);
         expect(updatedStars).toBeInTheDocument();
     });
     test('should not display updated review data of other recipe', async () => {
@@ -289,14 +289,14 @@ describe('RecipeDetails - not the recipe author', () => {
                     recipe: '5',
                     id: '1',
                     author: { id: 'eliya', name: 'name' },
-                    stars: 'updated stars',
+                    stars: '1.2',
                     comment: 'updated comment',
                 },
             ],
         };
         await store.dispatch({ type: TEST_CASE_RECIPE, payload: initialState });
 
-        const updatedStars = await screen.findByText(/updated stars/i);
+        const updatedStars = await screen.findByText(/(1.2)/i);
         expect(updatedStars).toBeInTheDocument();
     });
     test('should no display updated reviewsData of other recipe', async () => {

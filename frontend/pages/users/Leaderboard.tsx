@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import React from 'react';
 import UiCircleImage from '../../components/ui/UiCircleImage';
 import emptyImageIcon from '../../styles/icons/upload_image.svg';

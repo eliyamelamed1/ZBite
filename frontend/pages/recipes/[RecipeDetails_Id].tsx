@@ -63,12 +63,12 @@ const RecipeDetails = (props) => {
 
     const authorLinks = <section>{recipeData ? <IsRecipeAuthor recipe={recipeData} /> : null}</section>;
     return (
-        <div className={styles.main}>
+        <div className={styles.parent}>
             <Head>
                 {recipeData ? <title>ZBite | {`${recipeData.title}`}</title> : <title>ZBite - recipes </title>}
                 <meta name='description' content='recipes detail' />
             </Head>
-            <main data-testid='recipeDetails'>
+            <main className={styles.main} data-testid='recipeDetails'>
                 <section>
                     {recipeData ? (
                         <ul className={styles.recipe_data_container}>
@@ -148,6 +148,7 @@ const RecipeDetails = (props) => {
                     )}
                 </section>
                 <section>{reviewsData ? <DisplayReviews reviewsToDisplay={reviewsData} /> : null}</section>
+                <UiSectionSeparator />
                 <section>{authorLinks}</section>
             </main>
         </div>
