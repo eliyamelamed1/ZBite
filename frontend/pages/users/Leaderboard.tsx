@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
+import UiCircleImage from '../../components/ui/UiCircleImage';
 import emptyImageIcon from '../../styles/icons/upload_image.svg';
 import { loadLeaderboardAction } from '../../redux/actions/userActions';
 import scoreIcon from '../../styles/icons/score-icon.svg';
@@ -29,20 +30,16 @@ const Leaderboard: React.FC<DataTypes> = (props) => {
             {topThreeUsers.map((user, index) => (
                 <div key={index} className={styles.card}>
                     <li>
-                        <section className={styles.image_section}>
+                        <section className={styles.image_container}>
                             {user?.photo_main?.src ? (
-                                <Image src={user?.photo_main?.src} height={100} width={100} alt='profile picture' />
+                                <UiCircleImage src={user?.photo_main?.src} />
                             ) : (
-                                emptyImageIcon.src && (
-                                    <Image src={emptyImageIcon.src} height={100} width={100} alt='profile picture' />
-                                )
+                                emptyImageIcon.src && <UiCircleImage src={emptyImageIcon.src} />
                             )}
                         </section>
                         <span className={styles.full_name}>{user?.name}</span>
                         <section className={styles.score_section}>
-                            {scoreIcon?.src && (
-                                <Image src={scoreIcon?.src} height={100} width={100} alt='profile picture' />
-                            )}
+                            {scoreIcon?.src && <UiCircleImage src={scoreIcon?.src} />}
                             {user?.score ? (
                                 <span className={styles.score_text}>{user?.score}</span>
                             ) : (
@@ -62,17 +59,18 @@ const Leaderboard: React.FC<DataTypes> = (props) => {
                 <li key={index}>
                     <section className={styles.image_name_and_placement_section}>
                         <span className={styles.ranking_placement}>{index + 3}</span>
-                        {user?.photo_main?.src ? (
-                            <Image src={user?.photo_main?.src} height={100} width={100} alt='profile picture' />
-                        ) : (
-                            emptyImageIcon.src && (
-                                <Image src={emptyImageIcon.src} height={100} width={100} alt='profile picture' />
-                            )
-                        )}
+
+                        <section className={styles.image_container}>
+                            {user?.photo_main?.src ? (
+                                <UiCircleImage src={user?.photo_main?.src} />
+                            ) : (
+                                emptyImageIcon.src && <UiCircleImage src={emptyImageIcon.src} />
+                            )}
+                        </section>
                         <span className={styles.full_name}>{user?.name}</span>
                     </section>
                     <section className={styles.score_section}>
-                        {scoreIcon.src && <Image src={scoreIcon.src} height={100} width={100} alt='profile picture' />}
+                        {scoreIcon.src && <UiCircleImage src={scoreIcon.src} />}
                         {user?.score ? (
                             <span className={styles.score_text}>{user?.score}</span>
                         ) : (

@@ -6,7 +6,7 @@ import RecipeCard from './RecipeCard';
 
 interface Recipe {
     id: string;
-    author: { name: string; id: string };
+    author: { name: string; id: string; photo_main: File | null };
     title: string;
     photo_main: string;
     saves: string[];

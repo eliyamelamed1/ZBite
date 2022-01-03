@@ -3,17 +3,34 @@ import IsReviewAuthor from './isReviewAuthor';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import React from 'react';
+import UiStars from '../ui/UiStars';
 import { pageRoute } from '../../enums';
+import styles from '../../styles/components/reviewCard.module.scss';
 
-const ReviewCard = (props) => {
+interface Review {
+    id: string;
+    author: { name: string; id: string; photo_main: File | null };
+    comment: string;
+    image: File | null;
+    stars: number;
+    recipe: string;
+}
+
+const ReviewCard = (props: Review) => {
+    const { author, comment, image, stars, id } = props;
+
     const reviewProps = (
-        <div>
-            <Link href={pageRoute(props?.author?.id).profile} passHref>
-                {props?.author?.name}
-            </Link>
-            <p>{props.stars}</p>
-            {props.comment ? <p>{props.comment}</p> : null}
-            {props.image ? <Image src={props.image} alt='Review Image' height={100} width={100} /> : null}
+        <div className={styles.review_card}>
+            {/* <p>{photo_main}</p> */}
+            <div>
+                <Link href={pageRoute(props?.author?.id).profile} passHref>
+                    {author?.name}
+                </Link>
+            </div>
+            <p>
+                <UiStars starsCount={stars} />
+            </p>
+            {comment ? <p>{props.comment}</p> : null}
         </div>
     );
     return (
@@ -24,15 +41,6 @@ const ReviewCard = (props) => {
             </main>
         </React.Fragment>
     );
-};
-
-ReviewCard.propTypes = {
-    author: PropTypes.object.isRequired,
-    id: PropTypes.string.isRequired,
-    recipe: PropTypes.string.isRequired,
-    stars: PropTypes.string.isRequired,
-    comment: PropTypes.string,
-    image: PropTypes.string,
 };
 
 export default ReviewCard;

@@ -2,13 +2,24 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ReviewCard from './ReviewCard';
 
+interface Review {
+    id: string;
+    author: { name: string; id: string; photo_main: File | null };
+    comment: string;
+    image: File | null;
+    stars: string;
+    recipe: string;
+}
+
 const DisplayReviews = ({ reviewsToDisplay }) => {
     const getReviews = () => {
         if (reviewsToDisplay) {
             const reviewsOnPage = [];
             const result = [];
 
-            reviewsToDisplay.map((review) =>
+            reviewsToDisplay.map((review: Review) => {
+                review.stars = parseInt(review.stars).toFixed(1);
+
                 reviewsOnPage.push(
                     <ReviewCard
                         author={review.author}
@@ -18,8 +29,8 @@ const DisplayReviews = ({ reviewsToDisplay }) => {
                         comment={review.comment}
                         image={review.image}
                     />
-                )
-            );
+                );
+            });
             for (let i = 0; i < reviewsToDisplay.length; i += 1) {
                 result.push(
                     <div key={i}>
