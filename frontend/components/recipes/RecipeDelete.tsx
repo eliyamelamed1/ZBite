@@ -1,12 +1,15 @@
 // TODO - change PropTypes id to .isRequired
 
+import Image from 'next/image';
 import PropTypes from 'prop-types';
 import React from 'react';
-import Router from 'next/router';
 import UiButton from '../ui/UiButton';
+import deleteIcon from '../../styles/icons/delete-input-icon.svg';
 import { pageRoute } from '../../enums';
 import { recipeDeleteAction } from '../../redux/actions/recipeActions';
 import { useDispatch } from 'react-redux';
+
+// import editInput from '../../styles/icons/edit_input.svg';
 
 const RecipeDelete: React.FC<{ id: string }> = ({ id }) => {
     const dispatch = useDispatch();

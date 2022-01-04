@@ -61,9 +61,9 @@ describe('IsRecipeAuthor - not author', () => {
         );
     });
     test('should render without crashing', () => {});
-    test('should render guestLinks', () => {
-        const guestLinks = screen.getByTestId('guestLinks');
-        expect(guestLinks).toBeInTheDocument();
+    test('should not render authorLinks', () => {
+        const authorLinks = screen.queryByTestId('authorLinks');
+        expect(authorLinks).not.toBeInTheDocument();
     });
     test('authorLinks should not contain RecipeUpdate', () => {
         const authorLinks = screen.queryByTestId('recipeUpdate');

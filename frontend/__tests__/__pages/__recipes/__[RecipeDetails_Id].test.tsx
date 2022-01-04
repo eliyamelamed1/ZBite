@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
 
+import * as IsRecipeAuthor from '../../../components/recipes/IsRecipeAuthor';
 import * as ReviewCreate from '../../../components/reviews/ReviewCreate';
 import * as recipeActions from '../../../redux/actions/recipeActions';
 
@@ -16,6 +17,7 @@ import store from '../../../redux/store';
 const loadRecipeDetailsActionSpy = jest.spyOn(recipeActions, 'loadRecipeDetailsAction');
 const reviewsInRecipeActionSpy = jest.spyOn(recipeActions, 'reviewsInRecipeAction');
 const ReviewCreateSpy = jest.spyOn(ReviewCreate, 'default');
+const IsRecipeAuthorSpy = jest.spyOn(IsRecipeAuthor, 'default');
 
 const recipeParams = {
     existingRecipeId: '5',
@@ -136,9 +138,7 @@ describe('RecipeDetails - recipe of author', () => {
         expect(authorLinks).toBeInTheDocument();
     });
     test('authorLinks should contain IsRecipeAuthor component', () => {
-        const isRecipeAuthorTestId = screen.getByTestId('isRecipeAuthor');
-
-        expect(isRecipeAuthorTestId).toBeInTheDocument();
+        expect(IsRecipeAuthorSpy).toHaveBeenCalled();
     });
     test('IsRecipeAuthor should render RecipeUpdate component', () => {
         const recipeUpdateTestId = screen.getByTestId('recipeUpdate');
@@ -264,13 +264,12 @@ describe('RecipeDetails - not the recipe author', () => {
         expect(recipeTitle).toBeInTheDocument();
         expect(recipeDescription).toBeInTheDocument();
     });
-    test('should render guestLinks', () => {
-        const guestLinks = screen.getByTestId('guestLinks');
-        expect(guestLinks).toBeInTheDocument();
+    test('should not render authorLinks', () => {
+        const authorLinks = screen.queryByTestId('authorLinks');
+        expect(authorLinks).not.toBeInTheDocument();
     });
     test('authorLinks should contain IsRecipeAuthor component', () => {
-        const isRecipeAuthorTestId = screen.getByTestId('isRecipeAuthor');
-        expect(isRecipeAuthorTestId).toBeInTheDocument();
+        expect(IsRecipeAuthorSpy).toHaveBeenCalled();
     });
     test('IsRecipeAuthor should not render RecipeUpdate component', () => {
         const recipeUpdateTestId = screen.queryByTestId('recipeUpdate');

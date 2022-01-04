@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import RecipeDelete from './RecipeDelete';
 import RecipeUpdate from './RecipeUpdate';
 import { RootState } from '../../redux/store';
+import styles from '../../styles/components/isRecipeAuthor.module.scss';
 import { useSelector } from 'react-redux';
 
 interface Recipe {
@@ -32,10 +33,8 @@ const IsRecipeAuthor: React.FC<{ recipe: Recipe }> = ({ recipe }) => {
     const { loggedUserData } = useSelector((state: RootState) => state.userReducer);
     console.log(recipe);
 
-    const guestLinks = <div data-testid='guestLinks'>you are not the recipe author </div>;
-
     const authorLinks = (
-        <div data-testid='authorLinks'>
+        <div className={styles.authorLinks} data-testid='authorLinks'>
             <RecipeDelete id={recipe.id} />
             <RecipeUpdate id={recipe.id} />
         </div>
@@ -52,7 +51,7 @@ const IsRecipeAuthor: React.FC<{ recipe: Recipe }> = ({ recipe }) => {
             }
         }
     }, [loggedUserData, recipe.author.id]);
-    return <div data-testid='isRecipeAuthor'>{isAuthor ? authorLinks : guestLinks}</div>;
+    return <>{isAuthor && authorLinks}</>;
 };
 
 export default IsRecipeAuthor;
