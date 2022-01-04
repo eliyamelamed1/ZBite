@@ -15,7 +15,7 @@ review_create_url = Review.get_create_url()
 reviews_in_recipe_url = Review.get_reviews_in_recipe_url()
 create_recipe_url = Recipe.get_create_url()
 
-class TestRatingCreateView:
+class TestReviewCreateView:
     class TestAuthenticatedUsers:
         def test_get_request_return_status_code_405(self, api_client):
             new_user = UserFactory()
@@ -57,22 +57,19 @@ class TestRatingCreateView:
 
             assert new_recipe.stars == '5.0'
 
-        def test_creating_a_review_without_image_and_comment_should_be_successfull(self, api_client):
-            new_user = UserFactory()
-            api_client.force_authenticate(new_user)
-            new_recipe = RecipeFactory()
-            data = {
-                'recipe': new_recipe.id,
-                'stars': 5,
-                'comment': 'comment'
+        def test_creating_a_review_without_comment_raise_validation_error(self, api_client):
+            with pytest.raises(ValidationError):
+                new_user = UserFactory()
+                api_client.force_authenticate(new_user)
+                new_recipe = RecipeFactory()
+                data = {
+                    'recipe': new_recipe.id,
+                    'stars': 5,
 
-            }
-            api_client.post(review_create_url, data)
-            review = Review.objects.all().get(author__exact=new_user.id)
+                }
+                response = api_client.post(review_create_url, data)
 
-            assert review.stars == 5
-            assert review.comment == 'comment'
-            assert review.image == ''
+                assert response.status_code == 5
 
         def test_review_above_5_stars_raise_validation_error(self, api_client):
             with pytest.raises(ValidationError):
@@ -385,7 +382,7 @@ class TestRatingCreateView:
             assert response.status_code == 401
 
 
-class TestRatingDeleteView:
+class TestReviewDeleteView:
     class TestAuthenticatedUsers:
         def test_delete_page_should_render(self, api_client):
             new_review = ReviewFactory()
@@ -440,7 +437,7 @@ class TestRatingDeleteView:
             assert Review.objects.all().count() == 1
 
 
-class TestRatingsInRecipe:
+class TestReviewsInRecipe:
     class TestAuthenticatedUsers:
         def test_get_request_should_return_status_code_405(self, api_client):
             new_review = ReviewFactory()

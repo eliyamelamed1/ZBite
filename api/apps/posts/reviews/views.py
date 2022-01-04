@@ -22,16 +22,20 @@ class ReviewCreate(CreateAPIView):
 
         serializer.save(author=self.request.user)
 
-    def post(self, request, format=None):
-            # serializer = self.get_serializer(data=request.data)
+    def create(self, request, format=None):
+            serializer = self.get_serializer(data=request.data)
             # serializer.is_valid(raise_exception=True)
+
             data = request.data
             user = request.user
 
-            recipe = data['recipe']
-            stars = data['stars']
-            comment = data['comment']
-            
+            try:
+                recipe = data['recipe']
+                stars = data['stars']
+                comment = data['comment']
+
+            except:
+                raise ValidationError('problem with the input credentials')
             # image is optional so check for value 
             try:
                 image = data['image']
@@ -52,16 +56,13 @@ class ReviewCreate(CreateAPIView):
                 Review.objects.all().create(recipe=recipe, author=user, stars=stars, comment=comment, image=image)
 
             # else create review
-            except:
-                recipe = Recipe.objects.all().get(id=recipe)
-                Review.objects.all().create(recipe=recipe, author=user, stars=stars, comment=comment, image=image)
+            finally:
+                recipe.stars = Review.get_recipe_stars_score(recipe=recipe)
+                recipe.save()
 
-            recipe.stars = Review.get_recipe_stars_score(recipe=recipe)
-            recipe.save()
-
-            recipe_author = recipe.author
-            recipe_author.stars = Review.get_account_stars_score(user=recipe_author)
-            recipe_author.save()
+                recipe_author = recipe.author
+                recipe_author.stars = Review.get_account_stars_score(user=recipe_author)
+                recipe_author.save()
             
             # self.perform_create(serializer)
 
