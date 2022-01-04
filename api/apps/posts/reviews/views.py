@@ -24,38 +24,31 @@ class ReviewCreate(CreateAPIView):
 
     def create(self, request, format=None):
             serializer = self.get_serializer(data=request.data)
-            # serializer.is_valid(raise_exception=True)
-
+            serializer.is_valid(raise_exception=True)
             data = request.data
             user = request.user
 
+
+            # comment is optional so check for value 
             try:
                 recipe = data['recipe']
                 stars = data['stars']
                 comment = data['comment']
-
             except:
-                raise ValidationError('problem with the input credentials')
-            # image is optional so check for value 
-            try:
-                image = data['image']
-            except:
-                image = ''
+                raise ValidationError('at least one input is missing')
 
 
             if (float(stars)>5 or float(stars)<1):
                 raise ValidationError('review stars should be between above 1 and below 5')
             
-            # if already reviewed update review
+            # if already reviewed delete previous review and create new one
             try:
                 recipe = Recipe.objects.all().get(id=recipe)
                 recipe_reviews = Review.objects.all().filter(recipe=recipe)
                 user_review_of_recipe = recipe_reviews.filter(author=user)
-
                 user_review_of_recipe.delete()
-                Review.objects.all().create(recipe=recipe, author=user, stars=stars, comment=comment, image=image)
+                Review.objects.all().create(recipe=recipe, author=user, stars=stars, comment=comment)
 
-            # else create review
             finally:
                 recipe.stars = Review.get_recipe_stars_score(recipe=recipe)
                 recipe.save()
@@ -63,8 +56,7 @@ class ReviewCreate(CreateAPIView):
                 recipe_author = recipe.author
                 recipe_author.stars = Review.get_account_stars_score(user=recipe_author)
                 recipe_author.save()
-            
-            # self.perform_create(serializer)
+                
 
             return HttpResponse(status=201)
     

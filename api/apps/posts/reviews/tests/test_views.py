@@ -25,7 +25,7 @@ class TestReviewCreateView:
 
             assert response.status_code == 405
         
-        def test_create_review_post_request_returns_status_code_200(self, api_client):
+        def test_create_review_success(self, api_client):
             new_user = UserFactory()
             api_client.force_authenticate(new_user)
             new_recipe = RecipeFactory()
@@ -34,14 +34,16 @@ class TestReviewCreateView:
                 'recipe': new_recipe.id,
                 'stars': '5',
                 'comment': 'comment'
-
             }
             response = api_client.post(review_create_url, data)
-            new_recipe = Recipe.objects.all().get(id__exact=new_recipe.id)
+            new_review = Review.objects.all().get(recipe=new_recipe.id)
 
             assert response.status_code == 201
+            assert new_review.author == new_user
+            assert new_review.stars == 5
+            assert new_review.comment == 'comment'
     
-        def test_creating_a_review_match_it_to_a_recipe(self, api_client):
+        def test_creating_a_review_assign_it_to_a_recipe(self, api_client):
             new_user = UserFactory()
             api_client.force_authenticate(new_user)
             new_recipe = RecipeFactory()
@@ -50,7 +52,6 @@ class TestReviewCreateView:
                 'recipe': new_recipe.id,
                 'stars': 5,
                 'comment': 'comment',
-                'image': 'image'
             }
             api_client.post(review_create_url, data)
             new_recipe = Recipe.objects.all().get(id__exact=new_recipe.id)
@@ -107,7 +108,6 @@ class TestReviewCreateView:
                 'recipe': new_recipe.id,
                 'stars': 5,
                 'comment': 'comment',
-                'image': 'image'
             }
             
             api_client.post(review_create_url, data)
@@ -115,7 +115,6 @@ class TestReviewCreateView:
                 'recipe': new_recipe.id,
                 'stars': 4,
                 'comment': 'comment2',
-                'image': 'image2'
             }
             response = api_client.post(review_create_url, data)
 
@@ -124,7 +123,6 @@ class TestReviewCreateView:
             assert response.status_code == 201
             assert review.stars == 4
             assert review.comment == 'comment2'
-            assert review.image == 'image2'
             assert Review.objects.all().count() == 1  
 
         def test_reviews_from_different_users(self, api_client):
