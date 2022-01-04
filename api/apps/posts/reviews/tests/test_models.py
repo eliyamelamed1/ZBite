@@ -87,7 +87,7 @@ def test_get_account_stars_score(api_client):
     second_recipe = Recipe.objects.all().get(title__exact=second_recipe.title)
     data = {
         'recipe': second_recipe.id,
-        'stars': 0
+        'stars': 1
     }
     api_client.post(review_create_url, data)  
 
@@ -107,4 +107,4 @@ def test_get_account_stars_score(api_client):
 
     account_avg_stars = Review.get_account_stars_score(user=user)
 
-    assert account_avg_stars == 2.25
+    assert account_avg_stars == 2.5

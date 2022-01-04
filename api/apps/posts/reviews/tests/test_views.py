@@ -32,7 +32,7 @@ class TestRatingCreateView:
             new_recipe = Recipe.objects.all().get(id__exact=new_recipe.id)
             data = {
                 'recipe': new_recipe.id,
-                'stars': 5
+                'stars': '5'
             }
             response = api_client.post(review_create_url, data)
             new_recipe = Recipe.objects.all().get(id__exact=new_recipe.id)
@@ -78,7 +78,7 @@ class TestRatingCreateView:
                 new_recipe = Recipe.objects.all().get(id__exact=new_recipe.id)
                 data = {
                     'recipe': new_recipe.id,
-                    'stars': 5.1,
+                    'stars': 6,
                     'comment': 'comment'
                 }
                 api_client.post(review_create_url, data)
@@ -92,7 +92,7 @@ class TestRatingCreateView:
                 new_recipe = Recipe.objects.all().get(id__exact=new_recipe.id)
                 data = {
                     'recipe': new_recipe.id,
-                    'stars': 0.9,
+                    'stars': 0,
                     'comment': 'comment'
                 }
                 api_client.post(review_create_url, data)
@@ -259,7 +259,7 @@ class TestRatingCreateView:
             
             data = {
                 'recipe': second_recipe.id,
-                'stars': 0
+                'stars': 1
             }
             api_client.post(review_create_url, data)
             api_client.logout()
@@ -286,9 +286,9 @@ class TestRatingCreateView:
             user = UserAccount.objects.all().get(id=recipe_author.id)
 
             assert first_recipe.stars == '5.0'
-            assert second_recipe.stars == '2.5'
-            assert Review.get_account_stars_score(user=user) == 3.75
-            assert user.stars == '3.75'
+            assert second_recipe.stars == '3.0'
+            assert Review.get_account_stars_score(user=user) == 4.0
+            assert user.stars == '4.0'
 
 
         def test_reviews_on_recipe_from_non_recipe_author_should_still_calculate_recipe_author_avg_score(self, api_client):
@@ -320,7 +320,7 @@ class TestRatingCreateView:
 
             data = {
                 'recipe': second_recipe.id,
-                'stars': 0
+                'stars': 1
             }
             api_client.post(review_create_url, data)
 
@@ -329,9 +329,9 @@ class TestRatingCreateView:
             user = UserAccount.objects.all().get(id=recipe_author.id)
 
             assert first_recipe.stars == '5.0'
-            assert second_recipe.stars == '0.0'
-            assert Review.get_account_stars_score(user=user) == 2.5
-            assert user.stars == '2.5'
+            assert second_recipe.stars == '1.0'
+            assert Review.get_account_stars_score(user=user) == 3.0
+            assert user.stars == '3.0'
 
     class TestGuestUsers:
         def test_review_page_should_not_render(self, api_client):

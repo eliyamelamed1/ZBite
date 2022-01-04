@@ -42,7 +42,7 @@ class ReviewCreate(APIView):
             image = ''
 
 
-        if (1<float(stars)>5):
+        if (float(stars)>5 or float(stars)<1):
             raise ValidationError('review stars should be between above 1 and below 5')
         
         # if already reviewed update review
