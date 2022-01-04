@@ -7,6 +7,7 @@ from django.urls import reverse
 from apps.posts.recipes.models import Recipe
 
 
+
 class Review(models.Model):
     author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
@@ -15,10 +16,10 @@ class Review(models.Model):
         default=uuid.uuid4,
         editable=False
     )
-    stars = models.IntegerField()
+    stars = models.FloatField()
     comment = models.CharField(max_length=255, blank=True)
-    image = models.ImageField(upload_to='media/', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+
 
     def __str__(self):
         return str(self.author)
@@ -50,6 +51,7 @@ class Review(models.Model):
     @classmethod
     def get_account_stars_score(cls, user):
         user_own_recipes = Recipe.objects.all().filter(author=user)
+
         user_own_recipes_count = user_own_recipes.count()
         sum_of_recipes_scores = 0
 
@@ -61,7 +63,6 @@ class Review(models.Model):
         except:
             account_stars_score = 0
 
-        
         return account_stars_score
 
     @classmethod

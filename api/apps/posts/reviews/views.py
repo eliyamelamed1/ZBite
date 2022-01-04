@@ -35,11 +35,11 @@ class ReviewCreate(CreateAPIView):
                 stars = data['stars']
                 comment = data['comment']
             except:
-                raise ValidationError('at least one input is missing')
+                raise ValidationError(['at least one input is missing'])
 
 
             if (float(stars)>5 or float(stars)<1):
-                raise ValidationError('review stars should be between above 1 and below 5')
+                raise ValidationError(['stars should be above 1 and below 5'])
             
             # if already reviewed delete previous review and create new one
             try:

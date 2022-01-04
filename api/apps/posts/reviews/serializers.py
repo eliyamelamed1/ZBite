@@ -5,7 +5,6 @@ from apps.posts.recipes.models import Recipe
 
 from .models import Review
 
-
 class ReviewDetailSerializer(serializers.ModelSerializer):
     author = AuthorFieldSerializer()
     class Meta:
@@ -15,7 +14,7 @@ class ReviewDetailSerializer(serializers.ModelSerializer):
 class ReviewCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = ('stars', 'recipe','comment','image')
+        fields = ('stars', 'recipe','comment',)
 
 class ReviewsInRecipeSerializer(serializers.ModelSerializer):
     class Meta:

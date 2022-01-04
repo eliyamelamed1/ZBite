@@ -32,7 +32,7 @@ class TestReviewCreateView:
             new_recipe = Recipe.objects.all().get(id__exact=new_recipe.id)
             data = {
                 'recipe': new_recipe.id,
-                'stars': '5',
+                'stars': 4.0,
                 'comment': 'comment'
             }
             response = api_client.post(review_create_url, data)
@@ -40,7 +40,7 @@ class TestReviewCreateView:
 
             assert response.status_code == 201
             assert new_review.author == new_user
-            assert new_review.stars == 5
+            assert new_review.stars == 4.0
             assert new_review.comment == 'comment'
     
         def test_creating_a_review_assign_it_to_a_recipe(self, api_client):
