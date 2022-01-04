@@ -32,12 +32,14 @@ class TestRatingCreateView:
             new_recipe = Recipe.objects.all().get(id__exact=new_recipe.id)
             data = {
                 'recipe': new_recipe.id,
-                'stars': '5'
+                'stars': '5',
+                'comment': 'comment'
+
             }
             response = api_client.post(review_create_url, data)
             new_recipe = Recipe.objects.all().get(id__exact=new_recipe.id)
 
-            assert response.status_code == 200
+            assert response.status_code == 201
     
         def test_creating_a_review_match_it_to_a_recipe(self, api_client):
             new_user = UserFactory()
@@ -62,12 +64,14 @@ class TestRatingCreateView:
             data = {
                 'recipe': new_recipe.id,
                 'stars': 5,
+                'comment': 'comment'
+
             }
             api_client.post(review_create_url, data)
             review = Review.objects.all().get(author__exact=new_user.id)
 
             assert review.stars == 5
-            assert review.comment == ''
+            assert review.comment == 'comment'
             assert review.image == ''
 
         def test_review_above_5_stars_raise_validation_error(self, api_client):
@@ -120,7 +124,7 @@ class TestRatingCreateView:
 
             review = Review.objects.all().get(author__exact=new_user.id)
 
-            assert response.status_code == 200
+            assert response.status_code == 201
             assert review.stars == 4
             assert review.comment == 'comment2'
             assert review.image == 'image2'
@@ -151,8 +155,8 @@ class TestRatingCreateView:
             first_review = Review.objects.all().get(author__exact=new_user.id)
             second_review = Review.objects.all().get(author__exact=new_user2.id)
 
-            assert response.status_code == 200
-            assert response2.status_code == 200
+            assert response.status_code == 201
+            assert response2.status_code == 201
             assert Review.objects.all().count() == 2
             assert first_review.stars == 5
             assert second_review.stars== 4
@@ -167,12 +171,16 @@ class TestRatingCreateView:
             
             data = {
                 'recipe': new_recipe.id,
-                'stars': 5
+                'stars': 5,
+                'comment': 'comment'
+
             }
             api_client.post(review_create_url, data)
             data = {
                 'recipe': new_recipe.id,
-                'stars': 3
+                'stars': 3,
+                'comment': 'comment'
+
             }
             api_client.post(review_create_url, data)
             api_client.logout()
@@ -181,19 +189,25 @@ class TestRatingCreateView:
             api_client.force_authenticate(new_user2)
             data = {
                 'recipe': new_recipe.id,
-                'stars': 4
+                'stars': 4,
+                'comment': 'comment'
+
             }
             api_client.post(review_create_url, data)
 
             data = {
                 'recipe': new_recipe.id,
-                'stars': 2
+                'stars': 2,
+                'comment': 'comment'
+
             }
             api_client.post(review_create_url, data)
 
             data = {
                 'recipe': new_recipe.id,
-                'stars': 5
+                'stars': 5,
+                'comment': 'comment'
+
             }
             api_client.post(review_create_url, data)
             api_client.logout()
@@ -215,7 +229,9 @@ class TestRatingCreateView:
 
             data = {
                 'recipe': recipe.id,
-                'stars': 4
+                'stars': 4,
+                'comment': 'comment'
+
             }
             api_client.post(review_create_url, data)
             api_client.logout()
@@ -224,7 +240,9 @@ class TestRatingCreateView:
             api_client.force_authenticate(second_user)
             data = {
                 'recipe': recipe.id,
-                'stars': 2
+                'stars': 2,
+                'comment': 'comment'
+
             }
             api_client.post(review_create_url, data)
             recipe = Recipe.objects.all().get(id=recipe.id)
@@ -252,14 +270,18 @@ class TestRatingCreateView:
 
             data = {
                 'recipe': first_recipe.id,
-                'stars': 5
+                'stars': 5,
+                'comment': 'comment'
+
             }
 
             api_client.post(review_create_url, data)
             
             data = {
                 'recipe': second_recipe.id,
-                'stars': 1
+                'stars': 1,
+                'comment': 'comment'
+
             }
             api_client.post(review_create_url, data)
             api_client.logout()
@@ -269,13 +291,17 @@ class TestRatingCreateView:
             api_client.force_authenticate(second_user)
             data = {
                 'recipe': first_recipe.id,
-                'stars': 5
+                'stars': 5,
+                'comment': 'comment'
+
             }
             api_client.post(review_create_url, data)
 
             data = {
                 'recipe': second_recipe.id,
-                'stars': 5
+                'stars': 5,
+                'comment': 'comment'
+
             }
             api_client.post(review_create_url, data)
             api_client.logout()
@@ -314,13 +340,16 @@ class TestRatingCreateView:
 
             data = {
                 'recipe': first_recipe.id,
-                'stars': 5
+                'stars': 5,
+                'comment': 'comment'
             }
             api_client.post(review_create_url, data)
 
             data = {
                 'recipe': second_recipe.id,
-                'stars': 1
+                'stars': 1,
+                'comment': 'comment'
+
             }
             api_client.post(review_create_url, data)
 
@@ -347,7 +376,9 @@ class TestRatingCreateView:
             new_recipe = Recipe.objects.all().get(id__exact=new_recipe.id)
             data = {
                 'recipe': new_recipe.id,
-                'stars': 5
+                'stars': 5,
+                'comment': 'comment'
+
             }
             response = api_client.post(review_create_url, data)
 
