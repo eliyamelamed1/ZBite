@@ -30,6 +30,7 @@ interface Recipe {
 const IsRecipeAuthor: React.FC<{ recipe: Recipe }> = ({ recipe }) => {
     const [isAuthor, setIsAuthor] = useState<boolean>(false);
     const { loggedUserData } = useSelector((state: RootState) => state.userReducer);
+    console.log(recipe);
 
     const guestLinks = <div data-testid='guestLinks'>you are not the recipe author </div>;
 
@@ -41,9 +42,13 @@ const IsRecipeAuthor: React.FC<{ recipe: Recipe }> = ({ recipe }) => {
     );
 
     useEffect(() => {
+        console.log(loggedUserData?.id);
+        console.log(recipe?.author?.id);
+
         if (loggedUserData != null) {
             if (recipe?.author?.id == loggedUserData.id) {
                 setIsAuthor(true);
+                console.log(3);
             }
         }
     }, [loggedUserData, recipe.author.id]);

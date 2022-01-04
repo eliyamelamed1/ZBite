@@ -8,7 +8,10 @@ const axiosInstance = axios.create({
     headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        Authorization: typeof window !== 'undefined' && `Token ${localStorage.getItem('auth_token')}`,
+        Authorization:
+            typeof window !== 'undefined' && localStorage.getItem('auth_token')
+                ? `Token ${localStorage.getItem('auth_token')}`
+                : null,
     },
 });
 
@@ -17,11 +20,18 @@ axiosInstance.interceptors.response.use(
         return response;
     },
     (error) => {
+        // toast.error(error.response.data.detail);
+
         const object = error.response.data;
         if (object) {
             const key = Object.keys(object)[0];
-            const errorMassage = object[key][0];
-            toast.error(errorMassage);
+            let errorMassage = object[key];
+            let a;
+            if (Array.isArray(errorMassage)) {
+                toast.error(errorMassage[0]);
+            } else {
+                toast.error(errorMassage);
+            }
         }
         throw new Error(error);
     }
