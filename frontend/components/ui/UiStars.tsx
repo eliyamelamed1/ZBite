@@ -3,8 +3,8 @@ import React from 'react';
 import StarIcon from '../../styles/icons/star.svg';
 import styles from '../../styles/ui/UiStars.module.scss';
 
-const UiStars: React.FC<{ starsCount: number }> = ({ starsCount }) => {
-    if (!starsCount) starsCount = 0.0;
+const UiStars: React.FC<{ starsCount: string }> = ({ starsCount }) => {
+    if (!starsCount) starsCount = '0.0';
     return (
         <section className={styles.rating}>
             <div className={styles.rating_icons}>
@@ -15,7 +15,7 @@ const UiStars: React.FC<{ starsCount: number }> = ({ starsCount }) => {
                 <i>{StarIcon.src && <Image src={StarIcon.src} alt='star icon' height={100} width={100} />}</i>
             </div>
             <div className={styles.rating_score}>
-                <span>({starsCount})</span>
+                <span>({parseFloat(starsCount).toFixed(1)})</span>
             </div>
         </section>
     );

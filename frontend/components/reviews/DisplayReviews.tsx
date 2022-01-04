@@ -9,6 +9,7 @@ interface Review {
     image: File | null;
     stars: string;
     recipe: string;
+    created_at: string;
 }
 
 const DisplayReviews = ({ reviewsToDisplay }) => {
@@ -18,8 +19,6 @@ const DisplayReviews = ({ reviewsToDisplay }) => {
             const result = [];
 
             reviewsToDisplay.map((review: Review) => {
-                review.stars = parseFloat(review.stars).toFixed(1);
-
                 reviewsOnPage.push(
                     <ReviewCard
                         author={review.author}
@@ -28,6 +27,7 @@ const DisplayReviews = ({ reviewsToDisplay }) => {
                         stars={review.stars}
                         comment={review.comment}
                         image={review.image}
+                        created_at={review.created_at}
                     />
                 );
             });

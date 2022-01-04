@@ -2,7 +2,7 @@ import Image from 'next/image';
 import SavedIcon from '../../styles/icons/saved.svg';
 import styles from '../../styles/ui/UiSaves.module.scss';
 
-const UiSaves: React.FC<{ savesCount: number; textToRight: boolean }> = ({ savesCount, textToRight }) => {
+const UiSaves: React.FC<{ savesCount: number; textToRight?: boolean }> = ({ savesCount, textToRight }) => {
     if (textToRight)
         return (
             <section className={styles.saves_count_and_icon}>

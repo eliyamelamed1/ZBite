@@ -13,14 +13,14 @@ interface Review {
     author: { name: string; id: string; photo_main: { src: string } | null };
     comment: string;
     image: File | null;
-    stars: number | string;
+    stars: string;
     recipe: string;
+    created_at: string;
 }
 
 const ReviewCard = (props: Review) => {
-    const { author, comment, image, stars, id } = props;
+    const { author, comment, image, stars, id, created_at } = props;
 
-    console.log(author?.name);
     const reviewProps = (
         <>
             <section className={styles.review_card}>
@@ -41,7 +41,7 @@ const ReviewCard = (props: Review) => {
                         <UiStars starsCount={stars} />
                     </div>
                 </div>
-                <div className={styles.created_at}>5 November</div>
+                <div className={styles.created_at}>{created_at?.slice(0, 10)}</div>
                 <div className={styles.comment_container}>{comment}</div>
             </section>
             <br />

@@ -1,6 +1,6 @@
 .review_card {
     display: grid;
-    grid-template-columns: 5rem 8.2rem 2fr 1fr;
+    grid-template-columns: 5rem max-content 2.5fr 1fr max-content;
     grid-template-rows: 5rem fit-content;
     grid-gap: 1rem;
     grid-row-gap: 1rem;

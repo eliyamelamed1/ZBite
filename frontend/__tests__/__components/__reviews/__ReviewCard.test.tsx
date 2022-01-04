@@ -3,7 +3,7 @@ import '@testing-library/jest-dom/extend-expect';
 import * as IsReviewAuthor from '../../../components/reviews/isReviewAuthor';
 
 import { cleanup, render, screen } from '@testing-library/react';
-import { pageRoute, reviewParams, userParams } from '../../../enums';
+import { pageRoute, reviewParams } from '../../../enums';
 
 import { Provider } from 'react-redux';
 import ReviewCard from '../../../components/reviews/ReviewCard';
@@ -22,6 +22,7 @@ describe('ReviewCard', () => {
                     stars={reviewParams.stars}
                     comment={reviewParams.comment}
                     image={reviewParams.image}
+                    created_at={reviewParams.created_at}
                 />
             </Provider>
         );
@@ -31,15 +32,17 @@ describe('ReviewCard', () => {
         const dataTestId = screen.getByTestId('reviewCard');
         expect(dataTestId).toBeInTheDocument();
     });
-    test.only('should render review details', () => {
+    test('should render review details', () => {
         const author = screen.getByText(reviewParams.author.name);
-        const stars = screen.getByText(`(${reviewParams.stars})`);
+        const stars = screen.getByText(`(${reviewParams.stars}.0)`);
         const comment = screen.getByText(reviewParams.comment);
+        const created_at = screen.getByText(`${reviewParams.created_at.slice(0, 10)}`);
         // const image = screen.getByRole('img', { name: 'Review Image' });
 
         expect(author).toBeInTheDocument();
         expect(stars).toBeInTheDocument();
         expect(comment).toBeInTheDocument();
+        expect(created_at).toBeInTheDocument();
         // expect(image).toBeInTheDocument();
     });
     test('should link author to his profile page', () => {
