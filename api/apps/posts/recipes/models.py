@@ -21,7 +21,7 @@ class Recipe(models.Model):
     description = models.TextField(blank=True)
     serving = models.TextField()
     cook_time = models.TextField()
-    stars = models.TextField(blank=True)
+    stars = models.FloatField(default=0)
     saves = models.ManyToManyField(get_user_model(), default=None, blank=True)
     instructions_text_list = ArrayField(models.CharField(max_length=100,),default=list, size=15,)
     ingredients_text_list = ArrayField(models.CharField(max_length=100,),default=list, size=15,)

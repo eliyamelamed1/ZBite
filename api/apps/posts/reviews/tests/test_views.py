@@ -56,7 +56,7 @@ class TestReviewCreateView:
             api_client.post(review_create_url, data)
             new_recipe = Recipe.objects.all().get(id__exact=new_recipe.id)
 
-            assert new_recipe.stars == '5.0'
+            assert new_recipe.stars == 5.0
 
         def test_creating_a_review_without_comment_raise_validation_error(self, api_client):
             with pytest.raises(ValidationError):
@@ -242,8 +242,8 @@ class TestReviewCreateView:
             api_client.post(review_create_url, data)
             recipe = Recipe.objects.all().get(id=recipe.id)
 
-            assert recipe.stars == '3.0'
-            assert recipe.stars == str(Review.get_recipe_stars_score(recipe=recipe))
+            assert recipe.stars == 3.0
+            assert recipe.stars == Review.get_recipe_stars_score(recipe=recipe)
 
 
         def test_review_recipe_calculate_account_stars(self, api_client):
@@ -306,10 +306,10 @@ class TestReviewCreateView:
             second_recipe = Recipe.objects.all().get(title=second_recipe.title)
             user = UserAccount.objects.all().get(id=recipe_author.id)
 
-            assert first_recipe.stars == '5.0'
-            assert second_recipe.stars == '3.0'
+            assert first_recipe.stars == 5.0
+            assert second_recipe.stars == 3.0
             assert Review.get_account_stars_score(user=user) == 4.0
-            assert user.stars == '4.0'
+            assert user.stars == 4.0
 
 
         def test_reviews_on_recipe_from_non_recipe_author_should_still_calculate_recipe_author_avg_score(self, api_client):
@@ -352,10 +352,10 @@ class TestReviewCreateView:
             second_recipe = Recipe.objects.all().get(title=second_recipe.title)
             user = UserAccount.objects.all().get(id=recipe_author.id)
 
-            assert first_recipe.stars == '5.0'
-            assert second_recipe.stars == '1.0'
+            assert first_recipe.stars == 5.0
+            assert second_recipe.stars == 1.0
             assert Review.get_account_stars_score(user=user) == 3.0
-            assert user.stars == '3.0'
+            assert user.stars == 3.0
 
     class TestGuestUsers:
         def test_review_page_should_not_render(self, api_client):
