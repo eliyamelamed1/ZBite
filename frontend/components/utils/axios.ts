@@ -20,13 +20,10 @@ axiosInstance.interceptors.response.use(
         return response;
     },
     (error) => {
-        // toast.error(error.response.data.detail);
-
         const object = error.response.data;
         if (object) {
             const key = Object.keys(object)[0];
             let errorMassage = object[key];
-            let a;
             if (Array.isArray(errorMassage)) {
                 toast.error(errorMassage[0]);
             } else {
