@@ -38,7 +38,7 @@ class Review(models.Model):
 
         for i in range(total_users_who_reviewed_recipe):
             recipe_review = recipe_reviews_queryset[i]
-            total_recipe_stars += float(recipe_review.stars)
+            total_recipe_stars += recipe_review.stars
 
         try:
             recipe_stars_score = total_recipe_stars/total_users_who_reviewed_recipe
