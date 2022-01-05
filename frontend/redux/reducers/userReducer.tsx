@@ -26,6 +26,7 @@ import {
 } from '../types';
 
 import Router from 'next/router';
+import axiosInstance from '../../components/utils/axios';
 import { pageRoute } from '../../enums';
 import { toast } from 'react-toastify';
 
@@ -64,6 +65,7 @@ export default function userReducer(state = initialState, action) {
         case LOGIN_SUCCESS:
             Router.push(pageRoute().home);
             localStorage.setItem('auth_token', payload.auth_token);
+            axiosInstance.defaults.headers.common.Authorization = `Token ${payload.auth_token}`;
             return {
                 ...state,
                 isUserAuthenticated: true,

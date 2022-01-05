@@ -1,17 +1,17 @@
 import axios from 'axios';
+import store from '../../redux/store';
 import { toast } from 'react-toastify';
 
 //  need to switch to cookie from localStorage
+
+const { auth_token } = store.getState().userReducer;
 
 const axiosInstance = axios.create({
     // baseURL: 'http://localhost:8000', need to learn how to mock for tests
     headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        Authorization:
-            typeof window !== 'undefined' && localStorage.getItem('auth_token')
-                ? `Token ${localStorage.getItem('auth_token')}`
-                : null,
+        Authorization: auth_token ? `Token ${auth_token}` : null,
     },
 });
 
