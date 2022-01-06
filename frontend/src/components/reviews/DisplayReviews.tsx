@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import PropTypes from 'prop-types';
 import ReviewCard from './ReviewCard';
+import UiSectionSeparator from '../ui/UiSectionSeperator';
 
 interface Review {
     id: string;
@@ -45,7 +46,12 @@ const DisplayReviews = ({ reviewsToDisplay }) => {
             return null;
         }
     };
-    return <div>{getReviews()}</div>;
+    return (
+        <div>
+            {getReviews()}
+            <UiSectionSeparator />
+        </div>
+    );
 };
 
 DisplayReviews.propTypes = {
