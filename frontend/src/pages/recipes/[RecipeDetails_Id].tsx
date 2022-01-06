@@ -42,7 +42,6 @@ const RecipeDetails = (props) => {
     const [recipeData, setRecipeData] = useState<Recipe>(props.serverRecipeData);
     const { requestedRecipeData, listOfFilteredReviews } = useSelector((state: RootState) => state.recipeReducer);
     const [reviewsData, setReviewsData] = useState(props.serverReviewsData);
-    console.log(recipeData?.stars);
 
     useEffect(
         // when updating recipe data (title, description etc..) migrate the changes to the userData
@@ -56,8 +55,13 @@ const RecipeDetails = (props) => {
     useEffect(
         // when updating reviews data migrate the changes to the reviewsData
         function migrateListOfFilteredReviews() {
-            const isReviewsMatchRecipe = listOfFilteredReviews?.[0]?.recipe === recipeData?.id;
-            isReviewsMatchRecipe ? setReviewsData(listOfFilteredReviews) : null;
+            const updatedReviewList = [];
+            for (const review of listOfFilteredReviews) {
+                const isReviewsMatchRecipe = review.recipe === recipeData?.id;
+                if (isReviewsMatchRecipe) updatedReviewList.push(review);
+            }
+
+            setReviewsData(updatedReviewList);
         },
         [listOfFilteredReviews, recipeData?.id]
     );
@@ -148,8 +152,7 @@ const RecipeDetails = (props) => {
                         <Custom404 />
                     )}
                 </section>
-                <section>{reviewsData ? <DisplayReviews reviewsToDisplay={reviewsData} /> : null}</section>
-                <UiSectionSeparator />
+                <section>{reviewsData && <DisplayReviews reviewsToDisplay={reviewsData} />}</section>
                 <section>{authorLinks}</section>
             </main>
         </div>
