@@ -1,5 +1,3 @@
-// import '../styles/main.scss';
-
 import '../styles/main.scss';
 import 'react-toastify/dist/ReactToastify.css';
 

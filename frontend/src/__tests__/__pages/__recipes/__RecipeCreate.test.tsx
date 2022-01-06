@@ -17,9 +17,6 @@ jest.mock('../../../redux/actions/recipeActions', () => ({
     recipeCreateAction: jest.fn().mockReturnValue(() => true),
 }));
 
-jest.mock('axios');
-jest.mock('next/router');
-
 describe('authenticated users', () => {
     beforeEach(() => {
         cleanup();
