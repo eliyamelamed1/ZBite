@@ -26,7 +26,7 @@ import {
 } from '../types';
 
 import Router from 'next/router';
-import axiosInstance from '../../components/utils/axiosInstance';
+import axiosInstance from '../../utils/axiosInstance';
 import { pageRoute } from '../../enums';
 import { toast } from 'react-toastify';
 

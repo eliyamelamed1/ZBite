@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import UiSaves from '../ui/UiSaves';
 import UiStars from '../ui/UiStars';
-import imageLoader from '../utils/imageLoader';
+import imageLoader from '../../utils/imageLoader';
 import styles from '../../styles/components/_recipeCard.module.scss';
 import uploadImageIcon from '../../styles/icons/upload_image.svg';
 

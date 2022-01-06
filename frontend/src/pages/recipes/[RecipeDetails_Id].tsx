@@ -15,7 +15,7 @@ import UiButton from '../../components/ui/UiButton';
 import UiSaves from '../../components/ui/UiSaves';
 import UiSectionSeparator from '../../components/ui/UiSectionSeperator';
 import UiStars from '../../components/ui/UiStars';
-import imageLoader from '../../components/utils/imageLoader';
+import imageLoader from '../../utils/imageLoader';
 import { loadRecipeDetailsAction } from '../../redux/actions/recipeActions';
 import { reviewsInRecipeAction } from '../../redux/actions/recipeActions';
 import styles from '../../styles/pages/recipeDetails.module.scss';
