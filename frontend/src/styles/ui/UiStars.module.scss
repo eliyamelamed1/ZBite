@@ -16,6 +16,9 @@
         margin-left: 0.5rem;
         font-size: 1.2rem;
     }
+    .grayStar {
+        filter: invert(76%) sepia(20%) saturate(0%) hue-rotate(212deg) brightness(90%) contrast(91%);
+    }
 }
 
 .active {
