@@ -24,7 +24,7 @@ import {
 } from '../types';
 
 import axios from 'axios';
-import axiosInstance from '../../components/utils/axios';
+import axiosInstance from '../../components/utils/axiosInstance';
 import { endpointRoute } from '../../enums';
 import { loadLoggedUserDataAction } from './userActions';
 import { toast } from 'react-toastify';

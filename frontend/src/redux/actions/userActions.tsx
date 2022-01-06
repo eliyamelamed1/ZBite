@@ -24,7 +24,7 @@ import {
     UPDATE_USER_SUCCESS,
 } from '../types';
 
-import axiosInstance from '../../components/utils/axios';
+import axiosInstance from '../../components/utils/axiosInstance';
 import { endpointRoute } from '../../enums';
 import { toast } from 'react-toastify';
 
