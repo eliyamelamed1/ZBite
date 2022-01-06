@@ -12,8 +12,11 @@ const UiStarsButtons: React.FC = ({ setStarsValue, starsValue }) => {
         for (let index = 1; index <= 5; index++) {
             let starButton = (
                 <button
+                    data-testid={`button number${index}`}
                     type='button'
                     key={index}
+                    value={index}
+                    name='stars'
                     className={`${starsValue >= index || styles.grayStar}`}
                     onClick={() => setStarsValue(index)}
                 >

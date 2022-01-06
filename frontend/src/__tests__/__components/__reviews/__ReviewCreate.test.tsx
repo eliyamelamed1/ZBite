@@ -91,52 +91,58 @@ describe('ReviewCreate', () => {
                     });
                 });
                 describe('stars input', () => {
-                    test('render stars textbox', () => {
-                        const textbox = screen.getByPlaceholderText(/stars/i);
-                        expect(textbox).toBeInTheDocument();
+                    test('render stars buttons', () => {
+                        for (let index = 1; index <= 5; index++) {
+                            const starButton = screen.getByTestId(`button number${index}`);
+
+                            expect(starButton).toBeInTheDocument();
+                        }
                     });
                     test('stars attributes', () => {
-                        const textbox = screen.getByPlaceholderText(/stars/i);
-                        expect(textbox.required).toBe(true);
-                        expect(textbox.type).toBe('text');
-                        expect(textbox.name).toBe('stars');
+                        for (let index = 1; index <= 5; index++) {
+                            const starButton = screen.getByTestId(`button number${index}`);
+                            expect(starButton.type).toBe('button');
+                            expect(starButton.name).toBe('stars');
+                        }
                     });
                     test('stars value change according to input (onchange)', () => {
-                        const textbox = screen.getByPlaceholderText(/stars/i);
-                        userEvent.type(textbox, 'new stars');
-                        expect(textbox.value).toBe('new stars');
+                        for (let index = 1; index <= 5; index++) {
+                            const starButton = screen.getByTestId(`button number${index}`);
+                            userEvent.click(starButton);
+                            expect(starButton.value).toBe(index.toString());
+                        }
                     });
                 });
                 describe('submit button', () => {
                     test('should render submit button', () => {
-                        const button = screen.getByRole('button', { name: /submit/i });
-                        expect(button).toBeInTheDocument();
+                        const submitButton = screen.getByRole('button', { name: /submit/i });
+                        expect(submitButton).toBeInTheDocument();
                     });
                     test('button type should be type submit', () => {
-                        const button = screen.getByRole('button', { name: /submit/i });
-                        expect(button.type).toBe('submit');
+                        const submitButton = screen.getByRole('button', { name: /submit/i });
+                        expect(submitButton.type).toBe('submit');
                     });
                     test('clicking the submit button should call dispatch reviewCreateActionSpy', () => {
                         const commentTextbox = screen.getByPlaceholderText(/comment/i);
-                        const starsTextbox = screen.getByPlaceholderText(/stars/i);
-                        const button = screen.getByRole('button', { name: /submit/i });
+                        const starButton = screen.getByTestId('button number1');
+                        const submitButton = screen.getByRole('button', { name: /submit/i });
 
                         userEvent.type(commentTextbox, 'new comment');
-                        userEvent.type(starsTextbox, 'new stars');
-                        userEvent.click(button);
+                        userEvent.type(starButton, '1');
+                        userEvent.click(submitButton);
 
                         const timesActionDispatched = reviewCreateActionSpy.mock.calls.length;
                         expect(timesActionDispatched).toBe(1);
                         expect(reviewCreateActionSpy.mock.calls[0][0].comment).toBe('new comment');
-                        expect(reviewCreateActionSpy.mock.calls[0][0].stars).toBe('new stars');
+                        expect(reviewCreateActionSpy.mock.calls[0][0].stars).toBe(1);
                     });
                     test('authenticated user should not be redirected upon creating a review', () => {
                         const commentTextbox = screen.getByPlaceholderText(/comment/i);
-                        const starsTextbox = screen.getByPlaceholderText(/stars/i);
+                        const starButton = screen.getByTestId('button number1');
                         const button = screen.getByRole('button', { name: /submit/i });
 
                         userEvent.type(commentTextbox, 'new comment');
-                        userEvent.type(starsTextbox, 'new stars');
+                        userEvent.click(starButton);
                         userEvent.click(button);
 
                         expect(Router.push.mock.calls.length).toBe(0);

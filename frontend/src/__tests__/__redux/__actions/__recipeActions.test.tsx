@@ -143,11 +143,11 @@ describe('axios request should match url endpoint, and parameters', () => {
         expect(mockAxios.get.mock.calls[0][0]).toStrictEqual(endpointUrl);
     });
     test('reviewCreateAction', () => {
-        const { id, stars, comment, image } = parameters;
+        const { id, stars, comment } = parameters;
         const endpointUrl = endpointRoute().reviews.create;
-        const body = JSON.stringify({ recipe: id, stars, comment, image });
+        const body = JSON.stringify({ recipe: id, stars, comment });
 
-        store.dispatch(reviewCreateAction({ recipeId: id, stars, comment, image }));
+        store.dispatch(reviewCreateAction({ recipeId: id, stars, comment }));
 
         expect(mockAxios.post.mock.calls.length).toBe(1);
         expect(mockAxios.post.mock.calls[0][0]).toBe(endpointUrl);
