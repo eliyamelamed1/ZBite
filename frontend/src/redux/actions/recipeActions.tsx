@@ -139,14 +139,15 @@ export const loadRecipeDetailsAction =
     };
 
 export const reviewCreateAction =
-    ({ recipeId, stars, comment = '', image = '' }) =>
+    ({ recipeId, stars, comment = '' }) =>
     async (dispatch) => {
         try {
+            console.log(1);
+
             const body = JSON.stringify({
                 recipe: recipeId,
                 stars,
                 comment,
-                image,
             });
             await axiosInstance.post(endpointRoute().reviews.create, body);
             toast.success('review created successfully');

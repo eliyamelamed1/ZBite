@@ -5,20 +5,26 @@ import Router from 'next/router';
 import UiButton from '../ui/UiButton';
 import UiInput from '../ui/UiInput';
 import UiPopUp from '../ui/UiPopUp';
+import UiStarsButtons from '../ui/UiStarsButtons';
 import { pageRoute } from '../../enums';
 import { reviewCreateAction } from '../../redux/actions/recipeActions';
+import { toast } from 'react-toastify';
 import { useState } from 'react';
 
 const ReviewCreate: React.FC<{ recipeId: string }> = ({ recipeId }) => {
     const dispatch = useDispatch();
+    const [starsValue, setStarsValue] = useState(0);
     const [formData, setFormData] = useState({
-        stars: '',
         comment: '',
-        image: '',
     });
-    const { stars, comment, image } = formData;
+    const { comment } = formData;
     const [displayForm, setDisplayForm] = useState(false);
-    const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+
+    const onChange = (e) => {
+        e.preventDefault();
+
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
     const { isUserAuthenticated } = useSelector((state: RootState) => state.userReducer);
 
     const handleSubmit = async (e) => {
@@ -28,9 +34,11 @@ const ReviewCreate: React.FC<{ recipeId: string }> = ({ recipeId }) => {
     };
     const onSubmit = async (e) => {
         e.preventDefault();
+        if (starsValue === 0) return toast.error('stars are required');
         isUserAuthenticated === false ? Router.push(pageRoute().login) : null;
+
         try {
-            dispatch(reviewCreateAction({ recipeId, stars, comment, image }));
+            dispatch(reviewCreateAction({ recipeId, stars: starsValue, comment }));
             setDisplayForm(false);
         } catch (err) {}
     };
@@ -38,9 +46,8 @@ const ReviewCreate: React.FC<{ recipeId: string }> = ({ recipeId }) => {
     const reviewSection = () => (
         <UiPopUp onSubmit={onSubmit} setDisplayForm={setDisplayForm}>
             <h1>Leave a review</h1>
-            <UiInput type='text' placeholder='stars' name='stars' value={stars} onChange={onChange} required />
+            <UiStarsButtons setStarsValue={setStarsValue} starsValue={starsValue} />
             <UiInput type='text' placeholder='comment' name='comment' value={comment} onChange={onChange} required />
-            {/* <input type='image' placeholder='image' name='image' value={image} onChange={(e) => onChange(e)} /> */}
             <UiButton reverse={true}>submit</UiButton>
         </UiPopUp>
     );
