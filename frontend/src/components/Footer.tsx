@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import LogoIcon from '../styles/icons/logo.svg';
+import LogoIcon from '../assets/icons/logo.svg';
 import styles from '../styles/layout/_footer.module.scss';
 
 const Footer = () => {

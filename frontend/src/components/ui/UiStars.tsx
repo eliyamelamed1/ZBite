@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
-import StarIcon from '../../styles/icons/star.svg';
+import StarIcon from '../../assets/icons/star.svg';
 import styles from '../../styles/ui/UiStars.module.scss';
 
 const UiStars: React.FC<{ starsCount: string }> = ({ starsCount }) => {

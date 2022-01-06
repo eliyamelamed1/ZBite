@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 import styles from '../../styles/pages/recipeCreate.module.scss';
-import uploadImageIcon from '../../styles/icons/upload_image.svg';
+import uploadImageIcon from '../../assets/icons/upload_image.svg';
 
 const GeneralForm = ({ onChangeImage, photoMainBlob, onChangeText, title, description, cookTime, serving }) => (
     <section className={styles.general_section}>

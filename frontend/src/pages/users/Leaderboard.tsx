@@ -1,8 +1,8 @@
 import React from 'react';
 import UiCircleImage from '../../components/ui/UiCircleImage';
-import emptyImageIcon from '../../styles/icons/upload_image.svg';
+import emptyImageIcon from '../../assets/icons/upload_image.svg';
 import { loadLeaderboardAction } from '../../redux/actions/userActions';
-import scoreIcon from '../../styles/icons/score-icon.svg';
+import scoreIcon from '../../assets/icons/score-icon.svg';
 import store from '../../redux/store';
 import styles from '../../styles/pages/leaderboard.module.scss';
 

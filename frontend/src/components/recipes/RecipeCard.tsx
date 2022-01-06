@@ -2,14 +2,14 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import ProfileIcon from '../../styles/icons/profile._pic.svg';
+import ProfileIcon from '../../assets/icons/profile._pic.svg';
 import PropTypes from 'prop-types';
 import React from 'react';
 import UiSaves from '../ui/UiSaves';
 import UiStars from '../ui/UiStars';
 import imageLoader from '../../utils/imageLoader';
 import styles from '../../styles/components/_recipeCard.module.scss';
-import uploadImageIcon from '../../styles/icons/upload_image.svg';
+import uploadImageIcon from '../../assets/icons/upload_image.svg';
 
 interface DataTypes {
     title: string;

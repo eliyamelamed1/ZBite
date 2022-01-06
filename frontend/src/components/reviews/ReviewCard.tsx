@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import UiCircleImage from '../ui/UiCircleImage';
 import UiStars from '../ui/UiStars';
-import emptyImageIcon from '../../styles/icons/upload_image.svg';
+import emptyImageIcon from '../../assets/icons/upload_image.svg';
 import { pageRoute } from '../../enums';
 import styles from '../../styles/components/reviewCard.module.scss';
 

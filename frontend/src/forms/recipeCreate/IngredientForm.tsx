@@ -2,10 +2,10 @@ import EditInputContainer from '../../utils/ModifyInputContainer';
 import Image from 'next/image';
 import React from 'react';
 import addInputContainer from '../../utils/AddInputContainer';
-import deleteIcon from '../../styles/icons/delete-input-icon.svg';
+import deleteIcon from '../../assets/icons/delete-input-icon.svg';
 import deleteInputContainer from '../../utils/DeleteInputContainer';
-import editInput from '../../styles/icons/edit_input.svg';
-import saveInput from '../../styles/icons/save_changes.svg';
+import editInput from '../../assets/icons/edit_input.svg';
+import saveInput from '../../assets/icons/save_changes.svg';
 import styles from '../../styles/pages/recipeCreate.module.scss';
 
 const IngredientForm = ({ onChangeText, ingredient, setFormData, ingredientList, inputId, modifiedText }) => (

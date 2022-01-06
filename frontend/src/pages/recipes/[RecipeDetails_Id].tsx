@@ -19,7 +19,7 @@ import imageLoader from '../../utils/imageLoader';
 import { loadRecipeDetailsAction } from '../../redux/actions/recipeActions';
 import { reviewsInRecipeAction } from '../../redux/actions/recipeActions';
 import styles from '../../styles/pages/recipeDetails.module.scss';
-import uploadImageIcon from '../../styles/icons/upload_image.svg';
+import uploadImageIcon from '../../assets/icons/upload_image.svg';
 import { useSelector } from 'react-redux';
 
 interface Recipe {

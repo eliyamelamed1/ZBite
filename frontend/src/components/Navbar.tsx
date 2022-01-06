@@ -1,16 +1,16 @@
 import React, { ReactEventHandler, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import HomeIcon from '../styles/icons/home.svg';
+import HomeIcon from '../assets/icons/home.svg';
 import Image from 'next/image';
-import LeaderboardIcon from '../styles/icons/leaderboard.svg';
+import LeaderboardIcon from '../assets/icons/leaderboard.svg';
 import Link from 'next/link';
-import LogoIcon from '../styles/icons/logo.svg';
-import PlusIcon from '../styles/icons/plus.svg';
-import ProfileIcon from '../styles/icons/profile.svg';
+import LogoIcon from '../assets/icons/logo.svg';
+import PlusIcon from '../assets/icons/plus.svg';
+import ProfileIcon from '../assets/icons/profile.svg';
 import { RootState } from '../redux/store';
-import SavedIcon from '../styles/icons/heart.svg';
-import SearchIcon from '../styles/icons/search.svg';
+import SavedIcon from '../assets/icons/heart.svg';
+import SearchIcon from '../assets/icons/search.svg';
 import { logoutAction } from '../redux/actions/userActions';
 import { pageRoute } from '../enums';
 import styles from '../styles/layout/_navbar.module.scss';

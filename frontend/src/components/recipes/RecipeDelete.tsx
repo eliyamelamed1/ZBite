@@ -4,12 +4,12 @@ import Image from 'next/image';
 import PropTypes from 'prop-types';
 import React from 'react';
 import UiButton from '../ui/UiButton';
-import deleteIcon from '../../styles/icons/delete-input-icon.svg';
+import deleteIcon from '../../assets/icons/delete-input-icon.svg';
 import { pageRoute } from '../../enums';
 import { recipeDeleteAction } from '../../redux/actions/recipeActions';
 import { useDispatch } from 'react-redux';
 
-// import editInput from '../../styles/icons/edit_input.svg';
+// import editInput from '../../assets/icons/edit_input.svg';
 
 const RecipeDelete: React.FC<{ id: string }> = ({ id }) => {
     const dispatch = useDispatch();

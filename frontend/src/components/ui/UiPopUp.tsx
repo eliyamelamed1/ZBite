@@ -1,7 +1,7 @@
 import React, { ReactChildren } from 'react';
 
 import Image from 'next/image';
-import closeIcon from '../../styles/icons/x.svg';
+import closeIcon from '../../assets/icons/x.svg';
 import styles from '../../styles/ui/UiPopUp.module.scss';
 
 interface DataTypes {
