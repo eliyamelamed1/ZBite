@@ -4,9 +4,9 @@
 
 import React, { useState } from 'react';
 
-import GeneralForm from '../../forms/recipes/GeneralForm';
-import IngredientForm from '../../forms/recipes/IngredientForm';
-import InstructionForm from '../../forms/recipes/InstructionForm';
+import GeneralForm from '../../forms/recipeCreate/GeneralForm';
+import IngredientForm from '../../forms/recipeCreate/IngredientForm';
+import InstructionForm from '../../forms/recipeCreate/InstructionForm';
 import UiButton from '../ui/UiButton';
 import UiPopUp from '../ui/UiPopUp';
 import UiSectionSeparator from '../ui/UiSectionSeperator';

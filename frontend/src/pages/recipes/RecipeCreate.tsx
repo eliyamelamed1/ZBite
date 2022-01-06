@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import GeneralForm from '../../forms/recipes/GeneralForm';
-import IngredientForm from '../../forms/recipes/IngredientForm';
-import InstructionForm from '../../forms/recipes/InstructionForm';
+import GeneralForm from '../../forms/recipeCreate/GeneralForm';
+import IngredientForm from '../../forms/recipeCreate/IngredientForm';
+import InstructionForm from '../../forms/recipeCreate/InstructionForm';
 import { RootState } from '../../redux/store';
 import Router from 'next/router';
 import UiSectionSeparator from '../../components/ui/UiSectionSeperator';
