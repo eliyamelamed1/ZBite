@@ -4,9 +4,10 @@ import Image from 'next/image';
 import StarIcon from '../../assets/icons/star.svg';
 import imageLoader from '../../utils/imageLoader';
 import styles from '../../styles/ui/UiStarsButtons.module.scss';
-import { toast } from 'react-toastify';
 
 const UiStarsButtons: React.FC = ({ setStarsValue, starsValue }) => {
+    console.log('rendered');
+
     const createStarsArray = () => {
         const starsArray = [];
         for (let index = 1; index <= 5; index++) {
