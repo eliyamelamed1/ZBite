@@ -19,13 +19,7 @@ const UiStarsButtons = React.memo(({ setStarsValue, starsValue }) => {
                     onClick={() => setStarsValue(index)}
                 >
                     {StarIcon.src && (
-                        <Image
-                            loader={() => imageLoader({ src: StarIcon.src, width: 100, quality: 100 })}
-                            src={StarIcon.src}
-                            alt='star icon'
-                            height={100}
-                            width={100}
-                        />
+                        <Image loader={imageLoader} src={StarIcon.src} alt='star icon' height={100} width={100} />
                     )}
                 </button>
             );

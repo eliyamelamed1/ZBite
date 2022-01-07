@@ -27,10 +27,9 @@ const ReviewCreate: React.FC<{ recipeId: string }> = ({ recipeId }) => {
     };
     const { isUserAuthenticated } = useSelector((state: RootState) => state.userReducer);
 
-    const toggleReviewForm = async (e) => {
+    const toggleReviewForm = (e) => {
         e.preventDefault();
-        if (!isUserAuthenticated) await Router.push(pageRoute().login);
-
+        if (!isUserAuthenticated) return Router.push(pageRoute().login);
         setDisplayForm(true);
     };
     const onSubmit = async (e) => {
