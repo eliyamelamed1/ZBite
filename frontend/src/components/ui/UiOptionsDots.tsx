@@ -15,7 +15,12 @@ const UiOptionsDots = ({ children, lying = true }) => {
 
     return (
         <section className={styles.optionsDots}>
-            <button className={styles.button} type='button' onClick={() => setShowOptions(!showOptions)}>
+            <button
+                data-testid='optionsDots'
+                className={styles.button}
+                type='button'
+                onClick={() => setShowOptions(!showOptions)}
+            >
                 {icon().src && (
                     <Image loader={imageLoader} src={icon().src} width={100} height={100} alt='options dots' />
                 )}

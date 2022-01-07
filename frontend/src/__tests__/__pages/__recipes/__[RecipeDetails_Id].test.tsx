@@ -13,6 +13,7 @@ import RecipeDetails from '../../../pages/recipes/[RecipeDetails_Id]';
 import axios from 'axios';
 import { getServerSideProps } from '../../../pages/recipes/[RecipeDetails_Id]';
 import store from '../../../redux/store';
+import userEvent from '@testing-library/user-event';
 
 const loadRecipeDetailsActionSpy = jest.spyOn(recipeActions, 'loadRecipeDetailsAction');
 const reviewsInRecipeActionSpy = jest.spyOn(recipeActions, 'reviewsInRecipeAction');
@@ -77,7 +78,7 @@ describe('RecipeDetails - getServerSideProps', () => {
     });
 });
 
-describe('RecipeDetails - recipe of author', () => {
+describe('RecipeDetails - recipe author', () => {
     const userInitialState = {
         loggedUserData: { id: 'eliya' },
         isUserAuthenticated: true,
@@ -133,14 +134,20 @@ describe('RecipeDetails - recipe of author', () => {
         expect(recipeDescription).toBeInTheDocument();
     });
     test('should render authorLinks', () => {
+        const optionsDotsButton = screen.getByTestId('optionsDots');
+        userEvent.click(optionsDotsButton);
         const authorLinks = screen.getByTestId('authorLinks');
 
         expect(authorLinks).toBeInTheDocument();
     });
     test('authorLinks should contain IsRecipeAuthor component', () => {
+        const optionsDotsButton = screen.getByTestId('optionsDots');
+        userEvent.click(optionsDotsButton);
         expect(IsRecipeAuthorSpy).toHaveBeenCalled();
     });
     test('IsRecipeAuthor should render RecipeUpdate component', () => {
+        const optionsDotsButton = screen.getByTestId('optionsDots');
+        userEvent.click(optionsDotsButton);
         const recipeUpdateTestId = screen.getByTestId('recipeUpdate');
 
         expect(recipeUpdateTestId).toBeInTheDocument();
@@ -269,9 +276,13 @@ describe('RecipeDetails - not the recipe author', () => {
         expect(authorLinks).not.toBeInTheDocument();
     });
     test('authorLinks should contain IsRecipeAuthor component', () => {
+        const optionsDotsButton = screen.getByTestId('optionsDots');
+        userEvent.click(optionsDotsButton);
         expect(IsRecipeAuthorSpy).toHaveBeenCalled();
     });
     test('IsRecipeAuthor should not render RecipeUpdate component', () => {
+        const optionsDotsButton = screen.getByTestId('optionsDots');
+        userEvent.click(optionsDotsButton);
         const recipeUpdateTestId = screen.queryByTestId('recipeUpdate');
 
         expect(recipeUpdateTestId).not.toBeInTheDocument();

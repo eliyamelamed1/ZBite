@@ -34,7 +34,7 @@ afterEach(() => {
 
 describe('RecipeUpdate', () => {
     beforeEach(() => {
-        const updateButton = screen.getByRole('button', { name: /update/i });
+        const updateButton = screen.getByRole('button', { name: /update recipe/i });
         userEvent.click(updateButton);
     });
 
