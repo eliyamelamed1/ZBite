@@ -118,7 +118,7 @@ const RecipeUpdate: React.FC<{ id: string }> = ({ id }) => {
     return (
         <div data-testid='recipeUpdate'>
             <form onClick={(e) => handleSubmit(e)}>
-                <UiButton reverse={true}>Update</UiButton>
+                <UiButton reverse={true}>Update Recipe</UiButton>
             </form>
             {displayForm && recipeUpdateSection()}
         </div>

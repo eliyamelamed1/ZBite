@@ -1,6 +1,5 @@
 import IsReviewAuthor from './isReviewAuthor';
 import Link from 'next/link';
-import PropTypes from 'prop-types';
 import React from 'react';
 import UiCircleImage from '../ui/UiCircleImage';
 import UiStars from '../ui/UiStars';
@@ -41,11 +40,13 @@ const ReviewCard = (props: Review) => {
                         <UiStars starsCount={stars} />
                     </div>
                 </div>
-                <div className={styles.created_at}>{created_at?.slice(0, 10)}</div>
+                <div className={styles.created_at}>
+                    <IsReviewAuthor review={props} />
+                    {created_at?.slice(0, 10)}
+                </div>
                 <div className={styles.comment_container}>{comment}</div>
             </section>
             <br />
-            <IsReviewAuthor review={props} />
         </>
     );
     return (

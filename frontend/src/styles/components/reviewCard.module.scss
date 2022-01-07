@@ -1,6 +1,6 @@
 .review_card {
     display: grid;
-    grid-template-columns: 5rem max-content 2.5fr 1fr max-content;
+    grid-template-columns: 5rem max-content 1fr 1fr max-content;
     grid-template-rows: 5rem fit-content;
     grid-gap: 1rem;
     grid-row-gap: 1rem;
@@ -33,9 +33,16 @@
         font-weight: 700;
         grid-column: 4;
         grid-row: 1;
+
         align-self: center;
-        align-self: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
         text-align: right;
+        gap: 1rem;
+
+        width: 10.2rem;
     }
     .comment_container {
         grid-row-gap: 1rem;

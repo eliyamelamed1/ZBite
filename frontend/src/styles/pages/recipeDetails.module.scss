@@ -32,12 +32,12 @@
         text-transform: capitalize;
         width: clamp(22rem, 66.6vw, 66rem);
         display: grid;
-        grid-template-columns: 5rem 1fr 8rem;
+        grid-template-columns: 2rem 5rem 1fr 8rem;
         grid-template-rows: 1fr 1fr;
         align-items: center;
-        column-gap: 2rem;
+        column-gap: clamp(0rem, 3vw, 2rem);
         @include media('>tablet') {
-            grid-template-columns: 5rem 1fr 8rem 22rem;
+            grid-template-columns: 2rem 5rem 1fr 8rem 22rem;
             grid-template-rows: 1fr;
         }
 
@@ -50,6 +50,7 @@
         .author_name {
             display: grid;
             font-weight: 600;
+            overflow: hidden;
         }
 
         .saves_and_ratings_container {
@@ -67,7 +68,7 @@
             justify-content: center;
             width: clamp(22rem, 66.6vw, 66rem);
             @include media('>tablet') {
-                grid-column: 4;
+                grid-column: 5;
                 grid-row: 1;
                 width: 100%;
             }

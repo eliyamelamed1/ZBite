@@ -1,0 +1,13 @@
+.optionsDots {
+    width: 2rem;
+}
+
+.options {
+    position: absolute;
+    width: 10rem;
+    display: grid;
+    gap: 0.5rem;
+    justify-content: center;
+    z-index: 999999;
+    background-color: white;
+}

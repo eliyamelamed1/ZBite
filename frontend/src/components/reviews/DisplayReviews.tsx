@@ -36,7 +36,8 @@ const DisplayReviews = ({ reviewsToDisplay }) => {
             for (let i = 0; i < reviewsToDisplay.length; i += 1) {
                 result.push(
                     <div key={i}>
-                        <div>{reviewsOnPage[i] ? reviewsOnPage[i] : null}</div>
+                        <div>{reviewsOnPage[i] && reviewsOnPage[i]}</div>
+                        <br />
                     </div>
                 );
             }
@@ -46,12 +47,7 @@ const DisplayReviews = ({ reviewsToDisplay }) => {
             return null;
         }
     };
-    return (
-        <div>
-            {getReviews()}
-            <UiSectionSeparator />
-        </div>
-    );
+    return <div>{getReviews()}</div>;
 };
 
 DisplayReviews.propTypes = {

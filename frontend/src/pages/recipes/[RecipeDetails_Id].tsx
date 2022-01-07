@@ -11,7 +11,7 @@ import IsRecipeAuthor from '../../components/recipes/IsRecipeAuthor';
 import Link from 'next/link';
 import ReviewCreate from '../../components/reviews/ReviewCreate';
 import SaveRecipe from '../../components/recipes/SaveRecipe';
-import UiButton from '../../components/ui/UiButton';
+import UiOptionsDots from '../../components/ui/UiOptionsDots';
 import UiSaves from '../../components/ui/UiSaves';
 import UiSectionSeparator from '../../components/ui/UiSectionSeperator';
 import UiStars from '../../components/ui/UiStars';
@@ -68,7 +68,6 @@ const RecipeDetails = (props) => {
         [listOfFilteredReviews, recipeData?.id]
     );
 
-    const authorLinks = <section>{recipeData ? <IsRecipeAuthor recipe={recipeData} /> : null}</section>;
     return (
         <div className={styles.parent}>
             <Head>
@@ -101,6 +100,10 @@ const RecipeDetails = (props) => {
                                 )}
                             </li>
                             <li className={styles.details_container}>
+                                <UiOptionsDots lying={false}>
+                                    {recipeData && <IsRecipeAuthor recipe={recipeData} />}
+                                </UiOptionsDots>
+
                                 <i className={styles.profile_image_container}>asdd</i>
                                 <Link href={`/users/${recipeData?.author?.id}/`} passHref>
                                     <h3 className={styles.author_name}>{recipeData?.author?.name}</h3>
@@ -155,7 +158,6 @@ const RecipeDetails = (props) => {
                     )}
                 </section>
                 <section>{reviewsData && <DisplayReviews reviewsToDisplay={reviewsData} />}</section>
-                <section>{authorLinks}</section>
             </main>
         </div>
     );

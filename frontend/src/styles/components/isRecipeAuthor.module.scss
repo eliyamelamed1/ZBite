@@ -1,4 +1,5 @@
 .authorLinks {
     display: flex;
-    gap: clamp(1rem, 5vw, 5rem);
+    flex-direction: column;
+    gap: 0.5rem;
 }

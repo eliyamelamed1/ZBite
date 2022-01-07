@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import ReviewCreate from './ReviewCreate';
 import ReviewDelete from './ReviewDelete';
 import { RootState } from '../../redux/store';
+import UiOptionsDots from '../ui/UiOptionsDots';
 import { useSelector } from 'react-redux';
 
 interface Review {
@@ -14,11 +15,7 @@ interface Review {
 const IsReviewAuthor: React.FC<{ review: Review }> = ({ review }) => {
     const [isAuthor, setIsAuthor] = useState(false);
     const { loggedUserData } = useSelector((state: RootState) => state.userReducer);
-    const authorLinks = (
-        <>
-            <ReviewDelete reviewId={review.id} recipeId={review.recipe} />
-        </>
-    );
+    const authorLinks = <ReviewDelete reviewId={review.id} recipeId={review.recipe} />;
 
     useEffect(() => {
         {
