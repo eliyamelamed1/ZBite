@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
-
 import Image from 'next/image';
+import React from 'react';
 import StarIcon from '../../assets/icons/star.svg';
 import imageLoader from '../../utils/imageLoader';
 import styles from '../../styles/ui/UiStarsButtons.module.scss';
 
-const UiStarsButtons: React.FC = ({ setStarsValue, starsValue }) => {
-    console.log('rendered');
-
+const UiStarsButtons = React.memo(({ setStarsValue, starsValue }) => {
     const createStarsArray = () => {
         const starsArray = [];
         for (let index = 1; index <= 5; index++) {
@@ -47,6 +44,6 @@ const UiStarsButtons: React.FC = ({ setStarsValue, starsValue }) => {
             <div className={styles.rating_icons}>{renderButtonStars()}</div>
         </section>
     );
-};
+});
 
 export default UiStarsButtons;

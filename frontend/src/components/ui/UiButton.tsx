@@ -6,7 +6,7 @@ interface DataTypes {
     reverse: boolean;
 }
 
-const UiButton: React.FC<DataTypes> = ({ children, reverse }) => {
+const UiButton: React.FC<DataTypes> = React.memo(({ children, reverse }) => {
     const button = (reverse) => {
         if (reverse)
             return (
@@ -24,6 +24,6 @@ const UiButton: React.FC<DataTypes> = ({ children, reverse }) => {
     };
 
     return <>{button(reverse)}</>;
-};
+});
 
 export default UiButton;

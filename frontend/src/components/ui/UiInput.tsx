@@ -9,7 +9,7 @@ interface DataTypes {
     onChange: any;
     required: boolean;
 }
-const UiInput: React.FC<DataTypes> = ({ type, placeholder, name, value, onChange, required = false }) => {
+const UiInput: React.FC<DataTypes> = React.memo(({ type, placeholder, name, value, onChange, required = false }) => {
     const input = () => {
         if (required)
             return (
@@ -35,6 +35,6 @@ const UiInput: React.FC<DataTypes> = ({ type, placeholder, name, value, onChange
         );
     };
     return <>{input()}</>;
-};
+});
 
 export default UiInput;
