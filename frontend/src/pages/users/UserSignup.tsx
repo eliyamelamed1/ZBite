@@ -78,7 +78,7 @@ const UserSignup = () => {
                         name='password'
                         value={password}
                         onChange={(e) => onChange(e)}
-                        minLength={6}
+                        minLength={8}
                         className={styles.password_input}
                         required
                     />
@@ -88,7 +88,7 @@ const UserSignup = () => {
                         name='re_password'
                         value={re_password}
                         onChange={(e) => onChange(e)}
-                        minLength={6}
+                        minLength={8}
                         className={styles.password_input}
                         required
                     />
