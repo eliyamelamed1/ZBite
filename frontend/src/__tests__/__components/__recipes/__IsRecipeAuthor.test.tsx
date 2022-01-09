@@ -30,15 +30,11 @@ describe('IsRecipeAuthor - author', () => {
         );
     });
     test('should render without crashing', () => {});
-    test('should render authorLinks', () => {
-        const authorLinks = screen.getByTestId('authorLinks');
-        expect(authorLinks).toBeInTheDocument();
-    });
-    test('authorLinks should contains RecipeUpdate', () => {
+    test('should render RecipeUpdate', () => {
         const authorLinks = screen.getByTestId('recipeUpdate');
         expect(authorLinks).toBeInTheDocument();
     });
-    test('authorLinks should contains RecipeDelete', () => {
+    test('should render RecipeDelete', () => {
         const authorLinks = screen.getByTestId('recipeDelete');
         expect(authorLinks).toBeInTheDocument();
     });
@@ -61,15 +57,11 @@ describe('IsRecipeAuthor - not author', () => {
         );
     });
     test('should render without crashing', () => {});
-    test('should not render authorLinks', () => {
-        const authorLinks = screen.queryByTestId('authorLinks');
-        expect(authorLinks).not.toBeInTheDocument();
-    });
-    test('authorLinks should not contain RecipeUpdate', () => {
+    test('should not render RecipeUpdate', () => {
         const authorLinks = screen.queryByTestId('recipeUpdate');
         expect(authorLinks).not.toBeInTheDocument();
     });
-    test('authorLinks should not contain RecipeDelete', () => {
+    test('should not render RecipeDelete', () => {
         const authorLinks = screen.queryByTestId('recipeDelete');
         expect(authorLinks).not.toBeInTheDocument();
     });

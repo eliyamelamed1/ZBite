@@ -1,4 +1,4 @@
-export const endpointRoute = (id = String) => ({
+export const endpointRoute = (id = '') => ({
     users: {
         followUser: `${process.env.NEXT_PUBLIC_API_URL}/api/followers/follow/`,
         list: `${process.env.NEXT_PUBLIC_API_URL}/api/accounts/list/`,

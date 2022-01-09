@@ -133,13 +133,6 @@ describe('RecipeDetails - recipe author', () => {
         expect(recipeTitle).toBeInTheDocument();
         expect(recipeDescription).toBeInTheDocument();
     });
-    test('should render authorLinks', () => {
-        const optionsDotsButton = screen.getByTestId('optionsDots');
-        userEvent.click(optionsDotsButton);
-        const authorLinks = screen.getByTestId('authorLinks');
-
-        expect(authorLinks).toBeInTheDocument();
-    });
     test('authorLinks should contain IsRecipeAuthor component', () => {
         const optionsDotsButton = screen.getByTestId('optionsDots');
         userEvent.click(optionsDotsButton);
