@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import RecipeDelete from './RecipeDelete';
 import RecipeUpdate from './RecipeUpdate';
 import { RootState } from '../../redux/store';
-import UiOptionsDots from '../ui/UiOptionsDots';
+import UiOptionsDots from '../ui/optionsForm/UiOptionsDots';
 import styles from '../../styles/components/isRecipeAuthor.module.scss';
 import { useSelector } from 'react-redux';
 
@@ -33,10 +33,10 @@ const IsRecipeAuthor: React.FC<{ recipe: Recipe }> = ({ recipe }) => {
     const { loggedUserData } = useSelector((state: RootState) => state.userReducer);
 
     const authorLinks = (
-        <div className={styles.authorLinks} data-testid='authorLinks'>
+        <>
             <RecipeUpdate id={recipe.id} />
             <RecipeDelete id={recipe.id} />
-        </div>
+        </>
     );
 
     useEffect(() => {

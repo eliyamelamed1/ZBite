@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import ReviewCreate from './ReviewCreate';
 import ReviewDelete from './ReviewDelete';
 import { RootState } from '../../redux/store';
-import UiOptionsDots from '../ui/UiOptionsDots';
+import UiOptionsDots from '../ui/optionsForm/UiOptionsDots';
 import { useSelector } from 'react-redux';
 
 interface Review {

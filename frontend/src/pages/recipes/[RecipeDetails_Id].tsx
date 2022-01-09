@@ -11,7 +11,7 @@ import IsRecipeAuthor from '../../components/recipes/IsRecipeAuthor';
 import Link from 'next/link';
 import ReviewCreate from '../../components/reviews/ReviewCreate';
 import SaveRecipe from '../../components/recipes/SaveRecipe';
-import UiOptionsDots from '../../components/ui/UiOptionsDots';
+import UiOptionsDots from '../../components/ui/optionsForm/UiOptionsDots';
 import UiSaves from '../../components/ui/UiSaves';
 import UiSectionSeparator from '../../components/ui/UiSectionSeperator';
 import UiStars from '../../components/ui/UiStars';

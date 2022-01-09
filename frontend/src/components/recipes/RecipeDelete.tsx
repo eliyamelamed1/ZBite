@@ -4,6 +4,7 @@ import Image from 'next/image';
 import PropTypes from 'prop-types';
 import React from 'react';
 import UiButton from '../ui/UiButton';
+import UiOptionsButton from '../ui/optionsForm/UiOptionsButton';
 import deleteIcon from '../../assets/icons/delete-input-icon.svg';
 import { pageRoute } from '../../enums';
 import { recipeDeleteAction } from '../../redux/actions/recipeActions';
@@ -25,7 +26,7 @@ const RecipeDelete: React.FC<{ id: string }> = ({ id }) => {
     return (
         <div data-testid='recipeDelete'>
             <form onSubmit={onSubmit}>
-                <UiButton reverse={false}>delete Recipe</UiButton>
+                <UiOptionsButton>Delete Recipe</UiOptionsButton>
             </form>
         </div>
     );

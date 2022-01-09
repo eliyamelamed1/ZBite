@@ -1,13 +1,33 @@
+@import '../abstracts/variables';
+
 .optionsDots {
     width: 2rem;
 }
 
-.options {
+.optionsForm {
     position: absolute;
-    width: 10rem;
-    display: grid;
-    gap: 0.5rem;
-    justify-content: center;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
     z-index: 999999;
     background-color: white;
+    width: fit-content;
+    max-width: 15rem;
+
+    box-sizing: border-box;
+    border-radius: 1rem;
+    box-shadow: 0px 3px 6px 1px rgba(0, 0, 0, 0.25);
+}
+
+.formButton {
+    padding: 1.5rem;
+    font-weight: 700;
+    width: 100%;
+    border-radius: 1rem;
+
+    &:hover {
+        color: white;
+        background-color: $primary-color;
+    }
 }

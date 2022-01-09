@@ -5,7 +5,7 @@ import Link from 'next/link';
 import ProfileIcon from '../../assets/icons/profile._pic.svg';
 import PropTypes from 'prop-types';
 import React from 'react';
-import UiOptionsDots from '../ui/UiOptionsDots';
+import UiOptionsDots from '../ui/optionsForm/UiOptionsDots';
 import UiSaves from '../ui/UiSaves';
 import UiStars from '../ui/UiStars';
 import imageLoader from '../../utils/imageLoader';

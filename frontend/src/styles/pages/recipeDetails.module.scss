@@ -79,6 +79,14 @@
         }
     }
 
+    .title,
+    .description,
+    .cook_time_and_serving_container,
+    .ingredients_text_item {
+        width: clamp(22rem, 66.6vw, 66rem);
+        word-wrap: break-word;
+    }
+
     .title {
         font-size: 4rem;
         font-weight: 700;
@@ -101,6 +109,8 @@
         font-size: 1.75rem;
         font-weight: 700;
         color: $primary-color;
+        width: 50%;
+
         span {
             color: black;
         }
@@ -109,6 +119,7 @@
         font-size: 1.75rem;
         font-weight: 700;
         color: $primary-color;
+        width: 50%;
         span {
             color: black;
         }
@@ -136,6 +147,7 @@
         .ingredients_text_item {
             margin-bottom: 1rem;
             font-size: 1.5rem;
+            text-align: center;
         }
     }
 }

@@ -8,6 +8,7 @@ import GeneralForm from '../../forms/recipeCreate/GeneralForm';
 import IngredientForm from '../../forms/recipeCreate/IngredientForm';
 import InstructionForm from '../../forms/recipeCreate/InstructionForm';
 import UiButton from '../ui/UiButton';
+import UiOptionsButton from '../ui/optionsForm/UiOptionsButton';
 import UiPopUp from '../ui/UiPopUp';
 import UiSectionSeparator from '../ui/UiSectionSeperator';
 import { recipeUpdateAction } from '../../redux/actions/recipeActions';
@@ -118,7 +119,7 @@ const RecipeUpdate: React.FC<{ id: string }> = ({ id }) => {
     return (
         <div data-testid='recipeUpdate'>
             <form onClick={(e) => handleSubmit(e)}>
-                <UiButton reverse={true}>Update Recipe</UiButton>
+                <UiOptionsButton>Update Recipe</UiOptionsButton>
             </form>
             {displayForm && recipeUpdateSection()}
         </div>

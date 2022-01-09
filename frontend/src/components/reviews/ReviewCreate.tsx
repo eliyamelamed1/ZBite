@@ -4,7 +4,7 @@ import { RootState } from '../../redux/store';
 import Router from 'next/router';
 import UiButton from '../ui/UiButton';
 import UiInput from '../ui/UiInput';
-import UiOptionsDots from '../ui/UiOptionsDots';
+import UiOptionsDots from '../ui/optionsForm/UiOptionsDots';
 import UiPopUp from '../ui/UiPopUp';
 import UiStarsButtons from '../ui/UiStarsButtons';
 import { pageRoute } from '../../enums';
