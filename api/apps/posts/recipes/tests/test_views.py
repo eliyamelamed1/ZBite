@@ -49,7 +49,6 @@ class TestRecipeCreateView:
                 'cook_time': '2 hours',
                 'ingredients_text_list': '',
                 'instructions_text_list': '',
-                'instructions_image_list': '',
             }
             response = api_client.post(create_recipe_url, data)
 
@@ -67,7 +66,6 @@ class TestRecipeCreateView:
                     'cook_time': '2 hours',
                     'ingredients_text_list': '',
                     'instructions_text_list': '',
-                    'instructions_image_list': '',
                 }
                 api_client.post(create_recipe_url, data)
                 new_recipe = Recipe.objects.get(title=recipe_data.title)
@@ -90,7 +88,6 @@ class TestRecipeCreateView:
                 'cook_time': '2 hours',
                 'ingredients_text_list': '',
                 'instructions_text_list': '',
-                'instructions_image_list': '',
             }
             response = api_client.post(create_recipe_url, data)            
 
@@ -148,7 +145,6 @@ class TestUpdateRecipeView:
                 'cook_time': '2 hours',
                 'ingredients_text_list': ['updated_ingredients_text_list'],
                 'instructions_text_list': ['updated_instructions_text_list'],
-                'instructions_image_list': ['updated_instructions_image_list'],
             }
             response = api_client.patch(new_recipe.get_absolute_url(), data)
 
@@ -165,7 +161,6 @@ class TestUpdateRecipeView:
                 'cook_time': '2 hours',
                 'ingredients_text_list': ['updated_ingredients_text_list'],
                 'instructions_text_list': ['updated_instructions_text_list'],
-                'instructions_image_list': ['updated_instructions_image_list'],
             }
             response = api_client.patch(new_recipe.get_absolute_url(), data)
 
@@ -255,7 +250,6 @@ class TestTopRatedRecipes:
                     'cook_time': '2 hours',
                     'ingredients_text_list': '',
                     'instructions_text_list': '',
-                    'instructions_image_list': '',
                 }
                 api_client.post(create_recipe_url, data)
                 new_recipe = Recipe.objects.all().get(title=recipe_data.title)
@@ -274,7 +268,6 @@ class TestTopRatedRecipes:
                     'cook_time': '2 hours',
                     'ingredients_text_list': '',
                     'instructions_text_list': '',
-                    'instructions_image_list': '',
                 }
                 api_client.post(create_recipe_url, data)
                 new_recipe = Recipe.objects.all().get(title=recipe_data.title)
@@ -311,7 +304,6 @@ class TestTopRatedRecipes:
                     'cook_time': '2 hours',
                     'ingredients_text_list': '',
                     'instructions_text_list': '',
-                    'instructions_image_list': '',
                 }
                 api_client.post(create_recipe_url, data)
                 new_recipe = Recipe.objects.all().get(title=recipe_data.title)
@@ -330,7 +322,6 @@ class TestTopRatedRecipes:
                     'cook_time': '2 hours',
                     'ingredients_text_list': '',
                     'instructions_text_list': '',
-                    'instructions_image_list': '',
                 }
                 api_client.post(create_recipe_url, data)
                 new_recipe = Recipe.objects.all().get(title=recipe_data.title)

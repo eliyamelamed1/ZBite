@@ -36,7 +36,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
         default=uuid.uuid4,
         editable=False
     )
-    photo = models.ImageField(upload_to='media/', blank=True)
+    photo_main = models.ImageField(upload_to='media/', blank=True)
     email = models.EmailField(max_length=255, unique=True)
     name = models.CharField(max_length=255, unique=True)
     is_active = models.BooleanField(default=True)
@@ -44,7 +44,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     followers = models.ManyToManyField('self', default=None, blank=True, related_name='followers_list', symmetrical=False)
     following = models.ManyToManyField('self', default=None, blank=True, related_name='following_list', symmetrical=False)
     saved_recipes = models.ManyToManyField('recipes.Recipe', default=None, blank=True, related_name='saved_recipes', symmetrical=False)  
-    stars = models.TextField(blank=True)
+    stars = models.FloatField(default=0)
 
     objects = UserAccountManager()
 

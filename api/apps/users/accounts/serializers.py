@@ -24,4 +24,4 @@ class SavedRecipesSerializer(serializers.ModelSerializer):
 class AuthorFieldSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id','name',)
+        fields = ('id','name','photo_main',)

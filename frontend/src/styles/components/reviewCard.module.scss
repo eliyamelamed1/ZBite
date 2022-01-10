@@ -1,0 +1,59 @@
+.review_card {
+    display: grid;
+    grid-template-columns: 5rem max-content 1fr 1fr max-content;
+    grid-template-rows: 5rem fit-content;
+    grid-gap: 1rem;
+    grid-row-gap: 1rem;
+
+    .image_container {
+        grid-column: 1;
+        grid-row: 1;
+        width: 5rem;
+    }
+    .author_and_stars_container {
+        grid-column: 2;
+        grid-row: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        align-self: center;
+        text-align: left;
+        .author_container {
+            position: relative;
+            left: 2px;
+            a {
+                color: black;
+                font-size: 1.2rem;
+                font-weight: 700;
+            }
+        }
+    }
+    .created_at {
+        font-size: 1.2rem;
+        font-weight: 700;
+        grid-column: 4;
+        grid-row: 1;
+
+        align-self: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
+        text-align: right;
+        gap: 1rem;
+
+        width: 10.2rem;
+    }
+    .comment_container {
+        grid-row-gap: 1rem;
+        grid-row: 2;
+        font-size: 1.2rem;
+        width: MIN(80vw, 37.5rem);
+        box-sizing: border-box;
+    }
+}
+
+.delete_button {
+    display: grid;
+    justify-content: center;
+}

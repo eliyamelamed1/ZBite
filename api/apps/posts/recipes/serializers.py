@@ -8,7 +8,6 @@ class RecipeSerializer(serializers.ModelSerializer):
     author = AuthorFieldSerializer()
     ingredients_text_list = serializers.ListField()
     instructions_text_list = serializers.ListField()
-    instructions_image_list = serializers.ListField()
 
     class Meta:
         model = Recipe
@@ -17,8 +16,7 @@ class RecipeSerializer(serializers.ModelSerializer):
 class RecipeCreateSerializer(serializers.ModelSerializer):
     ingredients_text_list = serializers.ListField()
     instructions_text_list = serializers.ListField()
-    instructions_image_list = serializers.ListField()
     class Meta:
         model = Recipe
-        fields = ('id','title', 'description', 'photo_main','cook_time','serving', 'ingredients_text_list','instructions_text_list', 'instructions_image_list',)
+        fields = ('id','title', 'description', 'photo_main','cook_time','serving', 'ingredients_text_list','instructions_text_list',)
 

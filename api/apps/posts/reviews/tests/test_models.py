@@ -34,7 +34,8 @@ def test_get_recipe_avg_review_score(api_client):
     new_recipe = Recipe.objects.all().get(id__exact=new_recipe.id)
     data = {
         'recipe': new_recipe.id,
-        'stars': 5
+        'stars': 5,
+        'comment': 'comment'
     }
     api_client.post(review_create_url, data)
     api_client.logout()
@@ -43,7 +44,8 @@ def test_get_recipe_avg_review_score(api_client):
     api_client.force_authenticate(new_user)    
     data = {
         'recipe': new_recipe.id,
-        'stars': 1
+        'stars': 1,
+        'comment': 'comment'
     }
     api_client.post(review_create_url, data)
 
@@ -64,7 +66,6 @@ def test_get_account_stars_score(api_client):
         'cook_time': '2 hours',
         'ingredients_text_list': '',
         'instructions_text_list': '',
-        'instructions_image_list': '',
     }
     api_client.post(create_recipe_url, data)  
 
@@ -76,20 +77,21 @@ def test_get_account_stars_score(api_client):
         'cook_time': '2 hours',
         'ingredients_text_list': '',
         'instructions_text_list': '',
-        'instructions_image_list': '',
     }
     api_client.post(create_recipe_url, data)  
 
     first_recipe = Recipe.objects.all().get(title__exact=first_recipe.title)
     data = {
         'recipe': first_recipe.id,
-        'stars': 5
+        'stars': 5,
+        'comment':'comment'
     }
     api_client.post(review_create_url, data)  
     second_recipe = Recipe.objects.all().get(title__exact=second_recipe.title)
     data = {
         'recipe': second_recipe.id,
-        'stars': 0
+        'stars': 1,
+        'comment':'comment'
     }
     api_client.post(review_create_url, data)  
 
@@ -98,15 +100,17 @@ def test_get_account_stars_score(api_client):
 
     data = {
         'recipe': first_recipe.id,
-        'stars': 1
+        'stars': 1,
+        'comment':'comment'
     }
     api_client.post(review_create_url, data)  
     data = {
         'recipe': second_recipe.id,
-        'stars': 3
+        'stars': 3,
+        'comment':'comment'
     }
     api_client.post(review_create_url, data)  
 
     account_avg_stars = Review.get_account_stars_score(user=user)
 
-    assert account_avg_stars == 2.25
+    assert account_avg_stars == 2.5
