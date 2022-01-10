@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { setLoadingAction } from '../redux/actions/loadingActions';
+import store from '../redux/store';
 import { toast } from 'react-toastify';
 
 //  need to switch to cookie from localStorage
@@ -15,11 +17,28 @@ const axiosInstance = axios.create({
 
 if (auth_token) axiosInstance.defaults.headers.common.Authorization = `Token ${auth_token}`;
 
+axiosInstance.interceptors.request.use(
+    (config) => {
+        // trigger 'loading=true' event here
+        store.dispatch(setLoadingAction(true));
+
+        return config;
+    },
+    (error) => {
+        store.dispatch(setLoadingAction(false));
+        console.log(error);
+
+        return Promise.reject(error);
+    }
+);
+
 axiosInstance.interceptors.response.use(
     (response) => {
+        store.dispatch(setLoadingAction(false));
         return response;
     },
     (error) => {
+        store.dispatch(setLoadingAction(false));
         const object = error.response.data;
         if (object) {
             const key = Object.keys(object)[0];
@@ -30,7 +49,7 @@ axiosInstance.interceptors.response.use(
                 toast.error(errorMassage);
             }
         }
-        throw new Error(error);
+        return Promise.reject(error);
     }
 );
 

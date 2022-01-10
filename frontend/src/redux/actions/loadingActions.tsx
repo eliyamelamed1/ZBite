@@ -1,8 +1,5 @@
 import { SET_LOADING } from '../types';
 
-export const setLoadingAction = (value: boolean) => async (dispatch) => {
-    try {
-        await console.log(123);
-        dispatch({ type: SET_LOADING, payload: value });
-    } catch {}
+export const setLoadingAction = (value) => (dispatch) => {
+    dispatch({ type: SET_LOADING, payload: value });
 };

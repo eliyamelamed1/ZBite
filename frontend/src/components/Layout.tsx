@@ -17,7 +17,7 @@ const Layout: React.FC<DataTypes> = ({ children }) => {
     return (
         <div data-testid='layout'>
             <div className={styles.centerScreen}>
-                <PacmanLoader loading={isLoading} color={'#ff5349'} size={40} margin={2} />
+                <PacmanLoader loading={isLoading} color={'#ff5349'} size={40} margin={2} speedMultiplier={2} />
             </div>
             <meta name='csrf_token' content='{{ csrf_token }}'></meta>
             <Navbar />
