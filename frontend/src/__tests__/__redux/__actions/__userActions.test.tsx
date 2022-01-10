@@ -14,7 +14,6 @@ import {
     userUpdateAction,
 } from '../../../redux/actions/userActions';
 
-import axios from 'axios';
 import configureStore from 'redux-mock-store';
 import { endpointRoute } from '../../../enums';
 import mockAxios from '../../../__mocks__/axios';

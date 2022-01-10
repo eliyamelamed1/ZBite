@@ -7,10 +7,12 @@ import Router from 'next/router';
 import { ToastContainer } from 'react-toastify';
 import { loginAction } from '../../redux/actions/userActions';
 import { pageRoute } from '../../enums';
+import { setLoadingAction } from '../../redux/actions/loadingActions';
 import styles from '../../styles/pages/login.module.scss';
 
 const UserLogin = () => {
     const dispatch = useDispatch();
+
     const { isUserAuthenticated } = useSelector((state: RootState) => state.userReducer);
     const [formData, setFormData] = useState({
         email: '',
@@ -21,11 +23,9 @@ const UserLogin = () => {
 
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
-        try {
-            dispatch(loginAction({ email, password }));
-        } catch {}
+        await dispatch(loginAction({ email, password }));
     };
 
     if (isUserAuthenticated) {

@@ -55,6 +55,9 @@ export const REVIEW_DELETE_FAIL = 'REVIEW_DELETE_FAIL';
 export const REVIEWS_IN_RECIPE_SUCCESS = 'REVIEWS_IN_RECIPE_SUCCESS';
 export const REVIEWS_IN_RECIPE_FAIL = 'REVIEWS_IN_RECIPE_FAIL';
 
+// loadingActions
+export const SET_LOADING = 'SET_LOADING';
+
 // test
 export const TEST_CASE_AUTH = 'TEST_CASE_AUTH';
 export const TEST_CASE_RECIPE = 'TEST_CASE_RECIPE';

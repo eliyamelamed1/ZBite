@@ -23,7 +23,6 @@ import {
     UPDATE_RECIPE_SUCCESS,
 } from '../types';
 
-import axios from 'axios';
 import axiosInstance from '../../utils/axiosInstance';
 import { endpointRoute } from '../../enums';
 import { loadLoggedUserDataAction } from './userActions';
