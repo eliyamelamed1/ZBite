@@ -9,7 +9,6 @@ import styles from '../../../styles/ui/UiOptionsDots.module.scss';
 
 const UiOptionsDots = ({ children, lying = true, formSide = 'left' }) => {
     const [showOptions, setShowOptions] = useState(false);
-    console.log(123);
 
     return (
         <section className={styles.optionsDots}>

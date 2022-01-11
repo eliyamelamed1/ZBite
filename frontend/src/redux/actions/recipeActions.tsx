@@ -141,8 +141,6 @@ export const reviewCreateAction =
     ({ recipeId, stars, comment = '' }) =>
     async (dispatch) => {
         try {
-            console.log(1);
-
             const body = JSON.stringify({
                 recipe: recipeId,
                 stars,
