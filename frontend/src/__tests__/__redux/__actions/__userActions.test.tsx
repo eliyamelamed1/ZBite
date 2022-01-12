@@ -92,7 +92,10 @@ describe('axios request should match url endpoint, and parameters', () => {
 
             expect(mockAxios.delete.mock.calls.length).toBe(1);
             expect(mockAxios.delete.mock.calls[0][0]).toStrictEqual(endpointUrl);
-            expect(store.getActions()).toEqual([{ payload: true, type: 'DELETE_USER_SUCCESS' }, { type: 'LOGOUT' }]);
+            expect(store.getActions()).toEqual([
+                { payload: true, type: 'DELETE_USER_SUCCESS' },
+                { type: 'LOGOUT_SUCCESS' },
+            ]);
         });
         test('loginAction', async () => {
             const { email, password } = parameters;
@@ -146,11 +149,13 @@ describe('axios request should match url endpoint, and parameters', () => {
             expect(mockAxios.post.mock.calls[0][0]).toStrictEqual(endpointRoute().users.resetPasswordConfirm);
             expect(mockAxios.post.mock.calls[0][1]).toStrictEqual(body);
         });
-        test('logoutAction', async () => {
+        test('logout Action', async () => {
             await store.dispatch(logoutAction());
 
             expect(store.getActions().length).toBe(1);
-            expect(store.getActions()).toEqual([{ type: 'LOGOUT' }]);
+            expect(store.getActions()).toEqual([{ type: 'LOGOUT_SUCCESS' }]);
+            expect(mockAxios.post.mock.calls.length).toBe(1);
+            expect(mockAxios.post.mock.calls[0][0]).toStrictEqual(endpointRoute().users.logout);
         });
     });
 });

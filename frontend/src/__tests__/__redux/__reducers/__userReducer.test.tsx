@@ -132,8 +132,8 @@ describe('userReducer - cases that modify the state ', () => {
         expect(storeState.userReducer.listOfLeaderboardUsers).toBeNull();
         expect(Router.push.mock.calls.length).toBe(0);
     });
-    test('case LOGOUT', () => {
-        store.dispatch({ type: 'LOGOUT', payload: updatedState });
+    test('case LOGOUT_SUCCESS', () => {
+        store.dispatch({ type: 'LOGOUT_SUCCESS', payload: updatedState });
         const storeState = store.getState();
         expect(storeState.userReducer.auth_token).toBeNull();
         expect(storeState.userReducer.isUserAuthenticated).toBe(false);
@@ -168,6 +168,9 @@ describe('userReducer - cases that return ...state', () => {
 
     test('case GET_USER_DETAILS_FAIL', () => {
         store.dispatch({ type: 'GET_USER_DETAILS_FAIL', payload: updatedState });
+    });
+    test('case LOGOUT_FAIL', () => {
+        store.dispatch({ type: 'LOGOUT_FAIL', payload: updatedState });
     });
     test('case UPDATE_USER_FAIL ', () => {
         store.dispatch({ type: 'UPDATE_USER_FAIL', payload: updatedState });

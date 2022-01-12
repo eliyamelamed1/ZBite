@@ -13,7 +13,7 @@ const firstReviewData = {
     id: 'reviewId',
     stars: 'stars',
     comment: 'comment',
-    image: '/image',
+    created_at: '2021-01-03T16:36:24.778530Z',
 };
 const secondReviewData = {
     author: { name: 'secondAuthorId', id: 'secondAuthorName' },
@@ -21,7 +21,7 @@ const secondReviewData = {
     id: 'reviewId2',
     stars: 'stars2',
     comment: 'comment2',
-    image: '/image2',
+    created_at: '2022-01-03T16:36:24.778530Z',
 };
 
 const reviewsToDisplay = [firstReviewData, secondReviewData];

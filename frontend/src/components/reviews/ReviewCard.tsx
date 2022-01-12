@@ -19,8 +19,6 @@ interface Review {
 
 const ReviewCard = (props: Review) => {
     const { author, comment, stars, created_at } = props;
-    let newDate = new Date(created_at);
-    const formattedDate = Intl.DateTimeFormat('fr-FR').format(newDate);
 
     const reviewProps = (
         <>
@@ -44,7 +42,7 @@ const ReviewCard = (props: Review) => {
                 </div>
                 <div className={styles.created_at}>
                     <IsReviewAuthor review={props} />
-                    {formattedDate}
+                    {created_at}
                 </div>
                 <div className={styles.comment_container}>{comment}</div>
             </section>

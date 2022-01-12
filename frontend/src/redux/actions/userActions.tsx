@@ -14,6 +14,8 @@ import {
     LOGIN_FAIL,
     LOGIN_SUCCESS,
     LOGOUT,
+    LOGOUT_FAIL,
+    LOGOUT_SUCCESS,
     RESET_PASSWORD_CONFIRM_FAIL,
     RESET_PASSWORD_CONFIRM_SUCCESS,
     RESET_PASSWORD_FAIL,
@@ -181,8 +183,14 @@ export const resetPasswordConfirmAction =
     };
 
 export const logoutAction = () => async (dispatch) => {
-    toast.success('logout successfully');
-    dispatch({ type: LOGOUT });
+    try {
+        toast.success('logout successfully');
+        axiosInstance.post(endpointRoute().users.logout);
+        dispatch({ type: LOGOUT_SUCCESS });
+    } catch {
+        toast.success('logout failed');
+        dispatch({ type: LOGOUT_FAIL });
+    }
 };
 
 export const loadLeaderboardAction = () => async (dispatch) => {

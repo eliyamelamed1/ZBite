@@ -4,6 +4,7 @@ export const endpointRoute = (id = '') => ({
         list: `${process.env.NEXT_PUBLIC_API_URL}/api/accounts/list/`,
         loggedUserData: `${process.env.NEXT_PUBLIC_API_URL}/api/accounts/logged_user/`,
         login: `${process.env.NEXT_PUBLIC_API_URL}/api/djoser/token/login/`,
+        logout: `${process.env.NEXT_PUBLIC_API_URL}/api/djoser/token/logout/`,
         signup: `${process.env.NEXT_PUBLIC_API_URL}/api/djoser/users/`,
         activate: `${process.env.NEXT_PUBLIC_API_URL}/api/djoser/users/activation/`,
         resetPassword: `${process.env.NEXT_PUBLIC_API_URL}/api/djoser/users/reset_password/`,
