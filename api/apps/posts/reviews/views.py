@@ -1,4 +1,3 @@
-from django.core.exceptions import ValidationError
 from django.http import HttpResponse
 from rest_framework import permissions
 from rest_framework.generics import CreateAPIView, DestroyAPIView
@@ -35,11 +34,11 @@ class ReviewCreate(CreateAPIView):
                 stars = data['stars']
                 comment = data['comment']
             except:
-                raise ValidationError(['at least one input is missing'])
+                raise ValueError(['at least one input is missing'])
 
 
             if (float(stars)>5 or float(stars)<1):
-                raise ValidationError(['stars should be above 1 and below 5'])
+                raise ValueError(['stars should be above 1 and below 5'])
             
             # if already reviewed delete previous review and create new one
             try:
@@ -65,6 +64,21 @@ class ReviewDelete(DestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewDetailSerializer
 
+    def destroy(self, request, *args, **kwargs):
+        review_id = kwargs['pk']
+        review = Review.objects.all().get(id=review_id)
+        Review.objects.get(id=review_id).delete()
+
+        recipe = Recipe.objects.all().get(id=review.recipe.id)
+        recipe.stars = Review.get_recipe_stars_score(recipe=recipe)
+        recipe.save()
+
+        recipe_author = recipe.author
+        recipe_author.stars = Review.get_account_stars_score(user=recipe_author)
+        recipe_author.save()
+
+
+        return HttpResponse(status=204)
 
 class ReviewsInRecipe(APIView):
     permission_classes = (permissions.AllowAny,)
