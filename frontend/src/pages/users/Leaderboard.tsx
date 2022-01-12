@@ -9,7 +9,7 @@ import styles from '../../styles/pages/leaderboard.module.scss';
 interface User {
     photo_main?: { src: string };
     name: string;
-    score: string;
+    stars: number;
 }
 interface DataTypes {
     listOfLeaderboardUsers: User[];
@@ -39,8 +39,8 @@ const Leaderboard: React.FC<DataTypes> = (props) => {
                         <span className={styles.full_name}>{user?.name}</span>
                         <section className={styles.score_section}>
                             {scoreIcon?.src && <UiCircleImage src={scoreIcon?.src} />}
-                            {user?.score ? (
-                                <span className={styles.score_text}>{user?.score}</span>
+                            {user?.stars ? (
+                                <span className={styles.score_text}>{user?.stars.toFixed(1)}</span>
                             ) : (
                                 <span className={styles.score_text}>0</span>
                             )}
@@ -70,8 +70,8 @@ const Leaderboard: React.FC<DataTypes> = (props) => {
                     </section>
                     <section className={styles.score_section}>
                         {scoreIcon.src && <UiCircleImage src={scoreIcon.src} />}
-                        {user?.score ? (
-                            <span className={styles.score_text}>{user?.score}</span>
+                        {user?.stars ? (
+                            <span className={styles.score_text}>{user?.stars}</span>
                         ) : (
                             <span className={styles.score_text}>0</span>
                         )}
