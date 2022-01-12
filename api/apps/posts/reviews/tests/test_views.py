@@ -2,7 +2,6 @@
 # TODO test perform_create
 
 import pytest
-from django.core.exceptions import ValidationError
 
 from apps.users.accounts.models import UserAccount
 from factories import RecipeFactory, ReviewFactory, UserFactory
@@ -59,7 +58,7 @@ class TestReviewCreateView:
             assert new_recipe.stars == 5.0
 
         def test_creating_a_review_without_comment_raise_validation_error(self, api_client):
-            with pytest.raises(ValidationError):
+            with pytest.raises(ValueError):
                 new_user = UserFactory()
                 api_client.force_authenticate(new_user)
                 new_recipe = RecipeFactory()
@@ -73,7 +72,7 @@ class TestReviewCreateView:
                 assert response.status_code == 5
 
         def test_review_above_5_stars_raise_validation_error(self, api_client):
-            with pytest.raises(ValidationError):
+            with pytest.raises(ValueError):
                 new_user = UserFactory()
                 api_client.force_authenticate(new_user)
                 new_recipe = RecipeFactory()
@@ -87,7 +86,7 @@ class TestReviewCreateView:
                 new_recipe = Recipe.objects.all().get(id__exact=new_recipe.id)
 
         def test_review_below_1_stars_raise_validation_error(self, api_client):
-            with pytest.raises(ValidationError):
+            with pytest.raises(ValueError):
                 new_user = UserFactory()
                 api_client.force_authenticate(new_user)
                 new_recipe = RecipeFactory()

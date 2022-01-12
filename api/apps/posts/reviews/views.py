@@ -67,6 +67,9 @@ class ReviewDelete(DestroyAPIView):
     def destroy(self, request, *args, **kwargs):
         review_id = kwargs['pk']
         review = Review.objects.all().get(id=review_id)
+        
+        if (review.author != self.request.user): return HttpResponse(status=403)  
+
         Review.objects.get(id=review_id).delete()
 
         recipe = Recipe.objects.all().get(id=review.recipe.id)
