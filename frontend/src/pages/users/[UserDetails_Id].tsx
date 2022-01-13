@@ -6,6 +6,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import ProfileIcon from '../../assets/icons/profile._pic.svg';
 import ScoreIcon from '../../assets/icons/score-icon.svg';
+import UiOptionsDots from '../../components/ui/optionsForm/UiOptionsDots';
 import UserDelete from '../../components/users/UserDelete';
 import UserUpdate from '../../components/users/UserUpdate';
 import { loadUserDetailsAction } from '../../redux/actions/userActions';
@@ -66,12 +67,10 @@ const UserDetails: React.FC<{ serverUserData: User }> = (props) => {
     );
 
     const myProfileLinks = (
-        <main data-testid='myProfileLinks'>
-            <div>
-                <UserDelete id={userData?.id} />
-                <UserUpdate id={userData?.id} />
-            </div>
-        </main>
+        <div data-testid='myProfileLinks'>
+            <UserDelete id={userData?.id} />
+            <UserUpdate id={userData?.id} />
+        </div>
     );
     return (
         <div className={styles.parent_container}>
@@ -80,6 +79,9 @@ const UserDetails: React.FC<{ serverUserData: User }> = (props) => {
                 <meta name='description' content='recipes detail' />
             </Head>
             <section data-testid='userDetails' className={styles.section_container}>
+                <UiOptionsDots sectionClass={styles.three_dots_section}>
+                    <>{isMyProfile && myProfileLinks}</>
+                </UiOptionsDots>
                 <i className={styles.profile_pic}>
                     {ProfileIcon.src && <Image src={ProfileIcon.src} width={100} height={100} alt='profile pic' />}
                 </i>
@@ -88,7 +90,7 @@ const UserDetails: React.FC<{ serverUserData: User }> = (props) => {
                     <i className={styles.score_icon}>
                         {ScoreIcon.src && <Image src={ScoreIcon.src} width={100} height={100} alt='score icon' />}
                     </i>
-                    <span className={styles.score}>score: 7.6K</span>
+                    <span className={styles.score_text}>score: 7.6K</span>
                 </ul>
                 <ul className={styles.social_container}>
                     <li className={styles.followers_item}>
@@ -107,16 +109,13 @@ const UserDetails: React.FC<{ serverUserData: User }> = (props) => {
                         </span>
                     </li>
                 </ul>
-                <div className={styles.follow_button_container}>
-                    {isMyProfile || <FollowUser userToFollow={userData?.id} />}
-                </div>
-                <ul className={styles.option_list}>
-                    <button className={`${styles.posts_button} ${styles.option_list_active}`}>Posts</button>
-                    <button className={styles.edit_button}>Edit</button>
-                </ul>
+                {isMyProfile || (
+                    <div className={styles.follow_button_container}>
+                        <FollowUser userToFollow={userData?.id} />
+                    </div>
+                )}
+                <h1 className={styles.posts_button}>Posts</h1>
             </section>
-            <div>{isMyProfile && <div>{myProfileLinks}</div>}</div>
-            <p>{userData?.email}</p>
         </div>
     );
 };

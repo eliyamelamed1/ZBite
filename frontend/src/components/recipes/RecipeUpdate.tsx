@@ -99,11 +99,8 @@ const RecipeUpdate: React.FC<{ id: string }> = ({ id }) => {
             setDisplayForm(false);
         } catch {}
     };
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setDisplayForm(true);
-    };
-    const recipeUpdateSection = () => (
+
+    const recipeUpdateForm = (
         <UiPopUp onSubmit={onSubmit} setDisplayForm={setDisplayForm}>
             <h1>Update Recipe</h1>
             {GeneralForm({ onChangeImage, photoMainBlob, onChangeText, title, description, cookTime, serving })}
@@ -118,10 +115,10 @@ const RecipeUpdate: React.FC<{ id: string }> = ({ id }) => {
 
     return (
         <div data-testid='recipeUpdate'>
-            <form onClick={(e) => handleSubmit(e)}>
+            <form onClick={() => setDisplayForm(!displayForm)}>
                 <UiOptionsButton>Update Recipe</UiOptionsButton>
             </form>
-            {displayForm && recipeUpdateSection()}
+            {displayForm && recipeUpdateForm}
         </div>
     );
 };

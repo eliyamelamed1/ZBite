@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import Router from 'next/router';
+import UiOptionsButton from '../ui/optionsForm/UiOptionsButton';
 import { pageRoute } from '../../enums';
 import { useDispatch } from 'react-redux';
 import { userDeleteAction } from '../../redux/actions/userActions';
@@ -19,7 +20,7 @@ const UserDelete: React.FC<{ id: string }> = ({ id }) => {
     return (
         <main data-testid='userDelete'>
             <form onSubmit={onSubmit}>
-                <button type='submit'>delete user</button>
+                <UiOptionsButton>delete user</UiOptionsButton>
             </form>
         </main>
     );

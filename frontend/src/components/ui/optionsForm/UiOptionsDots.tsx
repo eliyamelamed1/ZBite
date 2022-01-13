@@ -7,11 +7,11 @@ import styles from '../../../styles/ui/UiOptionsDots.module.scss';
 
 // import standingOptionsDots from '../../assets/icons/optionsDots.svg';
 
-const UiOptionsDots = ({ children, lying = true, formSide = 'left' }) => {
+const UiOptionsDots = ({ children, sectionClass = '', lying = true, formSide = 'left' }) => {
     const [showOptions, setShowOptions] = useState(false);
 
     return (
-        <section className={styles.optionsDots}>
+        <section className={`${styles.optionsDots} ${sectionClass}`}>
             <button
                 data-testid='optionsDots'
                 className={styles.button}
