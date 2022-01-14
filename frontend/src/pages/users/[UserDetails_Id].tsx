@@ -11,12 +11,14 @@ import UserDelete from '../../components/users/UserDelete';
 import UserUpdate from '../../components/users/UserUpdate';
 import { loadUserDetailsAction } from '../../redux/actions/userActions';
 import styles from '../../styles/pages/userProfile.module.scss';
+import uploadImageIcon from '../../assets/icons/upload_image.svg';
 import { useSelector } from 'react-redux';
 
 interface User {
     id: string;
     name: string;
     email: string;
+    photo_main: any;
     followers: string[];
     following: string[];
 }
@@ -69,7 +71,7 @@ const UserDetails: React.FC<{ serverUserData: User }> = (props) => {
     const myProfileLinks = (
         <div data-testid='myProfileLinks'>
             <UserDelete id={userData?.id} />
-            <UserUpdate id={userData?.id} />
+            <UserUpdate id={userData?.id} emailPlaceholder={userData.email} namePlaceholder={userData.name} />
         </div>
     );
     return (
@@ -83,7 +85,13 @@ const UserDetails: React.FC<{ serverUserData: User }> = (props) => {
                     <>{isMyProfile && myProfileLinks}</>
                 </UiOptionsDots>
                 <i className={styles.profile_pic}>
-                    {ProfileIcon.src && <Image src={ProfileIcon.src} width={100} height={100} alt='profile pic' />}
+                    {userData.photo_main ? (
+                        <Image src={userData.photo_main} width={100} height={100} alt='profilesad' />
+                    ) : (
+                        uploadImageIcon.src && (
+                            <Image src={uploadImageIcon.src} width={100} height={100} alt='profile pic' />
+                        )
+                    )}
                 </i>
                 <span className={styles.name}>{userData?.name}</span>
                 <ul className={styles.score_container}>

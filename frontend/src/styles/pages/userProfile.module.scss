@@ -25,7 +25,11 @@
         margin-top: 0rem;
         margin-right: clamp(18rem, 70vw, 67.5rem);
     }
-
+    .profile_pic {
+        img {
+            border-radius: 5rem;
+        }
+    }
     .name {
         font-weight: 700;
         text-transform: capitalize;

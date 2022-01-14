@@ -43,7 +43,7 @@ export const recipeDeleteAction =
 
 export const recipeCreateAction =
     ({
-        photoMain,
+        photoMain = undefined,
         title,
         description,
         cookTime,
@@ -51,7 +51,7 @@ export const recipeCreateAction =
         ingredientsTextList,
         instructionsTextList,
     }: {
-        photoMain: File;
+        photoMain: File | undefined;
         title: string;
         description: string;
         cookTime: string;
@@ -63,7 +63,7 @@ export const recipeCreateAction =
         try {
             const formData = new FormData();
 
-            formData.append('photo_main', photoMain);
+            photoMain && formData.append('photo_main', photoMain);
             formData.append('title', title);
             formData.append('description', description);
             formData.append('cook_time', cookTime);
@@ -80,12 +80,12 @@ export const recipeCreateAction =
     };
 
 export const recipeUpdateAction =
-    ({ id, photoMain, title, description, serving, cookTime, ingredientsTextList, instructionsTextList }) =>
+    ({ id, title, description, serving, cookTime, ingredientsTextList, instructionsTextList, photoMain = undefined }) =>
     async (dispatch) => {
         try {
             const formData = new FormData();
 
-            formData.append('photo_main', photoMain);
+            photoMain && formData.append('photo_main', photoMain);
             formData.append('title', title);
             formData.append('description', description);
             formData.append('cook_time', cookTime);

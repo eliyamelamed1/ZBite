@@ -64,14 +64,15 @@ export const loadUserDetailsAction =
     };
 
 export const userUpdateAction =
-    ({ id, email, name }) =>
+    ({ id, email, name, photoMain = undefined }) =>
     async (dispatch) => {
         try {
-            const body = JSON.stringify({
-                email,
-                name,
-            });
-            const res = await axiosInstance.patch(endpointRoute(id).users.details, body);
+            const formData = new FormData();
+            formData.append('email', email);
+            formData.append('name', name);
+            photoMain && formData.append('photo_main', photoMain);
+
+            const res = await axiosInstance.patch(endpointRoute(id).users.details, formData);
             toast.success('user updated successfully');
             dispatch({ type: UPDATE_USER_SUCCESS, payload: res.data });
         } catch (err) {
