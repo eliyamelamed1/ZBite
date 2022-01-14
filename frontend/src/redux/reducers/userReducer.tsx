@@ -73,10 +73,13 @@ export default function userReducer(state = initialState, action) {
                 auth_token: payload.auth_token,
             };
         case GET_LOGGED_USER_DETAILS_SUCCESS:
+            const apiRoute = process.env.NEXT_PUBLIC_API_URL;
+            if (payload?.photo_main?.includes(apiRoute) === false)
+                payload.photo_main = `${apiRoute}${payload.photo_main}`;
             localStorage.setItem('loggedUserData', JSON.stringify(payload));
             return {
                 ...state,
-                loggedUserData: { ...payload, photo_main: `${process.env.NEXT_PUBLIC_API_URL}${payload.photo_main}` },
+                loggedUserData: payload,
             };
         case SIGNUP_SUCCESS:
             Router.push(pageRoute().login);
