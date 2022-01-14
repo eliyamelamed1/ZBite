@@ -40,72 +40,90 @@ describe('authenticated users', () => {
             expect(testid).toBeInTheDocument();
         });
     });
-    describe('name input', () => {
-        test('render name textbox', () => {
-            const nameInput = screen.getByPlaceholderText(/name/i);
-            expect(nameInput).toBeInTheDocument();
-        });
-        test('name attributes', () => {
-            const nameInput = screen.getByPlaceholderText(/name/i);
-            expect(nameInput.required).toBe(true);
-            expect(nameInput.type).toBe('text');
-            expect(nameInput.name).toBe('name');
-        });
-        test('name value change according to input (onchange)', () => {
-            const nameInput = screen.getByPlaceholderText(/name/i);
-            userEvent.type(nameInput, 'new name');
-            expect(nameInput.value).toBe('new name');
-        });
-    });
 
-    describe('email input', () => {
-        test('render email textbox', () => {
-            const emailInput = screen.getByPlaceholderText(/email/i);
-            expect(emailInput).toBeInTheDocument();
-        });
-        test('email attributes', () => {
-            const emailInput = screen.getByPlaceholderText(/email/i);
-            expect(emailInput.required).toBe(true);
-            expect(emailInput.type).toBe('text');
-            expect(emailInput.name).toBe('email');
-        });
-        test('email value change according to input (onchange)', () => {
-            const emailInput = screen.getByPlaceholderText(/email/i);
-            userEvent.type(emailInput, 'new email');
-            expect(emailInput.value).toBe('new email');
-        });
-    });
-
-    describe('UserUpdate - update button', () => {
+    describe('UserUpdate - update button (open update form button) ', () => {
         test('should render update button', () => {
-            const updateButton = screen.getByRole('button', { name: /update/i });
-            expect(updateButton).toBeInTheDocument();
+            const openUpdateForm = screen.getByRole('button', { name: /update/i });
+            expect(openUpdateForm).toBeInTheDocument();
         });
-        test('button type should be type submit', () => {
-            const updateButton = screen.getByRole('button', { name: /update/i });
-            expect(updateButton.type).toBe('submit');
+        test('button type should be type button', () => {
+            const openUpdateForm = screen.getByRole('button', { name: /update/i });
+            expect(openUpdateForm.type).toBe('button');
         });
     });
 
-    describe('onSubmit - should dispatch UserUpdateAction ', () => {
-        test('submit should call UserUpdateAction', () => {
-            const emailInput = screen.getByPlaceholderText(/email/i);
-            const nameInput = screen.getByPlaceholderText(/name/i);
-            const updateButton = screen.getByRole('button', { name: /update/i });
+    describe('open update form ', () => {
+        beforeEach(() => {
+            const openFormButton = screen.getByRole('button', { name: /update/i });
+            userEvent.click(openFormButton);
+        });
+        describe('name input', () => {
+            test('render name textbox', () => {
+                const nameInput = screen.getByPlaceholderText(/name/i);
+                expect(nameInput).toBeInTheDocument();
+            });
+            test('name attributes', () => {
+                const nameInput = screen.getByPlaceholderText(/name/i);
+                expect(nameInput.required).toBe(true);
+                expect(nameInput.type).toBe('text');
+                expect(nameInput.name).toBe('name');
+            });
+            test('name value change according to input (onchange)', () => {
+                const nameInput = screen.getByPlaceholderText(/name/i);
+                userEvent.type(nameInput, 'new name');
+                expect(nameInput.value).toBe('new name');
+            });
+        });
 
-            const emailValue = 'testuser@gmail.com';
-            const nameValue = 'testuser';
+        describe('email input', () => {
+            test('render email textbox', () => {
+                const emailInput = screen.getByPlaceholderText(/email/i);
+                expect(emailInput).toBeInTheDocument();
+            });
+            test('email attributes', () => {
+                const emailInput = screen.getByPlaceholderText(/email/i);
+                expect(emailInput.required).toBe(true);
+                expect(emailInput.type).toBe('text');
+                expect(emailInput.name).toBe('email');
+            });
+            test('email value change according to input (onchange)', () => {
+                const emailInput = screen.getByPlaceholderText(/email/i);
+                userEvent.type(emailInput, 'new email');
+                expect(emailInput.value).toBe('new email');
+            });
+        });
 
-            userEvent.type(emailInput, emailValue);
-            userEvent.type(nameInput, nameValue);
-            userEvent.click(updateButton);
+        describe('UserUpdate - submit button', () => {
+            test('should render submit button', () => {
+                const submitButton = screen.getByRole('button', { name: /submit/i });
+                expect(submitButton).toBeInTheDocument();
+            });
+            test('button type should be type button', () => {
+                const submitButton = screen.getByRole('button', { name: /submit/i });
+                expect(submitButton.type).toBe('submit');
+            });
+        });
 
-            const timesActionDispatched = userUpdateAction.mock.calls.length;
+        describe('onSubmit - should dispatch UserUpdateAction ', () => {
+            test('submit should call UserUpdateAction', () => {
+                const emailInput = screen.getByPlaceholderText(/email/i);
+                const nameInput = screen.getByPlaceholderText(/name/i);
+                const submitButton = screen.getByRole('button', { name: /submit/i });
 
-            expect(timesActionDispatched).toBe(1);
-            expect(userUpdateAction.mock.calls[0][0].email).toEqual(emailValue);
-            expect(userUpdateAction.mock.calls[0][0].name).toEqual(nameValue);
-            expect(userUpdateAction.mock.calls[0][0].id).toEqual(idValue);
+                const emailValue = 'testuser@gmail.com';
+                const nameValue = 'testuser';
+
+                userEvent.type(emailInput, emailValue);
+                userEvent.type(nameInput, nameValue);
+                userEvent.click(submitButton);
+
+                const timesActionDispatched = userUpdateAction.mock.calls.length;
+
+                expect(timesActionDispatched).toBe(1);
+                expect(userUpdateAction.mock.calls[0][0].email).toEqual(emailValue);
+                expect(userUpdateAction.mock.calls[0][0].name).toEqual(nameValue);
+                expect(userUpdateAction.mock.calls[0][0].id).toEqual(idValue);
+            });
         });
     });
 });

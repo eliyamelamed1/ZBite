@@ -14,61 +14,61 @@ const listOfLeaderboardUsers = [
     {
         id: 'firstUserId',
         name: 'firstUserName',
-        score: 'firstUserScore',
+        stars: 1.1,
         photo_main: { src: '/firstUserImage' },
     },
     {
         id: 'secondUserId',
         name: 'secondUserName',
-        score: 'secondUserScore',
+        stars: 1.2,
         photo_main: { src: '/secondUserImage' },
     },
     {
         id: 'thirdUserId',
         name: 'thirdUserName',
-        score: 'thirdUserScore',
+        stars: 1.3,
         photo_main: { src: '/thirdUserImage' },
     },
     {
         id: 'fourthUserId',
         name: 'fourthUserName',
-        score: 'fourthUserScore',
+        stars: 1.4,
         photo_main: { src: '/fourthUserImage' },
     },
     {
         id: 'fifthUserId',
         name: 'fifthUserName',
-        score: 'fifthUserScore',
+        stars: 1.5,
         photo_main: { src: '/fifthUserImage' },
     },
     {
         id: 'sixthUserId',
         name: 'sixthUserName',
-        score: 'sixthUserScore',
+        stars: 1.6,
         photo_main: { src: '/sixthUserImage' },
     },
     {
         id: 'seventhUserId',
         name: 'seventhUserName',
-        score: 'seventhUserScore',
+        stars: 1.7,
         photo_main: { src: '/seventhUserImage' },
     },
     {
         id: 'eighthUserId',
         name: 'eighthUserName',
-        score: 'eighthUserScore',
+        stars: 1.8,
         photo_main: { src: '/eighthUserImage' },
     },
     {
         id: 'ninthUserId',
         name: 'ninthUserName',
-        score: 'ninthUserScore',
+        stars: 1.9,
         photo_main: { src: '/ninthUserImage' },
     },
     {
         id: 'tenthUserId',
         name: 'tenthUserName',
-        score: 'tenthUserScore',
+        stars: 2.1,
         photo_main: { src: '/tenthUserImage' },
     },
 ];
@@ -76,7 +76,7 @@ const initialListOfLeaderboardUsers = [
     {
         id: 'firstUserId',
         name: 'firstUserName',
-        score: 'firstUserScore',
+        stars: 2.2,
         photo_main: { src: '/firstUserImage' },
     },
 ];
@@ -118,12 +118,12 @@ describe('Leaderboard', () => {
             render(<Leaderboard listOfLeaderboardUsers={listOfLeaderboardUsers} />);
         });
         test('should render without crashing', () => {});
-        test('should render all users relevant fields', () => {
+        test.only('should render all users relevant fields', () => {
             listOfLeaderboardUsers.forEach((user) => {
-                let score = screen.getByText(user.score);
+                let stars = screen.getByText(user.stars);
                 let name = screen.getByText(user.name);
 
-                expect(score).toBeInTheDocument();
+                expect(stars).toBeInTheDocument();
                 expect(name).toBeInTheDocument();
             });
         });
@@ -143,12 +143,12 @@ describe('Leaderboard', () => {
         test('should render without crashing', () => {});
         test('should render all users relevant fields', () => {
             initialListOfLeaderboardUsers.forEach((user) => {
-                if (!user?.score || !user?.name) return;
+                if (!user?.stars || !user?.name) return;
 
-                let score = screen.queryByText(user?.score);
+                let stars = screen.queryByText(user?.stars);
                 let name = screen.queryByText(user?.name);
 
-                expect(score).toBeInTheDocument();
+                expect(stars).toBeInTheDocument();
                 expect(name).toBeInTheDocument();
             });
         });
