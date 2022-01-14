@@ -28,6 +28,7 @@
     .profile_pic {
         img {
             border-radius: 5rem;
+            object-fit: cover;
         }
     }
     .name {

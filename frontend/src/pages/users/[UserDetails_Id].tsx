@@ -4,11 +4,11 @@ import store, { RootState } from '../../redux/store';
 import FollowUser from '../../components/followers/FollowUser';
 import Head from 'next/head';
 import Image from 'next/image';
-import ProfileIcon from '../../assets/icons/profile._pic.svg';
 import ScoreIcon from '../../assets/icons/score-icon.svg';
 import UiOptionsDots from '../../components/ui/optionsForm/UiOptionsDots';
 import UserDelete from '../../components/users/UserDelete';
 import UserUpdate from '../../components/users/UserUpdate';
+import imageLoader from '../../utils/imageLoader';
 import { loadUserDetailsAction } from '../../redux/actions/userActions';
 import styles from '../../styles/pages/userProfile.module.scss';
 import uploadImageIcon from '../../assets/icons/upload_image.svg';
@@ -87,17 +87,31 @@ const UserDetails: React.FC<{ serverUserData: User }> = (props) => {
                 </UiOptionsDots>
                 <i className={styles.profile_pic}>
                     {userData.photo_main ? (
-                        <Image src={userData.photo_main} width={100} height={100} alt='profilesad' />
+                        <Image
+                            src={userData.photo_main}
+                            width={100}
+                            height={100}
+                            alt='profilesad'
+                            loader={imageLoader}
+                        />
                     ) : (
                         uploadImageIcon.src && (
-                            <Image src={uploadImageIcon.src} width={100} height={100} alt='profile pic' />
+                            <Image
+                                src={uploadImageIcon.src}
+                                width={100}
+                                height={100}
+                                alt='profile pic'
+                                loader={imageLoader}
+                            />
                         )
                     )}
                 </i>
                 <span className={styles.name}>{userData?.name}</span>
                 <ul className={styles.score_container}>
                     <i className={styles.score_icon}>
-                        {ScoreIcon.src && <Image src={ScoreIcon.src} width={100} height={100} alt='score icon' />}
+                        {ScoreIcon.src && (
+                            <Image src={ScoreIcon.src} width={100} height={100} alt='score icon' loader={imageLoader} />
+                        )}
                     </i>
                     <span className={styles.score_text}>score: {userData.stars}</span>
                 </ul>

@@ -15,7 +15,11 @@
         justify-content: space-around;
         width: 100%;
         .profile_pic {
-            width: 4.25rem;
+            width: 4rem;
+            img {
+                border-radius: 5rem;
+                object-fit: cover;
+            }
         }
         .author_and_rating_container {
             position: relative;

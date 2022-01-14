@@ -16,7 +16,7 @@ interface DataTypes {
     title: string;
     photo_main: string;
     id: string;
-    author: { name: string; id: string };
+    author: { name: string; id: string; photo_main: any };
     saves: string[];
     stars: string;
 }
@@ -26,8 +26,24 @@ const RecipeCard: React.FC<DataTypes> = ({ title, photo_main, id, author, saves,
         <div data-testid='recipeCard' className={styles.card_container}>
             <section className={styles.detail_container_1}>
                 <i className={styles.profile_pic}>
-                    {ProfileIcon.src && (
-                        <Image src={ProfileIcon.src} alt='author profile photo' height={100} width={100} />
+                    {author.photo_main ? (
+                        <Image
+                            src={author.photo_main}
+                            width={100}
+                            height={100}
+                            alt='profile pic'
+                            loader={imageLoader}
+                        />
+                    ) : (
+                        uploadImageIcon.src && (
+                            <Image
+                                src={uploadImageIcon.src}
+                                width={100}
+                                height={100}
+                                alt='profile pic'
+                                loader={imageLoader}
+                            />
+                        )
                     )}
                 </i>
                 <ul className={styles.author_and_rating_container}>

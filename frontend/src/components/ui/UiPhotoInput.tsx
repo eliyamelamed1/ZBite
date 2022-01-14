@@ -23,7 +23,7 @@ const UiPhotoInput = ({ onChangeImage, photoMainBlob }) => {
                         {uploadImageIcon.src && (
                             <Image src={uploadImageIcon.src} width={100} height={100} alt='recipe photo' />
                         )}
-                        <span className={styles.image_text}>Add recipe image</span>
+                        <span className={styles.image_text}>Add image</span>
                     </div>
                 )}
             </label>

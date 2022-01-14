@@ -45,6 +45,11 @@
             justify-content: center;
             display: flex;
             align-items: center;
+            img {
+                width: 4rem;
+                border-radius: 5rem;
+                object-fit: cover;
+            }
         }
 
         .author_name {
