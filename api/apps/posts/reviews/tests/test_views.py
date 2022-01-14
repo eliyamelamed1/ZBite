@@ -413,22 +413,49 @@ class TestReviewDeleteView:
             assert response.status_code == 204
             assert Review.objects.all().count() == 0
         
-        def test_deleting_review_calculate_recipe_stars(self, api_client):
-            # assign review and stars to recipe
-            new_review = ReviewFactory()
-            recipe = Recipe.objects.get(id=new_review.recipe.id) 
-            recipe.stars = new_review.stars
-            
-            assert recipe.stars == new_review.stars 
+        def test_deleting_review_should_recalculate_recipe_stars(self, api_client):
+            recipe = RecipeFactory()
+            first_user = UserFactory()
+            api_client.force_authenticate(first_user)
+
+            data = {
+                'recipe': recipe.id,
+                'stars': 4,
+                'comment': 'comment'
+
+            }
+            api_client.post(review_create_url, data)
+            api_client.logout()
+
+            second_user = UserFactory()
+            api_client.force_authenticate(second_user)
+            data = {
+                'recipe': recipe.id,
+                'stars': 2,
+                'comment': 'secondcomment'
+
+            }
+            api_client.post(review_create_url, data)
+            api_client.logout()
+
+            recipe = Recipe.objects.all().get(id=recipe.id)
+
+            assert recipe.stars == 3.0
+            assert recipe.stars == Review.get_recipe_stars_score(recipe=recipe)
+
 
             # delete review and check if recipe stars get calculated
-            api_client.force_authenticate(new_review.author)
-            delete_url = new_review.get_delete_url()
-            api_client.delete(delete_url)
+            second_review = Review.objects.get(comment='secondcomment')
+            api_client.force_authenticate(second_review.author)
+            delete_url = second_review.get_delete_url()
+            response = api_client.delete(delete_url)
 
-            recipe = Recipe.objects.get(id=new_review.recipe.id) 
+            recipe = Recipe.objects.all().get(id=recipe.id)
 
-            assert recipe.stars == 0
+            assert response.status_code == 204
+            assert recipe.stars == 4.0
+            assert recipe.stars == Review.get_recipe_stars_score(recipe=recipe)
+
 
         
 

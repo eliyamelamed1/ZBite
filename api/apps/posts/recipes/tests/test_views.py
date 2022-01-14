@@ -111,13 +111,6 @@ class TestRecipeDetailsView:
 
 class TestDeleteRecipeView:
     class TestIsAuthorOrReadOnly:
-        def test_author_can_delete_own_recipe(self, api_client):
-            new_recipe = RecipeFactory()
-            api_client.force_authenticate(new_recipe.author)
-            response = api_client.delete(new_recipe.get_absolute_url())
-
-            assert response.status_code == 204 
-
         def test_not_author_cant_delete_recipe(self, api_client):
             new_recipe = RecipeFactory()
             random_user = UserFactory()
@@ -125,6 +118,29 @@ class TestDeleteRecipeView:
             response = api_client.delete(new_recipe.get_absolute_url())
 
             assert response.status_code == 403
+
+        def test_author_can_delete_own_recipe(self, api_client):
+            new_recipe = RecipeFactory()
+            api_client.force_authenticate(new_recipe.author)
+            response = api_client.delete(new_recipe.get_absolute_url())
+
+            assert response.status_code == 204 
+            
+        # def test_deleting_recipe_recalculates_author_stars(self, api_client):
+            
+            # new_recipe = RecipeFactory()
+            # author = UserAccount.objects.get(id=new_recipe.author.id).stars = 2 
+            # author.stars = 2
+
+            # assert author.stars == 2
+            
+            # api_client.force_authenticate(new_recipe.author)
+            # api_client.delete(new_recipe.get_absolute_url())
+
+            # author = UserAccount.objects.get(id=new_recipe.author.id)
+
+            # assert author.stars == 0
+
 
     class TestGuestUsers:
         def test_recipe_delete(self, api_client):
