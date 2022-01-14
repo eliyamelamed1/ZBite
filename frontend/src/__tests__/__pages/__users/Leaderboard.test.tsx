@@ -118,7 +118,7 @@ describe('Leaderboard', () => {
             render(<Leaderboard listOfLeaderboardUsers={listOfLeaderboardUsers} />);
         });
         test('should render without crashing', () => {});
-        test.only('should render all users relevant fields', () => {
+        test('should render all users relevant fields', () => {
             listOfLeaderboardUsers.forEach((user) => {
                 let stars = screen.getByText(user.stars);
                 let name = screen.getByText(user.name);
