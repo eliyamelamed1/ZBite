@@ -1,6 +1,7 @@
 # TODO add tests for MIN and MAX values of stars 
 # TODO test perform_create
 
+from re import A
 import pytest
 
 from apps.users.accounts.models import UserAccount
@@ -389,18 +390,6 @@ class TestReviewDeleteView:
             response = api_client.get(delete_url)
 
             assert response.status_code == 405
-
-        def test_author_can_delete_his_own_reviews(self, api_client):
-            new_review = ReviewFactory()
-            api_client.force_authenticate(new_review.author)
-
-            delete_url = new_review.get_delete_url()
-            response = api_client.delete(delete_url)
-
-
-            assert response.status_code == 204
-            assert Review.objects.all().count() == 0
-        
         def test_user_cant_delete_other_users_reviews(self, api_client):
             new_review = ReviewFactory()
             new_user = UserFactory()
@@ -413,6 +402,36 @@ class TestReviewDeleteView:
             assert response.status_code == 403
             assert Review.objects.all().count() == 1
         
+        def test_author_can_delete_his_own_reviews(self, api_client):
+            new_review = ReviewFactory()
+            api_client.force_authenticate(new_review.author)
+
+            delete_url = new_review.get_delete_url()
+            response = api_client.delete(delete_url)
+
+
+            assert response.status_code == 204
+            assert Review.objects.all().count() == 0
+        
+        def test_deleting_review_calculate_recipe_stars(self, api_client):
+            # assign review and stars to recipe
+            new_review = ReviewFactory()
+            recipe = Recipe.objects.get(id=new_review.recipe.id) 
+            recipe.stars = new_review.stars
+            
+            assert recipe.stars == new_review.stars 
+
+            # delete review and check if recipe stars get calculated
+            api_client.force_authenticate(new_review.author)
+            delete_url = new_review.get_delete_url()
+            api_client.delete(delete_url)
+
+            recipe = Recipe.objects.get(id=new_review.recipe.id) 
+
+            assert recipe.stars == 0
+
+        
+
         
     class TestGuestUsers:
         def test_delete_page_should_not_render(self, api_client):
