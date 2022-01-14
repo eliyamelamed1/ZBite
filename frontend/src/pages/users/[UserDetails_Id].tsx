@@ -21,6 +21,7 @@ interface User {
     photo_main: any;
     followers: string[];
     following: string[];
+    stars: any;
 }
 
 const UserDetails: React.FC<{ serverUserData: User }> = (props) => {
@@ -98,7 +99,7 @@ const UserDetails: React.FC<{ serverUserData: User }> = (props) => {
                     <i className={styles.score_icon}>
                         {ScoreIcon.src && <Image src={ScoreIcon.src} width={100} height={100} alt='score icon' />}
                     </i>
-                    <span className={styles.score_text}>score: 7.6K</span>
+                    <span className={styles.score_text}>score: {userData.stars}</span>
                 </ul>
                 <ul className={styles.social_container}>
                     <li className={styles.followers_item}>

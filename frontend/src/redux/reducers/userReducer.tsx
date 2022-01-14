@@ -76,7 +76,7 @@ export default function userReducer(state = initialState, action) {
             localStorage.setItem('loggedUserData', JSON.stringify(payload));
             return {
                 ...state,
-                loggedUserData: payload,
+                loggedUserData: { ...payload, photo_main: `${process.env.NEXT_PUBLIC_API_URL}${payload.photo_main}` },
             };
         case SIGNUP_SUCCESS:
             Router.push(pageRoute().login);

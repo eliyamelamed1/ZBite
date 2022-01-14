@@ -7,6 +7,7 @@ import UiInput from '../ui/UiInput';
 import UiOptionsDots from '../ui/optionsForm/UiOptionsDots';
 import UiPopUp from '../ui/UiPopUp';
 import UiStarsButtons from '../ui/UiStarsButtons';
+import { loadLoggedUserDataAction } from '../../redux/actions/userActions';
 import { pageRoute } from '../../enums';
 import { reviewCreateAction } from '../../redux/actions/recipeActions';
 import { toast } from 'react-toastify';
@@ -26,7 +27,7 @@ const ReviewCreate: React.FC<{ recipeId: string }> = ({ recipeId }) => {
 
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
-    const { isUserAuthenticated } = useSelector((state: RootState) => state.userReducer);
+    const { isUserAuthenticated, loggedUserData } = useSelector((state: RootState) => state.userReducer);
 
     const toggleReviewForm = (e) => {
         e.preventDefault();
@@ -39,8 +40,11 @@ const ReviewCreate: React.FC<{ recipeId: string }> = ({ recipeId }) => {
         isUserAuthenticated === false ? Router.push(pageRoute().login) : null;
 
         try {
-            dispatch(reviewCreateAction({ recipeId, stars: starsValue, comment }));
+            await dispatch(reviewCreateAction({ recipeId, stars: starsValue, comment }));
             setDisplayForm(false);
+
+            // dispatch to refresh logged user star score
+            if (loggedUserData?.id == recipeId) await dispatch(loadLoggedUserDataAction());
         } catch (err) {}
     };
 
