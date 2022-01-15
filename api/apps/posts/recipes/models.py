@@ -1,5 +1,4 @@
 import uuid
-from dis import Instruction
 
 from django.contrib.auth import get_user_model
 from django.db import models
@@ -32,6 +31,7 @@ class Recipe(models.Model):
     def get_absolute_url(self):
         """Return absolute URL to the Recipe Detail page."""
         return reverse('recipes:detail', kwargs={"pk": self.id})
+
 
     def __str__(self):
         return self.title
@@ -72,3 +72,4 @@ class Recipe(models.Model):
     @classmethod
     def get_top_rated_recipes_url(cls):
         return reverse('recipes:top_rated')
+

@@ -4,6 +4,7 @@ from apps.users.accounts.models import UserAccount
 from factories import RecipeFactory, UserFactory
 from apps.posts.recipes.models import Recipe
 
+
 # add test to get info from recipe detail page
 # ------------------------------------------------ Tests
 pytestmark = pytest.mark.django_db
@@ -245,6 +246,7 @@ class TestRecipesOfAccountsFollowedView:
             assert response.status_code == 401
 
 class TestTopRatedRecipes:
+
     class TestAuthenticatedUsers:
         def test_page_should_render_successfully_return_status_code_200(self, api_client):
             new_user = UserFactory()
@@ -303,12 +305,14 @@ class TestTopRatedRecipes:
                 assert f'{recipe}' not in f'{response.content}'
                 
     class TestGuestUsers:
+
         def test_get_request_return_status_code_200(self, api_client):
             response = api_client.get(top_rated_recipes_url) 
 
             assert response.status_code == 200
 
         def test_get_request_should_return_top_rated_recipes(self, api_client):
+            
             for i in range(10):
                 new_user = UserFactory() 
                 api_client.force_authenticate(new_user)
@@ -353,4 +357,7 @@ class TestTopRatedRecipes:
                 assert f'{recipe}' in f'{response.content}'
                 
             for recipe in bottom_rated_recipes:
+                
                 assert f'{recipe}' not in f'{response.content}'
+
+

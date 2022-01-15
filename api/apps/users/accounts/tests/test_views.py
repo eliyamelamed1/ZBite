@@ -250,3 +250,63 @@ class TestUserSavedRecipes:
             response = api_client.get(saved_recipes_url)
     
             assert response.status_code == 401
+
+
+
+class TestOwnRecipesList:
+    class TestAuthenticatedUsers:
+        def test_get_request_return_status_code_200(self, api_client):
+            new_user = UserFactory()
+            api_client.force_authenticate(new_user)
+
+            user_own_recipes = new_user.get_own_recipes_url()
+            response = api_client.get(user_own_recipes) 
+
+            assert response.status_code == 200
+
+        def test_should_return_user_own_recipes(self, api_client):
+            new_user = UserFactory()
+            api_client.force_authenticate(new_user)
+            
+            other_recipe = RecipeFactory()
+            new_recipe = RecipeFactory()
+            new_user = UserAccount.objects.get(id=new_recipe.author.id)
+              
+            response = api_client.get(new_user.get_own_recipes_url()) 
+
+            
+            assert f'{new_recipe.id}' in f'{response.content}'
+            assert f'{new_recipe.title}' in f'{response.content}'
+            assert f'{new_recipe.description}' in f'{response.content}'
+
+            
+            assert f'{other_recipe.id}' not in f'{response.content}'
+            assert f'{other_recipe.title}' not in f'{response.content}'
+            assert f'{other_recipe.description}' not in f'{response.content}'
+
+            
+    class TestGuestUsers:
+        def test_get_request_return_status_code_200(self, api_client):
+            new_user = UserFactory()
+            response = api_client.get(new_user.get_own_recipes_url()) 
+
+            assert response.status_code == 200
+
+        def test_should_return_user_own_recipes(self, api_client):
+            other_recipe = RecipeFactory()
+            new_recipe = RecipeFactory()
+            new_user = UserAccount.objects.get(id=new_recipe.author.id)
+              
+            response = api_client.get(new_user.get_own_recipes_url()) 
+
+            
+            assert f'{new_recipe.id}' in f'{response.content}'
+            assert f'{new_recipe.title}' in f'{response.content}'
+            assert f'{new_recipe.description}' in f'{response.content}'
+
+            
+            assert f'{other_recipe.id}' not in f'{response.content}'
+            assert f'{other_recipe.title}' not in f'{response.content}'
+            assert f'{other_recipe.description}' not in f'{response.content}'
+
+            
