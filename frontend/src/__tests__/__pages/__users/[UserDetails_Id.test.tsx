@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
 
+import * as FollowUser from '../../../components/followers/FollowUser';
 import * as userActions from '../../../redux/actions/userActions';
 
 import { cleanup, render, screen } from '@testing-library/react';
@@ -15,6 +16,8 @@ import userEvent from '@testing-library/user-event';
 import { userParams } from '../../../enums';
 
 const loadUserDetailsActionSpy = jest.spyOn(userActions, 'loadUserDetailsAction');
+const FollowUserSpy = jest.spyOn(FollowUser, 'default');
+
 jest.mock('axios');
 
 const ssrContextParams = {
@@ -208,9 +211,7 @@ describe('UserDetails - loggedUser visiting other account profile', () => {
         expect(userDeleteTestId).not.toBeInTheDocument();
     });
     test('should render follow/unfollow component', () => {
-        const followUser = screen.getByTestId('followUser');
-
-        expect(followUser).toBeInTheDocument();
+        expect(FollowUserSpy).toHaveBeenCalled();
     });
     test('should render the user details ', () => {
         // const userEmail = screen.getByText(userParams.otherUser.email);
