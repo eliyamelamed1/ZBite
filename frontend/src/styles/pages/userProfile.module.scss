@@ -11,7 +11,7 @@
     padding-top: 3rem;
     box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.25);
     border-radius: 20px;
-    width: clamp(24rem, 85vw, 100rem);
+    width: clamp(28rem, 85vw, 100rem);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -108,9 +108,10 @@
     }
 
     .recipes_container {
+        column-gap: 5rem;
         display: flex;
         flex-wrap: wrap;
-        width: MIN(100%, 1600px);
+        width: MIN(100%, 160rem);
         justify-content: space-evenly;
     }
     .no_recipes_container {

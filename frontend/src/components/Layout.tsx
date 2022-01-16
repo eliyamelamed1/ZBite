@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
-
 import Footer from './Footer';
 import Navbar from './Navbar';
 import PacmanLoader from 'react-spinners/PacmanLoader';
+import React from 'react';
 import { RootState } from '../redux/store';
+import { ToastContainer } from 'react-toastify';
 import styles from '../styles/layout/__layout.module.scss';
 import { useSelector } from 'react-redux';
 
@@ -16,6 +16,10 @@ const Layout: React.FC<DataTypes> = ({ children }) => {
 
     return (
         <div data-testid='layout'>
+            <h2>
+                <ToastContainer position='top-right' autoClose={5000} newestOnTop={false} pauseOnFocusLoss={false} />
+            </h2>
+
             <div className={styles.centerScreen}>
                 <PacmanLoader loading={isLoading} color={'#ff5349'} size={40} margin={2} speedMultiplier={2} />
             </div>

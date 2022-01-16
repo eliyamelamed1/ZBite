@@ -46,7 +46,7 @@
             display: flex;
             align-items: center;
             img {
-                width: 4rem;
+                width: 3.5rem;
                 border-radius: 5rem;
                 object-fit: cover;
             }
@@ -76,7 +76,9 @@
             display: flex;
             justify-content: center;
             width: clamp(22rem, 66.6vw, 66rem);
+            margin-top: 1rem;
             @include media('>tablet') {
+                margin-top: 0;
                 grid-column: 5;
                 grid-row: 1;
                 width: 100%;
