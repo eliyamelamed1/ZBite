@@ -2,7 +2,7 @@ import '@testing-library/jest-dom/extend-expect';
 
 import * as userActions from '../../../redux/actions/userActions';
 
-import { cleanup, render, screen, waitForElementToBeRemoved } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 
 import FollowUser from '../../../components/followers/FollowUser';
 import { Provider } from 'react-redux';
@@ -51,10 +51,7 @@ describe('FollowUser - isUserAlreadyFollowed false', () => {
         jest.clearAllMocks();
     });
     test('should render without crashing ', () => {});
-    test('should match own data-testid ', () => {
-        const followUser = screen.getByTestId('followUser');
-        expect(followUser).toBeInTheDocument();
-    });
+
     test('should render follow button', () => {
         const followButton = screen.getByRole('button', { name: 'follow' });
         expect(followButton).toBeInTheDocument();
@@ -112,10 +109,6 @@ describe('FollowUser - isUserAlreadyFollowed true', () => {
         jest.clearAllMocks();
     });
     test('should render without crashing ', () => {});
-    test('should match own data-testid ', () => {
-        const followUser = screen.getByTestId('followUser');
-        expect(followUser).toBeInTheDocument();
-    });
     test('should render follow button', async () => {
         const unFollowButton = await screen.findByRole('button', { name: 'unfollow' });
         expect(unFollowButton).toBeInTheDocument();

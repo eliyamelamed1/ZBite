@@ -35,7 +35,8 @@ class SaveFactory(factory.django.DjangoModelFactory):
 class ReviewFactory(factory.django.DjangoModelFactory):
     author = factory.SubFactory(UserFactory)
     recipe = factory.SubFactory(RecipeFactory) 
-    stars = 5
+    # stars = factory.fuzzy.FuzzyInteger(1, 5)
+    stars = 3.0
     comment = factory.fuzzy.FuzzyText()
 
     class Meta:

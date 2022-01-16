@@ -14,7 +14,7 @@ import { useDispatch } from 'react-redux';
 
 const RecipeDelete: React.FC<{ id: string }> = ({ id }) => {
     const dispatch = useDispatch();
-    const onSubmit = (e) => {
+    const onClick = (e) => {
         e.preventDefault();
         try {
             dispatch(recipeDeleteAction({ id }));
@@ -25,7 +25,7 @@ const RecipeDelete: React.FC<{ id: string }> = ({ id }) => {
 
     return (
         <div data-testid='recipeDelete'>
-            <form onSubmit={onSubmit}>
+            <form onClick={onClick}>
                 <UiOptionsButton>Delete Recipe</UiOptionsButton>
             </form>
         </div>

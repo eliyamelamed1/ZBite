@@ -55,6 +55,10 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
         """Return absolute URL to the user Detail page."""
         return reverse('accounts:detail', kwargs={"pk": self.id})
 
+    def get_own_recipes_url(self):
+        return reverse('accounts:own_recipes', kwargs={"pk": self.id})
+
+
     def __str__(self):
         return self.email
     

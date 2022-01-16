@@ -6,7 +6,7 @@ interface DataTypes {
     reverse: boolean;
 }
 
-const UiButton: React.FC<DataTypes> = ({ children, reverse }) => {
+const UiButton: React.FC<DataTypes> = ({ children, reverse = true }) => {
     const button = (reverse) => {
         if (reverse)
             return (

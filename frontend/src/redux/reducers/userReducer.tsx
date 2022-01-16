@@ -14,6 +14,8 @@ import {
     LOGIN_FAIL,
     LOGIN_SUCCESS,
     LOGOUT,
+    LOGOUT_FAIL,
+    LOGOUT_SUCCESS,
     RESET_PASSWORD_CONFIRM_FAIL,
     RESET_PASSWORD_CONFIRM_SUCCESS,
     RESET_PASSWORD_FAIL,
@@ -28,7 +30,6 @@ import {
 import Router from 'next/router';
 import axiosInstance from '../../utils/axiosInstance';
 import { pageRoute } from '../../enums';
-import { toast } from 'react-toastify';
 
 const initialState = {
     auth_token: process.browser ? localStorage.getItem('auth_token') : null,
@@ -72,6 +73,9 @@ export default function userReducer(state = initialState, action) {
                 auth_token: payload.auth_token,
             };
         case GET_LOGGED_USER_DETAILS_SUCCESS:
+            const apiRoute = process.env.NEXT_PUBLIC_API_URL;
+            if (payload?.photo_main?.includes(apiRoute) === false)
+                payload.photo_main = `${apiRoute}${payload.photo_main}`;
             localStorage.setItem('loggedUserData', JSON.stringify(payload));
             return {
                 ...state,
@@ -106,9 +110,10 @@ export default function userReducer(state = initialState, action) {
             };
         case SIGNUP_FAIL:
         case LOGIN_FAIL:
-        case LOGOUT:
-            localStorage.removeItem('auth_token');
+        case LOGOUT_SUCCESS:
             localStorage.removeItem('loggedUserData');
+            localStorage.removeItem('auth_token');
+            axiosInstance.defaults.headers.common.Authorization = null;
             return {
                 ...state,
                 auth_token: null,
@@ -139,6 +144,7 @@ export default function userReducer(state = initialState, action) {
         case DELETE_USER_FAIL:
         case FOLLOW_UNFOLLOW_USER_SUCCESS:
         case LOAD_LEADERBOARD_FAIL:
+        case LOGOUT_FAIL:
             return {
                 ...state,
             };

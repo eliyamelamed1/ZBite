@@ -4,10 +4,12 @@ from rest_framework.generics import (CreateAPIView, ListAPIView,
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+
 from permissions import IsAuthorOrReadOnly
 
 from .models import Recipe
 from .serializers import (RecipeCreateSerializer, RecipeSerializer)
+from apps.users.accounts.models import UserAccount
 
 
 class RecipeList(ListAPIView):
@@ -40,7 +42,6 @@ class RecipesOfAccountsFollowed(ListAPIView):
 
         return queryset
     
-
 class TopRatedRecipes(ListAPIView):
     '''display the top rated recipes'''
     serializer_class = RecipeSerializer

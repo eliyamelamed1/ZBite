@@ -104,10 +104,32 @@ const RecipeDetails = (props) => {
                                     {recipeData && <IsRecipeAuthor recipe={recipeData} />}
                                 </UiOptionsDots>
 
-                                <i className={styles.profile_image_container}>asdd</i>
-                                <Link href={`/users/${recipeData?.author?.id}/`} passHref>
-                                    <h3 className={styles.author_name}>{recipeData?.author?.name}</h3>
-                                </Link>
+                                <i className={styles.profile_image_container}>
+                                    {recipeData.author.photo_main ? (
+                                        <Image
+                                            src={recipeData.author.photo_main}
+                                            width={100}
+                                            height={100}
+                                            alt='profile pic'
+                                            loader={imageLoader}
+                                        />
+                                    ) : (
+                                        uploadImageIcon.src && (
+                                            <Image
+                                                src={uploadImageIcon.src}
+                                                width={100}
+                                                height={100}
+                                                alt='profile pic'
+                                                loader={imageLoader}
+                                            />
+                                        )
+                                    )}
+                                </i>
+                                <a>
+                                    <Link href={`/users/${recipeData?.author?.id}/`} passHref>
+                                        <h1 className={styles.author_name}>{recipeData?.author?.name}</h1>
+                                    </Link>
+                                </a>
 
                                 <div className={styles.saves_and_ratings_container}>
                                     <UiStars starsCount={recipeData.stars} />

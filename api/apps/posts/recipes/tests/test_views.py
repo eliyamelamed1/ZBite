@@ -4,6 +4,7 @@ from apps.users.accounts.models import UserAccount
 from factories import RecipeFactory, UserFactory
 from apps.posts.recipes.models import Recipe
 
+
 # add test to get info from recipe detail page
 # ------------------------------------------------ Tests
 pytestmark = pytest.mark.django_db
@@ -111,13 +112,6 @@ class TestRecipeDetailsView:
 
 class TestDeleteRecipeView:
     class TestIsAuthorOrReadOnly:
-        def test_author_can_delete_own_recipe(self, api_client):
-            new_recipe = RecipeFactory()
-            api_client.force_authenticate(new_recipe.author)
-            response = api_client.delete(new_recipe.get_absolute_url())
-
-            assert response.status_code == 204 
-
         def test_not_author_cant_delete_recipe(self, api_client):
             new_recipe = RecipeFactory()
             random_user = UserFactory()
@@ -125,6 +119,29 @@ class TestDeleteRecipeView:
             response = api_client.delete(new_recipe.get_absolute_url())
 
             assert response.status_code == 403
+
+        def test_author_can_delete_own_recipe(self, api_client):
+            new_recipe = RecipeFactory()
+            api_client.force_authenticate(new_recipe.author)
+            response = api_client.delete(new_recipe.get_absolute_url())
+
+            assert response.status_code == 204 
+            
+        # def test_deleting_recipe_recalculates_author_stars(self, api_client):
+            
+            # new_recipe = RecipeFactory()
+            # author = UserAccount.objects.get(id=new_recipe.author.id).stars = 2 
+            # author.stars = 2
+
+            # assert author.stars == 2
+            
+            # api_client.force_authenticate(new_recipe.author)
+            # api_client.delete(new_recipe.get_absolute_url())
+
+            # author = UserAccount.objects.get(id=new_recipe.author.id)
+
+            # assert author.stars == 0
+
 
     class TestGuestUsers:
         def test_recipe_delete(self, api_client):
@@ -229,6 +246,7 @@ class TestRecipesOfAccountsFollowedView:
             assert response.status_code == 401
 
 class TestTopRatedRecipes:
+
     class TestAuthenticatedUsers:
         def test_page_should_render_successfully_return_status_code_200(self, api_client):
             new_user = UserFactory()
@@ -287,12 +305,14 @@ class TestTopRatedRecipes:
                 assert f'{recipe}' not in f'{response.content}'
                 
     class TestGuestUsers:
+
         def test_get_request_return_status_code_200(self, api_client):
             response = api_client.get(top_rated_recipes_url) 
 
             assert response.status_code == 200
 
         def test_get_request_should_return_top_rated_recipes(self, api_client):
+            
             for i in range(10):
                 new_user = UserFactory() 
                 api_client.force_authenticate(new_user)
@@ -337,4 +357,7 @@ class TestTopRatedRecipes:
                 assert f'{recipe}' in f'{response.content}'
                 
             for recipe in bottom_rated_recipes:
+                
                 assert f'{recipe}' not in f'{response.content}'
+
+

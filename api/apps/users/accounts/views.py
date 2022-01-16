@@ -1,10 +1,13 @@
 from django.contrib.auth import get_user_model
+from django.http import JsonResponse
 from django.http.response import HttpResponse
-from rest_framework import  permissions
-from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework import permissions
+from rest_framework.generics import (ListAPIView, ListCreateAPIView,
+                                     RetrieveUpdateDestroyAPIView)
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from apps.posts.recipes.models import Recipe
 from apps.posts.recipes.serializers import RecipeSerializer
 
 from .models import UserAccount
@@ -54,4 +57,18 @@ class UserSavedRecipes(ListAPIView):
     def get_queryset(self):
         logged_user = UserAccount.objects.get(id=self.request.user.id) 
         queryset = logged_user.saved_recipes.all()
+        return queryset
+
+class UserOwnRecipes(ListAPIView):
+    '''display recipes of requested user'''
+    serializer_class = RecipeSerializer
+
+    def get_queryset(self, *args, **kwargs):
+        try:
+            account = UserAccount.objects.get(id=self.kwargs['pk'])
+        except:
+            raise ValueError('account doesnt exits')
+        
+        queryset = Recipe.objects.filter(author=account).order_by('-created_at')
+        # raise ValueError(queryset)
         return queryset

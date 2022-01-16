@@ -41,7 +41,7 @@ describe('UserDelete', () => {
         const deleteButton = screen.getByRole('button', { name: /delete/i });
         expect(deleteButton).toBeInTheDocument();
     });
-    test('should delete button should dispatch userDeleteAction', () => {
+    test('delete button should dispatch userDeleteAction', () => {
         const deleteButton = screen.getByRole('button', { name: /delete/i });
         userEvent.click(deleteButton);
 

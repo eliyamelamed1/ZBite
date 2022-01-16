@@ -11,6 +11,8 @@ import {
     GET_SAVED_RECIPE_LIST_SUCCESS,
     GET_TRENDING_RECIPE_LIST_FAIL,
     GET_TRENDING_RECIPE_LIST_SUCCESS,
+    GET_USER_OWN_RECIPES_LIST_FAIL,
+    GET_USER_OWN_RECIPES_LIST_SUCCESS,
     REVIEWS_IN_RECIPE_FAIL,
     REVIEWS_IN_RECIPE_SUCCESS,
     REVIEW_CREATE_FAIL,
@@ -43,7 +45,7 @@ export const recipeDeleteAction =
 
 export const recipeCreateAction =
     ({
-        photoMain,
+        photoMain = undefined,
         title,
         description,
         cookTime,
@@ -51,7 +53,7 @@ export const recipeCreateAction =
         ingredientsTextList,
         instructionsTextList,
     }: {
-        photoMain: File;
+        photoMain: File | undefined;
         title: string;
         description: string;
         cookTime: string;
@@ -63,7 +65,7 @@ export const recipeCreateAction =
         try {
             const formData = new FormData();
 
-            formData.append('photo_main', photoMain);
+            photoMain && formData.append('photo_main', photoMain);
             formData.append('title', title);
             formData.append('description', description);
             formData.append('cook_time', cookTime);
@@ -80,12 +82,12 @@ export const recipeCreateAction =
     };
 
 export const recipeUpdateAction =
-    ({ id, photoMain, title, description, serving, cookTime, ingredientsTextList, instructionsTextList }) =>
+    ({ id, title, description, serving, cookTime, ingredientsTextList, instructionsTextList, photoMain = undefined }) =>
     async (dispatch) => {
         try {
             const formData = new FormData();
 
-            formData.append('photo_main', photoMain);
+            photoMain && formData.append('photo_main', photoMain);
             formData.append('title', title);
             formData.append('description', description);
             formData.append('cook_time', cookTime);
@@ -126,6 +128,17 @@ export const loadSavedRecipesAction = () => async (dispatch) => {
     }
 };
 
+export const loadUserOwnRecipesAction =
+    ({ user_id }) =>
+    async (dispatch) => {
+        try {
+            const res = await axiosInstance.get(endpointRoute(user_id).recipes.userOwnRecipes);
+            dispatch({ type: GET_USER_OWN_RECIPES_LIST_SUCCESS, payload: res.data });
+        } catch (err) {
+            dispatch({ type: GET_USER_OWN_RECIPES_LIST_FAIL });
+        }
+    };
+
 export const loadRecipeDetailsAction =
     ({ id }) =>
     async (dispatch) => {
@@ -141,8 +154,6 @@ export const reviewCreateAction =
     ({ recipeId, stars, comment = '' }) =>
     async (dispatch) => {
         try {
-            console.log(1);
-
             const body = JSON.stringify({
                 recipe: recipeId,
                 stars,

@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
 
+import * as FollowUser from '../../../components/followers/FollowUser';
 import * as userActions from '../../../redux/actions/userActions';
 
 import { cleanup, render, screen } from '@testing-library/react';
@@ -11,9 +12,12 @@ import UserDetails_Id from '../../../pages/users/[UserDetails_Id]';
 import axios from 'axios';
 import { getServerSideProps } from '../../../pages/users/[UserDetails_Id]';
 import store from '../../../redux/store';
+import userEvent from '@testing-library/user-event';
 import { userParams } from '../../../enums';
 
 const loadUserDetailsActionSpy = jest.spyOn(userActions, 'loadUserDetailsAction');
+const FollowUserSpy = jest.spyOn(FollowUser, 'default');
+
 jest.mock('axios');
 
 const ssrContextParams = {
@@ -86,23 +90,38 @@ describe('UserDetails - loggedUser visit his own profile', () => {
         expect(userDetailsTestId).toBeInTheDocument();
     });
     test('should render the user details ', () => {
-        const userEmail = screen.getByText(userParams.loggedUser.email);
+        const optionsDotsButton = screen.getByTestId('optionsDots');
+        userEvent.click(optionsDotsButton);
+
+        const updateUserButton = screen.getByText('update user');
+        userEvent.click(updateUserButton);
+
+        // const userEmail = screen.getByText(userParams.loggedUser.email);
         const userName = screen.getByText(userParams.loggedUser.name);
 
-        expect(userEmail).toBeInTheDocument();
+        // expect(userEmail).toBeInTheDocument();
         expect(userName).toBeInTheDocument();
     });
     test('should render myProfileLinks', () => {
+        const optionsDotsButton = screen.getByTestId('optionsDots');
+        userEvent.click(optionsDotsButton);
+
         const myProfileLinks = screen.getByTestId('myProfileLinks');
 
         expect(myProfileLinks).toBeInTheDocument();
     });
     test('should render UserUpdate component', () => {
+        const optionsDotsButton = screen.getByTestId('optionsDots');
+        userEvent.click(optionsDotsButton);
+
         const userUpdateTestId = screen.getByTestId('userUpdate');
 
         expect(userUpdateTestId).toBeInTheDocument();
     });
     test('should render UserDelete component', () => {
+        const optionsDotsButton = screen.getByTestId('optionsDots');
+        userEvent.click(optionsDotsButton);
+
         const userDeleteTestId = screen.getByTestId('userDelete');
 
         expect(userDeleteTestId).toBeInTheDocument();
@@ -120,14 +139,14 @@ describe('UserDetails - loggedUser visit his own profile', () => {
         };
         await store.dispatch({ type: TEST_CASE_AUTH, payload: initialState });
 
-        const updatedEmail = await screen.findByText(updatedUserData.email);
+        // const updatedEmail = await screen.findByText(updatedUserData.email);
         const updatedName = await screen.findByText(updatedUserData.name);
-        const serverSideEmail = screen.queryByText(serverSideUserData.email);
+        // const serverSideEmail = screen.queryByText(serverSideUserData.email);
         const serverSideName = screen.queryByText(serverSideUserData.name);
 
-        expect(updatedEmail).toBeInTheDocument();
+        // expect(updatedEmail).toBeInTheDocument();
         expect(updatedName).toBeInTheDocument();
-        expect(serverSideEmail).not.toBeInTheDocument();
+        // expect(serverSideEmail).not.toBeInTheDocument();
         expect(serverSideName).not.toBeInTheDocument();
     });
     test('migrateLoggedUserData => isUserDataMatchReqId === false => should not update user data', async () => {
@@ -144,14 +163,14 @@ describe('UserDetails - loggedUser visit his own profile', () => {
         };
         store.dispatch({ type: TEST_CASE_AUTH, payload: initialState });
 
-        const serverSideEmail = screen.getByText(serverSideUserData.email);
+        // const serverSideEmail = screen.getByText(serverSideUserData.email);
         const serverSideName = screen.getByText(serverSideUserData.name);
-        const updatedEmail = screen.queryByText(updatedUserData.email);
+        // const updatedEmail = screen.queryByText(updatedUserData.email);
         const updatedName = screen.queryByText(updatedUserData.name);
 
-        expect(serverSideEmail).toBeInTheDocument();
+        // expect(serverSideEmail).toBeInTheDocument();
         expect(serverSideName).toBeInTheDocument();
-        expect(updatedEmail).not.toBeInTheDocument();
+        // expect(updatedEmail).not.toBeInTheDocument();
         expect(updatedName).not.toBeInTheDocument();
     });
 });
@@ -176,13 +195,7 @@ describe('UserDetails - loggedUser visiting other account profile', () => {
         const userDetailsTestId = screen.getByTestId('userDetails');
         expect(userDetailsTestId).toBeInTheDocument();
     });
-    test('should render the user details ', () => {
-        const userEmail = screen.getByText(userParams.otherUser.email);
-        const userName = screen.getByText(userParams.otherUser.name);
 
-        expect(userEmail).toBeInTheDocument();
-        expect(userName).toBeInTheDocument();
-    });
     test('should not render myProfileLinks', () => {
         const myProfileLinks = screen.queryByTestId('myProfileLinks');
         expect(myProfileLinks).not.toBeInTheDocument();
@@ -198,9 +211,14 @@ describe('UserDetails - loggedUser visiting other account profile', () => {
         expect(userDeleteTestId).not.toBeInTheDocument();
     });
     test('should render follow/unfollow component', () => {
-        const followUser = screen.getByTestId('followUser');
+        expect(FollowUserSpy).toHaveBeenCalled();
+    });
+    test('should render the user details ', () => {
+        // const userEmail = screen.getByText(userParams.otherUser.email);
+        const userName = screen.getByText(userParams.otherUser.name);
 
-        expect(followUser).toBeInTheDocument();
+        // expect(userEmail).toBeInTheDocument();
+        expect(userName).toBeInTheDocument();
     });
     test('migrateRequestedUserData => isUserDataMatchReqId === true => should update userData', async () => {
         const updatedUserData = {
@@ -217,12 +235,12 @@ describe('UserDetails - loggedUser visiting other account profile', () => {
         store.dispatch({ type: TEST_CASE_AUTH, payload: initialState });
 
         const updatedFollowingCount = await screen.findByTestId('following count');
-        const updatedUserEmail = await screen.findByText(updatedUserData.name);
-        const updatedUserName = await screen.findByText(updatedUserData.email);
+        const updatedUserName = await screen.findByText(updatedUserData.name);
+        // const updatedUserEmail = await screen.findByText(updatedUserData.email);
 
         expect(updatedFollowingCount).toBeInTheDocument();
-        expect(updatedUserEmail).toBeInTheDocument();
         expect(updatedUserName).toBeInTheDocument();
+        // expect(updatedUserEmail).toBeInTheDocument();
     });
     test('migrateRequestedUserData => isUserDataMatchReqId === false => should not update userData', async () => {
         const initialState = {
@@ -232,10 +250,10 @@ describe('UserDetails - loggedUser visiting other account profile', () => {
         };
         await store.dispatch({ type: TEST_CASE_AUTH, payload: initialState });
 
-        const serverSideUserEmail = await screen.findByText(userParams.otherUser.email);
-        expect(serverSideUserEmail).toBeInTheDocument();
+        const serverSideUserName = await screen.findByText(userParams.otherUser.name);
+        expect(serverSideUserName).toBeInTheDocument();
 
-        const updatedUserEmail = screen.queryByText(userParams.otherUser2.email);
-        expect(updatedUserEmail).not.toBeInTheDocument();
+        const updatedUserName = screen.queryByText(userParams.otherUser2.name);
+        expect(updatedUserName).not.toBeInTheDocument();
     });
 });

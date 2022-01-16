@@ -1,13 +1,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import Router from 'next/router';
+import UiOptionsButton from '../ui/optionsForm/UiOptionsButton';
 import { pageRoute } from '../../enums';
 import { useDispatch } from 'react-redux';
 import { userDeleteAction } from '../../redux/actions/userActions';
 
 const UserDelete: React.FC<{ id: string }> = ({ id }) => {
     const dispatch = useDispatch();
-    const onSubmit = async (e) => {
+
+    const onClick = async (e) => {
         e.preventDefault();
         try {
             await dispatch(userDeleteAction({ id }));
@@ -18,8 +20,8 @@ const UserDelete: React.FC<{ id: string }> = ({ id }) => {
     // add permissions
     return (
         <main data-testid='userDelete'>
-            <form onSubmit={onSubmit}>
-                <button type='submit'>delete user</button>
+            <form onClick={onClick}>
+                <UiOptionsButton>delete user</UiOptionsButton>
             </form>
         </main>
     );

@@ -43,7 +43,14 @@ const contextParams = {
 };
 
 const listOfReviews = [
-    { recipe: 'bacon', id: '1', author: { id: 'eliya', name: 'name' }, stars: '5', comment: 'new comment' },
+    {
+        recipe: 'bacon',
+        id: '1',
+        author: { id: 'eliya', name: 'name' },
+        stars: '5',
+        comment: 'new comment',
+        created_at: '2022-01-03T16:36:24.778530Z',
+    },
 ];
 
 describe('RecipeDetails - getServerSideProps', () => {
@@ -188,6 +195,7 @@ describe('RecipeDetails - recipe author', () => {
                     author: { id: 'eliya', name: 'name' },
                     stars: '1.2',
                     comment: 'updated comment',
+                    created_at: '2032-01-03T16:36:24.778530Z',
                 },
             ],
         };
@@ -206,6 +214,7 @@ describe('RecipeDetails - recipe author', () => {
                     author: { id: 'eliya', name: 'name' },
                     stars: 'updated stars',
                     comment: 'updated comment',
+                    created_at: '2043-01-03T16:36:24.778530Z',
                 },
             ],
         };
@@ -294,6 +303,7 @@ describe('RecipeDetails - not the recipe author', () => {
                     author: { id: 'eliya', name: 'name' },
                     stars: '1.2',
                     comment: 'updated comment',
+                    created_at: '2025-01-03T16:36:24.778530Z',
                 },
             ],
         };

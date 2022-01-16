@@ -21,6 +21,7 @@ const DisplayReviews = ({ reviewsToDisplay }) => {
             const result = [];
 
             reviewsToDisplay.map((review: Review) => {
+                const formattedDate = new Date(review.created_at);
                 reviewsOnPage.push(
                     <ReviewCard
                         author={review.author}
@@ -29,7 +30,7 @@ const DisplayReviews = ({ reviewsToDisplay }) => {
                         stars={review.stars}
                         comment={review.comment}
                         image={review.image}
-                        created_at={review.created_at}
+                        created_at={Intl.DateTimeFormat('fr-FR').format(formattedDate)}
                     />
                 );
             });

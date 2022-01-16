@@ -14,6 +14,8 @@ import {
     LOGIN_FAIL,
     LOGIN_SUCCESS,
     LOGOUT,
+    LOGOUT_FAIL,
+    LOGOUT_SUCCESS,
     RESET_PASSWORD_CONFIRM_FAIL,
     RESET_PASSWORD_CONFIRM_SUCCESS,
     RESET_PASSWORD_FAIL,
@@ -62,14 +64,15 @@ export const loadUserDetailsAction =
     };
 
 export const userUpdateAction =
-    ({ id, email, name }) =>
+    ({ id, email, name, photoMain = undefined }) =>
     async (dispatch) => {
         try {
-            const body = JSON.stringify({
-                email,
-                name,
-            });
-            const res = await axiosInstance.patch(endpointRoute(id).users.details, body);
+            const formData = new FormData();
+            formData.append('email', email);
+            formData.append('name', name);
+            photoMain && formData.append('photo_main', photoMain);
+
+            const res = await axiosInstance.patch(endpointRoute(id).users.details, formData);
             toast.success('user updated successfully');
             dispatch({ type: UPDATE_USER_SUCCESS, payload: res.data });
         } catch (err) {
@@ -181,8 +184,14 @@ export const resetPasswordConfirmAction =
     };
 
 export const logoutAction = () => async (dispatch) => {
-    toast.success('logout successfully');
-    dispatch({ type: LOGOUT });
+    try {
+        toast.success('logout successfully');
+        axiosInstance.post(endpointRoute().users.logout);
+        dispatch({ type: LOGOUT_SUCCESS });
+    } catch {
+        toast.success('logout failed');
+        dispatch({ type: LOGOUT_FAIL });
+    }
 };
 
 export const loadLeaderboardAction = () => async (dispatch) => {

@@ -1,56 +1,70 @@
 @import '../abstracts/variables';
 
 .parent_container {
-    padding-top: 4rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 .section_container {
     padding-top: 3rem;
-    padding-bottom: 2rem;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.25);
     border-radius: 20px;
-    width: 30rem;
+    width: clamp(28rem, 85vw, 100rem);
     display: flex;
     flex-direction: column;
     align-items: center;
     height: fit-content;
+    row-gap: 2.5rem;
+
+    .three_dots_section {
+        position: absolute;
+
+        margin-top: 0rem;
+        margin-right: clamp(18rem, 70vw, 67.5rem);
+    }
+    .profile_pic {
+        img {
+            border-radius: 5rem;
+            object-fit: cover;
+        }
+    }
     .name {
-        margin-top: 2rem;
         font-weight: 700;
         text-transform: capitalize;
         font-size: 2rem;
+        text-align: center;
     }
 
     .score_container {
-        margin-top: 2rem;
         background-color: $primary-color;
         display: flex;
         align-items: center;
-        justify-content: space-evenly;
+        justify-content: center;
+        column-gap: 1.5rem;
         border-radius: 150px;
         width: 16rem;
-        padding-top: 0.4rem;
-        padding-bottom: 0.4rem;
-    }
-
-    .score_icon {
-        position: relative;
-        top: 1px;
-        width: 1.5rem;
-    }
-    .score {
-        color: white;
-        font-weight: 700;
-        font-size: 1.2rem;
-        text-transform: capitalize;
+        padding-top: 0.6rem;
+        padding-bottom: 0.6rem;
+        .score_icon {
+            position: relative;
+            top: 1px;
+            width: 1.5rem;
+            filter: brightness(0) invert(1);
+        }
+        .score_text {
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-transform: capitalize;
+            text-align: center;
+        }
     }
 
     .social_container {
-        margin-top: 2rem;
         display: flex;
-        width: 28rem;
+        width: 100%;
         justify-content: space-around;
         align-items: center;
     }
@@ -68,7 +82,7 @@
     .followers_number,
     .following_number,
     .posts_number {
-        font-size: 1.2rem;
+        font-size: 1.5rem;
         font-weight: 700;
     }
     .followers_text,
@@ -78,13 +92,6 @@
         opacity: 70%;
     }
 
-    .follow_button_container {
-        margin-top: 3rem;
-        border: 2px solid $primary-color;
-        padding: 1rem 4rem;
-        border-radius: 5px;
-    }
-
     .follow_button {
         color: $primary-color;
         text-transform: capitalize;
@@ -92,25 +99,31 @@
         font-size: 2rem;
     }
 
-    .option_list {
-        display: flex;
-        margin-top: 5rem;
-        width: 20rem;
-        justify-content: space-around;
-        align-items: center;
-    }
-
-    .posts_button,
-    .edit_button {
-        font-size: 1.8rem;
-        padding: 1rem 2.5rem;
-        opacity: 70%;
-    }
-
-    .option_list_active {
-        background-color: $primary-color-opacity;
+    .posts_title {
+        text-align: center;
         color: $primary-color;
-        opacity: 100%;
-        border-radius: 10px;
+        font-weight: 600;
+        font-size: 2.5rem;
+        text-decoration: underline;
+    }
+
+    .recipes_container {
+        column-gap: 5rem;
+        display: flex;
+        flex-wrap: wrap;
+        width: MIN(100%, 160rem);
+        justify-content: space-evenly;
+    }
+    .no_recipes_container {
+        width: MIN(100%, 1600px);
+        display: grid;
+        row-gap: 4rem;
+        padding-bottom: 6rem;
+
+        .no_recipes_title {
+            text-align: center;
+            align-content: center;
+            font-size: 2rem;
+        }
     }
 }
