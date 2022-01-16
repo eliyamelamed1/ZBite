@@ -56,6 +56,10 @@
             display: grid;
             font-weight: 600;
             overflow: hidden;
+            color: black;
+            &:hover {
+                text-decoration: underline;
+            }
         }
 
         .saves_and_ratings_container {

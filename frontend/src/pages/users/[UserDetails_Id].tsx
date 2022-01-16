@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import store, { RootState } from '../../redux/store';
 
+import DisplayRecipes from '../../components/recipes/DisplayRecipes';
 import FollowUser from '../../components/followers/FollowUser';
 import Head from 'next/head';
 import Image from 'next/image';
 import ScoreIcon from '../../assets/icons/score-icon.svg';
 import UiOptionsDots from '../../components/ui/optionsForm/UiOptionsDots';
+import UiSectionSeparator from '../../components/ui/UiSectionSeperator';
 import UserDelete from '../../components/users/UserDelete';
 import UserUpdate from '../../components/users/UserUpdate';
 import imageLoader from '../../utils/imageLoader';
 import { loadUserDetailsAction } from '../../redux/actions/userActions';
+import { loadUserOwnRecipesAction } from '../../redux/actions/recipeActions';
 import styles from '../../styles/pages/userProfile.module.scss';
 import uploadImageIcon from '../../assets/icons/upload_image.svg';
 import { useSelector } from 'react-redux';
@@ -24,9 +27,10 @@ interface User {
     stars: any;
 }
 
-const UserDetails: React.FC<{ serverUserData: User }> = (props) => {
+const UserDetails: React.FC<{ serverUserData: User; listOfUserOwnRecipes: any[] }> = (props) => {
     const [isMyProfile, setIsMyProfile] = useState(false);
-    const [userData, setUserData] = useState<User>(props.serverUserData);
+    const { listOfUserOwnRecipes, serverUserData } = props;
+    const [userData, setUserData] = useState<User>(serverUserData);
     const { loggedUserData, requestedUserData } = useSelector((state: RootState) => state.userReducer);
 
     useEffect(
@@ -74,6 +78,22 @@ const UserDetails: React.FC<{ serverUserData: User }> = (props) => {
             <UserDelete id={userData?.id} />
             <UserUpdate id={userData?.id} emailPlaceholder={userData.email} namePlaceholder={userData.name} />
         </div>
+    );
+
+    const userOwnRecipes = (
+        <>
+            <h1 className={styles.posts_title}>Posts</h1>
+
+            {listOfUserOwnRecipes?.length > 0 ? (
+                <div className={styles.recipes_container}>
+                    <DisplayRecipes recipesToDisplay={listOfUserOwnRecipes} />
+                </div>
+            ) : (
+                <div className={styles.no_recipes_container}>
+                    <h2 className={styles.no_recipes_title}>You Haven't Created Recipes Yet</h2>
+                </div>
+            )}
+        </>
     );
     return (
         <div className={styles.parent_container}>
@@ -133,11 +153,12 @@ const UserDetails: React.FC<{ serverUserData: User }> = (props) => {
                     </li>
                 </ul>
                 {isMyProfile || (
-                    <div className={styles.follow_button_container}>
+                    <>
                         <FollowUser userToFollow={userData?.id} />
-                    </div>
+                    </>
                 )}
-                <h1 className={styles.posts_button}>Posts</h1>
+                <UiSectionSeparator />
+                {userOwnRecipes}
             </section>
         </div>
     );
@@ -149,8 +170,11 @@ export async function getServerSideProps(context) {
     const serverUserData = store.getState().userReducer.requestedUserData;
     const isRequestedUserIdExist = serverUserData?.id === id;
 
+    await store.dispatch(loadUserOwnRecipesAction({ user_id: id }));
+    const { listOfUserOwnRecipes } = store.getState().recipeReducer;
+
     if (isRequestedUserIdExist) {
-        return { props: { serverUserData } };
+        return { props: { serverUserData, listOfUserOwnRecipes } };
     } else {
         return { notFound: true };
     }

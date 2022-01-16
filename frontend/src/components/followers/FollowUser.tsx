@@ -2,22 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { RootState } from '../../redux/store';
+import UiButton from '../ui/UiButton';
 import { followUserAction } from '../../redux/actions/userActions';
-import styles from '../../styles/pages/userProfile.module.scss';
-
-// import styles from '../../styles/pages/userProfile.module.scss';
 
 const FollowUser: React.FC<{ userToFollow: string }> = ({ userToFollow }) => {
     const dispatch = useDispatch();
-    const [button, setButton] = useState('follow');
+    const [buttonText, setButtonText] = useState('follow');
     const { loggedUserData, isUserAuthenticated } = useSelector((state: RootState) => state.userReducer);
     useEffect(() => {
         try {
             const isUserAlreadyFollowed = loggedUserData?.following.includes(userToFollow);
             if (isUserAlreadyFollowed) {
-                setButton('unfollow');
+                setButtonText('unfollow');
             } else {
-                setButton('follow');
+                setButtonText('follow');
             }
         } catch {}
     }, [dispatch, loggedUserData, userToFollow]);
@@ -30,10 +28,11 @@ const FollowUser: React.FC<{ userToFollow: string }> = ({ userToFollow }) => {
 
     const authLinks = (
         <form onSubmit={onSubmit}>
-            <button className={styles.follow_button}>{button}</button>
+            <UiButton reverse={false}>{buttonText}</UiButton>
         </form>
     );
-    return <div data-testid='followUser'>{isUserAuthenticated ? <div>{authLinks}</div> : null}</div>;
+    return <>{isUserAuthenticated && authLinks}</>;
+
     // raise error when isUserAuthenticated is true on the client because he is null at the server and true !== null
 };
 

@@ -11,6 +11,8 @@ import {
     GET_SAVED_RECIPE_LIST_SUCCESS,
     GET_TRENDING_RECIPE_LIST_FAIL,
     GET_TRENDING_RECIPE_LIST_SUCCESS,
+    GET_USER_OWN_RECIPES_LIST_FAIL,
+    GET_USER_OWN_RECIPES_LIST_SUCCESS,
     REVIEWS_IN_RECIPE_FAIL,
     REVIEWS_IN_RECIPE_SUCCESS,
     REVIEW_CREATE_FAIL,
@@ -125,6 +127,17 @@ export const loadSavedRecipesAction = () => async (dispatch) => {
         dispatch({ type: GET_SAVED_RECIPE_LIST_FAIL });
     }
 };
+
+export const loadUserOwnRecipesAction =
+    ({ user_id }) =>
+    async (dispatch) => {
+        try {
+            const res = await axiosInstance.get(endpointRoute(user_id).recipes.userOwnRecipes);
+            dispatch({ type: GET_USER_OWN_RECIPES_LIST_SUCCESS, payload: res.data });
+        } catch (err) {
+            dispatch({ type: GET_USER_OWN_RECIPES_LIST_FAIL });
+        }
+    };
 
 export const loadRecipeDetailsAction =
     ({ id }) =>

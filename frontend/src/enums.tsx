@@ -21,6 +21,7 @@ export const endpointRoute = (id = '') => ({
         details: `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}/`,
         saved_recipes: `${process.env.NEXT_PUBLIC_API_URL}/api/accounts/saved_recipes/`,
         save: `${process.env.NEXT_PUBLIC_API_URL}/api/saves/save/`,
+        userOwnRecipes: `${process.env.NEXT_PUBLIC_API_URL}/api/accounts/own_recipes/${id}/`,
     },
     reviews: {
         create: `${process.env.NEXT_PUBLIC_API_URL}/api/reviews/create/`,
