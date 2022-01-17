@@ -72,7 +72,7 @@ class UserOwnRecipes(ListAPIView):
             raise ValueError('account doesnt exits')
         
         queryset = Recipe.objects.filter(author=account).order_by('-created_at')
-        # raise ValueError(queryset)
+        
         return queryset
 
 class SearchUsers(ListAPIView):

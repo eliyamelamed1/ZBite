@@ -29,5 +29,5 @@ class AuthorFieldSerializer(serializers.ModelSerializer):
 class UserSearchSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('name')
+        fields = ('name',)
 
