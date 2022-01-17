@@ -1,4 +1,4 @@
-from django.contrib.postgres.search import SearchQuery, SearchVector, SearchRank
+from apps.posts.recipes.documents import RecipeDocument
 from rest_framework import permissions
 from rest_framework.generics import (CreateAPIView, ListAPIView,
                                      RetrieveUpdateDestroyAPIView)
@@ -50,13 +50,6 @@ class SearchRecipes(ListAPIView):
 
     def get_queryset(self, *args, **kwargs):
         value = self.kwargs['value']
+        recipeQueryset = RecipeDocument.search().query('wildcard',title=f'*{value}*',)
 
-        if value:
-            vector = SearchVector('title','description')
-            query = SearchQuery(value)
-            recipesQueryset = Recipe.objects.annotate(rank=SearchRank(vector,query)).filter(rank__gte=0.001).order_by('-rank')
-        
-        else:
-            recipesQueryset: None
-
-        return recipesQueryset
+        return recipeQueryset

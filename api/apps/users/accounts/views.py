@@ -1,8 +1,7 @@
 from django.contrib.auth import get_user_model
-from django.contrib.postgres.search import (SearchQuery, SearchRank,
-                                            SearchVector)
-from django.http import JsonResponse
+
 from django.http.response import HttpResponse
+from .documents import UserAccountDocument
 from rest_framework import permissions
 from rest_framework.generics import (ListAPIView, ListCreateAPIView,
                                      RetrieveUpdateDestroyAPIView)
@@ -80,12 +79,7 @@ class SearchUsers(ListAPIView):
 
     def get_queryset(self, *args, **kwargs):
         value = self.kwargs['value']
-
-        if value:
-            vector = SearchVector('name')
-            query = SearchQuery(value)
-            usersQueryset = UserAccount.objects.annotate(rank=SearchRank(vector,query)).filter(rank__gte=0.001).order_by('-rank')
-        else:
-            usersQueryset: None
+        usersQueryset = UserAccountDocument.search().query('wildcard',name=f'*{value}*',)
 
         return usersQueryset
+
