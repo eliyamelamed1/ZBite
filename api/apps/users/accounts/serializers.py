@@ -25,3 +25,9 @@ class AuthorFieldSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id','name','photo_main',)
+
+class UserSearchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('name')
+

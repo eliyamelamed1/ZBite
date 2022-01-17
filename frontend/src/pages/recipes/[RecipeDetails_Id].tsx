@@ -105,9 +105,9 @@ const RecipeDetails = (props) => {
                                 </UiOptionsDots>
 
                                 <i className={styles.profile_image_container}>
-                                    {recipeData.author.photo_main ? (
+                                    {recipeData?.author?.photo_main ? (
                                         <Image
-                                            src={recipeData.author.photo_main}
+                                            src={recipeData?.author?.photo_main}
                                             width={100}
                                             height={100}
                                             alt='profile pic'

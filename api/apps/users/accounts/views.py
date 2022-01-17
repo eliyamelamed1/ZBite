@@ -1,4 +1,6 @@
 from django.contrib.auth import get_user_model
+from django.contrib.postgres.search import (SearchQuery, SearchRank,
+                                            SearchVector)
 from django.http import JsonResponse
 from django.http.response import HttpResponse
 from rest_framework import permissions
@@ -12,7 +14,7 @@ from apps.posts.recipes.serializers import RecipeSerializer
 
 from .models import UserAccount
 from .permissions import IsAuthorOrReadOnly
-from .serializers import UserSerializer
+from .serializers import UserSearchSerializer, UserSerializer
 
 
 class UserListView(ListCreateAPIView):
@@ -72,3 +74,18 @@ class UserOwnRecipes(ListAPIView):
         queryset = Recipe.objects.filter(author=account).order_by('-created_at')
         # raise ValueError(queryset)
         return queryset
+
+class SearchUsers(ListAPIView):
+    serializer_class = UserSearchSerializer
+
+    def get_queryset(self, *args, **kwargs):
+        value = self.kwargs['value']
+
+        if value:
+            vector = SearchVector('name')
+            query = SearchQuery(value)
+            usersQueryset = UserAccount.objects.annotate(rank=SearchRank(vector,query)).filter(rank__gte=0.001).order_by('-rank')
+        else:
+            usersQueryset: None
+
+        return usersQueryset

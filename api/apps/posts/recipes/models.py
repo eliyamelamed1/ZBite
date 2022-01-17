@@ -32,7 +32,6 @@ class Recipe(models.Model):
         """Return absolute URL to the Recipe Detail page."""
         return reverse('recipes:detail', kwargs={"pk": self.id})
 
-
     def __str__(self):
         return self.title
     
@@ -73,3 +72,7 @@ class Recipe(models.Model):
     def get_top_rated_recipes_url(cls):
         return reverse('recipes:top_rated')
 
+    @classmethod
+    def get_search_url(cls,value):
+        """Return to the Recipe search page."""
+        return reverse('recipes:search', kwargs={"value": value})

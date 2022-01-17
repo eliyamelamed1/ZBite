@@ -69,3 +69,8 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     @classmethod
     def get_saved_recipes_url(cls):
         return reverse('accounts:saved_recipes')
+
+    @classmethod
+    def get_search_url(cls, value):
+        """Return account search page."""
+        return reverse('accounts:search', kwargs={"value": value})

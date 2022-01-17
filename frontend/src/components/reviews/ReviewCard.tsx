@@ -24,16 +24,16 @@ const ReviewCard = (props: Review) => {
         <>
             <section className={styles.review_card}>
                 <div className={styles.image_container}>
-                    {author.photo_main?.src ? (
-                        <UiCircleImage src={author.photo_main?.src} />
+                    {author?.photo_main?.src ? (
+                        <UiCircleImage src={author?.photo_main?.src} />
                     ) : (
                         emptyImageIcon.src && <UiCircleImage src={emptyImageIcon.src} />
                     )}
                 </div>
                 <div className={styles.author_and_stars_container}>
                     <div className={styles.author_container}>
-                        <Link href={pageRoute(author.id).profile} passHref>
-                            {author.name}
+                        <Link href={pageRoute(author?.id).profile} passHref>
+                            {author?.name}
                         </Link>
                     </div>
                     <div className={styles.stars_container}>

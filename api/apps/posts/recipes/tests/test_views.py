@@ -306,11 +306,13 @@ class TestTopRatedRecipes:
                 
     class TestGuestUsers:
 
-        def test_get_request_return_status_code_200(self, api_client):
+        def test_page_should_render_successfully_return_status_code_200(self, api_client):
+            new_user = UserFactory()
+            api_client.force_authenticate(new_user)
             response = api_client.get(top_rated_recipes_url) 
 
             assert response.status_code == 200
-
+    
         def test_get_request_should_return_top_rated_recipes(self, api_client):
             
             for i in range(10):
@@ -360,4 +362,61 @@ class TestTopRatedRecipes:
                 
                 assert f'{recipe}' not in f'{response.content}'
 
+class TestSearchRecipes:
+    class TestAuthenticatedUsers:
+        def test_searching_without_value_should_return_status_code_200(self, api_client):
+            new_user = UserFactory()
+            api_client.force_authenticate(new_user)
+            response = api_client.get(Recipe.get_search_url(None)) 
 
+            assert response.status_code == 200
+
+        def test_searching_with_value_should_return_status_code_200(self, api_client):
+            new_user = UserFactory()
+            api_client.force_authenticate(new_user)
+            new_recipe = RecipeFactory()
+            response = api_client.get(Recipe.get_search_url(new_recipe.title)) 
+
+            assert response.status_code == 200
+
+        def test_searching_recipe_title_should_display_it(self, api_client):
+            new_user = UserFactory()
+            api_client.force_authenticate(new_user)
+            first_recipe = Recipe.objects.create(
+                title= 'first_title',
+                description= 'first_description'
+            )
+            second_recipe = Recipe.objects.create(
+                title= 'second_title',
+                description= 'second_title'
+            )
+            response = api_client.get(Recipe.get_search_url(first_recipe.title))
+
+            assert f'{first_recipe}' in f'{response.content}'
+            assert f'{second_recipe}' not in f'{response.content}'
+
+    class TestGuestUsers:
+        def test_searching_without_value_should_return_status_code_200(self, api_client):
+            response = api_client.get(Recipe.get_search_url(None)) 
+
+            assert response.status_code == 200
+        
+        def test_searching_with_value_should_return_status_code_200(self, api_client):
+            new_recipe = RecipeFactory()
+            response = api_client.get(Recipe.get_search_url(new_recipe.title)) 
+
+            assert response.status_code == 200
+
+        def test_searching_recipe_title_should_display_it(self, api_client):
+            first_recipe = Recipe.objects.create(
+                title= 'first_title',
+                description= 'first_description'
+            )
+            second_recipe = Recipe.objects.create(
+                title= 'second_title',
+                description= 'second_title'
+            )
+            response = api_client.get(Recipe.get_search_url(first_recipe.title))
+
+            assert f'{first_recipe}' in f'{response.content}'
+            assert f'{second_recipe}' not in f'{response.content}'

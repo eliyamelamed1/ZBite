@@ -20,3 +20,8 @@ class RecipeCreateSerializer(serializers.ModelSerializer):
         model = Recipe
         fields = ('id','title', 'description', 'photo_main','cook_time','serving', 'ingredients_text_list','instructions_text_list',)
 
+class RecipeSearchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Recipe
+        fields = ('title', 'description')
+

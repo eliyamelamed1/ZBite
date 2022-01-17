@@ -1,15 +1,11 @@
+from django.contrib.postgres.search import SearchQuery, SearchVector, SearchRank
 from rest_framework import permissions
 from rest_framework.generics import (CreateAPIView, ListAPIView,
                                      RetrieveUpdateDestroyAPIView)
-from rest_framework.response import Response
-from rest_framework.views import APIView
-
-
 from permissions import IsAuthorOrReadOnly
-
 from .models import Recipe
-from .serializers import (RecipeCreateSerializer, RecipeSerializer)
-from apps.users.accounts.models import UserAccount
+from .serializers import RecipeCreateSerializer, RecipeSearchSerializer, RecipeSerializer
+
 
 
 class RecipeList(ListAPIView):
@@ -47,3 +43,20 @@ class TopRatedRecipes(ListAPIView):
     serializer_class = RecipeSerializer
     queryset = Recipe.objects.order_by('-stars')[:10]
 
+
+
+class SearchRecipes(ListAPIView):
+    serializer_class = RecipeSearchSerializer
+
+    def get_queryset(self, *args, **kwargs):
+        value = self.kwargs['value']
+
+        if value:
+            vector = SearchVector('title','description')
+            query = SearchQuery(value)
+            recipesQueryset = Recipe.objects.annotate(rank=SearchRank(vector,query)).filter(rank__gte=0.001).order_by('-rank')
+        
+        else:
+            recipesQueryset: None
+
+        return recipesQueryset
