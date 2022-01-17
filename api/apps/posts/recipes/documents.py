@@ -14,7 +14,14 @@ class RecipeDocument(Document):
     class Django:
         model = Recipe
         fields = [
-             'title',
-             'description',
+            'photo_main',
+            'title',
+            'description',
+            'serving',
+            'cook_time',
+            'stars',
+            'review_count',
+            'score',
+
         ]
 
