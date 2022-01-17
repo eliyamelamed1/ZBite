@@ -43,7 +43,7 @@ const ReviewCreate: React.FC<{ recipeId: string }> = ({ recipeId }) => {
             await dispatch(reviewCreateAction({ recipeId, stars: starsValue, comment }));
             setDisplayForm(false);
 
-            // dispatch to refresh logged user star score
+            // dispatch to refresh logged user star
             if (loggedUserData?.id == recipeId) await dispatch(loadLoggedUserDataAction());
         } catch (err) {}
     };

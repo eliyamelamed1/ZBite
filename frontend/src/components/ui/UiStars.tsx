@@ -39,7 +39,7 @@ const UiStars: React.FC<{ starsCount: string }> = ({ starsCount }) => {
     return (
         <section className={styles.rating}>
             <div className={styles.rating_icons}>{mixedStars()}</div>
-            <div className={styles.rating_score}>
+            <div className={styles.rating_stars}>
                 <span>({parseFloat(starsCount).toFixed(1)})</span>
             </div>
         </section>

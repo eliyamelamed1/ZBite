@@ -26,9 +26,7 @@ def test_get_reviews_in_recipe_url():
     assert Review.get_reviews_in_recipe_url() == reverse('reviews:reviews_in_recipe')
 
 
-
-
-def test_get_recipe_avg_review_score(api_client):
+def test_get_recipe_avg_stars(api_client):
     new_recipe = RecipeFactory()
     api_client.force_authenticate(new_recipe.author)
     new_recipe = Recipe.objects.all().get(id__exact=new_recipe.id)
@@ -49,11 +47,11 @@ def test_get_recipe_avg_review_score(api_client):
     }
     api_client.post(review_create_url, data)
 
-    recipe_avg_stars = Review.get_recipe_stars_score(recipe=new_recipe)
+    recipe_avg_stars = Review.get_recipe_avg_stars(recipe=new_recipe)
 
     assert recipe_avg_stars == 3.0
 
-def test_get_account_stars_score(api_client):
+def test_get_account_avg_stars(api_client):
     user = UserFactory()
     api_client.force_authenticate(user)
 
@@ -111,6 +109,47 @@ def test_get_account_stars_score(api_client):
     }
     api_client.post(review_create_url, data)  
 
-    account_avg_stars = Review.get_account_stars_score(user=user)
+    account_avg_stars = Review.get_account_avg_stars(user=user)
 
     assert account_avg_stars == 2.5
+
+def test_calculate_recipe_score(api_client):
+    new_recipe = RecipeFactory()
+    api_client.force_authenticate(new_recipe.author)
+    new_recipe = Recipe.objects.all().get(id__exact=new_recipe.id)
+    data = {
+        'recipe': new_recipe.id,
+        'stars': 4.7,
+        'comment': 'comment'
+    }
+    api_client.post(review_create_url, data)
+    api_client.logout()
+
+    new_user = UserFactory()
+    api_client.force_authenticate(new_user)    
+    data = {
+        'recipe': new_recipe.id,
+        'stars': 3.2,
+        'comment': 'comment'
+    }
+    api_client.post(review_create_url, data)
+
+    recipe_score = Review.calculate_recipe_score(new_recipe)
+
+    assert recipe_score == 1.9
+
+def test_calculate_recipe_score_again(api_client):
+    new_recipe = RecipeFactory()
+    api_client.force_authenticate(new_recipe.author)
+    new_recipe = Recipe.objects.all().get(id__exact=new_recipe.id)
+    data = {
+        'recipe': new_recipe.id,
+        'stars': 3,
+        'comment': 'comment'
+    }
+    api_client.post(review_create_url, data)
+    api_client.logout()
+
+    recipe_score = Review.calculate_recipe_score(new_recipe)
+
+    assert recipe_score == 0
