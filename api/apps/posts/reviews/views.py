@@ -92,7 +92,11 @@ class ReviewsInRecipe(APIView):
         data = self.request.data
 
         recipe = data['recipe']
+        recipe = Recipe.objects.get(id=recipe)
         queryset = queryset.filter(recipe__exact=recipe)
+        
+        recipe.review_count = len(queryset)
+        recipe.save()
 
         serializer = ReviewDetailSerializer(queryset, many=True)
 

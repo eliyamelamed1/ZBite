@@ -490,7 +490,7 @@ class TestReviewsInRecipe:
 
             assert response.status_code == 405
 
-        def test_search_post_request_should_return_status_code_200(self, api_client):
+        def test_should_return_status_code_200(self, api_client):
             new_review = ReviewFactory()
             api_client.force_authenticate(new_review.author)
             data = {
@@ -500,7 +500,7 @@ class TestReviewsInRecipe:
 
             assert response.status_code == 200
 
-        def test_search_post_request_should_return_reviews(self, api_client):
+        def test_should_return_reviews(self, api_client):
             new_review = ReviewFactory()
             api_client.force_authenticate(new_review.author)
             data = {
@@ -510,6 +510,22 @@ class TestReviewsInRecipe:
 
             assert f'{new_review.id}' in f'{response.content}'
             assert f'{new_review.stars}' in f'{response.content}'        
+
+        def test_should_update_recipe_review_count(self, api_client):
+            new_review = ReviewFactory()
+            api_client.force_authenticate(new_review.author)
+            outdated_review_count = new_review.recipe.review_count
+            data = {
+                'recipe': new_review.recipe.id
+            }
+            api_client.post(reviews_in_recipe_url, data)
+            
+            updated_recipe = Recipe.objects.get(id=new_review.recipe.id)
+            updated_review_count = updated_recipe.review_count
+
+
+            assert outdated_review_count == 0
+            assert updated_review_count == 1
         
     class TestGuestUsers:
         def test_get_request_should_return_status_code_200(self, api_client):
@@ -517,7 +533,7 @@ class TestReviewsInRecipe:
 
             assert response.status_code == 405
 
-        def test_reviews_search_post_request_return_status_code_200(self, api_client):
+        def test_should_return_status_code_200(self, api_client):
             new_review = ReviewFactory()
             data = {
                 'recipe': new_review.recipe.id
@@ -527,7 +543,7 @@ class TestReviewsInRecipe:
             assert response.status_code == 200
         
         
-        def test_reviews_search_post_request_return_reviews(self, api_client):
+        def test_should_return_reviews(self, api_client):
             new_review = ReviewFactory()
             data = {
                 'recipe': new_review.recipe.id
@@ -537,4 +553,17 @@ class TestReviewsInRecipe:
             assert f'{new_review.id}' in f'{response.content}'
             assert f'{new_review.stars}' in f'{response.content}'
         
-        
+        def test_should_update_recipe_review_count(self, api_client):
+            new_review = ReviewFactory()
+            outdated_review_count = new_review.recipe.review_count
+            data = {
+                'recipe': new_review.recipe.id
+            }
+            api_client.post(reviews_in_recipe_url, data)
+            
+            updated_recipe = Recipe.objects.get(id=new_review.recipe.id)
+            updated_review_count = updated_recipe.review_count
+
+
+            assert outdated_review_count == 0
+            assert updated_review_count == 1

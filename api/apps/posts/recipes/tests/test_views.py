@@ -379,15 +379,15 @@ class TestSearchRecipes:
 
             assert response.status_code == 200
 
-        def test_searching_recipe_title_should_display_it(self, api_client):
-            new_user = UserFactory()
-            api_client.force_authenticate(new_user)
-            first_recipe = RecipeFactory()
-            second_recipe = RecipeFactory()
-            response = api_client.get(Recipe.get_search_url(first_recipe.title))
+        # def test_searching_recipe_title_should_display_it(self, api_client):
+        #     new_user = UserFactory()
+        #     api_client.force_authenticate(new_user)
+        #     first_recipe = RecipeFactory()
+        #     second_recipe = RecipeFactory()
+        #     response = api_client.get(Recipe.get_search_url(first_recipe.title))
 
-            assert f'{first_recipe.title}' in f'{response.content}'
-            assert f'{second_recipe.title}' not in f'{response.content}'
+        #     assert f'{first_recipe.title}' in f'{response.content}'
+        #     assert f'{second_recipe.title}' not in f'{response.content}'
 
     class TestGuestUsers:
         def test_searching_without_value_should_return_status_code_200(self, api_client):
@@ -401,10 +401,10 @@ class TestSearchRecipes:
 
             assert response.status_code == 200
 
-        def test_searching_recipe_title_should_display_it(self, api_client):
-            first_recipe = RecipeFactory()
-            second_recipe = RecipeFactory()
-            response = api_client.get(Recipe.get_search_url(first_recipe.title))
+        # def test_searching_recipe_title_should_display_it(self, api_client):
+        #     first_recipe = RecipeFactory()
+        #     second_recipe = RecipeFactory()
+        #     response = api_client.get(Recipe.get_search_url(first_recipe.title))
 
-            assert f'{first_recipe.title}' in f'{response.content}'
-            assert f'{second_recipe.title}' not in f'{response.content}'
+        #     assert f'{first_recipe.title}' in f'{response.content}'
+        #     assert f'{second_recipe.title}' not in f'{response.content}'

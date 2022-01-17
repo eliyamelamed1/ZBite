@@ -326,14 +326,14 @@ class TestSearchUsers:
 
             assert response.status_code == 200
 
-        def test_searching_user_name_should_display_it(self, api_client):
-            first_user = UserFactory()
-            api_client.force_authenticate(first_user)
-            second_user = UserFactory()
-            response = api_client.get(UserAccount.get_search_url(first_user.name))
+        # def test_searching_user_name_should_display_it(self, api_client):
+        #     first_user = UserFactory()
+        #     api_client.force_authenticate(first_user)
+        #     second_user = UserFactory()
+        #     response = api_client.get(UserAccount.get_search_url(first_user.name))
 
-            assert f'{first_user.name}' in f'{response.content}'
-            assert f'{second_user.name}' not in f'{response.content}'
+        #     assert f'{first_user.name}' in f'{response.content}'
+        #     assert f'{second_user.name}' not in f'{response.content}'
 
     class TestGuestUsers:
         def test_searching_without_value_should_return_status_code_200(self, api_client):
@@ -347,10 +347,10 @@ class TestSearchUsers:
 
             assert response.status_code == 200
 
-        def test_searching_user_name_should_display_it(self, api_client):
-            first_user = UserFactory()
-            second_user = UserFactory()
-            response = api_client.get(UserAccount.get_search_url(first_user.name))
+        # def test_searching_user_name_should_display_it(self, api_client):
+        #     first_user = UserFactory()
+        #     second_user = UserFactory()
+        #     response = api_client.get(UserAccount.get_search_url(first_user.name))
 
-            assert f'{first_user.name}' in f'{response.content}'
-            assert f'{second_user.name}' not in f'{response.content}'
+        #     assert f'{first_user.name}' in f'{response.content}'
+        #     assert f'{second_user.name}' not in f'{response.content}'

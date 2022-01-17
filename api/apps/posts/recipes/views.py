@@ -50,6 +50,16 @@ class SearchRecipes(ListAPIView):
 
     def get_queryset(self, *args, **kwargs):
         value = self.kwargs['value']
+        
         recipeQueryset = RecipeDocument.search().query('wildcard',title=f'*{value}*',)
 
         return recipeQueryset
+
+# weight = ^2  (twice as much)
+# rank by stars
+# sort = after query
+# group
+
+
+
+# score = ('stars' - 5 )*'numOfReviews' 
