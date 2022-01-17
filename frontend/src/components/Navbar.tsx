@@ -33,7 +33,7 @@ const Navbar = () => {
     const [searchValue, setSearchValue] = useState('');
     const profileUrl = loggedUserData ? '/users/' + loggedUserData?.id : '/users/UserLogin/';
 
-    const { listOfSearchedRecipes } = useSelector((state: RootState) => state.recipeReducer);
+    // const { listOfSearchedRecipes } = useSelector((state: RootState) => state.recipeReducer);
 
     const deb = useCallback(
         debounce((e) => setSearchValue(e.target.value), 500),
