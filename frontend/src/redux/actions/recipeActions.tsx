@@ -21,6 +21,8 @@ import {
     REVIEW_DELETE_SUCCESS,
     SAVE_UNSAVE_ACTION_FAIL,
     SAVE_UNSAVE_ACTION_SUCCESS,
+    SEARCH_RECIPE_FAIL,
+    SEARCH_RECIPE_SUCCESS,
     UPDATE_RECIPE_FAIL,
     UPDATE_RECIPE_SUCCESS,
 } from '../types';
@@ -211,3 +213,14 @@ export const saveRecipeAction =
             dispatch({ type: SAVE_UNSAVE_ACTION_FAIL });
         }
     };
+
+export const searchRecipeAction = (value) => async (dispatch) => {
+    try {
+        console.log('dispatched');
+
+        const res = await axiosInstance.get(endpointRoute(value).recipes.search);
+        await dispatch({ type: SEARCH_RECIPE_SUCCESS, payload: res.data });
+    } catch (err) {
+        dispatch({ type: SEARCH_RECIPE_FAIL });
+    }
+};

@@ -53,5 +53,6 @@ class SearchRecipes(ListAPIView):
         
         recipeQueryset = RecipeDocument.search().query('wildcard',title=f'*{value}*').sort("-score")
 
+
         return recipeQueryset
 

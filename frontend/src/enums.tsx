@@ -17,11 +17,11 @@ export const endpointRoute = (id = '') => ({
         list: `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/list/`,
         trending: `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/top_rated/`,
         followed: `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/recipes_of_accounts_followed/`,
-        search: `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/search/`,
         details: `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}/`,
         saved_recipes: `${process.env.NEXT_PUBLIC_API_URL}/api/accounts/saved_recipes/`,
         save: `${process.env.NEXT_PUBLIC_API_URL}/api/saves/save/`,
         userOwnRecipes: `${process.env.NEXT_PUBLIC_API_URL}/api/accounts/own_recipes/${id}/`,
+        search: `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/search/${id}/`,
     },
     reviews: {
         create: `${process.env.NEXT_PUBLIC_API_URL}/api/reviews/create/`,

@@ -1,4 +1,4 @@
-import React, { ReactEventHandler, useEffect, useRef, useState } from 'react';
+import React, { ReactEventHandler, useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import HomeIcon from '../assets/icons/home.svg';
@@ -11,8 +11,10 @@ import ProfileIcon from '../assets/icons/profile.svg';
 import { RootState } from '../redux/store';
 import SavedIcon from '../assets/icons/heart.svg';
 import SearchIcon from '../assets/icons/search.svg';
+import { debounce } from 'lodash';
 import { logoutAction } from '../redux/actions/userActions';
 import { pageRoute } from '../enums';
+import { searchRecipeAction } from '../redux/actions/recipeActions';
 import styles from '../styles/layout/_navbar.module.scss';
 import { useRouter } from 'next/router';
 
@@ -28,8 +30,24 @@ const Navbar = () => {
         setIsUserAuthenticated(updatedIsUserAuthenticated);
         setloggedUserData(updatedloggedUserData);
     }, [dispatch, updatedIsUserAuthenticated, updatedloggedUserData]);
-
+    const [searchValue, setSearchValue] = useState('');
     const profileUrl = loggedUserData ? '/users/' + loggedUserData?.id : '/users/UserLogin/';
+
+    const { listOfSearchedRecipes } = useSelector((state: RootState) => state.recipeReducer);
+
+    const deb = useCallback(
+        debounce((e) => setSearchValue(e.target.value), 500),
+        [searchValue]
+    );
+    const onChange = (e) => {
+        deb(e);
+    };
+
+    useEffect(() => {
+        if (searchValue.trim()) {
+            dispatch(searchRecipeAction(searchValue));
+        }
+    }, [searchValue, dispatch]);
 
     const handleLogout = () => {
         try {
@@ -176,7 +194,7 @@ const Navbar = () => {
                     {LogoIcon.src && <Image src={LogoIcon} alt='logo icon' height={100} width={100} />}
                 </i>
                 <div className={styles.search__box}>
-                    <input type='text' className={styles.search__txt} placeholder='Search' />
+                    <input type='text' className={styles.search__txt} placeholder='Search' onChange={onChange} />
                     <button className={styles.search__btn}>
                         <i>{SearchIcon.src && <Image src={SearchIcon} alt='search icon' height={100} width={100} />}</i>
                     </button>
