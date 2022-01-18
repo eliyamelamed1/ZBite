@@ -165,6 +165,7 @@ export const reviewCreateAction =
             toast.success('review created successfully');
             dispatch({ type: REVIEW_CREATE_SUCCESS });
             await dispatch(reviewsInRecipeAction({ recipeId }));
+            // dispatch(loadLoggedUserDataAction());
         } catch (err) {
             dispatch({ type: REVIEW_CREATE_FAIL });
         }
@@ -178,6 +179,7 @@ export const reviewDeleteAction =
             toast.success('review deleted successfully');
             dispatch({ type: REVIEW_DELETE_SUCCESS });
             dispatch(reviewsInRecipeAction({ recipeId }));
+            dispatch(loadLoggedUserDataAction());
         } catch (err) {
             dispatch({ type: REVIEW_DELETE_FAIL });
         }

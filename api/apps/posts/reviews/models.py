@@ -59,6 +59,16 @@ class Review(models.Model):
         return round(score,1)
 
     @classmethod
+    def calculate_account_score(cls, author):
+        all_recipes = Recipe.objects.filter(author=author)
+        score = 0.0
+
+        for recipe in all_recipes:
+            score += recipe.score
+
+        return round(score,1)
+
+    @classmethod
     def get_account_avg_stars(cls, user):
         user_own_recipes = Recipe.objects.all().filter(author=user)
 

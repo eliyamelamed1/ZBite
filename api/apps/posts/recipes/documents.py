@@ -1,5 +1,3 @@
-from django.db import models
-
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
 from elasticsearch_dsl import analyzer, tokenizer

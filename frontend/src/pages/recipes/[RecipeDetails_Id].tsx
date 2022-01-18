@@ -42,13 +42,12 @@ const RecipeDetails = (props) => {
     const [recipeData, setRecipeData] = useState<Recipe>(props.serverRecipeData);
     const { requestedRecipeData, listOfFilteredReviews } = useSelector((state: RootState) => state.recipeReducer);
     const [reviewsData, setReviewsData] = useState(props.serverReviewsData);
-    console.log(recipeData.score);
 
     useEffect(
         // when updating recipe data (title, description etc..) migrate the changes to the userData
         function migrateRequestedRecipeData() {
             const isRecipeDataMatchReqId = requestedRecipeData?.id === recipeData?.id;
-            isRecipeDataMatchReqId ? setRecipeData(requestedRecipeData) : null;
+            if (isRecipeDataMatchReqId) setRecipeData(requestedRecipeData);
         },
         [requestedRecipeData, recipeData?.id]
     );
@@ -56,6 +55,8 @@ const RecipeDetails = (props) => {
     useEffect(
         // when updating reviews data migrate the changes to the reviewsData
         function migrateListOfFilteredReviews() {
+            console.log(listOfFilteredReviews);
+
             if (listOfFilteredReviews == null) return null;
             if (listOfFilteredReviews.length == 0) return setReviewsData([]);
 
@@ -64,9 +65,11 @@ const RecipeDetails = (props) => {
                 const isReviewsMatchRecipe = review.recipe === recipeData?.id;
                 if (isReviewsMatchRecipe) updatedReviewList.push(review);
             }
-            return setReviewsData(updatedReviewList);
+            console.log(updatedReviewList);
+
+            if (updatedReviewList === []) return setReviewsData(updatedReviewList);
         },
-        [listOfFilteredReviews, recipeData?.id]
+        [listOfFilteredReviews, recipeData]
     );
 
     return (
@@ -144,6 +147,7 @@ const RecipeDetails = (props) => {
                                 </div>
                             </li>
                             <UiSectionSeparator />
+                            <p className={styles.title}> {recipeData?.id}</p>
                             <p className={styles.title}> {recipeData?.title}</p>
                             <p className={styles.description}>{recipeData?.description}</p>
                             <div className={styles.cook_time_and_serving_container}>

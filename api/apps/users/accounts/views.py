@@ -79,6 +79,7 @@ class SearchUsers(ListAPIView):
 
     def get_queryset(self, *args, **kwargs):
         value = self.kwargs['value']
+        # usersQueryset = UserAccountDocument.search().query('wildcard',name=f'*{value}*',).sort('-score')
         usersQueryset = UserAccountDocument.search().query('wildcard',name=f'*{value}*',)
 
         return usersQueryset
