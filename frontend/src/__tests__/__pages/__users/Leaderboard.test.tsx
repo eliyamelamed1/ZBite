@@ -14,61 +14,61 @@ const listOfLeaderboardUsers = [
     {
         id: 'firstUserId',
         name: 'firstUserName',
-        stars: 1.1,
+        score: 1.1,
         photo_main: { src: '/firstUserImage' },
     },
     {
         id: 'secondUserId',
         name: 'secondUserName',
-        stars: 1.2,
+        score: 1.2,
         photo_main: { src: '/secondUserImage' },
     },
     {
         id: 'thirdUserId',
         name: 'thirdUserName',
-        stars: 1.3,
+        score: 1.3,
         photo_main: { src: '/thirdUserImage' },
     },
     {
         id: 'fourthUserId',
         name: 'fourthUserName',
-        stars: 1.4,
+        score: 1.4,
         photo_main: { src: '/fourthUserImage' },
     },
     {
         id: 'fifthUserId',
         name: 'fifthUserName',
-        stars: 1.5,
+        score: 1.5,
         photo_main: { src: '/fifthUserImage' },
     },
     {
         id: 'sixthUserId',
         name: 'sixthUserName',
-        stars: 1.6,
+        score: 1.6,
         photo_main: { src: '/sixthUserImage' },
     },
     {
         id: 'seventhUserId',
         name: 'seventhUserName',
-        stars: 1.7,
+        score: 1.7,
         photo_main: { src: '/seventhUserImage' },
     },
     {
         id: 'eighthUserId',
         name: 'eighthUserName',
-        stars: 1.8,
+        score: 1.8,
         photo_main: { src: '/eighthUserImage' },
     },
     {
         id: 'ninthUserId',
         name: 'ninthUserName',
-        stars: 1.9,
+        score: 1.9,
         photo_main: { src: '/ninthUserImage' },
     },
     {
         id: 'tenthUserId',
         name: 'tenthUserName',
-        stars: 2.1,
+        score: 2.1,
         photo_main: { src: '/tenthUserImage' },
     },
 ];
@@ -76,7 +76,7 @@ const initialListOfLeaderboardUsers = [
     {
         id: 'firstUserId',
         name: 'firstUserName',
-        stars: 2.2,
+        score: 2.2,
         photo_main: { src: '/firstUserImage' },
     },
 ];
@@ -120,10 +120,10 @@ describe('Leaderboard', () => {
         test('should render without crashing', () => {});
         test('should render all users relevant fields', () => {
             listOfLeaderboardUsers.forEach((user) => {
-                let stars = screen.getByText(user.stars);
+                let score = screen.getByText(user.score);
                 let name = screen.getByText(user.name);
 
-                expect(stars).toBeInTheDocument();
+                expect(score).toBeInTheDocument();
                 expect(name).toBeInTheDocument();
             });
         });
@@ -143,12 +143,12 @@ describe('Leaderboard', () => {
         test('should render without crashing', () => {});
         test('should render all users relevant fields', () => {
             initialListOfLeaderboardUsers.forEach((user) => {
-                if (!user?.stars || !user?.name) return;
+                if (!user?.score || !user?.name) return;
 
-                let stars = screen.queryByText(user?.stars);
+                let score = screen.queryByText(user?.score);
                 let name = screen.queryByText(user?.name);
 
-                expect(stars).toBeInTheDocument();
+                expect(score).toBeInTheDocument();
                 expect(name).toBeInTheDocument();
             });
         });
