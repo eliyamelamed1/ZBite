@@ -6,6 +6,7 @@ import Image from 'next/image';
 import LeaderboardIcon from '../assets/icons/leaderboard.svg';
 import Link from 'next/link';
 import LogoIcon from '../assets/icons/logo.svg';
+import MuiAutoComplete from './mui/MuiAutoComplete';
 import PlusIcon from '../assets/icons/plus.svg';
 import ProfileIcon from '../assets/icons/profile.svg';
 import { RootState } from '../redux/store';
@@ -193,12 +194,13 @@ const Navbar = () => {
                 <i className={styles.logo__icon}>
                     {LogoIcon.src && <Image src={LogoIcon} alt='logo icon' height={100} width={100} />}
                 </i>
-                <div className={styles.search__box}>
-                    <input type='text' className={styles.search__txt} placeholder='Search' onChange={onChange} />
+                <MuiAutoComplete />
+                {/* <div className={styles.search__box}> */}
+                {/* <input type='text' className={styles.search__txt} placeholder='Search' onChange={onChange} />
                     <button className={styles.search__btn}>
                         <i>{SearchIcon.src && <Image src={SearchIcon} alt='search icon' height={100} width={100} />}</i>
-                    </button>
-                </div>
+                    </button> */}
+                {/* </div> */}
                 {authenitcationLinks}
             </header>
             {NavbarLinks()}
