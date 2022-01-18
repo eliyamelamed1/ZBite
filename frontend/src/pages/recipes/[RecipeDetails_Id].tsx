@@ -52,22 +52,27 @@ const RecipeDetails = (props) => {
         [requestedRecipeData, recipeData?.id]
     );
 
+    console.log(reviewsData);
+
     useEffect(
         // when updating reviews data migrate the changes to the reviewsData
         function migrateListOfFilteredReviews() {
-            console.log(listOfFilteredReviews);
-
             if (listOfFilteredReviews == null) return null;
-            if (listOfFilteredReviews.length == 0) return setReviewsData([]);
+            if (listOfFilteredReviews.length === 0) {
+                return setReviewsData([]);
+            }
 
             const updatedReviewList = [];
             for (const review of listOfFilteredReviews) {
+                console.log(recipeData.id);
+                console.log(review.recipe);
+
                 const isReviewsMatchRecipe = review.recipe === recipeData?.id;
                 if (isReviewsMatchRecipe) updatedReviewList.push(review);
             }
             console.log(updatedReviewList);
 
-            if (updatedReviewList === []) return setReviewsData(updatedReviewList);
+            if (updatedReviewList.length !== 0) return setReviewsData(updatedReviewList);
         },
         [listOfFilteredReviews, recipeData]
     );
