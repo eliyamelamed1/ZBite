@@ -46,6 +46,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     saved_recipes = models.ManyToManyField('recipes.Recipe', default=None, blank=True, related_name='saved_recipes', symmetrical=False)  
     stars = models.FloatField(default=0)
     score = models.FloatField(default=0)
+    recipe_count = models.IntegerField(default=0)
 
     objects = UserAccountManager()
 

@@ -39,7 +39,7 @@ class TestRecipeCreateView:
 
             assert create_recipe_page_render.status_code == 405 # 405 = method not allowed - get isnt allowed only post
 
-        def test_recipe_create_post_request_required_fields(self, api_client):
+        def test_should_create_recipe(self, api_client):
             new_user = UserFactory()
             api_client.force_authenticate(new_user)
             recipe_data = RecipeFactory.build()
@@ -72,6 +72,37 @@ class TestRecipeCreateView:
                 new_recipe = Recipe.objects.get(title=recipe_data.title)
 
                 assert new_recipe.author == first_user
+
+        def test_creating_recipe_should_recalculate_user_recipe_count(self, api_client):
+            new_user = UserFactory()
+            api_client.force_authenticate(new_user)
+            recipe_data = RecipeFactory.build()
+            data = {
+                'title': {recipe_data.title},
+                'description': {recipe_data.description},
+                'serving': 'four people',
+                'cook_time': '2 hours',
+                'ingredients_text_list': '',
+                'instructions_text_list': '',
+            }
+            api_client.post(create_recipe_url, data)
+            new_user = UserAccount.objects.get(id=new_user.id)
+
+            assert new_user.recipe_count == 1
+
+            recipe_data = RecipeFactory.build()
+            data = {
+                'title': {recipe_data.title},
+                'description': {recipe_data.description},
+                'serving': 'four people',
+                'cook_time': '2 hours',
+                'ingredients_text_list': '',
+                'instructions_text_list': '',
+            }
+            api_client.post(create_recipe_url, data)
+            new_user = UserAccount.objects.get(id=new_user.id)
+
+            assert new_user.recipe_count == 2
 
     class TestGuestUsers:
         def test_recipe_create_page_should_not_render(self, api_client):
@@ -126,12 +157,26 @@ class TestDeleteRecipeView:
             response = api_client.delete(new_recipe.get_absolute_url())
 
             assert response.status_code == 204 
+            assert Recipe.objects.all().count() == 0
+            
+        def test_deleting_recipe_should_recalculate_user_recipe_count(self, api_client):
+            new_recipe = RecipeFactory()
+            author = new_recipe.author
+            author.recipe_count = 1
+            author.save()
+
+            api_client.force_authenticate(author)
+            api_client.delete(new_recipe.get_absolute_url())
+            author = UserAccount.objects.get(id=author.id)
+
+            assert author.recipe_count == 0
             
         # def test_deleting_recipe_recalculates_author_stars(self, api_client):
             
-            # new_recipe = RecipeFactory()
-            # author = UserAccount.objects.get(id=new_recipe.author.id).stars = 2 
+        #     new_recipe = RecipeFactory()
+        #     author = UserAccount.objects.get(id=new_recipe.author.id) 
             # author.stars = 2
+            # author.save()
 
             # assert author.stars == 2
             

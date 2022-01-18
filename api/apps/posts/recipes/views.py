@@ -1,3 +1,4 @@
+from apps.users.accounts.models import UserAccount
 from apps.posts.recipes.documents import RecipeDocument
 from rest_framework import permissions
 from rest_framework.generics import (CreateAPIView, ListAPIView,
@@ -17,6 +18,12 @@ class RecipeDetail(RetrieveUpdateDestroyAPIView):
     queryset = Recipe.objects.order_by('-updated_at')
     serializer_class = RecipeSerializer
 
+    def perform_destroy(self, serializer):
+        serializer.delete()
+        author = UserAccount.objects.get(id=self.request.user.id)
+        author.recipe_count -= 1
+        author.save()
+        
 
 class RecipeCreate(CreateAPIView):
     permission_classes = (permissions.IsAuthenticated, )
@@ -26,6 +33,11 @@ class RecipeCreate(CreateAPIView):
     def perform_create(self, serializer):
         '''save the the current logged in user as the author of the recipe'''
         serializer.save(author=self.request.user)
+        
+        author = UserAccount.objects.get(id=self.request.user.id)
+        author.recipe_count += 1
+        author.save()
+        
 
 class RecipesOfAccountsFollowed(ListAPIView):
     '''display the recipes of followed users'''
