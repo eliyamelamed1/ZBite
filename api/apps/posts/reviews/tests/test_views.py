@@ -420,6 +420,40 @@ class TestReviewCreateView:
             assert updated_recipe.score == Review.calculate_recipe_score(updated_recipe)
             assert outdated_recipe.score != updated_recipe.score
 
+        def test_should_recipe_calculate_account_score(self, api_client):
+            recipe = RecipeFactory()
+            first_user = UserFactory()
+            api_client.force_authenticate(first_user)
+
+            data = {
+                'recipe': recipe.id,
+                'stars': 4,
+                'comment': 'comment'
+
+            }
+            api_client.post(review_create_url, data)
+            api_client.logout()
+
+            outdated_recipe = Recipe.objects.get(id=recipe.id)
+            outdated_user = outdated_recipe.author
+            assert outdated_user.score == Review.calculate_account_score(outdated_user)
+
+            second_user = UserFactory()
+            api_client.force_authenticate(second_user)
+            data = {
+                'recipe': recipe.id,
+                'stars': 1,
+                'comment': 'comment'
+            }
+
+            
+            api_client.post(review_create_url, data)
+            updated_recipe = Recipe.objects.get(id=recipe.id)
+            updated_user = updated_recipe.author 
+
+            assert updated_user.score == Review.calculate_account_score(updated_user)
+            assert outdated_user.score != updated_user.score
+
 
     class TestGuestUsers:
         def test_review_page_should_not_render(self, api_client):
@@ -597,6 +631,46 @@ class TestReviewDeleteView:
             assert outdated_recipe.score != updated_recipe.score
             assert updated_recipe.score == Review.calculate_recipe_score(updated_recipe)
   
+        def test_deleting_review_should_recalculate_account_score(self, api_client):
+            recipe = RecipeFactory()
+            first_user = UserFactory()
+            api_client.force_authenticate(first_user)
+
+            data = {
+                'recipe': recipe.id,
+                'stars': 4,
+                'comment': 'comment'
+
+            }
+            api_client.post(review_create_url, data)
+            api_client.logout()
+
+            second_user = UserFactory()
+            api_client.force_authenticate(second_user)
+            data = {
+                'recipe': recipe.id,
+                'stars': 1,
+                'comment': 'secondcomment'
+
+            }
+            api_client.post(review_create_url, data)
+            api_client.logout()
+
+            outdated_recipe = Recipe.objects.get(id=recipe.id)
+            outdated_user = outdated_recipe.author
+            assert outdated_user.score == Review.calculate_account_score(outdated_user)
+
+            # delete review and check if recipe score get calculated
+            second_review = Review.objects.get(comment='secondcomment')
+            api_client.force_authenticate(second_review.author)
+            delete_url = second_review.get_delete_url()
+            api_client.delete(delete_url)
+
+            updated_recipe = Recipe.objects.get(id=recipe.id)
+            updated_user = updated_recipe.author 
+
+            assert updated_user.score == Review.calculate_account_score(updated_user)
+            assert outdated_user.score != updated_user.score
     class TestGuestUsers:
         def test_delete_page_should_not_render(self, api_client):
             new_review = ReviewFactory()

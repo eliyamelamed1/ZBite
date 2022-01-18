@@ -153,3 +153,20 @@ def test_calculate_recipe_score_again(api_client):
     recipe_score = Review.calculate_recipe_score(new_recipe)
 
     assert recipe_score == 0
+
+def test_calculate_account_score(api_client):
+    first_recipe = RecipeFactory()
+    author = first_recipe.author
+    second_recipe = RecipeFactory()
+    second_recipe.author = author
+
+    first_recipe.score = 3
+    second_recipe.score = 4
+
+    first_recipe.save()
+    second_recipe.save()
+
+    account_score = Review.calculate_account_score(first_recipe.author)
+    
+    assert account_score == 7
+
