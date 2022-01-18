@@ -11,10 +11,9 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-
-    .create_button {
-        @include button;
-    }
+}
+.create_button {
+    @include button;
 }
 
 .general_section {

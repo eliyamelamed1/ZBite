@@ -1,13 +1,13 @@
-import * as React from 'react';
+import react, { Fragment, useEffect, useState } from 'react';
 
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
 import TextField from '@mui/material/TextField';
 import styles from '../../styles/mui/MuiAutoComplete.module.scss';
 
-interface Film {
+interface Recipe {
     title: string;
-    year: number;
+    [key: string]: any;
 }
 
 function sleep(delay = 0) {
@@ -17,11 +17,11 @@ function sleep(delay = 0) {
 }
 
 export default function MuiAutoComplete() {
-    const [open, setOpen] = React.useState(false);
-    const [options, setOptions] = React.useState<readonly Film[]>([]);
+    const [options, setOptions] = useState<readonly Recipe[]>([]);
+    const [open, setOpen] = useState(false);
     const loading = open && options.length === 0;
 
-    React.useEffect(() => {
+    useEffect(() => {
         let active = true;
 
         if (!loading) {
@@ -41,7 +41,7 @@ export default function MuiAutoComplete() {
         };
     }, [loading]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!open) {
             setOptions([]);
         }
@@ -79,10 +79,10 @@ export default function MuiAutoComplete() {
                         ...params.InputProps,
                         className: styles.optionList,
                         endAdornment: (
-                            <React.Fragment>
+                            <Fragment>
                                 {loading && <CircularProgress color='inherit' size={20} />}
-                                {/* {params.InputProps.endAdornment} */}
-                            </React.Fragment>
+                                {/* <button style={{ color: 'black' }}>button that will dispatch the action</button> */}
+                            </Fragment>
                         ),
                     }}
                 />

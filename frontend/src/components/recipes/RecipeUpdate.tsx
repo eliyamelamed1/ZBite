@@ -7,11 +7,11 @@ import React, { useState } from 'react';
 import GeneralForm from '../../forms/recipeCreate/GeneralForm';
 import IngredientForm from '../../forms/recipeCreate/IngredientForm';
 import InstructionForm from '../../forms/recipeCreate/InstructionForm';
-import UiButton from '../ui/UiButton';
 import UiOptionsButton from '../ui/optionsForm/UiOptionsButton';
 import UiPopUp from '../ui/UiPopUp';
 import UiSectionSeparator from '../ui/UiSectionSeperator';
 import { recipeUpdateAction } from '../../redux/actions/recipeActions';
+import styles from '../../styles/pages/recipeCreate.module.scss';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 
@@ -109,7 +109,7 @@ const RecipeUpdate: React.FC<{ id: string }> = ({ id }) => {
             <UiSectionSeparator />
             {InstructionForm({ onChangeText, instruction, setFormData, instructionList, inputId, modifiedText })}
             <UiSectionSeparator />
-            <UiButton reverse={true}>Submit</UiButton>
+            <button className={styles.create_button}>Submit</button>
         </UiPopUp>
     );
 
