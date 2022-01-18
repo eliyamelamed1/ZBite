@@ -21,7 +21,8 @@ class RecipeDetail(RetrieveUpdateDestroyAPIView):
     def perform_destroy(self, serializer):
         serializer.delete()
         author = UserAccount.objects.get(id=self.request.user.id)
-        author.recipe_count -= 1
+        recipe_count = Recipe.objects.filter(author=author).count()
+        author.recipe_count = recipe_count
         author.save()
         
 
@@ -35,7 +36,8 @@ class RecipeCreate(CreateAPIView):
         serializer.save(author=self.request.user)
         
         author = UserAccount.objects.get(id=self.request.user.id)
-        author.recipe_count += 1
+        recipe_count = Recipe.objects.filter(author=author).count() 
+        author.recipe_count = recipe_count
         author.save()
         
 

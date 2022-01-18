@@ -54,6 +54,7 @@ class TestRecipeCreateView:
             response = api_client.post(create_recipe_url, data)
 
             assert response.status_code == 201
+            assert Recipe.objects.all().count() == 1
         
         def test_recipe_author_is_current_logged_in_user(self, api_client):
                 ''' testing the method perform_create '''
