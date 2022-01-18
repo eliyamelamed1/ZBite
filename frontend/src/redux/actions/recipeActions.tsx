@@ -164,8 +164,8 @@ export const reviewCreateAction =
             await axiosInstance.post(endpointRoute().reviews.create, body);
             toast.success('review created successfully');
             dispatch({ type: REVIEW_CREATE_SUCCESS });
-            await dispatch(reviewsInRecipeAction({ recipeId }));
-            // dispatch(loadLoggedUserDataAction());
+            dispatch(reviewsInRecipeAction({ recipeId }));
+            dispatch(loadLoggedUserDataAction());
         } catch (err) {
             dispatch({ type: REVIEW_CREATE_FAIL });
         }
