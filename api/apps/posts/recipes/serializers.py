@@ -27,7 +27,7 @@ class RecipeSearchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Recipe
         fields = (
-            # 'saves'
+            'saves',
             'title', 
             'author',
             'ingredients_text_list',

@@ -70,14 +70,14 @@ class SearchRecipes(ListAPIView):
         value = self.kwargs['value']
 
         # search 
-        recipe_queryset = RecipeDocument.search().query('wildcard',title=f'*{value}*').sort("-score")
+        elastic_queryset = RecipeDocument.search().query('wildcard',title=f'*{value}*').sort("-score")
         
         # temporary solution (cause elasticsearch fails to index photo_main fields + saves field)
-        new_queryset = []
-        for recipe in recipe_queryset:
+        postgres_queryset = []
+        for recipe in elastic_queryset:
             try:
-                new_queryset.append(Recipe.objects.get(id=recipe.id))
+                postgres_queryset.append(Recipe.objects.get(id=recipe.id))
             except:
                 pass
 
-        return recipe_queryset
+        return postgres_queryset

@@ -36,6 +36,8 @@ export default function MuiAutoComplete() {
         deb(e);
     };
 
+    console.log(options);
+
     useEffect(() => {
         const searchRecipes = async () => {
             if (searchValue?.trim()) {

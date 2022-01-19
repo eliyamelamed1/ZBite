@@ -35,7 +35,7 @@ class RecipeDocument(Document):
             'id',
             'score',
             'description', 
-            # 'photo_main',
+            'photo_main',
             'stars',
             'review_count',
         ]
