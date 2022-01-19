@@ -10,10 +10,9 @@ interface Recipe {
     title?: string;
     [key: string]: any;
 }
-type Text = string;
 
 export default function MuiAutoComplete({ onChange, data }) {
-    const [options, setOptions] = useState<Recipe[] | Text>([]);
+    const [options, setOptions] = useState<readonly Recipe[]>([]);
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
@@ -46,7 +45,7 @@ export default function MuiAutoComplete({ onChange, data }) {
                 setOpen(false);
             }}
             isOptionEqualToValue={(option, value) => option.title === value.title}
-            getOptionLabel={(option) => (option?.title ? option.title : (option as Text))}
+            getOptionLabel={(option) => (option?.title ? option.title : (option as unknown as string))}
             options={options}
             // loading={loading}
             renderOption={(props, option) => {
