@@ -50,7 +50,6 @@ const HomePage: React.FC<{ listOfTrendingRecipes: Recipe[] }> = (props) => {
 
     return (
         <div className={styles.container}>
-            <MuiStarsRatings />
             <ul className={styles.recipe_filter} ref={buttonsRef} onClick={onClick}>
                 <button
                     className={styles.active}
