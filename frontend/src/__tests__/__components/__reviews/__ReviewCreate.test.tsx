@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
 
+import * as MuiStarsRatings from '../../../components/mui/MuiStarsRatings';
 import * as RecipeActions from '../../../redux/actions/recipeActions';
 
 import { act, cleanup, render, screen } from '@testing-library/react';
@@ -13,12 +14,15 @@ import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
 
 const reviewCreateActionSpy = jest.spyOn(RecipeActions, 'reviewCreateAction');
+const muiStarsRatingsSpy = jest.spyOn(MuiStarsRatings, 'default');
 jest.mock('next/router');
 
 describe('ReviewCreate', () => {
     const recipeId = 'recipeId';
     describe('authenticated users', () => {
         beforeEach(() => {
+            // disable unnecessary warnings
+
             cleanup();
             jest.clearAllMocks();
             const initialState = { isUserAuthenticated: true };
@@ -93,26 +97,8 @@ describe('ReviewCreate', () => {
                     });
                 });
                 describe('stars input', () => {
-                    test('render stars buttons', () => {
-                        for (let index = 1; index <= 5; index++) {
-                            const starButton = screen.getByTestId(`button number${index}`);
-
-                            expect(starButton).toBeInTheDocument();
-                        }
-                    });
-                    test('stars attributes', () => {
-                        for (let index = 1; index <= 5; index++) {
-                            const starButton = screen.getByTestId(`button number${index}`);
-                            expect(starButton.type).toBe('button');
-                            expect(starButton.name).toBe('stars');
-                        }
-                    });
-                    test('stars value change according to input (onchange)', () => {
-                        for (let index = 1; index <= 5; index++) {
-                            const starButton = screen.getByTestId(`button number${index}`);
-                            userEvent.click(starButton);
-                            expect(starButton.value).toBe(index.toString());
-                        }
+                    test('should render MuiStarsRatings', () => {
+                        expect(muiStarsRatingsSpy).toHaveBeenCalled();
                     });
                 });
                 describe('submit button', () => {
@@ -126,21 +112,19 @@ describe('ReviewCreate', () => {
                     });
                     test('clicking the submit button should call dispatch reviewCreateActionSpy', async () => {
                         const commentTextbox = screen.getByPlaceholderText(/comment/i);
-                        const starButton = screen.getByTestId('button number1');
-
+                        const starButton = screen.getByRole('radio', { name: '4.5 Stars' });
                         userEvent.type(commentTextbox, 'new comment');
-                        userEvent.type(starButton, '1');
+                        userEvent.click(starButton);
                         const submitButton = screen.getByRole('button', { name: /submit/i });
                         userEvent.click(submitButton);
-
-                        const timesActionDispatched = reviewCreateActionSpy.mock.calls.length;
+                        const timesActionDispatched = await reviewCreateActionSpy.mock.calls.length;
                         expect(timesActionDispatched).toBe(1);
                         expect(reviewCreateActionSpy.mock.calls[0][0].comment).toBe('new comment');
-                        expect(reviewCreateActionSpy.mock.calls[0][0].stars).toBe(1);
+                        expect(reviewCreateActionSpy.mock.calls[0][0].stars).toBe('4.5');
                     });
                     test('authenticated user should not be redirected upon creating a review', () => {
                         const commentTextbox = screen.getByPlaceholderText(/comment/i);
-                        const starButton = screen.getByTestId('button number1');
+                        const starButton = screen.getByRole('radio', { name: '4.5 Stars' });
                         const button = screen.getByRole('button', { name: /submit/i });
 
                         userEvent.type(commentTextbox, 'new comment');
