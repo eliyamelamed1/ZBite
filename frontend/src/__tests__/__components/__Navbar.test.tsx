@@ -8,7 +8,6 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import configureStore from 'redux-mock-store';
 import { logoutAction } from '../../redux/actions/userActions';
-import { pageRoute } from '../../enums';
 import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
@@ -28,6 +27,19 @@ describe('asda', () => {
     describe('NavBar - authenticated users', () => {
         const initialState = {
             userReducer: { isUserAuthenticated: true, loggedUserData: { email: 'testemail@gmail.com', id: 'userId' } },
+            recipeReducer: {
+                listOfAutoCompleteRecipes: [
+                    {
+                        id: 'id',
+                        title: 'title',
+                        description: 'description',
+                        stars: '5.0',
+                        score: '2.0',
+                        saves: '5',
+                        photo_main: null,
+                    },
+                ],
+            },
         };
         const store = mockStore(initialState);
         beforeEach(() => {
@@ -69,6 +81,19 @@ describe('asda', () => {
     describe('NavBar - guest users', () => {
         const initialState = {
             userReducer: { isUserAuthenticated: false },
+            recipeReducer: {
+                listOfAutoCompleteRecipes: [
+                    {
+                        id: 'id',
+                        title: 'title',
+                        description: 'description',
+                        stars: '5.0',
+                        score: '2.0',
+                        saves: '5',
+                        photo_main: null,
+                    },
+                ],
+            },
         };
         const store = mockStore(initialState);
         beforeEach(() => {

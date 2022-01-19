@@ -52,8 +52,6 @@ const RecipeDetails = (props) => {
         [requestedRecipeData, recipeData?.id]
     );
 
-    console.log(reviewsData);
-
     useEffect(
         // when updating reviews data migrate the changes to the reviewsData
         function migrateListOfFilteredReviews() {
@@ -64,13 +62,9 @@ const RecipeDetails = (props) => {
 
             const updatedReviewList = [];
             for (const review of listOfFilteredReviews) {
-                console.log(recipeData.id);
-                console.log(review.recipe);
-
                 const isReviewsMatchRecipe = review.recipe === recipeData?.id;
                 if (isReviewsMatchRecipe) updatedReviewList.push(review);
             }
-            console.log(updatedReviewList);
 
             if (updatedReviewList.length !== 0) return setReviewsData(updatedReviewList);
         },
@@ -152,7 +146,6 @@ const RecipeDetails = (props) => {
                                 </div>
                             </li>
                             <UiSectionSeparator />
-                            <p className={styles.title}> {recipeData?.id}</p>
                             <p className={styles.title}> {recipeData?.title}</p>
                             <p className={styles.description}>{recipeData?.description}</p>
                             <div className={styles.cook_time_and_serving_container}>

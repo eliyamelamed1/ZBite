@@ -66,7 +66,7 @@ class SearchRecipes(ListAPIView):
         value = self.kwargs['value']
         
         # search 
-        recipe_queryset = RecipeDocument.search().query('wildcard',title=f'{value}*').sort("-score")
+        recipe_queryset = RecipeDocument.search().query('wildcard',title=f'*{value}*').sort("-score")
         
         # temporary solution to get all recipe fields (cause elasticsearch fails to index saves, author and photo_main fields)
         new_queryset = []

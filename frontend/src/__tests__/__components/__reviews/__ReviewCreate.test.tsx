@@ -70,8 +70,10 @@ describe('ReviewCreate', () => {
 
             describe('after clicking the review button', () => {
                 beforeEach(() => {
-                    const button = screen.getByRole('button', { name: /review/i });
-                    userEvent.click(button);
+                    act(() => {
+                        const button = screen.getByRole('button', { name: /review/i });
+                        userEvent.click(button);
+                    });
                 });
                 describe('comment input', () => {
                     test('render comment textbox', () => {
@@ -122,13 +124,13 @@ describe('ReviewCreate', () => {
                         const submitButton = screen.getByRole('button', { name: /submit/i });
                         expect(submitButton.type).toBe('submit');
                     });
-                    test('clicking the submit button should call dispatch reviewCreateActionSpy', () => {
+                    test('clicking the submit button should call dispatch reviewCreateActionSpy', async () => {
                         const commentTextbox = screen.getByPlaceholderText(/comment/i);
                         const starButton = screen.getByTestId('button number1');
-                        const submitButton = screen.getByRole('button', { name: /submit/i });
 
                         userEvent.type(commentTextbox, 'new comment');
                         userEvent.type(starButton, '1');
+                        const submitButton = screen.getByRole('button', { name: /submit/i });
                         userEvent.click(submitButton);
 
                         const timesActionDispatched = reviewCreateActionSpy.mock.calls.length;

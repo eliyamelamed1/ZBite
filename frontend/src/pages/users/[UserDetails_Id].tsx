@@ -172,7 +172,6 @@ export async function getServerSideProps(context) {
     await store.dispatch(loadUserDetailsAction({ id }));
     const serverUserData = store.getState().userReducer.requestedUserData;
     const isRequestedUserIdExist = serverUserData?.id === id;
-    console.log(serverUserData);
 
     await store.dispatch(loadUserOwnRecipesAction({ user_id: id }));
     const { listOfUserOwnRecipes } = store.getState().recipeReducer;
