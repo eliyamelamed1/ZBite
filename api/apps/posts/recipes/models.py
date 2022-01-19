@@ -63,10 +63,6 @@ class Recipe(models.Model):
         return reverse('recipes:create')
     
     @classmethod
-    def get_list_url(cls):
-        return reverse('recipes:list')
-
-    @classmethod
     def get_recipes_of_accounts_followed_url(cls):
         return reverse('recipes:recipes_of_accounts_followed')
     

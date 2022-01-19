@@ -8,28 +8,10 @@ from apps.posts.recipes.models import Recipe
 # add test to get info from recipe detail page
 # ------------------------------------------------ Tests
 pytestmark = pytest.mark.django_db
-recipe_list_url = Recipe.get_list_url()
 create_recipe_url = Recipe.get_create_url()
-
 recipes_of_accounts_followed_url = Recipe.get_recipes_of_accounts_followed_url()
 top_rated_recipes_url = Recipe.get_top_rated_recipes_url()
 
-class TestRecipeListView:
-    class TestAuthenticatedUsers:
-        def test_recipe_list_page_render(self, api_client):
-            new_user = UserAccount()
-            api_client.force_authenticate(new_user)
-
-            recipe_list_page_render = api_client.get(recipe_list_url)
-
-            assert recipe_list_page_render.status_code == 200
-
-    class TestGuestUsers:
-        def test_recipe_list_page_render(self, api_client):
-            recipe_list_page_render = api_client.get(recipe_list_url)
-
-            assert recipe_list_page_render.status_code == 200
-            
 class TestRecipeCreateView:
     class TestAuthenticatedUsers:
         def test_recipe_create_page_render(self, api_client):

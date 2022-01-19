@@ -13,10 +13,6 @@ from .serializers import (RecipeCreateSerializer, RecipeSearchSerializer,
                           RecipeSerializer)
 
 
-class RecipeList(ListAPIView):
-    queryset = Recipe.objects.order_by('-updated_at')
-    serializer_class = RecipeSerializer
-
 class RecipeDetail(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthorOrReadOnly,)
     queryset = Recipe.objects.order_by('-updated_at')

@@ -3,8 +3,7 @@ from django.contrib.auth import get_user_model
 from django.http.response import HttpResponse
 from .documents import UserAccountDocument
 from rest_framework import permissions
-from rest_framework.generics import (ListAPIView, ListCreateAPIView,
-                                     RetrieveUpdateDestroyAPIView)
+from rest_framework.generics import (ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView)
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -14,12 +13,6 @@ from apps.posts.recipes.serializers import RecipeSerializer
 from .models import UserAccount
 from .permissions import IsAuthorOrReadOnly
 from .serializers import UserSearchSerializer, UserSerializer
-
-
-class UserListView(ListCreateAPIView):
-    permission_classes = (permissions.AllowAny, )
-    queryset = get_user_model().objects.all()
-    serializer_class = UserSerializer
 
 class UserDetailView(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthorOrReadOnly, )

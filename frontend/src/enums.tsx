@@ -1,7 +1,6 @@
 export const endpointRoute = (id = '') => ({
     users: {
         followUser: `${process.env.NEXT_PUBLIC_API_URL}/api/followers/follow/`,
-        list: `${process.env.NEXT_PUBLIC_API_URL}/api/accounts/list/`,
         loggedUserData: `${process.env.NEXT_PUBLIC_API_URL}/api/accounts/logged_user/`,
         login: `${process.env.NEXT_PUBLIC_API_URL}/api/djoser/token/login/`,
         logout: `${process.env.NEXT_PUBLIC_API_URL}/api/djoser/token/logout/`,
@@ -14,7 +13,6 @@ export const endpointRoute = (id = '') => ({
     },
     recipes: {
         create: `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/create/`,
-        list: `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/list/`,
         trending: `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/top_rated/`,
         followed: `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/recipes_of_accounts_followed/`,
         details: `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}/`,

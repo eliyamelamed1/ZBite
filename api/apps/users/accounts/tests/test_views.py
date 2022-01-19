@@ -107,22 +107,6 @@ class TestUserUpdateView:
             assert response.status_code == 401
 
 
-class TestUserListView:
-    class TestAuthenticatedUsers:
-        def test_user_list_page_render(self, api_client):
-            new_user = UserFactory()
-            api_client.force_authenticate(new_user)
-            
-            response = api_client.get(reverse('accounts:list'))
-
-            assert response.status_code == 200
-
-    class TestGuestUsers:
-        def test_user_list_page_render(self, api_client):
-            response = api_client.get(reverse('accounts:list'))
-
-            assert response.status_code == 200
-
 class TestLoggedUserDetailView:
     class TestAuthenticatedUsers:
         def test_user_list_page_render(self, api_client):

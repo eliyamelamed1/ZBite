@@ -1,11 +1,9 @@
 from django.urls import path
 
-from .views import (LoggedUserDetailView, SearchUsers, TopRatedAccounts, UserDetailView,
-                    UserListView, UserSavedRecipes, UserOwnRecipes)
+from .views import (LoggedUserDetailView, SearchUsers, TopRatedAccounts, UserDetailView, UserSavedRecipes, UserOwnRecipes)
 
 app_name = 'accounts'
 urlpatterns = [
-    path('list/', UserListView.as_view(), name='list'),
     path('<uuid:pk>/', UserDetailView.as_view(), name='detail'),
     path('top/', TopRatedAccounts.as_view(), name='top'),
     path('logged_user/', LoggedUserDetailView.as_view(), name='logged_user'),

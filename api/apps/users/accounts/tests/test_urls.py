@@ -4,12 +4,6 @@ from django.urls import resolve, reverse
 from factories import UserFactory
 pytestmark = pytest.mark.django_db
 
-class TestListUrl:
-    def test_list_reverse(self):
-        assert reverse('accounts:list') == '/api/accounts/list/'
-
-    def test_list_resolve(self):
-        assert resolve('/api/accounts/list/').view_name == 'accounts:list'
 class TestDetailUrl:
     def test_detail_reverse(self):
         new_user = UserFactory()

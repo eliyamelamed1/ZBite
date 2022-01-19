@@ -16,10 +16,6 @@ def test_get_absolute_url():
     
     assert new_recipe.get_absolute_url() == reverse('recipes:detail', kwargs={"pk": new_recipe.id})
 
-
-def test_get_list_url():
-    assert Recipe.get_list_url() == reverse('recipes:list')
-
 def test_get_create_url():
     assert Recipe.get_create_url() == reverse('recipes:create')
 

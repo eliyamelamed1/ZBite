@@ -9,12 +9,12 @@ from rest_framework import permissions
 
 schema_view = get_schema_view( # new
     openapi.Info(
-        title="Blog API",
+        title="ZBite API",
         default_version="v1",
-        description="A sample API for learning DRF",
-        terms_of_service="https://www.google.com/policies/terms/",
-        contact=openapi.Contact(email="hello@example.com"),
-        license=openapi.License(name="BSD License"),
+        description="The Best Recipes App In The Observable Universe",
+        contact=openapi.Contact(email="eliyamelamed1@gmail.com"),
+        # terms_of_service="https://www.google.com/policies/terms/",
+        # license=openapi.License(name="BSD License"),
     ),
         public=True,
         permission_classes=(permissions.AllowAny,),
@@ -22,8 +22,8 @@ schema_view = get_schema_view( # new
 
 
 urlpatterns = [
-    # browser api
-    path('api/browser_api/', include('dj_rest_auth.urls')), 
+    # browser api -
+    # path('api/browser_api/', include('dj_rest_auth.urls')), 
 
     # admim
     path('api/admin/', admin.site.urls),
@@ -46,6 +46,7 @@ urlpatterns = [
     path('api/chat_massages/', include('apps.chats.chat_massages.urls', namespace='chat_massages')),
     path('api/chat_duos/', include('apps.chats.chat_duos.urls', namespace='chat_duos')),
 
+    # Docs
     path('swagger/', schema_view.with_ui( 'swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui( 'redoc', cache_timeout=0), name='schema-redoc'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
