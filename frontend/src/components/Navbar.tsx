@@ -6,15 +6,14 @@ import Image from 'next/image';
 import LeaderboardIcon from '../assets/icons/leaderboard.svg';
 import Link from 'next/link';
 import LogoIcon from '../assets/icons/logo.svg';
-import MuiAutoComplete from './mui/MuiAutoComplete';
 import PlusIcon from '../assets/icons/plus.svg';
 import ProfileIcon from '../assets/icons/profile.svg';
 import { RootState } from '../redux/store';
 import SavedIcon from '../assets/icons/heart.svg';
+import UiSearchBarForm from './ui/UiSearchBarForm';
 import { debounce } from 'lodash';
 import { logoutAction } from '../redux/actions/userActions';
 import { pageRoute } from '../enums';
-import { searchRecipeAction } from '../redux/actions/recipeActions';
 import styles from '../styles/layout/_navbar.module.scss';
 import { useRouter } from 'next/router';
 
@@ -176,7 +175,7 @@ const Navbar = () => {
                 <i className={styles.logo__icon}>
                     {LogoIcon.src && <Image src={LogoIcon} alt='logo icon' height={100} width={100} />}
                 </i>
-                <MuiAutoComplete />
+                <UiSearchBarForm />
 
                 {authenitcationLinks}
             </header>

@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 import StarIcon from '@mui/icons-material/Star';
 
-export default function MuiStarsRatings({ onChange }) {
+export default function UiRatingForm({ onChange }) {
     const [value, setValue] = React.useState<number | null>(2.5);
     const [hover, setHover] = React.useState(-1);
 

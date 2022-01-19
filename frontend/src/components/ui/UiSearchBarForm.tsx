@@ -7,16 +7,15 @@ import { RootState } from '../../redux/store';
 import Router from 'next/router';
 import TextField from '@mui/material/TextField';
 import { debounce } from 'lodash';
-import { pageRoute } from '../../enums';
 import { searchRecipeAction } from '../../redux/actions/recipeActions';
-import styles from '../../styles/mui/MuiAutoComplete.module.scss';
+import styles from '../../styles/ui/UiSearchBarForm.module.scss';
 
 interface Recipe {
     title?: string;
     [key: string]: any;
 }
 
-export default function MuiAutoComplete() {
+export default function UiSearchBarForm() {
     const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
     const [searchValue, setSearchValue] = useState('');

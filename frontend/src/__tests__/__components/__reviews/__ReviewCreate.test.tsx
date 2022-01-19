@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 
-import * as MuiStarsRatings from '../../../components/mui/MuiStarsRatings';
 import * as RecipeActions from '../../../redux/actions/recipeActions';
+import * as UiRatingForm from '../../../components/ui/UiRatingForm';
 
 import { act, cleanup, render, screen } from '@testing-library/react';
 
@@ -14,7 +14,7 @@ import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
 
 const reviewCreateActionSpy = jest.spyOn(RecipeActions, 'reviewCreateAction');
-const muiStarsRatingsSpy = jest.spyOn(MuiStarsRatings, 'default');
+const uiRatingFormSpy = jest.spyOn(UiRatingForm, 'default');
 jest.mock('next/router');
 
 describe('ReviewCreate', () => {
@@ -97,8 +97,8 @@ describe('ReviewCreate', () => {
                     });
                 });
                 describe('stars input', () => {
-                    test('should render MuiStarsRatings', () => {
-                        expect(muiStarsRatingsSpy).toHaveBeenCalled();
+                    test('should render UiRatingForm', () => {
+                        expect(uiRatingFormSpy).toHaveBeenCalled();
                     });
                 });
                 describe('submit button', () => {

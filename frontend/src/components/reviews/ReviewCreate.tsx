@@ -1,13 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import MuiStarsRatings from '../mui/MuiStarsRatings';
 import { RootState } from '../../redux/store';
 import Router from 'next/router';
 import UiButton from '../ui/UiButton';
 import UiInput from '../ui/UiInput';
 import UiOptionsDots from '../ui/optionsForm/UiOptionsDots';
 import UiPopUp from '../ui/UiPopUp';
-import UiStarsButtons from '../ui/UiStarsButtons';
+import UiRatingForm from '../ui/UiRatingForm';
 import { loadLoggedUserDataAction } from '../../redux/actions/userActions';
 import { pageRoute } from '../../enums';
 import { reviewCreateAction } from '../../redux/actions/recipeActions';
@@ -53,7 +52,7 @@ const ReviewCreate: React.FC<{ recipeId: string }> = ({ recipeId }) => {
     const reviewSection = () => (
         <UiPopUp onSubmit={onSubmit} setDisplayForm={setDisplayForm}>
             <h1>Leave a review</h1>
-            <MuiStarsRatings onChange={onChange} />
+            <UiRatingForm onChange={onChange} />
             <UiInput type='text' placeholder='comment' name='comment' value={comment} onChange={onChange} required />
             <UiButton reverse={true}>submit</UiButton>
         </UiPopUp>

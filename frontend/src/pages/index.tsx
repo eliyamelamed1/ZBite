@@ -5,8 +5,8 @@ import store, { RootState } from '../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 
 import DisplayRecipes from '../components/recipes/DisplayRecipes';
-import MuiStarsRatings from '../components/mui/MuiStarsRatings';
 import Router from 'next/router';
+import UiRatingForm from '../components/ui/UiRatingForm';
 import UiRecipesContainer from '../components/ui/UiRecipesContainer';
 import UiSectionSeparator from '../components/ui/UiSectionSeperator';
 import styles from '../styles/pages/home.module.scss';
