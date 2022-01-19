@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 
+import MuiStarsRatings from '../mui/MuiStarsRatings';
 import { RootState } from '../../redux/store';
 import Router from 'next/router';
 import UiButton from '../ui/UiButton';
@@ -15,16 +16,17 @@ import { useState } from 'react';
 
 const ReviewCreate: React.FC<{ recipeId: string }> = ({ recipeId }) => {
     const dispatch = useDispatch();
-    const [starsValue, setStarsValue] = useState(0);
     const [formData, setFormData] = useState({
         comment: '',
+        starsValue: 0,
     });
-    const { comment } = formData;
+    const { comment, starsValue } = formData;
     const [displayForm, setDisplayForm] = useState(false);
 
     const onChange = (e) => {
-        e.preventDefault();
+        console.log(e);
 
+        e.preventDefault();
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
     const { isUserAuthenticated, loggedUserData } = useSelector((state: RootState) => state.userReducer);
@@ -51,7 +53,7 @@ const ReviewCreate: React.FC<{ recipeId: string }> = ({ recipeId }) => {
     const reviewSection = () => (
         <UiPopUp onSubmit={onSubmit} setDisplayForm={setDisplayForm}>
             <h1>Leave a review</h1>
-            <UiStarsButtons setStarsValue={setStarsValue} starsValue={starsValue} />
+            <MuiStarsRatings onChange={onChange} />
             <UiInput type='text' placeholder='comment' name='comment' value={comment} onChange={onChange} required />
             <UiButton reverse={true}>submit</UiButton>
         </UiPopUp>

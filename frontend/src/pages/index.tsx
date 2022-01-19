@@ -5,6 +5,7 @@ import store, { RootState } from '../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 
 import DisplayRecipes from '../components/recipes/DisplayRecipes';
+import MuiStarsRatings from '../components/mui/MuiStarsRatings';
 import Router from 'next/router';
 import UiRecipesContainer from '../components/ui/UiRecipesContainer';
 import UiSectionSeparator from '../components/ui/UiSectionSeperator';
@@ -49,6 +50,7 @@ const HomePage: React.FC<{ listOfTrendingRecipes: Recipe[] }> = (props) => {
 
     return (
         <div className={styles.container}>
+            <MuiStarsRatings />
             <ul className={styles.recipe_filter} ref={buttonsRef} onClick={onClick}>
                 <button
                     className={styles.active}
