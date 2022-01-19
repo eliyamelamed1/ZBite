@@ -2,6 +2,7 @@ import { Fragment, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Autocomplete from '@mui/material/Autocomplete';
+import { CircularProgress } from '@mui/material';
 import { RootState } from '../../redux/store';
 import Router from 'next/router';
 import TextField from '@mui/material/TextField';
@@ -17,7 +18,11 @@ interface Recipe {
 
 export default function MuiAutoComplete() {
     const dispatch = useDispatch();
+    const [open, setOpen] = useState(false);
     const [searchValue, setSearchValue] = useState('');
+    const [options, setOptions] = useState<readonly Recipe[]>([]);
+    const [loading, setLoading] = useState(false);
+
     const { listOfAutoCompleteRecipes } = useSelector((state: RootState) => state.recipeReducer);
 
     const deb = useCallback(
@@ -32,20 +37,15 @@ export default function MuiAutoComplete() {
     };
 
     useEffect(() => {
-        if (searchValue?.trim()) {
-            dispatch(searchRecipeAction(searchValue));
-            console.log('dispatched');
-        }
+        const searchRecipes = async () => {
+            if (searchValue?.trim()) {
+                setLoading(true);
+                await dispatch(searchRecipeAction({ searchValue }));
+                setLoading(false);
+            }
+        };
+        searchRecipes();
     }, [searchValue, dispatch]);
-
-    const [options, setOptions] = useState<readonly Recipe[]>([]);
-    const [open, setOpen] = useState(false);
-
-    useEffect(() => {
-        if (!open) {
-            setOptions([]);
-        }
-    }, [open]);
 
     useEffect(() => {
         if (!Array.isArray(listOfAutoCompleteRecipes)) return;
@@ -61,12 +61,6 @@ export default function MuiAutoComplete() {
         <Autocomplete
             freeSolo={true}
             onInputChange={onChange}
-            // onChange={(option, recipe) => {
-            //     Router.push('/');
-
-            //     // if (recipe?.title) redirect to search/recipe.title/
-            //     // else  redirect to search/recipe/
-            // }}
             onChange={onSubmit}
             id='asynchronous-demo'
             open={open}
@@ -80,7 +74,7 @@ export default function MuiAutoComplete() {
             isOptionEqualToValue={(option, value) => option.title === value.title}
             getOptionLabel={(option) => (option?.title ? option.title : (option as unknown as string))}
             options={options}
-            // loading={loading}
+            loading={loading}
             renderOption={(props, option) => {
                 if (!option) return;
 
@@ -101,7 +95,7 @@ export default function MuiAutoComplete() {
                         className: styles.optionList,
                         endAdornment: (
                             <Fragment>
-                                {/* {loading && <CircularProgress color='inherit' size={20} />} */}
+                                {loading && <CircularProgress color='inherit' size={20} />}
                                 {/* <button style={{ color: 'black' }}>button that will dispatch the action</button> */}
                             </Fragment>
                         ),

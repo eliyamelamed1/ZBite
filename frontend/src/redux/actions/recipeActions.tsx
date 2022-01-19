@@ -217,11 +217,13 @@ export const saveRecipeAction =
         }
     };
 
-export const searchRecipeAction = (value) => async (dispatch) => {
-    try {
-        const res = await axios.get(endpointRoute(value).recipes.search);
-        await dispatch({ type: SEARCH_RECIPE_SUCCESS, payload: res.data });
-    } catch (err) {
-        dispatch({ type: SEARCH_RECIPE_FAIL });
-    }
-};
+export const searchRecipeAction =
+    ({ searchValue }) =>
+    async (dispatch) => {
+        try {
+            const res = await axios.get(endpointRoute(searchValue).recipes.search);
+            await dispatch({ type: SEARCH_RECIPE_SUCCESS, payload: res.data });
+        } catch (err) {
+            dispatch({ type: SEARCH_RECIPE_FAIL });
+        }
+    };

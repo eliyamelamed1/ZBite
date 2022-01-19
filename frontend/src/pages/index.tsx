@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import DisplayRecipes from '../components/recipes/DisplayRecipes';
 import Router from 'next/router';
+import UiRecipesContainer from '../components/ui/UiRecipesContainer';
 import UiSectionSeparator from '../components/ui/UiSectionSeperator';
 import styles from '../styles/pages/home.module.scss';
 
@@ -64,14 +65,14 @@ const HomePage: React.FC<{ listOfTrendingRecipes: Recipe[] }> = (props) => {
                 </button>
             </ul>
             <UiSectionSeparator />
-            <ul className={styles.recipes_container}>
+            <UiRecipesContainer>
                 {typeOfRecipes === typeOfRecipesEnum.trending && listOfTrendingRecipes && (
                     <DisplayRecipes recipesToDisplay={listOfTrendingRecipes} />
                 )}
                 {typeOfRecipes === typeOfRecipesEnum.following && listOfFollowedRecipes && (
                     <DisplayRecipes recipesToDisplay={listOfFollowedRecipes} />
                 )}
-            </ul>
+            </UiRecipesContainer>
         </div>
     );
 };

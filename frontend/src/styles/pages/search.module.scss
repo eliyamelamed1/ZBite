@@ -5,11 +5,10 @@
     justify-content: center;
     align-items: center;
 }
-
-.recipes_container {
-    display: flex;
-    flex-wrap: wrap;
-    column-gap: 5rem;
-    width: MIN(100%, 160rem);
-    justify-content: space-evenly;
+.title {
+    font-size: 3.5rem;
+    color: #ff5349;
+    font-weight: 600;
+    text-decoration: underline;
+    text-align: center;
 }

@@ -7,6 +7,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import ScoreIcon from '../../assets/icons/score-icon.svg';
 import UiOptionsDots from '../../components/ui/optionsForm/UiOptionsDots';
+import UiRecipesContainer from '../../components/ui/UiRecipesContainer';
 import UiSectionSeparator from '../../components/ui/UiSectionSeperator';
 import UserDelete from '../../components/users/UserDelete';
 import UserUpdate from '../../components/users/UserUpdate';
@@ -87,9 +88,9 @@ const UserDetails: React.FC<{ serverUserData: User; listOfUserOwnRecipes: any[] 
             <h1 className={styles.posts_title}>Posts</h1>
 
             {listOfUserOwnRecipes?.length > 0 ? (
-                <div className={styles.recipes_container}>
+                <UiRecipesContainer>
                     <DisplayRecipes recipesToDisplay={listOfUserOwnRecipes} />
-                </div>
+                </UiRecipesContainer>
             ) : (
                 <div className={styles.no_recipes_container}>
                     <h2 className={styles.no_recipes_title}>You Haven't Created Recipes Yet</h2>
