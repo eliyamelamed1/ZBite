@@ -30,28 +30,7 @@ const Navbar = () => {
         setIsUserAuthenticated(updatedIsUserAuthenticated);
         setloggedUserData(updatedloggedUserData);
     }, [dispatch, updatedIsUserAuthenticated, updatedloggedUserData]);
-    const [searchValue, setSearchValue] = useState('');
     const profileUrl = loggedUserData ? '/users/' + loggedUserData?.id : '/users/UserLogin/';
-    // const [loading, setLoading] = useState(false);
-    const { listOfAutoCompleteRecipes } = useSelector((state: RootState) => state.recipeReducer);
-
-    const deb = useCallback(
-        debounce((e) => {
-            setSearchValue(e.target.value);
-        }, 500),
-        [searchValue]
-    );
-
-    const onChange = (e) => {
-        deb(e);
-    };
-
-    useEffect(() => {
-        if (searchValue?.trim()) {
-            dispatch(searchRecipeAction(searchValue));
-            console.log('dispatched');
-        }
-    }, [searchValue, dispatch]);
 
     const handleLogout = () => {
         try {
@@ -197,7 +176,7 @@ const Navbar = () => {
                 <i className={styles.logo__icon}>
                     {LogoIcon.src && <Image src={LogoIcon} alt='logo icon' height={100} width={100} />}
                 </i>
-                <MuiAutoComplete onChange={onChange} data={listOfAutoCompleteRecipes} />
+                <MuiAutoComplete />
 
                 {authenitcationLinks}
             </header>

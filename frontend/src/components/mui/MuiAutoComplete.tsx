@@ -1,9 +1,13 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Autocomplete from '@mui/material/Autocomplete';
+import { RootState } from '../../redux/store';
 import Router from 'next/router';
 import TextField from '@mui/material/TextField';
+import { debounce } from 'lodash';
 import { pageRoute } from '../../enums';
+import { searchRecipeAction } from '../../redux/actions/recipeActions';
 import styles from '../../styles/mui/MuiAutoComplete.module.scss';
 
 interface Recipe {
@@ -11,7 +15,29 @@ interface Recipe {
     [key: string]: any;
 }
 
-export default function MuiAutoComplete({ onChange, data }) {
+export default function MuiAutoComplete() {
+    const dispatch = useDispatch();
+    const [searchValue, setSearchValue] = useState('');
+    const { listOfAutoCompleteRecipes } = useSelector((state: RootState) => state.recipeReducer);
+
+    const deb = useCallback(
+        debounce((e) => {
+            setSearchValue(e.target.value);
+        }, 500),
+        [searchValue]
+    );
+
+    const onChange = (e) => {
+        deb(e);
+    };
+
+    useEffect(() => {
+        if (searchValue?.trim()) {
+            dispatch(searchRecipeAction(searchValue));
+            console.log('dispatched');
+        }
+    }, [searchValue, dispatch]);
+
     const [options, setOptions] = useState<readonly Recipe[]>([]);
     const [open, setOpen] = useState(false);
 
@@ -22,14 +48,13 @@ export default function MuiAutoComplete({ onChange, data }) {
     }, [open]);
 
     useEffect(() => {
-        if (!Array.isArray(data)) return;
+        if (!Array.isArray(listOfAutoCompleteRecipes)) return;
 
-        setOptions([...data]);
-    }, [data]);
+        setOptions([...listOfAutoCompleteRecipes]);
+    }, [listOfAutoCompleteRecipes]);
 
     const onSubmit = () => {
         Router.push('/Search');
-        console.log('success');
     };
 
     return (
