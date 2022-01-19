@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'django_extensions',
     'drf_yasg',
+    'elasticsearch_dsl',
     'django_elasticsearch_dsl',
 
     # Local apps

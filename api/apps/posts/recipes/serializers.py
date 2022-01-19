@@ -22,3 +22,23 @@ class RecipeCreateSerializer(serializers.ModelSerializer):
 
 
 
+class RecipeSearchSerializer(serializers.ModelSerializer):
+    author = AuthorFieldSerializer()
+    class Meta:
+        model = Recipe
+        fields = (
+            # 'saves'
+            'title', 
+            'author',
+            'ingredients_text_list',
+            'instructions_text_list',
+            'id',
+            'score',
+            'description', 
+            'photo_main',
+            'stars',
+            'review_count',
+        )
+
+
+

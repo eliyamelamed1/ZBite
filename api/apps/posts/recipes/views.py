@@ -1,12 +1,16 @@
-from apps.users.accounts.models import UserAccount
-from apps.posts.recipes.documents import RecipeDocument
+from django.contrib.postgres.search import (SearchQuery, SearchRank,
+                                            SearchVector)
 from rest_framework import permissions
 from rest_framework.generics import (CreateAPIView, ListAPIView,
                                      RetrieveUpdateDestroyAPIView)
-from permissions import IsAuthorOrReadOnly
-from .models import Recipe
-from .serializers import RecipeCreateSerializer, RecipeSerializer
 
+from apps.posts.recipes.documents import RecipeDocument
+from apps.users.accounts.models import UserAccount
+from permissions import IsAuthorOrReadOnly
+
+from .models import Recipe
+from .serializers import (RecipeCreateSerializer, RecipeSearchSerializer,
+                          RecipeSerializer)
 
 
 class RecipeList(ListAPIView):
@@ -60,15 +64,15 @@ class TopRatedRecipes(ListAPIView):
 
 
 class SearchRecipes(ListAPIView):
-    serializer_class = RecipeSerializer
+    serializer_class = RecipeSearchSerializer
 
     def get_queryset(self, *args, **kwargs):
         value = self.kwargs['value']
-        
+
         # search 
         recipe_queryset = RecipeDocument.search().query('wildcard',title=f'*{value}*').sort("-score")
         
-        # temporary solution to get all recipe fields (cause elasticsearch fails to index saves, author and photo_main fields)
+        # temporary solution (cause elasticsearch fails to index photo_main fields + saves field)
         new_queryset = []
         for recipe in recipe_queryset:
             try:
@@ -76,5 +80,4 @@ class SearchRecipes(ListAPIView):
             except:
                 pass
 
-        return new_queryset
-
+        return recipe_queryset
