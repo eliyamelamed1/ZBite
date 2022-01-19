@@ -7,7 +7,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import React from 'react';
-import { TEST_CASE_AUTH } from '../../../redux/types';
+import { TEST_CASE_AUTH } from '../../../redux/constants';
 import UserDetails_Id from '../../../pages/users/[UserDetails_Id]';
 import axios from 'axios';
 import { getServerSideProps } from '../../../pages/users/[UserDetails_Id]';

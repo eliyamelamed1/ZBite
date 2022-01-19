@@ -26,7 +26,7 @@ import {
     TEST_CASE_RECIPE,
     UPDATE_RECIPE_FAIL,
     UPDATE_RECIPE_SUCCESS,
-} from '../types';
+} from '../constants';
 
 import Router from 'next/router';
 import { pageRoute } from '../../enums';

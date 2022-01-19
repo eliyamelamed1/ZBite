@@ -6,7 +6,7 @@ import { cleanup, render } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import ReviewDelete from '../../../components/reviews/ReviewDelete';
-import { TEST_CASE_AUTH } from '../../../redux/types';
+import { TEST_CASE_AUTH } from '../../../redux/constants';
 import { screen } from '@testing-library/dom';
 import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';

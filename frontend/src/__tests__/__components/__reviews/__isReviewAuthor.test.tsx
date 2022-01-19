@@ -8,7 +8,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 import IsReviewAuthor from '../../../components/reviews/isReviewAuthor';
 import { Provider } from 'react-redux';
 import React from 'react';
-import { TEST_CASE_AUTH } from '../../../redux/types';
+import { TEST_CASE_AUTH } from '../../../redux/constants';
 import store from '../../../redux/store';
 
 const ReviewDeleteSpy = jest.spyOn(ReviewDelete, 'default');

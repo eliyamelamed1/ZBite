@@ -26,7 +26,7 @@ import {
     SAVE_UNSAVE_ACTION_SUCCESS,
     UPDATE_RECIPE_FAIL,
     UPDATE_RECIPE_SUCCESS,
-} from '../../../redux/types';
+} from '../../../redux/constants';
 
 import Router from 'next/router';
 import { cleanup } from '@testing-library/react';

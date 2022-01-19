@@ -25,7 +25,7 @@ import {
     TEST_CASE_AUTH,
     UPDATE_USER_FAIL,
     UPDATE_USER_SUCCESS,
-} from '../types';
+} from '../constants';
 
 import Router from 'next/router';
 import axiosInstance from '../../utils/axiosInstance';

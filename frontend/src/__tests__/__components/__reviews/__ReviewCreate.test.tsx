@@ -7,7 +7,7 @@ import { act, cleanup, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import ReviewCreate from '../../../components/reviews/ReviewCreate';
 import Router from 'next/router';
-import { TEST_CASE_AUTH } from '../../../redux/types';
+import { TEST_CASE_AUTH } from '../../../redux/constants';
 import { pageRoute } from '../../../enums';
 import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';

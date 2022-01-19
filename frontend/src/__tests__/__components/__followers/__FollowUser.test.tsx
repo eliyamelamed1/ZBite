@@ -7,7 +7,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 import FollowUser from '../../../components/followers/FollowUser';
 import { Provider } from 'react-redux';
 import React from 'react';
-import { TEST_CASE_AUTH } from '../../../redux/types';
+import { TEST_CASE_AUTH } from '../../../redux/constants';
 import axios from 'axios';
 import store from '../../../redux/store';
 import userEvent from '@testing-library/user-event';
