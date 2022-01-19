@@ -25,12 +25,13 @@ class RecipeDocument(Document):
         model = Recipe
         fields = [
             'id',
-            # 'title',
-            'photo_main',
-            'description',
-            'serving',
-            'cook_time',
-            'stars',
-            'review_count',
             'score',
+            # 'photo_main',
+            # 'description',
+            # 'serving',
+            # 'cook_time',
+            # 'stars',
+            # 'author',
+            # saves
+            # 'review_count',
         ]

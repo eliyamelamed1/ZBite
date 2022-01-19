@@ -27,14 +27,22 @@ export default function MuiAutoComplete({ onChange, data }) {
         setOptions([...data]);
     }, [data]);
 
+    const onSubmit = () => {
+        Router.push('/Search');
+        console.log('success');
+    };
+
     return (
         <Autocomplete
             freeSolo={true}
             onInputChange={onChange}
-            onChange={(option, recipe) => {
-                // if (recipe?.title) redirect to search/recipe.title/
-                // else  redirect to search/recipe/
-            }}
+            // onChange={(option, recipe) => {
+            //     Router.push('/');
+
+            //     // if (recipe?.title) redirect to search/recipe.title/
+            //     // else  redirect to search/recipe/
+            // }}
+            onChange={onSubmit}
             id='asynchronous-demo'
             open={open}
             className={styles.container}

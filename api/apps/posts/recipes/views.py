@@ -5,7 +5,7 @@ from rest_framework.generics import (CreateAPIView, ListAPIView,
                                      RetrieveUpdateDestroyAPIView)
 from permissions import IsAuthorOrReadOnly
 from .models import Recipe
-from .serializers import RecipeCreateSerializer, RecipeSearchSerializer, RecipeSerializer
+from .serializers import RecipeCreateSerializer, RecipeSerializer
 
 
 
@@ -60,13 +60,21 @@ class TopRatedRecipes(ListAPIView):
 
 
 class SearchRecipes(ListAPIView):
-    serializer_class = RecipeSearchSerializer
+    serializer_class = RecipeSerializer
 
     def get_queryset(self, *args, **kwargs):
         value = self.kwargs['value']
         
-        recipeQueryset = RecipeDocument.search().query('wildcard',title=f'{value}*').sort("-score")
+        # search 
+        recipe_queryset = RecipeDocument.search().query('wildcard',title=f'{value}*').sort("-score")
+        
+        # temporary solution to get all recipe fields (cause elasticsearch fails to index saves, author and photo_main fields)
+        new_queryset = []
+        for recipe in recipe_queryset:
+            try:
+                new_queryset.append(Recipe.objects.get(id=recipe.id))
+            except:
+                pass
 
-
-        return recipeQueryset
+        return new_queryset
 

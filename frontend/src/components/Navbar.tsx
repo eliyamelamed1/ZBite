@@ -47,7 +47,7 @@ const Navbar = () => {
     };
 
     useEffect(() => {
-        if (searchValue.trim()) {
+        if (searchValue?.trim()) {
             dispatch(searchRecipeAction(searchValue));
             console.log('dispatched');
         }

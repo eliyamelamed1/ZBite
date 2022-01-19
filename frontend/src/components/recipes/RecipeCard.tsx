@@ -54,7 +54,7 @@ const RecipeCard: React.FC<DataTypes> = ({ title, photo_main, id, author, saves,
                     </li>
                     <UiStars starsCount={stars} />
                 </ul>
-                <UiSaves savesCount={saves.length} />
+                <UiSaves savesCount={saves?.length} />
             </section>
             <section className={styles.detail_container_2}>
                 <h3>{title}</h3>
