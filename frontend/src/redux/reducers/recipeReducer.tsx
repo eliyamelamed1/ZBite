@@ -32,7 +32,7 @@ import Router from 'next/router';
 import { pageRoute } from '../../enums';
 
 const initialState = {
-    listOfSearchedRecipes: null,
+    listOfAutoCompleteRecipes: null,
     requestedRecipeData: null,
     listOfFilteredReviews: null,
     listOfTrendingRecipes: null,
@@ -48,7 +48,7 @@ export default function recipeReducer(state = initialState, action) {
         case TEST_CASE_RECIPE:
             return {
                 ...state,
-                listOfSearchedRecipes: payload.listOfSearchedRecipes,
+                listOfAutoCompleteRecipes: payload.listOfAutoCompleteRecipes,
                 requestedRecipeData: payload.requestedRecipeData,
                 listOfFilteredReviews: payload.listOfFilteredReviews,
                 listOfTrendingRecipes: payload.listOfTrendingRecipes,
@@ -76,7 +76,7 @@ export default function recipeReducer(state = initialState, action) {
         case GET_USER_OWN_RECIPES_LIST_SUCCESS:
             return { ...state, listOfUserOwnRecipes: payload };
         case SEARCH_RECIPE_SUCCESS:
-            return { ...state, listOfSearchedRecipes: payload };
+            return { ...state, listOfAutoCompleteRecipes: payload };
         case REVIEWS_IN_RECIPE_FAIL:
         case REVIEW_DELETE_SUCCESS:
         case REVIEW_DELETE_FAIL:

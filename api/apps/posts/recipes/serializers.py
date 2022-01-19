@@ -24,13 +24,7 @@ class RecipeSearchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Recipe
         fields = (
-            'photo_main',
+            'id',
             'title',
-            'description',
-            'serving',
-            'cook_time',
-            'stars',
-            'review_count',
-            'score',
         )
 

@@ -1,17 +1,19 @@
 import { Fragment, useEffect, useState } from 'react';
 
 import Autocomplete from '@mui/material/Autocomplete';
-import CircularProgress from '@mui/material/CircularProgress';
+import Router from 'next/router';
 import TextField from '@mui/material/TextField';
+import { pageRoute } from '../../enums';
 import styles from '../../styles/mui/MuiAutoComplete.module.scss';
 
 interface Recipe {
-    title: string;
+    title?: string;
     [key: string]: any;
 }
+type Text = string;
 
 export default function MuiAutoComplete({ onChange, data }) {
-    const [options, setOptions] = useState<readonly Recipe[]>([]);
+    const [options, setOptions] = useState<Recipe[] | Text>([]);
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
@@ -28,7 +30,12 @@ export default function MuiAutoComplete({ onChange, data }) {
 
     return (
         <Autocomplete
+            freeSolo={true}
             onInputChange={onChange}
+            onChange={(option, recipe) => {
+                // if (recipe?.title) redirect to search/recipe.title/
+                // else  redirect to search/recipe/
+            }}
             id='asynchronous-demo'
             open={open}
             className={styles.container}
@@ -39,10 +46,12 @@ export default function MuiAutoComplete({ onChange, data }) {
                 setOpen(false);
             }}
             isOptionEqualToValue={(option, value) => option.title === value.title}
-            getOptionLabel={(option) => option.title}
+            getOptionLabel={(option) => (option?.title ? option.title : (option as Text))}
             options={options}
             // loading={loading}
             renderOption={(props, option) => {
+                if (!option) return;
+
                 const { title } = option;
                 return (
                     <span {...props} style={{ fontSize: 15 }}>

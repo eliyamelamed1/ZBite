@@ -33,7 +33,7 @@ const Navbar = () => {
     const [searchValue, setSearchValue] = useState('');
     const profileUrl = loggedUserData ? '/users/' + loggedUserData?.id : '/users/UserLogin/';
     // const [loading, setLoading] = useState(false);
-    const { listOfSearchedRecipes } = useSelector((state: RootState) => state.recipeReducer);
+    const { listOfAutoCompleteRecipes } = useSelector((state: RootState) => state.recipeReducer);
 
     const deb = useCallback(
         debounce((e) => {
@@ -196,7 +196,7 @@ const Navbar = () => {
                 <i className={styles.logo__icon}>
                     {LogoIcon.src && <Image src={LogoIcon} alt='logo icon' height={100} width={100} />}
                 </i>
-                <MuiAutoComplete onChange={onChange} data={listOfSearchedRecipes} />
+                <MuiAutoComplete onChange={onChange} data={listOfAutoCompleteRecipes} />
 
                 {authenitcationLinks}
             </header>

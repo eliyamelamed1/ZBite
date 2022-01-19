@@ -65,7 +65,7 @@ class SearchRecipes(ListAPIView):
     def get_queryset(self, *args, **kwargs):
         value = self.kwargs['value']
         
-        recipeQueryset = RecipeDocument.search().query('wildcard',title=f'*{value}*').sort("-score")
+        recipeQueryset = RecipeDocument.search().query('wildcard',title=f'{value}*').sort("-score")
 
 
         return recipeQueryset

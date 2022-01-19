@@ -24,6 +24,7 @@ class RecipeDocument(Document):
     class Django:
         model = Recipe
         fields = [
+            'id',
             # 'title',
             'photo_main',
             'description',

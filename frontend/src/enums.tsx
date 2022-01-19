@@ -46,6 +46,8 @@ export const pageRoute = (id = '') => ({
     savedRecipes: '/recipes/SavedRecipes',
     createRecipe: '/recipes/RecipeCreate',
     reset_password: '/users/reset_password/UserResetPassword',
+    recipeProfile: `/recipes/${id}/`,
+    search: '/{id}/',
 });
 
 export const typeOfRecipesEnum = {
