@@ -27,6 +27,7 @@ import {
     UPDATE_RECIPE_SUCCESS,
 } from '../constants';
 
+import axios from 'axios';
 import axiosInstance from '../../utils/axiosInstance';
 import { endpointRoute } from '../../enums';
 import { loadLoggedUserDataAction } from './userActions';
@@ -218,9 +219,7 @@ export const saveRecipeAction =
 
 export const searchRecipeAction = (value) => async (dispatch) => {
     try {
-        console.log('dispatched');
-
-        const res = await axiosInstance.get(endpointRoute(value).recipes.search);
+        const res = await axios.get(endpointRoute(value).recipes.search);
         await dispatch({ type: SEARCH_RECIPE_SUCCESS, payload: res.data });
     } catch (err) {
         dispatch({ type: SEARCH_RECIPE_FAIL });

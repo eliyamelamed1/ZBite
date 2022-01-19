@@ -1,4 +1,4 @@
-import React, { ReactEventHandler, useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import HomeIcon from '../assets/icons/home.svg';
@@ -11,7 +11,6 @@ import PlusIcon from '../assets/icons/plus.svg';
 import ProfileIcon from '../assets/icons/profile.svg';
 import { RootState } from '../redux/store';
 import SavedIcon from '../assets/icons/heart.svg';
-import SearchIcon from '../assets/icons/search.svg';
 import { debounce } from 'lodash';
 import { logoutAction } from '../redux/actions/userActions';
 import { pageRoute } from '../enums';
@@ -33,13 +32,16 @@ const Navbar = () => {
     }, [dispatch, updatedIsUserAuthenticated, updatedloggedUserData]);
     const [searchValue, setSearchValue] = useState('');
     const profileUrl = loggedUserData ? '/users/' + loggedUserData?.id : '/users/UserLogin/';
-
-    // const { listOfSearchedRecipes } = useSelector((state: RootState) => state.recipeReducer);
+    // const [loading, setLoading] = useState(false);
+    const { listOfSearchedRecipes } = useSelector((state: RootState) => state.recipeReducer);
 
     const deb = useCallback(
-        debounce((e) => setSearchValue(e.target.value), 500),
+        debounce((e) => {
+            setSearchValue(e.target.value);
+        }, 500),
         [searchValue]
     );
+
     const onChange = (e) => {
         deb(e);
     };
@@ -194,13 +196,8 @@ const Navbar = () => {
                 <i className={styles.logo__icon}>
                     {LogoIcon.src && <Image src={LogoIcon} alt='logo icon' height={100} width={100} />}
                 </i>
-                <MuiAutoComplete />
-                {/* <div className={styles.search__box}> */}
-                {/* <input type='text' className={styles.search__txt} placeholder='Search' onChange={onChange} />
-                    <button className={styles.search__btn}>
-                        <i>{SearchIcon.src && <Image src={SearchIcon} alt='search icon' height={100} width={100} />}</i>
-                    </button> */}
-                {/* </div> */}
+                <MuiAutoComplete onChange={onChange} data={listOfSearchedRecipes} />
+
                 {authenitcationLinks}
             </header>
             {NavbarLinks()}
