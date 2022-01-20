@@ -21,34 +21,26 @@ if (auth_token) axiosInstance.defaults.headers.common.Authorization = `Token ${a
 axiosInstance.interceptors.request.use(
     (config) => {
         // trigger 'loading=true' event here
-        toast.error(0);
         store.dispatch(setLoadingAction(true));
 
-        return config;
+        return Promise.resolve(config);
     },
     (error) => {
         store.dispatch(setLoadingAction(false));
-        toast.error('1');
 
-        throw error;
+        return Promise.reject(error);
     }
 );
 
 axiosInstance.interceptors.response.use(
     (response) => {
-        toast.error('2');
-
         store.dispatch(setLoadingAction(false));
-        return response;
+        return Promise.resolve(response);
     },
     (error) => {
-        toast.error(3);
-        toast.error(error);
-        toast.error({ error });
-
         store.dispatch(setLoadingAction(false));
-
         const object = error.response.data;
+
         if (object) {
             const key = Object.keys(object)[0];
             let errorMassage = object[key];
@@ -58,8 +50,7 @@ axiosInstance.interceptors.response.use(
                 toast.error(errorMassage);
             }
         }
-
-        throw error;
+        return Promise.reject(error);
     }
 );
 
