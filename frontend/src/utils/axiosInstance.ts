@@ -26,7 +26,7 @@ axiosInstance.interceptors.request.use(
         return Promise.resolve(config);
     },
     (error) => {
-        store.dispatch(setLoadingAction(false));
+        // store.dispatch(setLoadingAction(false));
 
         return Promise.reject(error);
     }
