@@ -39,12 +39,14 @@ axiosInstance.interceptors.response.use(
         toast.error('2');
 
         store.dispatch(setLoadingAction(false));
-        throw response;
+        return response;
     },
     (error) => {
         toast.error(3);
-
+        toast.error(error);
+        toast.error({ error });
         store.dispatch(setLoadingAction(false));
+
         const object = error.response.data;
         if (object) {
             const key = Object.keys(object)[0];
