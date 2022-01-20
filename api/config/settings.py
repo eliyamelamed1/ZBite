@@ -12,7 +12,7 @@ SECRET_KEY = '0o%+e2tv@q!wiot0i3m*#)&q2w3v8nd74ew64+!ilm6&qq-9o5'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'zbite.herokuapp.com']
 
 # Application definition
 
@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'dj_rest_auth',
 
     #3rd party
+    'whitenoise.runserver_nostatic',
     'djoser',
     'corsheaders',
     'rest_framework',
@@ -58,6 +59,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -70,6 +72,7 @@ CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:8000',
     'http://localhost:3000',
+    'https://zbite.vercel.app',
 )
 
 ROOT_URLCONF = 'config.urls'
@@ -154,6 +157,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # Rest Framework Settings
