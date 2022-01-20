@@ -38,7 +38,7 @@ class TopRatedAccounts(APIView):
     def get(self, request):
         users = UserAccount.objects.all()
 
-        queryset = users.order_by('-stars')[:10]
+        queryset = users.order_by('-score')[:10]
         serializer = UserSerializer(queryset, many=True)
 
         return Response(serializer.data)

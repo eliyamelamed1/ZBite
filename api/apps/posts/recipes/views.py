@@ -55,7 +55,7 @@ class RecipesOfAccountsFollowed(ListAPIView):
 class TopRatedRecipes(ListAPIView):
     '''display the top rated recipes'''
     serializer_class = RecipeSerializer
-    queryset = Recipe.objects.order_by('-stars')[:10]
+    queryset = Recipe.objects.order_by('-score')[:10]
 
 
 
