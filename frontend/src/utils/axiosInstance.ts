@@ -45,6 +45,7 @@ axiosInstance.interceptors.response.use(
         toast.error(3);
         toast.error(error);
         toast.error({ error });
+
         store.dispatch(setLoadingAction(false));
 
         const object = error.response.data;
