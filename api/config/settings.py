@@ -205,6 +205,6 @@ SITE_ID = 1
 
 ELASTICSEARCH_DSL={
     'default':{
-        'hosts':'https://3ng0nd8r83:9b711z6cyt@dogwood-516101910.eu-west-1.bonsaisearch.net:443'
+        'hosts':'https://3ng0nd8r83:9b711z6cyt@dogwood-516101910.eu-west-1.bonsaisearch.net:443',
     },
 }
