@@ -24,13 +24,13 @@ axiosInstance.interceptors.request.use(
         toast.error(0);
         store.dispatch(setLoadingAction(true));
 
-        return Promise.resolve(config);
+        return config;
     },
     (error) => {
         store.dispatch(setLoadingAction(false));
         toast.error('1');
 
-        return Promise.reject(error);
+        throw error;
     }
 );
 
@@ -39,7 +39,7 @@ axiosInstance.interceptors.response.use(
         toast.error('2');
 
         store.dispatch(setLoadingAction(false));
-        return Promise.resolve(response);
+        throw response;
     },
     (error) => {
         toast.error(3);
@@ -55,7 +55,7 @@ axiosInstance.interceptors.response.use(
                 toast.error(errorMassage);
             }
         }
-        return Promise.reject(error);
+        throw error;
     }
 );
 
