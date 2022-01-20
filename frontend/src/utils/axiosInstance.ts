@@ -58,6 +58,7 @@ axiosInstance.interceptors.response.use(
                 toast.error(errorMassage);
             }
         }
+
         throw error;
     }
 );
