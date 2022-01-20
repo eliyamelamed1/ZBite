@@ -3,7 +3,7 @@ import '@testing-library/jest-dom/extend-expect';
 import * as DisplayRecipes from '../../components/recipes/DisplayRecipes';
 import * as RecipesActions from '../../redux/actions/recipeActions';
 
-import HomePage, { getStaticProps } from '../../pages';
+import HomePage, { getServerSideProps } from '../../pages';
 import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
@@ -58,7 +58,7 @@ describe('home page', () => {
         },
     ];
 
-    describe('getStaticProps', () => {
+    describe('getServerSideProps', () => {
         beforeEach(async () => {
             cleanup();
             jest.clearAllMocks();
@@ -69,16 +69,16 @@ describe('home page', () => {
             });
         });
 
-        test('getStaticProps should dispatch loadTrendingRecipesAction', async () => {
-            (await getStaticProps()).props.listOfTrendingRecipes;
+        test('getServerSideProps should dispatch loadTrendingRecipesAction', async () => {
+            (await getServerSideProps()).props.listOfTrendingRecipes;
             expect(loadTrendingRecipesActionSpy).toHaveBeenCalled();
         });
-        test('getStaticProps - should return matching revalidate', async () => {
-            const revalidate = (await getStaticProps()).revalidate;
-            expect(revalidate).toBe(10);
-        });
-        test('getStaticProps - should return matching props', async () => {
-            const props = (await getStaticProps()).props;
+        // test('getStaticProps - should return matching revalidate', async () => {
+        //     const revalidate = (await getServerSideProps()).revalidate;
+        //     expect(revalidate).toBe(10);
+        // });
+        test('getServerSideProps - should return matching props', async () => {
+            const props = (await getServerSideProps()).props;
             expect(props.listOfTrendingRecipes).toEqual(listOfTrendingRecipes);
         });
     });

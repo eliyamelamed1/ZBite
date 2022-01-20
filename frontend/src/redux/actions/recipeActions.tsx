@@ -209,9 +209,9 @@ export const saveRecipeAction =
             const body = JSON.stringify({ recipe: recipeId });
             await axiosInstance.post(endpointRoute().recipes.save, body);
             toast.success('updated saved recipes successfully');
-            await dispatch({ type: SAVE_UNSAVE_ACTION_SUCCESS });
-            await dispatch(loadRecipeDetailsAction({ id: recipeId }));
-            await dispatch(loadLoggedUserDataAction());
+            dispatch({ type: SAVE_UNSAVE_ACTION_SUCCESS });
+            dispatch(loadRecipeDetailsAction({ id: recipeId }));
+            dispatch(loadLoggedUserDataAction());
         } catch (err) {
             dispatch({ type: SAVE_UNSAVE_ACTION_FAIL });
         }
@@ -222,7 +222,7 @@ export const searchRecipeAction =
     async (dispatch) => {
         try {
             const res = await axios.get(endpointRoute(searchValue).recipes.search);
-            await dispatch({ type: SEARCH_RECIPE_SUCCESS, payload: res.data });
+            dispatch({ type: SEARCH_RECIPE_SUCCESS, payload: res.data });
         } catch (err) {
             dispatch({ type: SEARCH_RECIPE_FAIL });
         }
