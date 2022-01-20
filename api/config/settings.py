@@ -12,7 +12,7 @@ SECRET_KEY = '0o%+e2tv@q!wiot0i3m*#)&q2w3v8nd74ew64+!ilm6&qq-9o5'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'zbite.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'zbite.herokuapp']
 
 # Application definition
 
