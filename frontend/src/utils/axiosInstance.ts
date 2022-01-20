@@ -9,7 +9,7 @@ const auth_token = typeof window !== 'undefined' && localStorage.getItem('auth_t
 
 const axiosInstance = axios.create({
     // baseURL: 'http://localhost:8000', need to learn how to mock for tests
-    withCredentials: true,
+    withCredentials: false,
     headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
