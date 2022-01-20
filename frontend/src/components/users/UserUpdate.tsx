@@ -35,10 +35,10 @@ const UserUpdate: React.FC<{ id: string; emailPlaceholder: string; namePlacehold
         } catch {}
     };
 
-    const onSubmit = async (e) => {
+    const onSubmit = (e) => {
         e.preventDefault();
         try {
-            await dispatch(userUpdateAction({ id, email, name, photoMain }));
+            dispatch(userUpdateAction({ id, email, name, photoMain }));
             setDisplayForm(false);
         } catch {
             // TODO - add error massage

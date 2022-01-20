@@ -64,7 +64,7 @@ const RecipeCreate = () => {
     } = formData;
 
     const { isUserAuthenticated } = useSelector((state: RootState) => state.userReducer);
-    isUserAuthenticated === false ? Router.push(pageRoute().home) : null;
+    isUserAuthenticated === false ? Router.push(pageRoute().login) : null;
     // ------------Functions------------
     const onChangeText = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
     const onChangeImage = async (e) => {

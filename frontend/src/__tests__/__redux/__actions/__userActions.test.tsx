@@ -54,9 +54,9 @@ describe('axios request should match url endpoint, and parameters', () => {
             expect(mockAxios.post.mock.calls[0][0]).toStrictEqual(endpointRoute().users.followUser);
             expect(mockAxios.post.mock.calls[0][1]).toStrictEqual(body);
             expect(store.getActions()).toEqual([
+                { type: 'FOLLOW_UNFOLLOW_USER_SUCCESS' },
                 { payload: true, type: 'GET_USER_DETAILS_SUCCESS' },
                 { payload: true, type: 'GET_LOGGED_USER_DETAILS_SUCCESS' },
-                { type: 'FOLLOW_UNFOLLOW_USER_SUCCESS' },
             ]);
         });
         test('loadLoggedUserDataAction', async () => {

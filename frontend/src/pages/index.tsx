@@ -79,7 +79,7 @@ const HomePage: React.FC<{ listOfTrendingRecipes: Recipe[] }> = (props) => {
     );
 };
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
     await store.dispatch(loadTrendingRecipesAction());
     const { listOfTrendingRecipes } = store.getState().recipeReducer;
 

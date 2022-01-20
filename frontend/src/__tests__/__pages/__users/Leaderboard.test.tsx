@@ -2,7 +2,7 @@ import '@testing-library/jest-dom/extend-expect';
 
 import * as UserActions from '../../../redux/actions/userActions';
 
-import Leaderboard, { getStaticProps } from '../../../pages/users/Leaderboard';
+import Leaderboard, { getServerSideProps } from '../../../pages/users/Leaderboard';
 import { cleanup, render, screen } from '@testing-library/react';
 
 import store from '../../../redux/store';
@@ -82,7 +82,7 @@ const initialListOfLeaderboardUsers = [
 ];
 
 describe('Leaderboard', () => {
-    describe('getStaticProps', () => {
+    describe('getServerSideProps', () => {
         beforeEach(() => {
             cleanup();
             jest.clearAllMocks();
@@ -93,16 +93,16 @@ describe('Leaderboard', () => {
             });
         });
 
-        test('getStaticProps should dispatch loadLeaderboardAction', async () => {
-            (await getStaticProps()).props.listOfLeaderboardUsers;
+        test('getServerSideProps should dispatch loadLeaderboardAction', async () => {
+            (await getServerSideProps()).props.listOfLeaderboardUsers;
             expect(loadLeaderboardActionSpy).toHaveBeenCalled();
         });
-        test('getStaticProps - should return matching revalidate', async () => {
-            const revalidate = (await getStaticProps()).revalidate;
-            expect(revalidate).toBe(10);
-        });
-        test('getStaticProps - should return matching props', async () => {
-            const props = (await getStaticProps()).props;
+        // test('getStaticProps - should return matching revalidate', async () => {
+        //     const revalidate = (await getServerSideProps()).revalidate;
+        //     expect(revalidate).toBe(10);
+        // });
+        test('getServerSideProps - should return matching props', async () => {
+            const props = (await getServerSideProps()).props;
             expect(props.listOfLeaderboardUsers).toEqual(listOfLeaderboardUsers);
         });
     });
