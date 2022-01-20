@@ -70,10 +70,8 @@ MIDDLEWARE = [
 
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
-    'http://localhost:8000',
     'http://localhost:3000',
     'https://zbite.vercel.app',
-    'https://zbite.herokuapp',
 )
 
 ROOT_URLCONF = 'config.urls'
@@ -102,9 +100,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
+        'USER': 'orrejnjldzhkik',
+        'PASSWORD': '7da3a8a8796af42e2678215a529f4ba763b7295bc46114f83cafaf79e8a15a2f',
+        'HOST': 'ec2-54-220-243-77.eu-west-1.compute.amazonaws.com',
         'PORT': '5432',
     }
 }
