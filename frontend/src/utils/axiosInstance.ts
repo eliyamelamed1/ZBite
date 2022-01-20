@@ -26,7 +26,8 @@ axiosInstance.interceptors.request.use(
         return Promise.resolve(config);
     },
     (error) => {
-        // store.dispatch(setLoadingAction(false));
+        store.dispatch(setLoadingAction(false));
+        toast.error('1');
 
         return Promise.reject(error);
     }
@@ -34,10 +35,14 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
     (response) => {
+        toast.error('2');
+
         store.dispatch(setLoadingAction(false));
         return Promise.resolve(response);
     },
     (error) => {
+        toast.error('3');
+
         store.dispatch(setLoadingAction(false));
         const object = error.response.data;
         if (object) {
