@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import Image from 'next/image';
+import UiOptionsButton from './UiOptionsButton';
 import imageLoader from '../../../utils/imageLoader';
 import lyingOptionsDots from '../../../assets/icons/lyingOptionsDots.svg';
 import styles from '../../../styles/ui/UiOptionsDots.module.scss';
@@ -9,6 +10,7 @@ import styles from '../../../styles/ui/UiOptionsDots.module.scss';
 
 const UiOptionsDots = ({ children, sectionClass = '', lying = true, formSide = 'left' }) => {
     const [showOptions, setShowOptions] = useState(false);
+    console.log(children);
 
     return (
         <section className={`${styles.optionsDots} ${sectionClass}`}>
@@ -28,7 +30,15 @@ const UiOptionsDots = ({ children, sectionClass = '', lying = true, formSide = '
                     />
                 )}
             </button>
-            {showOptions && <section className={styles.optionsForm}>{children}</section>}
+            {showOptions && (
+                <section className={styles.optionsForm}>
+                    {children}
+
+                    <form onClick={() => setShowOptions(false)}>
+                        <UiOptionsButton>Report</UiOptionsButton>
+                    </form>
+                </section>
+            )}
         </section>
     );
 };
