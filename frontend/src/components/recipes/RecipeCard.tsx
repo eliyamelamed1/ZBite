@@ -26,9 +26,9 @@ const RecipeCard: React.FC<DataTypes> = ({ title, photo_main, id, author, saves,
         <div data-testid='recipeCard' className={styles.card_container}>
             <section className={styles.detail_container_1}>
                 <i className={styles.profile_pic}>
-                    {author.photo_main ? (
+                    {author?.photo_main ? (
                         <Image
-                            src={author.photo_main}
+                            src={author?.photo_main}
                             width={100}
                             height={100}
                             alt='profile pic'
@@ -54,7 +54,7 @@ const RecipeCard: React.FC<DataTypes> = ({ title, photo_main, id, author, saves,
                     </li>
                     <UiStars starsCount={stars} />
                 </ul>
-                <UiSaves savesCount={saves.length} />
+                <UiSaves savesCount={saves?.length} />
             </section>
             <section className={styles.detail_container_2}>
                 <h3>{title}</h3>

@@ -9,7 +9,7 @@ import styles from '../../styles/pages/leaderboard.module.scss';
 interface User {
     photo_main?: { src: string };
     name: string;
-    stars: number;
+    score: number;
 }
 interface DataTypes {
     listOfLeaderboardUsers: User[];
@@ -39,8 +39,8 @@ const Leaderboard: React.FC<DataTypes> = (props) => {
                         <span className={styles.full_name}>{user?.name}</span>
                         <section className={styles.score_section}>
                             {scoreIcon?.src && <UiCircleImage src={scoreIcon?.src} />}
-                            {user?.stars ? (
-                                <span className={styles.score_text}>{user?.stars.toFixed(1)}</span>
+                            {user?.score ? (
+                                <span className={styles.score_text}>{user?.score.toFixed(1)}</span>
                             ) : (
                                 <span className={styles.score_text}>0</span>
                             )}
@@ -57,7 +57,7 @@ const Leaderboard: React.FC<DataTypes> = (props) => {
             {lastSevenUsers.map((user, index) => (
                 <li key={index}>
                     <section className={styles.image_name_and_placement_section}>
-                        <span className={styles.ranking_placement}>{index + 3}</span>
+                        <span className={styles.ranking_placement}>{index + 4}</span>
 
                         <section className={styles.image_container}>
                             {user?.photo_main?.src ? (
@@ -70,8 +70,8 @@ const Leaderboard: React.FC<DataTypes> = (props) => {
                     </section>
                     <section className={styles.score_section}>
                         {scoreIcon.src && <UiCircleImage src={scoreIcon.src} />}
-                        {user?.stars ? (
-                            <span className={styles.score_text}>{user?.stars}</span>
+                        {user?.score ? (
+                            <span className={styles.score_text}>{user?.score}</span>
                         ) : (
                             <span className={styles.score_text}>0</span>
                         )}

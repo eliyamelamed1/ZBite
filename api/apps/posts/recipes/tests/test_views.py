@@ -8,28 +8,10 @@ from apps.posts.recipes.models import Recipe
 # add test to get info from recipe detail page
 # ------------------------------------------------ Tests
 pytestmark = pytest.mark.django_db
-recipe_list_url = Recipe.get_list_url()
 create_recipe_url = Recipe.get_create_url()
-
 recipes_of_accounts_followed_url = Recipe.get_recipes_of_accounts_followed_url()
 top_rated_recipes_url = Recipe.get_top_rated_recipes_url()
 
-class TestRecipeListView:
-    class TestAuthenticatedUsers:
-        def test_recipe_list_page_render(self, api_client):
-            new_user = UserAccount()
-            api_client.force_authenticate(new_user)
-
-            recipe_list_page_render = api_client.get(recipe_list_url)
-
-            assert recipe_list_page_render.status_code == 200
-
-    class TestGuestUsers:
-        def test_recipe_list_page_render(self, api_client):
-            recipe_list_page_render = api_client.get(recipe_list_url)
-
-            assert recipe_list_page_render.status_code == 200
-            
 class TestRecipeCreateView:
     class TestAuthenticatedUsers:
         def test_recipe_create_page_render(self, api_client):
@@ -39,7 +21,7 @@ class TestRecipeCreateView:
 
             assert create_recipe_page_render.status_code == 405 # 405 = method not allowed - get isnt allowed only post
 
-        def test_recipe_create_post_request_required_fields(self, api_client):
+        def test_should_create_recipe(self, api_client):
             new_user = UserFactory()
             api_client.force_authenticate(new_user)
             recipe_data = RecipeFactory.build()
@@ -54,6 +36,7 @@ class TestRecipeCreateView:
             response = api_client.post(create_recipe_url, data)
 
             assert response.status_code == 201
+            assert Recipe.objects.all().count() == 1
         
         def test_recipe_author_is_current_logged_in_user(self, api_client):
                 ''' testing the method perform_create '''
@@ -72,6 +55,37 @@ class TestRecipeCreateView:
                 new_recipe = Recipe.objects.get(title=recipe_data.title)
 
                 assert new_recipe.author == first_user
+
+        def test_creating_recipe_should_recalculate_user_recipe_count(self, api_client):
+            new_user = UserFactory()
+            api_client.force_authenticate(new_user)
+            recipe_data = RecipeFactory.build()
+            data = {
+                'title': {recipe_data.title},
+                'description': {recipe_data.description},
+                'serving': 'four people',
+                'cook_time': '2 hours',
+                'ingredients_text_list': '',
+                'instructions_text_list': '',
+            }
+            api_client.post(create_recipe_url, data)
+            new_user = UserAccount.objects.get(id=new_user.id)
+
+            assert new_user.recipe_count == 1
+
+            recipe_data = RecipeFactory.build()
+            data = {
+                'title': {recipe_data.title},
+                'description': {recipe_data.description},
+                'serving': 'four people',
+                'cook_time': '2 hours',
+                'ingredients_text_list': '',
+                'instructions_text_list': '',
+            }
+            api_client.post(create_recipe_url, data)
+            new_user = UserAccount.objects.get(id=new_user.id)
+
+            assert new_user.recipe_count == 2
 
     class TestGuestUsers:
         def test_recipe_create_page_should_not_render(self, api_client):
@@ -126,12 +140,26 @@ class TestDeleteRecipeView:
             response = api_client.delete(new_recipe.get_absolute_url())
 
             assert response.status_code == 204 
+            assert Recipe.objects.all().count() == 0
+            
+        def test_deleting_recipe_should_recalculate_user_recipe_count(self, api_client):
+            new_recipe = RecipeFactory()
+            author = new_recipe.author
+            author.recipe_count = 1
+            author.save()
+
+            api_client.force_authenticate(author)
+            api_client.delete(new_recipe.get_absolute_url())
+            author = UserAccount.objects.get(id=author.id)
+
+            assert author.recipe_count == 0
             
         # def test_deleting_recipe_recalculates_author_stars(self, api_client):
             
-            # new_recipe = RecipeFactory()
-            # author = UserAccount.objects.get(id=new_recipe.author.id).stars = 2 
+        #     new_recipe = RecipeFactory()
+        #     author = UserAccount.objects.get(id=new_recipe.author.id) 
             # author.stars = 2
+            # author.save()
 
             # assert author.stars == 2
             
@@ -306,11 +334,13 @@ class TestTopRatedRecipes:
                 
     class TestGuestUsers:
 
-        def test_get_request_return_status_code_200(self, api_client):
+        def test_page_should_render_successfully_return_status_code_200(self, api_client):
+            new_user = UserFactory()
+            api_client.force_authenticate(new_user)
             response = api_client.get(top_rated_recipes_url) 
 
             assert response.status_code == 200
-
+    
         def test_get_request_should_return_top_rated_recipes(self, api_client):
             
             for i in range(10):
@@ -360,4 +390,49 @@ class TestTopRatedRecipes:
                 
                 assert f'{recipe}' not in f'{response.content}'
 
+class TestSearchRecipes:
+    class TestAuthenticatedUsers:
+        def test_searching_without_value_should_return_status_code_200(self, api_client):
+            new_user = UserFactory()
+            api_client.force_authenticate(new_user)
+            response = api_client.get(Recipe.get_search_url(None)) 
 
+            assert response.status_code == 200
+
+        def test_searching_with_value_should_return_status_code_200(self, api_client):
+            new_user = UserFactory()
+            api_client.force_authenticate(new_user)
+            new_recipe = RecipeFactory()
+            response = api_client.get(Recipe.get_search_url(new_recipe.title)) 
+
+            assert response.status_code == 200
+
+        # def test_searching_recipe_title_should_display_it(self, api_client):
+        #     new_user = UserFactory()
+        #     api_client.force_authenticate(new_user)
+        #     first_recipe = RecipeFactory()
+        #     second_recipe = RecipeFactory()
+        #     response = api_client.get(Recipe.get_search_url(first_recipe.title))
+
+        #     assert f'{first_recipe.title}' in f'{response.content}'
+        #     assert f'{second_recipe.title}' not in f'{response.content}'
+
+    class TestGuestUsers:
+        def test_searching_without_value_should_return_status_code_200(self, api_client):
+            response = api_client.get(Recipe.get_search_url(None)) 
+
+            assert response.status_code == 200
+        
+        def test_searching_with_value_should_return_status_code_200(self, api_client):
+            new_recipe = RecipeFactory()
+            response = api_client.get(Recipe.get_search_url(new_recipe.title)) 
+
+            assert response.status_code == 200
+
+        # def test_searching_recipe_title_should_display_it(self, api_client):
+        #     first_recipe = RecipeFactory()
+        #     second_recipe = RecipeFactory()
+        #     response = api_client.get(Recipe.get_search_url(first_recipe.title))
+
+        #     assert f'{first_recipe.title}' in f'{response.content}'
+        #     assert f'{second_recipe.title}' not in f'{response.content}'

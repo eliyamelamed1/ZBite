@@ -1,9 +1,9 @@
 from django.contrib.auth import get_user_model
-from django.http import JsonResponse
+
 from django.http.response import HttpResponse
+from .documents import UserAccountDocument
 from rest_framework import permissions
-from rest_framework.generics import (ListAPIView, ListCreateAPIView,
-                                     RetrieveUpdateDestroyAPIView)
+from rest_framework.generics import (ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView)
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -12,13 +12,7 @@ from apps.posts.recipes.serializers import RecipeSerializer
 
 from .models import UserAccount
 from .permissions import IsAuthorOrReadOnly
-from .serializers import UserSerializer
-
-
-class UserListView(ListCreateAPIView):
-    permission_classes = (permissions.AllowAny, )
-    queryset = get_user_model().objects.all()
-    serializer_class = UserSerializer
+from .serializers import UserSearchSerializer, UserSerializer
 
 class UserDetailView(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthorOrReadOnly, )
@@ -44,7 +38,7 @@ class TopRatedAccounts(APIView):
     def get(self, request):
         users = UserAccount.objects.all()
 
-        queryset = users.order_by('-stars')[:10]
+        queryset = users.order_by('-score')[:10]
         serializer = UserSerializer(queryset, many=True)
 
         return Response(serializer.data)
@@ -70,5 +64,16 @@ class UserOwnRecipes(ListAPIView):
             raise ValueError('account doesnt exits')
         
         queryset = Recipe.objects.filter(author=account).order_by('-created_at')
-        # raise ValueError(queryset)
+        
         return queryset
+
+class SearchUsers(ListAPIView):
+    serializer_class = UserSearchSerializer
+
+    def get_queryset(self, *args, **kwargs):
+        value = self.kwargs['value']
+        # usersQueryset = UserAccountDocument.search().query('wildcard',name=f'*{value}*',).sort('-score')
+        usersQueryset = UserAccountDocument.search().query('wildcard',name=f'*{value}*',)
+
+        return usersQueryset
+

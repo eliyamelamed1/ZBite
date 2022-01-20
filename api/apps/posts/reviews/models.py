@@ -29,41 +29,62 @@ class Review(models.Model):
         return reverse('reviews:delete', kwargs={'pk': self.id})
 
     @classmethod
-    def get_recipe_stars_score(cls, recipe):
+    def get_recipe_avg_stars(cls, recipe):
         recipe_reviews_queryset = Review.objects.all().filter(recipe=recipe)
         total_users_who_reviewed_recipe = recipe_reviews_queryset.count()
 
         total_recipe_stars = 0
-        recipe_stars_score = 0
+        recipe_avg_stars = 0
 
         for i in range(total_users_who_reviewed_recipe):
             recipe_review = recipe_reviews_queryset[i]
             total_recipe_stars += recipe_review.stars
 
         try:
-            recipe_stars_score = total_recipe_stars/total_users_who_reviewed_recipe
+            recipe_avg_stars = total_recipe_stars/total_users_who_reviewed_recipe
 
         except:
-            recipe_stars_score = 0
+            recipe_avg_stars = 0
 
-        return recipe_stars_score
+        return recipe_avg_stars
 
     @classmethod
-    def get_account_stars_score(cls, user):
+    def calculate_recipe_score(cls, recipe):
+        recipe = Recipe.objects.get(id=recipe.id)
+        review_count = len(Review.objects.all().filter(recipe=recipe))
+        score = 0
+        if review_count != 0:
+            score = (recipe.stars - 3) * review_count
+        
+        return round(score,1)
+
+    @classmethod
+    def calculate_account_score(cls, author):
+        all_recipes = Recipe.objects.filter(author=author)
+        score = 0.0
+
+        for recipe in all_recipes:
+            score += recipe.score
+
+        return round(score,1)
+
+    @classmethod
+    def get_account_avg_stars(cls, user):
         user_own_recipes = Recipe.objects.all().filter(author=user)
 
         user_own_recipes_count = user_own_recipes.count()
-        sum_of_recipes_scores = 0
+        sum_of_recipes_stars = 0
 
         for recipe in user_own_recipes:
-            sum_of_recipes_scores += Review.get_recipe_stars_score(recipe=recipe)
+            sum_of_recipes_stars += Review.get_recipe_avg_stars(recipe=recipe)
 
         try:
-            account_stars_score = sum_of_recipes_scores/user_own_recipes_count
+            account_avg_stars = sum_of_recipes_stars/user_own_recipes_count
         except:
-            account_stars_score = 0
+            account_avg_stars = 0
 
-        return account_stars_score
+
+        return account_avg_stars
 
     @classmethod
     def get_create_url(cls):

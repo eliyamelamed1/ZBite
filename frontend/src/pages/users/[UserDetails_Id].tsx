@@ -7,6 +7,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import ScoreIcon from '../../assets/icons/score-icon.svg';
 import UiOptionsDots from '../../components/ui/optionsForm/UiOptionsDots';
+import UiRecipesContainer from '../../components/ui/UiRecipesContainer';
 import UiSectionSeparator from '../../components/ui/UiSectionSeperator';
 import UserDelete from '../../components/users/UserDelete';
 import UserUpdate from '../../components/users/UserUpdate';
@@ -25,6 +26,8 @@ interface User {
     followers: string[];
     following: string[];
     stars: any;
+    score: any;
+    recipe_count: any;
 }
 
 const UserDetails: React.FC<{ serverUserData: User; listOfUserOwnRecipes: any[] }> = (props) => {
@@ -85,9 +88,9 @@ const UserDetails: React.FC<{ serverUserData: User; listOfUserOwnRecipes: any[] 
             <h1 className={styles.posts_title}>Posts</h1>
 
             {listOfUserOwnRecipes?.length > 0 ? (
-                <div className={styles.recipes_container}>
+                <UiRecipesContainer>
                     <DisplayRecipes recipesToDisplay={listOfUserOwnRecipes} />
-                </div>
+                </UiRecipesContainer>
             ) : (
                 <div className={styles.no_recipes_container}>
                     <h2 className={styles.no_recipes_title}>You Haven't Created Recipes Yet</h2>
@@ -133,7 +136,7 @@ const UserDetails: React.FC<{ serverUserData: User; listOfUserOwnRecipes: any[] 
                             <Image src={ScoreIcon.src} width={100} height={100} alt='score icon' loader={imageLoader} />
                         )}
                     </i>
-                    <span className={styles.score_text}>score: {userData.stars}</span>
+                    <span className={styles.score_text}>score: {userData.score}</span>
                 </ul>
                 <ul className={styles.social_container}>
                     <li className={styles.followers_item}>
@@ -141,7 +144,7 @@ const UserDetails: React.FC<{ serverUserData: User; listOfUserOwnRecipes: any[] 
                         <span className={styles.followers_text}>Followers</span>
                     </li>
                     <li className={styles.posts_item}>
-                        <span className={styles.posts_number}>52</span>
+                        <span className={styles.posts_number}>{userData?.recipe_count}</span>
                         <span className={styles.posts_text}>Posts</span>
                     </li>
 

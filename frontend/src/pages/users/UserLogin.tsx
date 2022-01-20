@@ -23,7 +23,9 @@ const UserLogin = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        await dispatch(loginAction({ email, password }));
+        try {
+            await dispatch(loginAction({ email, password }));
+        } catch {}
     };
 
     if (isUserAuthenticated) {

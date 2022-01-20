@@ -3,15 +3,20 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "next dev",
+        "dev": "cross-env isProd=false next dev",
         "build": "next build",
-        "start": "next start",
+        "start": "cross-env isProd=true next start",
         "lint": "next lint",
-        "test": "jest --env=jsdom",
-        "watch": "jest --env=jsdom --watch"
+        "test": "jest --env=jsdom --silent",
+        "watch": "jest --env=jsdom --watch --silent"
     },
     "dependencies": {
         "@emotion/babel-plugin": "^11.7.2",
+        "@emotion/react": "^11.7.1",
+        "@emotion/styled": "^11.6.0",
+        "@mui/icons-material": "^5.3.0",
+        "@mui/material": "^5.3.0",
+        "cross-env": "^7.0.3",
         "identity-obj-proxy": "^3.0.0",
         "jest-cli": "^27.4.2",
         "next": "11.1.0",

@@ -45,6 +45,8 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     following = models.ManyToManyField('self', default=None, blank=True, related_name='following_list', symmetrical=False)
     saved_recipes = models.ManyToManyField('recipes.Recipe', default=None, blank=True, related_name='saved_recipes', symmetrical=False)  
     stars = models.FloatField(default=0)
+    score = models.FloatField(default=0)
+    recipe_count = models.IntegerField(default=0)
 
     objects = UserAccountManager()
 
@@ -69,3 +71,8 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     @classmethod
     def get_saved_recipes_url(cls):
         return reverse('accounts:saved_recipes')
+
+    @classmethod
+    def get_search_url(cls, value):
+        """Return account search page."""
+        return reverse('accounts:search', kwargs={"value": value})

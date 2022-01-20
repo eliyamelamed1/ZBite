@@ -4,7 +4,7 @@ import * as IsRecipeAuthor from '../../../components/recipes/IsRecipeAuthor';
 import * as ReviewCreate from '../../../components/reviews/ReviewCreate';
 import * as recipeActions from '../../../redux/actions/recipeActions';
 
-import { TEST_CASE_AUTH, TEST_CASE_RECIPE } from '../../../redux/types';
+import { TEST_CASE_AUTH, TEST_CASE_RECIPE } from '../../../redux/constants';
 import { cleanup, render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';

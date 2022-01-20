@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import RecipeCreate from '../../../pages/recipes/RecipeCreate';
 import Router from 'next/router';
-import { TEST_CASE_AUTH } from '../../../redux/types';
+import { TEST_CASE_AUTH } from '../../../redux/constants';
 import { pageRoute } from '../../../enums';
 import { recipeCreateAction } from '../../../redux/actions/recipeActions';
 import store from '../../../redux/store';

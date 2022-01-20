@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
 
+import { BASE_URL, endpointRoute } from '../../../enums';
 import {
     loadFollowedRecipesAction,
     loadRecipeDetailsAction,
@@ -17,7 +18,6 @@ import {
 import axios from 'axios';
 import { cleanup } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
-import { endpointRoute } from '../../../enums';
 import mockAxios from '../../../__mocks__/axios';
 import thunk from 'redux-thunk';
 
@@ -51,8 +51,7 @@ describe('axios request should match url endpoint, and parameters', () => {
     });
     test('recipeDeleteAction', () => {
         const { id } = parameters;
-        const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}/`;
-
+        const endpointUrl = `${BASE_URL}/api/recipes/${id}/`;
         store.dispatch(recipeDeleteAction({ id }));
 
         expect(mockAxios.delete.mock.calls.length).toBe(1);
@@ -88,7 +87,7 @@ describe('axios request should match url endpoint, and parameters', () => {
     test('recipeUpdateAction', () => {
         const { id, photoMain, title, description, cookTime, serving, ingredientsTextList, instructionsTextList } =
             parameters;
-        const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}/`;
+        const endpointUrl = `${BASE_URL}/api/recipes/${id}/`;
 
         store.dispatch(
             recipeUpdateAction({
@@ -136,7 +135,7 @@ describe('axios request should match url endpoint, and parameters', () => {
 
     test('loadRecipeDetailsAction', () => {
         const { id } = parameters;
-        const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/recipes/${id}/`;
+        const endpointUrl = `${BASE_URL}/api/recipes/${id}/`;
         store.dispatch(loadRecipeDetailsAction({ id }));
 
         expect(mockAxios.get.mock.calls.length).toBe(1);

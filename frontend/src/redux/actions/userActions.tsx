@@ -24,7 +24,7 @@ import {
     SIGNUP_SUCCESS,
     UPDATE_USER_FAIL,
     UPDATE_USER_SUCCESS,
-} from '../types';
+} from '../constants';
 
 import axiosInstance from '../../utils/axiosInstance';
 import { endpointRoute } from '../../enums';

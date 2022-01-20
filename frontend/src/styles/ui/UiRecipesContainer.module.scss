@@ -1,0 +1,8 @@
+.recipes_container {
+    column-gap: 5rem;
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+    width: MIN(100%, 150rem);
+    justify-content: space-evenly;
+}

@@ -5,12 +5,6 @@ from factories import RecipeFactory
 
 pytestmark = pytest.mark.django_db
 
-class TestListUrl:
-    def test_list_reverse(self):
-        assert reverse('recipes:list') == '/api/recipes/list/'
-
-    def test_list_resolve(self):
-        assert resolve('/api/recipes/list/').view_name == 'recipes:list'
 
 class TestCreateUrl:
     def test_create_reverse(self):

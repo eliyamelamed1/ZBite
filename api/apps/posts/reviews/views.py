@@ -18,7 +18,6 @@ class ReviewCreate(CreateAPIView):
 
     def perform_create(self, serializer):
         '''save the current logged in user as the author of the comment'''
-
         serializer.save(author=self.request.user)
 
     def create(self, request, format=None):
@@ -26,7 +25,6 @@ class ReviewCreate(CreateAPIView):
             serializer.is_valid(raise_exception=True)
             data = request.data
             user = request.user
-
 
             # comment is optional so check for value 
             try:
@@ -49,14 +47,22 @@ class ReviewCreate(CreateAPIView):
                 Review.objects.all().create(recipe=recipe, author=user, stars=stars, comment=comment)
 
             finally:
-                recipe.stars = Review.get_recipe_stars_score(recipe=recipe)
+                # update recipe review_count + stars + score
+                recipe = Recipe.objects.all().get(id=recipe.id)
+                recipe.review_count = len(Review.objects.filter(recipe__exact=recipe))
+                recipe.save()
+                recipe.stars = Review.get_recipe_avg_stars(recipe=recipe)
+                recipe.save()
+                recipe.score = Review.calculate_recipe_score(recipe)
                 recipe.save()
 
+                # update author account score
                 recipe_author = recipe.author
-                recipe_author.stars = Review.get_account_stars_score(user=recipe_author)
+                recipe_author.stars = Review.get_account_avg_stars(user=recipe_author)
+                recipe_author.save()
+                recipe_author.score = Review.calculate_account_score(recipe.author)
                 recipe_author.save()
                 
-
             return HttpResponse(status=201)
     
 class ReviewDelete(DestroyAPIView):
@@ -73,13 +79,19 @@ class ReviewDelete(DestroyAPIView):
         Review.objects.get(id=review_id).delete()
 
         recipe = Recipe.objects.all().get(id=review.recipe.id)
-        recipe.stars = Review.get_recipe_stars_score(recipe=recipe)
+        recipe.review_count = len(Review.objects.filter(recipe__exact=recipe))
+        recipe.save()
+        recipe.stars = Review.get_recipe_avg_stars(recipe=recipe)
+        recipe.save()
+        recipe.score = Review.calculate_recipe_score(recipe)
         recipe.save()
 
+        # update author account score
         recipe_author = recipe.author
-        recipe_author.stars = Review.get_account_stars_score(user=recipe_author)
+        recipe_author.stars = Review.get_account_avg_stars(user=recipe_author)
         recipe_author.save()
-
+        recipe_author.score = Review.calculate_account_score(recipe.author)
+        recipe_author.save()
 
         return HttpResponse(status=204)
 
@@ -92,6 +104,7 @@ class ReviewsInRecipe(APIView):
         data = self.request.data
 
         recipe = data['recipe']
+        recipe = Recipe.objects.get(id=recipe)
         queryset = queryset.filter(recipe__exact=recipe)
 
         serializer = ReviewDetailSerializer(queryset, many=True)

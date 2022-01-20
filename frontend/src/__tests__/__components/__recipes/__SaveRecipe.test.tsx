@@ -7,7 +7,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import Router from 'next/router';
 import SaveRecipe from '../../../components/recipes/SaveRecipe';
-import { TEST_CASE_AUTH } from '../../../redux/types';
+import { TEST_CASE_AUTH } from '../../../redux/constants';
 import axios from 'axios';
 import { pageRoute } from '../../../enums';
 import store from '../../../redux/store';

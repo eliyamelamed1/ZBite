@@ -21,10 +21,13 @@ import {
     REVIEW_DELETE_SUCCESS,
     SAVE_UNSAVE_ACTION_FAIL,
     SAVE_UNSAVE_ACTION_SUCCESS,
+    SEARCH_RECIPE_FAIL,
+    SEARCH_RECIPE_SUCCESS,
     UPDATE_RECIPE_FAIL,
     UPDATE_RECIPE_SUCCESS,
-} from '../types';
+} from '../constants';
 
+import axios from 'axios';
 import axiosInstance from '../../utils/axiosInstance';
 import { endpointRoute } from '../../enums';
 import { loadLoggedUserDataAction } from './userActions';
@@ -162,7 +165,8 @@ export const reviewCreateAction =
             await axiosInstance.post(endpointRoute().reviews.create, body);
             toast.success('review created successfully');
             dispatch({ type: REVIEW_CREATE_SUCCESS });
-            await dispatch(reviewsInRecipeAction({ recipeId }));
+            dispatch(reviewsInRecipeAction({ recipeId }));
+            dispatch(loadLoggedUserDataAction());
         } catch (err) {
             dispatch({ type: REVIEW_CREATE_FAIL });
         }
@@ -176,6 +180,7 @@ export const reviewDeleteAction =
             toast.success('review deleted successfully');
             dispatch({ type: REVIEW_DELETE_SUCCESS });
             dispatch(reviewsInRecipeAction({ recipeId }));
+            dispatch(loadLoggedUserDataAction());
         } catch (err) {
             dispatch({ type: REVIEW_DELETE_FAIL });
         }
@@ -209,5 +214,16 @@ export const saveRecipeAction =
             await dispatch(loadLoggedUserDataAction());
         } catch (err) {
             dispatch({ type: SAVE_UNSAVE_ACTION_FAIL });
+        }
+    };
+
+export const searchRecipeAction =
+    ({ searchValue }) =>
+    async (dispatch) => {
+        try {
+            const res = await axios.get(endpointRoute(searchValue).recipes.search);
+            await dispatch({ type: SEARCH_RECIPE_SUCCESS, payload: res.data });
+        } catch (err) {
+            dispatch({ type: SEARCH_RECIPE_FAIL });
         }
     };

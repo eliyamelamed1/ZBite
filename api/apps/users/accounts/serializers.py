@@ -13,7 +13,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id','email','name','followers','following','saved_recipes','stars','photo_main')
+        fields = ('id','email','name','followers','following','saved_recipes','stars','photo_main','score','recipe_count')
         ref_name = "user_details"
 
 class SavedRecipesSerializer(serializers.ModelSerializer):
@@ -25,3 +25,9 @@ class AuthorFieldSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id','name','photo_main',)
+
+class UserSearchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('name',)
+

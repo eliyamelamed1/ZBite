@@ -8,8 +8,6 @@ import React, { useEffect, useState } from 'react';
 import RecipeDelete from './RecipeDelete';
 import RecipeUpdate from './RecipeUpdate';
 import { RootState } from '../../redux/store';
-import UiOptionsDots from '../ui/optionsForm/UiOptionsDots';
-import styles from '../../styles/components/isRecipeAuthor.module.scss';
 import { useSelector } from 'react-redux';
 
 interface Recipe {

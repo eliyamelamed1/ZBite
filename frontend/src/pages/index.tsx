@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import DisplayRecipes from '../components/recipes/DisplayRecipes';
 import Router from 'next/router';
+import UiRatingForm from '../components/ui/UiRatingForm';
+import UiRecipesContainer from '../components/ui/UiRecipesContainer';
 import UiSectionSeparator from '../components/ui/UiSectionSeperator';
 import styles from '../styles/pages/home.module.scss';
 
@@ -19,6 +21,8 @@ interface Recipe {
 }
 
 const HomePage: React.FC<{ listOfTrendingRecipes: Recipe[] }> = (props) => {
+    console.log(process.env.isProd);
+
     const dispatch = useDispatch();
     const [typeOfRecipes, setTypeOfRecipes] = useState(typeOfRecipesEnum.trending);
     const buttonsRef = useRef() as any;
@@ -64,14 +68,14 @@ const HomePage: React.FC<{ listOfTrendingRecipes: Recipe[] }> = (props) => {
                 </button>
             </ul>
             <UiSectionSeparator />
-            <ul className={styles.recipes_container}>
+            <UiRecipesContainer>
                 {typeOfRecipes === typeOfRecipesEnum.trending && listOfTrendingRecipes && (
                     <DisplayRecipes recipesToDisplay={listOfTrendingRecipes} />
                 )}
                 {typeOfRecipes === typeOfRecipesEnum.following && listOfFollowedRecipes && (
                     <DisplayRecipes recipesToDisplay={listOfFollowedRecipes} />
                 )}
-            </ul>
+            </UiRecipesContainer>
         </div>
     );
 };

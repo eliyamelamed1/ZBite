@@ -23,11 +23,10 @@ axiosInstance.interceptors.request.use(
         // trigger 'loading=true' event here
         store.dispatch(setLoadingAction(true));
 
-        return config;
+        return Promise.resolve(config);
     },
     (error) => {
         store.dispatch(setLoadingAction(false));
-        console.log(error);
 
         return Promise.reject(error);
     }
@@ -36,7 +35,7 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
     (response) => {
         store.dispatch(setLoadingAction(false));
-        return response;
+        return Promise.resolve(response);
     },
     (error) => {
         store.dispatch(setLoadingAction(false));

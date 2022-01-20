@@ -21,6 +21,8 @@ class Recipe(models.Model):
     serving = models.TextField()
     cook_time = models.TextField()
     stars = models.FloatField(default=0)
+    review_count = models.IntegerField(default=0)
+    score = models.FloatField(default=0)
     saves = models.ManyToManyField(get_user_model(), default=None, blank=True)
     instructions_text_list = ArrayField(models.CharField(max_length=100,),default=list, size=15,)
     ingredients_text_list = ArrayField(models.CharField(max_length=100,),default=list, size=15,)
@@ -31,7 +33,6 @@ class Recipe(models.Model):
     def get_absolute_url(self):
         """Return absolute URL to the Recipe Detail page."""
         return reverse('recipes:detail', kwargs={"pk": self.id})
-
 
     def __str__(self):
         return self.title
@@ -62,10 +63,6 @@ class Recipe(models.Model):
         return reverse('recipes:create')
     
     @classmethod
-    def get_list_url(cls):
-        return reverse('recipes:list')
-
-    @classmethod
     def get_recipes_of_accounts_followed_url(cls):
         return reverse('recipes:recipes_of_accounts_followed')
     
@@ -73,3 +70,7 @@ class Recipe(models.Model):
     def get_top_rated_recipes_url(cls):
         return reverse('recipes:top_rated')
 
+    @classmethod
+    def get_search_url(cls,value):
+        """Return to the Recipe search page."""
+        return reverse('recipes:search', kwargs={"value": value})

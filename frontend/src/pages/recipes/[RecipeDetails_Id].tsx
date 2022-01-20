@@ -47,7 +47,7 @@ const RecipeDetails = (props) => {
         // when updating recipe data (title, description etc..) migrate the changes to the userData
         function migrateRequestedRecipeData() {
             const isRecipeDataMatchReqId = requestedRecipeData?.id === recipeData?.id;
-            isRecipeDataMatchReqId ? setRecipeData(requestedRecipeData) : null;
+            if (isRecipeDataMatchReqId) setRecipeData(requestedRecipeData);
         },
         [requestedRecipeData, recipeData?.id]
     );
@@ -56,16 +56,19 @@ const RecipeDetails = (props) => {
         // when updating reviews data migrate the changes to the reviewsData
         function migrateListOfFilteredReviews() {
             if (listOfFilteredReviews == null) return null;
-            if (listOfFilteredReviews.length == 0) return setReviewsData([]);
+            if (listOfFilteredReviews.length === 0) {
+                return setReviewsData([]);
+            }
 
             const updatedReviewList = [];
             for (const review of listOfFilteredReviews) {
                 const isReviewsMatchRecipe = review.recipe === recipeData?.id;
                 if (isReviewsMatchRecipe) updatedReviewList.push(review);
             }
-            return setReviewsData(updatedReviewList);
+
+            if (updatedReviewList.length !== 0) return setReviewsData(updatedReviewList);
         },
-        [listOfFilteredReviews, recipeData?.id]
+        [listOfFilteredReviews, recipeData]
     );
 
     return (
@@ -105,9 +108,9 @@ const RecipeDetails = (props) => {
                                 </UiOptionsDots>
 
                                 <i className={styles.profile_image_container}>
-                                    {recipeData.author.photo_main ? (
+                                    {recipeData?.author?.photo_main ? (
                                         <Image
-                                            src={recipeData.author.photo_main}
+                                            src={recipeData?.author?.photo_main}
                                             width={100}
                                             height={100}
                                             alt='profile pic'
@@ -127,7 +130,9 @@ const RecipeDetails = (props) => {
                                 </i>
                                 <a>
                                     <Link href={`/users/${recipeData?.author?.id}/`} passHref>
-                                        <h1 className={styles.author_name}>{recipeData?.author?.name}</h1>
+                                        <h1 className={styles.author_name}>
+                                            {recipeData?.author?.name} asd asd asd asd
+                                        </h1>
                                     </Link>
                                 </a>
 

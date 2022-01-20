@@ -26,7 +26,7 @@ import {
     SAVE_UNSAVE_ACTION_SUCCESS,
     UPDATE_RECIPE_FAIL,
     UPDATE_RECIPE_SUCCESS,
-} from '../../../redux/types';
+} from '../../../redux/constants';
 
 import Router from 'next/router';
 import { cleanup } from '@testing-library/react';
@@ -34,7 +34,7 @@ import { pageRoute } from '../../../enums';
 import store from '../../../redux/store';
 
 const updatedState = {
-    listOfSearchedRecipes: 'updatedState',
+    listOfAutoCompleteRecipes: 'updatedState',
     requestedRecipeData: 'updatedState',
     listOfFilteredReviews: 'updatedState',
     listOfTrendingRecipes: 'updatedState',
@@ -48,7 +48,7 @@ describe('recipeReducers - cases that modify the state', () => {
         cleanup();
         jest.clearAllMocks();
         initialState = {
-            listOfSearchedRecipes: null,
+            listOfAutoCompleteRecipes: null,
             requestedRecipeData: null,
             listOfFilteredReviews: null,
             listOfTrendingRecipes: null,
@@ -64,14 +64,14 @@ describe('recipeReducers - cases that modify the state', () => {
         const storeState = store.getState();
 
         expect(storeState.recipeReducer.requestedRecipeData).toStrictEqual(updatedState.requestedRecipeData);
-        expect(storeState.recipeReducer.listOfSearchedRecipes).toBeNull();
+        expect(storeState.recipeReducer.listOfAutoCompleteRecipes).toBeNull();
         expect(storeState.recipeReducer.listOfFilteredReviews).toBeNull();
     });
     test('case UPDATE_RECIPE_SUCCESS', () => {
         store.dispatch({ type: UPDATE_RECIPE_SUCCESS, payload: updatedState.requestedRecipeData });
         const storeState = store.getState();
 
-        expect(storeState.recipeReducer.listOfSearchedRecipes).toBeNull();
+        expect(storeState.recipeReducer.listOfAutoCompleteRecipes).toBeNull();
         expect(storeState.recipeReducer.requestedRecipeData).toStrictEqual(updatedState.requestedRecipeData);
         expect(storeState.recipeReducer.listOfFilteredReviews).toBeNull();
     });
@@ -79,7 +79,7 @@ describe('recipeReducers - cases that modify the state', () => {
         store.dispatch({ type: REVIEWS_IN_RECIPE_SUCCESS, payload: updatedState.listOfFilteredReviews });
         const storeState = store.getState();
 
-        expect(storeState.recipeReducer.listOfSearchedRecipes).toBeNull();
+        expect(storeState.recipeReducer.listOfAutoCompleteRecipes).toBeNull();
         expect(storeState.recipeReducer.requestedRecipeData).toBeNull();
         expect(storeState.recipeReducer.listOfFilteredReviews).toStrictEqual(updatedState.listOfFilteredReviews);
     });
@@ -88,7 +88,7 @@ describe('recipeReducers - cases that modify the state', () => {
         store.dispatch({ type: GET_TRENDING_RECIPE_LIST_SUCCESS, payload: updatedState.listOfTrendingRecipes });
         const storeState = store.getState();
 
-        expect(storeState.recipeReducer.listOfSearchedRecipes).toBeNull();
+        expect(storeState.recipeReducer.listOfAutoCompleteRecipes).toBeNull();
         expect(storeState.recipeReducer.requestedRecipeData).toBeNull();
         expect(storeState.recipeReducer.listOfFilteredReviews).toBeNull();
         expect(storeState.recipeReducer.listOfFollowedRecipes).toBeNull();
@@ -98,7 +98,7 @@ describe('recipeReducers - cases that modify the state', () => {
         store.dispatch({ type: GET_FOLLOWED_RECIPE_LIST_SUCCESS, payload: updatedState.listOfFollowedRecipes });
         const storeState = store.getState();
 
-        expect(storeState.recipeReducer.listOfSearchedRecipes).toBeNull();
+        expect(storeState.recipeReducer.listOfAutoCompleteRecipes).toBeNull();
         expect(storeState.recipeReducer.requestedRecipeData).toBeNull();
         expect(storeState.recipeReducer.listOfFilteredReviews).toBeNull();
         expect(storeState.recipeReducer.listOfTrendingRecipes).toBeNull();
@@ -108,7 +108,7 @@ describe('recipeReducers - cases that modify the state', () => {
         store.dispatch({ type: GET_SAVED_RECIPE_LIST_SUCCESS, payload: updatedState.listOfSavedRecipes });
         const storeState = store.getState();
 
-        expect(storeState.recipeReducer.listOfSearchedRecipes).toBeNull();
+        expect(storeState.recipeReducer.listOfAutoCompleteRecipes).toBeNull();
         expect(storeState.recipeReducer.requestedRecipeData).toBeNull();
         expect(storeState.recipeReducer.listOfFilteredReviews).toBeNull();
         expect(storeState.recipeReducer.listOfTrendingRecipes).toBeNull();

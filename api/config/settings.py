@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from threading import local
 
 # Build paths inside the project save this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -9,7 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '0o%+e2tv@q!wiot0i3m*#)&q2w3v8nd74ew64+!ilm6&qq-9o5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
@@ -23,6 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.contrib.postgres',
     
     # browser api
     'dj_rest_auth',
@@ -34,6 +36,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'django_extensions',
     'drf_yasg',
+    'elasticsearch_dsl',
+    'django_elasticsearch_dsl',
 
     # Local apps
         # Users
@@ -194,3 +198,9 @@ DJOSER = {
 AUTH_USER_MODEL = 'accounts.UserAccount'
 
 SITE_ID = 1
+
+ELASTICSEARCH_DSL={
+    'default':{
+        'hosts':'localhost:9200'
+    },
+}

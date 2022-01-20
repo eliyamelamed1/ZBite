@@ -107,13 +107,6 @@
         text-decoration: underline;
     }
 
-    .recipes_container {
-        column-gap: 5rem;
-        display: flex;
-        flex-wrap: wrap;
-        width: MIN(100%, 160rem);
-        justify-content: space-evenly;
-    }
     .no_recipes_container {
         width: MIN(100%, 1600px);
         display: grid;

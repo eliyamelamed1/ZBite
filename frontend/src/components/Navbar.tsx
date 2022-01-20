@@ -1,4 +1,4 @@
-import React, { ReactEventHandler, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import HomeIcon from '../assets/icons/home.svg';
@@ -10,7 +10,8 @@ import PlusIcon from '../assets/icons/plus.svg';
 import ProfileIcon from '../assets/icons/profile.svg';
 import { RootState } from '../redux/store';
 import SavedIcon from '../assets/icons/heart.svg';
-import SearchIcon from '../assets/icons/search.svg';
+import UiSearchBarForm from './ui/UiSearchBarForm';
+import { debounce } from 'lodash';
 import { logoutAction } from '../redux/actions/userActions';
 import { pageRoute } from '../enums';
 import styles from '../styles/layout/_navbar.module.scss';
@@ -28,7 +29,6 @@ const Navbar = () => {
         setIsUserAuthenticated(updatedIsUserAuthenticated);
         setloggedUserData(updatedloggedUserData);
     }, [dispatch, updatedIsUserAuthenticated, updatedloggedUserData]);
-
     const profileUrl = loggedUserData ? '/users/' + loggedUserData?.id : '/users/UserLogin/';
 
     const handleLogout = () => {
@@ -175,12 +175,8 @@ const Navbar = () => {
                 <i className={styles.logo__icon}>
                     {LogoIcon.src && <Image src={LogoIcon} alt='logo icon' height={100} width={100} />}
                 </i>
-                <div className={styles.search__box}>
-                    <input type='text' className={styles.search__txt} placeholder='Search' />
-                    <button className={styles.search__btn}>
-                        <i>{SearchIcon.src && <Image src={SearchIcon} alt='search icon' height={100} width={100} />}</i>
-                    </button>
-                </div>
+                <UiSearchBarForm />
+
                 {authenitcationLinks}
             </header>
             {NavbarLinks()}
