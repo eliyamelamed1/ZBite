@@ -18,11 +18,11 @@ interface DataTypes {
 const Leaderboard: React.FC<DataTypes> = (props) => {
     const { listOfLeaderboardUsers } = props;
     for (let i = 0; i < 10; i++) {
-        if (listOfLeaderboardUsers[i] === undefined) listOfLeaderboardUsers[i] = null;
+        if (listOfLeaderboardUsers?.[i] == undefined) listOfLeaderboardUsers[i] = null;
     }
 
-    const topThreeUsers = listOfLeaderboardUsers.slice(0, 3);
-    const lastSevenUsers = listOfLeaderboardUsers.slice(-7);
+    const topThreeUsers = listOfLeaderboardUsers?.slice(0, 3);
+    const lastSevenUsers = listOfLeaderboardUsers?.slice(-7);
 
     const threeUsersContainer = (
         <ul className={styles.threeUsersContainer}>
@@ -90,7 +90,7 @@ const Leaderboard: React.FC<DataTypes> = (props) => {
 };
 export async function getStaticProps() {
     await store.dispatch(loadLeaderboardAction());
-    const { listOfLeaderboardUsers } = store.getState().userReducer;
+    const listOfLeaderboardUsers = store.getState().userReducer.listOfLeaderboardUsers || [];
 
     return { props: { listOfLeaderboardUsers }, revalidate: 10 };
 }
