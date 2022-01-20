@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
 
+import { BASE_URL, endpointRoute } from '../../../enums';
 import {
     followUserAction,
     loadLoggedUserDataAction,
@@ -15,7 +16,6 @@ import {
 } from '../../../redux/actions/userActions';
 
 import configureStore from 'redux-mock-store';
-import { endpointRoute } from '../../../enums';
 import mockAxios from '../../../__mocks__/axios';
 import thunk from 'redux-thunk';
 
@@ -67,16 +67,15 @@ describe('axios request should match url endpoint, and parameters', () => {
         });
         test('loadUserDetailsAction', () => {
             const { id } = parameters;
-            const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/accounts/${id}/`;
+            const endpointUrl = `${BASE_URL}/api/accounts/${id}/`;
             store.dispatch(loadUserDetailsAction({ id }));
-
             expect(mockAxios.get.mock.calls.length).toBe(1);
             expect(mockAxios.get.mock.calls[0][0]).toStrictEqual(endpointUrl);
         });
         test('userUpdateAction', () => {
             const { email, name, id } = parameters;
             const body = JSON.stringify({ email, name });
-            const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/accounts/${id}/`;
+            const endpointUrl = `${BASE_URL}/api/accounts/${id}/`;
 
             store.dispatch(userUpdateAction({ id, email, name }));
 
@@ -89,7 +88,7 @@ describe('axios request should match url endpoint, and parameters', () => {
         });
         test('userDeleteAction', async () => {
             const { id } = parameters;
-            const endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/accounts/${id}/`;
+            const endpointUrl = `${BASE_URL}/api/accounts/${id}/`;
 
             await store.dispatch(userDeleteAction({ id }));
 

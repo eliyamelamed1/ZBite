@@ -26,10 +26,10 @@ import {
     UPDATE_USER_FAIL,
     UPDATE_USER_SUCCESS,
 } from '../constants';
+import { BASE_URL, pageRoute } from '../../enums';
 
 import Router from 'next/router';
 import axiosInstance from '../../utils/axiosInstance';
-import { pageRoute } from '../../enums';
 
 const initialState = {
     auth_token: process.browser ? localStorage.getItem('auth_token') : null,
@@ -73,7 +73,7 @@ export default function userReducer(state = initialState, action) {
                 auth_token: payload.auth_token,
             };
         case GET_LOGGED_USER_DETAILS_SUCCESS:
-            const apiRoute = process.env.NEXT_PUBLIC_API_URL;
+            const apiRoute = BASE_URL;
             if (payload?.photo_main?.includes(apiRoute) === false)
                 payload.photo_main = `${apiRoute}${payload.photo_main}`;
             localStorage.setItem('loggedUserData', JSON.stringify(payload));
