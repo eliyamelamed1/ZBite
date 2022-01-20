@@ -205,6 +205,6 @@ SITE_ID = 1
 
 ELASTICSEARCH_DSL={
     'default':{
-        'hosts':'localhost:9200'
+        'hosts':'zbite.herokuapp.com:9200'
     },
 }
