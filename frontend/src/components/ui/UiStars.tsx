@@ -12,7 +12,7 @@ const UiStars: React.FC<{ starsCount: string }> = ({ starsCount }) => {
                 mt: 0.5,
             }}
         >
-            <Rating defaultValue={+fixedValue} precision={0.5} readOnly sx={{ fontSize: 12 }} />
+            <Rating value={+fixedValue} precision={0.5} readOnly sx={{ fontSize: 12 }} />
             <Box sx={{ ml: 0.5 }} style={{ fontSize: 10 }}>{`(${fixedValue})`}</Box>
         </Box>
     );

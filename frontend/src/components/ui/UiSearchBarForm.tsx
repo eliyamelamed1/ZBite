@@ -60,6 +60,7 @@ export default function UiSearchBarForm() {
         <Autocomplete
             freeSolo={true}
             onInputChange={onChange}
+            size='small'
             onChange={onSubmit}
             id='asynchronous-demo'
             open={open}
@@ -87,10 +88,11 @@ export default function UiSearchBarForm() {
             renderInput={(params) => (
                 <TextField
                     {...params}
-                    size='small'
+                    sx={{ fontSize: 15 }}
                     placeholder='Search'
                     InputProps={{
                         ...params.InputProps,
+                        sx: { fontSize: 15 },
                         className: styles.optionList,
                         endAdornment: (
                             <Fragment>

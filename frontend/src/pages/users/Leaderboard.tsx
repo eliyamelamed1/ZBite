@@ -88,11 +88,11 @@ const Leaderboard: React.FC<DataTypes> = (props) => {
         </div>
     );
 };
-export async function getStaticProps() {
+export async function getServerSideProps() {
     await store.dispatch(loadLeaderboardAction());
     const listOfLeaderboardUsers = store.getState().userReducer.listOfLeaderboardUsers || [];
 
-    return { props: { listOfLeaderboardUsers }, revalidate: 10 };
+    return { props: { listOfLeaderboardUsers } };
 }
 
 export default Leaderboard;

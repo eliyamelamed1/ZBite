@@ -23,8 +23,6 @@ const ReviewCreate: React.FC<{ recipeId: string }> = ({ recipeId }) => {
     const [displayForm, setDisplayForm] = useState(false);
 
     const onChange = (e) => {
-        console.log(e);
-
         e.preventDefault();
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
