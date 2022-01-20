@@ -22,7 +22,6 @@ interface Recipe {
 
 const HomePage: React.FC<{ listOfTrendingRecipes: Recipe[] }> = (props) => {
     console.log(process.env.isProd);
-
     const dispatch = useDispatch();
     const [typeOfRecipes, setTypeOfRecipes] = useState(typeOfRecipesEnum.trending);
     const buttonsRef = useRef() as any;
