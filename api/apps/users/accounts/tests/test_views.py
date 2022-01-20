@@ -135,16 +135,16 @@ class TestTopRatedAccounts:
         def test_page_should_return_top_rated_accounts(self, api_client):
             for i in range(10):
                 new_user = UserFactory() 
-                new_user.stars = 5
+                new_user.score = 5
                 new_user.save()
 
             for i in range(10):
                 new_user = UserFactory() 
-                new_user.stars = 4
+                new_user.score = 4
                 new_user.save()
             
-            top_rated_chefs = UserAccount.objects.all().filter(stars=5)
-            bottom_rated_chefs = UserAccount.objects.all().filter(stars=4)
+            top_rated_chefs = UserAccount.objects.all().filter(score=5)
+            bottom_rated_chefs = UserAccount.objects.all().filter(score=4)
             
             api_client.force_authenticate(new_user)
             response = api_client.get(top_rated_accounts_url)
@@ -161,16 +161,16 @@ class TestTopRatedAccounts:
             response = api_client.get(top_rated_accounts_url) 
             for i in range(10):
                 new_user = UserFactory() 
-                new_user.stars = 5
+                new_user.score = 5
                 new_user.save()
 
             for i in range(10):
                 new_user = UserFactory() 
-                new_user.stars = 4
+                new_user.score = 4
                 new_user.save()
             
-            top_rated_chefs = UserAccount.objects.all().filter(stars=5)
-            bottom_rated_chefs = UserAccount.objects.all().filter(stars=4)
+            top_rated_chefs = UserAccount.objects.all().filter(score=5)
+            bottom_rated_chefs = UserAccount.objects.all().filter(score=4)
             
             api_client.force_authenticate(new_user)
             response = api_client.get(top_rated_accounts_url)
@@ -186,16 +186,16 @@ class TestTopRatedAccounts:
         def test_top_chefs_page_should_display_top_rated_chefs(self, api_client):
             for i in range(10):
                 new_user = UserFactory() 
-                new_user.stars = 5
+                new_user.score = 5
                 new_user.save()
 
             for i in range(10):
                 new_user = UserFactory() 
-                new_user.stars = 4
+                new_user.score = 4
                 new_user.save()
             
-            top_rated_chefs = UserAccount.objects.all().filter(stars=5)
-            bottom_rated_chefs = UserAccount.objects.all().filter(stars=4)
+            top_rated_chefs = UserAccount.objects.all().filter(score=5)
+            bottom_rated_chefs = UserAccount.objects.all().filter(score=4)
 
             response = api_client.get(top_rated_accounts_url)
 

@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'dj_rest_auth',
 
     #3rd party
+    'whitenoise.runserver_nostatic',
     'djoser',
     'corsheaders',
     'rest_framework',
@@ -71,7 +72,7 @@ CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:8000',
     'http://localhost:3000',
-    'https://zbite.vercel.app/',
+    'https://zbite.vercel.app',
 )
 
 ROOT_URLCONF = 'config.urls'
@@ -156,6 +157,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # Rest Framework Settings
