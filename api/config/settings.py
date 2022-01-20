@@ -10,9 +10,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '0o%+e2tv@q!wiot0i3m*#)&q2w3v8nd74ew64+!ilm6&qq-9o5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'zbite.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'zbite.herokuapp.com',]
 
 # Application definition
 
@@ -70,7 +70,6 @@ MIDDLEWARE = [
 
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
-    'http://localhost:8000',
     'http://localhost:3000',
     'https://zbite.vercel.app',
 )
@@ -100,10 +99,10 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
+        'NAME': 'dduv1ml0qmj7uq',
+        'USER': 'orrejnjldzhkik',
+        'PASSWORD': '7da3a8a8796af42e2678215a529f4ba763b7295bc46114f83cafaf79e8a15a2f',
+        'HOST': 'ec2-54-220-243-77.eu-west-1.compute.amazonaws.com',
         'PORT': '5432',
     }
 }
@@ -206,6 +205,6 @@ SITE_ID = 1
 
 ELASTICSEARCH_DSL={
     'default':{
-        'hosts':'localhost:9200'
+        'hosts':'https://3ng0nd8r83:9b711z6cyt@dogwood-516101910.eu-west-1.bonsaisearch.net:443',
     },
 }

@@ -63,6 +63,7 @@ PyJWT = "==2.0.0"
 django-elasticsearch-dsl = "*"
 gunicorn = "==20.0.4"
 whitenoise = "==5.1.0"
+elasticsearch = "==7.13"
 
 [dev-packages]
 
