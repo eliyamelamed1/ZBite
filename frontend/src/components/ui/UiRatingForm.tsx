@@ -22,7 +22,7 @@ export default function UiRatingForm({ onChange }) {
                 value={value}
                 precision={0.5}
                 onChange={(event, newValue) => {
-                    if (newValue <= 1) return;
+                    if (newValue < 1) return;
                     onChange(event);
                     setValue(newValue);
                 }}

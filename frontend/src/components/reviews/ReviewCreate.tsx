@@ -17,7 +17,7 @@ const ReviewCreate: React.FC<{ recipeId: string }> = ({ recipeId }) => {
     const dispatch = useDispatch();
     const [formData, setFormData] = useState({
         comment: '',
-        starsValue: 0,
+        starsValue: 2.5,
     });
     const { comment, starsValue } = formData;
     const [displayForm, setDisplayForm] = useState(false);
