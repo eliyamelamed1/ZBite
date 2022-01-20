@@ -21,6 +21,7 @@ if (auth_token) axiosInstance.defaults.headers.common.Authorization = `Token ${a
 axiosInstance.interceptors.request.use(
     (config) => {
         // trigger 'loading=true' event here
+        toast.error(0);
         store.dispatch(setLoadingAction(true));
 
         return Promise.resolve(config);
@@ -41,7 +42,7 @@ axiosInstance.interceptors.response.use(
         return Promise.resolve(response);
     },
     (error) => {
-        toast.error('3');
+        toast.error(3);
 
         store.dispatch(setLoadingAction(false));
         const object = error.response.data;
