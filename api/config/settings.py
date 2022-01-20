@@ -12,7 +12,8 @@ SECRET_KEY = '0o%+e2tv@q!wiot0i3m*#)&q2w3v8nd74ew64+!ilm6&qq-9o5'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'zbite.herokuapp.com',]
+# ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'zbite.herokuapp.com',]
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -68,11 +69,14 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = (
-    'http://localhost:3000',
-    'https://zbite.vercel.app',
+'*'
 )
+# CORS_ORIGIN_WHITELIST = (
+#     'http://localhost:3000',
+#     'https://zbite.vercel.app',
+# )
 
 ROOT_URLCONF = 'config.urls'
 
