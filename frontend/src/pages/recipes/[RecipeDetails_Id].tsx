@@ -131,9 +131,7 @@ const RecipeDetails = (props) => {
                                 </i>
                                 <a>
                                     <Link href={`/users/${recipeData?.author?.id}/`} passHref>
-                                        <h1 className={styles.author_name}>
-                                            {recipeData?.author?.name} asd asd asd asd
-                                        </h1>
+                                        <h1 className={styles.author_name}>{recipeData?.author?.name}</h1>
                                     </Link>
                                 </a>
 

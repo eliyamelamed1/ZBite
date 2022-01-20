@@ -40,6 +40,7 @@ axiosInstance.interceptors.response.use(
     (error) => {
         store.dispatch(setLoadingAction(false));
         const object = error.response.data;
+
         if (object) {
             const key = Object.keys(object)[0];
             let errorMassage = object[key];
