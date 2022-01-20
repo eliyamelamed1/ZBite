@@ -83,7 +83,7 @@ export async function getStaticProps() {
     await store.dispatch(loadTrendingRecipesAction());
     const { listOfTrendingRecipes } = store.getState().recipeReducer;
 
-    return { props: { listOfTrendingRecipes }, revalidate: 10 };
+    return { props: { listOfTrendingRecipes } };
 }
 
 export default HomePage;
