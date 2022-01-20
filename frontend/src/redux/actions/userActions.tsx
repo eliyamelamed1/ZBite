@@ -44,9 +44,9 @@ export const followUserAction =
             const body = JSON.stringify({ user_to_follow });
             await axiosInstance.post(endpointRoute().users.followUser, body);
             toast.success('updated users followed successfully');
-            await dispatch(loadUserDetailsAction({ id: user_to_follow }));
-            await dispatch(loadLoggedUserDataAction());
-            await dispatch({ type: FOLLOW_UNFOLLOW_USER_SUCCESS });
+            dispatch(loadUserDetailsAction({ id: user_to_follow }));
+            dispatch(loadLoggedUserDataAction());
+            dispatch({ type: FOLLOW_UNFOLLOW_USER_SUCCESS });
         } catch (err) {
             dispatch({ type: FOLLOW_UNFOLLOW_USER_FAIL });
         }
@@ -113,7 +113,7 @@ export const loginAction =
             const res = await axiosInstance.post(endpointRoute().users.login, body);
             toast.success('login completed, redirected to home page');
             await dispatch({ type: LOGIN_SUCCESS, payload: res.data });
-            await dispatch(loadLoggedUserDataAction());
+            dispatch(loadLoggedUserDataAction());
         } catch (err) {
             dispatch({ type: LOGIN_FAIL });
         }
