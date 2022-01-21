@@ -2,10 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import ProfileIcon from '../../assets/icons/profile._pic.svg';
-import PropTypes from 'prop-types';
 import React from 'react';
-import UiOptionsDots from '../ui/optionsForm/UiOptionsDots';
 import UiSaves from '../ui/UiSaves';
 import UiStars from '../ui/UiStars';
 import imageLoader from '../../utils/imageLoader';
@@ -22,6 +19,8 @@ interface DataTypes {
 }
 
 const RecipeCard: React.FC<DataTypes> = ({ title, photo_main, id, author, saves, stars }) => {
+    console.log(photo_main);
+
     return (
         <div data-testid='recipeCard' className={styles.card_container}>
             <section className={styles.detail_container_1}>

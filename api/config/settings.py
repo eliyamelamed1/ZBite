@@ -36,9 +36,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'django_extensions',
-    'drf_yasg',
+    'drf_yasg', # docs
     'elasticsearch_dsl',
     'django_elasticsearch_dsl',
+    'storages', # amazons s3
 
     # Local apps
         # Users
@@ -208,3 +209,23 @@ ELASTICSEARCH_DSL={
         'hosts':'https://3ng0nd8r83:9b711z6cyt@dogwood-516101910.eu-west-1.bonsaisearch.net:443',
     },
 }
+
+
+# amazon s3 storage
+AWS_ACCESS_KEY_ID = 'AKIAQAUQJESZOQBHAKTZ'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'zbite'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_LOCATION = 'static'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'build/static'),
+]
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+DEFAULT_FILE_STORAGE = 'config.storage_backends.MediaStorage'
+
