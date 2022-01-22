@@ -157,7 +157,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
    
         # browser api
-        'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
     ),
 }
 
@@ -231,4 +231,3 @@ CORS_ORIGIN_WHITELIST = (
     'https://zbite.vercel.app',
     '192.168.1.29'
 )
-# 
