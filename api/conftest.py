@@ -72,7 +72,7 @@ def chat_massage_create():
 
 
 # enable testing for postgres db
-# @pytest.fixture(scope='session')
+@pytest.fixture(scope='session')
 def django_db_setup():
     settings.DATABASES['default'] 
 
