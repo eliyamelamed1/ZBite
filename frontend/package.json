@@ -3,9 +3,9 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "cross-env isProd=false next dev",
+        "dev": "cross-env isDev=false next dev",
         "build": "next build",
-        "start": "cross-env isProd=true next start",
+        "start": "cross-env isDev=true next start",
         "lint": "next lint",
         "test": "jest --env=jsdom --silent",
         "watch": "jest --env=jsdom --watch --silent"
