@@ -66,12 +66,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_ORIGIN_WHITELIST = (
-    'https://localhost:3000',
-    'https://zbite.vercel.app',
-)
-
 ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
@@ -189,8 +183,6 @@ DJOSER = {
     },
 }
 
-
-
 AUTH_USER_MODEL = 'accounts.UserAccount'
 
 SITE_ID = 1
@@ -231,3 +223,8 @@ SECURE_HSTS_PRELOAD = env.bool("DJANGO_SECURE_HSTS_PRELOAD", default=True)
 SESSION_COOKIE_SECURE = env.bool("DJANGO_SESSION_COOKIE_SECURE", default=True)
 CSRF_COOKIE_SECURE = env.bool("DJANGO_CSRF_COOKIE_SECURE", default=True)
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = (
+    'https://localhost:3000',
+    'https://zbite.vercel.app',
+)
