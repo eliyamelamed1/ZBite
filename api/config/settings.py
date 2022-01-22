@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from pickle import TRUE
 from environs import Env
 
 env = Env()
@@ -65,12 +66,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_ORIGIN_WHITELIST = (
-    'https://localhost:3000',
-    'https://zbite.vercel.app',
-)
 
 ROOT_URLCONF = 'config.urls'
 
@@ -162,7 +157,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
    
         # browser api
-        'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
     ),
 }
 
@@ -188,8 +183,6 @@ DJOSER = {
         'user_delete': 'apps.users.accounts.serializers.UserDeleteSerializer',
     },
 }
-
-
 
 AUTH_USER_MODEL = 'accounts.UserAccount'
 
@@ -221,7 +214,9 @@ STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 DEFAULT_FILE_STORAGE = 'config.storage_backends.MediaStorage'
 
 # Security
-SECRET_KEY = env("DJANGO_SECRET_KEY")
+SECRET_KEY = '0o%+e2tv@q!wiot0i3m*#)&q2w3v8nd74ew64+!ilm6&qq-9o5'
+DEBUG = True
+SECRET_KEY = env("DJANGO_SECRET_KEY", default='secret_key')
 DEBUG = env.bool("DJANGO_DEBUG", default=False)
 SECURE_SSL_REDIRECT = env.bool("DJANGO_SECURE_SSL_REDIRECT", default=True)
 SECURE_HSTS_SECONDS = env.int("DJANGO_SECURE_HSTS_SECONDS", default=2592000)
@@ -230,3 +225,9 @@ SECURE_HSTS_PRELOAD = env.bool("DJANGO_SECURE_HSTS_PRELOAD", default=True)
 SESSION_COOKIE_SECURE = env.bool("DJANGO_SESSION_COOKIE_SECURE", default=True)
 CSRF_COOKIE_SECURE = env.bool("DJANGO_CSRF_COOKIE_SECURE", default=True)
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000',
+    'https://zbite.vercel.app',
+    '192.168.1.29'
+)
