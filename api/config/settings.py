@@ -92,30 +92,29 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 # ---------- Prod Database
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'dduv1ml0qmj7uq',
-#         'USER': 'orrejnjldzhkik',
-#         'PASSWORD': '7da3a8a8796af42e2678215a529f4ba763b7295bc46114f83cafaf79e8a15a2f',
-#         'HOST': 'ec2-54-220-243-77.eu-west-1.compute.amazonaws.com',
-#         'PORT': '5432',
-#     },
-# # create replica
-# }
-
-
-# ------------ dev Database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
+        'NAME': 'dduv1ml0qmj7uq',
+        'USER': 'orrejnjldzhkik',
+        'PASSWORD': '7da3a8a8796af42e2678215a529f4ba763b7295bc46114f83cafaf79e8a15a2f',
+        'HOST': 'ec2-54-220-243-77.eu-west-1.compute.amazonaws.com',
         'PORT': '5432',
-    }
+    },
 }
+
+
+# ------------ dev Database
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'postgres',
+#         'USER': 'postgres',
+#         'PASSWORD': 'postgres',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
