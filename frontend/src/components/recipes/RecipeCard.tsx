@@ -19,8 +19,6 @@ interface DataTypes {
 }
 
 const RecipeCard: React.FC<DataTypes> = ({ title, photo_main, id, author, saves, stars }) => {
-    console.log(photo_main);
-
     return (
         <div data-testid='recipeCard' className={styles.card_container}>
             <section className={styles.detail_container_1}>

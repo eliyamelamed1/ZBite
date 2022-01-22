@@ -6,12 +6,6 @@ import sys
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '0o%+e2tv@q!wiot0i3m*#)&q2w3v8nd74ew64+!ilm6&qq-9o5'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'zbite.herokuapp.com',]
 
 # Application definition
@@ -98,15 +92,15 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'dduv1ml0qmj7uq',
-            'USER': 'orrejnjldzhkik',
-            'PASSWORD': '7da3a8a8796af42e2678215a529f4ba763b7295bc46114f83cafaf79e8a15a2f',
-            'HOST': 'ec2-54-220-243-77.eu-west-1.compute.amazonaws.com',
-            'PORT': '5432',
-        },
-    }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'dduv1ml0qmj7uq',
+        'USER': 'orrejnjldzhkik',
+        'PASSWORD': '7da3a8a8796af42e2678215a529f4ba763b7295bc46114f83cafaf79e8a15a2f',
+        'HOST': 'ec2-54-220-243-77.eu-west-1.compute.amazonaws.com',
+        'PORT': '5432',
+    },
+}
 
 
 
@@ -224,3 +218,13 @@ STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 DEFAULT_FILE_STORAGE = 'config.storage_backends.MediaStorage'
 
+
+# Security
+SECRET_KEY = '0o%+e2tv@q!wiot0i3m*#)&q2w3v8nd74ew64+!ilm6&qq-9o5'
+DEBUG = False
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True
+SECURE_HSTS_SECONDS = 2592000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
