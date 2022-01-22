@@ -1,7 +1,8 @@
 const prodUrl = 'https://zbite.herokuapp.com';
 const devUrl = 'http://localhost:8000';
 
-export const BASE_URL = process.env.isDev ? devUrl : prodUrl;
+// export const BASE_URL = process.env.isDev ? devUrl : prodUrl;
+export const BASE_URL = prodUrl;
 
 export const endpointRoute = (id = '') => ({
     users: {
