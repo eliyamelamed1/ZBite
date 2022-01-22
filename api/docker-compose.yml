@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+    web:
+        build: .
+        command: python /api/manage.py runserver localhost:8000
+        volumes:
+            - .:/api
+        ports:
+            - 8000:8000
