@@ -1,6 +1,10 @@
 import os
 from pathlib import Path
 from pickle import TRUE
+import sys
+
+from django.conf import settings
+
 from environs import Env
 
 env = Env()
@@ -87,20 +91,31 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-# Database
+# ---------- Prod Database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'dduv1ml0qmj7uq',
         'USER': 'orrejnjldzhkik',
-        'TEST': {
-             'MIRROR': 'default',
-        },
         'PASSWORD': '7da3a8a8796af42e2678215a529f4ba763b7295bc46114f83cafaf79e8a15a2f',
         'HOST': 'ec2-54-220-243-77.eu-west-1.compute.amazonaws.com',
         'PORT': '5432',
     },
 }
+
+
+# ------------ dev Database
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'postgres',
+#         'USER': 'postgres',
+#         'PASSWORD': 'postgres',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
+
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -157,7 +172,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
    
         # browser api
-        # 'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ),
 }
 
@@ -214,11 +229,9 @@ STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 DEFAULT_FILE_STORAGE = 'config.storage_backends.MediaStorage'
 
 # Security
-SECRET_KEY = '0o%+e2tv@q!wiot0i3m*#)&q2w3v8nd74ew64+!ilm6&qq-9o5'
-DEBUG = True
+# SECRET_KEY = '0o%+e2tv@q!wiot0i3m*#)&q2w3v8nd74ew64+!ilm6&qq-9o5'
 SECRET_KEY = env("DJANGO_SECRET_KEY", default='secret_key')
 DEBUG = env.bool("DJANGO_DEBUG", default=False)
-SECURE_SSL_REDIRECT = env.bool("DJANGO_SECURE_SSL_REDIRECT", default=True)
 SECURE_HSTS_SECONDS = env.int("DJANGO_SECURE_HSTS_SECONDS", default=2592000)
 SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool("DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS", default=True)
 SECURE_HSTS_PRELOAD = env.bool("DJANGO_SECURE_HSTS_PRELOAD", default=True)
@@ -229,5 +242,6 @@ CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',
     'https://zbite.vercel.app',
-    '192.168.1.29'
 )
+SECURE_SSL_REDIRECT = env.bool("DJANGO_SECURE_SSL_REDIRECT", default=False)
+
