@@ -4,7 +4,7 @@ setup:
         - plan: bonsai-elasticsearch
 build:
     docker:
-        web: Dockerfile
+        web: /api/Dockerfile
 release:
     image: web
     command:
