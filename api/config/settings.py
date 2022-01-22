@@ -1,6 +1,5 @@
 import os
 from pathlib import Path
-import sys
 
 # Build paths inside the project save this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -89,23 +88,22 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
 # Database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'dduv1ml0qmj7uq',
         'USER': 'orrejnjldzhkik',
+        'TEST': {
+             'MIRROR': 'default',
+        },
         'PASSWORD': '7da3a8a8796af42e2678215a529f4ba763b7295bc46114f83cafaf79e8a15a2f',
         'HOST': 'ec2-54-220-243-77.eu-west-1.compute.amazonaws.com',
         'PORT': '5432',
     },
 }
 
-
-
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
