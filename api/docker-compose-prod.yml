@@ -12,6 +12,7 @@ services:
             - db
         environment:
             - 'DJANGO_SECRET_KEY=0o%+e2tv@q!wiot0i3m*#)&q2w3v8nd74ew64+!ilm6&qq-9o5'
+            - 'DJANGO_SECURE_SSL_REDIRECT=True'
     db:
         image: postgres:11
         volumes:
