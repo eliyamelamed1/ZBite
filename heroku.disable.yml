@@ -9,7 +9,6 @@ release:
     image: web
     command:
         - python manage.py collectstatic --noinput
-    command:
-        - python manage.py search_index -rebuild
+
 run:
     web: gunicorn config.wsgi
