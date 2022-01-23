@@ -120,8 +120,8 @@ DATABASES = {
 # Send emails
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'apikey' # this is exactly the value 'apikey'
-EMAIL_HOST_PASSWORD = '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'
+EMAIL_HOST_USER = env('EMAIL_HOST_USER',default='blah')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD',default='blah')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True 
 SENDGRID_SANDBOX_MODE_IN_DEBUG = True

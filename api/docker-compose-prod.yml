@@ -13,6 +13,8 @@ services:
         environment:
             - 'DJANGO_SECRET_KEY=0o%+e2tv@q!wiot0i3m*#)&q2w3v8nd74ew64+!ilm6&qq-9o5'
             - 'DJANGO_SECURE_SSL_REDIRECT=True'
+            - 'EMAIL_HOST_USER=apikey'
+            - 'EMAIL_HOST_PASSWORD=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'
     db:
         image: postgres:11
         volumes:
