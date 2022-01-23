@@ -24,7 +24,11 @@ jest.mock('next/router', () => ({
     push: jest.fn(),
     useRouter: jest.fn(() => ({
         query: {
-            UserResetPasswordConfirm_UidToken: [dynamicUrlParams.uid, dynamicUrlParams.token],
+            UserResetPasswordConfirm_UidToken: [
+                'UserResetPasswordConfirm',
+                dynamicUrlParams.uid,
+                dynamicUrlParams.token,
+            ],
         },
     })),
 }));
@@ -93,5 +97,6 @@ describe('form submit', () => {
         expect(timesActionDispatched).toBe(1);
         expect(resetPasswordConfirmAction.mock.calls[0][0].uid).toBe(dynamicUrlParams.uid);
         expect(resetPasswordConfirmAction.mock.calls[0][0].token).toBe(dynamicUrlParams.token);
+        expect(resetPasswordConfirmAction.mock.calls[0][0].new_password).toBe(passwordValue);
     });
 });
