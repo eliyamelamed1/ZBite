@@ -4,7 +4,7 @@ from pathlib import Path
 from pickle import TRUE
 
 from django.conf import settings
-from django.conf.global_settings import EMAIL_USE_TLS
+from django.conf.global_settings import EMAIL_USE_SSL, EMAIL_USE_TLS
 
 from environs import Env
 
@@ -121,9 +121,9 @@ DATABASES = {
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_HOST_USER = 'apikey' # this is exactly the value 'apikey'
-EMAIL_HOST_PASSWORD = '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'
+EMAIL_HOST_PASSWORD = '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'
 EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+EMAIL_USE_TLS = True 
 SENDGRID_SANDBOX_MODE_IN_DEBUG = True
 DEFAULT_FROM_EMAIL = 'eliyamelamed1@gmail.com'
 
@@ -186,8 +186,7 @@ REST_FRAMEWORK = {
 
 
 # Djoser settings
-# DOMAIN = 'zbite.vercel.app'
-DOMAIN = 'localhost:3000'
+DOMAIN = 'zbite.vercel.app'
 SITE_NAME = 'Zbite'
 DJOSER = {
     'LOGIN_FIELD': 'email',
@@ -201,7 +200,7 @@ DJOSER = {
 
     'PASSWORD_RESET_CONFIRM_URL': 'users/reset_password/UserResetPassword/{uid}/{token}/',
     # 'USERNAME_RESET_CONFIRM_URL': 'email/reset/confirm/{uid}/{token}/',
-    'ACTIVATION_URL': 'activate/{uid}/{token}',
+    # 'ACTIVATION_URL': 'activate/{uid}/{token}',
 
     'SERIALIZERS': {
         'user_create': 'apps.users.accounts.serializers.UserCreateSerializer',
