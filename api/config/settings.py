@@ -93,28 +93,28 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 # ---------- heroku Database
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env('DB_NAME',default='postgres'),
-        'USER': env('DB_USER',default='postgres'),
-        'PASSWORD': env('DB_PASSWORD',default='postgres'),
-        'HOST': env('DB_HOST',default='localhost'),
-        'PORT': '5432',
-    },
-}
-
-# ---------- Prod Database
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'dduv1ml0qmj7uq',
-#         'USER': 'orrejnjldzhkik',
-#         'PASSWORD': '7da3a8a8796af42e2678215a529f4ba763b7295bc46114f83cafaf79e8a15a2f',
-#         'HOST': 'ec2-54-220-243-77.eu-west-1.compute.amazonaws.com',
+#         'NAME': env('DB_NAME',default='postgres'),
+#         'USER': env('DB_USER',default='postgres'),
+#         'PASSWORD': env('DB_PASSWORD',default='postgres'),
+#         'HOST': env('DB_HOST',default='localhost'),
 #         'PORT': '5432',
 #     },
 # }
+
+# ---------- Prod Database
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'dduv1ml0qmj7uq',
+        'USER': 'orrejnjldzhkik',
+        'PASSWORD': '7da3a8a8796af42e2678215a529f4ba763b7295bc46114f83cafaf79e8a15a2f',
+        'HOST': 'ec2-54-220-243-77.eu-west-1.compute.amazonaws.com',
+        'PORT': '5432',
+    },
+}
 
 # ------------ dev Database
 # DATABASES = {
