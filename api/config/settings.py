@@ -1,9 +1,10 @@
 import os
+import sys
 from pathlib import Path
 from pickle import TRUE
-import sys
 
 from django.conf import settings
+from django.conf.global_settings import EMAIL_USE_SSL, EMAIL_USE_TLS
 
 from environs import Env
 
@@ -91,18 +92,29 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-# ---------- Prod Database
+# ---------- heroku Database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dduv1ml0qmj7uq',
-        'USER': 'orrejnjldzhkik',
-        'PASSWORD': '7da3a8a8796af42e2678215a529f4ba763b7295bc46114f83cafaf79e8a15a2f',
-        'HOST': 'ec2-54-220-243-77.eu-west-1.compute.amazonaws.com',
+        'NAME': env('DB_NAME',default='postgres'),
+        'USER': env('DB_USER',default='postgres'),
+        'PASSWORD': env('DB_PASSWORD',default='postgres'),
+        'HOST': env('DB_HOST',default='localhost'),
         'PORT': '5432',
     },
 }
 
+# ---------- Prod Database
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'dduv1ml0qmj7uq',
+#         'USER': 'orrejnjldzhkik',
+#         'PASSWORD': '7da3a8a8796af42e2678215a529f4ba763b7295bc46114f83cafaf79e8a15a2f',
+#         'HOST': 'ec2-54-220-243-77.eu-west-1.compute.amazonaws.com',
+#         'PORT': '5432',
+#     },
+# }
 
 # ------------ dev Database
 # DATABASES = {
@@ -116,8 +128,15 @@ DATABASES = {
 #     }
 # }
 
-
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# Send emails
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_PORT = 587
+EMAIL_HOST_USER=env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD=env('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = True 
+SENDGRID_SANDBOX_MODE_IN_DEBUG = True
+DEFAULT_FROM_EMAIL = 'eliyamelamed1@gmail.com'
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -178,6 +197,8 @@ REST_FRAMEWORK = {
 
 
 # Djoser settings
+DOMAIN = 'zbite.vercel.app'
+SITE_NAME = 'Zbite'
 DJOSER = {
     'LOGIN_FIELD': 'email',
     'USER_CREATE_PASSWORD_RETYPE': True,
@@ -188,9 +209,9 @@ DJOSER = {
     'SET_PASSWORD_RETYPE': True,
     # 'SEND_ACTIVATION_EMAIL': True,
 
-    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
-    'USERNAME_RESET_CONFIRM_URL': 'email/reset/confirm/{uid}/{token}',
-    'ACTIVATION_URL': 'activate/{uid}/{token}',
+    'PASSWORD_RESET_CONFIRM_URL': 'users/reset_password/UserResetPassword/{uid}/{token}/',
+    # 'USERNAME_RESET_CONFIRM_URL': 'email/reset/confirm/{uid}/{token}/',
+    # 'ACTIVATION_URL': 'activate/{uid}/{token}',
 
     'SERIALIZERS': {
         'user_create': 'apps.users.accounts.serializers.UserCreateSerializer',
@@ -229,19 +250,17 @@ STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 DEFAULT_FILE_STORAGE = 'config.storage_backends.MediaStorage'
 
 # Security
-# SECRET_KEY = '0o%+e2tv@q!wiot0i3m*#)&q2w3v8nd74ew64+!ilm6&qq-9o5'
 SECRET_KEY = env("DJANGO_SECRET_KEY", default='secret_key')
-DEBUG = env.bool("DJANGO_DEBUG", default=False)
-SECURE_HSTS_SECONDS = env.int("DJANGO_SECURE_HSTS_SECONDS", default=2592000)
-SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool("DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS", default=True)
-SECURE_HSTS_PRELOAD = env.bool("DJANGO_SECURE_HSTS_PRELOAD", default=True)
-SESSION_COOKIE_SECURE = env.bool("DJANGO_SESSION_COOKIE_SECURE", default=True)
-CSRF_COOKIE_SECURE = env.bool("DJANGO_CSRF_COOKIE_SECURE", default=True)
+DEBUG = env('DJANGO_DEBUG',default=True)
+SECURE_HSTS_SECONDS = env("DJANGO_SECURE_HSTS_SECONDS", default=0)
+SECURE_HSTS_INCLUDE_SUBDOMAINS = env("DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS", default=False)
+SECURE_HSTS_PRELOAD = env("DJANGO_SECURE_HSTS_PRELOAD", default=False)
+SESSION_COOKIE_SECURE = env("DJANGO_SESSION_COOKIE_SECURE", default=False)
+CSRF_COOKIE_SECURE = env("DJANGO_CSRF_COOKIE_SECURE", default=False)
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',
     'https://zbite.vercel.app',
 )
-SECURE_SSL_REDIRECT = env.bool("DJANGO_SECURE_SSL_REDIRECT", default=False)
-
+SECURE_SSL_REDIRECT = env("DJANGO_SECURE_SSL_REDIRECT", default=False)
