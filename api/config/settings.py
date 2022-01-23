@@ -103,6 +103,7 @@ DATABASES = {
         'PORT': '5432',
     },
 }
+
 # ---------- Prod Database
 # DATABASES = {
 #     'default': {
@@ -115,7 +116,6 @@ DATABASES = {
 #     },
 # }
 
-
 # ------------ dev Database
 # DATABASES = {
 #     'default': {
@@ -123,7 +123,7 @@ DATABASES = {
 #         'NAME': 'postgres',
 #         'USER': 'postgres',
 #         'PASSWORD': 'postgres',
-        # 'HOST': 'localhost',
+#         'HOST': 'localhost',
 #         'PORT': '5432',
 #     }
 # }
