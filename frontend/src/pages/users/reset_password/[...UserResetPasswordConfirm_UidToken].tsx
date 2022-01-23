@@ -22,8 +22,8 @@ const UserResetPasswordConfirm = () => {
         try {
             if (new_password == re_new_password) {
                 const params = router.query.UserResetPasswordConfirm_UidToken;
-                const uid = params?.[0];
-                const token = params?.[1];
+                const uid = params?.[1];
+                const token = params?.[2];
                 dispatch(resetPasswordConfirmAction({ uid, token, new_password }));
             }
         } catch {
