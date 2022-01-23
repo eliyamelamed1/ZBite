@@ -92,17 +92,28 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-# ---------- Prod Database
+# ---------- heroku Database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dduv1ml0qmj7uq',
-        'USER': 'orrejnjldzhkik',
-        'PASSWORD': '7da3a8a8796af42e2678215a529f4ba763b7295bc46114f83cafaf79e8a15a2f',
-        'HOST': 'ec2-54-220-243-77.eu-west-1.compute.amazonaws.com',
+        'NAME': env('DB_NAME',default='postgres'),
+        'USER': env('DB_USER',default='postgres'),
+        'PASSWORD': env('DB_PASSWORD',default='postgres'),
+        'HOST': env('DB_HOST',default='postgres'),
         'PORT': '5432',
     },
 }
+# ---------- Prod Database
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'dduv1ml0qmj7uq',
+#         'USER': 'orrejnjldzhkik',
+#         'PASSWORD': '7da3a8a8796af42e2678215a529f4ba763b7295bc46114f83cafaf79e8a15a2f',
+#         'HOST': 'ec2-54-220-243-77.eu-west-1.compute.amazonaws.com',
+#         'PORT': '5432',
+#     },
+# }
 
 
 # ------------ dev Database
@@ -120,8 +131,6 @@ DATABASES = {
 # Send emails
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = env('EMAIL_HOST_USER',default='blah')
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD',default='blah')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True 
 SENDGRID_SANDBOX_MODE_IN_DEBUG = True
