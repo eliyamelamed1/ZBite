@@ -241,7 +241,8 @@ DEFAULT_FILE_STORAGE = 'config.storage_backends.MediaStorage'
 # Security
 # SECRET_KEY = '0o%+e2tv@q!wiot0i3m*#)&q2w3v8nd74ew64+!ilm6&qq-9o5'
 SECRET_KEY = env("DJANGO_SECRET_KEY", default='secret_key')
-DEBUG = env.bool("DJANGO_DEBUG", default=False)
+# DEBUG = env.bool("DJANGO_DEBUG", default=False)
+DEBUG = True
 SECURE_HSTS_SECONDS = env.int("DJANGO_SECURE_HSTS_SECONDS", default=2592000)
 SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool("DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS", default=True)
 SECURE_HSTS_PRELOAD = env.bool("DJANGO_SECURE_HSTS_PRELOAD", default=True)
