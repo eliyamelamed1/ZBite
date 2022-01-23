@@ -104,7 +104,7 @@ DATABASES = {
     },
 }
 
-# ---------- Prod Database
+# # ---------- Prod Database
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -132,8 +132,8 @@ DATABASES = {
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_PORT = 587
-EMAIL_HOST_USER=env('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD=env('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER=env('EMAIL_HOST_USER',default='EMAIL_USER')
+EMAIL_HOST_PASSWORD=env('EMAIL_HOST_PASSWORD',default='EMAIL_PASSWORD')
 EMAIL_USE_TLS = True 
 SENDGRID_SANDBOX_MODE_IN_DEBUG = True
 DEFAULT_FROM_EMAIL = 'eliyamelamed1@gmail.com'
