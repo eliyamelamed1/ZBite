@@ -1,10 +1,5 @@
 import os
-import sys
 from pathlib import Path
-from pickle import TRUE
-
-from django.conf import settings
-from django.conf.global_settings import EMAIL_USE_SSL, EMAIL_USE_TLS
 
 from environs import Env
 
@@ -104,39 +99,14 @@ DATABASES = {
     },
 }
 
-# # ---------- Prod Database
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'dduv1ml0qmj7uq',
-#         'USER': 'orrejnjldzhkik',
-#         'PASSWORD': '7da3a8a8796af42e2678215a529f4ba763b7295bc46114f83cafaf79e8a15a2f',
-#         'HOST': 'ec2-54-220-243-77.eu-west-1.compute.amazonaws.com',
-#         'PORT': '5432',
-#     },
-# }
-
-# ------------ dev Database
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'postgres',
-#         'USER': 'postgres',
-#         'PASSWORD': 'postgres',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
-
 # Send emails
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_PORT = 587
-EMAIL_HOST_USER=env('EMAIL_HOST_USER',default='EMAIL_USER')
-EMAIL_HOST_PASSWORD=env('EMAIL_HOST_PASSWORD',default='EMAIL_PASSWORD')
 EMAIL_USE_TLS = True 
-SENDGRID_SANDBOX_MODE_IN_DEBUG = True
-DEFAULT_FROM_EMAIL = 'eliyamelamed1@gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER=env('SENDGRID_USER',default='SENDGRID_USER')
+EMAIL_HOST_PASSWORD=env('SENDGRID_PASSWORD',default='SENDGRID_PASSWORD')
+DEFAULT_FROM_EMAIL = env('SENDGRID_FROM_EMAIL',default='email@gmail.com')
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -191,7 +161,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
    
         # browser api
-        'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
     ),
 }
 
@@ -232,8 +202,8 @@ ELASTICSEARCH_DSL={
 
 
 # amazon s3 storage
-AWS_ACCESS_KEY_ID = 'AKIAQAUQJESZOQBHAKTZ'
-AWS_SECRET_ACCESS_KEY = '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'
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID',default='aws_access_key')
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY',default='aws_secret_access_key')
 AWS_STORAGE_BUCKET_NAME = 'zbite'
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 AWS_S3_OBJECT_PARAMETERS = {
