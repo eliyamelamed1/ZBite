@@ -7,7 +7,7 @@ type PropsType = {
         navigate: (path: string) => void;
     };
 };
-export default function SettingsScreen({ navigation }: PropsType) {
+export default function AddRecipeScreen({ navigation }: PropsType) {
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             <Text onPress={() => navigation.navigate('Home')} style={{ fontSize: 26, fontWeight: 'bold' }}>
