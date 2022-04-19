@@ -2,25 +2,18 @@ import * as React from 'react';
 
 import { Image, StyleSheet, Text, Touchable, View } from 'react-native';
 
-import { Searchbar } from 'react-native-paper';
+import SearchBar from './SearchBar';
 import { colors } from '../constants/colors';
 
 export default function Header() {
-    const [searchQuery, setSearchQuery] = React.useState('');
-
-    const onChangeSearch = (query: string) => setSearchQuery(query);
-
     return (
         <View style={styles.container}>
             <View style={styles.iconContainer}>
                 <Image style={styles.icon} source={require('../assets/logo.png')} />
             </View>
-            <Searchbar
-                placeholder='Search'
-                onChangeText={onChangeSearch}
-                value={searchQuery}
-                style={styles.searchBar}
-            />
+            <View style={styles.searchBarContainer}>
+                <SearchBar />
+            </View>
             <View style={styles.auth}>
                 <Text style={{ fontSize: 12, color: colors.text }}>Login</Text>
                 <Text style={{ fontSize: 12, color: colors.text }}>Signup</Text>
@@ -34,24 +27,22 @@ const styles = StyleSheet.create({
         backgroundColor: colors.primaryColor,
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-evenly',
+        justifyContent: 'space-around',
         alignItems: 'center',
     },
     iconContainer: {
-        flex: 0.5,
+        flex: 0.3,
         alignItems: 'center',
         marginHorizontal: 10,
         justifyContent: 'center',
     },
     icon: {
-        width: 30,
-        height: 30,
+        width: 25,
+        height: 25,
     },
-    searchBar: {
-        display: 'flex',
+    searchBarContainer: {
         flex: 2,
         marginHorizontal: 10,
-        height: 30,
     },
 
     auth: {
