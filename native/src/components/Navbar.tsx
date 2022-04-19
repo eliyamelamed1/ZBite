@@ -1,13 +1,14 @@
 import * as React from 'react';
 
-import AddRecipeScreen from '../screens/AddRecipeScreen';
+import AddRecipeScreen from '../screens/recipes/AddRecipeScreen';
 import HomeScreen from '../screens/HomeScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import LeaderboardScreen from '../screens/LeaderboardScreen';
+import LeaderboardScreen from '../screens/users/LeaderboardScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { NavigationContainer } from '@react-navigation/native';
-import ProfileScreen from '../screens/ProfileScreen';
-import SavedRecipesScreen from '../screens/SavedRecipesScreen';
+import ProfileScreen from '../screens/users/ProfileScreen';
+import SavedRecipesScreen from '../screens/recipes/SavedRecipesScreen';
+import { colors } from '../constants/colors';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import screenRoutes from '../utils/screenRoutes';
 
@@ -16,7 +17,6 @@ const Tab = createBottomTabNavigator();
 function Navbar() {
     return (
         <NavigationContainer>
-            {/* @ts-ignore */}
             <Tab.Navigator
                 initialRouteName={screenRoutes.home}
                 screenOptions={({ route }) => ({
@@ -54,7 +54,7 @@ function Navbar() {
                     },
                 })}
                 tabBarOptions={{
-                    activeTintColor: 'tomato',
+                    activeTintColor: colors.primaryColor,
                     inactiveTintColor: 'grey',
                     labelStyle: { paddingBottom: 10, fontSize: 10 },
                     style: { padding: 10, height: 70 },
