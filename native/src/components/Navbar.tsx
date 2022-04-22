@@ -4,10 +4,12 @@ import AddRecipeScreen from '../screens/recipes/AddRecipeScreen';
 import HomeScreen from '../screens/HomeScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LeaderboardScreen from '../screens/users/LeaderboardScreen';
+import LoginScreen from '../screens/users/LoginScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { NavigationContainer } from '@react-navigation/native';
 import ProfileScreen from '../screens/users/ProfileScreen';
 import SavedRecipesScreen from '../screens/recipes/SavedRecipesScreen';
+import SignupScreen from '../screens/users/SignupScreen';
 import { colors } from '../constants/colors';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import screenRoutes from '../utils/screenRoutes';
@@ -60,8 +62,8 @@ function Navbar() {
                     style: { padding: 10, height: 70 },
                 }}
             >
-                <Tab.Screen name={screenRoutes.home} component={HomeScreen} />
-                <Tab.Screen name={screenRoutes.savedRecipes} component={SavedRecipesScreen} />
+                <Tab.Screen name={screenRoutes.home} component={SignupScreen} />
+                <Tab.Screen name={screenRoutes.savedRecipes} component={LoginScreen} />
                 <Tab.Screen name={screenRoutes.addRecipe} component={AddRecipeScreen} />
                 <Tab.Screen name={screenRoutes.leaderboard} component={LeaderboardScreen} />
                 <Tab.Screen name={screenRoutes.profile} component={ProfileScreen} />
