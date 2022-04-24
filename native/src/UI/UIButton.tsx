@@ -12,7 +12,7 @@ interface PropTypes {
 }
 const UIButton = ({ onPress, title = 'Submit' }: PropTypes) => {
     return (
-        <TouchableHighlight style={styles.container} onPress={() => null} underlayColor={colors.primaryColorOpacity}>
+        <TouchableHighlight style={styles.container} onPress={onPress} underlayColor={colors.primaryColorOpacity}>
             <Text style={styles.text}>{title}</Text>
         </TouchableHighlight>
     );
