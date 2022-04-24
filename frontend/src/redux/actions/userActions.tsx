@@ -33,9 +33,7 @@ import { toast } from 'react-toastify';
 export const testAction = () => async (dispatch) => {
     dispatch(secondTestAction());
 };
-export const secondTestAction = () => {
-    console.log('second action have been dispatched');
-};
+export const secondTestAction = () => {};
 
 export const followUserAction =
     ({ user_to_follow }) =>
