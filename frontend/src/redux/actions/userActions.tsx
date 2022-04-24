@@ -33,9 +33,7 @@ import { toast } from 'react-toastify';
 export const testAction = () => async (dispatch) => {
     dispatch(secondTestAction());
 };
-export const secondTestAction = () => {
-    console.log('second action have been dispatched');
-};
+export const secondTestAction = () => {};
 
 export const followUserAction =
     ({ user_to_follow }) =>
@@ -43,7 +41,6 @@ export const followUserAction =
         try {
             const body = JSON.stringify({ user_to_follow });
             await axiosInstance.post(endpointRoute().users.followUser, body);
-            toast.success('updated users followed successfully');
             dispatch(loadUserDetailsAction({ id: user_to_follow }));
             dispatch(loadLoggedUserDataAction());
             dispatch({ type: FOLLOW_UNFOLLOW_USER_SUCCESS });
@@ -73,7 +70,6 @@ export const userUpdateAction =
             photoMain && formData.append('photo_main', photoMain);
 
             const res = await axiosInstance.patch(endpointRoute(id).users.details, formData);
-            toast.success('user updated successfully');
             dispatch({ type: UPDATE_USER_SUCCESS, payload: res.data });
         } catch (err) {
             dispatch({ type: UPDATE_USER_FAIL });
@@ -86,7 +82,6 @@ export const userDeleteAction =
     async (dispatch) => {
         try {
             const res = await axiosInstance.delete(endpointRoute(id).users.details);
-            toast.success('user deleted successfully');
             dispatch({ type: DELETE_USER_SUCCESS, payload: res.data });
             dispatch(logoutAction());
         } catch (err) {
@@ -111,7 +106,6 @@ export const loginAction =
 
         try {
             const res = await axiosInstance.post(endpointRoute().users.login, body);
-            toast.success('login completed, redirected to home page');
             await dispatch({ type: LOGIN_SUCCESS, payload: res.data });
             dispatch(loadLoggedUserDataAction());
         } catch (err) {
@@ -130,7 +124,6 @@ export const signupAction =
 
         try {
             const res = await axiosInstance.post(endpointRoute().users.signup, body);
-            toast.success('registration completed, redirected to login page');
             dispatch({ type: SIGNUP_SUCCESS, payload: res.data });
         } catch (err) {
             dispatch({ type: SIGNUP_FAIL });
@@ -145,7 +138,6 @@ export const userActivateAction =
 
         try {
             const res = await axiosInstance.post(endpointRoute().users.activate, body);
-            toast.success('user activated successfully');
             dispatch({ type: ACTIVATION_SUCCESS, payload: res.data });
         } catch (err) {
             dispatch({ type: ACTIVATION_FAIL });
@@ -159,7 +151,6 @@ export const resetPasswordAction =
 
         try {
             const res = await axiosInstance.post(endpointRoute().users.resetPassword, body);
-            toast.success('email sent successfully');
             dispatch({ type: RESET_PASSWORD_SUCCESS, payload: res.data });
         } catch (err) {
             dispatch({ type: RESET_PASSWORD_FAIL });
@@ -176,7 +167,6 @@ export const resetPasswordConfirmAction =
                 new_password,
             });
             const res = await axiosInstance.post(endpointRoute().users.resetPasswordConfirm, body);
-            toast.success('password reset completed successfully');
             dispatch({ type: RESET_PASSWORD_CONFIRM_SUCCESS, payload: res.data });
         } catch (err) {
             dispatch({ type: RESET_PASSWORD_CONFIRM_FAIL });
@@ -185,11 +175,9 @@ export const resetPasswordConfirmAction =
 
 export const logoutAction = () => async (dispatch) => {
     try {
-        toast.success('logout successfully');
         axiosInstance.post(endpointRoute().users.logout);
         dispatch({ type: LOGOUT_SUCCESS });
     } catch {
-        toast.success('logout failed');
         dispatch({ type: LOGOUT_FAIL });
     }
 };

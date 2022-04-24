@@ -39,7 +39,6 @@ export const recipeDeleteAction =
     async (dispatch) => {
         try {
             await axiosInstance.delete(endpointRoute(id).recipes.details);
-            toast.success('recipe deleted successfully');
             dispatch({ type: DELETE_RECIPE_SUCCESS });
         } catch (err) {
             dispatch({ type: DELETE_RECIPE_FAIL });
@@ -77,7 +76,6 @@ export const recipeCreateAction =
             instructionsTextList?.forEach((item) => formData.append('instructions_text_list', item));
 
             await axiosInstance.post(endpointRoute().recipes.create, formData);
-            toast.success('recipe created successfully');
             dispatch({ type: CREATE_RECIPE_SUCCESS });
         } catch (err) {
             dispatch({ type: CREATE_RECIPE_FAIL });
@@ -99,7 +97,6 @@ export const recipeUpdateAction =
             instructionsTextList?.forEach((item) => formData.append('instructions_text_list', item));
             const res = await axiosInstance.patch(endpointRoute(id).recipes.details, formData);
 
-            toast.success('recipe updated successfully');
             dispatch({ type: UPDATE_RECIPE_SUCCESS, payload: res.data });
         } catch (err) {
             dispatch({ type: UPDATE_RECIPE_FAIL });
@@ -163,7 +160,6 @@ export const reviewCreateAction =
                 comment,
             });
             await axiosInstance.post(endpointRoute().reviews.create, body);
-            toast.success('review created successfully');
             dispatch({ type: REVIEW_CREATE_SUCCESS });
             dispatch(reviewsInRecipeAction({ recipeId }));
             dispatch(loadLoggedUserDataAction());
@@ -177,7 +173,6 @@ export const reviewDeleteAction =
     async (dispatch) => {
         try {
             await axiosInstance.delete(endpointRoute(reviewId).reviews.delete);
-            toast.success('review deleted successfully');
             dispatch({ type: REVIEW_DELETE_SUCCESS });
             dispatch(reviewsInRecipeAction({ recipeId }));
             dispatch(loadLoggedUserDataAction());
@@ -208,7 +203,6 @@ export const saveRecipeAction =
         try {
             const body = JSON.stringify({ recipe: recipeId });
             await axiosInstance.post(endpointRoute().recipes.save, body);
-            toast.success('updated saved recipes successfully');
             dispatch({ type: SAVE_UNSAVE_ACTION_SUCCESS });
             dispatch(loadRecipeDetailsAction({ id: recipeId }));
             dispatch(loadLoggedUserDataAction());

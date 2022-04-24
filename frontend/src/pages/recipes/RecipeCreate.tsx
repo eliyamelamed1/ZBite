@@ -95,9 +95,7 @@ const RecipeCreate = () => {
                     instructionsTextList,
                 })
             );
-        } catch (err) {
-            // console.log(err);
-        }
+        } catch (err) {}
     };
 
     // ------------Sections-------------

@@ -38,10 +38,9 @@ const HomePage: React.FC<{ listOfTrendingRecipes: Recipe[] }> = (props) => {
     const { listOfFollowedRecipes } = useSelector((state: RootState) => state.recipeReducer);
     const { isUserAuthenticated } = useSelector((state: RootState) => state.userReducer);
 
-    if (typeOfRecipes === typeOfRecipesEnum.following && isUserAuthenticated === false) Router.push(pageRoute().login);
-
     useEffect(() => {
         if (typeOfRecipes === typeOfRecipesEnum.following) {
+            if (isUserAuthenticated === false) return Router.push(pageRoute().login);
             try {
                 dispatch(loadFollowedRecipesAction());
             } catch {}

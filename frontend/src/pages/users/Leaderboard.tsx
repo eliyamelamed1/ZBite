@@ -7,7 +7,7 @@ import store from '../../redux/store';
 import styles from '../../styles/pages/leaderboard.module.scss';
 
 interface User {
-    photo_main?: { src: string };
+    photo_main: string;
     name: string;
     score: number;
 }
@@ -17,6 +17,7 @@ interface DataTypes {
 
 const Leaderboard: React.FC<DataTypes> = (props) => {
     const { listOfLeaderboardUsers } = props;
+
     for (let i = 0; i < 10; i++) {
         if (listOfLeaderboardUsers?.[i] == undefined) listOfLeaderboardUsers[i] = null;
     }
@@ -30,8 +31,8 @@ const Leaderboard: React.FC<DataTypes> = (props) => {
                 <div key={index} className={styles.card}>
                     <li>
                         <section className={styles.image_container}>
-                            {user?.photo_main?.src ? (
-                                <UiCircleImage src={user?.photo_main?.src} />
+                            {user?.photo_main ? (
+                                <UiCircleImage src={user?.photo_main} />
                             ) : (
                                 emptyImageIcon.src && <UiCircleImage src={emptyImageIcon.src} />
                             )}
@@ -60,8 +61,8 @@ const Leaderboard: React.FC<DataTypes> = (props) => {
                         <span className={styles.ranking_placement}>{index + 4}</span>
 
                         <section className={styles.image_container}>
-                            {user?.photo_main?.src ? (
-                                <UiCircleImage src={user?.photo_main?.src} />
+                            {user?.photo_main ? (
+                                <UiCircleImage src={user?.photo_main} />
                             ) : (
                                 emptyImageIcon.src && <UiCircleImage src={emptyImageIcon.src} />
                             )}
